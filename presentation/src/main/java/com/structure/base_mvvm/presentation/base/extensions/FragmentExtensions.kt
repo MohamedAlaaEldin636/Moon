@@ -17,6 +17,7 @@ import com.afollestad.assent.*
 import com.structure.base_mvvm.domain.utils.FailureStatus
 import com.structure.base_mvvm.domain.utils.Resource.Failure
 import com.structure.base_mvvm.presentation.R
+import com.structure.base_mvvm.presentation.base.BaseActivity
 import com.structure.base_mvvm.presentation.base.utils.hideSoftInput
 import com.structure.base_mvvm.presentation.base.utils.showMessage
 import com.structure.base_mvvm.presentation.base.utils.showNoApiErrorAlert

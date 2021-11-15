@@ -8,7 +8,7 @@
   <uses-permission android:name="android.permission.INTERNET" />
 
   <application
-    android:name="com.structure.base_mvvm.core.MyApplication"
+    android:name="app.grand.tafwak.core.MyApplication"
     android:allowBackup="false"
     android:icon="${appIcon}"
     android:label="${appName}"
@@ -58,7 +58,7 @@
       android:value="@string/google_api_key" />
     <!-- End Google Services -->
     <service
-      android:name="com.structure.base_mvvm.core.MyFirebaseMessagingService"
+      android:name="app.grand.tafwak.core.MyFirebaseMessagingService"
       android:exported="false">
       <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />

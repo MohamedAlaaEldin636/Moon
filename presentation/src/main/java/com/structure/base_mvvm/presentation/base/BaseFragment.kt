@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableArrayList
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -160,5 +159,6 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
         }, Throwable::printStackTrace)
     }
   }
+
 
 }

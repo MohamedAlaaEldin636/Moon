@@ -60,7 +60,7 @@ dependencies {
 
   // Hilt
   implementation(Libraries.hilt)
-  kapt(Libraries.hiltDaggerCompiler)
+    kapt(Libraries.hiltDaggerCompiler)
 
   // Map
   implementation(Libraries.map)
@@ -70,6 +70,9 @@ dependencies {
 
   //Ted bottom picker
   implementation(Libraries.ted_bottom_picker)
+
+  //Pin code
+  implementation(Libraries.pin_code)
 
   // Project Modules
   implementation(project(Config.Modules.domain))

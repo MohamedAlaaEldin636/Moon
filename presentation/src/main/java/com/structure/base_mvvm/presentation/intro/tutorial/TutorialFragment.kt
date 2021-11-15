@@ -1,12 +1,14 @@
 package com.structure.base_mvvm.presentation.intro.tutorial
 
 import androidx.fragment.app.viewModels
-import codes.mina_mikhail.app_tutorial.AppTutorial
-import codes.mina_mikhail.app_tutorial.AppTutorialHelper
+import codes.grand.app_tutorial.AppTutorial
+import codes.grand.app_tutorial.AppTutorialHelper
 import com.structure.base_mvvm.presentation.R
+import com.structure.base_mvvm.presentation.auth.AuthActivity
 import com.structure.base_mvvm.presentation.base.BaseFragment
 import com.structure.base_mvvm.presentation.base.extensions.getMyDrawable
 import com.structure.base_mvvm.presentation.base.extensions.navigateSafe
+import com.structure.base_mvvm.presentation.base.extensions.openActivityAndClearStack
 import com.structure.base_mvvm.presentation.databinding.FragmentTutorialBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,14 +60,16 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
 
     AppTutorialHelper.Builder(requireActivity(), lifecycle)
       .setTutorialData(tutorialData)
-      .setTitleColor(R.color.colorPrimaryDark)
-      .setContentColor(R.color.gray)
+      .setTitleColor(R.color.black)
+      .setContentColor(R.color.black_op)
       .setSliderContainerResourceID(R.id.tutorial_container)
       .setActiveIndicatorColor(R.color.colorAccent)
       .setInActiveIndicatorColor(R.color.gray)
       .setAutoScrolling(false)
-      .setNextButtonTextColor(R.color.colorPrimaryDark)
-      .setNextButtonBackground(R.drawable.btn_accent)
+      .setNextButtonTextColor(R.color.white)
+      .setNextButtonBackground(R.color.blue)
+      .setNextButtonIcon(R.drawable.ic_back)
+      .setPreviousTextColor(R.color.black)
       .setSkipTutorialClick { openIntro() }
       .create()
   }
@@ -76,6 +80,7 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
   }
 
   private fun openIntro() {
-    navigateSafe(TutorialFragmentDirections.actionOpenIntroFragment())
+    viewModel.setFirstTime(false)
+    openActivityAndClearStack(AuthActivity::class.java)
   }
 }

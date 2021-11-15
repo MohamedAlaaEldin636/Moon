@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <LinearLayout
+  <androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundGray"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:id="@+id/root"
-      android:layout_height="match_parent"
-      android:background="@color/backgroundGray"
-      android:orientation="vertical"
-      >
+      android:layout_height="match_parent">
 
-    <androidx.fragment.app.FragmentContainerView
+      <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_host_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         app:defaultNavHost="true"
-        />
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+      <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen56"
         android:background="@color/white"
         app:itemIconTint="@drawable/bottom_navigation_selector"
-        app:labelVisibilityMode="selected"
-        app:menu="@menu/menu_bottom_navigation"
-        />
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom_navigation" />
 
-  </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+      android:id="@+id/navigation_view"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_gravity="start"
+      app:menu="@menu/menu_navigation_view" />
+  </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

@@ -1,6 +1,7 @@
 <resources>
   <dimen name="dimen2">2dp</dimen>
   <dimen name="dimen10">10dp</dimen>
+  <dimen name="dimen30">40dp</dimen>
   <dimen name="dimen280">280dp</dimen>
 
   <dimen name="tutorial_content">16sp</dimen>

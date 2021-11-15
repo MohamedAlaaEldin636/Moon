@@ -1,5 +1,6 @@
 package com.structure.base_mvvm.presentation.base
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -52,6 +53,7 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
 
     if (savedInstanceState == null) {
       setUpBottomNavigation()
+      setUpNavigationDrawer()
     }
 
     setUpViews()
@@ -60,8 +62,8 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
   override
   fun onRestoreInstanceState(savedInstanceState: Bundle) {
     super.onRestoreInstanceState(savedInstanceState)
-
     setUpBottomNavigation()
+    setUpNavigationDrawer()
   }
 
   private fun initViewBinding() {
@@ -74,6 +76,7 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
   abstract fun getLayoutId(): Int
 
   open fun setUpBottomNavigation() {}
+  open fun setUpNavigationDrawer() {}
 
   open fun setUpViews() {}
 

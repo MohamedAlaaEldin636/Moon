@@ -24,18 +24,8 @@ class LogInViewModel @Inject constructor(
   private val _logInResponse = MutableStateFlow<Resource<BaseResponse<User>>>(Resource.Default)
   val logInResponse = _logInResponse
 
-  var signUpClick = SingleLiveEvent<Void>()
-  var openForgotPassword = SingleLiveEvent<Void>()
-
   var validationException = SingleLiveEvent<Int>()
 
-  fun onSignUpClicked() {
-    signUpClick.call()
-  }
-
-  fun onForgotPasswordClicked() {
-    openForgotPassword.call()
-  }
 
   fun onLogInClicked() {
     logInUseCase.login(request)

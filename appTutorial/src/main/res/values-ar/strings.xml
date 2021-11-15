@@ -2,4 +2,5 @@
 <resources>
   <string name="open_app">تصفح التطبيق</string>
   <string name="next">التالى</string>
+    <string name="previous_app">السابق</string>
 </resources>

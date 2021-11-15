@@ -8,6 +8,14 @@
   <fragment
       android:id="@+id/home_fragment"
       android:name="com.structure.base_mvvm.presentation.home.HomeFragment"
-      tools:layout="@layout/fragment_home" />
+      tools:layout="@layout/fragment_home" >
+    <action
+      android:id="@+id/action_home_fragment_to_signUpFragment"
+      app:destination="@id/signUpFragment" />
+  </fragment>
+  <fragment
+    android:id="@+id/signUpFragment"
+    android:name="com.structure.base_mvvm.presentation.auth.sign_up.SignUpFragment"
+    android:label="SignUpFragment" />
 
 </navigation>

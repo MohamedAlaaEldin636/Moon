@@ -1,4 +1,4 @@
-rootProject.name = "Kotlin-Base-MVVM"
+rootProject.name = "Tafwak"
 
 // Include all the existent modules in the project
 rootDir

@@ -1,8 +1,8 @@
 object Config {
   object AppConfig {
-    const val appId = "com.mina_mikhail.base_mvvm"
+    const val appId = "app.grand.tafwak"
     const val compileSdkVersion = 30
-    const val minSdkVersion = 21
+    const val minSdkVersion = 23
     const val versionCode = 1
     const val versionName = "1"
     const val testRunner = "androidx.test.runner.AndroidJUnitRunner"

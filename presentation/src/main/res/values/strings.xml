@@ -42,6 +42,26 @@
   <string name="explore_app">Need to explore app features?</string>
   <string name="continue_as_guest">Continue as Guest</string>
   <string name="google_api_key">Continue as Guest</string>
-    <string name="send">Send</string>
+  <string name="send">Send</string>
+  <string name="contact_us">Contact us</string>
+  <string name="or">او عن طريق</string>
+  <string name="register_name">اكتب اسمك</string>
+  <string name="register_phone">أدخل رقم الهاتف الجوال</string>
+  <string name="email_hint">أدخل البريد الإلكتروني</string>
+  <string name="password_hint_confirm">قم بتأكيد كلمة المرور</string>
+  <string name="agree_to">أوافق على</string>
+  <string name="have_account">لدي حساب</string>
+  <string name="privacy">سياسة الخصوصية</string>
+  <string name="terms_auth">شروط الاستخدام |</string>
+  <string name="confirm_header_text">تأكيد حسابك</string>
+  <string name="confirm_resend">إعادة ارسال</string>
+  <string name="confirm_header">أدخل كود التفعيل المرسل لك على بريدك الإلكتروني</string>
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rememeber">تذكرت كلمة المرور</string>
+  <string name="change_title">كلمة مرور جديدة</string>
+  <string name="change_body">من فضللك قم بكتابة كلمة مرور جديدة مع التأكد من عدم علم اي شخص بها</string>
+  <string name="old_password">كلمة المرور القديمة</string>
+  <string name="confirm">تأكيد</string>
 
 </resources>

@@ -26,7 +26,7 @@ object Versions {
 
   // UI
   const val materialDesign = "1.4.0"
-  const val androidNavigation = "2.3.5"
+  const val androidNavigation = "2.4.0-alpha01"
   const val loadingAnimations = "1.4.0"
   const val alerter = "7.2.4"
   const val coil = "1.3.2"
@@ -51,4 +51,6 @@ object Versions {
 
   //ted bottom picker
   const val ted_bottom_picker = "2.0.1"
+  //Pin View
+  const val pin_code = "1.4.3"
 }

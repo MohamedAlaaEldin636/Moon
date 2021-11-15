@@ -1,5 +1,6 @@
 package com.structure.base_mvvm.presentation.auth.sign_up
 
+import android.widget.CompoundButton
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
 import com.structure.base_mvvm.presentation.base.BaseViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
@@ -13,5 +14,9 @@ class SignUpViewModel @Inject constructor(private val authRepository: AuthReposi
 
   fun onBackClicked() {
     backToPreviousScreen.call()
+  }
+  fun onCheckedChange(button: CompoundButton?, check: Boolean) {
+//    if (check) liveData.setValue(Mutable(Constants.TERMS))
+//    isTermsAccepted = check
   }
 }

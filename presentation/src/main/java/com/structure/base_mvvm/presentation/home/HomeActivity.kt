@@ -14,19 +14,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
+  private var isReceiverRegistered = false
 
   companion object {
     const val ACTION_OPEN_SPECIFIC_PAGE = "ACTION_OPEN_SPECIFIC_PAGE"
     const val TAB_ID = "TAB_ID"
-  }
-
-  private var isReceiverRegistered = false
-
-  private val openSpecificTabReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-    override
-    fun onReceive(context: Context, intent: Intent) {
-      navigateToSpecificTab(intent.getIntExtra(TAB_ID, 0))
-    }
   }
 
   override
@@ -36,6 +28,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   fun onResume() {
     super.onResume()
     registerOpenSpecificTabReceiver()
+  }
+
+  private val openSpecificTabReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    override
+    fun onReceive(context: Context, intent: Intent) {
+      navigateToSpecificTab(intent.getIntExtra(TAB_ID, 0))
+    }
   }
 
   private fun registerOpenSpecificTabReceiver() {
@@ -65,8 +64,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       graphIds,
       supportFragmentManager,
       R.id.fragment_host_container,
-      intent
-    )
+      intent)
 
     navController = controller
   }
@@ -76,9 +74,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   }
 
   override
+  fun setUpNavigationDrawer() {
+
+  }
+
+  override
   fun onDestroy() {
     unregisterOpenSpecificTabReceiver()
-
     super.onDestroy()
   }
 

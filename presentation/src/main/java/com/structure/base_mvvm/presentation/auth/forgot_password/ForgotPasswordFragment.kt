@@ -1,6 +1,7 @@
 package com.structure.base_mvvm.presentation.auth.forgot_password
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.structure.base_mvvm.domain.auth.enums.AuthFieldsValidation
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
@@ -13,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
 
   private val viewModel: ForgotPasswordViewModel by viewModels()
+  private val args: ForgotPasswordFragmentArgs by navArgs()
 
   override
   fun getLayoutId() = R.layout.fragment_forgot_password

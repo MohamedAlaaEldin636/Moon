@@ -21,34 +21,28 @@
   </style>
 
   <style name="TextBoldFont">
-    <item name="android:textSize">@dimen/text_size16</item>
     <item name="android:textStyle">bold</item>
     <item name="fontFamily">@font/poppins_bold</item>
   </style>
 
   <style name="TitleBoldFont">
-    <item name="android:textSize">@dimen/text_size16</item>
     <item name="android:textStyle">bold</item>
     <item name="fontFamily">@font/syncopate_bold</item>
   </style>
 
   <style name="TextMediumFont">
-    <item name="android:textSize">@dimen/text_size14</item>
     <item name="fontFamily">@font/poppins_medium</item>
   </style>
 
   <style name="TextRegularFont">
-    <item name="android:textSize">@dimen/text_size14</item>
     <item name="fontFamily">@font/poppins_light</item>
   </style>
 
   <style name="TitleRegularFont">
-    <item name="android:textSize">@dimen/text_size14</item>
     <item name="fontFamily">@font/syncopate_regular</item>
   </style>
 
   <style name="ArabicTextRegularFont">
-    <item name="android:textSize">@dimen/text_size14</item>
     <item name="fontFamily">@font/almarai_medium</item>
   </style>
 

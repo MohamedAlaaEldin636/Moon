@@ -10,6 +10,7 @@ buildscript {
     classpath(Config.Dependencies.navigationSafeArgs)
     classpath(Config.Dependencies.hilt)
     classpath(Config.Dependencies.google_services)
+      classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
   }
 }
 

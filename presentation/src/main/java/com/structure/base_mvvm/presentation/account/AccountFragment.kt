@@ -2,7 +2,7 @@ package com.structure.base_mvvm.presentation.account
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import codes.mina_mikhail.pretty_pop_up.PrettyPopUpHelper
+import codes.grand.pretty_pop_up.PrettyPopUpHelper
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.auth.AuthActivity

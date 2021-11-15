@@ -5,7 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import codes.mina_mikhail.pretty_pop_up.PrettyPopUpHelper
+import codes.grand.pretty_pop_up.PrettyPopUpHelper
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
@@ -32,14 +32,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
   override
   fun setUpViews() {
     setUpToolBar()
-
   }
 
   private fun setUpToolBar() {
     binding.includedToolbar.toolbarTitle.text = getMyString(R.string.home)
     binding.includedToolbar.backIv.hide()
   }
-
 
   override
   fun setupObservers() {

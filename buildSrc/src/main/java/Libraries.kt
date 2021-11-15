@@ -68,4 +68,7 @@ object Libraries {
 
   //multi select media
   const val ted_bottom_picker = "gun0912.ted:tedbottompicker:${Versions.ted_bottom_picker}"
+
+  //pin code
+  const val pin_code = "com.chaos.view:pinview:${Versions.pin_code}"
 }
