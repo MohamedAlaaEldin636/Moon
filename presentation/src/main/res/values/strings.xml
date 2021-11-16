@@ -63,5 +63,8 @@
   <string name="change_body">من فضللك قم بكتابة كلمة مرور جديدة مع التأكد من عدم علم اي شخص بها</string>
   <string name="old_password">كلمة المرور القديمة</string>
   <string name="confirm">تأكيد</string>
+    <string name="countries_title">أختر البلد , لتحديد المنهج الدراسي لك</string>
+  <string name="soon">قريبا</string>
+  <string name="school_level_title">اختر المرحلة الدراسية</string>
 
 </resources>

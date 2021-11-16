@@ -32,6 +32,24 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_log_in_fragment_to_countriesFragment"
+      app:destination="@id/countriesFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:popUpTo="@+id/log_in_fragment"
+      app:popUpToSaveState="true" />
+    <action
+      android:id="@+id/action_log_in_fragment_to_schoolGradeFragment"
+      app:destination="@id/schoolGradeFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:popUpTo="@+id/log_in_fragment"
+      app:popUpToSaveState="true" />
 
   </fragment>
 
@@ -63,7 +81,9 @@
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right" />
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:popUpTo="@+id/log_in_fragment"
+      app:popUpToSaveState="true" />
   </fragment>
 
   <fragment
@@ -76,11 +96,40 @@
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right" />
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:popUpTo="@+id/log_in_fragment"
+      app:popUpToSaveState="true" />
+    <action
+      android:id="@+id/action_fragment_confirm_code_to_countriesFragment"
+      app:destination="@id/countriesFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:popUpTo="@+id/log_in_fragment"
+      app:popUpToSaveState="true" />
   </fragment>
   <fragment
     android:id="@+id/changePasswordFragment"
     android:name="com.structure.base_mvvm.presentation.auth.changePassword.ChangePasswordFragment"
     android:label="ChangePasswordFragment" />
+  <fragment
+    android:id="@+id/countriesFragment"
+    android:name="com.structure.base_mvvm.presentation.auth.countries.CountriesFragment"
+    android:label="CountriesFragment">
+    <action
+      android:id="@+id/action_countriesFragment_to_schoolGradeFragment"
+      app:destination="@id/schoolGradeFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:popUpTo="@+id/log_in_fragment"
+      app:popUpToSaveState="true" />
+  </fragment>
+  <fragment
+    android:id="@+id/schoolGradeFragment"
+    android:name="com.structure.base_mvvm.presentation.auth.schoolInfo.SchoolGradeFragment"
+    android:label="SchoolGradeFragment" />
 
 </navigation>
