@@ -31,8 +31,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>() {
   }
 
   private fun setUpToolBar() {
-    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.account)
-    binding.includedToolbar.backIv.hide()
+//    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.account)
+//    binding.includedToolbar.backIv.hide()
   }
 
   override

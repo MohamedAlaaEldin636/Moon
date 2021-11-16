@@ -27,7 +27,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
   }
 
   private fun setUpToolBar() {
-    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.search)
-    binding.includedToolbar.backIv.hide()
+//    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.search)
+//    binding.includedToolbar.backIv.hide()
   }
 }

@@ -65,6 +65,7 @@
   <string name="confirm">تأكيد</string>
     <string name="countries_title">أختر البلد , لتحديد المنهج الدراسي لك</string>
   <string name="soon">قريبا</string>
-  <string name="school_level_title">اختر المرحلة الدراسية</string>
+  <string name="school_grade_title">اختر المرحلة الدراسية</string>
+  <string name="school_level_title">اختر الصف الدراسي</string>
 
 </resources>

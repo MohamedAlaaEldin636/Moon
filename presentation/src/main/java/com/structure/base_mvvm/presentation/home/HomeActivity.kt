@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.annotation.IdRes
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseActivity
 import com.structure.base_mvvm.presentation.base.extensions.setupWithNavController
@@ -23,6 +25,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   override
   fun getLayoutId() = R.layout.activity_home
+  override fun setUpViews() {
+    setSupportActionBar(binding.toolbar)
+  }
 
   override
   fun onResume() {
@@ -64,9 +69,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       graphIds,
       supportFragmentManager,
       R.id.fragment_host_container,
-      intent)
+      intent
+    )
 
     navController = controller
+    navController.value?.let { binding.navigationView.setupWithNavController(it) }
   }
 
   private fun navigateToSpecificTab(@IdRes tabID: Int) {

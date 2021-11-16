@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.structure.base_mvvm.domain.home.models.HomeData
 import com.structure.base_mvvm.presentation.R
-import com.structure.base_mvvm.presentation.databinding.ItemHomeBinding
-import com.structure.base_mvvm.presentation.home.viewModels.ItemHomeViewModel
+import com.structure.base_mvvm.presentation.databinding.ItemTeacherBinding
+import com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel
 
-class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class TeacherAdapter : RecyclerView.Adapter<TeacherAdapter.ViewHolder>() {
   private val differCallback = object : DiffUtil.ItemCallback<HomeData>() {
     override fun areItemsTheSame(oldItem: HomeData, newItem: HomeData): Boolean {
       return oldItem.id == newItem.id
@@ -24,13 +24,13 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
   }
   val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home, parent, false)
+    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_teacher, parent, false)
     return ViewHolder(view)
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemHomeViewModel(data)
+    val itemViewModel = ItemTeacherViewModel(data)
     holder.setViewModel(itemViewModel)
 
   }
@@ -51,7 +51,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    private lateinit var itemLayoutBinding: ItemHomeBinding
+    private lateinit var itemLayoutBinding: ItemTeacherBinding
 
     init {
       bind()
@@ -65,7 +65,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
       itemLayoutBinding.unbind()
     }
 
-    fun setViewModel(itemViewModel: ItemHomeViewModel) {
+    fun setViewModel(itemViewModel: ItemTeacherViewModel) {
       itemLayoutBinding.notifyItemViewModels = itemViewModel
     }
   }

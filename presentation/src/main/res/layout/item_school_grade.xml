@@ -6,7 +6,7 @@
 
     <variable
       name="notifyItemViewModels"
-      type="com.structure.base_mvvm.presentation.auth.schoolInfo.levels.ItemSchoolLevelViewModel" />
+      type="com.structure.base_mvvm.presentation.auth.schoolInfo.grades.ItemSchoolGradeViewModel" />
   </data>
 
 

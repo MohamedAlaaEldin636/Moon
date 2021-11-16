@@ -33,7 +33,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
       val targetActivity = if (viewModel.isFirstTime()) {
         IntroActivity::class.java
       } else {
-        AuthActivity::class.java
+        HomeActivity::class.java
       }
       openActivityAndClearStack(targetActivity)
     }, 2000)

@@ -50,6 +50,9 @@
       app:popExitAnim="@anim/anim_slide_out_right"
       app:popUpTo="@+id/log_in_fragment"
       app:popUpToSaveState="true" />
+    <action
+      android:id="@+id/action_log_in_fragment_to_schoolLevelsFragment2"
+      app:destination="@id/schoolLevelsFragment2" />
 
   </fragment>
 
@@ -129,7 +132,15 @@
   </fragment>
   <fragment
     android:id="@+id/schoolGradeFragment"
-    android:name="com.structure.base_mvvm.presentation.auth.schoolInfo.SchoolGradeFragment"
-    android:label="SchoolGradeFragment" />
+    android:name="com.structure.base_mvvm.presentation.auth.schoolInfo.grades.SchoolGradeFragment"
+    android:label="SchoolGradeFragment" >
+    <action
+      android:id="@+id/action_schoolGradeFragment_to_schoolLevelsFragment2"
+      app:destination="@id/schoolLevelsFragment2" />
+  </fragment>
+  <fragment
+    android:id="@+id/schoolLevelsFragment2"
+    android:name="com.structure.base_mvvm.presentation.auth.schoolInfo.levels.SchoolLevelsFragment"
+    android:label="SchoolLevelsFragment" />
 
 </navigation>

@@ -35,8 +35,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
   }
 
   private fun setUpToolBar() {
-    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.home)
-    binding.includedToolbar.backIv.hide()
+//    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.home)
+//    binding.includedToolbar.backIv.hide()
   }
 
   override
@@ -70,9 +70,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
     val itemTouchHelper = ItemTouchHelper(swipeHandler)
     itemTouchHelper.attachToRecyclerView(binding.rcNotifications)
-    binding.includedToolbar.ivAction.setOnClickListener {
-      singleTedBottomPicker(requireActivity())
-    }
+//    binding.includedToolbar.ivAction.setOnClickListener {
+//      singleTedBottomPicker(requireActivity())
+//    }
     selectedImages.observeForever {
       Log.e("selectedImages", "selectedImages: ${selectedImages.value?.path}")
     }
