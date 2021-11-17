@@ -53,4 +53,6 @@ object Versions {
   const val ted_bottom_picker = "2.0.1"
   //Pin View
   const val pin_code = "1.4.3"
+  //smarteist
+  const val smarteist="1.3.2-appcompat"
 }

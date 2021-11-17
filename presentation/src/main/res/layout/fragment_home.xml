@@ -15,38 +15,132 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundGray">
 
-    <include
-      android:id="@+id/included_toolbar"
-      layout="@layout/toolbar_blue"
-      android:visibility="gone"
-      app:layout_constraintTop_toTopOf="parent" />
+    <com.smarteist.autoimageslider.SliderView
+      android:id="@+id/imageSlider"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dimen180"
+      app:layout_constraintTop_toTopOf="parent"
+      app:sliderAnimationDuration="600"
+      app:sliderAutoCycleDirection="back_and_forth"
+      app:sliderAutoCycleEnabled="true"
+      app:sliderCircularHandlerEnabled="true"
+      app:sliderIndicatorAnimationDuration="600"
+      app:sliderIndicatorGravity="center_horizontal|bottom"
+      app:sliderIndicatorMargin="15dp"
+      app:sliderIndicatorOrientation="horizontal"
+      app:sliderIndicatorPadding="3dp"
+      app:sliderIndicatorRadius="2dp"
+      app:sliderIndicatorSelectedColor="@color/colorPrimary"
+      app:sliderIndicatorUnselectedColor="@color/white"
+      app:sliderScrollTimeInSec="10"
+      app:sliderStartAutoCycle="true" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_suggested_teachers"
+      style="@style/TextMediumFont"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen10"
+      android:text="@string/suggested_teachers"
+      android:textColor="@color/black"
+      app:layout_constraintStart_toStartOf="@id/imageSlider"
+      app:layout_constraintTop_toBottomOf="@id/imageSlider" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_suggested_teachers_all"
+      style="@style/TextMediumFont"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen10"
+      android:text="@string/all"
+      android:textColor="@color/black"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/imageSlider" />
 
     <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/rc_notifications"
+      android:id="@+id/rc_suggested_teachers"
       android:layout_width="match_parent"
-      android:layout_height="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen10"
+      android:orientation="horizontal"
       app:adapter="@{viewModel.adapter}"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-      app:layout_constraintBottom_toTopOf="@id/progress"
-      app:layout_constraintTop_toBottomOf="@+id/included_toolbar"
+      app:layout_constraintTop_toBottomOf="@+id/tv_suggested_teachers_all"
       app:orientation="@{`1`}"
       app:span="@{`1`}"
       tools:listitem="@layout/item_teacher" />
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-      android:id="@+id/progress"
-      style="Widget.MaterialComponents.LinearProgressIndicator"
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_suggested_groups"
+      style="@style/TextMediumFont"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="@dimen/dimen4"
-      android:indeterminate="true"
-      android:visibility="gone"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:trackColor="@color/white"
-      app:trackThickness="@dimen/dimen4" />
+      android:layout_margin="@dimen/dimen10"
+      android:text="@string/suggested_groups"
+      android:textColor="@color/black"
+      app:layout_constraintStart_toStartOf="@id/imageSlider"
+      app:layout_constraintTop_toBottomOf="@id/rc_suggested_teachers" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_suggested_groups_all"
+      style="@style/TextMediumFont"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen10"
+      android:text="@string/all"
+      android:textColor="@color/black"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/rc_suggested_teachers" />
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rc_suggested_groups"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen10"
+      android:orientation="horizontal"
+      app:adapter="@{viewModel.adapter}"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintTop_toBottomOf="@+id/tv_suggested_groups_all"
+      app:orientation="@{`1`}"
+      app:span="@{`1`}"
+      tools:listitem="@layout/item_groups" />
+
+    <com.google.android.material.card.MaterialCardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen10"
+      app:cardCornerRadius="@dimen/dimen6"
+      app:cardElevation="2dp"
+      app:layout_constraintTop_toBottomOf="@id/rc_suggested_groups">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ic_quiz"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen14"
+          android:src="@drawable/ic_quiz"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/TextBoldFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dimen20"
+          android:text="@string/test"
+          android:textColor="@color/black"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

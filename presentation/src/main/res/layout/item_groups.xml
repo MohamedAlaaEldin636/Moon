@@ -29,7 +29,7 @@
         android:layout_margin="@dimen/dimen10"
         android:src="@drawable/bg_no_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_subject"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         app:strokeColor="@color/blue"
         app:strokeWidth="@dimen/dimen1" />
@@ -66,6 +66,22 @@
         app:cornerRadius="@dimen/dimen14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_group_type"
+        style="@style/ArabicTextRegularFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:drawableStart="@drawable/ic_goup_type"
+        android:drawablePadding="@dimen/dimen4"
+        android:text="مجموعة عامة"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_subject" />
 
       <androidx.appcompat.widget.AppCompatRatingBar
         android:id="@+id/rate"

@@ -60,7 +60,7 @@ dependencies {
 
   // Hilt
   implementation(Libraries.hilt)
-    kapt(Libraries.hiltDaggerCompiler)
+  kapt(Libraries.hiltDaggerCompiler)
 
   // Map
   implementation(Libraries.map)
@@ -73,6 +73,8 @@ dependencies {
 
   //Pin code
   implementation(Libraries.pin_code)
+  //smarteist
+  implementation(Libraries.smartteist)
 
   // Project Modules
   implementation(project(Config.Modules.domain))

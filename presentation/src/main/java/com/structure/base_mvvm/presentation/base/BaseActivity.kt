@@ -1,6 +1,5 @@
 package com.structure.base_mvvm.presentation.base
 
-import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -16,9 +15,7 @@ import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegateImpl
 import java.util.Locale
 
 abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
-
   private val localeDelegate: LocaleHelperActivityDelegate = LocaleHelperActivityDelegateImpl()
-
   private var _binding: VB? = null
   open val binding get() = _binding!!
   public lateinit var navController: LiveData<NavController>

@@ -61,5 +61,9 @@
   <string name="soon">قريبا</string>
   <string name="school_grade_title">اختر المرحلة الدراسية</string>
   <string name="school_level_title">اختر الصف الدراسي</string>
+    <string name="suggested_teachers">معلمين مقترحين</string>
+  <string name="all">عرض الجميع</string>
+  <string name="suggested_groups">مجموعات مقترحة</string>
+  <string name="test">إختبر نفسك</string>
 
 </resources>

@@ -71,4 +71,7 @@ object Libraries {
 
   //pin code
   const val pin_code = "com.chaos.view:pinview:${Versions.pin_code}"
+
+  //smartteist
+  const val smartteist = "com.github.smarteist:autoimageslider:${Versions.smarteist}"
 }
