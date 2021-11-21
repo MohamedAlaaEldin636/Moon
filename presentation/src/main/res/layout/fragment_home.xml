@@ -63,11 +63,8 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen10"
       android:orientation="horizontal"
-      app:adapter="@{viewModel.adapter}"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       app:layout_constraintTop_toBottomOf="@+id/tv_suggested_teachers_all"
-      app:orientation="@{`1`}"
-      app:span="@{`1`}"
       tools:listitem="@layout/item_teacher" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -98,11 +95,8 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen10"
       android:orientation="horizontal"
-      app:adapter="@{viewModel.adapter}"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       app:layout_constraintTop_toBottomOf="@+id/tv_suggested_groups_all"
-      app:orientation="@{`1`}"
-      app:span="@{`1`}"
       tools:listitem="@layout/item_groups" />
 
     <com.google.android.material.card.MaterialCardView

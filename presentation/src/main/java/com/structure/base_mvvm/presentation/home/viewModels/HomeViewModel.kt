@@ -7,7 +7,7 @@ import com.structure.base_mvvm.domain.utils.BaseResponse
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.base.BaseViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
-import com.structure.base_mvvm.presentation.home.adapters.TeacherAdapter
+import com.structure.base_mvvm.presentation.home.adapters.SubjectsAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : BaseViewModel() {
 
   val showPrettyPopUp = SingleLiveEvent<Void>()
-  val adapter: TeacherAdapter = TeacherAdapter()
+  val adapter: SubjectsAdapter = SubjectsAdapter()
 
   private val _homeResponse =
     MutableStateFlow<Resource<BaseResponse<HomePaginateData>>>(Resource.Default)

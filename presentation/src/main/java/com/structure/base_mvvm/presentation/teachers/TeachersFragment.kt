@@ -1,20 +1,19 @@
-package com.structure.base_mvvm.presentation.search
+package com.structure.base_mvvm.presentation.teachers
 
 import androidx.fragment.app.viewModels
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
-import com.structure.base_mvvm.presentation.base.extensions.getMyString
-import com.structure.base_mvvm.presentation.base.extensions.hide
-import com.structure.base_mvvm.presentation.databinding.FragmentSearchBinding
+import com.structure.base_mvvm.presentation.databinding.FragmentTeachersBinding
+import com.structure.base_mvvm.presentation.teachers.viewModels.TeachersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment<FragmentSearchBinding>() {
+class TeachersFragment : BaseFragment<FragmentTeachersBinding>() {
 
-  private val viewModel: SearchViewModel by viewModels()
+  private val viewModel: TeachersViewModel by viewModels()
 
   override
-  fun getLayoutId() = R.layout.fragment_search
+  fun getLayoutId() = R.layout.fragment_teachers
 
   override
   fun setBindingVariables() {

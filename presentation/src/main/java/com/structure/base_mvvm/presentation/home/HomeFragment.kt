@@ -68,8 +68,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.adapter.notifyItemRemoved(viewHolder.adapterPosition)
       }
     }
-    val itemTouchHelper = ItemTouchHelper(swipeHandler)
-    itemTouchHelper.attachToRecyclerView(binding.rcNotifications)
+//    val itemTouchHelper = ItemTouchHelper(swipeHandler)
+//    itemTouchHelper.attachToRecyclerView(binding.rcNotifications)
 //    binding.includedToolbar.ivAction.setOnClickListener {
 //      singleTedBottomPicker(requireActivity())
 //    }

@@ -1,4 +1,4 @@
-package com.structure.base_mvvm.presentation.home.adapters
+package com.structure.base_mvvm.presentation.teachers.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.structure.base_mvvm.domain.home.models.HomeData
 import com.structure.base_mvvm.presentation.R
-import com.structure.base_mvvm.presentation.databinding.ItemTeacherBinding
-import com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel
+import com.structure.base_mvvm.presentation.databinding.ItemSubjectBinding
+import com.structure.base_mvvm.presentation.teachers.viewModels.ItemSubjectsViewModel
 
-class TeacherAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
+class SubjectsAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
   private val differCallback = object : DiffUtil.ItemCallback<HomeData>() {
     override fun areItemsTheSame(oldItem: HomeData, newItem: HomeData): Boolean {
       return oldItem.id == newItem.id
@@ -24,13 +24,13 @@ class TeacherAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
   }
   val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_teacher, parent, false)
+    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_subject, parent, false)
     return ViewHolder(view)
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemTeacherViewModel(data)
+    val itemViewModel = ItemSubjectsViewModel(data)
     holder.setViewModel(itemViewModel)
 
   }
@@ -51,7 +51,7 @@ class TeacherAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    private lateinit var itemLayoutBinding: ItemTeacherBinding
+    private lateinit var itemLayoutBinding: ItemSubjectBinding
 
     init {
       bind()
@@ -65,7 +65,7 @@ class TeacherAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
       itemLayoutBinding.unbind()
     }
 
-    fun setViewModel(itemViewModel: ItemTeacherViewModel) {
+    fun setViewModel(itemViewModel: ItemSubjectsViewModel) {
       itemLayoutBinding.notifyItemViewModels = itemViewModel
     }
   }
