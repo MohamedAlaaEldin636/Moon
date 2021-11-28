@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.structure.base_mvvm.presentation.reviews.viewModels.ReviewsViewModel" />
+  </data>
+
+  <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/dimen12">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/dialog_review_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen12"
+        android:numStars="5"
+        android:progressTint="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+      <!--          android:onRatingChanged="@{viewModel.onRateChange}"-->
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/review_dialog_comment"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen70"
+        android:layout_margin="@dimen/dimen8"
+        android:background="@drawable/corner_view_gray"
+        android:gravity="top"
+        android:hint="@string/comment"
+        android:padding="@dimen/dimen8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_review_rate" />
+      <!--          android:text="@={viewModel.rateRequest.comment}"-->
+
+      <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen20"
+        android:background="@drawable/btn_accent"
+        android:text="@string/rate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/review_dialog_comment"
+        app:layout_constraintStart_toStartOf="@id/review_dialog_comment"
+        app:layout_constraintTop_toBottomOf="@+id/review_dialog_comment" />
+      <!--          android:onClick="@{()->viewModel.sendRate()}"-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.cardview.widget.CardView>
+</layout>
+

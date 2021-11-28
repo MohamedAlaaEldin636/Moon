@@ -7,7 +7,7 @@ import com.structure.base_mvvm.domain.utils.BaseResponse
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.base.BaseViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
-import com.structure.base_mvvm.presentation.home.adapters.SubjectsAdapter
+import com.structure.base_mvvm.presentation.teachers.adapters.SubjectsAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn

@@ -12,7 +12,7 @@ import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.databinding.ItemTeacherBinding
 import com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel
 
-class TeacherAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
+class TeacherAdapter : RecyclerView.Adapter<TeacherAdapter.ViewHolder>() {
   private val differCallback = object : DiffUtil.ItemCallback<HomeData>() {
     override fun areItemsTheSame(oldItem: HomeData, newItem: HomeData): Boolean {
       return oldItem.id == newItem.id

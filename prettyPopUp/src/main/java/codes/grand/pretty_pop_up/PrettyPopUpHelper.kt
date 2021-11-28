@@ -223,7 +223,11 @@ class PrettyPopUpHelper private constructor(builder: Builder) {
     }
 
     override
-    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    fun onCreateView(
+      inflater: LayoutInflater,
+      container: ViewGroup?,
+      savedInstanceState: Bundle?
+    ): View {
       _binding = PrettyPopUpBinding.inflate(inflater, container, false)
 
       val params = dialog!!.window!!.attributes
@@ -300,7 +304,12 @@ class PrettyPopUpHelper private constructor(builder: Builder) {
         titleColor?.let {
           binding.tvTitle.setTextColor(it)
         } ?: run {
-          binding.tvTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorDarkGray))
+          binding.tvTitle.setTextColor(
+            ContextCompat.getColor(
+              requireContext(),
+              R.color.colorDarkGray
+            )
+          )
         }
       }
     }
@@ -340,7 +349,12 @@ class PrettyPopUpHelper private constructor(builder: Builder) {
         contentColor?.let {
           binding.tvContent.setTextColor(it)
         } ?: run {
-          binding.tvContent.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorGray))
+          binding.tvContent.setTextColor(
+            ContextCompat.getColor(
+              requireContext(),
+              R.color.colorGray
+            )
+          )
         }
       }
     }
@@ -561,6 +575,7 @@ class PrettyPopUpHelper private constructor(builder: Builder) {
       binding.positiveBtnStyle2.setOnClickListener {
         positiveButtonClick?.invoke(this)
       }
+
     }
 
     fun setStyle(style: Style?) {
@@ -607,7 +622,10 @@ class PrettyPopUpHelper private constructor(builder: Builder) {
       this.contentColor = contentColor
     }
 
-    fun setPositiveButton(positiveButton: String?, positiveButtonClick: ((popUp: DialogFragment) -> Unit)?) {
+    fun setPositiveButton(
+      positiveButton: String?,
+      positiveButtonClick: ((popUp: DialogFragment) -> Unit)?
+    ) {
       this.positiveButton = positiveButton
       this.positiveButtonClick = positiveButtonClick
     }
@@ -632,7 +650,10 @@ class PrettyPopUpHelper private constructor(builder: Builder) {
       this.positiveButtonTextColor = positiveButtonTextColor
     }
 
-    fun setUpNegativeButton(negativeButton: String?, negativeButtonClick: ((popUp: DialogFragment) -> Unit)?) {
+    fun setUpNegativeButton(
+      negativeButton: String?,
+      negativeButtonClick: ((popUp: DialogFragment) -> Unit)?
+    ) {
       this.negativeButton = negativeButton
       this.negativeButtonClick = negativeButtonClick
     }
@@ -707,6 +728,12 @@ class PrettyPopUpHelper private constructor(builder: Builder) {
     // Negative Button Text Color
     internal var negativeButtonTextColorResId: Int? = null
     internal var negativeButtonTextColor: Int? = null
+
+    // Negative RATING
+    internal var ratingBarResId: Int? = null
+
+    // Negative RATING
+    internal var editTextResId: Int? = null
 
     // Negative Button Click
     internal var negativeButtonClick: ((popUp: DialogFragment) -> Unit)? = null
@@ -839,6 +866,7 @@ class PrettyPopUpHelper private constructor(builder: Builder) {
       this.negativeButtonTextColor = negativeButtonTextColor
       return this
     }
+
 
     fun create(): PrettyPopUpHelper {
       return PrettyPopUpHelper(this)

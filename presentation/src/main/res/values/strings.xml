@@ -71,5 +71,22 @@
   <string name="all">عرض الجميع</string>
   <string name="suggested_groups">مجموعات مقترحة</string>
   <string name="test">إختبر نفسك</string>
+    <string name="start_test">بدأ اختبار</string>
+  <string name="my_tests">رؤية اختباراتي</string>
+    <string name="stars">عرض أعلي التقيمات</string>
+  <string name="expire_test">يمكنك استخدام الاختبارات مجانا لمدة 48 ساعة</string>
+  <string name="subscribe">اشترك الان</string>
+  <string name="profile">بياناتي الشخصية</string>
+  <string name="my_groups">مجموعاتي</string>
+  <string name="lessons">الحصص التعويضية</string>
+  <string name="teachers">المعلمين</string>
+  <string name="menu_tests">اختبارات</string>
+  <string name="teacher_info">معلومات عن المعلم</string>
+  <string name="teacher_groups">المجموعات العامه التي يقدمها</string>
+  <string name="private_group_request">طلب مجموعة خاصة</string>
+  <string name="students_review">أراء الطلبة في المعلم</string>
+  <string name="rate_teacher">تقيم المعلم</string>
+  <string name="rate">تقيم</string>
+  <string name="comment">من فضلك قم بأضافة تعليق</string>
 
 </resources>

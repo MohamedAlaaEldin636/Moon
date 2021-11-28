@@ -6,4 +6,7 @@ object Constants {
   const val REGISTER = 2
   const val FORGET_PASSWORD = 3
   const val CONFIRM_CODE = 4
+  const val TEACHER_PROFILE = 5
+  const val REVIEW_DIALOG = 6
+  const val REVIEWS = 7
 }

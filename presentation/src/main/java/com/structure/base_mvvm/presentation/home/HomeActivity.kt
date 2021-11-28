@@ -4,24 +4,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.util.Log
-import android.view.MenuItem
 import androidx.annotation.IdRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.navigation.NavigationView
 import com.structure.base_mvvm.presentation.R
-import com.structure.base_mvvm.presentation.auth.log_in.LogInFragmentDirections
 import com.structure.base_mvvm.presentation.base.BaseActivity
-import com.structure.base_mvvm.presentation.base.extensions.navigateSafe
 import com.structure.base_mvvm.presentation.base.extensions.setupWithNavController
 import com.structure.base_mvvm.presentation.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,7 +61,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(){
   fun setUpBottomNavigationWithGraphs() {
     val graphIds = listOf(
       R.navigation.nav_home,
-      R.navigation.nav_search,
+      R.navigation.nav_teachers,
+      R.navigation.nav_tests,
       R.navigation.nav_account
     )
 
