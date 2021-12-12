@@ -24,6 +24,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
   override
   fun setUpViews() {
+    binding.viewModel=viewModel
     LocaleHelper.setLocale(this, Locale("ar"))
     decideNavigationLogic()
   }

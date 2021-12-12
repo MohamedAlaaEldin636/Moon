@@ -130,7 +130,6 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?) {
     ImageLoader(context).enqueue(request)
   } else {
     progressBar?.hide()
-
     setImageResource(R.drawable.bg_no_image)
   }
 }
@@ -225,6 +224,7 @@ fun ImageView.loadRoundImage(imageUrl: String?, progressBar: ProgressBar?) {
 fun loadDrawable(imageView: ImageView, drawable: Drawable?) {
   imageView.setImageDrawable(drawable)
 }
+
 
 @BindingAdapter("app:adapter", "app:span", "app:orientation")
 fun getItemsV2Binding(

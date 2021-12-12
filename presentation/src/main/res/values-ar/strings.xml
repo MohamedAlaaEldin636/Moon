@@ -39,7 +39,7 @@
   <string name="explore_app">تريد تصفح خدمات التطبيق</string>
   <string name="continue_as_guest">المتابعة كضيف</string>
     <string name="send">ارسال</string>
-    <string name="contact_us">Contact us</string>
+    <string name="contact_us">اتصل بنا</string>
   <string name="or">او عن طريق</string>
   <string name="register_name">اكتب اسمك</string>
   <string name="register_phone">أدخل رقم الهاتف الجوال</string>
@@ -82,5 +82,10 @@
   <string name="rate_teacher">تقيم المعلم</string>
   <string name="rate">تقيم</string>
   <string name="comment">من فضلك قم بأضافة تعليق</string>
+    <string name="terms">الشروط والاحكام</string>
+  <string name="suggestions">الشكاوي والاقتراحات</string>
+  <string name="about">عن التطبيق</string>
+  <string name="share_app">مشاركة التطبيق</string>
+  <string name="rate_app">تقيم التطبيق</string>
 
 </resources>

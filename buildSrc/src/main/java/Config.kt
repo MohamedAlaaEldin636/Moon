@@ -33,6 +33,7 @@ object Config {
   object Modules {
     const val domain = ":domain"
     const val data = ":data"
+    const val app = ":app"
     const val presentation = ":presentation"
     const val prettyPopUp = ":prettyPopUp"
     const val appTutorial = ":appTutorial"

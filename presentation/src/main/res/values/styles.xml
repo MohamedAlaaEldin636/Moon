@@ -71,4 +71,8 @@
     <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
 
   </style>
+  <style name="ToolbarColoredBackArrow" parent="AppTheme">
+    <item name="android:textColorSecondary">@color/black</item>
+  </style>
+
 </resources>

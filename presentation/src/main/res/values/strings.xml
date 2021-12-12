@@ -88,5 +88,10 @@
   <string name="rate_teacher">تقيم المعلم</string>
   <string name="rate">تقيم</string>
   <string name="comment">من فضلك قم بأضافة تعليق</string>
+    <string name="terms">الشروط والاحكام</string>
+  <string name="suggestions">الشكاوي والاقتراحات</string>
+  <string name="about">عن التطبيق</string>
+  <string name="share_app">مشاركة التطبيق</string>
+  <string name="rate_app">تقيم التطبيق</string>
 
 </resources>

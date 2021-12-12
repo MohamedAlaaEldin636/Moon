@@ -28,6 +28,7 @@ class LogInViewModel @Inject constructor(
 
 
   fun onLogInClicked() {
+
     logInUseCase.login(request)
       .catch { exception -> validationException.value = exception.message?.toInt() }
       .onEach { result ->

@@ -15,4 +15,5 @@ dependencies {
   implementation(Libraries.gson)
   implementation(Libraries.javaInject)
   implementation(Libraries.paging_version)
+
 }

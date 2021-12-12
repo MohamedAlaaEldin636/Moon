@@ -3,6 +3,13 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.structure.base_mvvm.presentation.splash.SplashViewModel" />
+  </data>
+
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,13 +17,13 @@
     android:gravity="center"
     android:orientation="horizontal">
 
+
     <ImageView
       android:layout_width="@dimen/dimen200"
       android:layout_height="@dimen/dimen200"
       android:layout_marginEnd="@dimen/dimen5"
       app:srcCompat="@drawable/ic_app_logo"
       tools:ignore="ContentDescription" />
-
   </LinearLayout>
 
 </layout>

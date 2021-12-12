@@ -4,10 +4,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.view.MenuItem
 import androidx.annotation.IdRes
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
-import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.*
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseActivity
 import com.structure.base_mvvm.presentation.base.extensions.setupWithNavController
@@ -15,7 +18,7 @@ import com.structure.base_mvvm.presentation.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : BaseActivity<ActivityHomeBinding>(){
+class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   private lateinit var appBarConfiguration: AppBarConfiguration
   private lateinit var nav: NavController
 
@@ -32,7 +35,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(){
   override
   fun onResume() {
     super.onResume()
-    registerOpenSpecificTabReceiver()
+//    registerOpenSpecificTabReceiver()
   }
 
   private val openSpecificTabReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -59,20 +62,35 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(){
   }
 
   fun setUpBottomNavigationWithGraphs() {
-    val graphIds = listOf(
-      R.navigation.nav_home,
-      R.navigation.nav_teachers,
-      R.navigation.nav_tests,
-      R.navigation.nav_account
-    )
 
-    val controller = binding.bottomNavigationView.setupWithNavController(
-      graphIds,
-      supportFragmentManager,
-      R.id.fragment_host_container,
-      intent
+    val navHostFragment =
+      supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
+    nav = navHostFragment.navController
+    appBarConfiguration = AppBarConfiguration(
+      setOf(
+        R.id.home_fragment,
+        R.id.teachersFragment,
+        R.id.testsFragment,
+        R.id.accountFragment,
+      ), binding.root
     )
-    navController = controller
+    binding.toolbar.setupWithNavController(nav, appBarConfiguration)
+    binding.bottomNavigationView.setupWithNavController(nav)
+    binding.navigationView.setupWithNavController(nav)
+//    val graphIds = listOf(
+//      R.navigation.nav_home,
+//      R.navigation.nav_teachers,
+//      R.navigation.nav_tests,
+//      R.navigation.nav_account
+//    )
+//
+//    val controller = binding.bottomNavigationView.setupWithNavController(
+//      graphIds,
+//      supportFragmentManager,
+//      R.id.fragment_host_container,
+//      intent
+//    )
+//    navController = controller
 //    val navHostFragment =
 //      supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
 //    nav = navHostFragment.findNavController()
@@ -98,8 +116,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(){
     super.onDestroy()
   }
 
+  override fun onNavigateUp(): Boolean {
+    return nav.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+  }
+
   private fun unregisterOpenSpecificTabReceiver() {
     LocalBroadcastManager.getInstance(this).unregisterReceiver(openSpecificTabReceiver)
   }
 
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return item.onNavDestinationSelected(nav) || super.onOptionsItemSelected(item)
+  }
 }
