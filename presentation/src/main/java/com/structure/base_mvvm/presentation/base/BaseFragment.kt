@@ -160,5 +160,4 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
     }
   }
 
-
 }

@@ -8,8 +8,8 @@
   <fragment
     android:id="@+id/home_fragment"
     android:name="com.structure.base_mvvm.presentation.home.HomeFragment"
-    tools:layout="@layout/fragment_home"
-    android:label="@string/home">
+    android:label="@string/home"
+    tools:layout="@layout/fragment_home">
 
     <action
       android:id="@+id/actionToTeacherProfileFragment"
@@ -47,5 +47,13 @@
     android:id="@+id/accountFragment"
     android:name="com.structure.base_mvvm.presentation.account.AccountFragment"
     android:label="AccountFragment" />
+  <fragment
+    android:id="@+id/about_fragment"
+    android:name="com.structure.base_mvvm.presentation.about.AboutFragment"
+    android:label="AboutFragment" />
+  <fragment
+    android:id="@+id/contact_fragment"
+    android:name="com.structure.base_mvvm.presentation.contactUs.ContactUsFragment"
+    android:label="ContactUsFragment" />
 
 </navigation>

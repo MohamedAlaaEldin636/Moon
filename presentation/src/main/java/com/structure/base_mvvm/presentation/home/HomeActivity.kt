@@ -1,19 +1,14 @@
 package com.structure.base_mvvm.presentation.home
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.util.Log
 import android.view.MenuItem
-import androidx.annotation.IdRes
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import android.view.View
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseActivity
-import com.structure.base_mvvm.presentation.base.extensions.setupWithNavController
 import com.structure.base_mvvm.presentation.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,47 +17,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   private lateinit var appBarConfiguration: AppBarConfiguration
   private lateinit var nav: NavController
 
-  private var isReceiverRegistered = false
-
-  companion object {
-    const val ACTION_OPEN_SPECIFIC_PAGE = "ACTION_OPEN_SPECIFIC_PAGE"
-    const val TAB_ID = "TAB_ID"
-  }
-
   override
   fun getLayoutId() = R.layout.activity_home
-
-  override
-  fun onResume() {
-    super.onResume()
-//    registerOpenSpecificTabReceiver()
-  }
-
-  private val openSpecificTabReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-    override
-    fun onReceive(context: Context, intent: Intent) {
-      navigateToSpecificTab(intent.getIntExtra(TAB_ID, 0))
-    }
-  }
-
-  private fun registerOpenSpecificTabReceiver() {
-    if (!isReceiverRegistered) {
-      LocalBroadcastManager.getInstance(this)
-        .registerReceiver(
-          openSpecificTabReceiver,
-          IntentFilter(ACTION_OPEN_SPECIFIC_PAGE)
-        )
-      isReceiverRegistered = true
-    }
-  }
 
   override
   fun setUpBottomNavigation() {
     setUpBottomNavigationWithGraphs()
   }
 
-  fun setUpBottomNavigationWithGraphs() {
-
+  private fun setUpBottomNavigationWithGraphs() {
     val navHostFragment =
       supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
     nav = navHostFragment.navController
@@ -72,56 +35,34 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.teachersFragment,
         R.id.testsFragment,
         R.id.accountFragment,
-      ), binding.root
+        R.id.contact_fragment,
+        R.id.about_fragment,
+      ),
+      binding.root,
     )
     binding.toolbar.setupWithNavController(nav, appBarConfiguration)
     binding.bottomNavigationView.setupWithNavController(nav)
     binding.navigationView.setupWithNavController(nav)
-//    val graphIds = listOf(
-//      R.navigation.nav_home,
-//      R.navigation.nav_teachers,
-//      R.navigation.nav_tests,
-//      R.navigation.nav_account
-//    )
-//
-//    val controller = binding.bottomNavigationView.setupWithNavController(
-//      graphIds,
-//      supportFragmentManager,
-//      R.id.fragment_host_container,
-//      intent
-//    )
-//    navController = controller
-//    val navHostFragment =
-//      supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
-//    nav = navHostFragment.findNavController()
-//    appBarConfiguration = AppBarConfiguration(
-//      setOf(R.id.home_fragment),
-//      binding.root
-//    )
-//
-//    setSupportActionBar(binding.toolbar)
-//    setupActionBarWithNavController(nav, appBarConfiguration)
-////    binding.bottomNavigationView.setupWithNavController(nav)
-//    binding.navigationView.setupWithNavController(nav)
-//    binding.navigationView.setNavigationItemSelectedListener(this)
+    navChangeListener()
   }
 
-  private fun navigateToSpecificTab(@IdRes tabID: Int) {
-    binding.bottomNavigationView.selectedItemId = tabID
-  }
+  private fun navChangeListener() {
+//    nav.addOnDestinationChangedListener { _, destination, _ ->
+//      if (destination.id == R.id.home_fragment || destination.id == R.id.teachersFragment || destination.id == R.id.testsFragment || destination.id == R.id.accountFragment) {
+//        binding.toolbar.visibility = View.VISIBLE
+//        binding.bottomNavigationView.visibility = View.VISIBLE
+//        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+//      } else {
+    binding.toolbar.setBackgroundColor(getColor(R.color.transparent))
+//        binding.bottomNavigationView.visibility = View.GONE
+//        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+//      }
+//    }
 
-  override
-  fun onDestroy() {
-    unregisterOpenSpecificTabReceiver()
-    super.onDestroy()
   }
 
   override fun onNavigateUp(): Boolean {
     return nav.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-  }
-
-  private fun unregisterOpenSpecificTabReceiver() {
-    LocalBroadcastManager.getInstance(this).unregisterReceiver(openSpecificTabReceiver)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -93,5 +93,6 @@
   <string name="about">عن التطبيق</string>
   <string name="share_app">مشاركة التطبيق</string>
   <string name="rate_app">تقيم التطبيق</string>
+    <string name="message">الرسالة</string>
 
 </resources>

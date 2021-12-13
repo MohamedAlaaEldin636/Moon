@@ -74,5 +74,12 @@
   <style name="ToolbarColoredBackArrow" parent="AppTheme">
     <item name="android:textColorSecondary">@color/black</item>
   </style>
+  <style name="ThemeOverlay.App.NavigationView" parent="">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorSurface">@color/transparent</item>
+    <item name="colorOnSurface">@color/white</item>
+    <item name="listPreferredItemHeightSmall">@dimen/dimen60</item>
+
+  </style>
 
 </resources>
