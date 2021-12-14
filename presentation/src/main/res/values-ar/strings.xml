@@ -88,5 +88,6 @@
   <string name="share_app">مشاركة التطبيق</string>
   <string name="rate_app">تقيم التطبيق</string>
     <string name="message">الرسالة</string>
+    <string name="notifications">Notifications</string>
 
 </resources>

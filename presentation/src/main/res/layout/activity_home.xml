@@ -11,13 +11,15 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-      <androidx.appcompat.widget.Toolbar
+      <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         style="@style/ToolbarColoredBackArrow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:menu="@menu/top_app_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleCentered="true" />
 
       <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_host_container"
@@ -47,9 +49,9 @@
       android:layout_height="match_parent"
       android:layout_gravity="start"
       android:background="@color/blue"
-      app:theme="@style/ThemeOverlay.App.NavigationView"
       app:headerLayout="@layout/navigate_header"
-      app:menu="@menu/menu_navigation_view" />
+      app:menu="@menu/menu_navigation_view"
+      app:theme="@style/ThemeOverlay.App.NavigationView" />
   </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

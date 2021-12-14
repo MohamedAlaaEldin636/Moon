@@ -47,17 +47,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   }
 
   private fun navChangeListener() {
-//    nav.addOnDestinationChangedListener { _, destination, _ ->
-//      if (destination.id == R.id.home_fragment || destination.id == R.id.teachersFragment || destination.id == R.id.testsFragment || destination.id == R.id.accountFragment) {
-//        binding.toolbar.visibility = View.VISIBLE
-//        binding.bottomNavigationView.visibility = View.VISIBLE
-//        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-//      } else {
-    binding.toolbar.setBackgroundColor(getColor(R.color.transparent))
-//        binding.bottomNavigationView.visibility = View.GONE
-//        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-//      }
-//    }
+    nav.addOnDestinationChangedListener { _, destination, _ ->
+      if (destination.id == R.id.home_fragment || destination.id == R.id.teachersFragment || destination.id == R.id.testsFragment || destination.id == R.id.accountFragment) {
+        binding.toolbar.visibility = View.VISIBLE
+        binding.bottomNavigationView.visibility = View.VISIBLE
+        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+      } else {
+        binding.toolbar.setBackgroundColor(getColor(R.color.transparent))
+        binding.bottomNavigationView.visibility = View.GONE
+        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+      }
+    }
 
   }
 
