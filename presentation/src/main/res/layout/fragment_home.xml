@@ -55,11 +55,11 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen10"
       android:onClick="@{()->viewModel.clickEvent(Constants.TEACHER_PROFILE)}"
-      android:text="@string/all"
+      android:text="@{viewModel.countDownFlow.va}"
       android:textColor="@color/black"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toBottomOf="@id/imageSlider" />
-
+    <!--    @string/all-->
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/rc_suggested_teachers"
       android:layout_width="match_parent"

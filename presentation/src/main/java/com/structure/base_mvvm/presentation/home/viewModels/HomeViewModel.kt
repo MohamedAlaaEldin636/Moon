@@ -9,7 +9,9 @@ import com.structure.base_mvvm.presentation.base.BaseViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
 import com.structure.base_mvvm.presentation.teachers.adapters.SubjectsAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -23,6 +25,16 @@ class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : 
   private val _homeResponse =
     MutableStateFlow<Resource<BaseResponse<HomePaginateData>>>(Resource.Default)
   val homeResponse = _homeResponse
+  val countDownFlow = flow<Int> {
+    val startValue = 10
+    var currentValue = startValue
+    emit(startValue)
+    while (currentValue > 0) {
+      delay(1000L)
+      currentValue--
+      emit(currentValue)
+    }
+  }
 
   init {
 //    getHome(1, true)

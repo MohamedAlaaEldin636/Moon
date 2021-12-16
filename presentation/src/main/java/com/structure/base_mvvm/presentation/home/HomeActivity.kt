@@ -1,6 +1,7 @@
 package com.structure.base_mvvm.presentation.home
 
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.drawerlayout.widget.DrawerLayout
@@ -68,4 +69,5 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return item.onNavDestinationSelected(nav) || super.onOptionsItemSelected(item)
   }
+
 }

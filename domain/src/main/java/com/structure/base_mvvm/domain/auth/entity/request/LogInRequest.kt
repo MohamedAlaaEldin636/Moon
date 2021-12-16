@@ -9,6 +9,7 @@ data class LogInRequest(
   var device_token: String
 ) {
   constructor() : this("", "", "")
+
 }
 
 class LogInValidationException(private val validationType: String) : Exception(validationType)

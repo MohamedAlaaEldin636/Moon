@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
     android:id="@+id/home_fragment"
@@ -33,5 +34,9 @@
     android:id="@+id/rate_app"
     android:icon="@drawable/ic_rate"
     android:title="@string/rate_app" />
+  <item
+    android:id="@+id/grand"
+    app:actionLayout="@layout/grand"
+    android:title="" />
 
 </menu>

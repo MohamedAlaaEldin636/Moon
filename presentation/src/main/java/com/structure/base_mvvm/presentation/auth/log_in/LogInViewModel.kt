@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class LogInViewModel @Inject constructor(
+class  LogInViewModel @Inject constructor(
   private val logInUseCase: LogInUseCase
 ) : BaseViewModel() {
 
