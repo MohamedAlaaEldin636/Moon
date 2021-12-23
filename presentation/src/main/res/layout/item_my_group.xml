@@ -24,15 +24,34 @@
 
       <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img"
-        android:layout_width="@dimen/dimen50"
-        android:layout_height="@dimen/dimen50"
+        android:layout_width="@dimen/dimen80"
+        android:layout_height="@dimen/dimen80"
         android:layout_margin="@dimen/dimen10"
+        android:scaleType="centerCrop"
         android:src="@drawable/bg_no_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_subject"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         app:strokeColor="@color/blue"
         app:strokeWidth="@dimen/dimen1" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_group_info"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="المراجعة النهائية في مادة اللغة العربية"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@id/img" />
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_name"
@@ -50,7 +69,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@id/btn_subject"
         app:layout_constraintStart_toEndOf="@id/img"
-        app:layout_constraintTop_toTopOf="@id/img" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_group_info" />
 
       <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_subject"
@@ -121,22 +140,31 @@
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_desc"
-        style="@style/TextRegularFont"
+        style="@style/TextMediumFont"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen8"
-        android:layout_marginTop="@dimen/dimen7"
-        android:layout_marginEnd="@dimen/dimen8"
-        android:layout_marginBottom="@dimen/dimen7"
-        android:text="لوريم ايبسوم دولار سيت أميت لوريم ايبسوم دولار سيت أميت كونسيكتيتور كونسيكتيتور كونسيكتيتور"
+        android:layout_margin="@dimen/dimen10"
+        android:drawableStart="@drawable/ic_mix"
+        android:drawablePadding="@dimen/dimen6"
+        android:text="مجموعة مختلطة"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/darkGray"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/info" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen14"
+        android:text="@string/show_details"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/br" />
-
+        app:layout_constraintTop_toBottomOf="@id/br" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
