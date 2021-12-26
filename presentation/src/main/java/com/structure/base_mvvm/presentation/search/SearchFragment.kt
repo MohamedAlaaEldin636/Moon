@@ -1,19 +1,19 @@
-package com.structure.base_mvvm.presentation.my_groups
+package com.structure.base_mvvm.presentation.search
 
 import androidx.fragment.app.viewModels
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
-import com.structure.base_mvvm.presentation.databinding.FragmentMyGroupsBinding
-import com.structure.base_mvvm.presentation.my_groups.viewModels.MyGroupsViewModel
+import com.structure.base_mvvm.presentation.databinding.FragmentSearchBinding
+import com.structure.base_mvvm.presentation.search.viewModels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MyGroupsFragment : BaseFragment<FragmentMyGroupsBinding>() {
+class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
-  private val viewModel: MyGroupsViewModel by viewModels()
+  private val viewModel: SearchViewModel by viewModels()
 
   override
-  fun getLayoutId() = R.layout.fragment_my_groups
+  fun getLayoutId() = R.layout.fragment_search
 
   override
   fun setBindingVariables() {

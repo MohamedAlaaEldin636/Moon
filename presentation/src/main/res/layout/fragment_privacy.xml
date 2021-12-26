@@ -8,7 +8,7 @@
 
     <variable
       name="viewModel"
-      type="com.structure.base_mvvm.presentation.about.viewModels.PrivacyViewModel" />
+      type="com.structure.base_mvvm.presentation.privacy.viewModels.PrivacyViewModel" />
   </data>
 
   <androidx.core.widget.NestedScrollView
@@ -22,9 +22,9 @@
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_about"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen250"
         android:scaleType="fitXY"
-        android:src="@drawable/about"
+        android:src="@drawable/ic_register_curve"
         app:layout_constraintTop_toTopOf="parent" />
 
       <androidx.appcompat.widget.AppCompatImageView
@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="@id/ic_about"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ic_about" />
+        app:layout_constraintTop_toBottomOf="@+id/includedToolbar" />
 
       <include
         android:id="@+id/includedToolbar"

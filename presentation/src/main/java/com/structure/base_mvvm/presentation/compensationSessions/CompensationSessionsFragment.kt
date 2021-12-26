@@ -1,19 +1,21 @@
-package com.structure.base_mvvm.presentation.my_groups
+package com.structure.base_mvvm.presentation.compensationSessions
 
 import androidx.fragment.app.viewModels
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
+import com.structure.base_mvvm.presentation.compensationSessions.viewModels.CompensationSessionsViewModel
+import com.structure.base_mvvm.presentation.databinding.FragmentCompensationSessionsBinding
 import com.structure.base_mvvm.presentation.databinding.FragmentMyGroupsBinding
 import com.structure.base_mvvm.presentation.my_groups.viewModels.MyGroupsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MyGroupsFragment : BaseFragment<FragmentMyGroupsBinding>() {
+class CompensationSessionsFragment : BaseFragment<FragmentCompensationSessionsBinding>() {
 
-  private val viewModel: MyGroupsViewModel by viewModels()
+  private val viewModel: CompensationSessionsViewModel by viewModels()
 
   override
-  fun getLayoutId() = R.layout.fragment_my_groups
+  fun getLayoutId() = R.layout.fragment_compensation_sessions
 
   override
   fun setBindingVariables() {

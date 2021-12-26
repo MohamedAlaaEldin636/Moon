@@ -54,13 +54,38 @@
   <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
     <item name="cornerSize">10%</item>
   </style>
+
   <style name="ToolbarColoredBackArrow" parent="AppTheme">
     <item name="android:textColorSecondary">@color/black</item>
   </style>
+
   <style name="ThemeOverlay.App.NavigationView" parent="Widget.MaterialComponents.NavigationView">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorSurface">@color/transparent</item>
     <item name="colorOnSurface">@color/white</item>
     <item name="listPreferredItemHeightSmall">@dimen/dimen60</item>
+  </style>
+
+  <style name="CustomDialogAnimation" parent="Theme.MaterialComponents.DayNight.Dialog.Bridge">
+    <item name="android:windowNoTitle">true</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+
+    <item name="android:windowActivityTransitions">true</item>
+
+    <!-- Additionally if you want animations when dialog opening -->
+    <!--    <item name="android:windowEnterAnimation">@anim/slide_up</item>-->
+    <!--    <item name="android:windowExitAnimation">@anim/slide_down</item>-->
+  </style>
+
+  <style name="PauseDialogAnimation">
+    <item name="android:windowEnterAnimation">@anim/anim_slide_in_left</item>
+    <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
+  </style>
+
+  <style name="PauseDialog" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
+    <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+    <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+    <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
   </style>
 </resources>

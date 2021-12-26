@@ -13,7 +13,7 @@ class MyGroupDetailsFragment : BaseFragment<FragmentMyGroupDetailsBinding>() {
   private val viewModel: MyGroupDetailsViewModel by viewModels()
 
   override
-  fun getLayoutId() = R.layout.fragment_group_details
+  fun getLayoutId() = R.layout.fragment_my_group_details
 
   override
   fun setBindingVariables() {

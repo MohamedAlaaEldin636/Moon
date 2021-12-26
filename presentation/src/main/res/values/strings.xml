@@ -121,5 +121,11 @@
   <string name="next_sessions">الحصص القادمة</string>
   <string name="next_sessions_notifications">سيتم ارسالك اشعار لك عند بداية الحصة</string>
   <string name="previous_sessions">الحصص السابقة</string>
+    <string name="change_password">تغير كلمة المرور</string>
+  <string name="change_country">تغير الدولة</string>
+  <string name="change_study">تغير بياناتي الدراسيه</string>
+  <string name="save">حفظ</string>
+  <string name="compensation_sessions">الحصص التعويضية</string>
+    <string name="groups">مجموعات</string>
 
 </resources>
