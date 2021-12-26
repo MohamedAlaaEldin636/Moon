@@ -1,43 +1,36 @@
 package com.structure.base_mvvm.presentation.home.viewModels
 
+import android.util.Log
+import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import com.structure.base_mvvm.domain.home.models.HomePaginateData
 import com.structure.base_mvvm.domain.home.use_case.HomeUseCase
 import com.structure.base_mvvm.domain.utils.BaseResponse
 import com.structure.base_mvvm.domain.utils.Resource
+import com.structure.base_mvvm.presentation.BR
 import com.structure.base_mvvm.presentation.base.BaseViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
 import com.structure.base_mvvm.presentation.teachers.adapters.SubjectsAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : BaseViewModel() {
 
   val showPrettyPopUp = SingleLiveEvent<Void>()
+
+  @Bindable
   val adapter: SubjectsAdapter = SubjectsAdapter()
 
   private val _homeResponse =
     MutableStateFlow<Resource<BaseResponse<HomePaginateData>>>(Resource.Default)
   val homeResponse = _homeResponse
-  val countDownFlow = flow<Int> {
-    val startValue = 10
-    var currentValue = startValue
-    emit(startValue)
-    while (currentValue > 0) {
-      delay(1000L)
-      currentValue--
-      emit(currentValue)
-    }
-  }
 
   init {
-//    getHome(1, true)
+    getHome(1, true)
   }
 
   fun onShowPrettyPopUpClicked() {
@@ -47,6 +40,7 @@ class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : 
   fun getHome(page: Int, showProgress: Boolean) {
     homeUseCase.getHome(page, showProgress)
       .onEach { result ->
+        println(result.toString())
         _homeResponse.value = result
       }
       .launchIn(viewModelScope)
@@ -54,7 +48,9 @@ class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : 
 
   var homePaginateData: HomePaginateData = HomePaginateData()
     set(value) {
+      Log.e("homePaginateData", ": " + value.list.size)
       adapter.differ.submitList(value.list)
+      notifyPropertyChanged(BR.adapter)
       field = value
     }
 }

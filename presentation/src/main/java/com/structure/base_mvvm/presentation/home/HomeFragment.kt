@@ -54,9 +54,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
       }
     }
+    lifecycleScope.launchWhenResumed {
+      viewModel.adapter.liveData.collect {
+        Log.e("setupObservers", "setupObservers: ")
+      }
+    }
   }
 
-  fun toTeacherProfile() {
+  private fun toTeacherProfile() {
     navigateSafe(HomeFragmentDirections.actionToTeacherProfileFragment())
   }
 

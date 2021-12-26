@@ -4,6 +4,8 @@
 
   <data>
 
+    <import type="com.structure.base_mvvm.domain.utils.Constants" />
+
     <variable
       name="notifyItemViewModels"
       type="com.structure.base_mvvm.presentation.teachers.viewModels.ItemSubjectsViewModel" />
@@ -20,6 +22,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen8"
+      android:onClick="@{()-> notifyItemViewModels.clickEvent(Constants.LIST_PAGE_SIZE)}"
       android:text="All"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/white"

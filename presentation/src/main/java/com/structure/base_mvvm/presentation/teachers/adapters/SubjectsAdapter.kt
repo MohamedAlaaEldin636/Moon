@@ -1,5 +1,6 @@
 package com.structure.base_mvvm.presentation.teachers.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +9,15 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.structure.base_mvvm.domain.home.models.HomeData
+import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.databinding.ItemSubjectBinding
 import com.structure.base_mvvm.presentation.teachers.viewModels.ItemSubjectsViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class SubjectsAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
+  val liveData = MutableStateFlow<Int>(0)
   private val differCallback = object : DiffUtil.ItemCallback<HomeData>() {
     override fun areItemsTheSame(oldItem: HomeData, newItem: HomeData): Boolean {
       return oldItem.id == newItem.id
@@ -31,6 +36,10 @@ class SubjectsAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemSubjectsViewModel(data)
+    itemViewModel.clickEvent.observeForever {
+      Log.e("onBindViewHolder", "onBindViewHolder: $position")
+      liveData.value = Constants.LIST_PAGE_SIZE
+    }
     holder.setViewModel(itemViewModel)
 
   }
