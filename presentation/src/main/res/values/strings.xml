@@ -95,5 +95,31 @@
   <string name="rate_app">تقيم التطبيق</string>
     <string name="message">الرسالة</string>
     <string name="notifications">Notifications</string>
+    <string name="ask_group_header_info">تفاصيل ومميزات المجموعة الخاصة</string>
+  <string name="ask_group_info1">شرح مسبط للمنهج</string>
+  <string name="ask_group_info2">يقوم المعلم يمتابعتك انت فقط لا يوجد طلاب أخرون معك</string>
+  <string name="ask_group_info3">يمكنك اختيار عدد الحصص وتحديد مواعيدها المناسبة لك</string>
+  <string name="session_price">سعر الحصة الواحدة الخاصة</string>
+  <string name="price_info">السعر شامل الضريبة ويتم دفع تكلفة حصص الشهر جميعا مرة واحده</string>
+  <string name="session_time_header">تحديد وقت الحصة</string>
+  <string name="day">اليوم</string>
+  <string name="month">الشهر</string>
+  <string name="year">السنة</string>
+  <string name="add">إضافة</string>
+  <string name="session_count">عدد الحصص المطلوبة</string>
+  <string name="one_session_price">سعر الحصة الواحدة</string>
+  <string name="total">السعر الكلي</string>
+  <string name="send_to_teacher">ارسال الطلب للمعلم</string>
+  <string name="sessions_dates">مواعيد الحصص من كل أسبوع</string>
+  <string name="group_join">طلب أنضمام للمجموعة</string>
+  <string name="public_groups">مجموعات عامة</string>
+  <string name="private_groups">مجموعات خاصة</string>
+  <string name="current_groups">مجموعات حالية</string>
+  <string name="show_details">عرض التفاصيل</string>
+  <string name="lesson_now">تجري حاليا</string>
+  <string name="watch">مشاهدة</string>
+  <string name="next_sessions">الحصص القادمة</string>
+  <string name="next_sessions_notifications">سيتم ارسالك اشعار لك عند بداية الحصة</string>
+  <string name="previous_sessions">الحصص السابقة</string>
 
 </resources>
