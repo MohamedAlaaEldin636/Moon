@@ -6,9 +6,9 @@
 
     <import type="com.structure.base_mvvm.domain.utils.Constants" />
 
-    <variable
-      name="viewModel"
-      type="com.structure.base_mvvm.presentation.about.viewModels.PrivacyViewModel" />
+<!--    <variable-->
+<!--      name="viewModel"-->
+<!--      type="com.structure.base_mvvm.presentation.about.viewModels.AboutViewModel" />-->
   </data>
 
   <androidx.core.widget.NestedScrollView

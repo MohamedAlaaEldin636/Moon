@@ -75,6 +75,10 @@ dependencies {
   implementation(Libraries.pin_code)
   //smarteist
   implementation(Libraries.smartteist)
+  //expandable
+  implementation(Libraries.expandable)
+ //circularprogressbar
+  implementation(Libraries.circularprogressbar)
 
   // Project Modules
   implementation(project(Config.Modules.domain))

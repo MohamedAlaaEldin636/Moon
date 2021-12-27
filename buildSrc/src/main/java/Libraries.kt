@@ -74,4 +74,9 @@ object Libraries {
 
   //smartteist
   const val smartteist = "com.github.smarteist:autoimageslider:${Versions.smarteist}"
+  //Expandable
+  const val expandable = "com.github.florent37:expansionpanel:${Versions.expandable}"
+  //circularprogressbar
+  const val circularprogressbar = "com.mikhaellopez:circularprogressbar:${Versions.circularprogressbar}"
+
 }

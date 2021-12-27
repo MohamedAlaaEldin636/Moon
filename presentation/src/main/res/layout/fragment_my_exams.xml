@@ -9,7 +9,7 @@
 
     <variable
       name="viewModel"
-      type="com.structure.base_mvvm.presentation.social.viewModels.SocialViewModel" />
+      type="com.structure.base_mvvm.presentation.exams.myExams.viewModels.MyExamsViewModel" />
   </data>
 
   <androidx.core.widget.NestedScrollView
@@ -19,35 +19,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent">
-
-      <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_about"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen250"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_register_curve"
-        app:layout_constraintTop_toTopOf="parent" />
-
-      <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo_white"
-        app:layout_constraintBottom_toBottomOf="@id/ic_about"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/includedToolbar" />
-
       <include
         android:id="@+id/includedToolbar"
         layout="@layout/toolbar_transparent" />
 
       <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_suggested_groups"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen10"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_social"
-        app:layout_constraintTop_toBottomOf="@id/ic_about" />
+        app:layout_constraintTop_toBottomOf="@+id/includedToolbar"
+        tools:listitem="@layout/item_my_exam" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.core.widget.NestedScrollView>
 </layout>

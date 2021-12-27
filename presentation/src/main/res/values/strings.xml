@@ -127,5 +127,21 @@
   <string name="save">حفظ</string>
   <string name="compensation_sessions">الحصص التعويضية</string>
     <string name="groups">مجموعات</string>
+    <string name="choose_subjects">اختر المادة</string>
+  <string name="choose_subjects_units">حدد الدروس والوحدات</string>
+  <string name="all_materials">عمل اختبار علي جميع الوحدات</string>
+  <string name="choose_exam_level">من فضلك قم بأختيار مستوي الاختبار</string>
+  <string name="easy">مستوي سهل</string>
+  <string name="easy_body">مستوي سهل , سيكون الاختبار في مستوي الطالب المتوسط ولا يوجد أسئلة صعبة</string>
+  <string name="exam_middle">مستوي متوسط</string>
+  <string name="middle_body">مستوي متوسط , سيكون الاختبار في مستوي الطالب فوق المتوسط ويحتوي بعض الأسئلة الصعبة</string>
+  <string name="exam_hard">مستوي صعب</string>
+  <string name="hard_body">مستوي صعب , سيكون الاختبار في مستوي الطالب المتفوق ومعظمة أسئلة صعبة</string>
+  <string name="exam_warning_title">برجاء الانتباه</string>
+  <string name="exam_warning_body">عند البدء في الاختبار لا يمكنك الخروج من التطبيق او الرجوع الي تصفح التطبيق وفي حالة الرجوع او الخروج من التطبيق يتم اغلاق الاختبار واعتماد الدرجه بناء علي ما تم حله من الاختبار</string>
+  <string name="btn_start_test">بدأ الاختبار</string>
+  <string name="your_grade">درجتك هي</string>
+  <string name="do_more_tests">عمل اختبار أخر</string>
+  <string name="go_home">الذهاب للرئيسية</string>
 
 </resources>

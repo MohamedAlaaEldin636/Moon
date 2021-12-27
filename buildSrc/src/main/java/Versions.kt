@@ -55,4 +55,6 @@ object Versions {
   const val pin_code = "1.4.3"
   //smarteist
   const val smarteist="1.3.2-appcompat"
+  const val expandable="1.2.2"
+  const val circularprogressbar="3.1.0"
 }

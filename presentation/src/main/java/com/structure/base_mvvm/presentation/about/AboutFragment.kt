@@ -2,7 +2,7 @@ package com.structure.base_mvvm.presentation.about
 
 import androidx.fragment.app.viewModels
 import com.structure.base_mvvm.presentation.R
-import com.structure.base_mvvm.presentation.about.viewModels.PrivacyViewModel
+import com.structure.base_mvvm.presentation.about.viewModels.AboutViewModel
 import com.structure.base_mvvm.presentation.base.BaseFragment
 import com.structure.base_mvvm.presentation.base.extensions.backToPreviousScreen
 import com.structure.base_mvvm.presentation.base.extensions.getMyString
@@ -13,14 +13,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AboutFragment : BaseFragment<FragmentAboutBinding>() {
 
-  private val viewModel: PrivacyViewModel by viewModels()
+  private val viewModel: AboutViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_about
 
   override
   fun setBindingVariables() {
-    binding.viewModel = viewModel
+//    binding.viewModel = viewModel
   }
 
   override fun setUpViews() {
