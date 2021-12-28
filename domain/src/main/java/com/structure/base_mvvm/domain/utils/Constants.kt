@@ -9,4 +9,5 @@ object Constants {
   const val TEACHER_PROFILE = 5
   const val REVIEW_DIALOG = 6
   const val REVIEWS = 7
+  const val BUNDLE = "BUNDLE"
 }

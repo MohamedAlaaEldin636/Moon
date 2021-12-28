@@ -4,9 +4,12 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import codes.grand.pretty_pop_up.PrettyPopUpHelper
 import com.structure.base_mvvm.domain.utils.Constants
@@ -42,6 +45,14 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
   override
   fun setUpViews() {
     setUpToolBar()
+    setFragmentResultListener(Constants.BUNDLE) { _: String, bundle: Bundle ->
+      Log.e("setUpViews", "setUpViews: "+bundle.getInt("value") )
+//      if (bundle.containsKey("deleted"))
+//        viewModel.adapter.deletePosition(invoiceItem)
+//      else if (bundle.containsKey("model")) {
+//        viewModel.adapter.updateItem(invoiceItem, bundle.getSerializable("model") as InvoiceItem)
+//      }
+    }
   }
 
   private fun setUpToolBar() {

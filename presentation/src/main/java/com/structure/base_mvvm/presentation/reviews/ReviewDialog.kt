@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.databinding.ReviewDialogBinding
 import com.structure.base_mvvm.presentation.reviews.viewModels.ReviewsViewModel
@@ -25,7 +27,13 @@ class ReviewDialog : DialogFragment() {
     val binding: ReviewDialogBinding =
       DataBindingUtil.inflate(inflater, R.layout.review_dialog, container, false)
     binding.viewModel = viewModel
-    Log.e("onCreateView", "onCreateView: " + viewModel.test)
+    binding.btnRate.setOnClickListener {
+      viewModel.test = 15
+      val bundle = Bundle()
+      bundle.putInt("value", viewModel.test)
+      setFragmentResult(Constants.BUNDLE, bundle)
+      dismiss()
+    }
     return binding.root
   }
 }
