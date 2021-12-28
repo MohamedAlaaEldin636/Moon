@@ -18,6 +18,7 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
+
   </fragment>
   <fragment
     android:id="@+id/teacherProfileFragment"
@@ -34,7 +35,11 @@
   <fragment
     android:id="@+id/reviewsFragment"
     android:name="com.structure.base_mvvm.presentation.reviews.ReviewsFragment"
-    android:label="ReviewsFragment" />
+    android:label="ReviewsFragment">
+    <action
+      android:id="@+id/action_reviewsFragment_to_review_dialog_comment"
+      app:destination="@id/review_dialog_comment" />
+  </fragment>
   <fragment
     android:id="@+id/teachersFragment"
     android:name="com.structure.base_mvvm.presentation.teachers.TeachersFragment"
@@ -55,5 +60,12 @@
     android:id="@+id/contact_fragment"
     android:name="com.structure.base_mvvm.presentation.contactUs.ContactUsFragment"
     android:label="ContactUsFragment" />
-
+  <dialog
+    android:id="@+id/review_dialog_comment"
+    android:name="com.structure.base_mvvm.presentation.reviews.ReviewDialog"
+    tools:layout="@layout/review_dialog">
+    <argument
+      android:name="teacherId"
+      app:argType="integer" />
+  </dialog>
 </navigation>

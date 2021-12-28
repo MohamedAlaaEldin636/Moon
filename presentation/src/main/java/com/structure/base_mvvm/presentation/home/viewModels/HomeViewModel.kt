@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : 
   val homeResponse = _homeResponse
 
   init {
-    getHome(1, true)
+//    getHome(1, true)
   }
 
   fun onShowPrettyPopUpClicked() {

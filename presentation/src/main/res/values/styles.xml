@@ -18,6 +18,7 @@
     <item name="android:windowContentTransitions">true</item>
 
     <item name="android:windowActionBarOverlay">true</item>
+    <item name="android:dialogTheme">@style/PauseDialog</item>
 
   </style>
 
