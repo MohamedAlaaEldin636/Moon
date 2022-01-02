@@ -11,6 +11,7 @@
   <color name="gray">#BCBCBC</color>
   <color name="lightGray">#F3F3F3</color>
   <color name="white">#FFFFFF</color>
+  <color name="white_op">#63FFFFFF</color>
   <color name="transparent">#00FFFFFF</color>
   <color name="blue">#05A4BB</color>
   <color name="blue_dark">#038092</color>

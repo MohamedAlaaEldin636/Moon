@@ -105,6 +105,60 @@
           app:layout_constraintTop_toBottomOf="@+id/ic_teacher" />
 
         <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_teacher_group_type"
+          style="@style/ArabicTextRegularFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen10"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:drawableStart="@drawable/ic_goup_type"
+          android:drawablePadding="@dimen/dimen4"
+          android:drawableTint="@color/white"
+          android:text="مجموعة عامة"
+          android:textAlignment="viewStart"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/white"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tv_group_header" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_teacher_group_desc"
+          style="@style/TextRegularFont"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen10"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:text="سنقوم في المجموعة بمراجعة مكسفه للمنهج وحل مسابقات وامتحانات علي تفاصيل الشرح خلال شهر مايوسنقوم في المجموعة بمراجعة مكسفه للمنهج وحل مسابقات وامتحانات علي تفاصيل الشرح خلال شهر مايو"
+          android:textAlignment="viewStart"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/white"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tv_teacher_group_type" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_teacher_group_gender"
+          style="@style/ArabicTextRegularFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen10"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:background="@drawable/corner_view_white_op"
+          android:paddingStart="@dimen/dimen12"
+          android:paddingTop="@dimen/dimen6"
+          android:paddingEnd="@dimen/dimen12"
+          android:paddingBottom="@dimen/dimen6"
+          android:text="مجموعة ذكور"
+          android:textAlignment="viewStart"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/white"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tv_teacher_group_desc" />
+
+        <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/tv_group_type"
           style="@style/ArabicTextRegularFont"
           android:layout_width="wrap_content"
@@ -149,7 +203,7 @@
           app:flow_horizontalStyle="spread_inside"
           app:flow_wrapMode="chain"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tv_group_header" />
+          app:layout_constraintTop_toBottomOf="@id/tv_teacher_group_gender" />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
       <androidx.appcompat.widget.AppCompatTextView
@@ -328,6 +382,137 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_previous_sessions"
         tools:itemCount="4"
         tools:listitem="@layout/item_my_group_session" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_students"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/students_in_group"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rc_previous_sessions" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_students"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen10"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/tv_students"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_group_students" />
+
+      <View
+        android:id="@+id/v8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dimen16"
+        android:background="@color/lightGray"
+        app:layout_constraintTop_toBottomOf="@id/rc_students" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_total"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/total_profit"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/tv_total_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v8" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_total_value"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/total_profit"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v8" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_app_percentage"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/tv_app_percentage"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/tv_app_percentage_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_total" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_app_percentage_value"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/total_profit"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_total" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_clean_profit"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/dimen24"
+        android:text="@string/tv_clean_profit"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_clean_profit_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_percentage" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_clean_profit_value"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/dimen24"
+        android:text="@string/total_profit"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_percentage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.core.widget.NestedScrollView>

@@ -6,7 +6,9 @@ import android.view.MenuItem
 import android.view.View
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseActivity
@@ -29,7 +31,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   private fun setUpBottomNavigationWithGraphs() {
     val navHostFragment =
       supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
-    nav = navHostFragment.navController
+    nav = navHostFragment.findNavController()
     appBarConfiguration = AppBarConfiguration(
       setOf(
         R.id.home_fragment,
@@ -41,7 +43,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       ),
       binding.root,
     )
-    binding.toolbar.setupWithNavController(nav, appBarConfiguration)
+    setSupportActionBar(binding.toolbar)
+    setupActionBarWithNavController(nav, appBarConfiguration)
+//    binding.toolbar.setupWithNavController(nav, appBarConfiguration)
     binding.bottomNavigationView.setupWithNavController(nav)
     binding.navigationView.setupWithNavController(nav)
     navChangeListener()
@@ -62,8 +66,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   }
 
-  override fun onNavigateUp(): Boolean {
+  override fun onSupportNavigateUp(): Boolean {
     return nav.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+  }
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.top_app_bar, menu)
+    return true
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

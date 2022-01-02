@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/nav_teacher_home"
+  app:startDestination="@id/teacherHomeFragment">
+
+  <fragment
+    android:id="@+id/teacherHomeFragment"
+    android:name="com.structure.base_mvvm.presentation.teachers.home.TeacherHomeFragment"
+    android:label="@string/home" />
+  <fragment
+    android:id="@+id/teacherGroupsFragment"
+    android:name="com.structure.base_mvvm.presentation.teachers.my_groups.TeacherGroupsFragment"
+    android:label="TeacherGroupsFragment" />
+  <fragment
+    android:id="@+id/teacherAccountFragment"
+    android:name="com.structure.base_mvvm.presentation.teachers.account.TeacherAccountFragment"
+    android:label="TeacherAccountFragment" />
+  <fragment
+    android:id="@+id/moreFragment"
+    android:name="com.structure.base_mvvm.presentation.teachers.more.MoreFragment"
+    android:label="MoreFragment" />
+
+</navigation>

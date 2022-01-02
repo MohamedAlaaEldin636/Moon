@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <variable
+      name="notifyItemViewModels"
+      type="com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel" />
+  </data>
+
+  <com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dimen16"
+    android:layout_marginTop="@dimen/dimen8"
+    android:layout_marginEnd="@dimen/dimen16"
+    app:cardCornerRadius="@dimen/dimen6"
+    app:cardElevation="@dimen/dimen4">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_more_item"
+        style="@style/TextMediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen20"
+        android:layout_marginTop="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen16"
+        android:drawableStart="@drawable/ic_contact"
+        android:drawablePadding="@dimen/dimen8"
+        android:drawableTint="@color/blue"
+        android:text="@string/contact_us"
+        android:textAlignment="viewEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -15,14 +15,14 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class AccountFragment : BaseFragment<FragmentAccountBinding>() {
 
-  private val viewModel: AccountViewModel by viewModels()
+  private val viewModelTeacher: AccountViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_account
 
   override
   fun setBindingVariables() {
-    binding.viewModel = viewModel
+    binding.viewModel = viewModelTeacher
   }
 
   override
@@ -37,7 +37,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>() {
 
   override
   fun setupObservers() {
-    viewModel.showLogOutPopUp.observe(this) { showLogOutPopUp() }
+    viewModelTeacher.showLogOutPopUp.observe(this) { showLogOutPopUp() }
   }
 
   private fun showLogOutPopUp() {
@@ -61,10 +61,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>() {
   }
 
   private fun logOut() {
-    viewModel.logOut()
+    viewModelTeacher.logOut()
 
     lifecycleScope.launchWhenResumed {
-      viewModel.logOutResponse.collect {
+      viewModelTeacher.logOutResponse.collect {
         when (it) {
           Resource.Loading -> {
             hideKeyboard()

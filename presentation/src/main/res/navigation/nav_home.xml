@@ -50,7 +50,7 @@
     android:label="TestsFragment" />
   <fragment
     android:id="@+id/accountFragment"
-    android:name="com.structure.base_mvvm.presentation.account.AccountFragment"
+    android:name="com.structure.base_mvvm.presentation.account.TeacherAccountFragment"
     android:label="AccountFragment" />
   <fragment
     android:id="@+id/about_fragment"

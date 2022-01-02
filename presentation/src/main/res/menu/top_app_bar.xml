@@ -6,5 +6,6 @@
     android:contentDescription="@string/notifications"
     android:icon="@drawable/ic_notification"
     android:title="@string/notifications"
+    android:menuCategory="secondary"
     app:showAsAction="ifRoom" />
 </menu>

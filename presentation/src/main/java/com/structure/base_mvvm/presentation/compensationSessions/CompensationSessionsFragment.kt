@@ -5,8 +5,6 @@ import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
 import com.structure.base_mvvm.presentation.compensationSessions.viewModels.CompensationSessionsViewModel
 import com.structure.base_mvvm.presentation.databinding.FragmentCompensationSessionsBinding
-import com.structure.base_mvvm.presentation.databinding.FragmentMyGroupsBinding
-import com.structure.base_mvvm.presentation.my_groups.viewModels.MyGroupsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

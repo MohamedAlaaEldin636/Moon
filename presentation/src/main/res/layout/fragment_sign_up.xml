@@ -103,6 +103,34 @@
       </com.google.android.material.textfield.TextInputLayout>
 
       <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_name_teacher"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen14"
+        android:layout_marginTop="@dimen/dimen18"
+        android:layout_marginEnd="@dimen/dimen14"
+        android:hint="@string/register_name_teacher"
+        android:textColorHint="@color/darkGray"
+        app:helperTextTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_name"
+        app:startIconDrawable="@drawable/ic_user">
+        <!--        app:error="@{viewmodel.request.nameError}"-->
+        <!--        android:text="@={viewmodel.request.name}"-->
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/in_teacher_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="textAutoComplete|textAutoCorrect"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/colorPrimaryDark"
+          android:textColorHint="@color/darkGray" />
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_phone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
@@ -116,7 +144,7 @@
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_name"
+        app:layout_constraintTop_toBottomOf="@+id/input_name_teacher"
         app:startIconDrawable="@drawable/ic_call">
 
         <androidx.appcompat.widget.AppCompatEditText

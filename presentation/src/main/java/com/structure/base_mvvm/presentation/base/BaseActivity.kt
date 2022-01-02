@@ -18,7 +18,7 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
   private val localeDelegate: LocaleHelperActivityDelegate = LocaleHelperActivityDelegateImpl()
   private var _binding: VB? = null
   open val binding get() = _binding!!
-  public lateinit var navController: LiveData<NavController>
+   lateinit var navController: LiveData<NavController>
 
   override
   fun createConfigurationContext(overrideConfiguration: Configuration): Context {

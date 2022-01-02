@@ -28,6 +28,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
+    val someKotlinCollectionFunctions = listOf(
+      "distinct", "map",
+      "isEmpty", "contains",
+      "filter", "first",
+      "last", "reduce",
+      "single", "joinToString"
+    )
+
+    val message = someKotlinCollectionFunctions.joinToString(
+      separator = ", ",
+      prefix = "Kotlin has many collection functions like: ",
+      postfix = "and they are awesome.",
+      limit = 3
+    )
+    Log.e("setBindingVariables", "setBindingVariables: $message")
   }
 
   override

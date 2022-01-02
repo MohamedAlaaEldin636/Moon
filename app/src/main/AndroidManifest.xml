@@ -39,6 +39,9 @@
     <activity
       android:name="com.structure.base_mvvm.presentation.intro.IntroActivity"
       android:screenOrientation="portrait" />
+    <activity
+      android:name="com.structure.base_mvvm.presentation.teachers.home.TeacherHomeActivity"
+      android:screenOrientation="portrait" />
 
     <activity
       android:name="com.structure.base_mvvm.presentation.auth.AuthActivity"
