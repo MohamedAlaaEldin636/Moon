@@ -12,9 +12,7 @@ import javax.inject.Inject
 
 
 class HomeUseCase @Inject constructor(
-  private val homeRepository: HomeRepository
-) {
-
+  private val homeRepository: HomeRepository) {
   fun getHome(page: Int, showProgress: Boolean): Flow<Resource<BaseResponse<HomePaginateData>>> =
     flow {
       emit(Resource.Loading)
@@ -22,4 +20,5 @@ class HomeUseCase @Inject constructor(
 
       emit(result)
     }.flowOn(Dispatchers.IO)
+
 }

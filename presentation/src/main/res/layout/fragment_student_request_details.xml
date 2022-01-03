@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="com.structure.base_mvvm.domain.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="com.structure.base_mvvm.presentation.teachers.studentRequests.viewModels.TeacherStudentRequestDetailsViewModel" />
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_slim_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen150"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_slim_header"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/dimen70"
+        android:layout_height="@dimen/dimen70"
+        android:layout_margin="@dimen/dimen10"
+        android:padding="@dimen/dimen3"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_no_image"
+        app:layout_constraintBottom_toBottomOf="@id/ic_slim_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+        app:strokeColor="@color/lightGray"
+        app:strokeWidth="@dimen/dimen2" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:text="أ/ أحمد محمد مصطفي"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/tv_created_at"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@id/img" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_created_at"
+        style="@style/TextRegularFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:drawableEnd="@drawable/ic_timer"
+        android:drawablePadding="@dimen/dimen4"
+        android:drawableTint="@color/white"
+        android:text="02 : 15 : 60"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/img" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_stage"
+        style="@style/TextRegularFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:text="الصف الأول الابتدائي"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_warning"
+        style="@style/TextMediumFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen16"
+        android:background="@drawable/corner_primary"
+        android:drawableStart="@drawable/ic_warning_sign_notification_man_alert"
+        android:gravity="center"
+        android:padding="@dimen/dimen10"
+        android:text="@string/request_warning"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/ic_slim_header" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_sessions_times"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen10"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/tv_warning"
+        app:spanCount="2"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_session_time" />
+
+
+      <View
+        android:id="@+id/v8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dimen16"
+        android:background="@color/lightGray"
+        app:layout_constraintTop_toBottomOf="@id/rc_sessions_times" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_session_count"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/session_count"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/tv_session_count_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v8" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_session_count_value"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/session_count"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v8" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_total"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/total_profit"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/tv_total_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_session_count" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_total_value"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/total_profit"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_session_count" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_app_percentage"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/tv_app_percentage"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/tv_app_percentage_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_total" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_app_percentage_value"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:text="@string/tv_app_percentage"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_total" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_clean_profit"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/dimen24"
+        android:text="@string/tv_app_percentage"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/tv_clean_profit_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_percentage" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_clean_profit_value"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/dimen24"
+        android:text="@string/tv_clean_profit"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_percentage" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_accept"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen12"
+        android:text="@string/accept"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:backgroundTint="@color/blue"
+        app:icon="@drawable/ic_done_al"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_reject"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_clean_profit" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_reject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen12"
+        android:text="@string/reject"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:icon="@drawable/ic_delete"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_accept"
+        app:layout_constraintTop_toBottomOf="@id/tv_clean_profit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+</layout>

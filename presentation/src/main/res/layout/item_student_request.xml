@@ -12,6 +12,8 @@
   <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardElevation="@dimen/dimen6"
+    app:cardCornerRadius="@dimen/dimen8"
     android:layout_margin="@dimen/dimen4">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,14 +43,30 @@
         android:layout_marginStart="@dimen/dimen8"
         android:layout_marginTop="@dimen/dimen2"
         android:layout_marginEnd="@dimen/dimen8"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:text="أ/ أحمد محمد مصطفي"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_created_at"
         app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@id/img" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_created_at"
+        style="@style/TextRegularFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:drawableEnd="@drawable/ic_timer"
+        android:drawableTint="@color/colorPrimary"
+        android:drawablePadding="@dimen/dimen4"
+        android:text="02 : 15 : 60"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/img" />
 
       <androidx.appcompat.widget.AppCompatTextView
@@ -87,12 +105,13 @@
         android:id="@+id/btn_accept"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen12"
         android:text="@string/accept"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:backgroundTint="@color/blue"
         app:icon="@drawable/ic_done_al"
         app:iconGravity="textStart"
-        app:backgroundTint="@color/blue"
-        android:layout_margin="@dimen/dimen12"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_reject"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,12 +121,13 @@
         android:id="@+id/btn_reject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/reject"
         android:layout_margin="@dimen/dimen12"
+        android:text="@string/reject"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:backgroundTint="@color/colorPrimaryDark"
         app:icon="@drawable/ic_delete"
         app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_accept"

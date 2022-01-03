@@ -4,6 +4,7 @@ import com.structure.base_mvvm.domain.account.entity.request.SendFirebaseTokenRe
 import com.structure.base_mvvm.domain.auth.entity.model.User
 import com.structure.base_mvvm.domain.utils.BaseResponse
 import com.structure.base_mvvm.domain.utils.Resource
+import kotlinx.coroutines.flow.Flow
 
 interface AccountRepository {
 
@@ -15,7 +16,9 @@ interface AccountRepository {
 
   fun isLoggedIn(): Boolean
 
-  fun saveFirebaseTokenToLocal(firebaseToken: String)
+  suspend fun saveFirebaseTokenToLocal(firebaseToken: String)
+
+  suspend fun getFirebaseTokenToLocal(): Flow<String>
 
   fun getFirebaseToken(): String?
 

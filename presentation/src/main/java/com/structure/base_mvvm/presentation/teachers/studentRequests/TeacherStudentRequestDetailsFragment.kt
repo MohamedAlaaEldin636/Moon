@@ -3,17 +3,19 @@ package com.structure.base_mvvm.presentation.teachers.studentRequests
 import androidx.fragment.app.viewModels
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
+import com.structure.base_mvvm.presentation.databinding.FragmentStudentRequestDetailsBinding
 import com.structure.base_mvvm.presentation.databinding.FragmentStudentsRequestsBinding
+import com.structure.base_mvvm.presentation.teachers.studentRequests.viewModels.TeacherStudentRequestDetailsViewModel
 import com.structure.base_mvvm.presentation.teachers.studentRequests.viewModels.TeacherStudentRequestsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TeacherStudentRequestsFragment : BaseFragment<FragmentStudentsRequestsBinding>() {
+class TeacherStudentRequestDetailsFragment : BaseFragment<FragmentStudentRequestDetailsBinding>() {
 
-  private val viewModel: TeacherStudentRequestsViewModel by viewModels()
+  private val viewModel: TeacherStudentRequestDetailsViewModel by viewModels()
 
   override
-  fun getLayoutId() = R.layout.fragment_students_requests
+  fun getLayoutId() = R.layout.fragment_student_request_details
 
   override
   fun setBindingVariables() {

@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+option java_package = "com.structure.base_mvvm.data";
+option java_multiple_files = true;
+
+message FilterOption {
+   int my_counter = 1;
+}

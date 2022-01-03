@@ -40,6 +40,7 @@ class LogInUseCase @Inject constructor(
     val result = authRepository.logIn(request)
     if (result is Resource.Success) {
       saveUserToLocalUseCase(result.value.data)
+      saveUserToLocalUseCase.invoke(result.value.data.name)
     }
     emit(result)
   }.flowOn(Dispatchers.IO)

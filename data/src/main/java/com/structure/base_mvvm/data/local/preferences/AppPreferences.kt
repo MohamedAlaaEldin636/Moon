@@ -2,14 +2,35 @@ package com.structure.base_mvvm.data.local.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.structure.base_mvvm.domain.auth.entity.model.User
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class AppPreferences @Inject constructor(context: Context) {
+class AppPreferences @Inject constructor(val context: Context) {
 
+  private val STORE_NAME = "app_data_store"
+  private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = STORE_NAME)
+
+  suspend fun saveNameToDataStore(name: String) {
+    context.dataStore.edit {
+      it[NAME] = name
+    }
+  }
+
+  suspend fun getNameFromDataStore() = context.dataStore.data.map {
+    it[NAME] ?: ""
+  }
+
+  //Old Pref
   companion object {
-    private const val APP_PREFERENCES_NAME = "APP-NAME-Cache"
+    val NAME = stringPreferencesKey("NAME")
+    const val APP_PREFERENCES_NAME = "APP-NAME-Cache"
     private const val SESSION_PREFERENCES_NAME = "APP-NAME-UserCache"
     private const val MODE = Context.MODE_PRIVATE
 
@@ -18,7 +39,8 @@ class AppPreferences @Inject constructor(context: Context) {
     private val FIREBASE_TOKEN = Pair("FIREBASE_TOKEN", "")
   }
 
-  private val appPreferences: SharedPreferences = context.getSharedPreferences(APP_PREFERENCES_NAME, MODE)
+  private val appPreferences: SharedPreferences =
+    context.getSharedPreferences(APP_PREFERENCES_NAME, MODE)
   private val sessionPreferences: SharedPreferences =
     context.getSharedPreferences(SESSION_PREFERENCES_NAME, MODE)
 

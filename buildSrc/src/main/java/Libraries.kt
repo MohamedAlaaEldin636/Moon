@@ -25,6 +25,8 @@ object Libraries {
   const val coroutinesAndroid =
     "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinCoroutines}"
 
+  // DATA STORE
+  const val datastore_preferences="androidx.datastore:datastore-preferences:${Versions.datastore_preferences}"
   // Networking
   const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
   const val retrofitConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
@@ -74,9 +76,12 @@ object Libraries {
 
   //smartteist
   const val smartteist = "com.github.smarteist:autoimageslider:${Versions.smarteist}"
+
   //Expandable
   const val expandable = "com.github.florent37:expansionpanel:${Versions.expandable}"
+
   //circularprogressbar
-  const val circularprogressbar = "com.mikhaellopez:circularprogressbar:${Versions.circularprogressbar}"
+  const val circularprogressbar =
+    "com.mikhaellopez:circularprogressbar:${Versions.circularprogressbar}"
 
 }

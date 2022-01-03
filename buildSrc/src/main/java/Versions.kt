@@ -18,6 +18,9 @@ object Versions {
   // Kotlin Coroutines
   const val kotlinCoroutines = "1.4.1"
 
+  //DATA STORE
+  const val datastore_preferences = "1.0.0"
+
   // Networking
   const val retrofit = "2.9.0"
   const val gson = "2.8.8"
@@ -51,10 +54,12 @@ object Versions {
 
   //ted bottom picker
   const val ted_bottom_picker = "2.0.1"
+
   //Pin View
   const val pin_code = "1.4.3"
+
   //smarteist
-  const val smarteist="1.3.2-appcompat"
-  const val expandable="1.2.2"
-  const val circularprogressbar="3.1.0"
+  const val smarteist = "1.3.2-appcompat"
+  const val expandable = "1.2.2"
+  const val circularprogressbar = "3.1.0"
 }

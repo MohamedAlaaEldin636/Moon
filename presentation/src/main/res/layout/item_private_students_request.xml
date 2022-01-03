@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <variable
+      name="notifyItemViewModels"
+      type="com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel" />
+  </data>
+
+  <com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen4"
+    app:cardCornerRadius="@dimen/dimen6"
+    app:cardElevation="@dimen/dimen6">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_left"
+        app:backgroundTint="@color/blue"
+        app:fabCustomSize="@dimen/dimen30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+      <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/dimen70"
+        android:layout_height="@dimen/dimen70"
+        android:layout_margin="@dimen/dimen10"
+        android:padding="@dimen/dimen3"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_no_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+        app:strokeColor="@color/lightGray"
+        app:strokeWidth="@dimen/dimen2" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="أ/ أحمد محمد مصطفي"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/btn_details"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@id/img" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_stage"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="أ/ أحمد محمد مصطفي"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/btn_details"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </com.google.android.material.card.MaterialCardView>
+</layout>

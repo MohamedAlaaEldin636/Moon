@@ -29,7 +29,6 @@ android {
       manifestPlaceholders["appName"] = "@string/app_name_debug"
       manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_debug"
       manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher_debug_round"
-
       buildConfigField("String", "API_BASE_URL", Config.Environments.debugBaseUrl)
     }
 

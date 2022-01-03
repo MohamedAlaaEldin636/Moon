@@ -3,6 +3,7 @@ package com.structure.base_mvvm.presentation.home.viewModels
 import android.util.Log
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
+import com.structure.base_mvvm.domain.account.repository.AccountRepository
 import com.structure.base_mvvm.domain.home.models.HomePaginateData
 import com.structure.base_mvvm.domain.home.use_case.HomeUseCase
 import com.structure.base_mvvm.domain.utils.BaseResponse
@@ -12,13 +13,15 @@ import com.structure.base_mvvm.presentation.base.BaseViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
 import com.structure.base_mvvm.presentation.teachers.adapters.SubjectsAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : BaseViewModel() {
+class HomeViewModel @Inject constructor(
+  private val homeUseCase: HomeUseCase,
+  private val accountRepository: AccountRepository
+) : BaseViewModel() {
 
   val showPrettyPopUp = SingleLiveEvent<Void>()
 
@@ -31,6 +34,11 @@ class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : 
 
   init {
 //    getHome(1, true)
+    viewModelScope.launch {
+      accountRepository.getFirebaseTokenToLocal().collect {
+        Log.e("getFirebaseTokenToLocal", ": $it" )
+      }
+    }
   }
 
   fun onShowPrettyPopUpClicked() {

@@ -5,6 +5,10 @@ import com.structure.base_mvvm.data.local.preferences.AppPreferences
 import com.structure.base_mvvm.domain.account.entity.request.SendFirebaseTokenRequest
 import com.structure.base_mvvm.domain.account.repository.AccountRepository
 import com.structure.base_mvvm.domain.auth.entity.model.User
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
@@ -13,7 +17,8 @@ class AccountRepositoryImpl @Inject constructor(
 ) : AccountRepository {
 
   override
-  suspend fun sendFirebaseToken(request: SendFirebaseTokenRequest) = remoteDataSource.sendFirebaseToken(request)
+  suspend fun sendFirebaseToken(request: SendFirebaseTokenRequest) =
+    remoteDataSource.sendFirebaseToken(request)
 
   override
   suspend fun logOut() = remoteDataSource.logOut()
@@ -24,9 +29,13 @@ class AccountRepositoryImpl @Inject constructor(
   override
   fun isLoggedIn() = appPreferences.isLoggedIn
 
-  override
-  fun saveFirebaseTokenToLocal(firebaseToken: String) {
-    appPreferences.firebaseToken = firebaseToken
+  override suspend fun saveFirebaseTokenToLocal(firebaseToken: String) {
+//    appPreferences.firebaseToken = firebaseToken
+    appPreferences.saveNameToDataStore(firebaseToken)
+  }
+
+  override suspend fun getFirebaseTokenToLocal(): Flow<String> {
+    return appPreferences.getNameFromDataStore()
   }
 
   override

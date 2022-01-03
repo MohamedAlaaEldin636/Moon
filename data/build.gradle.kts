@@ -24,6 +24,8 @@ dependencies {
   // Kotlin Coroutines
   implementation(Libraries.coroutinesCore)
   implementation(Libraries.coroutinesAndroid)
+//DATA STORE
+  implementation(Libraries.datastore_preferences)
 
   // Networking
   implementation(Libraries.retrofit)

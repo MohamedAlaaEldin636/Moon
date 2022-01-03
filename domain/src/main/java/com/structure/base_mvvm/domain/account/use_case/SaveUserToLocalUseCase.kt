@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class SaveUserToLocalUseCase @Inject constructor(private val accountRepository: AccountRepository) {
   operator fun invoke(user: User) = accountRepository.saveUserToLocal(user)
-  operator fun invoke(firebaseToken: String) =
+  suspend operator fun invoke(firebaseToken: String) =
     accountRepository.saveFirebaseTokenToLocal(firebaseToken)
 }

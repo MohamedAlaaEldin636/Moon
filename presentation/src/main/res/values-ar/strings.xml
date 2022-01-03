@@ -153,7 +153,7 @@
   <string name="students_in_group">الطلبة المشتركين في المجموعة</string>
   <string name="total_profit">العائد الكلي</string>
   <string name="tv_app_percentage">نسبة التطبيق</string>
-  <string name="tv_clean_profit">نسبة التطبيق</string>
+  <string name="tv_clean_profit">العائد الصافي</string>
   <string name="reasons_header">اختر سبب الشكوي</string>
   <string name="reason_hint">أكتب تفاصيل لتقديمها للأدارة</string>
   <string name="reason_image_hint">ارسال صورة كدليل ( اختياري )</string>
@@ -170,5 +170,8 @@
   <string name="add_group">أضافة المجموعة</string>
   <string name="accept">قبول</string>
   <string name="reject">رفض</string>
+    <string name="public_groups_requests">طلبات مجموعات عامة</string>
+  <string name="private_groups_requests">طلبات مجموعات خاصة</string>
+  <string name="request_warning">هناك تعارض مع المواعيد برجاء اختيار معاد مناسب</string>
 
 </resources>
