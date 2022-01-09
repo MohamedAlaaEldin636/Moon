@@ -8,6 +8,8 @@ import com.structure.base_mvvm.data.general.data_source.remote.GeneralRemoteData
 import com.structure.base_mvvm.data.general.repository.GeneralRepositoryImpl
 import com.structure.base_mvvm.data.home.data_source.remote.HomeRemoteDataSource
 import com.structure.base_mvvm.data.home.repository.HomeRepositoryImpl
+import com.structure.base_mvvm.data.intro.data_source.IntroRemoteDataSource
+import com.structure.base_mvvm.data.intro.repository.IntroRepositoryImpl
 import com.structure.base_mvvm.data.local.preferences.AppPreferences
 import com.structure.base_mvvm.data.search.data_source.remote.SearchRemoteDataSource
 import com.structure.base_mvvm.data.search.repository.SearchRepositoryImpl
@@ -15,6 +17,7 @@ import com.structure.base_mvvm.domain.account.repository.AccountRepository
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
 import com.structure.base_mvvm.domain.general.repository.GeneralRepository
 import com.structure.base_mvvm.domain.home.repository.HomeRepository
+import com.structure.base_mvvm.domain.intro.repository.IntroRepository
 import com.structure.base_mvvm.domain.search.repository.SearchRepository
 import dagger.Module
 import dagger.Provides
@@ -57,5 +60,10 @@ class RepositoryModule {
   fun provideHomeRepository(
     remoteDataSource: HomeRemoteDataSource
   ): HomeRepository = HomeRepositoryImpl(remoteDataSource)
+ @Provides
+  @Singleton
+  fun provideIntroRepository(
+    remoteDataSource: IntroRemoteDataSource
+  ): IntroRepository = IntroRepositoryImpl(remoteDataSource)
 
 }

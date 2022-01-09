@@ -1,6 +1,7 @@
 package codes.grand.images_slider
 
 import android.app.Activity
+import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -20,7 +21,7 @@ import grand.images_slider.R
 import kotlinx.coroutines.delay
 
 class ImagesSliderHelper private constructor(builder: Builder) : LifecycleObserver {
-
+  public  val TAG = "ImagesSliderHelper"
   companion object {
     const val SLIDER_DELAY: Long = 2500
   }
@@ -52,6 +53,7 @@ class ImagesSliderHelper private constructor(builder: Builder) : LifecycleObserv
 
   init {
     images = builder.images
+    Log.e("INIT", ": INIT "+ images.size)
     viewPagerIndicators = ArrayList(images.size)
     sliderContainer = builder.sliderContainer
     sliderContainerResourceID = builder.sliderContainerResourceID
@@ -81,7 +83,6 @@ class ImagesSliderHelper private constructor(builder: Builder) : LifecycleObserv
     if (sliderContainerResourceID != 0 && sliderContainer == null) {
       sliderContainer = activity.findViewById(sliderContainerResourceID)
     }
-
     sliderContainer?.removeAllViewsInLayout()
   }
 
@@ -204,6 +205,7 @@ class ImagesSliderHelper private constructor(builder: Builder) : LifecycleObserv
     internal var imageClickAction: ((position: Int) -> Unit)? = null
 
     fun setImages(images: List<String>): Builder {
+      Log.e("ImagesSliderHelper", "setImages: "+images.size )
       this.images = images
       return this
     }
@@ -239,6 +241,7 @@ class ImagesSliderHelper private constructor(builder: Builder) : LifecycleObserv
     }
 
     fun create(): ImagesSliderHelper {
+      Log.e("create", "create: ")
       return ImagesSliderHelper(this)
     }
   }

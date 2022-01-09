@@ -19,7 +19,7 @@
 
     <item name="android:windowActionBarOverlay">true</item>
     <item name="android:dialogTheme">@style/PauseDialog</item>
-
+    <item name="android:windowDisablePreview">true</item>
   </style>
 
   <style name="TextBoldFont">

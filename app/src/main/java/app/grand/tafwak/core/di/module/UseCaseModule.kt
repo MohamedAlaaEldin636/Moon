@@ -14,6 +14,8 @@ import com.structure.base_mvvm.domain.general.use_case.ClearPreferencesUseCase
 import com.structure.base_mvvm.domain.general.use_case.GeneralUseCases
 import com.structure.base_mvvm.domain.home.repository.HomeRepository
 import com.structure.base_mvvm.domain.home.use_case.HomeUseCase
+import com.structure.base_mvvm.domain.intro.repository.IntroRepository
+import com.structure.base_mvvm.domain.intro.use_case.IntroUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,6 +39,13 @@ class UseCaseModule {
     homeRepository: HomeRepository
   ): HomeUseCase = HomeUseCase(homeRepository)
 
+  @Provides
+  @Singleton
+  fun provideIntroUseCase(
+    introRepository: IntroRepository
+  ): IntroUseCase = IntroUseCase(introRepository)
+
+  //public use cases
   @Provides
   @Singleton
   fun provideCheckFirstTimeUseCase(

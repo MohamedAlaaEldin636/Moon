@@ -2,9 +2,11 @@ package com.structure.base_mvvm.presentation.home
 
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import codes.grand.images_slider.ImagesSliderHelper
 import codes.grand.pretty_pop_up.PrettyPopUpHelper
 import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.domain.utils.Resource
@@ -28,21 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    val someKotlinCollectionFunctions = listOf(
-      "distinct", "map",
-      "isEmpty", "contains",
-      "filter", "first",
-      "last", "reduce",
-      "single", "joinToString"
-    )
 
-    val message = someKotlinCollectionFunctions.joinToString(
-      separator = ", ",
-      prefix = "Kotlin has many collection functions like: ",
-      postfix = "and they are awesome.",
-      limit = 3
-    )
-    Log.e("setBindingVariables", "setBindingVariables: $message")
   }
 
   override
@@ -77,8 +65,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
   }
 
   private fun toTeacherProfile() {
-    navigateSafe(HomeFragmentDirections.actionToTeacherProfileFragment())
+//    navigateSafe(HomeFragmentDirections.actionToTeacherProfileFragment())
+//    val imageList = listOf(
+//      "https://thumbs.dreamstime.com/z/oyster-mushroom-24463726.jpg",
+//      "https://thumbs.dreamstime.com/z/button-mushroom-isolated-white-13090359.jpg"
+//    )
+//    ImagesSliderHelper.Builder(requireActivity(), lifecycle)
+//      .setImages(imageList)
+//      .setAutoScrolling(true)
+//      .setActiveIndicatorColor(R.color.colorPrimaryDark)
+//      .setInActiveIndicatorColor(R.color.colorPrimary)
+//      .setSliderContainerResourceID(R.id.frame_images)
+//      .setClickAction {
+//        Log.e("toTeacherProfile", "toTeacherProfile: " )
+//      }
+//      .create()
   }
-
-
 }

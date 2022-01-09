@@ -4,7 +4,6 @@ import android.app.Activity
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -12,7 +11,6 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
-import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -20,9 +18,9 @@ import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
+import com.structure.base_mvvm.domain.intro.entity.AppTutorial
 import grand.app_tutorial.R
 import kotlinx.coroutines.delay
-import java.time.temporal.TemporalAdjusters.previous
 
 class AppTutorialHelper private constructor(builder: Builder) : LifecycleObserver {
 

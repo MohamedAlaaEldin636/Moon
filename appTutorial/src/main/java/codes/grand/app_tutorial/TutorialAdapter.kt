@@ -1,11 +1,15 @@
 package codes.grand.app_tutorial
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import codes.grand.app_tutorial.TutorialAdapter.ImagesSliderViewHolder
+import coil.ImageLoader
+import coil.request.ImageRequest
+import com.structure.base_mvvm.domain.intro.entity.AppTutorial
 import grand.app_tutorial.R
 import grand.app_tutorial.databinding.ItemTutorialBinding
 
@@ -13,6 +17,7 @@ internal class TutorialAdapter(
   private var titleColor: Int,
   private var contentColor: Int
 ) : ListAdapter<AppTutorial, ImagesSliderViewHolder>(DIFF_CALLBACK) {
+  private lateinit var context: Context
 
   companion object {
     private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AppTutorial>() {
@@ -32,6 +37,7 @@ internal class TutorialAdapter(
     viewType: Int
   ): ImagesSliderViewHolder {
     val root = LayoutInflater.from(parent.context).inflate(R.layout.item_tutorial, parent, false)
+    context = parent.context
     return ImagesSliderViewHolder(ItemTutorialBinding.bind(root))
   }
 
@@ -54,8 +60,37 @@ internal class TutorialAdapter(
       currentItem = item
 
       itemBinding.tvTitle.text = item.title
-      itemBinding.tvContent.text = item.content
-      itemBinding.ivImage.setImageDrawable(item.image)
+      itemBinding.tvContent.text = item.body
+      showImage(item.image)
     }
+
+    private fun showImage(imageUrl: String) {
+      if (imageUrl.isNotEmpty()) {
+        val request = ImageRequest.Builder(context)
+          .data(imageUrl)
+          .crossfade(true)
+          .crossfade(400)
+          .placeholder(R.color.colorGray)
+          .error(R.drawable.bg_no_image)
+          .target(
+            onStart = { placeholder ->
+              itemBinding.ivImage.setImageDrawable(placeholder)
+            },
+            onSuccess = { result ->
+              itemBinding.ivImage.setImageDrawable(result)
+            }
+          )
+          .listener(onError = { request: ImageRequest, _: Throwable ->
+            itemBinding.ivImage.setImageDrawable(request.error)
+          })
+          .build()
+
+        ImageLoader(context).enqueue(request)
+      } else {
+        itemBinding.ivImage.setImageResource(R.drawable.bg_no_image)
+      }
+    }
+
   }
+
 }

@@ -41,7 +41,7 @@ object Config {
   }
 
   object Environments {
-    const val debugBaseUrl = "\"https://aber.my-staff.net/api/\""
-    const val releaseBaseUrl = "\"https://aber.my-staff.net/api/\""
+    const val debugBaseUrl = "\"https://amrrek.net/api/\""
+    const val releaseBaseUrl = "\"https://amrrek.net/api/\""
   }
 }

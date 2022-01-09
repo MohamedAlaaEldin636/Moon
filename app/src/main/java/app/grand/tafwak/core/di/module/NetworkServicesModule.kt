@@ -4,6 +4,7 @@ import com.structure.base_mvvm.data.account.data_source.remote.AccountServices
 import com.structure.base_mvvm.data.auth.data_source.remote.AuthServices
 import com.structure.base_mvvm.data.general.data_source.remote.GeneralServices
 import com.structure.base_mvvm.data.home.data_source.remote.HomeServices
+import com.structure.base_mvvm.data.intro.data_source.IntroServices
 import com.structure.base_mvvm.data.search.data_source.remote.SearchServices
 import dagger.Module
 import dagger.Provides
@@ -40,4 +41,10 @@ object NetworkServicesModule {
   @Singleton
   fun provideHomeServices(retrofit: Retrofit): HomeServices =
     retrofit.create(HomeServices::class.java)
+
+  @Provides
+  @Singleton
+  fun provideIntroServices(retrofit: Retrofit): IntroServices =
+    retrofit.create(IntroServices::class.java)
+
 }

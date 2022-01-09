@@ -1,5 +1,6 @@
 package codes.grand.images_slider
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -31,6 +32,7 @@ internal class ImagesSliderAdapter(private var itemClick: ((position: Int) -> Un
     viewType: Int
   ): ImagesSliderViewHolder {
     val root = LayoutInflater.from(parent.context).inflate(R.layout.item_slider_image, parent, false)
+    Log.e("onCreateViewHolder", "onCreateViewHolder: ")
     return ImagesSliderViewHolder(ItemSliderImageBinding.bind(root))
   }
 
