@@ -8,6 +8,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(private val generalUseCases: GeneralUseCases) :
   BaseViewModel() {
-  val image = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__4890.jpg"
   fun isFirstTime() = generalUseCases.checkFirstTimeUseCase()
+  fun isLogged() = generalUseCases.checkLoggedInUserUseCase()
 }

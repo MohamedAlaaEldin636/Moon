@@ -179,5 +179,10 @@
     <string name="public_groups_requests">طلبات مجموعات عامة</string>
   <string name="private_groups_requests">طلبات مجموعات خاصة</string>
   <string name="request_warning">هناك تعارض مع المواعيد برجاء اختيار معاد مناسب</string>
+    <string name="student">طالب</string>
+  <string name="teacher">معلم</string>
+  <string name="not_match_password">كلمتا المرور غير متطابقتان</string>
+  <string name="empty_terms">يرجى الموافقه على الشروط والاحكام</string>
+  <string name="empty_image">يرجى اختيار الصورة</string>
 
 </resources>

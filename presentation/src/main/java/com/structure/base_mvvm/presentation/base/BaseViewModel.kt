@@ -5,6 +5,7 @@ import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
 import java.util.*
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
+import androidx.lifecycle.SavedStateHandle
 
 open class BaseViewModel : ViewModel(), Observable {
   private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
@@ -46,4 +47,10 @@ open class BaseViewModel : ViewModel(), Observable {
     callbacks.notifyCallbacks(this, fieldId, null)
   }
 
+//  fun getArgs(key: String, dataType: Objects, savedStateHandle: SavedStateHandle): Any? {
+//    savedStateHandle.get<dataType>(key)?.let {
+//      return it
+//    }
+//    return null
+//  }
 }

@@ -60,7 +60,7 @@ internal class TutorialAdapter(
       currentItem = item
 
       itemBinding.tvTitle.text = item.title
-      itemBinding.tvContent.text = item.body
+      itemBinding.tvContent.text = item.content
       showImage(item.image)
     }
 

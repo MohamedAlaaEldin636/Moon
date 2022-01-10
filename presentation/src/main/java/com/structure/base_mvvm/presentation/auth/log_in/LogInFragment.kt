@@ -41,19 +41,19 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
         openSignUp()
     }
 
-    viewModel.validationException.observe(this) {
-      when (it) {
-        AuthFieldsValidation.EMPTY_EMAIL.value -> {
-          requireView().showSnackBar(resources.getString(R.string.empty_email))
-        }
-        AuthFieldsValidation.INVALID_EMAIL.value -> {
-          requireView().showSnackBar(resources.getString(R.string.invalid_email))
-        }
-        AuthFieldsValidation.EMPTY_PASSWORD.value -> {
-          requireView().showSnackBar(resources.getString(R.string.empty_password))
-        }
-      }
-    }
+//    viewModel.validationException.observe(this) {
+//      when (it) {
+//        AuthFieldsValidation.EMPTY_EMAIL.value -> {
+//          requireView().showSnackBar(resources.getString(R.string.empty_email))
+//        }
+//        AuthFieldsValidation.INVALID_EMAIL.value -> {
+//          requireView().showSnackBar(resources.getString(R.string.invalid_email))
+//        }
+//        AuthFieldsValidation.EMPTY_PASSWORD.value -> {
+//          requireView().showSnackBar(resources.getString(R.string.empty_password))
+//        }
+//      }
+//    }
 
     lifecycleScope.launchWhenResumed {
       viewModel.logInResponse.collect {

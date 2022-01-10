@@ -2,11 +2,16 @@ package com.structure.base_mvvm.presentation.auth.confirmCode
 
 import android.os.CountDownTimer
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
-import com.structure.base_mvvm.presentation.base.extensions.backToPreviousScreen
+import com.structure.base_mvvm.presentation.base.extensions.handleApiError
+import com.structure.base_mvvm.presentation.base.extensions.hideKeyboard
+import com.structure.base_mvvm.presentation.base.extensions.navigateSafe
 import com.structure.base_mvvm.presentation.databinding.FragmentConfirmCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
@@ -24,7 +29,55 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
 
   override
   fun setupObservers() {
-    viewModel.backToPreviousScreen.observe(this) { backToPreviousScreen() }
+    lifecycleScope.launchWhenResumed {
+      viewModel.verifyResponse.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            if (viewModel.request.type == "verify")
+              openCountry()
+            else
+              openChangePassword()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it, retryAction = { viewModel.verifyAccount() })
+          }
+          Resource.Default -> {}
+        }
+      }
+    }
+    lifecycleScope.launchWhenResumed {
+      viewModel.forgetResponse.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            startTimer()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it, retryAction = { viewModel.verifyAccount() })
+          }
+          Resource.Default -> {}
+        }
+      }
+    }
+  }
+
+  private fun openCountry() {
+    navigateSafe(ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToCountriesFragment())
+  }
+
+  private fun openChangePassword() {
+    navigateSafe(ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToChangePasswordFragment())
   }
 
   override fun onStart() {

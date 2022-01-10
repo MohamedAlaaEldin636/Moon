@@ -111,6 +111,12 @@
       app:popExitAnim="@anim/anim_slide_out_right"
       app:popUpTo="@+id/log_in_fragment"
       app:popUpToSaveState="true" />
+    <argument
+      android:name="email"
+      app:argType="string" />
+    <argument
+      android:name="type"
+      app:argType="string" />
   </fragment>
   <fragment
     android:id="@+id/changePasswordFragment"

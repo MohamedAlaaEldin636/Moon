@@ -61,7 +61,7 @@
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_confirm_header"
-        style="@style/TextBoldFont"
+        style="@style/TextMediumFont"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen36"
@@ -93,6 +93,7 @@
         android:textColor="@color/lightBlack"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:text="@={viewmodel.request.code}"
         app:cursorColor="@color/black"
         app:cursorWidth="2dp"
         app:hideLineWhenFilled="false"
@@ -127,12 +128,12 @@
         android:layout_height="wrap_content"
         android:enabled="false"
         android:text="@string/confirm_resend"
+        android:onClick="@{()->viewmodel.resendCode()}"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/darkGray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_forget_timer" />
-      <!--        android:onClick="@{()->viewmodel.resendCode()}"-->
 
       <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/appCompatButtonNext"
@@ -143,6 +144,7 @@
         android:layout_marginEnd="@dimen/dimen12"
         android:background="@drawable/btn_accent"
         android:text="@string/send"
+        android:onClick="@{()->viewmodel.verifyAccount()}"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +152,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_login_forget" />
       <!--      android:background="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?@drawable/corner_view_primary_dark:@drawable/corner_view_primary_medium,default=@drawable/corner_view_primary_dark}"-->
       <!--      android:enabled="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?true:false}"-->
-      <!--      android:onClick="@{()->viewmodel.confirmCode()}"-->
+      <!--      -->
 
       <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress"

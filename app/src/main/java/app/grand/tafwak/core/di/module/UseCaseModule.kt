@@ -10,6 +10,8 @@ import com.structure.base_mvvm.domain.account.use_case.SendFirebaseTokenUseCase
 import com.structure.base_mvvm.domain.account.use_case.SetFirstTimeUseCase
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
 import com.structure.base_mvvm.domain.auth.use_case.LogInUseCase
+import com.structure.base_mvvm.domain.auth.use_case.RegisterUseCase
+import com.structure.base_mvvm.domain.auth.use_case.VerifyAccountUseCase
 import com.structure.base_mvvm.domain.general.use_case.ClearPreferencesUseCase
 import com.structure.base_mvvm.domain.general.use_case.GeneralUseCases
 import com.structure.base_mvvm.domain.home.repository.HomeRepository
@@ -32,6 +34,18 @@ class UseCaseModule {
     authRepository: AuthRepository,
     saveUserToLocalUseCase: SaveUserToLocalUseCase
   ): LogInUseCase = LogInUseCase(authRepository, saveUserToLocalUseCase)
+
+  @Provides
+  @Singleton
+  fun provideRegisterUseCase(
+    authRepository: AuthRepository
+  ): RegisterUseCase = RegisterUseCase(authRepository)
+
+  @Provides
+  @Singleton
+  fun provideVerifyAccountUseCase(
+    authRepository: AuthRepository
+  ): VerifyAccountUseCase = VerifyAccountUseCase(authRepository)
 
   @Provides
   @Singleton

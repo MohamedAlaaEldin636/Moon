@@ -7,6 +7,7 @@ import com.structure.base_mvvm.domain.auth.entity.request.LogInRequest
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
 import com.structure.base_mvvm.domain.auth.use_case.ForgetPasswordUseCase
 import com.structure.base_mvvm.domain.utils.BaseResponse
+import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.base.BaseViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
@@ -24,17 +25,10 @@ class ForgotPasswordViewModel @Inject constructor(private val forgetPasswordUseC
   private val _forgetPasswordResponse =
     MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
   val forgetPasswordResponse = _forgetPasswordResponse
-  var validationException = SingleLiveEvent<Int>()
-
-  val backToPreviousScreen = SingleLiveEvent<Void>()
-
-  fun onBackClicked() {
-    backToPreviousScreen.call()
-  }
 
   fun sendCode() {
+    request.type = Constants.FORGET
     forgetPasswordUseCase(request)
-      .catch { exception -> validationException.value = exception.message?.toInt() }
       .onEach { result ->
         _forgetPasswordResponse.value = result
       }

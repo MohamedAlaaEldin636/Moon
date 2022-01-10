@@ -13,7 +13,6 @@ import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.databinding.ItemSubjectBinding
 import com.structure.base_mvvm.presentation.teachers.viewModels.ItemSubjectsViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class SubjectsAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
@@ -38,7 +37,7 @@ class SubjectsAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
     val itemViewModel = ItemSubjectsViewModel(data)
     itemViewModel.clickEvent.observeForever {
       Log.e("onBindViewHolder", "onBindViewHolder: $position")
-      liveData.value = Constants.LIST_PAGE_SIZE
+      liveData.value = Constants.PICK_IMAGE
     }
     holder.setViewModel(itemViewModel)
 

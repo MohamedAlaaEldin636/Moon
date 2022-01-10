@@ -7,6 +7,8 @@
 
     <import type="com.structure.base_mvvm.domain.utils.Constants" />
 
+    <import type="android.view.View" />
+
     <variable
       name="viewModel"
       type="com.structure.base_mvvm.presentation.auth.sign_up.SignUpViewModel" />
@@ -32,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen10"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:onClick="@{() -> viewModel.onBackClicked()}"
+        android:onClick="@{()->viewModel.clickEvent(Constants.BACK)}"
         android:padding="@dimen/dimen2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +43,7 @@
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_sign_up"
-        style="@style/TitleBoldFont"
+        style="@style/TextBoldFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen14"
@@ -54,9 +56,10 @@
 
       <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/user_img"
-        android:layout_width="@dimen/dimen90"
-        android:layout_height="@dimen/dimen90"
+        android:layout_width="@dimen/dimen100"
+        android:layout_height="@dimen/dimen100"
         android:layout_marginTop="@dimen/dimen36"
+        android:onClick="@{()->viewModel.clickEvent(Constants.PICK_IMAGE)}"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_user_image_holder"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,9 +73,49 @@
         android:layout_marginEnd="@dimen/dimen4"
         android:layout_marginBottom="@dimen/dimen4"
         android:background="@drawable/corner_white"
+        android:onClick="@{()->viewModel.clickEvent(Constants.PICK_IMAGE)}"
         android:src="@drawable/ic_profile_camera"
         app:layout_constraintBottom_toBottomOf="@id/user_img"
         app:layout_constraintEnd_toEndOf="@id/user_img" />
+
+      <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen14"
+        android:layout_marginTop="@dimen/dimen25"
+        android:layout_marginEnd="@dimen/dimen14"
+        app:cardCornerRadius="@dimen/dimen8"
+        app:cardElevation="@dimen/dimen2"
+        app:layout_constraintTop_toBottomOf="@+id/user_img">
+
+        <com.google.android.material.tabs.TabLayout
+          android:id="@+id/tabs"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:tabBackground="@drawable/tab_color_selector"
+          app:tabIndicatorHeight="0dp"
+          app:tabSelectedTextColor="@color/white"
+          app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
+          app:tabTextColor="@color/black">
+
+          <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/student" />
+
+          <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/teacher" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+      </com.google.android.material.card.MaterialCardView>
 
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_name"
@@ -87,16 +130,17 @@
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_img"
+        app:layout_constraintTop_toBottomOf="@+id/card_tabs"
         app:startIconDrawable="@drawable/ic_user">
         <!--        app:error="@{viewmodel.request.nameError}"-->
-        <!--        android:text="@={viewmodel.request.name}"-->
+        <!--        -->
 
         <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/auto"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:inputType="textAutoComplete|textAutoCorrect"
+          android:text="@={viewModel.registerRequest.name}"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/colorPrimaryDark"
           android:textColorHint="@color/darkGray" />
@@ -112,6 +156,7 @@
         android:layout_marginEnd="@dimen/dimen14"
         android:hint="@string/register_name_teacher"
         android:textColorHint="@color/darkGray"
+        android:visibility="gone"
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,6 +196,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:inputType="phone"
+          android:text="@={viewModel.registerRequest.phone}"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/colorPrimaryDark"
           android:textColorHint="@color/darkGray"
@@ -177,6 +223,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:inputType="textEmailAddress"
+          android:text="@={viewModel.registerRequest.email}"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/colorPrimaryDark"
           android:textColorHint="@color/darkGray" />
@@ -204,6 +251,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:inputType="textPassword"
+          android:text="@={viewModel.registerRequest.password}"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/colorPrimaryDark"
           android:textColorHint="@color/darkGray" />
@@ -230,6 +278,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:inputType="textPassword"
+          android:text="@={viewModel.registerRequest.password_confirmation}"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/colorPrimaryDark"
           android:textColorHint="@color/darkGray" />
@@ -295,7 +344,7 @@
         android:layout_marginTop="@dimen/dimen20"
         android:layout_marginEnd="@dimen/dimen12"
         android:background="@drawable/btn_accent"
-        android:onClick="@{()-> viewModel.clickEvent(Constants.CONFIRM_CODE)}"
+        android:onClick="@{()-> viewModel.register()}"
         android:text="@string/sign_up"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"
@@ -326,7 +375,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
-        android:onClick="@{()-> viewModel.onBackClicked()}"
+        android:onClick="@{()->viewModel.clickEvent(Constants.BACK)}"
         android:text="@string/have_account"
         android:textAlignment="viewEnd"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -338,7 +387,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
-        android:onClick="@{()-> viewModel.onBackClicked()}"
+        android:onClick="@{()->viewModel.clickEvent(Constants.BACK)}"
         android:text="@string/log_in"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"

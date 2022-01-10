@@ -22,7 +22,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen8"
-      android:onClick="@{()-> notifyItemViewModels.clickEvent(Constants.LIST_PAGE_SIZE)}"
+      android:onClick="@{()-> notifyItemViewModels.clickEvent(Constants.PICK_IMAGE)}"
       android:text="All"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/white"

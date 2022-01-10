@@ -24,17 +24,23 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
   override
   fun setUpViews() {
-    binding.viewModel=viewModel
+    binding.viewModel = viewModel
     LocaleHelper.setLocale(this, Locale("ar"))
     decideNavigationLogic()
   }
 
   private fun decideNavigationLogic() {
     Handler(Looper.getMainLooper()).postDelayed({
-      val targetActivity = if (viewModel.isFirstTime()) {
-        IntroActivity::class.java
-      } else {
-        HomeActivity::class.java
+      val targetActivity = when {
+          viewModel.isFirstTime() -> {
+            IntroActivity::class.java
+          }
+          viewModel.isLogged() -> {
+            HomeActivity::class.java
+          }
+          else -> {
+            AuthActivity::class.java
+          }
       }
       openActivityAndClearStack(targetActivity)
     }, 2000)

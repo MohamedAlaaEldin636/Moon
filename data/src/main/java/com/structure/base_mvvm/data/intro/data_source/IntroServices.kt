@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface IntroServices {
 
-  @GET("app/app-explanation/0/0")
+  @GET("v1/welcome")
   suspend fun intro(): BaseResponse<List<AppTutorial>>
 
 }

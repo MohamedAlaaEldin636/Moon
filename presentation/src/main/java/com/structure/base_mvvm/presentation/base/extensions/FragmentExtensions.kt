@@ -66,6 +66,7 @@ fun Fragment.showError(
 fun Fragment.getMyColor(@ColorRes id: Int) = ContextCompat.getColor(requireContext(), id)
 
 fun Fragment.getMyDrawable(@DrawableRes id: Int) = ContextCompat.getDrawable(requireContext(), id)!!
+fun Fragment.getMyDrawableVector(@DrawableRes id: Int) = ContextCompat.getDrawable(requireContext(), id)!!
 
 fun Fragment.getMyString(id: Int) = resources.getString(id)
 

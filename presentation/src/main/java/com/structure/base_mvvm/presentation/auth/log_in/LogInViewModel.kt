@@ -9,6 +9,7 @@ import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.base.BaseViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.internal.operators.observable.ObservableFilter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
@@ -28,7 +29,6 @@ class  LogInViewModel @Inject constructor(
 
 
   fun onLogInClicked() {
-
     logInUseCase.login(request)
       .catch { exception -> validationException.value = exception.message?.toInt() }
       .onEach { result ->
