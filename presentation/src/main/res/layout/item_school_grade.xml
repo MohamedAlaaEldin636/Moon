@@ -4,9 +4,11 @@
 
   <data>
 
+    <import type="com.structure.base_mvvm.domain.utils.Constants" />
+
     <variable
-      name="notifyItemViewModels"
-      type="com.structure.base_mvvm.presentation.auth.schoolInfo.grades.ItemSchoolGradeViewModel" />
+      name="itemViewModels"
+      type="com.structure.base_mvvm.presentation.auth.schoolInfo.grades.viewModels.ItemSchoolGradeViewModel" />
   </data>
 
 
@@ -14,19 +16,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen4"
+    android:onClick="@{()-> itemViewModels.clickEvent(Constants.CLICK_EVENT)}"
     android:orientation="vertical">
-
-    <com.google.android.material.imageview.ShapeableImageView
-      android:id="@+id/img"
-      android:layout_width="@dimen/dimen36"
-      android:layout_height="@dimen/dimen36"
-      android:layout_margin="@dimen/dimen4"
-      android:scaleType="centerCrop"
-      android:src="@drawable/bg_no_image"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
 
     <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/textView14"
@@ -35,15 +26,15 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen14"
       android:layout_marginEnd="@dimen/dimen8"
-      android:text="Egypt"
+      android:text="@{itemViewModels.stage.name}"
       android:textAlignment="viewStart"
       android:textAppearance="@style/TextAppearance.AppCompat.Small"
       android:textColor="@color/black"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/radio"
       app:layout_constraintHorizontal_bias="0.5"
-      app:layout_constraintStart_toEndOf="@+id/img"
-      app:layout_constraintTop_toTopOf="@id/img" />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.radiobutton.MaterialRadioButton
@@ -52,10 +43,17 @@
       android:layout_height="wrap_content"
       android:minWidth="0dp"
       android:minHeight="0dp"
-      android:checked="true"
+      android:onClick="@{()-> itemViewModels.clickEvent(Constants.CLICK_EVENT)}"
       app:buttonTint="@color/blue"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dimen1"
+      android:background="@color/lightGray"
+      android:layout_marginTop="@dimen/dimen10"
+      app:layout_constraintTop_toBottomOf="@id/textView14"/>
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

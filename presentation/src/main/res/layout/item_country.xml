@@ -4,9 +4,11 @@
 
   <data>
 
+    <import type="com.structure.base_mvvm.domain.utils.Constants" />
+
     <variable
-      name="notifyItemViewModels"
-      type="com.structure.base_mvvm.presentation.auth.countries.ItemCountryViewModel" />
+      name="countryItemViewModels"
+      type="com.structure.base_mvvm.presentation.auth.countries.viewModels.ItemCountryViewModel" />
   </data>
 
 
@@ -14,6 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen4"
+    android:onClick="@{()-> countryItemViewModels.clickEvent(Constants.CLICK_EVENT)}"
     android:orientation="vertical">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -23,9 +26,9 @@
       android:layout_margin="@dimen/dimen4"
       android:scaleType="centerCrop"
       android:src="@drawable/bg_no_image"
-      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
+      app:loadImage="@{countryItemViewModels.country.image}"
       app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -35,11 +38,10 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen14"
       android:layout_marginEnd="@dimen/dimen8"
-      android:text="Egypt"
+      android:text="@{countryItemViewModels.country.name}"
       android:textAlignment="viewStart"
       android:textAppearance="@style/TextAppearance.AppCompat.Small"
       android:textColor="@color/black"
-      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/textView15"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toEndOf="@+id/img"
@@ -56,7 +58,6 @@
       android:textAlignment="center"
       android:textAppearance="@style/TextAppearance.AppCompat.Small"
       android:textColor="@color/black_op"
-      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/radio"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toEndOf="@+id/textView14"
@@ -68,9 +69,23 @@
       android:layout_height="wrap_content"
       android:minWidth="0dp"
       android:minHeight="0dp"
+      android:onClick="@{()-> countryItemViewModels.clickEvent(Constants.CLICK_EVENT)}"
       app:buttonTint="@color/blue"
-      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:barrierDirection="bottom"
+      android:id="@+id/br"
+      app:constraint_referenced_ids="img,textView14,textView15"/>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dimen1"
+      android:layout_marginTop="@dimen/dimen10"
+      android:background="@color/lightGray"
+      app:layout_constraintTop_toBottomOf="@id/br" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

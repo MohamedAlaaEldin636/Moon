@@ -1,12 +1,13 @@
 package com.structure.base_mvvm.domain.auth.use_case
 
-import com.structure.base_mvvm.domain.account.use_case.SaveUserToLocalUseCase
+import com.structure.base_mvvm.domain.account.use_case.UserLocalUseCase
 import com.structure.base_mvvm.domain.auth.entity.model.User
 import com.structure.base_mvvm.domain.auth.entity.request.LogInRequest
 import com.structure.base_mvvm.domain.auth.entity.request.LogInValidationException
 import com.structure.base_mvvm.domain.auth.enums.AuthFieldsValidation
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
 import com.structure.base_mvvm.domain.utils.BaseResponse
+import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.domain.utils.isValidEmail
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 class LogInUseCase @Inject constructor(
   private val authRepository: AuthRepository,
-  private val saveUserToLocalUseCase: SaveUserToLocalUseCase
+  private val userLocalUseCase: UserLocalUseCase
 ) {
 
   @Throws(LogInValidationException::class)
@@ -39,8 +40,8 @@ class LogInUseCase @Inject constructor(
     emit(Resource.Loading)
     val result = authRepository.logIn(request)
     if (result is Resource.Success) {
-      saveUserToLocalUseCase(result.value.data)
-      saveUserToLocalUseCase.invoke(result.value.data.name)
+      userLocalUseCase(result.value.data)
+      userLocalUseCase.invoke(Constants.TOKEN,result.value.data.name)
     }
     emit(result)
   }.flowOn(Dispatchers.IO)

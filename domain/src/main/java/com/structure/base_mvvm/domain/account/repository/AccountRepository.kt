@@ -27,4 +27,8 @@ interface AccountRepository {
   fun setFirstTime(isFirstTime: Boolean)
 
   fun clearPreferences()
+
+  fun saveKeyToLocal(key:String,value: String)
+
+  fun getKeyFromLocal(key: String) :String
 }

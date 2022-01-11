@@ -7,7 +7,7 @@
 
     <variable
       name="viewModel"
-      type="com.structure.base_mvvm.presentation.auth.schoolInfo.grades.SchoolGradesViewModel" />
+      type="com.structure.base_mvvm.presentation.auth.schoolInfo.grades.viewModels.SchoolGradesViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,8 +39,8 @@
       android:layout_height="0dp"
       android:layout_marginStart="@dimen/dimen36"
       android:layout_marginTop="@dimen/dimen18"
-      android:layout_marginBottom="@dimen/dimen18"
       android:layout_marginEnd="@dimen/dimen36"
+      android:layout_marginBottom="@dimen/dimen18"
       app:cardCornerRadius="@dimen/dimen5"
       app:cardElevation="2dp"
       app:layout_constraintBottom_toTopOf="@id/btn_next"
@@ -58,7 +58,6 @@
           android:background="@drawable/corner_blue"
           android:drawableEnd="@drawable/ic_arrow_down"
           android:padding="@dimen/dimen10"
-          android:text="مصر"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           android:textColor="@color/white"
           app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +68,7 @@
           android:layout_height="wrap_content"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           app:layout_constraintTop_toBottomOf="@+id/tv_selected_country"
-          tools:listitem="@layout/item_school_level" />
+          tools:listitem="@layout/item_school_grade" />
       </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -78,8 +77,8 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen36"
-      android:layout_marginBottom="@dimen/dimen12"
       android:layout_marginEnd="@dimen/dimen36"
+      android:layout_marginBottom="@dimen/dimen12"
       android:background="@drawable/btn_accent"
       android:text="@string/next"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"

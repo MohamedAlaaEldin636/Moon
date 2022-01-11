@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="com.structure.base_mvvm.domain.utils.Constants" />
+
+    <variable
+      name="toolBar"
+      type="com.structure.base_mvvm.presentation.base.BaseViewModel" />
+  </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -22,10 +30,12 @@
       app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ic_back"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:onClick="@{()-> toolBar.clickEvent(Constants.BACK)}"
+      android:src="@drawable/ic_back"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="@id/tv_title"
-      android:src="@drawable/ic_back"/>
+      app:layout_constraintTop_toTopOf="@id/tv_title" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -184,5 +184,7 @@
   <string name="not_match_password">كلمتا المرور غير متطابقتان</string>
   <string name="empty_terms">يرجى الموافقه على الشروط والاحكام</string>
   <string name="empty_image">يرجى اختيار الصورة</string>
+    <string name="continue_register_title">هل تريد استكمال البيانات ؟</string>
+  <string name="yes">نعم</string>
 
 </resources>

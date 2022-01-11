@@ -10,4 +10,5 @@ enum class AuthFieldsValidation(val value: Int) {
   PASSWORD_NOT_MATCH(7),
   EMPTY_TERMS(8),
   EMPTY_IMAGE(9),
+  EMPTY_NICK_NAME(10),
 }

@@ -4,8 +4,12 @@ import com.structure.base_mvvm.domain.account.repository.AccountRepository
 import com.structure.base_mvvm.domain.auth.entity.model.User
 import javax.inject.Inject
 
-class SaveUserToLocalUseCase @Inject constructor(private val accountRepository: AccountRepository) {
+class UserLocalUseCase @Inject constructor(private val accountRepository: AccountRepository) {
   operator fun invoke(user: User) = accountRepository.saveUserToLocal(user)
-  suspend operator fun invoke(firebaseToken: String) =
-    accountRepository.saveFirebaseTokenToLocal(firebaseToken)
+  operator fun invoke(key: String, value: String) =
+    accountRepository.saveKeyToLocal(key, value)
+
+  operator fun invoke(key: String): String {
+    return accountRepository.getKeyFromLocal(key)
+  }
 }

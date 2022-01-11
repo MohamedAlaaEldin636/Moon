@@ -2,18 +2,12 @@ package com.structure.base_mvvm.presentation.auth.log_in
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.structure.base_mvvm.domain.auth.enums.AuthFieldsValidation
+import codes.grand.pretty_pop_up.PrettyPopUpHelper
 import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
-import com.structure.base_mvvm.presentation.auth.AuthActivity
-import com.structure.base_mvvm.presentation.base.BaseActivity
 import com.structure.base_mvvm.presentation.base.BaseFragment
-import com.structure.base_mvvm.presentation.base.extensions.handleApiError
-import com.structure.base_mvvm.presentation.base.extensions.hideKeyboard
-import com.structure.base_mvvm.presentation.base.extensions.navigateSafe
-import com.structure.base_mvvm.presentation.base.extensions.openActivityAndClearStack
-import com.structure.base_mvvm.presentation.base.extensions.showSnackBar
+import com.structure.base_mvvm.presentation.base.extensions.*
 import com.structure.base_mvvm.presentation.databinding.FragmentLogInBinding
 import com.structure.base_mvvm.presentation.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,10 +29,12 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   override
   fun setupObservers() {
     viewModel.clickEvent.observe(this) {
-      if (Constants.FORGET_PASSWORD == it)
-        openForgotPassword()
-      else if (it == Constants.REGISTER)
-        openSignUp()
+      when {
+        Constants.FORGET_PASSWORD == it -> openForgotPassword()
+        it == Constants.REGISTER -> openSignUp()
+        it == Constants.CONTINUE_PROGRESS -> openContinueDialog()
+      }
+
     }
 
 //    viewModel.validationException.observe(this) {
@@ -85,5 +81,27 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
 
   private fun openHome() {
     requireActivity().openActivityAndClearStack(HomeActivity::class.java)
+  }
+
+  private fun openContinueDialog() {
+    PrettyPopUpHelper.Builder(childFragmentManager)
+      .setStyle(PrettyPopUpHelper.Style.STYLE_1_HORIZONTAL_BUTTONS)
+      .setContent(R.string.continue_register_title)
+      .setContentColor(getMyColor(R.color.colorPrimaryDark))
+      .setPositiveButtonBackground(R.drawable.corner_blue)
+      .setPositiveButtonTextColor(getMyColor(R.color.white))
+      .setPositiveButton(R.string.yes) {
+        it.dismiss()
+        if (viewModel.regsiter_step == "2")
+          openCountries()
+      }
+      .setNegativeButtonBackground(R.drawable.btn_gray)
+      .setNegativeButtonTextColor(getMyColor(R.color.white))
+      .setNegativeButton(getMyString(R.string.cancel), null)
+      .create()
+  }
+
+  private fun openCountries() {
+    navigateSafe(LogInFragmentDirections.actionLogInFragmentToCountriesFragment())
   }
 }

@@ -5,10 +5,7 @@ import com.structure.base_mvvm.data.local.preferences.AppPreferences
 import com.structure.base_mvvm.domain.account.entity.request.SendFirebaseTokenRequest
 import com.structure.base_mvvm.domain.account.repository.AccountRepository
 import com.structure.base_mvvm.domain.auth.entity.model.User
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
@@ -53,4 +50,9 @@ class AccountRepositoryImpl @Inject constructor(
 
   override
   fun clearPreferences() = appPreferences.clearPreferences()
+  override fun saveKeyToLocal(key: String, value: String) {
+    appPreferences.setLocal(key, value)
+  }
+
+  override fun getKeyFromLocal(key: String): String = appPreferences.getLocal(key)
 }

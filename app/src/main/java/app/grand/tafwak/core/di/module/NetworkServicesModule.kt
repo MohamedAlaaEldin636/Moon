@@ -2,6 +2,8 @@ package app.grand.tafwak.core.di.module
 
 import com.structure.base_mvvm.data.account.data_source.remote.AccountServices
 import com.structure.base_mvvm.data.auth.data_source.remote.AuthServices
+import com.structure.base_mvvm.data.countries.data_source.CountriesServices
+import com.structure.base_mvvm.data.educational.data_source.EducationalServices
 import com.structure.base_mvvm.data.general.data_source.remote.GeneralServices
 import com.structure.base_mvvm.data.home.data_source.remote.HomeServices
 import com.structure.base_mvvm.data.intro.data_source.IntroServices
@@ -46,5 +48,15 @@ object NetworkServicesModule {
   @Singleton
   fun provideIntroServices(retrofit: Retrofit): IntroServices =
     retrofit.create(IntroServices::class.java)
+
+  @Provides
+  @Singleton
+  fun provideCountriesServices(retrofit: Retrofit): CountriesServices =
+    retrofit.create(CountriesServices::class.java)
+
+  @Provides
+  @Singleton
+  fun provideEducationalServices(retrofit: Retrofit): EducationalServices =
+    retrofit.create(EducationalServices::class.java)
 
 }

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import com.structure.base_mvvm.BuildConfig
 import com.structure.base_mvvm.data.local.preferences.AppPreferences
 import com.readystatesoftware.chuck.ChuckInterceptor
+import com.structure.base_mvvm.domain.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +33,7 @@ object RetrofitModule {
       chain.proceed(
         chain.request().newBuilder()
           .addHeader("Authorization", "Bearer ${appPreferences.userToken ?: ""}")
+          .addHeader("country-id", appPreferences.getLocal(Constants.COUNTRY_ID))
           .addHeader("Accept", "application/json")
           .addHeader("language", "ar")
           .build()

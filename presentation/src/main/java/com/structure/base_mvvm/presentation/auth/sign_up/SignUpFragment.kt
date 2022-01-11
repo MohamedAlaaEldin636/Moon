@@ -71,6 +71,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         AuthFieldsValidation.EMPTY_NAME.value -> {
           showNoApiErrorAlert(requireActivity(), resources.getString(R.string.register_name))
         }
+        AuthFieldsValidation.EMPTY_NICK_NAME.value -> {
+          showNoApiErrorAlert(
+            requireActivity(),
+            resources.getString(R.string.register_name_teacher)
+          )
+        }
         AuthFieldsValidation.EMPTY_EMAIL.value -> {
           showNoApiErrorAlert(requireActivity(), resources.getString(R.string.empty_email))
         }

@@ -33,7 +33,6 @@ class AppPreferences @Inject constructor(val context: Context) {
     const val APP_PREFERENCES_NAME = "APP-NAME-Cache"
     private const val SESSION_PREFERENCES_NAME = "APP-NAME-UserCache"
     private const val MODE = Context.MODE_PRIVATE
-
     private val USER_DATA = Pair("USER_DATA", "")
     private val FIRST_TIME = Pair("FIRST_TIME", true)
     private val FIREBASE_TOKEN = Pair("FIREBASE_TOKEN", "")
@@ -52,6 +51,16 @@ class AppPreferences @Inject constructor(val context: Context) {
     val editor = edit()
     operation(editor)
     editor.apply()
+  }
+
+  fun setLocal(key: String, value: String) {
+    sessionPreferences.edit {
+      it.putString(key, value)
+    }
+  }
+
+  fun getLocal(key: String): String {
+    return sessionPreferences.getString(key, "").toString()
   }
 
   var userData: User?

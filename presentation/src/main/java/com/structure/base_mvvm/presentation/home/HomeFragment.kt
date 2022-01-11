@@ -13,7 +13,6 @@ import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
 import com.structure.base_mvvm.presentation.base.extensions.*
-import com.structure.base_mvvm.presentation.base.utils.SwipeToDeleteCallback
 import com.structure.base_mvvm.presentation.databinding.FragmentHomeBinding
 import com.structure.base_mvvm.presentation.home.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint

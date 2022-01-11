@@ -1,4 +1,4 @@
-package com.structure.base_mvvm.presentation.auth.schoolInfo.grades
+package com.structure.base_mvvm.presentation.auth.schoolInfo.grades.viewModels
 
 import androidx.lifecycle.viewModelScope
 import com.structure.base_mvvm.domain.auth.entity.request.ForgetPasswordRequest
