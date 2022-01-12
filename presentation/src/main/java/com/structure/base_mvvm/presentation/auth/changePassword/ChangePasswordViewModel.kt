@@ -1,11 +1,9 @@
 package com.structure.base_mvvm.presentation.auth.changePassword
 
 import androidx.lifecycle.viewModelScope
-import com.structure.base_mvvm.domain.auth.entity.model.User
-import com.structure.base_mvvm.domain.auth.entity.request.ForgetPasswordRequest
-import com.structure.base_mvvm.domain.auth.entity.request.LogInRequest
-import com.structure.base_mvvm.domain.auth.repository.AuthRepository
-import com.structure.base_mvvm.domain.auth.use_case.ForgetPasswordUseCase
+import com.structure.base_mvvm.domain.auth.entity.request.ChangePasswordRequest
+import com.structure.base_mvvm.domain.auth.use_case.ChangePasswordUseCase
+import com.structure.base_mvvm.domain.general.use_case.GeneralUseCases
 import com.structure.base_mvvm.domain.utils.BaseResponse
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.base.BaseViewModel
@@ -18,26 +16,25 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class ChangePasswordViewModel @Inject constructor(private val forgetPasswordUseCase: ForgetPasswordUseCase) :
+class ChangePasswordViewModel @Inject constructor(
+  private val changePasswordUseCase: ChangePasswordUseCase,
+  private val generalUseCases: GeneralUseCases
+) :
   BaseViewModel() {
-  var request = ForgetPasswordRequest()
-  private val _forgetPasswordResponse =
+  var request = ChangePasswordRequest()
+  private val _changePasswordResponse =
     MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
-  val forgetPasswordResponse = _forgetPasswordResponse
+  val changePasswordResponse = _changePasswordResponse
   var validationException = SingleLiveEvent<Int>()
 
-  val backToPreviousScreen = SingleLiveEvent<Void>()
-
-  fun onBackClicked() {
-    backToPreviousScreen.call()
-  }
-
-  fun sendCode() {
-    forgetPasswordUseCase(request)
+  fun changePassword() {
+    changePasswordUseCase(request)
       .catch { exception -> validationException.value = exception.message?.toInt() }
       .onEach { result ->
-        _forgetPasswordResponse.value = result
+        _changePasswordResponse.value = result
       }
       .launchIn(viewModelScope)
   }
+  fun isLogged() = generalUseCases.checkLoggedInUserUseCase()
+
 }

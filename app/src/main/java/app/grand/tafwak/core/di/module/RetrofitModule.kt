@@ -32,7 +32,7 @@ object RetrofitModule {
     Interceptor { chain ->
       chain.proceed(
         chain.request().newBuilder()
-          .addHeader("Authorization", "Bearer ${appPreferences.userToken ?: ""}")
+          .addHeader("Authorization", "Bearer ${appPreferences.getLocal(Constants.TOKEN)}")
           .addHeader("country-id", appPreferences.getLocal(Constants.COUNTRY_ID))
           .addHeader("Accept", "application/json")
           .addHeader("language", "ar")

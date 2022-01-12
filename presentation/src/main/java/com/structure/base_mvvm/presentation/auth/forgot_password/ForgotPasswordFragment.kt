@@ -5,7 +5,6 @@ import androidx.lifecycle.lifecycleScope
 import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
-import com.structure.base_mvvm.presentation.auth.sign_up.SignUpFragmentDirections
 import com.structure.base_mvvm.presentation.base.BaseFragment
 import com.structure.base_mvvm.presentation.base.extensions.*
 import com.structure.base_mvvm.presentation.databinding.FragmentForgotPasswordBinding
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
   private val viewModel: ForgotPasswordViewModel by viewModels()
+
   override
   fun getLayoutId() = R.layout.fragment_forgot_password
 
@@ -49,7 +49,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
 
   private fun openConfirmCode() {
     navigateSafe(
-      SignUpFragmentDirections.actionOpenConfirmCodeFragment(
+      ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToFragmentConfirmCode(
         viewModel.request.email,
         Constants.FORGET
       )

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.structure.base_mvvm.domain.countries.entity.Country
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.auth.countries.viewModels.ItemCountryViewModel
-import com.structure.base_mvvm.presentation.auth.schoolInfo.grades.adapters.adapters.CountriesAdapter
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
 import com.structure.base_mvvm.presentation.databinding.ItemCountryBinding
 

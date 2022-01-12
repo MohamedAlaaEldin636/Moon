@@ -11,6 +11,6 @@ interface AccountServices {
   @PUT("Account/FirebaseToken/Update")
   suspend fun sendFirebaseToken(@Body request: SendFirebaseTokenRequest): BaseResponse<Boolean>
 
-  @DELETE("Account/Logout")
-  suspend fun logOut(): BaseResponse<Boolean>
+  @DELETE("v1/auth/logout")
+  suspend fun logOut(): BaseResponse<*>
 }

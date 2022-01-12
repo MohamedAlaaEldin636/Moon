@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TeacherAccountViewModel @Inject constructor(private val accountUseCases: AccountUseCases) : BaseViewModel() {
 
-  private val _logOuResponse = MutableStateFlow<Resource<BaseResponse<Boolean>>>(Resource.Default)
+  private val _logOuResponse = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
   val logOutResponse = _logOuResponse
 
   val showLogOutPopUp = SingleLiveEvent<Void>()

@@ -34,8 +34,6 @@ class CountriesFragment : BaseFragment<FragmentCountriesBinding>() {
     viewModel.clickEvent.observe(this) {
       if (it == Constants.BACK)
         backToPreviousScreen()
-      else if (it == Constants.EDUCATIONAL_STAGES && viewModel.adapter.lastSelected != -1)
-        openEducationalStages()
     }
     lifecycleScope.launchWhenResumed {
       viewModel.countriesPasswordResponse.collect {
@@ -55,9 +53,27 @@ class CountriesFragment : BaseFragment<FragmentCountriesBinding>() {
         }
       }
     }
+     lifecycleScope.launchWhenResumed {
+      viewModel.registerResponse.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            openEducationalStages()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
+
     viewModel.adapter.changeEvent.observeForever { country ->
       binding.tvSelectedCountry.text = country.name
-      viewModel.saveCountry(country.id.toString())
     }
   }
 

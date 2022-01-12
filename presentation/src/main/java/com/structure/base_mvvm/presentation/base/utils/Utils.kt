@@ -44,6 +44,26 @@ fun showNoApiErrorAlert(activity: Activity, message: String) {
     .show()
 }
 
+fun showNoApiErrorAlertWithAction(
+  activity: Activity,
+  message: String,
+  positiveButtonText:String,
+  action: (() -> Unit)? = null
+) {
+  Alerter.create(activity)
+    .setText(message)
+    .setIcon(R.drawable.ic_api_warning)
+    .setBackgroundColorRes(R.color.red)
+    .enableClickAnimation(true)
+    .enableSwipeToDismiss()
+    .addButton(positiveButtonText, R.style.AlertButton) {
+      action?.let {
+        it()
+      }
+    }
+    .show()
+}
+
 fun showLoadingDialog(activity: Activity?, hint: String?): Dialog? {
   if (activity == null || activity.isFinishing) {
     return null

@@ -6,6 +6,7 @@ import javax.inject.Inject
 
 class UserLocalUseCase @Inject constructor(private val accountRepository: AccountRepository) {
   operator fun invoke(user: User) = accountRepository.saveUserToLocal(user)
+  operator fun invoke(): User? = accountRepository.getUserToLocal()
   operator fun invoke(key: String, value: String) =
     accountRepository.saveKeyToLocal(key, value)
 

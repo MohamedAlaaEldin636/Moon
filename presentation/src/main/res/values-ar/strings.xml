@@ -180,5 +180,7 @@
   <string name="empty_image">يرجى اختيار الصورة</string>
     <string name="continue_register_title">هل تريد استكمال البيانات ؟</string>
   <string name="yes">نعم</string>
+    <string name="continue_register_body">يمكنك استكمال انشاء حسابك عند اخر خطوة</string>
+  <string name="active">تفعيل الحساب</string>
 
 </resources>

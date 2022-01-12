@@ -11,5 +11,6 @@ data class User(
   val nickname: String?,
   val name: String,
   val phone: String,
+  val account_type: String,
   val token: String
 )

@@ -12,7 +12,8 @@ object Constants {
   const val BACK = 8
   const val CLICK_EVENT = 9
   const val CONTINUE_PROGRESS = 10
-  const val EDUCATIONAL_STAGES = 11
+  const val CONTACT = 11
+  const val LOGOUT = 12
   const val BUNDLE = "BUNDLE"
   const val STUDENT_TYPE = "student"
   const val TEACHER_TYPE = "instructor"

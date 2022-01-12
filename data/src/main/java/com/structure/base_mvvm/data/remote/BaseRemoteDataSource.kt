@@ -48,6 +48,12 @@ open class BaseRemoteDataSource @Inject constructor() {
             (apiResponse as BaseResponse<*>).code,
             (apiResponse as BaseResponse<*>).message
           )
+        } 405 -> {
+          return Resource.Failure(
+            FailureStatus.NOT_ACTIVE,
+            (apiResponse as BaseResponse<*>).code,
+            (apiResponse as BaseResponse<*>).message
+          )
         }
         else -> {
           return Resource.Failure(FailureStatus.API_FAIL)

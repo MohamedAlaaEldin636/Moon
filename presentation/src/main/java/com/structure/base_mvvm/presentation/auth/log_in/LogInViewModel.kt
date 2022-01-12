@@ -1,6 +1,5 @@
 package com.structure.base_mvvm.presentation.auth.log_in
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.structure.base_mvvm.domain.account.use_case.UserLocalUseCase
 import com.structure.base_mvvm.domain.auth.entity.model.User
@@ -27,19 +26,18 @@ class LogInViewModel @Inject constructor(
   var request = LogInRequest()
   private val _logInResponse = MutableStateFlow<Resource<BaseResponse<User>>>(Resource.Default)
   val logInResponse = _logInResponse
-  var regsiter_step = ""
+  var registerStep = ""
   var validationException = SingleLiveEvent<Int>()
 
   init {
-    regsiter_step = checkIfHasAccount()
-    Log.e("regsiter_step", ": "+regsiter_step )
-    if (regsiter_step.isNotEmpty())
+    registerStep = checkIfHasAccount()
+    if (registerStep.isNotEmpty())
       clickEvent.value = Constants.CONTINUE_PROGRESS
 
   }
 
   fun onLogInClicked() {
-    logInUseCase.login(request)
+    logInUseCase(request)
       .catch { exception -> validationException.value = exception.message?.toInt() }
       .onEach { result ->
         _logInResponse.value = result
@@ -48,5 +46,6 @@ class LogInViewModel @Inject constructor(
   }
 
   private fun checkIfHasAccount(): String = userLocalUseCase.invoke(Constants.REGISTER_STEP)
+  fun checkUserType(): String? = userLocalUseCase.invoke()?.account_type
 
 }

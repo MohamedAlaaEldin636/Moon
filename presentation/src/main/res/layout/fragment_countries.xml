@@ -87,7 +87,7 @@
       android:layout_marginEnd="@dimen/dimen36"
       android:layout_marginBottom="@dimen/dimen12"
       android:background="@drawable/btn_accent"
-      android:onClick="@{()->viewModel.clickEvent(Constants.EDUCATIONAL_STAGES)}"
+      android:onClick="@{()->viewModel.registerStep2()}"
       android:text="@string/next"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/white"

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
+
+    <import type="com.structure.base_mvvm.domain.utils.Constants" />
 
     <variable
       name="viewModel"
@@ -10,9 +13,9 @@
   </data>
 
   <androidx.core.widget.NestedScrollView
-    android:background="@color/backgroundGray"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundGray">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -41,7 +44,7 @@
       <com.google.android.material.card.MaterialCardView
         android:id="@+id/user_card"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="189dp"
         android:layout_margin="@dimen/dimen10"
         app:cardCornerRadius="@dimen/dimen8"
         app:cardElevation="@dimen/dimen2"
@@ -66,7 +69,7 @@
       <com.google.android.material.card.MaterialCardView
         android:id="@+id/profit_card"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="189dp"
         android:layout_margin="@dimen/dimen10"
         app:cardCornerRadius="@dimen/dimen8"
         app:cardElevation="@dimen/dimen2"
@@ -91,14 +94,15 @@
       <com.google.android.material.card.MaterialCardView
         android:id="@+id/logout_card"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="208dp"
         android:layout_margin="@dimen/dimen10"
+        android:onClick="@{()->viewModel.clickEvent(Constants.LOGOUT)}"
         app:cardCornerRadius="@dimen/dimen8"
         app:cardElevation="@dimen/dimen2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/lessons_card"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lessons_card"
         app:layout_constraintTop_toBottomOf="@+id/user_card">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -117,14 +121,14 @@
       <com.google.android.material.card.MaterialCardView
         android:id="@+id/lessons_card"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="208dp"
         android:layout_margin="@dimen/dimen10"
         app:cardCornerRadius="@dimen/dimen8"
         app:cardElevation="@dimen/dimen2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/logout_card"
+        app:layout_constraintEnd_toStartOf="@+id/logout_card"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_card">
 
         <androidx.appcompat.widget.AppCompatTextView

@@ -1,15 +1,18 @@
 package com.structure.base_mvvm.presentation.auth.changePassword
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
+import androidx.lifecycle.lifecycleScope
 import com.structure.base_mvvm.domain.auth.enums.AuthFieldsValidation
+import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
 import com.structure.base_mvvm.presentation.base.extensions.backToPreviousScreen
-import com.structure.base_mvvm.presentation.base.extensions.showSnackBar
+import com.structure.base_mvvm.presentation.base.extensions.handleApiError
+import com.structure.base_mvvm.presentation.base.extensions.hideKeyboard
+import com.structure.base_mvvm.presentation.base.utils.showNoApiErrorAlert
 import com.structure.base_mvvm.presentation.databinding.FragmentChangePasswordBinding
-import com.structure.base_mvvm.presentation.databinding.FragmentForgotPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
@@ -26,16 +29,46 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
 
   override
   fun setupObservers() {
-    viewModel.backToPreviousScreen.observe(this) { backToPreviousScreen() }
+    viewModel.clickEvent.observe(this) { backToPreviousScreen() }
     viewModel.validationException.observe(this) {
       when (it) {
-        AuthFieldsValidation.EMPTY_EMAIL.value -> {
-          requireView().showSnackBar(resources.getString(R.string.empty_email))
+        AuthFieldsValidation.EMPTY_PASSWORD.value -> {
+          showNoApiErrorAlert(requireActivity(), resources.getString(R.string.empty_password))
         }
-        AuthFieldsValidation.INVALID_EMAIL.value -> {
-          requireView().showSnackBar(resources.getString(R.string.invalid_email))
+        AuthFieldsValidation.EMPTY_CONFIRM_PASSWORD.value -> {
+          showNoApiErrorAlert(
+            requireActivity(),
+            resources.getString(R.string.password_hint_confirm)
+          )
+        }
+        AuthFieldsValidation.PASSWORD_NOT_MATCH.value -> {
+          showNoApiErrorAlert(
+            requireActivity(),
+            resources.getString(R.string.not_match_password)
+          )
+        }
+      }
+    }
+    lifecycleScope.launchWhenResumed {
+      viewModel.changePasswordResponse.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            backToPreviousScreen()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it, retryAction = { viewModel.changePassword() })
+          }
+          Resource.Default -> {}
         }
       }
     }
   }
+
+
 }

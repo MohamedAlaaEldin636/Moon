@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:bind="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
   <data>
+    <import type="com.structure.base_mvvm.domain.utils.Constants" />
 
     <variable
       name="viewModel"
@@ -18,6 +20,7 @@
     <include
       android:id="@+id/included_toolbar"
       layout="@layout/toolbar_blue"
+      bind:toolBar="@{viewModel}"
       app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -66,6 +69,9 @@
           android:id="@+id/rc_countries"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          app:adapter="@{viewModel.adapter}"
+          app:orientation="@{`1`}"
+          app:span="@{`1`}"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           app:layout_constraintTop_toBottomOf="@+id/tv_selected_country"
           tools:listitem="@layout/item_school_grade" />
@@ -81,6 +87,7 @@
       android:layout_marginBottom="@dimen/dimen12"
       android:background="@drawable/btn_accent"
       android:text="@string/next"
+      android:onClick="@{()->viewModel.registerStep3()}"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/white"
       app:layout_constraintBottom_toBottomOf="parent"

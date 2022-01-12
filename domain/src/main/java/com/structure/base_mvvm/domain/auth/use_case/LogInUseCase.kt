@@ -6,10 +6,7 @@ import com.structure.base_mvvm.domain.auth.entity.request.LogInRequest
 import com.structure.base_mvvm.domain.auth.entity.request.LogInValidationException
 import com.structure.base_mvvm.domain.auth.enums.AuthFieldsValidation
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
-import com.structure.base_mvvm.domain.utils.BaseResponse
-import com.structure.base_mvvm.domain.utils.Constants
-import com.structure.base_mvvm.domain.utils.Resource
-import com.structure.base_mvvm.domain.utils.isValidEmail
+import com.structure.base_mvvm.domain.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -23,7 +20,7 @@ class LogInUseCase @Inject constructor(
 ) {
 
   @Throws(LogInValidationException::class)
-  fun login(request: LogInRequest): Flow<Resource<BaseResponse<User>>> = flow {
+  operator fun invoke(request: LogInRequest): Flow<Resource<BaseResponse<User>>> = flow {
     if (request.email.isEmpty()) {
       throw LogInValidationException(AuthFieldsValidation.EMPTY_EMAIL.value.toString())
     }
@@ -36,12 +33,17 @@ class LogInUseCase @Inject constructor(
       throw LogInValidationException(AuthFieldsValidation.EMPTY_PASSWORD.value.toString())
     }
 
-    request.device_token = "sdkjfhgkjsdf"
     emit(Resource.Loading)
     val result = authRepository.logIn(request)
     if (result is Resource.Success) {
-      userLocalUseCase(result.value.data)
-      userLocalUseCase.invoke(Constants.TOKEN,result.value.data.name)
+      userLocalUseCase.invoke(Constants.TOKEN, result.value.data.token)
+      if (result.value.data.register_steps == 4)
+        userLocalUseCase(result.value.data)
+      else
+        userLocalUseCase.invoke(
+          Constants.REGISTER_STEP,
+          result.value.data.register_steps.toString()
+        )
     }
     emit(result)
   }.flowOn(Dispatchers.IO)

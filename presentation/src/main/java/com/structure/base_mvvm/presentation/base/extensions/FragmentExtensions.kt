@@ -1,33 +1,25 @@
 package com.structure.base_mvvm.presentation.base.extensions
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.net.Uri
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.afollestad.assent.*
 import com.structure.base_mvvm.domain.utils.FailureStatus
 import com.structure.base_mvvm.domain.utils.Resource.Failure
 import com.structure.base_mvvm.presentation.R
-import com.structure.base_mvvm.presentation.base.BaseActivity
-import com.structure.base_mvvm.presentation.base.utils.hideSoftInput
-import com.structure.base_mvvm.presentation.base.utils.showMessage
-import com.structure.base_mvvm.presentation.base.utils.showNoApiErrorAlert
-import com.structure.base_mvvm.presentation.base.utils.showNoInternetAlert
-import gun0912.tedbottompicker.TedRxBottomPicker
+import com.structure.base_mvvm.presentation.base.utils.*
 
 fun Fragment.handleApiError(
   failure: Failure,
   retryAction: (() -> Unit)? = null,
   noDataAction: (() -> Unit)? = null,
+  notActive: (() -> Unit)? = null,
+  notActiveAction: (() -> Unit)? = null,
   noInternetAction: (() -> Unit)? = null
 ) {
   when (failure.failureStatus) {
@@ -38,6 +30,17 @@ fun Fragment.handleApiError(
     FailureStatus.NO_INTERNET -> {
       noInternetAction?.invoke()
       showNoInternetAlert(requireActivity())
+    }
+    FailureStatus.NOT_ACTIVE -> {
+      notActive?.invoke()
+      failure.message?.let {
+        showNoApiErrorAlertWithAction(
+          requireActivity(),
+          it,
+          getString(R.string.active),
+          notActiveAction
+        )
+      }
     }
     else -> {
       noDataAction?.invoke()
@@ -66,7 +69,8 @@ fun Fragment.showError(
 fun Fragment.getMyColor(@ColorRes id: Int) = ContextCompat.getColor(requireContext(), id)
 
 fun Fragment.getMyDrawable(@DrawableRes id: Int) = ContextCompat.getDrawable(requireContext(), id)!!
-fun Fragment.getMyDrawableVector(@DrawableRes id: Int) = ContextCompat.getDrawable(requireContext(), id)!!
+fun Fragment.getMyDrawableVector(@DrawableRes id: Int) =
+  ContextCompat.getDrawable(requireContext(), id)!!
 
 fun Fragment.getMyString(id: Int) = resources.getString(id)
 

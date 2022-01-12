@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
 
@@ -56,7 +55,7 @@
         <androidx.appcompat.widget.AppCompatEditText
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:inputType="text"
+          android:inputType="textEmailAddress"
           android:text="@={viewModel.request.email}"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/colorPrimaryDark"
@@ -108,7 +107,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen12"
-        android:layout_marginTop="@dimen/dimen12"
+        android:layout_marginTop="@dimen/dimen30"
         android:layout_marginEnd="@dimen/dimen12"
         android:background="@drawable/btn_accent"
         android:onClick="@{()-> viewModel.onLogInClicked()}"
@@ -126,7 +125,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen14"
         android:background="?selectableItemBackground"
-        android:onClick="@{()-> viewModel.clickEvent(Constants.REGISTER)}"
+        android:onClick="@{()-> viewModel.clickEvent(Constants.CONTACT)}"
         android:text="@string/contact_us"
         android:textAlignment="viewEnd"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"

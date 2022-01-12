@@ -1,4 +1,4 @@
-package com.structure.base_mvvm.presentation.auth.schoolInfo.grades.adapters
+package com.structure.base_mvvm.presentation.auth.schoolInfo.levels.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,36 +8,36 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.structure.base_mvvm.domain.educational.entity.model.Stage
+import com.structure.base_mvvm.domain.educational.entity.model.Grade
 import com.structure.base_mvvm.presentation.R
-import com.structure.base_mvvm.presentation.auth.schoolInfo.grades.viewModels.ItemSchoolGradeViewModel
+import com.structure.base_mvvm.presentation.auth.schoolInfo.levels.ItemSchoolLevelViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
-import com.structure.base_mvvm.presentation.databinding.ItemSchoolGradeBinding
+import com.structure.base_mvvm.presentation.databinding.ItemSchoolLevelBinding
 
-class StagesAdapter : RecyclerView.Adapter<StagesAdapter.ViewHolder>() {
+class GradesAdapter : RecyclerView.Adapter<GradesAdapter.ViewHolder>() {
   var lastSelected = -1
   private var lastPosition = -1
-  var changeEvent: SingleLiveEvent<Stage> = SingleLiveEvent()
-  private val differCallback = object : DiffUtil.ItemCallback<Stage>() {
-    override fun areItemsTheSame(oldItem: Stage, newItem: Stage): Boolean {
+  var changeEvent: SingleLiveEvent<Grade> = SingleLiveEvent()
+  private val differCallback = object : DiffUtil.ItemCallback<Grade>() {
+    override fun areItemsTheSame(oldItem: Grade, newItem: Grade): Boolean {
       return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Stage, newItem: Stage): Boolean {
+    override fun areContentsTheSame(oldItem: Grade, newItem: Grade): Boolean {
       return oldItem == newItem
     }
   }
   val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view =
-      LayoutInflater.from(parent.context).inflate(R.layout.item_school_grade, parent, false)
+      LayoutInflater.from(parent.context).inflate(R.layout.item_school_level, parent, false)
     return ViewHolder(view)
   }
 
   @SuppressLint("RecyclerView")
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemSchoolGradeViewModel(data)
+    val itemViewModel = ItemSchoolLevelViewModel(data)
     itemViewModel.clickEvent.observeForever {
       notifyItemChanged(lastPosition)
       lastPosition = position
@@ -66,7 +66,7 @@ class StagesAdapter : RecyclerView.Adapter<StagesAdapter.ViewHolder>() {
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    lateinit var itemLayoutBinding: ItemSchoolGradeBinding
+    lateinit var itemLayoutBinding: ItemSchoolLevelBinding
 
     init {
       bind()
@@ -80,7 +80,7 @@ class StagesAdapter : RecyclerView.Adapter<StagesAdapter.ViewHolder>() {
       itemLayoutBinding.unbind()
     }
 
-    fun setViewModel(itemViewModel: ItemSchoolGradeViewModel) {
+    fun setViewModel(itemViewModel: ItemSchoolLevelViewModel) {
       itemLayoutBinding.itemViewModels = itemViewModel
     }
   }

@@ -2,10 +2,7 @@ package com.structure.base_mvvm.data.auth.repository
 
 import com.structure.base_mvvm.data.auth.data_source.remote.AuthRemoteDataSource
 import com.structure.base_mvvm.domain.auth.entity.model.User
-import com.structure.base_mvvm.domain.auth.entity.request.ForgetPasswordRequest
-import com.structure.base_mvvm.domain.auth.entity.request.LogInRequest
-import com.structure.base_mvvm.domain.auth.entity.request.RegisterRequest
-import com.structure.base_mvvm.domain.auth.entity.request.VerifyAccountRequest
+import com.structure.base_mvvm.domain.auth.entity.request.*
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
 import com.structure.base_mvvm.domain.utils.BaseResponse
 import com.structure.base_mvvm.domain.utils.Resource
@@ -17,6 +14,9 @@ class AuthRepositoryImpl @Inject constructor(
 
   override
   suspend fun logIn(request: LogInRequest) = remoteDataSource.logIn(request)
+  override suspend fun changePassword(request: ChangePasswordRequest): Resource<BaseResponse<*>> =
+    remoteDataSource.changePassword(request)
+
   override suspend fun forgetPassword(request: ForgetPasswordRequest) =
     remoteDataSource.forgetPassword(request)
 

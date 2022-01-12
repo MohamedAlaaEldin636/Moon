@@ -10,7 +10,7 @@ interface AccountRepository {
 
   suspend fun sendFirebaseToken(request: SendFirebaseTokenRequest): Resource<BaseResponse<Boolean>>
 
-  suspend fun logOut(): Resource<BaseResponse<Boolean>>
+  suspend fun logOut(): Resource<BaseResponse<*>>
 
   fun isFirstTime(): Boolean
 
@@ -23,12 +23,13 @@ interface AccountRepository {
   fun getFirebaseToken(): String?
 
   fun saveUserToLocal(user: User)
+  fun getUserToLocal(): User?
 
   fun setFirstTime(isFirstTime: Boolean)
 
   fun clearPreferences()
 
-  fun saveKeyToLocal(key:String,value: String)
+  fun saveKeyToLocal(key: String, value: String)
 
-  fun getKeyFromLocal(key: String) :String
+  fun getKeyFromLocal(key: String): String
 }

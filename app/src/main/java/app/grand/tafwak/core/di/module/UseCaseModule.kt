@@ -9,6 +9,7 @@ import com.structure.base_mvvm.domain.account.use_case.UserLocalUseCase
 import com.structure.base_mvvm.domain.account.use_case.SendFirebaseTokenUseCase
 import com.structure.base_mvvm.domain.account.use_case.SetFirstTimeUseCase
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
+import com.structure.base_mvvm.domain.auth.use_case.ChangePasswordUseCase
 import com.structure.base_mvvm.domain.auth.use_case.LogInUseCase
 import com.structure.base_mvvm.domain.auth.use_case.RegisterUseCase
 import com.structure.base_mvvm.domain.auth.use_case.VerifyAccountUseCase
@@ -55,15 +56,23 @@ class UseCaseModule {
 
   @Provides
   @Singleton
+  fun provideChangePasswordUseCase(
+    authRepository: AuthRepository,
+  ): ChangePasswordUseCase = ChangePasswordUseCase(authRepository)
+
+  @Provides
+  @Singleton
   fun provideCountriesUseCase(
-    countriesRepository: CountriesRepository
-  ): CountriesUseCase = CountriesUseCase(countriesRepository)
+    countriesRepository: CountriesRepository,
+    userLocalUseCase: UserLocalUseCase
+  ): CountriesUseCase = CountriesUseCase(countriesRepository, userLocalUseCase)
 
   @Provides
   @Singleton
   fun provideEducationalUseCase(
-    countriesRepository: EducationalRepository
-  ): EducationalUseCase = EducationalUseCase(countriesRepository)
+    countriesRepository: EducationalRepository,
+    userLocalUseCase: UserLocalUseCase
+  ): EducationalUseCase = EducationalUseCase(countriesRepository, userLocalUseCase)
 
   @Provides
   @Singleton

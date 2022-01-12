@@ -15,10 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(private val accountUseCases: AccountUseCases) : BaseViewModel() {
 
-  private val _logOuResponse = MutableStateFlow<Resource<BaseResponse<Boolean>>>(Resource.Default)
+  private val _logOuResponse = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
   val logOutResponse = _logOuResponse
-
-  val showLogOutPopUp = SingleLiveEvent<Void>()
 
   fun logOut() {
     accountUseCases.logOutUseCase()
@@ -28,7 +26,4 @@ class AccountViewModel @Inject constructor(private val accountUseCases: AccountU
       .launchIn(viewModelScope)
   }
 
-  fun onLogOutClicked() {
-    showLogOutPopUp.call()
-  }
 }

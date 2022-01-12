@@ -72,18 +72,6 @@ class AppPreferences @Inject constructor(val context: Context) {
       it.putString(USER_DATA.first, Gson().toJson(value))
     }
 
-  val userToken: String?
-    get() {
-      val value: String? = sessionPreferences.getString(USER_DATA.first, USER_DATA.second)
-      val user = Gson().fromJson(value, User::class.java)
-
-      return if (user == null || user.token.isEmpty()) {
-        null
-      } else {
-        user.token
-      }
-    }
-
   val isLoggedIn: Boolean
     get() {
       val value: String? = sessionPreferences.getString(USER_DATA.first, USER_DATA.second)

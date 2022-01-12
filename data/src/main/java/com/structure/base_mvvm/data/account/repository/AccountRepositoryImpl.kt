@@ -43,6 +43,10 @@ class AccountRepositoryImpl @Inject constructor(
     appPreferences.userData = user
   }
 
+  override fun getUserToLocal(): User? {
+    return appPreferences.userData
+  }
+
   override
   fun setFirstTime(isFirstTime: Boolean) {
     appPreferences.isFirstTime = isFirstTime

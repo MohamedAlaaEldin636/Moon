@@ -1,6 +1,7 @@
 package com.structure.base_mvvm.data.auth.data_source.remote
 
 import com.structure.base_mvvm.domain.auth.entity.model.User
+import com.structure.base_mvvm.domain.auth.entity.request.ChangePasswordRequest
 import com.structure.base_mvvm.domain.auth.entity.request.ForgetPasswordRequest
 import com.structure.base_mvvm.domain.auth.entity.request.LogInRequest
 import com.structure.base_mvvm.domain.auth.entity.request.VerifyAccountRequest
@@ -10,7 +11,7 @@ import retrofit2.http.*
 
 interface AuthServices {
 
-  @POST("v1/client/login")
+  @POST("v1/auth/login")
   suspend fun logIn(@Body request: LogInRequest): BaseResponse<User>
 
   @POST("v1/auth/send_code")
@@ -18,6 +19,8 @@ interface AuthServices {
 
   @POST("v1/auth/verify_code")
   suspend fun verifyAccount(@Body request: VerifyAccountRequest): BaseResponse<User>
+ @POST("v1/auth/change_password")
+  suspend fun changePassword(@Body request: ChangePasswordRequest): BaseResponse<*>
 
   @Multipart
   @POST("v1/auth/register")

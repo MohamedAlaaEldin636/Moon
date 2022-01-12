@@ -26,43 +26,8 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>() {
   }
 
   override
-  fun setUpViews() {
-    setUpToolBar()
-  }
-
-  private fun setUpToolBar() {
-//    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.account)
-//    binding.includedToolbar.backIv.hide()
-  }
-
-  override
   fun setupObservers() {
-    viewModelTeacher.showLogOutPopUp.observe(this) { showLogOutPopUp() }
-  }
-
-  private fun showLogOutPopUp() {
-    PrettyPopUpHelper.Builder(childFragmentManager)
-      .setStyle(PrettyPopUpHelper.Style.STYLE_1_HORIZONTAL_BUTTONS)
-      .setTitle(R.string.log_out)
-      .setTitleColor(getMyColor(R.color.colorPrimaryDark))
-      .setContent(R.string.log_out_hint)
-      .setContentColor(getMyColor(R.color.gray))
-      .setPositiveButtonBackground(R.drawable.btn_accent)
-      .setPositiveButtonTextColor(getMyColor(R.color.colorPrimaryDark))
-      .setImage(R.drawable.alerter_ic_notifications)
-      .setPositiveButton(R.string.log_out) {
-        it.dismiss()
-        logOut()
-      }
-      .setNegativeButtonBackground(R.drawable.btn_gray)
-      .setNegativeButtonTextColor(getMyColor(R.color.white))
-      .setNegativeButton(getMyString(R.string.cancel), null)
-      .create()
-  }
-
-  private fun logOut() {
-    viewModelTeacher.logOut()
-
+    viewModelTeacher.clickEvent.observe(this) { showLogOutPopUp() }
     lifecycleScope.launchWhenResumed {
       viewModelTeacher.logOutResponse.collect {
         when (it) {
@@ -81,6 +46,26 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>() {
         }
       }
     }
+  }
+
+  private fun showLogOutPopUp() {
+    PrettyPopUpHelper.Builder(childFragmentManager)
+      .setStyle(PrettyPopUpHelper.Style.STYLE_1_HORIZONTAL_BUTTONS)
+      .setTitle(R.string.log_out)
+      .setTitleColor(getMyColor(R.color.colorPrimaryDark))
+      .setContent(R.string.log_out_hint)
+      .setContentColor(getMyColor(R.color.gray))
+      .setPositiveButtonBackground(R.color.colorPrimaryDark)
+      .setPositiveButtonTextColor(getMyColor(R.color.white))
+      .setImage(R.drawable.ic_logout)
+      .setPositiveButton(R.string.log_out) {
+        it.dismiss()
+        viewModelTeacher.logOut()
+      }
+      .setNegativeButtonBackground(R.drawable.btn_gray)
+      .setNegativeButtonTextColor(getMyColor(R.color.white))
+      .setNegativeButton(getMyString(R.string.cancel), null)
+      .create()
   }
 
   private fun openLogInScreen() {
