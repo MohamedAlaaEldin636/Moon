@@ -37,13 +37,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.testsFragment,
         R.id.accountFragment,
         R.id.contact_fragment,
+        R.id.suggestions_fragment,
         R.id.about_fragment,
+        R.id.privacy_fragment,
+        R.id.terms_fragment,
       ),
       binding.root,
     )
     setSupportActionBar(binding.toolbar)
     setupActionBarWithNavController(nav, appBarConfiguration)
-//    binding.toolbar.setupWithNavController(nav, appBarConfiguration)
     binding.bottomNavigationView.setupWithNavController(nav)
     binding.navigationView.setupWithNavController(nav)
     navChangeListener()
@@ -51,12 +53,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   private fun navChangeListener() {
     nav.addOnDestinationChangedListener { _, destination, _ ->
-      if (destination.id == R.id.home_fragment || destination.id == R.id.teachersFragment || destination.id == R.id.testsFragment || destination.id == R.id.accountFragment) {
+      if (destination.id == R.id.home_fragment || destination.id == R.id.teachersFragment || destination.id == R.id.testsFragment || destination.id == R.id.accountFragment || destination.id == R.id.contact_fragment || destination.id == R.id.suggestions_fragment) {
         binding.toolbar.visibility = View.VISIBLE
         binding.bottomNavigationView.visibility = View.VISIBLE
         binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
       } else {
-        binding.toolbar.setBackgroundColor(getColor(R.color.transparent))
+        binding.toolbar.visibility = View.GONE
         binding.bottomNavigationView.visibility = View.GONE
         binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
       }
@@ -67,6 +69,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   override fun onSupportNavigateUp(): Boolean {
     return nav.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
   }
+
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.top_app_bar, menu)
     return true

@@ -56,7 +56,7 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
   }
 
   private fun setUpToolBar() {
-//    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.search)
+//    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.settings)
 //    binding.includedToolbar.backIv.hide()
   }
 

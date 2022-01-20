@@ -6,9 +6,12 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
+import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
@@ -49,6 +52,16 @@ fun View.invisible() {
   if (this is Group) {
     this.requestLayout()
   }
+}
+
+@BindingAdapter("app:fromHtml")
+fun TextView.fromHtml(text: String?) {
+  if (text != null)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      setText(Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT));
+    } else {
+      setText(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY));
+    }
 }
 
 @BindingAdapter("app:goneUnless")

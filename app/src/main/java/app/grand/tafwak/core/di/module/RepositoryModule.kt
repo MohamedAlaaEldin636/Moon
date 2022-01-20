@@ -15,8 +15,8 @@ import com.structure.base_mvvm.data.home.repository.HomeRepositoryImpl
 import com.structure.base_mvvm.data.intro.data_source.IntroRemoteDataSource
 import com.structure.base_mvvm.data.intro.repository.IntroRepositoryImpl
 import com.structure.base_mvvm.data.local.preferences.AppPreferences
-import com.structure.base_mvvm.data.search.data_source.remote.SearchRemoteDataSource
-import com.structure.base_mvvm.data.search.repository.SearchRepositoryImpl
+import com.structure.base_mvvm.data.settings.data_source.remote.SettingsRemoteDataSource
+import com.structure.base_mvvm.data.settings.repository.SettingsRepositoryImpl
 import com.structure.base_mvvm.domain.account.repository.AccountRepository
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
 import com.structure.base_mvvm.domain.countries.repository.CountriesRepository
@@ -24,7 +24,7 @@ import com.structure.base_mvvm.domain.educational.repository.EducationalReposito
 import com.structure.base_mvvm.domain.general.repository.GeneralRepository
 import com.structure.base_mvvm.domain.home.repository.HomeRepository
 import com.structure.base_mvvm.domain.intro.repository.IntroRepository
-import com.structure.base_mvvm.domain.search.repository.SearchRepository
+import com.structure.base_mvvm.domain.settings.repository.SettingsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -69,9 +69,9 @@ class RepositoryModule {
 
   @Provides
   @Singleton
-  fun provideSearchRepository(
-    remoteDataSource: SearchRemoteDataSource
-  ): SearchRepository = SearchRepositoryImpl(remoteDataSource)
+  fun provideSettingsRepository(
+    remoteDataSource: SettingsRemoteDataSource
+  ): SettingsRepository = SettingsRepositoryImpl(remoteDataSource)
 
   @Provides
   @Singleton

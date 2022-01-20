@@ -11,4 +11,5 @@ enum class AuthFieldsValidation(val value: Int) {
   EMPTY_TERMS(8),
   EMPTY_IMAGE(9),
   EMPTY_NICK_NAME(10),
+  EMPTY_CONTENT(11),
 }

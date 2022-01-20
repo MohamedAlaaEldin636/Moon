@@ -59,7 +59,21 @@
   <fragment
     android:id="@+id/contact_fragment"
     android:name="com.structure.base_mvvm.presentation.contactUs.ContactUsFragment"
-    android:label="ContactUsFragment" />
+    android:label="@string/contact_us">
+    <argument
+      android:name="type"
+      app:argType="string"
+      android:defaultValue="contact_us"/>
+  </fragment>
+  <fragment
+    android:id="@+id/suggestions_fragment"
+    android:name="com.structure.base_mvvm.presentation.contactUs.SuggestionsFragment"
+    android:label="@string/suggestions">
+    <argument
+      android:name="type"
+      app:argType="string"
+      android:defaultValue="complaint"/>
+  </fragment>
   <dialog
     android:id="@+id/review_dialog_comment"
     android:name="com.structure.base_mvvm.presentation.reviews.ReviewDialog"
@@ -68,4 +82,13 @@
       android:name="teacherId"
       app:argType="integer" />
   </dialog>
+  <fragment
+    android:id="@+id/privacy_fragment"
+    android:name="com.structure.base_mvvm.presentation.privacy.PrivacyFragment"
+    android:label="@string/privacy" />
+  <fragment
+    android:id="@+id/terms_fragment"
+    android:name="com.structure.base_mvvm.presentation.terms.TermsFragment"
+    android:label="@string/terms" />
+
 </navigation>
