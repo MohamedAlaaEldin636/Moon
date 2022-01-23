@@ -6,7 +6,7 @@ import javax.inject.Inject
 class HomeRemoteDataSource @Inject constructor(private val apiService: HomeServices) :
   BaseRemoteDataSource() {
 
-  suspend fun home(page: Int) = safeApiCall {
-    apiService.home(page)
+  suspend fun homeStudent() = safeApiCall {
+    apiService.homeStudent()
   }
 }

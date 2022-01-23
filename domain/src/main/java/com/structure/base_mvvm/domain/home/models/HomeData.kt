@@ -1,5 +1,8 @@
 package com.structure.base_mvvm.domain.home.models
 
+import androidx.annotation.Keep
+
+@Keep
 data class HomeData(
   val created_at: String,
   val text: String,

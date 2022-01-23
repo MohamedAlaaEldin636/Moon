@@ -5,7 +5,7 @@
   <data>
 
     <variable
-      name="notifyItemViewModels"
+      name="itemViewModels"
       type="com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel" />
   </data>
 
@@ -30,6 +30,7 @@
         android:src="@drawable/bg_no_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:loadImage="@{itemViewModels.instructor.image}"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         app:strokeColor="@color/blue"
         app:strokeWidth="@dimen/dimen1" />
@@ -44,7 +45,7 @@
         android:layout_marginEnd="@dimen/dimen8"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="أ/ أحمد محمد مصطفي"
+        android:text="@{itemViewModels.instructor.name}"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/black"
@@ -57,10 +58,10 @@
         style="@style/TextMediumFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen4"
         android:width="0dp"
         android:minHeight="0dp"
-        android:layout_margin="@dimen/dimen4"
-        android:text="لغة عربية"
+        android:text="@{itemViewModels.instructor.name}"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:backgroundTint="@color/blue"
         app:cornerRadius="@dimen/dimen14"

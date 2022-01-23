@@ -116,7 +116,7 @@ open class BaseRemoteDataSource @Inject constructor() {
                     throwable.response()?.errorBody()!!.charStream().readText(),
                     ErrorResponse::class.java
                   )
-                  Resource.Failure(FailureStatus.API_FAIL, throwable.code(), errorResponse.detail)
+                  Resource.Failure(FailureStatus.API_FAIL, throwable.code(), errorResponse?.detail)
                 } catch (ex: JsonSyntaxException) {
                   Resource.Failure(FailureStatus.API_FAIL, throwable.code())
                 }

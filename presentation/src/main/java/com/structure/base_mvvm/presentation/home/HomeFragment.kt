@@ -2,12 +2,7 @@ package com.structure.base_mvvm.presentation.home
 
 import android.util.Log
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
-import codes.grand.images_slider.ImagesSliderHelper
-import codes.grand.pretty_pop_up.PrettyPopUpHelper
 import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
@@ -47,7 +42,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            viewModel.homePaginateData = it.value.data
+            viewModel.homeStudentData = it.value.data
           }
           is Resource.Failure -> {
             hideLoading()
@@ -57,9 +52,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
       }
     }
     lifecycleScope.launchWhenResumed {
-      viewModel.adapter.liveData.collect {
-        Log.e("setupObservers", "setupObservers: ")
-      }
+//      viewModel.adapter.liveData.collect {
+//        Log.e("setupObservers", "setupObservers: ")
+//      }
     }
   }
 

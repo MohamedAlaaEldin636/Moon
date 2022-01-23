@@ -1,52 +1,36 @@
 package com.structure.base_mvvm.presentation.home.viewModels
 
-import android.util.Log
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
-import com.structure.base_mvvm.domain.account.repository.AccountRepository
-import com.structure.base_mvvm.domain.home.models.HomePaginateData
+import com.structure.base_mvvm.domain.home.models.HomeStudentData
 import com.structure.base_mvvm.domain.home.use_case.HomeUseCase
 import com.structure.base_mvvm.domain.utils.BaseResponse
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.BR
 import com.structure.base_mvvm.presentation.base.BaseViewModel
-import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
-import com.structure.base_mvvm.presentation.teachers.adapters.SubjectsAdapter
+import com.structure.base_mvvm.presentation.home.adapters.TeacherAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-  private val homeUseCase: HomeUseCase,
-  private val accountRepository: AccountRepository
+  private val homeUseCase: HomeUseCase
 ) : BaseViewModel() {
 
-  val showPrettyPopUp = SingleLiveEvent<Void>()
-
   @Bindable
-  val adapter: SubjectsAdapter = SubjectsAdapter()
+  val adapter: TeacherAdapter = TeacherAdapter()
 
   private val _homeResponse =
-    MutableStateFlow<Resource<BaseResponse<HomePaginateData>>>(Resource.Default)
+    MutableStateFlow<Resource<BaseResponse<HomeStudentData>>>(Resource.Default)
   val homeResponse = _homeResponse
 
   init {
-//    getHome(1, true)
-    viewModelScope.launch {
-      accountRepository.getFirebaseTokenToLocal().collect {
-        Log.e("getFirebaseTokenToLocal", ": $it" )
-      }
-    }
+    getHomeStudent()
   }
 
-  fun onShowPrettyPopUpClicked() {
-    showPrettyPopUp.call()
-  }
-
-  fun getHome(page: Int, showProgress: Boolean) {
-    homeUseCase.getHome(page, showProgress)
+  private fun getHomeStudent() {
+    homeUseCase.invoke()
       .onEach { result ->
         println(result.toString())
         _homeResponse.value = result
@@ -54,10 +38,9 @@ class HomeViewModel @Inject constructor(
       .launchIn(viewModelScope)
   }
 
-  var homePaginateData: HomePaginateData = HomePaginateData()
+  var homeStudentData: HomeStudentData = HomeStudentData()
     set(value) {
-      Log.e("homePaginateData", ": " + value.list.size)
-      adapter.differ.submitList(value.list)
+      adapter.differ.submitList(value.instructors)
       notifyPropertyChanged(BR.adapter)
       field = value
     }

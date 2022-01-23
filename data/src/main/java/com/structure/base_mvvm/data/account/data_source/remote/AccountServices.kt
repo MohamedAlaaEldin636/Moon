@@ -4,6 +4,7 @@ import com.structure.base_mvvm.domain.account.entity.request.SendFirebaseTokenRe
 import com.structure.base_mvvm.domain.utils.BaseResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.POST
 import retrofit2.http.PUT
 
 interface AccountServices {
@@ -11,6 +12,6 @@ interface AccountServices {
   @PUT("Account/FirebaseToken/Update")
   suspend fun sendFirebaseToken(@Body request: SendFirebaseTokenRequest): BaseResponse<Boolean>
 
-  @DELETE("v1/auth/logout")
+  @POST("v1/auth/logout")
   suspend fun logOut(): BaseResponse<*>
 }

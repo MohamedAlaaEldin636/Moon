@@ -7,18 +7,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.structure.base_mvvm.domain.home.models.HomeData
+import com.structure.base_mvvm.domain.home.models.Instructor
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.databinding.ItemTeacherBinding
 import com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel
 
 class TeacherAdapter : RecyclerView.Adapter<TeacherAdapter.ViewHolder>() {
-  private val differCallback = object : DiffUtil.ItemCallback<HomeData>() {
-    override fun areItemsTheSame(oldItem: HomeData, newItem: HomeData): Boolean {
+  private val differCallback = object : DiffUtil.ItemCallback<Instructor>() {
+    override fun areItemsTheSame(oldItem: Instructor, newItem: Instructor): Boolean {
       return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: HomeData, newItem: HomeData): Boolean {
+    override fun areContentsTheSame(oldItem: Instructor, newItem: Instructor): Boolean {
       return oldItem == newItem
     }
   }
@@ -66,7 +66,7 @@ class TeacherAdapter : RecyclerView.Adapter<TeacherAdapter.ViewHolder>() {
     }
 
     fun setViewModel(itemViewModel: ItemTeacherViewModel) {
-      itemLayoutBinding.notifyItemViewModels = itemViewModel
+      itemLayoutBinding.itemViewModels = itemViewModel
     }
   }
 }

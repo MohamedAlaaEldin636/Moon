@@ -1,6 +1,6 @@
 package com.structure.base_mvvm.domain.home.use_case
 
-import com.structure.base_mvvm.domain.home.models.HomePaginateData
+import com.structure.base_mvvm.domain.home.models.HomeStudentData
 import com.structure.base_mvvm.domain.home.repository.HomeRepository
 import com.structure.base_mvvm.domain.utils.BaseResponse
 import com.structure.base_mvvm.domain.utils.Resource
@@ -12,11 +12,12 @@ import javax.inject.Inject
 
 
 class HomeUseCase @Inject constructor(
-  private val homeRepository: HomeRepository) {
-  fun getHome(page: Int, showProgress: Boolean): Flow<Resource<BaseResponse<HomePaginateData>>> =
+  private val homeRepository: HomeRepository
+) {
+  operator fun invoke(): Flow<Resource<BaseResponse<HomeStudentData>>> =
     flow {
       emit(Resource.Loading)
-      val result = homeRepository.home(page)
+      val result = homeRepository.studentHome()
 
       emit(result)
     }.flowOn(Dispatchers.IO)

@@ -1,5 +1,6 @@
 package com.structure.base_mvvm.presentation.auth.log_in
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import codes.grand.pretty_pop_up.PrettyPopUpHelper
@@ -33,6 +34,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
 
   override
   fun setupObservers() {
+    Log.e("setupObservers", "setupObservers: " )
     viewModel.clickEvent.observe(this) {
       when (it) {
         Constants.FORGET_PASSWORD -> openForgotPassword()

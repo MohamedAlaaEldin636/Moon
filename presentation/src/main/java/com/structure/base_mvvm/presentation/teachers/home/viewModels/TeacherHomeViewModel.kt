@@ -38,10 +38,10 @@ class TeacherHomeViewModel @Inject constructor(private val homeUseCase: HomeUseC
   }
 
   fun getHome(page: Int, showProgress: Boolean) {
-    homeUseCase.getHome(page, showProgress)
+    homeUseCase.invoke()
       .onEach { result ->
         println(result.toString())
-        _homeResponse.value = result
+//        _homeResponse.value = result
       }
       .launchIn(viewModelScope)
   }
