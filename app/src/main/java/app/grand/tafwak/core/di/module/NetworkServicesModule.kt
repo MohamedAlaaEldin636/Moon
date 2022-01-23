@@ -7,7 +7,7 @@ import com.structure.base_mvvm.data.educational.data_source.EducationalServices
 import com.structure.base_mvvm.data.general.data_source.remote.GeneralServices
 import com.structure.base_mvvm.data.home.data_source.remote.HomeServices
 import com.structure.base_mvvm.data.intro.data_source.IntroServices
-import com.structure.base_mvvm.data.search.data_source.remote.SearchServices
+import com.structure.base_mvvm.data.settings.data_source.remote.SettingsServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,8 +36,8 @@ object NetworkServicesModule {
 
   @Provides
   @Singleton
-  fun provideSearchServices(retrofit: Retrofit): SearchServices =
-    retrofit.create(SearchServices::class.java)
+  fun provideSearchServices(retrofit: Retrofit): SettingsServices =
+    retrofit.create(SettingsServices::class.java)
 
   @Provides
   @Singleton

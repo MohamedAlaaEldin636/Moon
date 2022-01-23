@@ -23,5 +23,9 @@ object Constants {
   const val COUNTRY_ID = "COUNTRY_ID"
   const val TOKEN = "TOKEN"
   const val REGISTER_STEP = "REGISTER_STEP"
+  const val ABOUT_TYPE: String = "about_us"
+  const val PRIVACY_TYPE: String = "privacy_policy"
+  const val TERMS_TYPE: String = "terms_conditions"
+  const val APP_TYPE_GENERAL: String = "general"
 
 }

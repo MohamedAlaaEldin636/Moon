@@ -1,6 +1,7 @@
 package app.grand.tafwak.core.di.module
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.structure.base_mvvm.BuildConfig
@@ -30,10 +31,11 @@ object RetrofitModule {
   @Singleton
   fun provideHeadersInterceptor(appPreferences: AppPreferences) =
     Interceptor { chain ->
+      Log.e("JWT", "provideHeadersInterceptor: ${appPreferences.getLocal(Constants.TOKEN)}")
       chain.proceed(
         chain.request().newBuilder()
           .addHeader("Authorization", "Bearer ${appPreferences.getLocal(Constants.TOKEN)}")
-          .addHeader("country-id", appPreferences.getLocal(Constants.COUNTRY_ID))
+          .addHeader("countryId", appPreferences.getLocal(Constants.COUNTRY_ID))
           .addHeader("Accept", "application/json")
           .addHeader("language", "ar")
           .build()

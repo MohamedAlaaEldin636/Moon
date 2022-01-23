@@ -44,6 +44,16 @@ fun showNoApiErrorAlert(activity: Activity, message: String) {
     .show()
 }
 
+fun showSuccessAlert(activity: Activity, message: String) {
+  Alerter.create(activity)
+    .setText(message)
+    .setIcon(R.drawable.ic_success)
+    .setBackgroundColorRes(R.color.colorAccentDark)
+    .enableClickAnimation(true)
+    .enableSwipeToDismiss()
+    .show()
+}
+
 fun showNoApiErrorAlertWithAction(
   activity: Activity,
   message: String,
