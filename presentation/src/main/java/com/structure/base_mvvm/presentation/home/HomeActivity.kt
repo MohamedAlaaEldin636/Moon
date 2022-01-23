@@ -39,6 +39,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.contact_fragment,
         R.id.suggestions_fragment,
         R.id.about_fragment,
+        R.id.social_fragment,
         R.id.privacy_fragment,
         R.id.terms_fragment,
       ),

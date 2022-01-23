@@ -49,7 +49,7 @@ class TeacherHomeViewModel @Inject constructor(private val homeUseCase: HomeUseC
   var homePaginateData: HomePaginateData = HomePaginateData()
     set(value) {
       Log.e("homePaginateData", ": " + value.list.size)
-      adapter.differ.submitList(value.list)
+//      adapter.differ.submitList(value.list)
       notifyPropertyChanged(BR.adapter)
       field = value
     }

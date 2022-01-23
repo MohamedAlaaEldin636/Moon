@@ -8,6 +8,8 @@ import com.structure.base_mvvm.domain.utils.BaseResponse
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.BR
 import com.structure.base_mvvm.presentation.base.BaseViewModel
+import com.structure.base_mvvm.presentation.home.adapters.GroupsAdapter
+import com.structure.base_mvvm.presentation.home.adapters.HomeSliderAdapter
 import com.structure.base_mvvm.presentation.home.adapters.TeacherAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -20,6 +22,11 @@ class HomeViewModel @Inject constructor(
 
   @Bindable
   val adapter: TeacherAdapter = TeacherAdapter()
+
+  @Bindable
+  val groupsAdapter: GroupsAdapter = GroupsAdapter()
+
+  val homeSliderAdapter: HomeSliderAdapter = HomeSliderAdapter()
 
   private val _homeResponse =
     MutableStateFlow<Resource<BaseResponse<HomeStudentData>>>(Resource.Default)
@@ -42,6 +49,9 @@ class HomeViewModel @Inject constructor(
     set(value) {
       adapter.differ.submitList(value.instructors)
       notifyPropertyChanged(BR.adapter)
+      groupsAdapter.differ.submitList(value.classes)
+      notifyPropertyChanged(BR.groupsAdapter)
+      homeSliderAdapter.update(value.sliders)
       field = value
     }
 }

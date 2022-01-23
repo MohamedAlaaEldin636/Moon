@@ -1,6 +1,5 @@
 package com.structure.base_mvvm.presentation.teachers.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.structure.base_mvvm.domain.home.models.HomeData
+import com.structure.base_mvvm.domain.home.models.Subject
 import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.databinding.ItemSubjectBinding
@@ -17,12 +16,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class SubjectsAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
   val liveData = MutableStateFlow<Int>(0)
-  private val differCallback = object : DiffUtil.ItemCallback<HomeData>() {
-    override fun areItemsTheSame(oldItem: HomeData, newItem: HomeData): Boolean {
+  private val differCallback = object : DiffUtil.ItemCallback<Subject>() {
+    override fun areItemsTheSame(oldItem: Subject, newItem: Subject): Boolean {
       return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: HomeData, newItem: HomeData): Boolean {
+    override fun areContentsTheSame(oldItem: Subject, newItem: Subject): Boolean {
       return oldItem == newItem
     }
   }
@@ -36,7 +35,6 @@ class SubjectsAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
     val data = differ.currentList[position]
     val itemViewModel = ItemSubjectsViewModel(data)
     itemViewModel.clickEvent.observeForever {
-      Log.e("onBindViewHolder", "onBindViewHolder: $position")
       liveData.value = Constants.PICK_IMAGE
     }
     holder.setViewModel(itemViewModel)

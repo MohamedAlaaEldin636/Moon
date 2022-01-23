@@ -11,6 +11,7 @@ import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.Group
@@ -70,6 +71,12 @@ fun View.goneUnless(visible: Boolean) {
   if (this is Group) {
     this.requestLayout()
   }
+}
+
+@BindingAdapter("app:rate")
+fun RatingBar.rateApp(value: String) {
+  if (value.isNotEmpty())
+    rating = value.toFloat()
 }
 
 fun ImageView.drawCircle(backgroundColor: String, borderColor: String? = null) {

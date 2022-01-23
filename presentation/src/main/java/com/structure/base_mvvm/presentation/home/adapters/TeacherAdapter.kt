@@ -9,10 +9,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.structure.base_mvvm.domain.home.models.Instructor
 import com.structure.base_mvvm.presentation.R
+import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
 import com.structure.base_mvvm.presentation.databinding.ItemTeacherBinding
 import com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel
 
 class TeacherAdapter : RecyclerView.Adapter<TeacherAdapter.ViewHolder>() {
+  var clickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+
   private val differCallback = object : DiffUtil.ItemCallback<Instructor>() {
     override fun areItemsTheSame(oldItem: Instructor, newItem: Instructor): Boolean {
       return oldItem.id == newItem.id
@@ -31,6 +34,9 @@ class TeacherAdapter : RecyclerView.Adapter<TeacherAdapter.ViewHolder>() {
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemTeacherViewModel(data)
+    itemViewModel.clickEvent.observeForever {
+      clickEvent.value = data.id
+    }
     holder.setViewModel(itemViewModel)
 
   }

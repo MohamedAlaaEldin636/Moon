@@ -1,6 +1,5 @@
 package com.structure.base_mvvm.presentation.home
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.structure.base_mvvm.domain.utils.Constants
@@ -30,8 +29,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
   override
   fun setupObservers() {
     viewModel.clickEvent.observeForever {
-      if (it == Constants.TEACHER_PROFILE)
-        toTeacherProfile()
+      if (it == Constants.TEACHERS)
+        toTeachers()
     }
     lifecycleScope.launchWhenResumed {
       viewModel.homeResponse.collect {
@@ -43,6 +42,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
           is Resource.Success -> {
             hideLoading()
             viewModel.homeStudentData = it.value.data
+            binding.imageSlider.setSliderAdapter(viewModel.homeSliderAdapter)
           }
           is Resource.Failure -> {
             hideLoading()
@@ -51,28 +51,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
       }
     }
-    lifecycleScope.launchWhenResumed {
-//      viewModel.adapter.liveData.collect {
-//        Log.e("setupObservers", "setupObservers: ")
-//      }
-    }
+//    viewModel.adapter.clickEvent.observeForever { instructorId ->
+//      toTeacherProfile(instructorId)
+//    }
+
   }
 
-  private fun toTeacherProfile() {
-//    navigateSafe(HomeFragmentDirections.actionToTeacherProfileFragment())
-//    val imageList = listOf(
-//      "https://thumbs.dreamstime.com/z/oyster-mushroom-24463726.jpg",
-//      "https://thumbs.dreamstime.com/z/button-mushroom-isolated-white-13090359.jpg"
-//    )
-//    ImagesSliderHelper.Builder(requireActivity(), lifecycle)
-//      .setImages(imageList)
-//      .setAutoScrolling(true)
-//      .setActiveIndicatorColor(R.color.colorPrimaryDark)
-//      .setInActiveIndicatorColor(R.color.colorPrimary)
-//      .setSliderContainerResourceID(R.id.frame_images)
-//      .setClickAction {
-//        Log.e("toTeacherProfile", "toTeacherProfile: " )
-//      }
-//      .create()
+  private fun toTeachers() {
+    ((requireActivity() as HomeActivity)).binding.bottomNavigationView.selectedItemId =
+      R.id.teachersFragment
+  }
+
+  private fun toTeacherProfile(instructorId: Int) {
+    navigateSafe(HomeFragmentDirections.actionToTeacherProfileFragment(instructorId))
   }
 }

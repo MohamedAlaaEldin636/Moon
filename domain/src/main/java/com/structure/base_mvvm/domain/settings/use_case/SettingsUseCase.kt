@@ -6,6 +6,7 @@ import com.structure.base_mvvm.domain.settings.models.ContactUsRequest
 import com.structure.base_mvvm.domain.settings.models.SettingsData
 import com.structure.base_mvvm.domain.settings.repository.SettingsRepository
 import com.structure.base_mvvm.domain.utils.BaseResponse
+import com.structure.base_mvvm.domain.utils.Constants
 import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.domain.utils.isValidEmail
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,15 @@ class SettingsUseCase @Inject constructor(
     flow {
       emit(Resource.Loading)
       val result = settingsRepository.settings(type, app_type)
+      emit(result)
+    }.flowOn(Dispatchers.IO)
+
+  operator fun invoke(
+    type: String
+  ): Flow<Resource<BaseResponse<List<SettingsData>>>> =
+    flow {
+      emit(Resource.Loading)
+      val result = settingsRepository.social(type, Constants.APP_TYPE_GENERAL)
       emit(result)
     }.flowOn(Dispatchers.IO)
 

@@ -6,6 +6,7 @@
   <data>
 
     <import type="com.structure.base_mvvm.domain.utils.Constants" />
+    <import type="android.text.TextUtils" />
 
     <variable
       name="viewModel"
@@ -44,6 +45,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:loadCircleImage="@{viewModel.teacherProfile.instructor.image}"
             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
             app:srcCompat="@drawable/bg_no_image"
             app:strokeColor="@color/white"
@@ -57,9 +59,7 @@
             android:layout_marginStart="@dimen/dimen8"
             android:layout_marginTop="@dimen/dimen2"
             android:layout_marginEnd="@dimen/dimen8"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Mostafa Elnagar"
+            android:text="@{viewModel.teacherProfile.instructor.name}"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/white"
@@ -78,7 +78,8 @@
             android:progressTint="@color/colorPrimary"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toEndOf="@id/ic_teacher"
-            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:rate="@{viewModel.teacherProfile.instructor.average_rating}" />
 
           <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_rate"
@@ -88,10 +89,10 @@
             android:layout_marginStart="@dimen/dimen8"
             android:layout_marginTop="@dimen/dimen2"
             android:layout_marginEnd="@dimen/dimen8"
-            android:text="(4.5)"
+            android:text="@{`( `.concat(!TextUtils.isEmpty(viewModel.teacherProfile.instructor.average_rating)?viewModel.teacherProfile.instructor.average_rating:``).concat(` )`)}"
             android:textAlignment="viewStart"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/white"
+            android:textSize="11sp"
             app:layout_constraintStart_toEndOf="@id/rate"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -102,9 +103,8 @@
             android:layout_marginStart="@dimen/dimen10"
             android:layout_marginTop="@dimen/dimen4"
             android:layout_marginBottom="@dimen/dimen4"
-            android:width="0dp"
             android:minHeight="0dp"
-            android:text="لغة عربية"
+            android:text="@{viewModel.teacherProfile.instructor.subject.name}"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             app:backgroundTint="@color/colorPrimaryDark"
             app:cornerRadius="@dimen/dimen14"

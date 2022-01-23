@@ -25,6 +25,10 @@ import com.structure.base_mvvm.domain.intro.repository.IntroRepository
 import com.structure.base_mvvm.domain.intro.use_case.IntroUseCase
 import com.structure.base_mvvm.domain.settings.repository.SettingsRepository
 import com.structure.base_mvvm.domain.settings.use_case.SettingsUseCase
+import com.structure.base_mvvm.domain.student_teacher.repository.StudentTeacherRepository
+import com.structure.base_mvvm.domain.student_teacher.use_case.StudentTeacherUseCase
+import com.structure.base_mvvm.domain.teacher_profile.repository.TeacherProfileRepository
+import com.structure.base_mvvm.domain.teacher_profile.use_case.TeacherProfileUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -84,6 +88,12 @@ class UseCaseModule {
 
   @Provides
   @Singleton
+  fun provideStudentTeacherUseCase(
+    studentTeacherRepository: StudentTeacherRepository
+  ): StudentTeacherUseCase = StudentTeacherUseCase(studentTeacherRepository)
+
+  @Provides
+  @Singleton
   fun provideIntroUseCase(
     introRepository: IntroRepository
   ): IntroUseCase = IntroUseCase(introRepository)
@@ -93,6 +103,12 @@ class UseCaseModule {
   fun provideSettingsUseCase(
     settingsRepository: SettingsRepository
   ): SettingsUseCase = SettingsUseCase(settingsRepository)
+
+  @Provides
+  @Singleton
+  fun provideTeacherProfileUseCase(
+    teacherRepository: TeacherProfileRepository
+  ): TeacherProfileUseCase = TeacherProfileUseCase(teacherRepository)
 
   //public use cases
   @Provides

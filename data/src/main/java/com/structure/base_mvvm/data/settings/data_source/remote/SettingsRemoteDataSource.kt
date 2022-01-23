@@ -10,6 +10,10 @@ class SettingsRemoteDataSource @Inject constructor(private val apiService: Setti
     apiService.settings(type, app_type)
   }
 
+  suspend fun social(type: String, app_type: String) = safeApiCall {
+    apiService.social(type, app_type)
+  }
+
   suspend fun contactApp(contactUsRequest: ContactUsRequest) = safeApiCall {
     apiService.contactApp(contactUsRequest)
   }

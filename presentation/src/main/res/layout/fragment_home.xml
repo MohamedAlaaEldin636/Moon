@@ -25,7 +25,6 @@
       app:sliderAnimationDuration="600"
       app:sliderAutoCycleDirection="back_and_forth"
       app:sliderAutoCycleEnabled="true"
-      app:sliderCircularHandlerEnabled="true"
       app:sliderIndicatorAnimationDuration="600"
       app:sliderIndicatorGravity="center_horizontal|bottom"
       app:sliderIndicatorMargin="15dp"
@@ -54,7 +53,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen10"
-      android:onClick="@{()->viewModel.clickEvent(Constants.TEACHER_PROFILE)}"
+      android:onClick="@{()->viewModel.clickEvent(Constants.TEACHERS)}"
       android:text="@string/all"
       android:textColor="@color/black"
       app:layout_constraintEnd_toEndOf="parent"
@@ -101,8 +100,11 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen10"
       android:orientation="horizontal"
+      app:adapter="@{viewModel.groupsAdapter}"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       app:layout_constraintTop_toBottomOf="@+id/tv_suggested_groups_all"
+      app:orientation="@{`2`}"
+      app:span="@{`1`}"
       tools:listitem="@layout/item_groups" />
 
     <com.google.android.material.card.MaterialCardView

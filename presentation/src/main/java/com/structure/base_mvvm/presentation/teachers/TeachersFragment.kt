@@ -1,11 +1,16 @@
 package com.structure.base_mvvm.presentation.teachers
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
+import com.structure.base_mvvm.presentation.base.extensions.handleApiError
+import com.structure.base_mvvm.presentation.base.extensions.hideKeyboard
 import com.structure.base_mvvm.presentation.databinding.FragmentTeachersBinding
 import com.structure.base_mvvm.presentation.teachers.viewModels.TeachersViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class TeachersFragment : BaseFragment<FragmentTeachersBinding>() {
@@ -20,13 +25,26 @@ class TeachersFragment : BaseFragment<FragmentTeachersBinding>() {
     binding.viewModel = viewModel
   }
 
-  override
-  fun setUpViews() {
-    setUpToolBar()
-  }
+  override fun setupObservers() {
+    lifecycleScope.launchWhenResumed {
+      viewModel.teacherResponse.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            viewModel.studentTeacher = it.value.data
+            binding.imageSlider.setSliderAdapter(viewModel.homeSliderAdapter)
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
 
-  private fun setUpToolBar() {
-//    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.settings)
-//    binding.includedToolbar.backIv.hide()
   }
 }

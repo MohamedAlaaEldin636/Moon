@@ -15,6 +15,11 @@ class SettingsRepositoryImpl @Inject constructor(private val remoteDataSource: S
     app_type: String
   ): Resource<BaseResponse<SettingsData>> = remoteDataSource.settings(type, app_type)
 
+  override suspend fun social(
+    type: String,
+    app_type: String
+  ): Resource<BaseResponse<List<SettingsData>>> = remoteDataSource.social(type, app_type)
+
   override suspend fun contactApp(contactUsRequest: ContactUsRequest): Resource<BaseResponse<*>> =
     remoteDataSource.contactApp(contactUsRequest)
 }

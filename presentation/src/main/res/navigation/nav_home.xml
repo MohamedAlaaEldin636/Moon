@@ -18,7 +18,6 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
-
   </fragment>
   <fragment
     android:id="@+id/teacherProfileFragment"
@@ -31,6 +30,9 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
+    <argument
+      android:name="instructor_id"
+      app:argType="integer" />
   </fragment>
   <fragment
     android:id="@+id/reviewsFragment"
@@ -56,14 +58,15 @@
     android:id="@+id/about_fragment"
     android:name="com.structure.base_mvvm.presentation.about.AboutFragment"
     android:label="AboutFragment" />
+
   <fragment
     android:id="@+id/contact_fragment"
     android:name="com.structure.base_mvvm.presentation.contactUs.ContactUsFragment"
     android:label="@string/contact_us">
     <argument
       android:name="type"
-      app:argType="string"
-      android:defaultValue="contact_us"/>
+      android:defaultValue="contact_us"
+      app:argType="string" />
   </fragment>
   <fragment
     android:id="@+id/suggestions_fragment"
@@ -71,8 +74,8 @@
     android:label="@string/suggestions">
     <argument
       android:name="type"
-      app:argType="string"
-      android:defaultValue="complaint"/>
+      android:defaultValue="complaint"
+      app:argType="string" />
   </fragment>
   <dialog
     android:id="@+id/review_dialog_comment"
@@ -90,5 +93,9 @@
     android:id="@+id/terms_fragment"
     android:name="com.structure.base_mvvm.presentation.terms.TermsFragment"
     android:label="@string/terms" />
+  <fragment
+    android:id="@+id/social_fragment"
+    android:name="com.structure.base_mvvm.presentation.social.SocialFragment"
+    android:label="SocialFragment" />
 
 </navigation>

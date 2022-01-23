@@ -23,7 +23,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/dimen8"
       android:onClick="@{()-> notifyItemViewModels.clickEvent(Constants.PICK_IMAGE)}"
-      android:text="All"
+      android:text="@{notifyItemViewModels.subject.name}"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/white"
       app:backgroundTint="@color/colorPrimaryDark"

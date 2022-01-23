@@ -14,6 +14,8 @@ object Constants {
   const val CONTINUE_PROGRESS = 10
   const val CONTACT = 11
   const val LOGOUT = 12
+  const val TEACHERS: Int = 13
+  const val OPEN_BROWSER: Int = 14
   const val BUNDLE = "BUNDLE"
   const val STUDENT_TYPE = "student"
   const val TEACHER_TYPE = "instructor"
@@ -24,8 +26,14 @@ object Constants {
   const val TOKEN = "TOKEN"
   const val REGISTER_STEP = "REGISTER_STEP"
   const val ABOUT_TYPE: String = "about_us"
+  const val SOCIAL_TYPE: String = "social_media"
   const val PRIVACY_TYPE: String = "privacy_policy"
   const val TERMS_TYPE: String = "terms_conditions"
   const val APP_TYPE_GENERAL: String = "general"
+  const val BOTH: String = "both"
+  const val MALE: String = "male"
+  const val FEMALE: String = "female"
+  const val PUBLIC: String = "public"
+  const val PRIVATE: String = "private"
 
 }

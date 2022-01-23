@@ -39,7 +39,7 @@ object Libraries {
   const val navigationFragment =
     "androidx.navigation:navigation-fragment-ktx:${Versions.androidNavigation}"
   const val navigationUI = "androidx.navigation:navigation-ui-ktx:${Versions.androidNavigation}"
-  const val loadingAnimations = "com.github.ybq:Android-SpinKit:${Versions.loadingAnimations}"
+  const val loadingAnimations = "com.airbnb.android:lottie:${Versions.loadingAnimations}"
   const val alerter = "com.github.tapadoo:alerter:${Versions.alerter}"
   const val coil = "io.coil-kt:coil:${Versions.coil}"
 

@@ -35,7 +35,7 @@ object RetrofitModule {
       chain.proceed(
         chain.request().newBuilder()
           .addHeader("Authorization", "Bearer ${appPreferences.getLocal(Constants.TOKEN)}")
-          .addHeader("countryId", appPreferences.getLocal(Constants.COUNTRY_ID))
+          .addHeader("countryId", "1") //appPreferences.getLocal(Constants.COUNTRY_ID)
           .addHeader("Accept", "application/json")
           .addHeader("language", "ar")
           .build()

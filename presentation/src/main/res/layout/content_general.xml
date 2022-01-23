@@ -80,14 +80,14 @@
 
     </LinearLayout>
 
-    <com.github.ybq.android.spinkit.SpinKitView
-        style="@style/SpinKitView.Large.DoubleBounce"
-        android:layout_width="@dimen/dimen70"
-        android:layout_height="@dimen/dimen70"
-        android:layout_gravity="center"
-        app:SpinKit_Color="@color/colorPrimary"
-        app:goneUnless="@{baseViewModel.dataLoadingEvent ==  DataStatus.LOADING}"
-        />
+<!--    <com.github.ybq.android.spinkit.SpinKitView-->
+<!--        style="@style/SpinKitView.Large.DoubleBounce"-->
+<!--        android:layout_width="@dimen/dimen70"-->
+<!--        android:layout_height="@dimen/dimen70"-->
+<!--        android:layout_gravity="center"-->
+<!--        app:SpinKit_Color="@color/colorPrimary"-->
+<!--        app:goneUnless="@{baseViewModel.dataLoadingEvent ==  DataStatus.LOADING}"-->
+<!--        />-->
 
   </LinearLayout>
 

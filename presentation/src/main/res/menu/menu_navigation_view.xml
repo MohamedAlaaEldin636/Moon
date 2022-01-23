@@ -26,6 +26,11 @@
     android:id="@+id/about_fragment"
     android:icon="@drawable/ic_about"
     android:title="@string/about" />
+   <item
+    android:id="@+id/social_fragment"
+    android:icon="@drawable/ic_social_media"
+    android:title="@string/social" />
+
   <item
     android:id="@+id/share_app"
     android:icon="@drawable/ic_share"

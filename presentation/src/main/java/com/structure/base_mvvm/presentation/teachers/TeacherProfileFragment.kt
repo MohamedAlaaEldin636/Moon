@@ -1,16 +1,18 @@
 package com.structure.base_mvvm.presentation.teachers
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.structure.base_mvvm.domain.utils.Constants
+import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
+import com.structure.base_mvvm.presentation.base.extensions.handleApiError
+import com.structure.base_mvvm.presentation.base.extensions.hideKeyboard
 import com.structure.base_mvvm.presentation.base.extensions.navigateSafe
 import com.structure.base_mvvm.presentation.databinding.FragmentTeacherProfileBinding
-import com.structure.base_mvvm.presentation.databinding.FragmentTeachersBinding
-import com.structure.base_mvvm.presentation.home.HomeFragmentDirections
 import com.structure.base_mvvm.presentation.teachers.viewModels.TeacherProfileViewModel
-import com.structure.base_mvvm.presentation.teachers.viewModels.TeachersViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
@@ -25,20 +27,28 @@ class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
     binding.viewModel = viewModel
   }
 
-  override
-  fun setUpViews() {
-    setUpToolBar()
-  }
-
-  private fun setUpToolBar() {
-//    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.settings)
-//    binding.includedToolbar.backIv.hide()
-  }
-
   override fun setupObservers() {
     viewModel.clickEvent.observeForever {
       if (it == Constants.REVIEWS)
         toReviews()
+    }
+    lifecycleScope.launchWhenResumed {
+      viewModel.profileResponse.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            viewModel.teacherProfile = it.value.data
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
     }
   }
 

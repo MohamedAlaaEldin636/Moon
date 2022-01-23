@@ -71,13 +71,13 @@
 
     </LinearLayout>
 
-    <com.github.ybq.android.spinkit.SpinKitView
-      style="@style/SpinKitView.Large.DoubleBounce"
-      android:layout_width="@dimen/dimen70"
-      android:layout_height="@dimen/dimen70"
-      android:layout_gravity="center"
-      app:SpinKit_Color="@color/colorPrimary"
-      app:goneUnless="@{baseViewModel.dataLoadingEvent ==  DataStatus.LOADING}" />
+<!--    <com.github.ybq.android.spinkit.SpinKitView-->
+<!--      style="@style/SpinKitView.Large.DoubleBounce"-->
+<!--      android:layout_width="@dimen/dimen70"-->
+<!--      android:layout_height="@dimen/dimen70"-->
+<!--      android:layout_gravity="center"-->
+<!--      app:SpinKit_Color="@color/colorPrimary"-->
+<!--      app:goneUnless="@{baseViewModel.dataLoadingEvent ==  DataStatus.LOADING}" />-->
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recycler_view"
@@ -88,14 +88,14 @@
       android:padding="@dimen/dimen10"
       app:goneUnless="@{baseViewModel.dataLoadingEvent == DataStatus.SHOW_DATA || baseViewModel.dataLoadingEvent == DataStatus.LOADING_NEXT_PAGE}" />
 
-    <com.github.ybq.android.spinkit.SpinKitView
-      style="@style/SpinKitView.Large.Wave"
-      android:layout_width="@dimen/dimen50"
-      android:layout_height="@dimen/dimen50"
-      android:layout_gravity="center"
-      android:layout_marginBottom="@dimen/dimen12"
-      app:SpinKit_Color="@color/colorPrimary"
-      app:goneUnless="@{baseViewModel.dataLoadingEvent == DataStatus.LOADING_NEXT_PAGE}" />
+<!--    <com.github.ybq.android.spinkit.SpinKitView-->
+<!--      style="@style/SpinKitView.Large.Wave"-->
+<!--      android:layout_width="@dimen/dimen50"-->
+<!--      android:layout_height="@dimen/dimen50"-->
+<!--      android:layout_gravity="center"-->
+<!--      android:layout_marginBottom="@dimen/dimen12"-->
+<!--      app:SpinKit_Color="@color/colorPrimary"-->
+<!--      app:goneUnless="@{baseViewModel.dataLoadingEvent == DataStatus.LOADING_NEXT_PAGE}" />-->
 
   </LinearLayout>
 

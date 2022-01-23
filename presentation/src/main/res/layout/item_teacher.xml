@@ -4,6 +4,8 @@
 
   <data>
 
+    <import type="com.structure.base_mvvm.domain.utils.Constants" />
+
     <variable
       name="itemViewModels"
       type="com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel" />
@@ -13,6 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen2"
+    android:onClick="@{()-> itemViewModels.clickEvent(Constants.TEACHERS)}"
     app:cardCornerRadius="@dimen/dimen6"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
@@ -24,9 +27,11 @@
 
       <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img"
-        android:layout_width="@dimen/dimen50"
-        android:layout_height="@dimen/dimen50"
+        android:layout_width="@dimen/dimen60"
+        android:layout_height="@dimen/dimen60"
         android:layout_margin="@dimen/dimen10"
+        android:padding="@dimen/dimen4"
+        android:scaleType="centerCrop"
         android:src="@drawable/bg_no_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -59,9 +64,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen4"
-        android:width="0dp"
         android:minHeight="0dp"
-        android:text="@{itemViewModels.instructor.name}"
+        android:text="@{itemViewModels.instructor.subject.name}"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:backgroundTint="@color/blue"
         app:cornerRadius="@dimen/dimen14"
@@ -79,7 +83,8 @@
         android:progressTint="@color/colorPrimary"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toEndOf="@id/img"
-        app:layout_constraintTop_toBottomOf="@id/tv_name" />
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:rate="@{itemViewModels.instructor.average_rating}" />
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_rate"
@@ -89,10 +94,10 @@
         android:layout_marginStart="@dimen/dimen8"
         android:layout_marginTop="@dimen/dimen2"
         android:layout_marginEnd="@dimen/dimen8"
-        android:text="(4.5)"
+        android:text="@{`( `.concat(itemViewModels.instructor.average_rating).concat(` )`)}"
         android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/darkGray"
+        android:textSize="11sp"
         app:layout_constraintStart_toEndOf="@id/rate"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -112,7 +117,7 @@
         android:layout_marginTop="@dimen/dimen7"
         android:layout_marginEnd="@dimen/dimen8"
         android:layout_marginBottom="@dimen/dimen7"
-        android:text="لوريم ايبسوم دولار سيت أميت لوريم ايبسوم دولار سيت أميت كونسيكتيتور كونسيكتيتور كونسيكتيتور"
+        android:text="@{itemViewModels.instructor.description}"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/darkGray"
@@ -120,7 +125,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/br" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

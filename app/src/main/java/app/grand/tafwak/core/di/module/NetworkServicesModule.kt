@@ -8,6 +8,8 @@ import com.structure.base_mvvm.data.general.data_source.remote.GeneralServices
 import com.structure.base_mvvm.data.home.data_source.remote.HomeServices
 import com.structure.base_mvvm.data.intro.data_source.IntroServices
 import com.structure.base_mvvm.data.settings.data_source.remote.SettingsServices
+import com.structure.base_mvvm.data.studentTeacher.data_source.StudentTeacherServices
+import com.structure.base_mvvm.data.teacher_profile.data_source.TeacherProfileServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,5 +60,15 @@ object NetworkServicesModule {
   @Singleton
   fun provideEducationalServices(retrofit: Retrofit): EducationalServices =
     retrofit.create(EducationalServices::class.java)
+
+  @Provides
+  @Singleton
+  fun provideStudentServiceServices(retrofit: Retrofit): StudentTeacherServices =
+    retrofit.create(StudentTeacherServices::class.java)
+
+  @Provides
+  @Singleton
+  fun provideTeacherProfileServices(retrofit: Retrofit): TeacherProfileServices =
+    retrofit.create(TeacherProfileServices::class.java)
 
 }

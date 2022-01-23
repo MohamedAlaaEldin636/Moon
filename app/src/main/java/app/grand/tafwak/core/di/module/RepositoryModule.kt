@@ -17,6 +17,10 @@ import com.structure.base_mvvm.data.intro.repository.IntroRepositoryImpl
 import com.structure.base_mvvm.data.local.preferences.AppPreferences
 import com.structure.base_mvvm.data.settings.data_source.remote.SettingsRemoteDataSource
 import com.structure.base_mvvm.data.settings.repository.SettingsRepositoryImpl
+import com.structure.base_mvvm.data.studentTeacher.data_source.StudentTeacherRemoteDataSource
+import com.structure.base_mvvm.data.studentTeacher.repository.StudentTeacherRepositoryImpl
+import com.structure.base_mvvm.data.teacher_profile.data_source.TeacherProfileRemoteDataSource
+import com.structure.base_mvvm.data.teacher_profile.repository.TeacherProfileRepositoryImpl
 import com.structure.base_mvvm.domain.account.repository.AccountRepository
 import com.structure.base_mvvm.domain.auth.repository.AuthRepository
 import com.structure.base_mvvm.domain.countries.repository.CountriesRepository
@@ -25,6 +29,8 @@ import com.structure.base_mvvm.domain.general.repository.GeneralRepository
 import com.structure.base_mvvm.domain.home.repository.HomeRepository
 import com.structure.base_mvvm.domain.intro.repository.IntroRepository
 import com.structure.base_mvvm.domain.settings.repository.SettingsRepository
+import com.structure.base_mvvm.domain.student_teacher.repository.StudentTeacherRepository
+import com.structure.base_mvvm.domain.teacher_profile.repository.TeacherProfileRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -84,5 +90,17 @@ class RepositoryModule {
   fun provideIntroRepository(
     remoteDataSource: IntroRemoteDataSource
   ): IntroRepository = IntroRepositoryImpl(remoteDataSource)
+
+  @Provides
+  @Singleton
+  fun provideStudentTeacherRepository(
+    remoteDataSource: StudentTeacherRemoteDataSource
+  ): StudentTeacherRepository = StudentTeacherRepositoryImpl(remoteDataSource)
+
+  @Provides
+  @Singleton
+  fun provideTeacherProfileRepository(
+    remoteDataSource: TeacherProfileRemoteDataSource
+  ): TeacherProfileRepository = TeacherProfileRepositoryImpl(remoteDataSource)
 
 }
