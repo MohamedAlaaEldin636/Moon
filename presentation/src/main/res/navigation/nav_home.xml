@@ -22,7 +22,7 @@
   <fragment
     android:id="@+id/teacherProfileFragment"
     android:name="com.structure.base_mvvm.presentation.teachers.TeacherProfileFragment"
-    android:label="TeacherProfileFragment">
+    android:label="{title}">
     <action
       android:id="@+id/actionToReviewsFragment"
       app:destination="@id/reviewsFragment"
@@ -33,6 +33,10 @@
     <argument
       android:name="instructor_id"
       app:argType="integer" />
+    <argument
+      android:name="title"
+      app:argType="string" />
+
   </fragment>
   <fragment
     android:id="@+id/reviewsFragment"
@@ -41,11 +45,22 @@
     <action
       android:id="@+id/action_reviewsFragment_to_review_dialog_comment"
       app:destination="@id/review_dialog_comment" />
+    <argument
+      android:name="instructor_id"
+      app:argType="integer" />
   </fragment>
   <fragment
     android:id="@+id/teachersFragment"
     android:name="com.structure.base_mvvm.presentation.teachers.TeachersFragment"
-    android:label="TeachersFragment" />
+    android:label="TeachersFragment">
+    <action
+      android:id="@+id/actionToTeacherProfileFragment"
+      app:destination="@id/teacherProfileFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+  </fragment>
   <fragment
     android:id="@+id/testsFragment"
     android:name="com.structure.base_mvvm.presentation.tests.TestsFragment"
@@ -82,7 +97,7 @@
     android:name="com.structure.base_mvvm.presentation.reviews.ReviewDialog"
     tools:layout="@layout/review_dialog">
     <argument
-      android:name="teacherId"
+      android:name="instructor_id"
       app:argType="integer" />
   </dialog>
   <fragment

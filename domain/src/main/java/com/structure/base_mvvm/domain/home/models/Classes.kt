@@ -20,7 +20,7 @@ data class Classes(
   @SerializedName("name")
   @Expose
   val name: String = "",
-  @SerializedName("user")
+  @SerializedName("instructor")
   @Expose
   val instructor: Instructor = Instructor(),
   @SerializedName("subject")

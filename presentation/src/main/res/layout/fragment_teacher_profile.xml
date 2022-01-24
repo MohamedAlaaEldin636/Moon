@@ -6,6 +6,7 @@
   <data>
 
     <import type="com.structure.base_mvvm.domain.utils.Constants" />
+
     <import type="android.text.TextUtils" />
 
     <variable
@@ -45,7 +46,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loadCircleImage="@{viewModel.teacherProfile.instructor.image}"
+            app:loadCircleImage="@{viewModel.teacherProfile.image}"
             app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
             app:srcCompat="@drawable/bg_no_image"
             app:strokeColor="@color/white"
@@ -59,9 +60,9 @@
             android:layout_marginStart="@dimen/dimen8"
             android:layout_marginTop="@dimen/dimen2"
             android:layout_marginEnd="@dimen/dimen8"
-            android:text="@{viewModel.teacherProfile.instructor.name}"
+            android:text="@{viewModel.teacherProfile.name}"
             android:textAlignment="viewStart"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ic_teacher"
@@ -79,7 +80,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toEndOf="@id/ic_teacher"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
-            app:rate="@{viewModel.teacherProfile.instructor.average_rating}" />
+            app:rate="@{viewModel.teacherProfile!=null?viewModel.teacherProfile.average_rating:`0`}" />
 
           <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_rate"
@@ -89,7 +90,7 @@
             android:layout_marginStart="@dimen/dimen8"
             android:layout_marginTop="@dimen/dimen2"
             android:layout_marginEnd="@dimen/dimen8"
-            android:text="@{`( `.concat(!TextUtils.isEmpty(viewModel.teacherProfile.instructor.average_rating)?viewModel.teacherProfile.instructor.average_rating:``).concat(` )`)}"
+            android:text="@{`( `.concat(!TextUtils.isEmpty(viewModel.teacherProfile.average_rating)?viewModel.teacherProfile.average_rating:``).concat(` )`)}"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="11sp"
@@ -104,7 +105,7 @@
             android:layout_marginTop="@dimen/dimen4"
             android:layout_marginBottom="@dimen/dimen4"
             android:minHeight="0dp"
-            android:text="@{viewModel.teacherProfile.instructor.subject.name}"
+            android:text="@{viewModel.teacherProfile.subject.name}"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             app:backgroundTint="@color/colorPrimaryDark"
             app:cornerRadius="@dimen/dimen14"
@@ -138,7 +139,7 @@
         android:layout_marginStart="@dimen/dimen8"
         android:layout_marginTop="@dimen/dimen10"
         android:layout_marginEnd="@dimen/dimen8"
-        android:text="لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو لابورأس نيسي يت أليكيوب أكس"
+        android:text="@{viewModel.teacherProfile.description}"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/black"
@@ -167,8 +168,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen10"
         android:orientation="horizontal"
+        app:adapter="@{viewModel.groupsAdapter}"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/tv_groups"
+        app:orientation="@{`2`}"
+        app:span="@{`1`}"
         tools:listitem="@layout/item_groups" />
 
       <com.google.android.material.button.MaterialButton
@@ -208,6 +212,7 @@
         android:layout_marginTop="@dimen/dimen24"
         android:layout_marginEnd="@dimen/dimen8"
         android:text="@string/all"
+        android:onClick="@{()->viewModel.clickEvent(Constants.REVIEWS)}"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
@@ -219,8 +224,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen10"
+        app:adapter="@{viewModel.reviewsAdapter}"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/tv_students_review"
+        app:orientation="@{`1`}"
+        app:span="@{`1`}"
         tools:itemCount="5"
         tools:listitem="@layout/item_review" />
 

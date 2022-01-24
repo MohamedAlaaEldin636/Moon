@@ -54,18 +54,30 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   private fun navChangeListener() {
     nav.addOnDestinationChangedListener { _, destination, _ ->
-      if (destination.id == R.id.home_fragment || destination.id == R.id.teachersFragment || destination.id == R.id.testsFragment || destination.id == R.id.accountFragment || destination.id == R.id.contact_fragment || destination.id == R.id.suggestions_fragment) {
-        binding.toolbar.visibility = View.VISIBLE
-        binding.bottomNavigationView.visibility = View.VISIBLE
-        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-      } else {
+      if (destination.id == R.id.privacy_fragment
+        || destination.id == R.id.terms_fragment
+        || destination.id == R.id.about_fragment
+        || destination.id == R.id.social_fragment
+      ) {
         binding.toolbar.visibility = View.GONE
         binding.bottomNavigationView.visibility = View.GONE
         binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+      } else {
+        binding.toolbar.visibility = View.VISIBLE
+        if (destination.id == R.id.home_fragment
+          || destination.id == R.id.teachersFragment
+          || destination.id == R.id.testsFragment
+          || destination.id == R.id.accountFragment
+        )
+          binding.bottomNavigationView.visibility = View.VISIBLE
+        else
+          binding.bottomNavigationView.visibility = View.GONE
+
+        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
       }
     }
-
   }
+
 
   override fun onSupportNavigateUp(): Boolean {
     return nav.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()

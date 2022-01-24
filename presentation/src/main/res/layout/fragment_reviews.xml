@@ -21,7 +21,10 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_margin="@dimen/dimen10"
+      app:adapter="@{viewModel.reviewsAdapter}"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:orientation="@{`1`}"
+      app:span="@{`1`}"
       tools:listitem="@layout/item_review" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

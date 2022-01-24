@@ -11,7 +11,8 @@
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/corner_white">
 
     <androidx.appcompat.widget.AppCompatRatingBar
       android:id="@+id/dialog_review_rate"
@@ -19,11 +20,11 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/dimen12"
       android:numStars="5"
+      android:onRatingChanged="@{viewModel.onRateChange}"
       android:progressTint="@color/colorPrimaryDark"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
-    <!--          android:onRatingChanged="@{viewModel.onRateChange}"-->
 
     <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/review_dialog_comment"
@@ -34,26 +35,41 @@
       android:gravity="top"
       android:hint="@string/comment"
       android:padding="@dimen/dimen8"
+      android:text="@={viewModel.request.review}"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/dialog_review_rate" />
-    <!--          android:text="@={viewModel.rateRequest.comment}"-->
+
 
     <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/btn_rate"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/dimen16"
       android:layout_marginBottom="@dimen/dimen20"
       android:background="@drawable/btn_accent"
+      android:onClick="@{()->viewModel.sendRate()}"
       android:text="@string/rate"
-      android:id="@+id/btn_rate"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/white"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="@id/review_dialog_comment"
       app:layout_constraintStart_toStartOf="@id/review_dialog_comment"
-      app:layout_constraintTop_toBottomOf="@+id/review_dialog_comment" />
-    <!--          android:onClick="@{()->viewModel.sendRate()}"-->
+      app:layout_constraintTop_toBottomOf="@+id/progress" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+      android:id="@+id/progress"
+      style="Widget.MaterialComponents.LinearProgressIndicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:indeterminate="true"
+      android:layout_marginTop="@dimen/dimen8"
+      android:visibility="gone"
+      app:trackColor="@color/colorPrimaryDark"
+      app:layout_constraintStart_toStartOf="@id/btn_rate"
+      app:layout_constraintEnd_toEndOf="@id/btn_rate"
+      app:layout_constraintTop_toBottomOf="@+id/review_dialog_comment"
+      app:trackThickness="@dimen/dimen4" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,4 +1,4 @@
-package com.structure.base_mvvm.presentation.home.adapters
+package com.structure.base_mvvm.presentation.reviews.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,36 +7,30 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.structure.base_mvvm.domain.home.models.Instructor
+import com.structure.base_mvvm.domain.reviews.entity.Reviews
 import com.structure.base_mvvm.presentation.R
-import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
-import com.structure.base_mvvm.presentation.databinding.ItemTeacherBinding
-import com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel
+import com.structure.base_mvvm.presentation.databinding.ItemReviewBinding
+import com.structure.base_mvvm.presentation.reviews.viewModels.ItemReviewViewModel
 
-class TeacherAdapter : RecyclerView.Adapter<TeacherAdapter.ViewHolder>() {
-  var clickEvent: SingleLiveEvent<Instructor> = SingleLiveEvent()
-
-  private val differCallback = object : DiffUtil.ItemCallback<Instructor>() {
-    override fun areItemsTheSame(oldItem: Instructor, newItem: Instructor): Boolean {
-      return oldItem.id == newItem.id
+class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ViewHolder>() {
+  private val differCallback = object : DiffUtil.ItemCallback<Reviews>() {
+    override fun areItemsTheSame(oldItem: Reviews, newItem: Reviews): Boolean {
+      return oldItem.user == newItem.user
     }
 
-    override fun areContentsTheSame(oldItem: Instructor, newItem: Instructor): Boolean {
+    override fun areContentsTheSame(oldItem: Reviews, newItem: Reviews): Boolean {
       return oldItem == newItem
     }
   }
-  val differ = AsyncListDiffer(this, differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_teacher, parent, false)
+    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_review, parent, false)
     return ViewHolder(view)
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemTeacherViewModel(data)
-    itemViewModel.clickEvent.observeForever {
-      clickEvent.value = data
-    }
+    val itemViewModel = ItemReviewViewModel(data)
     holder.setViewModel(itemViewModel)
 
   }
@@ -57,7 +51,7 @@ class TeacherAdapter : RecyclerView.Adapter<TeacherAdapter.ViewHolder>() {
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    private lateinit var itemLayoutBinding: ItemTeacherBinding
+    private lateinit var itemLayoutBinding: ItemReviewBinding
 
     init {
       bind()
@@ -71,8 +65,9 @@ class TeacherAdapter : RecyclerView.Adapter<TeacherAdapter.ViewHolder>() {
       itemLayoutBinding.unbind()
     }
 
-    fun setViewModel(itemViewModel: ItemTeacherViewModel) {
+    fun setViewModel(itemViewModel: ItemReviewViewModel) {
       itemLayoutBinding.itemViewModels = itemViewModel
     }
   }
+
 }

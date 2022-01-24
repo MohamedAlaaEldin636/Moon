@@ -51,9 +51,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
       }
     }
-//    viewModel.adapter.clickEvent.observeForever { instructorId ->
-//      toTeacherProfile(instructorId)
-//    }
+    viewModel.adapter.clickEvent.observeForever { instructor ->
+      toTeacherProfile(instructor.id, instructor.name)
+    }
 
   }
 
@@ -62,7 +62,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
       R.id.teachersFragment
   }
 
-  private fun toTeacherProfile(instructorId: Int) {
-    navigateSafe(HomeFragmentDirections.actionToTeacherProfileFragment(instructorId))
+  private fun toTeacherProfile(instructorId: Int, instructorName: String) {
+    navigateSafe(
+      HomeFragmentDirections.actionToTeacherProfileFragment(
+        instructorId,
+        instructorName
+      )
+    )
   }
 }

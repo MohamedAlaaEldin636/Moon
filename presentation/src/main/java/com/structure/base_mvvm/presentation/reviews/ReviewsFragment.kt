@@ -1,38 +1,26 @@
 package com.structure.base_mvvm.presentation.reviews
 
-import android.app.Dialog
-import android.content.DialogInterface
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Window
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import codes.grand.pretty_pop_up.PrettyPopUpHelper
+import androidx.lifecycle.lifecycleScope
 import com.structure.base_mvvm.domain.utils.Constants
+import com.structure.base_mvvm.domain.utils.Resource
+import com.structure.base_mvvm.presentation.BR
 import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
-import com.structure.base_mvvm.presentation.base.extensions.getMyColor
-import com.structure.base_mvvm.presentation.base.extensions.getMyString
+import com.structure.base_mvvm.presentation.base.extensions.handleApiError
+import com.structure.base_mvvm.presentation.base.extensions.hideKeyboard
 import com.structure.base_mvvm.presentation.base.extensions.navigateSafe
 import com.structure.base_mvvm.presentation.databinding.FragmentReviewsBinding
-import com.structure.base_mvvm.presentation.databinding.FragmentTeachersBinding
-import com.structure.base_mvvm.presentation.databinding.ReviewDialogBinding
-import com.structure.base_mvvm.presentation.home.HomeFragmentDirections
 import com.structure.base_mvvm.presentation.reviews.viewModels.ReviewsViewModel
-import com.structure.base_mvvm.presentation.teachers.viewModels.TeachersViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
-
   private val viewModel: ReviewsViewModel by viewModels()
-
-  private lateinit var dialog: Dialog
 
   override
   fun getLayoutId() = R.layout.fragment_reviews
@@ -44,27 +32,36 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
 
   override
   fun setUpViews() {
-    setUpToolBar()
     setFragmentResultListener(Constants.BUNDLE) { _: String, bundle: Bundle ->
-      Log.e("setUpViews", "setUpViews: "+bundle.getInt("value") )
-//      if (bundle.containsKey("deleted"))
-//        viewModel.adapter.deletePosition(invoiceItem)
-//      else if (bundle.containsKey("model")) {
-//        viewModel.adapter.updateItem(invoiceItem, bundle.getSerializable("model") as InvoiceItem)
-//      }
+      viewModel.getReviews()
     }
   }
 
-  private fun setUpToolBar() {
-//    binding.includedToolbar.toolbarTitle.text = getMyString(R.string.settings)
-//    binding.includedToolbar.backIv.hide()
-  }
 
   override
   fun setupObservers() {
     viewModel.clickEvent.observeForever {
       if (it == Constants.REVIEW_DIALOG)
         openReviewDialog()
+    }
+    lifecycleScope.launchWhenResumed {
+      viewModel.reviewsResponse.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            viewModel.reviewsAdapter.differ.submitList(it.value.data)
+            viewModel.notifyPropertyChanged(BR.reviewsAdapter)
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
     }
   }
 
@@ -82,7 +79,7 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
 //    dialog.setContentView(binding.root)
 //    binding.viewModel = viewModel
 //    dialog.show()
-    viewModel.test = 5
-    navigateSafe(ReviewsFragmentDirections.actionReviewsFragmentToReviewDialogComment(viewModel.test))
+
+    navigateSafe(ReviewsFragmentDirections.actionReviewsFragmentToReviewDialogComment(viewModel.instructorId))
   }
 }

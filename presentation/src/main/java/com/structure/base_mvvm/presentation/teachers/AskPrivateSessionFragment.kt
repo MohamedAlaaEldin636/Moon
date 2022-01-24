@@ -40,6 +40,6 @@ class AskPrivateSessionFragment : BaseFragment<FragmentAskPrivateSessionBinding>
   }
 
   fun toReviews() {
-    navigateSafe(TeacherProfileFragmentDirections.actionToReviewsFragment())
+//    navigateSafe(TeacherProfileFragmentDirections.actionToReviewsFragment())
   }
 }

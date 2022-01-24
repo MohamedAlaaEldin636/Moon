@@ -30,7 +30,7 @@ class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
   override fun setupObservers() {
     viewModel.clickEvent.observeForever {
       if (it == Constants.REVIEWS)
-        toReviews()
+        toReviews(viewModel.teacherProfile.id)
     }
     lifecycleScope.launchWhenResumed {
       viewModel.profileResponse.collect {
@@ -52,7 +52,7 @@ class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
     }
   }
 
-  fun toReviews() {
-    navigateSafe(TeacherProfileFragmentDirections.actionToReviewsFragment())
+  private fun toReviews(instructor: Int) {
+    navigateSafe(TeacherProfileFragmentDirections.actionToReviewsFragment(instructor))
   }
 }

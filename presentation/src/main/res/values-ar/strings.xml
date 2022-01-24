@@ -188,5 +188,6 @@
   <string name="female_group">مجموعة اناث</string>
   <string name="male_group">مجموعة ذكور</string>
   <string name="social">مواقع التواصل الاجتماعي</string>
+    <string name="rate_warning">يرجى ادخال التقييم اولا</string>
 
 </resources>

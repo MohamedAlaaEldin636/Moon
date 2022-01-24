@@ -7,6 +7,7 @@ import com.structure.base_mvvm.presentation.R
 import com.structure.base_mvvm.presentation.base.BaseFragment
 import com.structure.base_mvvm.presentation.base.extensions.handleApiError
 import com.structure.base_mvvm.presentation.base.extensions.hideKeyboard
+import com.structure.base_mvvm.presentation.base.extensions.navigateSafe
 import com.structure.base_mvvm.presentation.databinding.FragmentTeachersBinding
 import com.structure.base_mvvm.presentation.teachers.viewModels.TeachersViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,6 +46,17 @@ class TeachersFragment : BaseFragment<FragmentTeachersBinding>() {
         }
       }
     }
+    viewModel.adapter.clickEvent.observeForever { instructor ->
+      toTeacherProfile(instructor.id, instructor.name)
+    }
+  }
 
+  private fun toTeacherProfile(instructorId: Int, instructorName: String) {
+    navigateSafe(
+      TeachersFragmentDirections.actionToTeacherProfileFragment(
+        instructorId,
+        instructorName
+      )
+    )
   }
 }

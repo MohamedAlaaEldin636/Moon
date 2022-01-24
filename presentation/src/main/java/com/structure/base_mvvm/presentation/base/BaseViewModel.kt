@@ -14,7 +14,6 @@ open class BaseViewModel : ViewModel(), Observable {
   var clickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
   fun clickEvent(action: Int) {
     clickEvent.value = action
-    clickEvent.call()
   }
 
   override fun addOnPropertyChangedCallback(

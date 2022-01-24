@@ -46,7 +46,7 @@ class TeachersViewModel @Inject constructor(
 
   var studentTeacher: StudentTeacher = StudentTeacher()
     set(value) {
-      adapter.differ.submitList(value.instructors)
+      adapter.differ.submitList(value.instructors.instructor)
       notifyPropertyChanged(BR.adapter)
       subjectAdapter.differ.submitList(value.subjects)
       notifyPropertyChanged(BR.subjectAdapter)

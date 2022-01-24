@@ -1,5 +1,6 @@
 package com.structure.base_mvvm.domain.teacher_profile.use_case
 
+import com.structure.base_mvvm.domain.home.models.Instructor
 import com.structure.base_mvvm.domain.teacher_profile.entity.TeacherProfile
 import com.structure.base_mvvm.domain.teacher_profile.repository.TeacherProfileRepository
 import com.structure.base_mvvm.domain.utils.BaseResponse
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class TeacherProfileUseCase @Inject constructor(
   private val teacherProfileRepository: TeacherProfileRepository
 ) {
-  operator fun invoke(instructor_id: Int): Flow<Resource<BaseResponse<TeacherProfile>>> =
+  operator fun invoke(instructor_id: Int): Flow<Resource<BaseResponse<Instructor>>> =
     flow {
       emit(Resource.Loading)
       val result = teacherProfileRepository.teacherProfile(instructor_id)
