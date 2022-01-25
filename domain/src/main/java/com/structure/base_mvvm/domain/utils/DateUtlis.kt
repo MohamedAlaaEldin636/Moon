@@ -1,13 +1,13 @@
-package com.structure.base_mvvm.presentation.base.utils
+package com.structure.base_mvvm.domain.utils
 
-import android.text.format.DateUtils
-import com.structure.base_mvvm.presentation.base.utils.DateUtils.Companion.API_DATE_FORMAT
-import com.structure.base_mvvm.presentation.base.utils.DateUtils.Companion.DAY_NAME
+import com.structure.base_mvvm.domain.utils.DateUtils.Companion.API_DATE_FORMAT
+import com.structure.base_mvvm.domain.utils.DateUtils.Companion.DAY_NAME
+import com.structure.base_mvvm.domain.utils.DateUtils.Companion.TIME_12_FORMAT
+import com.structure.base_mvvm.domain.utils.DateUtils.Companion.TIME_24_FORMAT
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
+
 
 class DateUtils {
   companion object {
@@ -16,7 +16,7 @@ class DateUtils {
     const val FULL_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
     const val MONTH_UI_DATE_FORMAT = "dd MMM yyyy"
     const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
-    const val TIME_12_FORMAT = "hh:mm a"
+    const val TIME_12_FORMAT = "hh:mm:ss aa"
     const val TIME_24_FORMAT = "HH:mm"
     const val TIME_24_FORMAT_WITH_SECONDS = "HH:mm:ss"
     const val TIME_HOUR_ONLY = "HH"
@@ -34,37 +34,31 @@ class DateUtils {
   }
 }
 
-fun String.changeDataFormat(oldFormat: String, newFormat: String): String {
-  val formatView = SimpleDateFormat(oldFormat, getLocale())
-  val newFormatView = SimpleDateFormat(newFormat, getLocale())
-  var dateObj: Date? = null
-  try {
-    dateObj = formatView.parse(this)
-  } catch (e: ParseException) {
-    e.printStackTrace()
-  }
-
-  return if (dateObj == null) "" else newFormatView.format(dateObj)
-}
-
-fun String.convertDateTimeToTimesAgo(format: String): String {
-  val inputFormat = SimpleDateFormat(format, getLocale())
+fun String.dayName(parsedDate: String): String {
+  val inputFormat = SimpleDateFormat(API_DATE_FORMAT, getLocale())
+  val dayFormat = SimpleDateFormat(DAY_NAME, getLocale())
   val date: Date?
   return try {
-    date = inputFormat.parse(this)
-
-    // the new date style
-    DateUtils.getRelativeTimeSpanString(
-      date.time,
-      Calendar.getInstance().timeInMillis,
-      DateUtils.MINUTE_IN_MILLIS
-    ) as String
+    date = inputFormat.parse(parsedDate)
+    return dayFormat.format(date)
   } catch (e: Exception) {
     e.printStackTrace()
     ""
   }
 }
 
+fun String.time(parsedTime: String): String {
+  val time24Format = SimpleDateFormat(TIME_24_FORMAT, getLocale())
+  val time12Format = SimpleDateFormat(TIME_12_FORMAT, getLocale())
+  val date: Date?
+  return try {
+    date = time24Format.parse(parsedTime)
+    return time12Format.format(date)
+  } catch (e: Exception) {
+    e.printStackTrace()
+    ""
+  }
+}
 
 fun getLocale(): Locale? {
   return when (Locale.getDefault().language) {

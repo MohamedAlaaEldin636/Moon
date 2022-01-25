@@ -10,6 +10,8 @@ import com.structure.base_mvvm.data.educational.data_source.EducationalRemoteDat
 import com.structure.base_mvvm.data.educational.repository.EducationalRepositoryImpl
 import com.structure.base_mvvm.data.general.data_source.remote.GeneralRemoteDataSource
 import com.structure.base_mvvm.data.general.repository.GeneralRepositoryImpl
+import com.structure.base_mvvm.data.groupDetails.data_source.GroupDetailsRemoteDataSource
+import com.structure.base_mvvm.data.groupDetails.repository.GroupDetailsRepositoryImpl
 import com.structure.base_mvvm.data.home.data_source.remote.HomeRemoteDataSource
 import com.structure.base_mvvm.data.home.repository.HomeRepositoryImpl
 import com.structure.base_mvvm.data.intro.data_source.IntroRemoteDataSource
@@ -28,6 +30,7 @@ import com.structure.base_mvvm.domain.auth.repository.AuthRepository
 import com.structure.base_mvvm.domain.countries.repository.CountriesRepository
 import com.structure.base_mvvm.domain.educational.repository.EducationalRepository
 import com.structure.base_mvvm.domain.general.repository.GeneralRepository
+import com.structure.base_mvvm.domain.groups.repository.GroupDetailsRepository
 import com.structure.base_mvvm.domain.home.repository.HomeRepository
 import com.structure.base_mvvm.domain.intro.repository.IntroRepository
 import com.structure.base_mvvm.domain.reviews.repository.ReviewsRepository
@@ -105,10 +108,17 @@ class RepositoryModule {
   fun provideTeacherProfileRepository(
     remoteDataSource: TeacherProfileRemoteDataSource
   ): TeacherProfileRepository = TeacherProfileRepositoryImpl(remoteDataSource)
- @Provides
+
+  @Provides
   @Singleton
   fun provideReviewsRepository(
     remoteDataSource: ReviewsRemoteDataSource
   ): ReviewsRepository = ReviewsRepositoryImpl(remoteDataSource)
+
+  @Provides
+  @Singleton
+  fun provideGroupDetailsRepository(
+    remoteDataSource: GroupDetailsRemoteDataSource
+  ): GroupDetailsRepository = GroupDetailsRepositoryImpl(remoteDataSource)
 
 }

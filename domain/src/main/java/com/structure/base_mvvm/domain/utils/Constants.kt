@@ -16,6 +16,7 @@ object Constants {
   const val LOGOUT = 12
   const val TEACHERS: Int = 13
   const val OPEN_BROWSER: Int = 14
+  const val GROUP_DETAILS: Int = 15
   const val BUNDLE = "BUNDLE"
   const val STUDENT_TYPE = "student"
   const val TEACHER_TYPE = "instructor"

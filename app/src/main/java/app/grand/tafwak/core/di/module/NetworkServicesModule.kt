@@ -5,6 +5,7 @@ import com.structure.base_mvvm.data.auth.data_source.remote.AuthServices
 import com.structure.base_mvvm.data.countries.data_source.CountriesServices
 import com.structure.base_mvvm.data.educational.data_source.EducationalServices
 import com.structure.base_mvvm.data.general.data_source.remote.GeneralServices
+import com.structure.base_mvvm.data.groupDetails.data_source.GroupDetailsServices
 import com.structure.base_mvvm.data.home.data_source.remote.HomeServices
 import com.structure.base_mvvm.data.intro.data_source.IntroServices
 import com.structure.base_mvvm.data.reviews.data_source.ReviewsServices
@@ -71,9 +72,15 @@ object NetworkServicesModule {
   @Singleton
   fun provideTeacherProfileServices(retrofit: Retrofit): TeacherProfileServices =
     retrofit.create(TeacherProfileServices::class.java)
-@Provides
+
+  @Provides
   @Singleton
   fun provideReviewsServices(retrofit: Retrofit): ReviewsServices =
     retrofit.create(ReviewsServices::class.java)
+
+  @Provides
+  @Singleton
+  fun provideGroupDetailsServices(retrofit: Retrofit): GroupDetailsServices =
+    retrofit.create(GroupDetailsServices::class.java)
 
 }

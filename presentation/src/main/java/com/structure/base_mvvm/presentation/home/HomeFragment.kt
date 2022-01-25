@@ -54,6 +54,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     viewModel.adapter.clickEvent.observeForever { instructor ->
       toTeacherProfile(instructor.id, instructor.name)
     }
+    viewModel.groupsAdapter.clickEvent.observeForever { group ->
+      toGroupDetails(group.id, group.name)
+    }
 
   }
 
@@ -70,4 +73,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
       )
     )
   }
+
+  private fun toGroupDetails(groupId: Int, groupName: String) {
+    navigateSafe(
+      HomeFragmentDirections.actionHomeFragmentToGroupDetailsFragment(
+        groupId,
+        groupName
+      )
+    )
+  }
+
 }

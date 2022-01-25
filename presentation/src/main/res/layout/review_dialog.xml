@@ -20,7 +20,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/dimen12"
       android:numStars="5"
-      android:onRatingChanged="@{viewModel.onRateChange}"
+      android:onRatingChanged="@{viewModel::onRateChange}"
       android:progressTint="@color/colorPrimaryDark"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

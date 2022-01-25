@@ -36,6 +36,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             IntroActivity::class.java
           }
           viewModel.isLogged() -> {
+
             HomeActivity::class.java
           }
           else -> {

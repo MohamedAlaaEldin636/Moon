@@ -50,6 +50,18 @@ class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
         }
       }
     }
+    viewModel.groupsAdapter.clickEvent.observeForever { group ->
+      toGroupDetails(group.id, group.name)
+    }
+  }
+
+  private fun toGroupDetails(groupId: Int, groupName: String) {
+    navigateSafe(
+      TeacherProfileFragmentDirections.actionTeacherProfileFragmentToGroupDetailsFragment(
+        groupId,
+        groupName
+      )
+    )
   }
 
   private fun toReviews(instructor: Int) {

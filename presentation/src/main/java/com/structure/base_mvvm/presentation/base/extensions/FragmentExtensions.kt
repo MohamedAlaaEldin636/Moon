@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.structure.base_mvvm.domain.utils.FailureStatus
 import com.structure.base_mvvm.domain.utils.Resource.Failure
 import com.structure.base_mvvm.presentation.R
+import com.structure.base_mvvm.presentation.auth.AuthActivity
 import com.structure.base_mvvm.presentation.base.utils.*
 
 fun Fragment.handleApiError(
@@ -41,6 +42,9 @@ fun Fragment.handleApiError(
           notActiveAction
         )
       }
+    }
+    FailureStatus.TOKEN_EXPIRED -> {
+      openActivityAndClearStack(AuthActivity::class.java)
     }
     else -> {
       noDataAction?.invoke()

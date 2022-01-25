@@ -18,6 +18,13 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_home_fragment_to_groupDetailsFragment"
+      app:destination="@id/groupDetailsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
   </fragment>
   <fragment
     android:id="@+id/teacherProfileFragment"
@@ -36,6 +43,13 @@
     <argument
       android:name="title"
       app:argType="string" />
+    <action
+      android:id="@+id/action_teacherProfileFragment_to_groupDetailsFragment"
+      app:destination="@id/groupDetailsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
 
   </fragment>
   <fragment
@@ -112,5 +126,24 @@
     android:id="@+id/social_fragment"
     android:name="com.structure.base_mvvm.presentation.social.SocialFragment"
     android:label="SocialFragment" />
+  <fragment
+    android:id="@+id/groupDetailsFragment"
+    android:name="com.structure.base_mvvm.presentation.group_details.GroupDetailsFragment"
+    android:label="{title}">
+    <action
+      android:id="@+id/action_groupDetailsFragment_to_reviewsFragment"
+      app:destination="@id/reviewsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+    <argument
+      android:name="group_id"
+      app:argType="integer" />
+    <argument
+      android:name="title"
+      app:argType="string" />
+
+  </fragment>
 
 </navigation>

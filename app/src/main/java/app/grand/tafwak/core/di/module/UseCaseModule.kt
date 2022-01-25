@@ -19,6 +19,8 @@ import com.structure.base_mvvm.domain.educational.repository.EducationalReposito
 import com.structure.base_mvvm.domain.educational.use_case.EducationalUseCase
 import com.structure.base_mvvm.domain.general.use_case.ClearPreferencesUseCase
 import com.structure.base_mvvm.domain.general.use_case.GeneralUseCases
+import com.structure.base_mvvm.domain.groups.repository.GroupDetailsRepository
+import com.structure.base_mvvm.domain.groups.use_case.GroupDetailsUseCase
 import com.structure.base_mvvm.domain.home.repository.HomeRepository
 import com.structure.base_mvvm.domain.home.use_case.HomeUseCase
 import com.structure.base_mvvm.domain.intro.repository.IntroRepository
@@ -117,6 +119,12 @@ class UseCaseModule {
   fun provideReviewsUseCase(
     reviewsRepository: ReviewsRepository
   ): ReviewsUseCase = ReviewsUseCase(reviewsRepository)
+
+  @Provides
+  @Singleton
+  fun provideGroupDetailsUseCase(
+    groupDetailsRepository: GroupDetailsRepository
+  ): GroupDetailsUseCase = GroupDetailsUseCase(groupDetailsRepository)
 
   //public use cases
   @Provides

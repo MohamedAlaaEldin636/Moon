@@ -4,9 +4,11 @@
 
   <data>
 
+    <import type="com.structure.base_mvvm.presentation.base.utils.DateUtils" />
+
     <variable
-      name="notifyItemViewModels"
-      type="com.structure.base_mvvm.presentation.home.viewModels.ItemTeacherViewModel" />
+      name="itemViewModels"
+      type="com.structure.base_mvvm.presentation.group_details.viewModels.ItemSessionScheduledViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +26,7 @@
       android:drawableStart="@drawable/circle"
       android:drawablePadding="@dimen/dimen8"
       android:drawableTint="@color/colorPrimaryDark"
-      android:text="الاحد"
+      android:text="@{itemViewModels.scheduled.scheduled}"
       android:textAlignment="viewEnd"
       android:textAppearance="@style/TextAppearance.AppCompat.Small"
       android:textColor="@color/black"
@@ -40,7 +42,7 @@
       android:layout_marginTop="@dimen/dimen7"
       android:layout_marginEnd="@dimen/dimen8"
       android:layout_marginBottom="@dimen/dimen7"
-      android:text="12 مساءًً"
+      android:text="@{itemViewModels.scheduled.start}"
       android:textAlignment="viewStart"
       android:textAppearance="@style/TextAppearance.AppCompat.Small"
       android:textColor="@color/black" />
@@ -54,7 +56,7 @@
       android:layout_marginTop="@dimen/dimen7"
       android:layout_marginEnd="@dimen/dimen8"
       android:layout_marginBottom="@dimen/dimen7"
-      android:text=" 2 مساءً"
+      android:text="@{itemViewModels.scheduled.end}"
       android:textAlignment="viewStart"
       android:textAppearance="@style/TextAppearance.AppCompat.Small"
       android:textColor="@color/black" />

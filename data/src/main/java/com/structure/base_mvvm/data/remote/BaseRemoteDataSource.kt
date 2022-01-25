@@ -48,7 +48,8 @@ open class BaseRemoteDataSource @Inject constructor() {
             (apiResponse as BaseResponse<*>).code,
             (apiResponse as BaseResponse<*>).message
           )
-        } 405 -> {
+        }
+        405 -> {
           return Resource.Failure(
             FailureStatus.NOT_ACTIVE,
             (apiResponse as BaseResponse<*>).code,
@@ -76,9 +77,8 @@ open class BaseRemoteDataSource @Inject constructor() {
                 throwable.response()?.errorBody()!!.charStream().readText(),
                 ErrorResponse::class.java
               )
-
               return Resource.Failure(
-                FailureStatus.API_FAIL,
+                FailureStatus.TOKEN_EXPIRED,
                 throwable.code(),
                 errorResponse.detail
               )
