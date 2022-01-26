@@ -27,16 +27,12 @@ class AccountRepositoryImpl @Inject constructor(
   fun isLoggedIn() = appPreferences.isLoggedIn
 
   override suspend fun saveFirebaseTokenToLocal(firebaseToken: String) {
-//    appPreferences.firebaseToken = firebaseToken
-    appPreferences.saveNameToDataStore(firebaseToken)
+    appPreferences.saveFireBaseToken(firebaseToken)
   }
 
   override suspend fun getFirebaseTokenToLocal(): Flow<String> {
-    return appPreferences.getNameFromDataStore()
+    return appPreferences.getFireBaseToken()
   }
-
-  override
-  fun getFirebaseToken() = appPreferences.firebaseToken
 
   override
   fun saveUserToLocal(user: User) {

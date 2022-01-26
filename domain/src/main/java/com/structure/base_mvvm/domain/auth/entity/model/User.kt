@@ -2,6 +2,7 @@ package com.structure.base_mvvm.domain.auth.entity.model
 
 import androidx.annotation.Keep
 
+
 @Keep
 data class User(
   val email: String,

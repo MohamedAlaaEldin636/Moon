@@ -12,30 +12,29 @@ import com.structure.base_mvvm.domain.auth.entity.model.User
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class AppPreferences @Inject constructor(val context: Context) {
+class AppPreferences @Inject constructor(private val context: Context) {
 
   private val STORE_NAME = "app_data_store"
   private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = STORE_NAME)
 
-  suspend fun saveNameToDataStore(name: String) {
+  suspend fun saveFireBaseToken(token: String) {
     context.dataStore.edit {
-      it[NAME] = name
+      it[FIREBASE_TOKEN] = token
     }
   }
 
-  suspend fun getNameFromDataStore() = context.dataStore.data.map {
-    it[NAME] ?: ""
+  suspend fun getFireBaseToken() = context.dataStore.data.map {
+    it[FIREBASE_TOKEN] ?: ""
   }
 
   //Old Pref
   companion object {
-    val NAME = stringPreferencesKey("NAME")
+    val FIREBASE_TOKEN = stringPreferencesKey("FIREBASE_TOKEN")
     const val APP_PREFERENCES_NAME = "APP-NAME-Cache"
     private const val SESSION_PREFERENCES_NAME = "APP-NAME-UserCache"
     private const val MODE = Context.MODE_PRIVATE
     private val USER_DATA = Pair("USER_DATA", "")
     private val FIRST_TIME = Pair("FIRST_TIME", true)
-    private val FIREBASE_TOKEN = Pair("FIREBASE_TOKEN", "")
   }
 
   private val appPreferences: SharedPreferences =
@@ -86,14 +85,6 @@ class AppPreferences @Inject constructor(val context: Context) {
     }
     set(value) = appPreferences.edit {
       it.putBoolean(FIRST_TIME.first, value)
-    }
-
-  var firebaseToken: String?
-    get() {
-      return sessionPreferences.getString(FIREBASE_TOKEN.first, FIREBASE_TOKEN.second)
-    }
-    set(value) = sessionPreferences.edit {
-      it.putString(FIREBASE_TOKEN.first, value)
     }
 
   fun clearPreferences() {

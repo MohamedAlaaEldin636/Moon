@@ -1,6 +1,8 @@
 package com.structure.base_mvvm.domain.utils
 
 object Constants {
+  const val PAGE_INDEX = 1
+  const val NETWORK_PAGE_SIZE = 2
 
   const val PICK_IMAGE = 1
   const val REGISTER = 2

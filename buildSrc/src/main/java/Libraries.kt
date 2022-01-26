@@ -18,6 +18,7 @@ object Libraries {
   const val viewModelState =
     "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
   const val paging_version = "androidx.paging:paging-runtime:${Versions.paging_version}"
+  const val paging_version_ktx = "androidx.paging:paging-common-ktx:${Versions.paging_version}"
 
   // Kotlin Coroutines
   const val coroutinesCore =

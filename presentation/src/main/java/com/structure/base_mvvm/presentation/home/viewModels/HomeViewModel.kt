@@ -1,7 +1,12 @@
 package com.structure.base_mvvm.presentation.home.viewModels
 
+import android.util.Log
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.structure.base_mvvm.domain.account.repository.AccountRepository
+import com.structure.base_mvvm.domain.account.use_case.UserLocalUseCase
 import com.structure.base_mvvm.domain.home.models.HomeStudentData
 import com.structure.base_mvvm.domain.home.use_case.HomeUseCase
 import com.structure.base_mvvm.domain.utils.BaseResponse
@@ -17,7 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-  private val homeUseCase: HomeUseCase
+  private val homeUseCase: HomeUseCase,
+ private val userLocalUseCase: UserLocalUseCase
 ) : BaseViewModel() {
 
   @Bindable
@@ -33,6 +39,15 @@ class HomeViewModel @Inject constructor(
   val homeResponse = _homeResponse
 
   init {
+    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+      if (!task.isSuccessful) {
+        return@OnCompleteListener
+      }
+      var result = task.result
+      Log.e("setupFirebaseToken", "setupFirebaseToken: $result")
+      //shared perereference
+      userLocalUseCase.saveToken(result)
+    })
     getHomeStudent()
   }
 
@@ -43,6 +58,10 @@ class HomeViewModel @Inject constructor(
         _homeResponse.value = result
       }
       .launchIn(viewModelScope)
+
+    userLocalUseCase.getToken().onEach {
+      Log.e("getHomeStudent", "getHomeStudent: "+it )
+    }
   }
 
   var homeStudentData: HomeStudentData = HomeStudentData()

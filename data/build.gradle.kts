@@ -32,6 +32,8 @@ dependencies {
   implementation(Libraries.gson)
 
   implementation(Libraries.javaInject)
+//  implementation(Libraries.paging_version)
+//  implementation(Libraries.paging_version_ktx)
 
   // Project Modules
   implementation(project(Config.Modules.domain))

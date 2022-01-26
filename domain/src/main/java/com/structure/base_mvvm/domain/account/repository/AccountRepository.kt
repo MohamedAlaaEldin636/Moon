@@ -20,9 +20,8 @@ interface AccountRepository {
 
   suspend fun getFirebaseTokenToLocal(): Flow<String>
 
-  fun getFirebaseToken(): String?
-
   fun saveUserToLocal(user: User)
+
   fun getUserToLocal(): User?
 
   fun setFirstTime(isFirstTime: Boolean)

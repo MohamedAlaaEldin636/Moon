@@ -84,10 +84,14 @@ dependencies {
   implementation(Libraries.playServices)
   implementation(Libraries.localization)
   implementation(Libraries.multidex)
+// paging
+  implementation(Libraries.paging_version)
+  implementation(Libraries.paging_version_ktx)
 
   // Hilt
   implementation(Libraries.hilt)
-  implementation("com.google.firebase:firebase-messaging-ktx:22.0.0")
+  implementation(Libraries.firebase_platform)
+  implementation(Libraries.firebase_messaging)
   kapt(Libraries.hiltDaggerCompiler)
   // Project Modules
   implementation(project(Config.Modules.domain))

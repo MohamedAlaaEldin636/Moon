@@ -44,12 +44,12 @@ class ReviewsViewModel @Inject constructor(
   }
 
   fun getReviews() {
-    reviewsUseCase.invoke(instructorId)
-      .onEach { result ->
-        println(result.toString())
-        _reviewsResponse.value = result
-      }
-      .launchIn(viewModelScope)
+//    reviewsUseCase.invoke(instructorId)
+//      .onEach { result ->
+//        println(result.toString())
+////        _reviewsResponse.value = result
+//      }
+//      .launchIn(viewModelScope)
   }
 
   fun sendRate() {
