@@ -12,19 +12,33 @@ interface AccountRepository {
 
   suspend fun logOut(): Resource<BaseResponse<*>>
 
-  fun isFirstTime(): Boolean
+  suspend fun isLoggedIn(isLoggedIn: Boolean)
 
-  fun isLoggedIn(): Boolean
+  suspend fun getIsLoggedIn(): Flow<Boolean>
 
   suspend fun saveFirebaseTokenToLocal(firebaseToken: String)
 
   suspend fun getFirebaseTokenToLocal(): Flow<String>
 
-  fun saveUserToLocal(user: User)
+  suspend fun setFirstTime(isFirstTime: Boolean)
 
-  fun getUserToLocal(): User?
+  suspend fun isFirstTime(): Flow<Boolean>
 
-  fun setFirstTime(isFirstTime: Boolean)
+  suspend fun saveUserToLocal(user: User)
+
+  suspend fun getUserToLocal(): Flow<User>
+
+  suspend fun saveUserToken(userToken: String)
+
+  suspend fun getUserToken(): Flow<String>
+
+  suspend fun saveRegisterStep(register_step: String)
+
+  suspend fun getRegisterStep(): Flow<String>
+
+  suspend fun saveCountryId(country_id: String)
+
+  suspend fun getCountryId(): Flow<String>
 
   fun clearPreferences()
 

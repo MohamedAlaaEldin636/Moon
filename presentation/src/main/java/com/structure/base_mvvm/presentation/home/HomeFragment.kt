@@ -46,7 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
           }
           is Resource.Failure -> {
             hideLoading()
-            handleApiError(it)
+//            handleApiError(it)
           }
         }
       }

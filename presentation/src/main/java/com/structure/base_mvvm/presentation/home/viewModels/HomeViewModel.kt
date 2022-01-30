@@ -18,12 +18,13 @@ import com.structure.base_mvvm.presentation.home.adapters.HomeSliderAdapter
 import com.structure.base_mvvm.presentation.home.adapters.TeacherAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
   private val homeUseCase: HomeUseCase,
- private val userLocalUseCase: UserLocalUseCase
+  private val userLocalUseCase: UserLocalUseCase
 ) : BaseViewModel() {
 
   @Bindable
@@ -46,7 +47,9 @@ class HomeViewModel @Inject constructor(
       var result = task.result
       Log.e("setupFirebaseToken", "setupFirebaseToken: $result")
       //shared perereference
-      userLocalUseCase.saveToken(result)
+      viewModelScope.launch {
+        userLocalUseCase.saveToken(result)
+      }
     })
     getHomeStudent()
   }
@@ -58,9 +61,10 @@ class HomeViewModel @Inject constructor(
         _homeResponse.value = result
       }
       .launchIn(viewModelScope)
-
-    userLocalUseCase.getToken().onEach {
-      Log.e("getHomeStudent", "getHomeStudent: "+it )
+    viewModelScope.launch {
+      userLocalUseCase.getToken().collect {
+        Log.e("getHomeStudent", "getHomeStudent: "+it)
+      }
     }
   }
 

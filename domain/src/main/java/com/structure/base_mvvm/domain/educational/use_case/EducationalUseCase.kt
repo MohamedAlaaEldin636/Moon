@@ -40,7 +40,7 @@ class EducationalUseCase @Inject constructor(
       val result =
         educationalRepository.registerStep3(RegisterStep3(educational_stage_id = stage_id))
       if (result is Resource.Success) {
-        userLocalUseCase.invoke(Constants.REGISTER_STEP, "4")
+        userLocalUseCase.registerStep( "4")
       }
       emit(result)
     }.flowOn(Dispatchers.IO)
@@ -50,7 +50,7 @@ class EducationalUseCase @Inject constructor(
       emit(Resource.Loading)
       val result = educationalRepository.registerStep4(RegisterStep4(grade_id = grade_id))
       if (result is Resource.Success) {
-        userLocalUseCase.invoke(Constants.REGISTER_STEP, "5")
+        userLocalUseCase.registerStep("5")
         userLocalUseCase(result.value.data)
       }
       emit(result)

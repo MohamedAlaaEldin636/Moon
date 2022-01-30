@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class SetFirstTimeUseCase @Inject constructor(private val accountRepository: AccountRepository) {
 
-  operator fun invoke(isFirstTime: Boolean) = accountRepository.setFirstTime(isFirstTime)
+  suspend operator fun invoke(isFirstTime: Boolean) = accountRepository.setFirstTime(isFirstTime)
 }

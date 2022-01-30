@@ -19,6 +19,9 @@ object Constants {
   const val TEACHERS: Int = 13
   const val OPEN_BROWSER: Int = 14
   const val GROUP_DETAILS: Int = 15
+  const val FIRST_TIME: Int = 16
+  const val IS_LOGGED: Int = 17
+  const val AUTH: Int = 18
   const val BUNDLE = "BUNDLE"
   const val STUDENT_TYPE = "student"
   const val TEACHER_TYPE = "instructor"
@@ -26,7 +29,6 @@ object Constants {
   const val Verify: String = "verify"
   const val FORGET: String = "reset"
   const val COUNTRY_ID = "COUNTRY_ID"
-  const val TOKEN = "TOKEN"
   const val REGISTER_STEP = "REGISTER_STEP"
   const val ABOUT_TYPE: String = "about_us"
   const val SOCIAL_TYPE: String = "social_media"

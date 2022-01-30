@@ -11,16 +11,14 @@ import com.structure.base_mvvm.domain.utils.Resource
 import com.structure.base_mvvm.presentation.base.BaseViewModel
 import com.structure.base_mvvm.presentation.base.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LogInViewModel @Inject constructor(
   private val logInUseCase: LogInUseCase,
-  private val userLocalUseCase: UserLocalUseCase
+  val userLocalUseCase: UserLocalUseCase
 ) : BaseViewModel() {
 
   var request = LogInRequest()
@@ -30,9 +28,14 @@ class LogInViewModel @Inject constructor(
   var validationException = SingleLiveEvent<Int>()
 
   init {
-    registerStep = checkIfHasAccount()
-    if (registerStep.isNotEmpty())
-      clickEvent.value = Constants.CONTINUE_PROGRESS
+    viewModelScope.launch {
+      userLocalUseCase.getRegisterStep().collect {
+        registerStep = it
+        if (registerStep.isNotEmpty())
+          clickEvent.value = Constants.CONTINUE_PROGRESS
+      }
+    }
+
 
   }
 
@@ -44,8 +47,5 @@ class LogInViewModel @Inject constructor(
       }
       .launchIn(viewModelScope)
   }
-
-  private fun checkIfHasAccount(): String = userLocalUseCase.invoke(Constants.REGISTER_STEP)
-  fun checkUserType(): String? = userLocalUseCase.invoke()?.account_type
 
 }

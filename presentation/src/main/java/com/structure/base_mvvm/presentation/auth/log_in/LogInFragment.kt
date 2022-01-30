@@ -1,5 +1,6 @@
 package com.structure.base_mvvm.presentation.auth.log_in
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import codes.grand.pretty_pop_up.PrettyPopUpHelper
@@ -16,6 +17,7 @@ import com.structure.base_mvvm.presentation.home.HomeActivity
 import com.structure.base_mvvm.presentation.teachers.home.TeacherHomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LogInFragment : BaseFragment<FragmentLogInBinding>() {
@@ -65,9 +67,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            if (viewModel.checkUserType()!=null)
-              openHome()
-            else checkNavigate()
+            openHome()
           }
           is Resource.Failure -> {
             hideLoading()
@@ -100,10 +100,18 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   }
 
   private fun openHome() {
-    if (viewModel.checkUserType() == Constants.STUDENT_TYPE)
-      requireActivity().openActivityAndClearStack(HomeActivity::class.java)
-    else
-      requireActivity().openActivityAndClearStack(TeacherHomeActivity::class.java)
+    lifecycleScope.launch {
+      viewModel.userLocalUseCase.invoke().collect { user ->
+        Log.e("openHome", "openHome: "+user.account_type )
+        if (user.account_type.isNotEmpty()) {
+          if (user.account_type == Constants.STUDENT_TYPE)
+            requireActivity().openActivityAndClearStack(HomeActivity::class.java)
+          else
+            requireActivity().openActivityAndClearStack(TeacherHomeActivity::class.java)
+        } else checkNavigate()
+      }
+    }
+
   }
 
   private fun openContinueDialog() {

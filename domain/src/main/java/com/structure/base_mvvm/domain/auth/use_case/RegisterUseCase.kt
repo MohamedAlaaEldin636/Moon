@@ -59,7 +59,7 @@ class RegisterUseCase @Inject constructor(
     emit(Resource.Loading)
     val result = authRepository.register(request)
     if (result is Resource.Success) {
-      userLocalUseCase.invoke(Constants.REGISTER_STEP, (request.register_steps + 1).toString())
+      userLocalUseCase.registerStep((request.register_steps + 1).toString())
     }
     emit(result)
   }.flowOn(Dispatchers.IO)

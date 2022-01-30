@@ -6,6 +6,8 @@ plugins {
   id(Config.Plugins.kotlinKapt)
   id(Config.Plugins.navigationSafeArgs)
   id(Config.Plugins.hilt)
+  id(Config.Plugins.google_services)
+
 }
 
 android {

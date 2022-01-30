@@ -36,12 +36,12 @@ class LogInUseCase @Inject constructor(
     emit(Resource.Loading)
     val result = authRepository.logIn(request)
     if (result is Resource.Success) {
-      userLocalUseCase.invoke(Constants.TOKEN, result.value.data.token)
+      userLocalUseCase.saveUserToken(result.value.data.token)
+      userLocalUseCase.saveCountryId(result.value.data.country_id)
       if (result.value.data.register_steps == 4)
-        userLocalUseCase(result.value.data)
+        userLocalUseCase.invoke(result.value.data)
       else
-        userLocalUseCase.invoke(
-          Constants.REGISTER_STEP,
+        userLocalUseCase.registerStep(
           result.value.data.register_steps.toString()
         )
     }

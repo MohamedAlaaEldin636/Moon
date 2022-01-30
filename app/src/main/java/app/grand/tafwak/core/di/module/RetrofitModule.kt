@@ -13,6 +13,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,18 +35,39 @@ object RetrofitModule {
 
   @Provides
   @Singleton
-  fun provideHeadersInterceptor(appPreferences: AppPreferences) =
+  fun provideHeadersInterceptor(appPreferences: AppPreferences) = run {
+    var countryId = ""
+    var userToken = ""
+    GlobalScope.launch {
+      withContext(Dispatchers.IO) {
+        appPreferences.getCountryId().collect { country_id ->
+          countryId = country_id
+        }
+
+      }
+    }
+    GlobalScope.launch {
+      appPreferences.getUserToken().collect { token ->
+        userToken = token
+//          Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken")
+      }
+    }
+
     Interceptor { chain ->
-      Log.e("JWT", "provideHeadersInterceptor: ${appPreferences.getLocal(Constants.TOKEN)}")
+
+      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken")
       chain.proceed(
         chain.request().newBuilder()
-          .addHeader("Authorization", "Bearer ${appPreferences.getLocal(Constants.TOKEN)}")
-          .addHeader("countryId", "1") //appPreferences.getLocal(Constants.COUNTRY_ID)
+          .addHeader("Authorization", "Bearer $userToken")
+          .addHeader(
+            "countryId", countryId
+          )
           .addHeader("Accept", "application/json")
           .addHeader("language", "ar")
           .build()
       )
     }
+  }
 
   @Provides
   @Singleton

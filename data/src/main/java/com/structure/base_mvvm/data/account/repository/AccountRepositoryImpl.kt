@@ -19,12 +19,14 @@ class AccountRepositoryImpl @Inject constructor(
 
   override
   suspend fun logOut() = remoteDataSource.logOut()
+  override suspend fun isLoggedIn(isLoggedIn: Boolean) {
+    appPreferences.isLoggedIn(isLoggedIn)
+  }
 
-  override
-  fun isFirstTime() = appPreferences.isFirstTime
+  override suspend fun getIsLoggedIn(): Flow<Boolean> {
+    return appPreferences.getIsLoggedIn()
+  }
 
-  override
-  fun isLoggedIn() = appPreferences.isLoggedIn
 
   override suspend fun saveFirebaseTokenToLocal(firebaseToken: String) {
     appPreferences.saveFireBaseToken(firebaseToken)
@@ -34,18 +36,44 @@ class AccountRepositoryImpl @Inject constructor(
     return appPreferences.getFireBaseToken()
   }
 
-  override
-  fun saveUserToLocal(user: User) {
-    appPreferences.userData = user
+  override suspend fun setFirstTime(isFirstTime: Boolean) {
+    appPreferences.isFirstTime(isFirstTime)
   }
 
-  override fun getUserToLocal(): User? {
-    return appPreferences.userData
+  override suspend fun isFirstTime(): Flow<Boolean> {
+    return appPreferences.getIsFirstTime()
   }
 
-  override
-  fun setFirstTime(isFirstTime: Boolean) {
-    appPreferences.isFirstTime = isFirstTime
+  override suspend fun saveUserToLocal(user: User) {
+    appPreferences.saveUser(user)
+  }
+
+  override suspend fun getUserToLocal(): Flow<User> {
+    return appPreferences.getUser()
+  }
+
+  override suspend fun saveUserToken(userToken: String) {
+    appPreferences.userToken(userToken)
+  }
+
+  override suspend fun getUserToken(): Flow<String> {
+    return appPreferences.getUserToken()
+  }
+
+  override suspend fun saveRegisterStep(register_step: String) {
+    appPreferences.registerStep(register_step)
+  }
+
+  override suspend fun getRegisterStep(): Flow<String> {
+    return appPreferences.getRegisterStep()
+  }
+
+  override suspend fun saveCountryId(country_id: String) {
+    appPreferences.countryId(country_id)
+  }
+
+  override suspend fun getCountryId(): Flow<String> {
+    return appPreferences.getCountryId()
   }
 
   override

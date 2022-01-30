@@ -15,5 +15,5 @@ class IntroViewModel @Inject constructor(private val generalUseCases: GeneralUse
     openLogIn.call()
   }
 
-  fun setFirstTime(isFirstTime: Boolean) = generalUseCases.setFirstTimeUseCase(isFirstTime)
+  fun setFirstTime(isFirstTime: Boolean) = false
 }

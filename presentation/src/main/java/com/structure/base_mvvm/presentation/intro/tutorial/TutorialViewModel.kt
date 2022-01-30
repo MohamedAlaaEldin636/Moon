@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,6 +39,10 @@ class TutorialViewModel @Inject constructor(
     openIntro.call()
   }
 
-  fun setFirstTime(isFirstTime: Boolean) = generalUseCases.setFirstTimeUseCase(isFirstTime)
+  fun setFirstTime(isFirstTime: Boolean) {
+    viewModelScope.launch {
+      generalUseCases.setFirstTimeUseCase(isFirstTime)
+    }
+  }
 
 }

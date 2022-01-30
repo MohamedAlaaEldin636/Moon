@@ -30,8 +30,8 @@ class CountriesUseCase @Inject constructor(
       emit(Resource.Loading)
       val result = countriesRepository.registerStep2(RegisterStep2(2, country_id))
       if (result is Resource.Success) {
-        userLocalUseCase.invoke(Constants.COUNTRY_ID, country_id.toString())
-        userLocalUseCase.invoke(Constants.REGISTER_STEP, "3")
+        userLocalUseCase.saveCountryId(country_id.toString())
+        userLocalUseCase.registerStep("3")
       }
       emit(result)
     }.flowOn(Dispatchers.IO)
