@@ -66,6 +66,7 @@ class HomeViewModel @Inject constructor(
         Log.e("getHomeStudent", "getHomeStudent: "+it)
       }
     }
+
   }
 
   var homeStudentData: HomeStudentData = HomeStudentData()

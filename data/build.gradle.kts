@@ -20,6 +20,9 @@ android {
 }
 
 dependencies {
+  //Room
+  implementation(Libraries.roomVersion)
+  kapt(Libraries.roomCompiler)
 
   // Kotlin Coroutines
   implementation(Libraries.coroutinesCore)

@@ -32,6 +32,7 @@ android {
       manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_debug"
       manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher_debug_round"
       buildConfigField("String", "API_BASE_URL", Config.Environments.debugBaseUrl)
+      buildConfigField("String", "ROOM_DB", Config.Environments.roomDb)
     }
 
     signingConfigs {
@@ -55,6 +56,7 @@ android {
       manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher_round"
 
       buildConfigField("String", "API_BASE_URL", Config.Environments.releaseBaseUrl)
+      buildConfigField("String", "ROOM_DB", Config.Environments.roomDb)
     }
   }
 
@@ -74,6 +76,9 @@ android {
 
 dependencies {
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+  //Room
+  implementation(Libraries.roomVersion)
+  kapt(Libraries.roomCompiler)
 
   // Networking
   implementation(Libraries.retrofit)

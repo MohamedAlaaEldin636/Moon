@@ -14,6 +14,7 @@ object Versions {
   // Arch Components
   const val lifecycle = "2.4.0-alpha03"
   const val paging_version = "2.1.2"
+  const val roomVersion = "2.4.1"
 
   // Kotlin Coroutines
   const val kotlinCoroutines = "1.4.1"

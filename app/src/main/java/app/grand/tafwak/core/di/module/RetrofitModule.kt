@@ -7,18 +7,13 @@ import com.google.gson.GsonBuilder
 import com.structure.base_mvvm.BuildConfig
 import com.structure.base_mvvm.data.local.preferences.AppPreferences
 import com.readystatesoftware.chuck.ChuckInterceptor
-import com.structure.base_mvvm.domain.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -40,22 +35,24 @@ object RetrofitModule {
     var userToken = ""
     GlobalScope.launch {
       withContext(Dispatchers.IO) {
-        appPreferences.getCountryId().collect { country_id ->
-          countryId = country_id
-        }
+        awaitAll(
+          async {
+            appPreferences.getCountryId().collect { country_id ->
+              countryId = country_id
+            }
+          }, async {
+            appPreferences.getUserToken().collect { token ->
+              userToken = token
+            }
+          }
+        )
 
-      }
-    }
-    GlobalScope.launch {
-      appPreferences.getUserToken().collect { token ->
-        userToken = token
-//          Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken")
+
       }
     }
 
     Interceptor { chain ->
-
-      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken")
+      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken ::  $countryId")
       chain.proceed(
         chain.request().newBuilder()
           .addHeader("Authorization", "Bearer $userToken")

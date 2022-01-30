@@ -1,9 +1,11 @@
 package com.structure.base_mvvm.domain.home.models
 
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose
 
+@Entity
 data class HomeStudentData(
   @SerializedName("classes")
   @Expose

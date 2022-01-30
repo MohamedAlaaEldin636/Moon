@@ -1,5 +1,6 @@
 plugins {
   id(Config.Plugins.kotlinJvm)
+  id(Config.Plugins.kotlinKapt)
 }
 
 java {
@@ -16,5 +17,10 @@ dependencies {
   implementation(Libraries.javaInject)
   implementation(Libraries.paging_version)
   implementation(Libraries.paging_version_ktx)
+  implementation(Libraries.roomVersion)
+  kapt(Libraries.roomCompiler)
+  implementation(Libraries.roomCommon)
+  implementation(Libraries.roomktx)
+
 
 }

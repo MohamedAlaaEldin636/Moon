@@ -19,6 +19,10 @@ object Libraries {
     "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
   const val paging_version = "androidx.paging:paging-runtime:${Versions.paging_version}"
   const val paging_version_ktx = "androidx.paging:paging-common-ktx:${Versions.paging_version}"
+  const val roomVersion = "androidx.room:room-runtime:${Versions.roomVersion}"
+  const val roomCompiler = "androidx.room:room-compiler:${Versions.roomVersion}"
+  const val roomktx = "androidx.room:room-ktx:${Versions.roomVersion}"
+  const val roomCommon = "androidx.room:room-common:${Versions.roomVersion}"
 
   // Kotlin Coroutines
   const val coroutinesCore =
