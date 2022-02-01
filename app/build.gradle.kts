@@ -23,6 +23,7 @@ android {
     vectorDrawables.useSupportLibrary = true
     multiDexEnabled = true
     testInstrumentationRunner = Config.AppConfig.testRunner
+
   }
 
   buildTypes {
@@ -60,6 +61,7 @@ android {
   }
 
   compileOptions {
+
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
   }

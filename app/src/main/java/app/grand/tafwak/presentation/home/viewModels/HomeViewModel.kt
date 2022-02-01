@@ -39,32 +39,32 @@ class HomeViewModel @Inject constructor(
   val homeResponse = _homeResponse
 
   init {
-    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-      if (!task.isSuccessful) {
-        return@OnCompleteListener
-      }
-      var result = task.result
-      Log.e("setupFirebaseToken", "setupFirebaseToken: $result")
-      //shared perereference
-      viewModelScope.launch {
-        userLocalUseCase.saveToken(result)
-      }
-    })
+//    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//      if (!task.isSuccessful) {
+//        return@OnCompleteListener
+//      }
+//      var result = task.result
+//      Log.e("setupFirebaseToken", "setupFirebaseToken: $result")
+//      //shared perereference
+//      viewModelScope.launch {
+//        userLocalUseCase.saveToken(result)
+//      }
+//    })
     getHomeStudent()
   }
 
   private fun getHomeStudent() {
-    homeUseCase.invoke()
+    homeUseCase.getHomeDataLocal()
       .onEach { result ->
         println(result.toString())
-        _homeResponse.value = result
+//        _homeResponse.value = result
       }
       .launchIn(viewModelScope)
-    viewModelScope.launch {
-      userLocalUseCase.getToken().collect {
-        Log.e("getHomeStudent", "getHomeStudent: "+it)
-      }
-    }
+//    viewModelScope.launch {
+//      userLocalUseCase.getToken().collect {
+//        Log.e("getHomeStudent", "getHomeStudent: "+it)
+//      }
+//    }
 
   }
 

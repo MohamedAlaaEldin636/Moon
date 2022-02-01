@@ -89,8 +89,8 @@ class UseCaseModule {
   @Singleton
   fun provideHomeUseCase(
     homeRepository: HomeRepository,
-//    homeLocalRepository: HomeLocalRepository
-  ): HomeUseCase = HomeUseCase(homeRepository)
+    homeLocalRepository: HomeLocalRepository
+  ): HomeUseCase = HomeUseCase(homeRepository, homeLocalRepository)
 
   @Provides
   @Singleton

@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose
 
-//@Entity
+@Entity
 data class HomeStudentData(
-//  @PrimaryKey(autoGenerate = true)
-//  val roomId: Int = 0,
+  @PrimaryKey(autoGenerate = true)
+  val roomId: Int? = null,
   @SerializedName("classes")
   @Expose
   val classes: List<Classes> = listOf(),

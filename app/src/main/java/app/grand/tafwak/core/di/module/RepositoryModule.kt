@@ -12,6 +12,9 @@ import app.grand.tafwak.data.general.data_source.remote.GeneralRemoteDataSource
 import app.grand.tafwak.data.general.repository.GeneralRepositoryImpl
 import app.grand.tafwak.data.groupDetails.data_source.GroupDetailsRemoteDataSource
 import app.grand.tafwak.data.groupDetails.repository.GroupDetailsRepositoryImpl
+import app.grand.tafwak.data.home.data_source.local.HomeDao
+import app.grand.tafwak.data.home.data_source.local.HomeLocalRemoteDataSource
+import app.grand.tafwak.data.home.repository.local.HomeLocalRepositoryImpl
 import app.grand.tafwak.data.home.data_source.remote.HomeRemoteDataSource
 import app.grand.tafwak.data.home.repository.HomeRepositoryImpl
 import app.grand.tafwak.data.intro.data_source.IntroRemoteDataSource
@@ -32,6 +35,7 @@ import app.grand.tafwak.domain.educational.repository.EducationalRepository
 import app.grand.tafwak.domain.general.repository.GeneralRepository
 import app.grand.tafwak.domain.groups.repository.GroupDetailsRepository
 import app.grand.tafwak.domain.home.repository.HomeRepository
+import app.grand.tafwak.domain.home.repository.local.HomeLocalRepository
 import app.grand.tafwak.domain.intro.repository.IntroRepository
 import app.grand.tafwak.domain.reviews.repository.ReviewsRepository
 import app.grand.tafwak.domain.settings.repository.SettingsRepository
@@ -90,6 +94,12 @@ class RepositoryModule {
   fun provideHomeRepository(
     remoteDataSource: HomeRemoteDataSource
   ): HomeRepository = HomeRepositoryImpl(remoteDataSource)
+
+  @Provides
+  @Singleton
+  fun provideHomeLocalRepository(
+    homeLocalRemoteDataSource: HomeLocalRemoteDataSource
+  ): HomeLocalRepository = HomeLocalRepositoryImpl(homeLocalRemoteDataSource)
 
   @Provides
   @Singleton

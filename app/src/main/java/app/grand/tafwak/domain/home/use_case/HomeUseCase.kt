@@ -1,5 +1,6 @@
 package app.grand.tafwak.domain.home.use_case
 
+import android.util.Log
 import app.grand.tafwak.domain.home.models.HomeStudentData
 import app.grand.tafwak.domain.home.repository.HomeRepository
 import app.grand.tafwak.domain.home.repository.local.HomeLocalRepository
@@ -15,21 +16,31 @@ import javax.inject.Inject
 
 class HomeUseCase @Inject constructor(
   private val homeRepository: HomeRepository,
-//  private val homeLocalRepository: HomeLocalRepository,
+  private val homeLocalRepository: HomeLocalRepository,
 ) {
   operator fun invoke(): Flow<Resource<BaseResponse<HomeStudentData>>> =
     flow {
-      emit(Resource.Loading)
+
+      Log.e("invoke", "invoke: ")
       val result = homeRepository.studentHome()
+//      if (result is Resource.Success) {
+//        homeLocalRepository.insertStudentHomeLocal(result.value.data)
+//      }
 
       emit(result)
     }.flowOn(Dispatchers.IO)
-//  private val homeLocalRepository: HomeLocalRepository
 
-//  fun getHomeDataLocal(): Flow<HomeStudentData> =
-//    flow {
-//      homeLocalRepository.studentHomeLocal().collect {
-//        emit(it)
-//      }
-//    }.flowOn(Dispatchers.IO)
+  fun getHomeDataLocal(): Flow<HomeStudentData> =
+    flow {
+      homeLocalRepository.studentHomeLocal().collect { homeStudent ->
+        Log.e("getHomeDataLocal", "getHomeDataLocal: ")
+        if (homeStudent != null) {
+          Log.e("getHomeDataLocal", "getHomeDataLocal: " + homeStudent)
+          emit(homeStudent)
+        } else {
+          Log.e("getHomeDataLocal", "getHomeDataLocal: INVOKE")
+          invoke()
+        }
+      }
+    }.flowOn(Dispatchers.IO)
 }

@@ -1,6 +1,6 @@
 object Versions {
   const val gradleVersion = "7.0.2"
-  const val kotlin = "1.5.21"
+  const val kotlin = "1.6.10"
   const val ktLint = "10.2.0"
 
   // Java Inject
@@ -42,7 +42,7 @@ object Versions {
   const val permissions = "3.0.0-RC4"
 
   // Hilt
-  const val hiltVersion = "2.38.1"
+  const val hiltVersion = "2.40.5"
 
   // Map
   const val map = "17.0.1"
