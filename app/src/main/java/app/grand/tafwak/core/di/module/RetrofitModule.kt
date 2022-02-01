@@ -5,7 +5,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.structure.base_mvvm.BuildConfig
-import com.structure.base_mvvm.data.local.preferences.AppPreferences
+import app.grand.tafwak.data.local.preferences.AppPreferences
 import com.readystatesoftware.chuck.ChuckInterceptor
 import dagger.Module
 import dagger.Provides
@@ -46,8 +46,6 @@ object RetrofitModule {
             }
           }
         )
-
-
       }
     }
 

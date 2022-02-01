@@ -27,7 +27,6 @@ android {
 
   buildTypes {
     getByName("debug") {
-//      resValue("string", "google_api_key", gradleLocalProperties(rootDir).getProperty("GOOGLE_API_KEY"))
       manifestPlaceholders["appName"] = "@string/app_name_debug"
       manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_debug"
       manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher_debug_round"
@@ -79,6 +78,8 @@ dependencies {
   //Room
   implementation(Libraries.roomVersion)
   kapt(Libraries.roomCompiler)
+  implementation(Libraries.roomktx)
+  implementation(Libraries.roomCommon)
 
   // Networking
   implementation(Libraries.retrofit)
@@ -91,6 +92,9 @@ dependencies {
   implementation(Libraries.playServices)
   implementation(Libraries.localization)
   implementation(Libraries.multidex)
+  implementation(Libraries.permissions)
+  implementation(Libraries.gson)
+
 // paging
   implementation(Libraries.paging_version)
   implementation(Libraries.paging_version_ktx)
@@ -100,8 +104,50 @@ dependencies {
   implementation(Libraries.firebase_platform)
   implementation(Libraries.firebase_messaging)
   kapt(Libraries.hiltDaggerCompiler)
+  // Support
+  implementation(Libraries.appCompat)
+  implementation(Libraries.coreKtx)
+  implementation(Libraries.androidSupport)
+
+  // Arch Components
+  implementation(Libraries.viewModel)
+  implementation(Libraries.lifeData)
+  implementation(Libraries.lifecycle)
+  implementation(Libraries.viewModelState)
+
+  // Kotlin Coroutines
+  implementation(Libraries.coroutinesCore)
+  implementation(Libraries.coroutinesAndroid)
+//DATA STORE
+  implementation(Libraries.datastore_preferences)
+
+  // UI
+  implementation(Libraries.materialDesign)
+  implementation(Libraries.navigationFragment)
+  implementation(Libraries.navigationUI)
+  implementation(Libraries.loadingAnimations)
+  implementation(Libraries.alerter)
+  implementation(Libraries.coil)
+
+  // Map
+  implementation(Libraries.map)
+  implementation(Libraries.playServicesLocation)
+  implementation(Libraries.rxLocation)
+  implementation(Libraries.firebase_messaging)
+
+  //Ted bottom picker
+  implementation(Libraries.ted_bottom_picker)
+
+  //Pin code
+  implementation(Libraries.pin_code)
+  //smarteist
+  implementation(Libraries.smartteist)
+  //expandable
+  implementation(Libraries.expandable)
+  //circularprogressbar
+  implementation(Libraries.circularprogressbar)
+
   // Project Modules
-  implementation(project(Config.Modules.domain))
-  implementation(project(Config.Modules.data))
-  implementation(project(Config.Modules.presentation))
+  implementation(project(Config.Modules.prettyPopUp))
+
 }

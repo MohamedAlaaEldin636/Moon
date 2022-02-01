@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="app.grand.tafwak.domain.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="app.grand.tafwak.presentation.subjects.viewModels.SubjectsViewModel" />
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <include
+        android:id="@+id/includedToolbar"
+        layout="@layout/toolbar_transparent" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/choose_subjects"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen16"
+        android:text="@string/choose_subjects"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/includedToolbar" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_study_subjects"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen10"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/choose_subjects"
+        app:spanCount="3"
+        tools:listitem="@layout/item_study_subject" />
+
+      <androidx.appcompat.widget.AppCompatButton
+        style="@style/TextMediumFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen16"
+        android:background="@drawable/btn_accent"
+        android:text="@string/next"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rc_study_subjects" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+</layout>

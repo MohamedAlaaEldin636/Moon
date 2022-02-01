@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="app.grand.tafwak.domain.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="app.grand.tafwak.presentation.exams.examResult.viewModels.ExamResultViewModel" />
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <include
+        android:id="@+id/includedToolbar"
+        layout="@layout/toolbar_transparent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_good_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen10"
+        android:src="@drawable/ic_good_exam_result"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/includedToolbar" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_your_grade"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen16"
+        android:text="@string/your_grade"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ic_good_result" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_grade"
+        style="@style/TextBoldFont"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen130"
+        android:layout_marginStart="@dimen/dimen70"
+        android:layout_marginTop="@dimen/dimen30"
+        android:layout_marginEnd="@dimen/dimen70"
+        android:text="14 / 15"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:elevation="4dp"
+        app:cornerRadius="@dimen/dimen8"
+        app:layout_constraintTop_toBottomOf="@+id/tv_your_grade" />
+
+      <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_more_test"
+        style="@style/TextMediumFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen30"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:background="@drawable/corner_blue"
+        android:text="@string/do_more_tests"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/bt_grade" />
+
+      <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_home"
+        style="@style/TextMediumFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen20"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen20"
+        android:background="@drawable/btn_accent"
+        android:text="@string/go_home"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_more_test" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+
+</layout>

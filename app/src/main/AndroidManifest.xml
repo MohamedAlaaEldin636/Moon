@@ -27,7 +27,7 @@
       android:resource="@color/colorPrimary" />
 
     <activity
-      android:name="com.structure.base_mvvm.presentation.splash.SplashActivity"
+      android:name="app.grand.tafwak.presentation.splash.SplashActivity"
       android:screenOrientation="portrait"
       android:theme="@style/Theme.AppTheme"
       android:exported="true">
@@ -39,28 +39,28 @@
     </activity>
 
     <activity
-      android:name="com.structure.base_mvvm.presentation.intro.IntroActivity"
+      android:name="app.grand.tafwak.presentation.intro.IntroActivity"
       android:screenOrientation="portrait" />
     <activity
-      android:name="com.structure.base_mvvm.presentation.teachers.home.TeacherHomeActivity"
+      android:name="app.grand.tafwak.presentation.teachers.home.TeacherHomeActivity"
       android:screenOrientation="portrait" />
 
     <activity
-      android:name="com.structure.base_mvvm.presentation.auth.AuthActivity"
+      android:name="app.grand.tafwak.presentation.auth.AuthActivity"
       android:configChanges="orientation|screenSize"
       android:screenOrientation="portrait"
       android:windowSoftInputMode="adjustResize|stateHidden" />
 
     <activity
-      android:name="com.structure.base_mvvm.presentation.home.HomeActivity"
+      android:name="app.grand.tafwak.presentation.home.HomeActivity"
       android:configChanges="orientation|screenSize"
       android:screenOrientation="portrait"
       android:windowSoftInputMode="adjustResize|stateHidden" />
 
     <!-- Start Google Services -->
-    <meta-data
-      android:name="com.google.android.geo.API_KEY"
-      android:value="@string/google_api_key" />
+<!--    <meta-data-->
+<!--      android:name="com.google.android.geo.API_KEY"-->
+<!--      android:value="@string/google_api_key" />-->
     <!-- End Google Services -->
 <!--    tafawaqtafawaq@gmail.com-->
 

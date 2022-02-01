@@ -1,7 +1,7 @@
 package app.grand.tafwak.core.di.module
 
 import android.content.Context
-import com.structure.base_mvvm.data.local.preferences.AppPreferences
+import app.grand.tafwak.data.local.preferences.AppPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

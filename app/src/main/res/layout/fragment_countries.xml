@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:bind="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="app.grand.tafwak.domain.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="app.grand.tafwak.presentation.auth.countries.viewModels.CountriesViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundGray">
+
+    <include
+      android:id="@+id/included_toolbar"
+      layout="@layout/toolbar_blue"
+      app:layout_constraintTop_toTopOf="parent"
+      bind:toolBar="@{viewModel}" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_countries_title"
+      style="@style/TextBoldFont"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen36"
+      android:text="@string/countries_title"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/black"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/included_toolbar" />
+
+    <com.google.android.material.card.MaterialCardView
+      android:id="@+id/card_country"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginStart="@dimen/dimen36"
+      android:layout_marginTop="@dimen/dimen18"
+      android:layout_marginEnd="@dimen/dimen36"
+      android:layout_marginBottom="@dimen/dimen18"
+      app:cardCornerRadius="@dimen/dimen5"
+      app:cardElevation="2dp"
+      app:layout_constraintBottom_toTopOf="@id/btn_next"
+      app:layout_constraintTop_toBottomOf="@id/tv_countries_title">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_selected_country"
+          style="@style/TextMediumFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/corner_blue"
+          android:drawableEnd="@drawable/ic_arrow_down"
+          android:padding="@dimen/dimen10"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/white"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rc_countries"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:adapter="@{viewModel.adapter}"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintTop_toBottomOf="@+id/tv_selected_country"
+          app:orientation="@{`1`}"
+          app:span="@{`1`}"
+          tools:listitem="@layout/item_country" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/btn_next"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/dimen36"
+      android:layout_marginEnd="@dimen/dimen36"
+      android:layout_marginBottom="@dimen/dimen12"
+      android:background="@drawable/btn_accent"
+      android:onClick="@{()->viewModel.registerStep2()}"
+      android:text="@string/next"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

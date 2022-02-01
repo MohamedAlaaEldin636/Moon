@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context="amrk.app.moon.views.fragments.SplashFragment">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <import type="android.text.TextUtils" />
+
+    <variable
+      name="viewmodel"
+      type="app.grand.tafwak.presentation.auth.confirmCode.ConfirmViewModel" />
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_confirm_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_confirm_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_login_logo"
+        android:layout_width="@dimen/dimen150"
+        android:layout_height="@dimen/dimen150"
+        android:src="@drawable/logo_white"
+        app:layout_constraintBottom_toBottomOf="@id/ic_confirm_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_confirm_header_text"
+        style="@style/TextBoldFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen36"
+        android:layout_marginTop="@dimen/dimen40"
+        android:layout_marginEnd="@dimen/dimen36"
+        android:text="@string/confirm_header_text"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ic_confirm_header" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_confirm_header"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen36"
+        android:layout_marginTop="@dimen/dimen12"
+        android:layout_marginEnd="@dimen/dimen36"
+        android:text="@string/confirm_header"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black_op"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_confirm_header_text" />
+      <!--      android:text="@={viewmodel.request.code}"-->
+      <!--      android:text="@={viewmodel.request.code}"-->
+
+      <com.chaos.view.PinView
+        android:id="@+id/pin_Validate"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen12"
+        android:cursorVisible="true"
+        android:gravity="center_horizontal"
+        android:inputType="number"
+        android:itemBackground="@drawable/corner_view_gray_border"
+        android:padding="8dp"
+        android:textColor="@color/lightBlack"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@={viewmodel.request.code}"
+        app:cursorColor="@color/black"
+        app:cursorWidth="2dp"
+        app:hideLineWhenFilled="false"
+        app:itemCount="4"
+        app:itemHeight="70dp"
+        app:itemRadius="@dimen/dimen8"
+        app:itemSpacing="@dimen/dimen8"
+        app:itemWidth="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_confirm_header"
+        app:lineWidth="2dp"
+        app:viewType="rectangle" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_forget_timer"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen28"
+        android:layout_marginEnd="@dimen/dimen4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin_Validate" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_login_forget"
+        style="@style/TextMediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/confirm_resend"
+        android:onClick="@{()->viewmodel.resendCode()}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/darkGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_forget_timer" />
+
+      <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButtonNext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen12"
+        android:layout_marginTop="@dimen/dimen20"
+        android:layout_marginEnd="@dimen/dimen12"
+        android:background="@drawable/btn_accent"
+        android:text="@string/send"
+        android:onClick="@{()->viewmodel.verifyAccount()}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_forget" />
+      <!--      android:background="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?@drawable/corner_view_primary_dark:@drawable/corner_view_primary_medium,default=@drawable/corner_view_primary_dark}"-->
+      <!--      android:enabled="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?true:false}"-->
+      <!--      -->
+
+      <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress"
+        style="Widget.MaterialComponents.LinearProgressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="@id/appCompatButtonNext"
+        app:layout_constraintStart_toStartOf="@id/appCompatButtonNext"
+        app:layout_constraintTop_toTopOf="@id/appCompatButtonNext"
+        app:trackColor="@color/white"
+        app:trackThickness="@dimen/dimen4" />
+      <!--      android:visibility="@{!TextUtils.isEmpty(viewmodel.message)&amp;&amp;viewmodel.message.equals(Constants.SHOW_PROGRESS)?View.VISIBLE:View.GONE}"-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+</layout>

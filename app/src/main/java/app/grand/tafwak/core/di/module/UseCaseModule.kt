@@ -1,38 +1,39 @@
 package app.grand.tafwak.core.di.module
 
-import com.structure.base_mvvm.domain.account.repository.AccountRepository
-import com.structure.base_mvvm.domain.account.use_case.AccountUseCases
-import com.structure.base_mvvm.domain.account.use_case.CheckFirstTimeUseCase
-import com.structure.base_mvvm.domain.account.use_case.CheckLoggedInUserUseCase
-import com.structure.base_mvvm.domain.account.use_case.LogOutUseCase
-import com.structure.base_mvvm.domain.account.use_case.UserLocalUseCase
-import com.structure.base_mvvm.domain.account.use_case.SendFirebaseTokenUseCase
-import com.structure.base_mvvm.domain.account.use_case.SetFirstTimeUseCase
-import com.structure.base_mvvm.domain.auth.repository.AuthRepository
-import com.structure.base_mvvm.domain.auth.use_case.ChangePasswordUseCase
-import com.structure.base_mvvm.domain.auth.use_case.LogInUseCase
-import com.structure.base_mvvm.domain.auth.use_case.RegisterUseCase
-import com.structure.base_mvvm.domain.auth.use_case.VerifyAccountUseCase
-import com.structure.base_mvvm.domain.countries.repository.CountriesRepository
-import com.structure.base_mvvm.domain.countries.use_case.CountriesUseCase
-import com.structure.base_mvvm.domain.educational.repository.EducationalRepository
-import com.structure.base_mvvm.domain.educational.use_case.EducationalUseCase
-import com.structure.base_mvvm.domain.general.use_case.ClearPreferencesUseCase
-import com.structure.base_mvvm.domain.general.use_case.GeneralUseCases
-import com.structure.base_mvvm.domain.groups.repository.GroupDetailsRepository
-import com.structure.base_mvvm.domain.groups.use_case.GroupDetailsUseCase
-import com.structure.base_mvvm.domain.home.repository.HomeRepository
-import com.structure.base_mvvm.domain.home.use_case.HomeUseCase
-import com.structure.base_mvvm.domain.intro.repository.IntroRepository
-import com.structure.base_mvvm.domain.intro.use_case.IntroUseCase
-import com.structure.base_mvvm.domain.reviews.repository.ReviewsRepository
-import com.structure.base_mvvm.domain.reviews.use_case.ReviewsUseCase
-import com.structure.base_mvvm.domain.settings.repository.SettingsRepository
-import com.structure.base_mvvm.domain.settings.use_case.SettingsUseCase
-import com.structure.base_mvvm.domain.student_teacher.repository.StudentTeacherRepository
-import com.structure.base_mvvm.domain.student_teacher.use_case.StudentTeacherUseCase
-import com.structure.base_mvvm.domain.teacher_profile.repository.TeacherProfileRepository
-import com.structure.base_mvvm.domain.teacher_profile.use_case.TeacherProfileUseCase
+import app.grand.tafwak.domain.account.repository.AccountRepository
+import app.grand.tafwak.domain.account.use_case.AccountUseCases
+import app.grand.tafwak.domain.account.use_case.CheckFirstTimeUseCase
+import app.grand.tafwak.domain.account.use_case.CheckLoggedInUserUseCase
+import app.grand.tafwak.domain.account.use_case.LogOutUseCase
+import app.grand.tafwak.domain.account.use_case.UserLocalUseCase
+import app.grand.tafwak.domain.account.use_case.SendFirebaseTokenUseCase
+import app.grand.tafwak.domain.account.use_case.SetFirstTimeUseCase
+import app.grand.tafwak.domain.auth.repository.AuthRepository
+import app.grand.tafwak.domain.auth.use_case.ChangePasswordUseCase
+import app.grand.tafwak.domain.auth.use_case.LogInUseCase
+import app.grand.tafwak.domain.auth.use_case.RegisterUseCase
+import app.grand.tafwak.domain.auth.use_case.VerifyAccountUseCase
+import app.grand.tafwak.domain.countries.repository.CountriesRepository
+import app.grand.tafwak.domain.countries.use_case.CountriesUseCase
+import app.grand.tafwak.domain.educational.repository.EducationalRepository
+import app.grand.tafwak.domain.educational.use_case.EducationalUseCase
+import app.grand.tafwak.domain.general.use_case.ClearPreferencesUseCase
+import app.grand.tafwak.domain.general.use_case.GeneralUseCases
+import app.grand.tafwak.domain.groups.repository.GroupDetailsRepository
+import app.grand.tafwak.domain.groups.use_case.GroupDetailsUseCase
+import app.grand.tafwak.domain.home.repository.HomeRepository
+import app.grand.tafwak.domain.home.repository.local.HomeLocalRepository
+import app.grand.tafwak.domain.home.use_case.HomeUseCase
+import app.grand.tafwak.domain.intro.repository.IntroRepository
+import app.grand.tafwak.domain.intro.use_case.IntroUseCase
+import app.grand.tafwak.domain.reviews.repository.ReviewsRepository
+import app.grand.tafwak.domain.reviews.use_case.ReviewsUseCase
+import app.grand.tafwak.domain.settings.repository.SettingsRepository
+import app.grand.tafwak.domain.settings.use_case.SettingsUseCase
+import app.grand.tafwak.domain.student_teacher.repository.StudentTeacherRepository
+import app.grand.tafwak.domain.student_teacher.use_case.StudentTeacherUseCase
+import app.grand.tafwak.domain.teacher_profile.repository.TeacherProfileRepository
+import app.grand.tafwak.domain.teacher_profile.use_case.TeacherProfileUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -87,7 +88,8 @@ class UseCaseModule {
   @Provides
   @Singleton
   fun provideHomeUseCase(
-    homeRepository: HomeRepository
+    homeRepository: HomeRepository,
+//    homeLocalRepository: HomeLocalRepository
   ): HomeUseCase = HomeUseCase(homeRepository)
 
   @Provides

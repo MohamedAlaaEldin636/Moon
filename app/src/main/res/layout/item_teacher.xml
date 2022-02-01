@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="app.grand.tafwak.domain.utils.Constants" />
+
+    <variable
+      name="itemViewModels"
+      type="app.grand.tafwak.presentation.home.viewModels.ItemTeacherViewModel" />
+  </data>
+
+  <com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen2"
+    android:onClick="@{()-> itemViewModels.clickEvent(Constants.TEACHERS)}"
+    app:cardCornerRadius="@dimen/dimen6"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/dimen60"
+        android:layout_height="@dimen/dimen60"
+        android:layout_margin="@dimen/dimen10"
+        android:padding="@dimen/dimen4"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_no_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:loadImage="@{itemViewModels.instructor.image}"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+        app:strokeColor="@color/blue"
+        app:strokeWidth="@dimen/dimen1" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@{itemViewModels.instructor.name}"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/btn_subject"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@id/img" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_subject"
+        style="@style/TextMediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen4"
+        android:minHeight="0dp"
+        android:text="@{itemViewModels.instructor.subject.name}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:backgroundTint="@color/blue"
+        app:cornerRadius="@dimen/dimen14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/rate"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:progressTint="@color/colorPrimary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:rate="@{itemViewModels.instructor.average_rating}" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_rate"
+        style="@style/TextRegularFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen2"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:text="@{`( `.concat(itemViewModels.instructor.average_rating).concat(` )`)}"
+        android:textAlignment="viewStart"
+        android:textColor="@color/darkGray"
+        android:textSize="11sp"
+        app:layout_constraintStart_toEndOf="@id/rate"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+      <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/br"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="img,tv_rate" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_desc"
+        style="@style/TextRegularFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen7"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:layout_marginBottom="@dimen/dimen7"
+        android:text="@{itemViewModels.instructor.description}"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/darkGray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/br" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </com.google.android.material.card.MaterialCardView>
+</layout>

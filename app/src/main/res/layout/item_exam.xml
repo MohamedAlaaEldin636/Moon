@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="app.grand.tafwak.domain.utils.Constants" />
+
+    <variable
+      name="notifyItemViewModels"
+      type="app.grand.tafwak.presentation.teachers.viewModels.ItemSubjectsViewModel" />
+  </data>
+
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen4"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+      style="@style/TextMediumFont"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/corner_blue"
+      android:padding="@dimen/dimen16"
+      android:text="الإجابة الاولي"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/white"
+      app:layout_constraintTop_toTopOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/nav_home"
+  app:startDestination="@id/home_fragment">
+
+  <fragment
+    android:id="@+id/home_fragment"
+    android:name="app.grand.tafwak.presentation.home.HomeFragment"
+    android:label="@string/home"
+    tools:layout="@layout/fragment_home">
+
+    <action
+      android:id="@+id/actionToTeacherProfileFragment"
+      app:destination="@id/teacherProfileFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_home_fragment_to_groupDetailsFragment"
+      app:destination="@id/groupDetailsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+  </fragment>
+  <fragment
+    android:id="@+id/teacherProfileFragment"
+    android:name="app.grand.tafwak.presentation.teachers.TeacherProfileFragment"
+    android:label="{title}">
+    <action
+      android:id="@+id/actionToReviewsFragment"
+      app:destination="@id/reviewsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+    <argument
+      android:name="instructor_id"
+      app:argType="integer" />
+    <argument
+      android:name="title"
+      app:argType="string" />
+    <action
+      android:id="@+id/action_teacherProfileFragment_to_groupDetailsFragment"
+      app:destination="@id/groupDetailsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+
+  </fragment>
+  <fragment
+    android:id="@+id/reviewsFragment"
+    android:name="app.grand.tafwak.presentation.reviews.ReviewsFragment"
+    android:label="ReviewsFragment">
+    <action
+      android:id="@+id/action_reviewsFragment_to_review_dialog_comment"
+      app:destination="@id/review_dialog_comment" />
+    <argument
+      android:name="instructor_id"
+      app:argType="integer" />
+  </fragment>
+  <fragment
+    android:id="@+id/teachersFragment"
+    android:name="app.grand.tafwak.presentation.teachers.TeachersFragment"
+    android:label="TeachersFragment">
+    <action
+      android:id="@+id/actionToTeacherProfileFragment"
+      app:destination="@id/teacherProfileFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+  </fragment>
+  <fragment
+    android:id="@+id/testsFragment"
+    android:name="app.grand.tafwak.presentation.tests.TestsFragment"
+    android:label="TestsFragment" />
+  <fragment
+    android:id="@+id/accountFragment"
+    android:name="app.grand.tafwak.presentation.account.AccountFragment"
+    android:label="AccountFragment" />
+  <fragment
+    android:id="@+id/about_fragment"
+    android:name="app.grand.tafwak.presentation.about.AboutFragment"
+    android:label="AboutFragment" />
+
+  <fragment
+    android:id="@+id/contact_fragment"
+    android:name="app.grand.tafwak.presentation.contactUs.ContactUsFragment"
+    android:label="@string/contact_us">
+    <argument
+      android:name="type"
+      android:defaultValue="contact_us"
+      app:argType="string" />
+  </fragment>
+  <fragment
+    android:id="@+id/suggestions_fragment"
+    android:name="app.grand.tafwak.presentation.contactUs.SuggestionsFragment"
+    android:label="@string/suggestions">
+    <argument
+      android:name="type"
+      android:defaultValue="complaint"
+      app:argType="string" />
+  </fragment>
+  <dialog
+    android:id="@+id/review_dialog_comment"
+    android:name="app.grand.tafwak.presentation.reviews.ReviewDialog"
+    tools:layout="@layout/review_dialog">
+    <argument
+      android:name="instructor_id"
+      app:argType="integer" />
+  </dialog>
+  <fragment
+    android:id="@+id/privacy_fragment"
+    android:name="app.grand.tafwak.presentation.privacy.PrivacyFragment"
+    android:label="@string/privacy" />
+  <fragment
+    android:id="@+id/terms_fragment"
+    android:name="app.grand.tafwak.presentation.terms.TermsFragment"
+    android:label="@string/terms" />
+  <fragment
+    android:id="@+id/social_fragment"
+    android:name="app.grand.tafwak.presentation.social.SocialFragment"
+    android:label="SocialFragment" />
+  <fragment
+    android:id="@+id/groupDetailsFragment"
+    android:name="app.grand.tafwak.presentation.group_details.GroupDetailsFragment"
+    android:label="{title}">
+    <action
+      android:id="@+id/action_groupDetailsFragment_to_reviewsFragment"
+      app:destination="@id/reviewsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+    <argument
+      android:name="group_id"
+      app:argType="integer" />
+    <argument
+      android:name="title"
+      app:argType="string" />
+
+  </fragment>
+
+</navigation>

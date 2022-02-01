@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <variable
+      name="notifyItemViewModels"
+      type="app.grand.tafwak.presentation.home.viewModels.ItemTeacherViewModel" />
+  </data>
+
+  <com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen2"
+    app:cardCornerRadius="@dimen/dimen6"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_group_info"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen12"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="المراجعة النهائية في مادة اللغة العربية"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/btn_details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_grade"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen8"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="الصف الثاني الاعدادي"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/btn_details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_group_info" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_students_count"
+        style="@style/TextRegularFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen8"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen8"
+        android:drawableStart="@drawable/ic_student_count"
+        android:drawablePadding="@dimen/dimen6"
+        android:text="@string/students_count"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_grade" />
+
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_left"
+        app:backgroundTint="@color/blue"
+        app:fabCustomSize="@dimen/dimen30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </com.google.android.material.card.MaterialCardView>
+</layout>

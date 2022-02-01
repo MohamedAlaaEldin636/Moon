@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="app.grand.tafwak.domain.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="app.grand.tafwak.presentation.exams.viewModels.ExamsViewModel" />
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <include
+        android:id="@+id/includedToolbar"
+        layout="@layout/toolbar_transparent" />
+
+      <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:id="@+id/circularProgressBar"
+        android:layout_width="@dimen/dimen100"
+        android:layout_height="@dimen/dimen100"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@drawable/ic_blue_circle"
+        app:cpb_background_progressbar_color="@color/lightGray"
+        app:cpb_background_progressbar_width="2dp"
+        app:cpb_progress="5"
+        app:cpb_progress_direction="to_right"
+        app:cpb_progress_max="15"
+        app:cpb_progressbar_color="@color/colorPrimaryDark"
+        app:cpb_progressbar_width="10dp"
+        app:cpb_round_border="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/includedToolbar" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen30"
+        android:layout_marginEnd="@dimen/dimen30"
+        android:text="5/15"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/circularProgressBar"
+        app:layout_constraintEnd_toEndOf="@id/circularProgressBar"
+        app:layout_constraintStart_toStartOf="@id/circularProgressBar"
+        app:layout_constraintTop_toTopOf="@id/circularProgressBar" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/choose_subjects"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen12"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:text="ما هو مصدر الاكسجين في تجربه الكشف عن الكربون والهيدروجين في قطعه ما هو مصدر الاكسجين في تجربه الكشف ؟"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/circularProgressBar" />
+
+      <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ic_exam"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen150"
+        android:layout_margin="@dimen/dimen12"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/choose_subjects"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+        app:srcCompat="@drawable/ic_confirm_header" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_study_subjects"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen10"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/ic_exam"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_exam" />
+
+
+      <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_next"
+        style="@style/TextMediumFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen16"
+        android:background="@drawable/btn_accent"
+        android:text="@string/next"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rc_study_subjects" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+
+</layout>
