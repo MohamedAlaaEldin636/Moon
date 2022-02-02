@@ -42,15 +42,6 @@ class CountriesViewModel @Inject constructor(
       .launchIn(viewModelScope)
   }
 
-   fun registerStep2() {
-    if (adapter.lastSelected != -1) {
-      countriesUseCase.registerStep2(adapter.lastSelected)
-        .onEach { result ->
-          _registerResponse.value = result
-        }
-        .launchIn(viewModelScope)
-    }
-  }
 
   fun updateAdapter(countries: List<Country>) {
     adapter.differ.submitList(countries)

@@ -36,62 +36,8 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>() {
 
   override
   fun setUpViews() {
-    setUpGuestButton()
   }
 
-  private fun setUpGuestButton() {
-    val finalMessage = "${resources.getString(R.string.explore_app)} ${resources.getString(R.string.continue_as_guest)}"
-
-    val spanString = SpannableString(finalMessage)
-
-    val clickableSpan = object : ClickableSpan() {
-      override
-      fun onClick(textView: View) {
-        viewModel.setFirstTime(false)
-        openHome()
-      }
-    }
-
-    // Define my span
-    spanString
-      .setSpan(
-        clickableSpan, finalMessage.indexOf(resources.getString(R.string.continue_as_guest)),
-        finalMessage.indexOf(resources.getString(R.string.continue_as_guest)) + resources
-          .getString(R.string.continue_as_guest).length,
-        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-      )
-
-    // Set span color
-    spanString.setSpan(
-      ForegroundColorSpan(getMyColor(color.colorAccent)),
-      finalMessage.indexOf(resources.getString(R.string.continue_as_guest)),
-      finalMessage.indexOf(resources.getString(R.string.continue_as_guest)) + resources
-        .getString(R.string.continue_as_guest).length,
-      Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-
-    // Set span style
-    spanString.setSpan(
-      StyleSpan(Typeface.BOLD),
-      finalMessage.indexOf(resources.getString(R.string.continue_as_guest)),
-      finalMessage.indexOf(resources.getString(R.string.continue_as_guest)) + resources
-        .getString(R.string.continue_as_guest).length,
-      Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-
-    // Add underline to span
-    spanString.setSpan(
-      UnderlineSpan(),
-      finalMessage.indexOf(resources.getString(R.string.continue_as_guest)),
-      finalMessage.indexOf(resources.getString(R.string.continue_as_guest)) + resources
-        .getString(R.string.continue_as_guest).length,
-      Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-
-    binding.btnGuestMode.movementMethod = LinkMovementMethod.getInstance()
-    binding.btnGuestMode.setText(spanString, SPANNABLE)
-    binding.btnGuestMode.isSelected = true
-  }
 
   override
   fun setupObservers() {

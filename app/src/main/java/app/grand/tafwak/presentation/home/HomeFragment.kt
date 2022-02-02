@@ -42,7 +42,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
           is Resource.Success -> {
             hideLoading()
             viewModel.homeStudentData = it.value.data
-            binding.imageSlider.setSliderAdapter(viewModel.homeSliderAdapter)
+//            binding.imageSlider.setSliderAdapter(viewModel.homeSliderAdapter)
           }
           is Resource.Failure -> {
             hideLoading()
@@ -51,12 +51,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
       }
     }
-    viewModel.adapter.clickEvent.observeForever { instructor ->
-      toTeacherProfile(instructor.id, instructor.name)
-    }
-    viewModel.groupsAdapter.clickEvent.observeForever { group ->
-      toGroupDetails(group.id, group.name)
-    }
+//    viewModel.adapter.clickEvent.observeForever { instructor ->
+//      toTeacherProfile(instructor.id, instructor.name)
+//    }
+//    viewModel.groupsAdapter.clickEvent.observeForever { group ->
+//      toGroupDetails(group.id, group.name)
+//    }
 
   }
 

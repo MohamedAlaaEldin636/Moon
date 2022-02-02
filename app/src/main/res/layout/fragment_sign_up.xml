@@ -78,44 +78,6 @@
         app:layout_constraintBottom_toBottomOf="@id/user_img"
         app:layout_constraintEnd_toEndOf="@id/user_img" />
 
-      <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen25"
-        android:layout_marginEnd="@dimen/dimen14"
-        app:cardCornerRadius="@dimen/dimen8"
-        app:cardElevation="@dimen/dimen2"
-        app:layout_constraintTop_toBottomOf="@+id/user_img">
-
-        <com.google.android.material.tabs.TabLayout
-          android:id="@+id/tabs"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/white"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:tabBackground="@drawable/tab_color_selector"
-          app:tabIndicatorHeight="0dp"
-          app:tabSelectedTextColor="@color/white"
-          app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
-          app:tabTextColor="@color/black">
-
-          <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/student" />
-
-          <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/teacher" />
-
-        </com.google.android.material.tabs.TabLayout>
-
-      </com.google.android.material.card.MaterialCardView>
 
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_name"
@@ -130,7 +92,7 @@
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_tabs"
+        app:layout_constraintTop_toBottomOf="@+id/user_img"
         app:startIconDrawable="@drawable/ic_user">
         <!--        app:error="@{viewmodel.request.nameError}"-->
         <!--        -->
@@ -146,34 +108,11 @@
           android:textColorHint="@color/darkGray" />
       </com.google.android.material.textfield.TextInputLayout>
 
-      <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_name_teacher"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen18"
-        android:layout_marginEnd="@dimen/dimen14"
-        android:hint="@string/register_name_teacher"
-        android:textColorHint="@color/darkGray"
-        android:visibility="gone"
-        app:helperTextTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_name"
-        app:startIconDrawable="@drawable/ic_user">
+
         <!--        app:error="@{viewmodel.request.nameError}"-->
         <!--        android:text="@={viewmodel.request.name}"-->
 
-        <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/in_teacher_name"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:inputType="textAutoComplete|textAutoCorrect"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/darkGray" />
-      </com.google.android.material.textfield.TextInputLayout>
+
 
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_phone"
@@ -189,7 +128,7 @@
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_name_teacher"
+        app:layout_constraintTop_toBottomOf="@+id/input_name"
         app:startIconDrawable="@drawable/ic_call">
 
         <androidx.appcompat.widget.AppCompatEditText

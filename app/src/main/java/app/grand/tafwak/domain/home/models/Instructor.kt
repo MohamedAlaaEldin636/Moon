@@ -4,7 +4,6 @@ package app.grand.tafwak.domain.home.models
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose
-import app.grand.tafwak.domain.reviews.entity.Reviews
 
 @Keep
 data class Instructor(
@@ -47,9 +46,6 @@ data class Instructor(
   @SerializedName("classes")
   @Expose
   val classes: List<Classes> = listOf(),
-  @SerializedName("reviews")
-  @Expose
-  val reviews: List<Reviews> = listOf(),
 
 
   )

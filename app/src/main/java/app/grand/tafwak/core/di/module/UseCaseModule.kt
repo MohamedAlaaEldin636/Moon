@@ -15,25 +15,15 @@ import app.grand.tafwak.domain.auth.use_case.RegisterUseCase
 import app.grand.tafwak.domain.auth.use_case.VerifyAccountUseCase
 import app.grand.tafwak.domain.countries.repository.CountriesRepository
 import app.grand.tafwak.domain.countries.use_case.CountriesUseCase
-import app.grand.tafwak.domain.educational.repository.EducationalRepository
-import app.grand.tafwak.domain.educational.use_case.EducationalUseCase
 import app.grand.tafwak.domain.general.use_case.ClearPreferencesUseCase
 import app.grand.tafwak.domain.general.use_case.GeneralUseCases
-import app.grand.tafwak.domain.groups.repository.GroupDetailsRepository
-import app.grand.tafwak.domain.groups.use_case.GroupDetailsUseCase
 import app.grand.tafwak.domain.home.repository.HomeRepository
 import app.grand.tafwak.domain.home.repository.local.HomeLocalRepository
 import app.grand.tafwak.domain.home.use_case.HomeUseCase
 import app.grand.tafwak.domain.intro.repository.IntroRepository
 import app.grand.tafwak.domain.intro.use_case.IntroUseCase
-import app.grand.tafwak.domain.reviews.repository.ReviewsRepository
-import app.grand.tafwak.domain.reviews.use_case.ReviewsUseCase
 import app.grand.tafwak.domain.settings.repository.SettingsRepository
 import app.grand.tafwak.domain.settings.use_case.SettingsUseCase
-import app.grand.tafwak.domain.student_teacher.repository.StudentTeacherRepository
-import app.grand.tafwak.domain.student_teacher.use_case.StudentTeacherUseCase
-import app.grand.tafwak.domain.teacher_profile.repository.TeacherProfileRepository
-import app.grand.tafwak.domain.teacher_profile.use_case.TeacherProfileUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -80,23 +70,10 @@ class UseCaseModule {
 
   @Provides
   @Singleton
-  fun provideEducationalUseCase(
-    countriesRepository: EducationalRepository,
-    userLocalUseCase: UserLocalUseCase
-  ): EducationalUseCase = EducationalUseCase(countriesRepository, userLocalUseCase)
-
-  @Provides
-  @Singleton
   fun provideHomeUseCase(
     homeRepository: HomeRepository,
     homeLocalRepository: HomeLocalRepository
   ): HomeUseCase = HomeUseCase(homeRepository, homeLocalRepository)
-
-  @Provides
-  @Singleton
-  fun provideStudentTeacherUseCase(
-    studentTeacherRepository: StudentTeacherRepository
-  ): StudentTeacherUseCase = StudentTeacherUseCase(studentTeacherRepository)
 
   @Provides
   @Singleton
@@ -109,24 +86,6 @@ class UseCaseModule {
   fun provideSettingsUseCase(
     settingsRepository: SettingsRepository
   ): SettingsUseCase = SettingsUseCase(settingsRepository)
-
-  @Provides
-  @Singleton
-  fun provideTeacherProfileUseCase(
-    teacherRepository: TeacherProfileRepository
-  ): TeacherProfileUseCase = TeacherProfileUseCase(teacherRepository)
-
-  @Provides
-  @Singleton
-  fun provideReviewsUseCase(
-    reviewsRepository: ReviewsRepository
-  ): ReviewsUseCase = ReviewsUseCase(reviewsRepository)
-
-  @Provides
-  @Singleton
-  fun provideGroupDetailsUseCase(
-    groupDetailsRepository: GroupDetailsRepository
-  ): GroupDetailsUseCase = GroupDetailsUseCase(groupDetailsRepository)
 
   //public use cases
   @Provides

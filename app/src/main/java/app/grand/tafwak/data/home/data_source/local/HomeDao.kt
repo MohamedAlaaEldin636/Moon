@@ -12,6 +12,6 @@ interface HomeDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertHomeData(homeStudentData: HomeStudentData)
 
-//  @Delete
-//  suspend fun deleteHomeData()
+  @Query("DELETE from HomeStudentData")
+  fun deleteHomeData()
 }

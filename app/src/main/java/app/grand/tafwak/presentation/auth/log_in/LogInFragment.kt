@@ -14,7 +14,6 @@ import app.grand.tafwak.presentation.base.utils.getDeviceId
 import app.grand.tafwak.presentation.base.utils.showNoApiErrorAlert
 import com.structure.base_mvvm.databinding.FragmentLogInBinding
 import app.grand.tafwak.presentation.home.HomeActivity
-import app.grand.tafwak.presentation.teachers.home.TeacherHomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -102,13 +101,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   private fun openHome() {
     lifecycleScope.launch {
       viewModel.userLocalUseCase.invoke().collect { user ->
-        Log.e("openHome", "openHome: "+user.account_type )
-        if (user.account_type.isNotEmpty()) {
-          if (user.account_type == Constants.STUDENT_TYPE)
-            requireActivity().openActivityAndClearStack(HomeActivity::class.java)
-          else
-            requireActivity().openActivityAndClearStack(TeacherHomeActivity::class.java)
-        } else checkNavigate()
+
       }
     }
 

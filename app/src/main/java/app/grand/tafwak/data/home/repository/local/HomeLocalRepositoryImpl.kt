@@ -14,4 +14,6 @@ class HomeLocalRepositoryImpl @Inject constructor(private val homeLocalRemoteDat
   override suspend fun insertStudentHomeLocal(homeStudentData: HomeStudentData) =
     homeLocalRemoteDataSource.insertHomeStudent(homeStudentData)
 
+  override suspend fun deleteAll()  = homeLocalRemoteDataSource.homeStudentDelete()
+
 }

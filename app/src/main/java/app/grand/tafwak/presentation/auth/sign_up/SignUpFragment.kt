@@ -28,27 +28,27 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
   fun setBindingVariables() {
     binding.viewModel = viewModel
     viewModel.registerRequest.device_token = getDeviceId(requireActivity())
-    binding.tabs.addOnTabSelectedListener(object : OnTabSelectedListener {
-      override fun onTabSelected(tab: TabLayout.Tab) {
-        if (tab.position == 0) {
-          viewModel.registerRequest.account_type = Constants.STUDENT_TYPE
-          binding.inputNameTeacher.hide()
-          binding.userImg.setImageResource(R.drawable.ic_user_image_holder)
-        } else {
-          viewModel.registerRequest.account_type = Constants.TEACHER_TYPE
-          binding.inputNameTeacher.show()
-          binding.userImg.setImageResource(R.drawable.ic_teacher_holder)
-        }
-      }
-
-      override fun onTabUnselected(tab: TabLayout.Tab) {
-
-      }
-
-      override fun onTabReselected(tab: TabLayout.Tab) {
-
-      }
-    })
+//    binding.tabs.addOnTabSelectedListener(object : OnTabSelectedListener {
+//      override fun onTabSelected(tab: TabLayout.Tab) {
+//        if (tab.position == 0) {
+//          viewModel.registerRequest.account_type = Constants.STUDENT_TYPE
+//          binding.inputNameTeacher.hide()
+//          binding.userImg.setImageResource(R.drawable.ic_user_image_holder)
+//        } else {
+//          viewModel.registerRequest.account_type = Constants.TEACHER_TYPE
+//          binding.inputNameTeacher.show()
+//          binding.userImg.setImageResource(R.drawable.ic_teacher_holder)
+//        }
+//      }
+//
+//      override fun onTabUnselected(tab: TabLayout.Tab) {
+//
+//      }
+//
+//      override fun onTabReselected(tab: TabLayout.Tab) {
+//
+//      }
+//    })
   }
 
   override
@@ -71,12 +71,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         AuthFieldsValidation.EMPTY_NAME.value -> {
           showNoApiErrorAlert(requireActivity(), resources.getString(R.string.register_name))
         }
-        AuthFieldsValidation.EMPTY_NICK_NAME.value -> {
-          showNoApiErrorAlert(
-            requireActivity(),
-            resources.getString(R.string.register_name_teacher)
-          )
-        }
+//        AuthFieldsValidation.EMPTY_NICK_NAME.value -> {
+//          showNoApiErrorAlert(
+//            requireActivity(),
+////            resources.getString(R.string.register_name_teacher)
+////          )
+//        }
         AuthFieldsValidation.EMPTY_EMAIL.value -> {
           showNoApiErrorAlert(requireActivity(), resources.getString(R.string.empty_email))
         }
