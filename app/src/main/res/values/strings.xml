@@ -4,6 +4,7 @@
 
   <!-- General Strings -->
   <string name="hide">Hide</string>
+  <string name="empty_warning">This field is required</string>
   <string name="connection_error">Connection Error</string>
   <string name="no_internet">No internet connection please try again later</string>
   <string name="retry">Retry</string>

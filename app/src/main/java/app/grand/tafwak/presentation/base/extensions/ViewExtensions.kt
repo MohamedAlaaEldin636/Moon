@@ -8,7 +8,9 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.Html
+import android.util.Log
 import android.view.View
+import android.webkit.URLUtil
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RatingBar
@@ -27,6 +29,7 @@ import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.snackbar.Snackbar
 import com.structure.base_mvvm.R
+import java.io.File
 
 fun View.show() {
   if (visibility == View.VISIBLE) return
@@ -122,35 +125,49 @@ fun View.showSnackBar(
   snackBar.show()
 }
 
-@BindingAdapter(value = ["app:loadImage", "app:progressBar"], requireAll = false)
-fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?) {
+@BindingAdapter(
+  value = ["app:loadImage", "app:progressBar", "app:defaultImage"],
+  requireAll = false
+)
+fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultImage: Any?) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
-    val request = ImageRequest.Builder(context)
-      .data(imageUrl)
-      .crossfade(true)
-      .crossfade(400)
-      .placeholder(R.color.backgroundGray)
-      .error(R.drawable.bg_no_image)
-      .target(
-        onStart = { placeholder ->
-          progressBar?.show()
-          setImageDrawable(placeholder)
-        },
-        onSuccess = { result ->
+    if (URLUtil.isValidUrl(imageUrl)) {
+      val request = ImageRequest.Builder(context)
+        .data(imageUrl)
+        .crossfade(true)
+        .crossfade(400)
+        .error(R.drawable.bg_no_image)
+        .target(
+          onStart = { placeholder ->
+            progressBar?.show()
+            setImageDrawable(placeholder)
+          },
+          onSuccess = { result ->
+            progressBar?.hide()
+            setImageDrawable(result)
+          }
+        )
+        .listener(onError = { request: ImageRequest, _: Throwable ->
           progressBar?.hide()
-          setImageDrawable(result)
-        }
-      )
-      .listener(onError = { request: ImageRequest, _: Throwable ->
-        progressBar?.hide()
-        setImageDrawable(request.error)
-      })
-      .build()
+          setImageDrawable(request.error)
+        })
+        .build()
 
-    ImageLoader(context).enqueue(request)
+      ImageLoader(context).enqueue(request)
+    } else {
+      load(File(imageUrl)) {
+        crossfade(750) // 75th percentile of a second
+        build()
+      }
+    }
+
   } else {
     progressBar?.hide()
-    setImageResource(R.drawable.bg_no_image)
+    when (defaultImage) {
+      null -> setImageResource(R.drawable.bg_no_image)
+      is Int -> setImageResource(defaultImage)
+      is Drawable -> setImageDrawable(defaultImage)
+    }
   }
 }
 

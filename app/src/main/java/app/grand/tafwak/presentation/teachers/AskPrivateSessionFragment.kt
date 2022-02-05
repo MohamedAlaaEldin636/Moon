@@ -1,7 +1,7 @@
 package app.grand.tafwak.presentation.teachers
 
 import androidx.fragment.app.viewModels
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import com.structure.base_mvvm.R
 import app.grand.tafwak.presentation.base.BaseFragment
 import com.structure.base_mvvm.databinding.FragmentAskPrivateSessionBinding

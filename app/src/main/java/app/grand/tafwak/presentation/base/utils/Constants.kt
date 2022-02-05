@@ -1,4 +1,4 @@
-package app.grand.tafwak.domain.utils
+package app.grand.tafwak.presentation.base.utils
 
 object Constants {
   const val PAGE_INDEX = 1
@@ -40,5 +40,7 @@ object Constants {
   const val FEMALE: String = "female"
   const val PUBLIC: String = "public"
   const val PRIVATE: String = "private"
+  const val EMPTY: String = "EMPTY"
+  const val INVALID_EMAIL: String = "INVALID_EMAIL"
 
 }

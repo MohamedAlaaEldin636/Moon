@@ -1,7 +1,8 @@
 package app.grand.tafwak.presentation.splash
 
+import android.annotation.SuppressLint
 import androidx.activity.viewModels
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import com.structure.base_mvvm.R
 import app.grand.tafwak.presentation.auth.AuthActivity
 import app.grand.tafwak.presentation.base.BaseActivity
@@ -13,6 +14,7 @@ import com.zeugmasolutions.localehelper.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 

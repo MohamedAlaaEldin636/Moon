@@ -6,7 +6,7 @@ import app.grand.tafwak.domain.settings.models.ContactUsRequest
 import app.grand.tafwak.domain.settings.models.SettingsData
 import app.grand.tafwak.domain.settings.repository.SettingsRepository
 import app.grand.tafwak.domain.utils.BaseResponse
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import app.grand.tafwak.domain.utils.Resource
 import app.grand.tafwak.domain.utils.isValidEmail
 import kotlinx.coroutines.Dispatchers

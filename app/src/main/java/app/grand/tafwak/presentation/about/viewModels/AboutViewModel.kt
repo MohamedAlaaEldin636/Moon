@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import app.grand.tafwak.domain.settings.models.SettingsData
 import app.grand.tafwak.domain.settings.use_case.SettingsUseCase
 import app.grand.tafwak.domain.utils.BaseResponse
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import app.grand.tafwak.domain.utils.Resource
 import app.grand.tafwak.presentation.base.BaseViewModel
 import com.structure.base_mvvm.BR

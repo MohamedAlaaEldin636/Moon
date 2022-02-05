@@ -2,7 +2,7 @@ package app.grand.tafwak.presentation.teachers
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import app.grand.tafwak.domain.utils.Resource
 import com.structure.base_mvvm.R
 import app.grand.tafwak.presentation.base.BaseFragment

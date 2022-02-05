@@ -19,7 +19,7 @@ data class Instructor(
   val id: Int = 0,
   @SerializedName("image")
   @Expose
-  val image: String = "",
+  var image: String = "",
   @SerializedName("name")
   @Expose
   val name: String = "",
@@ -50,6 +50,5 @@ data class Instructor(
   @SerializedName("reviews")
   @Expose
   val reviews: List<Reviews> = listOf(),
-
-
-  )
+  ){
+}

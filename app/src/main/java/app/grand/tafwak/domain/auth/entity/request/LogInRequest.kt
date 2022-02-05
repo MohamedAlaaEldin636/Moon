@@ -1,13 +1,27 @@
 package app.grand.tafwak.domain.auth.entity.request
 
+import android.util.Log
 import androidx.annotation.Keep
+import androidx.databinding.ObservableField
 
 @Keep
-data class LogInRequest(
-  var email: String = "",
-  var password: String = "",
+class LogInRequest {
+  var email: String = ""
+    set(value) {
+      validation.emailError.set(null)
+      Log.e("validation", ": " + validation.emailError.get())
+      field = value
+    }
+  var password: String = ""
   var device_token: String = ""
-)
+  var validation: LogInValidationException = LogInValidationException()
+}
 
 @Keep
-class LogInValidationException(private val validationType: String) : Exception(validationType)
+class LogInValidationException {
+  var emailError: ObservableField<String> = ObservableField<String>()
+  var passwordError: ObservableField<String> = ObservableField<String>()
+
+}
+//@Keep
+//class LogInValidationException(private val validationType: String) : Exception(validationType)

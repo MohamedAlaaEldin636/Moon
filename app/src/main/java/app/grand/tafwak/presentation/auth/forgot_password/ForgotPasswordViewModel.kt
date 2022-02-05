@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import app.grand.tafwak.domain.auth.entity.request.ForgetPasswordRequest
 import app.grand.tafwak.domain.auth.use_case.ForgetPasswordUseCase
 import app.grand.tafwak.domain.utils.BaseResponse
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import app.grand.tafwak.domain.utils.Resource
 import app.grand.tafwak.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

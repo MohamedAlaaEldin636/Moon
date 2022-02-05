@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import app.grand.tafwak.domain.utils.Resource
 import com.structure.base_mvvm.BR
 import com.structure.base_mvvm.R

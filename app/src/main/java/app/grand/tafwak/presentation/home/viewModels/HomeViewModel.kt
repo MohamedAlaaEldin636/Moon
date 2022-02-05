@@ -1,10 +1,7 @@
 package app.grand.tafwak.presentation.home.viewModels
 
-import android.util.Log
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
 import app.grand.tafwak.domain.account.use_case.UserLocalUseCase
 import app.grand.tafwak.domain.home.models.HomeStudentData
 import app.grand.tafwak.domain.home.use_case.HomeUseCase
@@ -37,6 +34,9 @@ class HomeViewModel @Inject constructor(
   private val _homeResponse =
     MutableStateFlow<Resource<BaseResponse<HomeStudentData>>>(Resource.Default)
   val homeResponse = _homeResponse
+  private val _homeCachResponse =
+    MutableStateFlow<HomeStudentData>(HomeStudentData())
+  val homeCachResponse = _homeCachResponse
 
   init {
 //    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -50,22 +50,32 @@ class HomeViewModel @Inject constructor(
 //        userLocalUseCase.saveToken(result)
 //      }
 //    })
+    homeCached()
     getHomeStudent()
   }
 
-  private fun getHomeStudent() {
-    homeUseCase.getHomeDataLocal()
+   private fun getHomeStudent() {
+    homeUseCase.homeService()
       .onEach { result ->
-        println(result.toString())
-//        _homeResponse.value = result
+        _homeResponse.value = result
       }
       .launchIn(viewModelScope)
-//    viewModelScope.launch {
-//      userLocalUseCase.getToken().collect {
-//        Log.e("getHomeStudent", "getHomeStudent: "+it)
-//      }
-//    }
+////    viewModelScope.launch {
+////      userLocalUseCase.getToken().collect {
+////        Log.e("getHomeStudent", "getHomeStudent: "+it)
+////      }
+////    }
+//
 
+  }
+
+ private fun homeCached() {
+    viewModelScope.launch {
+      homeUseCase.invoke()
+        .collect { result ->
+          _homeCachResponse.value = result
+        }
+    }
   }
 
   var homeStudentData: HomeStudentData = HomeStudentData()

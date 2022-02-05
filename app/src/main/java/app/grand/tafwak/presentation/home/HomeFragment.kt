@@ -2,7 +2,7 @@ package app.grand.tafwak.presentation.home
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import app.grand.tafwak.domain.utils.Resource
 import com.structure.base_mvvm.R
 import app.grand.tafwak.presentation.base.BaseFragment
@@ -41,12 +41,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            viewModel.homeStudentData = it.value.data
-            binding.imageSlider.setSliderAdapter(viewModel.homeSliderAdapter)
           }
           is Resource.Failure -> {
             hideLoading()
 //            handleApiError(it)
+          }
+        }
+      }
+    }
+    lifecycleScope.launchWhenResumed {
+      viewModel.homeCachResponse.collect {
+        when (it) {
+          null -> {
+            showLoading()
+          }
+          else -> {
+            viewModel.homeStudentData = it
+            binding.imageSlider.setSliderAdapter(viewModel.homeSliderAdapter)
           }
         }
       }

@@ -5,7 +5,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import app.grand.tafwak.domain.auth.enums.AuthFieldsValidation
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import app.grand.tafwak.domain.utils.Resource
 import com.structure.base_mvvm.R
 import app.grand.tafwak.presentation.base.BaseFragment

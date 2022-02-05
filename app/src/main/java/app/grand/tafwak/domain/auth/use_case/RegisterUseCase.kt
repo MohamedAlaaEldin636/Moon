@@ -6,7 +6,7 @@ import app.grand.tafwak.domain.auth.entity.request.RegisterValidationException
 import app.grand.tafwak.domain.auth.enums.AuthFieldsValidation
 import app.grand.tafwak.domain.auth.repository.AuthRepository
 import app.grand.tafwak.domain.utils.BaseResponse
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import app.grand.tafwak.domain.utils.Resource
 import app.grand.tafwak.domain.utils.isValidEmail
 import kotlinx.coroutines.Dispatchers

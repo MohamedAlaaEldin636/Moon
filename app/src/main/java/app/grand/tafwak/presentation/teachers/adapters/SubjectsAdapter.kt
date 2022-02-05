@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.grand.tafwak.domain.home.models.Subject
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import com.structure.base_mvvm.R
 import com.structure.base_mvvm.databinding.ItemSubjectBinding
 import app.grand.tafwak.presentation.teachers.viewModels.ItemSubjectsViewModel

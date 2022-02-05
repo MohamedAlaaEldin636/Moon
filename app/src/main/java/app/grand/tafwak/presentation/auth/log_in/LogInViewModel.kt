@@ -6,7 +6,7 @@ import app.grand.tafwak.domain.auth.entity.model.User
 import app.grand.tafwak.domain.auth.entity.request.LogInRequest
 import app.grand.tafwak.domain.auth.use_case.LogInUseCase
 import app.grand.tafwak.domain.utils.BaseResponse
-import app.grand.tafwak.domain.utils.Constants
+import app.grand.tafwak.presentation.base.utils.Constants
 import app.grand.tafwak.domain.utils.Resource
 import app.grand.tafwak.presentation.base.BaseViewModel
 import app.grand.tafwak.presentation.base.utils.SingleLiveEvent
@@ -35,7 +35,6 @@ class LogInViewModel @Inject constructor(
           clickEvent.value = Constants.CONTINUE_PROGRESS
       }
     }
-
 
   }
 

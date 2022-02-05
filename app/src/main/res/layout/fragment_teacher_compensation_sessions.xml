@@ -5,7 +5,7 @@
 
   <data>
 
-    <import type="app.grand.tafwak.domain.utils.Constants" />
+    <import type="app.grand.tafwak.presentation.base.utils.Constants" />
 
     <variable
       name="viewModel"
