@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.exams.examFirstStep.viewModels.ExamFirstStepViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginBottom="@dimen/dimen8"
+      app:layout_constraintBottom_toTopOf="@+id/btn_next"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+          android:id="@+id/includedToolbar"
+          layout="@layout/toolbar_transparent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/choose_subjects"
+          style="@style/TextMediumFont"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen12"
+          android:layout_marginEnd="@dimen/dimen8"
+          android:text="@string/choose_subjects_units"
+          android:textAlignment="viewStart"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/black"
+          app:layout_constraintEnd_toStartOf="@id/btn_all"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/btn_all" />
+
+        <com.google.android.material.button.MaterialButton
+          android:id="@+id/btn_all"
+          style="@style/TextRegularFont"
+          android:layout_width="wrap_content"
+          android:layout_height="0dp"
+          android:layout_marginTop="@dimen/dimen16"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:text="@string/all_materials"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/white"
+          app:backgroundTint="@color/colorPrimary"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/choose_subjects"
+          app:layout_constraintTop_toBottomOf="@id/includedToolbar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rc_study_subjects"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen10"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintTop_toBottomOf="@id/btn_all"
+          tools:listitem="@layout/item_exam_first_step_header" />
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/btn_next"
+      style="@style/TextMediumFont"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen16"
+      android:background="@drawable/btn_accent"
+      android:text="@string/next"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/white"
+      app:layout_constraintBottom_toBottomOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

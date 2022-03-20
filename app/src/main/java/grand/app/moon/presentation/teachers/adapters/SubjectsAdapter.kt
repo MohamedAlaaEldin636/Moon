@@ -1,0 +1,78 @@
+package grand.app.moon.presentation.teachers.adapters
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import grand.app.moon.domain.home.models.Subject
+import grand.app.moon.presentation.base.utils.Constants
+import com.structure.base_mvvm.R
+import com.structure.base_mvvm.databinding.ItemSubjectBinding
+import grand.app.moon.presentation.teachers.viewModels.ItemSubjectsViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+
+class SubjectsAdapter : RecyclerView.Adapter<SubjectsAdapter.ViewHolder>() {
+  val liveData = MutableStateFlow<Int>(0)
+  private val differCallback = object : DiffUtil.ItemCallback<Subject>() {
+    override fun areItemsTheSame(oldItem: Subject, newItem: Subject): Boolean {
+      return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Subject, newItem: Subject): Boolean {
+      return oldItem == newItem
+    }
+  }
+  val differ = AsyncListDiffer(this, differCallback)
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_subject, parent, false)
+    return ViewHolder(view)
+  }
+
+  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    val data = differ.currentList[position]
+    val itemViewModel = ItemSubjectsViewModel(data)
+    itemViewModel.clickEvent.observeForever {
+      liveData.value = Constants.PICK_IMAGE
+    }
+    holder.setViewModel(itemViewModel)
+
+  }
+
+  override fun getItemCount(): Int {
+    return differ.currentList.size
+  }
+
+  override fun onViewAttachedToWindow(holder: ViewHolder) {
+    super.onViewAttachedToWindow(holder)
+    holder.bind()
+  }
+
+  override fun onViewDetachedFromWindow(holder: ViewHolder) {
+    super.onViewDetachedFromWindow(holder)
+    holder.unBind()
+  }
+
+  inner class ViewHolder(itemView: View) :
+    RecyclerView.ViewHolder(itemView) {
+    private lateinit var itemLayoutBinding: ItemSubjectBinding
+
+    init {
+      bind()
+    }
+
+    fun bind() {
+      itemLayoutBinding = DataBindingUtil.bind(itemView)!!
+    }
+
+    fun unBind() {
+      itemLayoutBinding.unbind()
+    }
+
+    fun setViewModel(itemViewModel: ItemSubjectsViewModel) {
+      itemLayoutBinding.notifyItemViewModels = itemViewModel
+    }
+  }
+}

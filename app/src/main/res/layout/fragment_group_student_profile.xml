@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.teachers.studentProfile.viewModels.GroupStudentProfileViewModel" />
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_register_curve"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_student_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen40"
+        android:layout_marginEnd="@dimen/dimen16"
+        app:cardCornerRadius="@dimen/dimen8"
+        app:cardElevation="@dimen/dimen6"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+          <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/dimen70"
+            android:layout_height="@dimen/dimen70"
+            android:layout_margin="@dimen/dimen10"
+            android:padding="@dimen/dimen3"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_no_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+            app:strokeColor="@color/lightGray"
+            app:strokeWidth="@dimen/dimen2" />
+
+          <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            style="@style/TextMediumFont"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen8"
+            android:layout_marginTop="@dimen/dimen2"
+            android:layout_marginEnd="@dimen/dimen8"
+            android:text="أ/ أحمد محمد مصطفي"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img" />
+
+          <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_stage"
+            style="@style/TextRegularFont"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen8"
+            android:layout_marginTop="@dimen/dimen2"
+            android:layout_marginEnd="@dimen/dimen8"
+            android:layout_marginBottom="@dimen/dimen16"
+            android:text="الصف الأول الابتدائي"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_registered_groups"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen25"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:text="@string/registered_groups"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_student_profile" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen16"
+        app:layout_constraintTop_toBottomOf="@id/tv_registered_groups"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_teacher_group" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_registered_groups_private"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen25"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:text="@string/registered_groups_private"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rc_groups" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_registered_groups_empty"
+        style="@style/TextMediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen25"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:background="@drawable/card_background"
+        android:padding="@dimen/dimen50"
+        android:text="@string/not_registered_groups_private"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_registered_groups_private" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_groups_private"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen16"
+        app:layout_constraintTop_toBottomOf="@id/tv_registered_groups_empty"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_teacher_group" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+</layout>

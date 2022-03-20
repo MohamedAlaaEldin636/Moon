@@ -7,7 +7,7 @@
 
     <variable
       name="viewModel"
-      type="app.grand.tafwak.presentation.splash.SplashViewModel" />
+      type="grand.app.moon.presentation.splash.SplashViewModel" />
   </data>
 
   <LinearLayout

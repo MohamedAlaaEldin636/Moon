@@ -6,7 +6,7 @@
 
     <variable
       name="viewModel"
-      type="app.grand.tafwak.presentation.intro.tutorial.TutorialViewModel" />
+      type="grand.app.moon.presentation.intro.tutorial.TutorialViewModel" />
   </data>
 
   <LinearLayout

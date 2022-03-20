@@ -5,13 +5,13 @@
 
   <data>
 
-    <import type="app.grand.tafwak.domain.utils.Constants" />
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
 
     <import type="android.view.View" />
 
     <variable
       name="viewModel"
-      type="app.grand.tafwak.presentation.auth.sign_up.SignUpViewModel" />
+      type="grand.app.moon.presentation.auth.sign_up.SignUpViewModel" />
   </data>
 
   <androidx.core.widget.NestedScrollView

@@ -12,7 +12,7 @@
 
     <variable
       name="viewmodel"
-      type="app.grand.tafwak.presentation.auth.confirmCode.ConfirmViewModel" />
+      type="grand.app.moon.presentation.auth.confirmCode.ConfirmViewModel" />
   </data>
 
   <androidx.core.widget.NestedScrollView

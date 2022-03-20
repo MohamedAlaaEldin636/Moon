@@ -7,7 +7,7 @@
 
   <fragment
     android:id="@+id/log_in_fragment"
-    android:name="app.grand.tafwak.presentation.auth.log_in.LogInFragment"
+    android:name="grand.app.moon.presentation.auth.log_in.LogInFragment"
     tools:layout="@layout/fragment_log_in">
 
     <action
@@ -64,7 +64,7 @@
 
   <fragment
     android:id="@+id/sign_up_fragment"
-    android:name="app.grand.tafwak.presentation.auth.sign_up.SignUpFragment"
+    android:name="grand.app.moon.presentation.auth.sign_up.SignUpFragment"
     tools:layout="@layout/fragment_sign_up">
     <action
       android:id="@+id/action_open_confirmCodeFragment"
@@ -79,7 +79,7 @@
 
   <fragment
     android:id="@+id/forgot_password_fragment"
-    android:name="app.grand.tafwak.presentation.auth.forgot_password.ForgotPasswordFragment"
+    android:name="grand.app.moon.presentation.auth.forgot_password.ForgotPasswordFragment"
     tools:layout="@layout/fragment_forgot_password">
 
     <action
@@ -95,7 +95,7 @@
 
   <fragment
     android:id="@+id/fragment_confirm_code"
-    android:name="app.grand.tafwak.presentation.auth.confirmCode.ConfirmCodeFragment"
+    android:name="grand.app.moon.presentation.auth.confirmCode.ConfirmCodeFragment"
     tools:layout="@layout/fragment_confirm_code">
     <action
       android:id="@+id/action_fragment_confirm_code_to_changePasswordFragment"
@@ -124,11 +124,11 @@
   </fragment>
   <fragment
     android:id="@+id/changePasswordFragment"
-    android:name="app.grand.tafwak.presentation.auth.changePassword.ChangePasswordFragment"
+    android:name="grand.app.moon.presentation.auth.changePassword.ChangePasswordFragment"
     android:label="ChangePasswordFragment" />
   <fragment
     android:id="@+id/countriesFragment"
-    android:name="app.grand.tafwak.presentation.auth.countries.CountriesFragment"
+    android:name="grand.app.moon.presentation.auth.countries.CountriesFragment"
     android:label="CountriesFragment">
     <action
       android:id="@+id/action_countriesFragment_to_schoolGradeFragment"
@@ -142,7 +142,7 @@
   </fragment>
   <fragment
     android:id="@+id/schoolGradeFragment"
-    android:name="app.grand.tafwak.presentation.auth.schoolInfo.grades.SchoolGradeFragment"
+    android:name="grand.app.moon.presentation.auth.schoolInfo.grades.SchoolGradeFragment"
     android:label="SchoolGradeFragment">
     <action
       android:id="@+id/action_schoolGradeFragment_to_schoolLevelsFragment2"
@@ -156,7 +156,7 @@
   </fragment>
   <fragment
     android:id="@+id/schoolLevelsFragment2"
-    android:name="app.grand.tafwak.presentation.auth.schoolInfo.levels.SchoolLevelsFragment"
+    android:name="grand.app.moon.presentation.auth.schoolInfo.levels.SchoolLevelsFragment"
     android:label="SchoolLevelsFragment">
     <argument
       android:name="educational_stage_id"

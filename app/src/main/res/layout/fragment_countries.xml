@@ -6,11 +6,11 @@
 
   <data>
 
-    <import type="app.grand.tafwak.domain.utils.Constants" />
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
 
     <variable
       name="viewModel"
-      type="app.grand.tafwak.presentation.auth.countries.viewModels.CountriesViewModel" />
+      type="grand.app.moon.presentation.auth.countries.viewModels.CountriesViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout

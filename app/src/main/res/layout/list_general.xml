@@ -7,9 +7,9 @@
 
     <variable
       name="baseViewModel"
-      type="app.grand.tafwak.presentation.base.BaseViewModel" />
+      type="grand.app.moon.presentation.base.BaseViewModel" />
 
-    <import type="app.grand.tafwak.domain.enums.DataStatus" />
+    <import type="grand.app.moon.domain.enums.DataStatus" />
 
     <import type="android.view.View" />
   </data>

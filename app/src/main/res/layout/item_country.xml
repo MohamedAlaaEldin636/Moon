@@ -4,11 +4,11 @@
 
   <data>
 
-    <import type="app.grand.tafwak.domain.utils.Constants" />
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
 
     <variable
       name="countryItemViewModels"
-      type="app.grand.tafwak.presentation.auth.countries.viewModels.ItemCountryViewModel" />
+      type="grand.app.moon.presentation.auth.countries.viewModels.ItemCountryViewModel" />
   </data>
 
 

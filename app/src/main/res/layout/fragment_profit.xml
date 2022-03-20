@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.teachers.profit.viewModels.ProfitViewModel" />
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profit_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen25"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:background="@drawable/corner_blue"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/ic_profit"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen20"
+          android:layout_marginTop="@dimen/dimen25"
+          android:layout_marginBottom="@dimen/dimen25"
+          android:src="@drawable/profit"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/TextMediumFont"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen26"
+          android:layout_marginEnd="@dimen/dimen26"
+          android:text="العائد الكلي حتي اليوم 20000جنية مصري"
+          android:textAlignment="center"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/white"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/ic_profit"
+          app:layout_constraintTop_toTopOf="@id/ic_profit" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen14"
+        app:cardCornerRadius="@dimen/dimen8"
+        app:cardElevation="@dimen/dimen2"
+        app:layout_constraintTop_toBottomOf="@id/profit_container">
+
+        <com.google.android.material.tabs.TabLayout
+          android:id="@+id/tabs"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:tabBackground="@drawable/tab_color_selector"
+          app:tabIndicatorHeight="0dp"
+          app:tabSelectedTextColor="@color/white"
+          app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
+          app:tabTextColor="@color/black">
+
+          <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/public_groups" />
+
+          <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/private_groups" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+      </com.google.android.material.card.MaterialCardView>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_suggested_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen10"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/card_tabs"
+        tools:listitem="@layout/item_teacher_group" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+
+</layout>

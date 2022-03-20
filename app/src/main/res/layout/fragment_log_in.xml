@@ -4,11 +4,11 @@
 
   <data>
 
-    <import type="app.grand.tafwak.domain.utils.Constants" />
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
 
     <variable
       name="viewModel"
-      type="app.grand.tafwak.presentation.auth.log_in.LogInViewModel" />
+      type="grand.app.moon.presentation.auth.log_in.LogInViewModel" />
   </data>
 
   <androidx.core.widget.NestedScrollView
@@ -46,6 +46,8 @@
         android:layout_marginEnd="@dimen/dimen14"
         android:hint="@string/email"
         android:textColorHint="@color/black"
+        app:error="@{viewModel.request.validation.emailError.equals(Constants.EMPTY)?@string/empty_warning:viewModel.request.validation.emailError.equals(Constants.INVALID_EMAIL)?@string/invalid_email:``}"
+        app:errorEnabled="@{viewModel.request.validation.emailError==null?false:true}"
         app:helperTextTextColor="@color/black"
         app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintEnd_toEndOf="parent"
@@ -194,8 +196,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen14"
         app:constraint_referenced_ids="ic_facebook,ic_twitter,ic_google"
-        app:flow_horizontalStyle="packed"
         app:flow_horizontalAlign="center"
+        app:flow_horizontalStyle="packed"
         app:flow_wrapMode="chain"
         app:layout_constraintTop_toBottomOf="@id/tv_or" />
 

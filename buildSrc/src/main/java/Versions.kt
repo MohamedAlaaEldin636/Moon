@@ -33,7 +33,7 @@ object Versions {
   const val androidNavigation = "2.4.0-alpha01"
   const val loadingAnimations = "3.6.0"
   const val alerter = "7.2.4"
-  const val coil = "1.3.2"
+  const val coil = "1.4.0"
 
   // Utils
   const val playServices = "19.2.0"

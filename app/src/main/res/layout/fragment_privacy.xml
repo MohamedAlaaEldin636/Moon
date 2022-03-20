@@ -4,11 +4,11 @@
 
   <data>
 
-    <import type="app.grand.tafwak.domain.utils.Constants" />
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
 
     <variable
       name="viewModel"
-      type="app.grand.tafwak.presentation.privacy.viewModels.PrivacyViewModel" />
+      type="grand.app.moon.presentation.privacy.viewModels.PrivacyViewModel" />
   </data>
 
   <androidx.core.widget.NestedScrollView

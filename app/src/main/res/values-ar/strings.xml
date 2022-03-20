@@ -1,6 +1,7 @@
 <resources>
   <!-- General Strings -->
   <string name="hide">اخفاء</string>
+  <string name="empty_warning">هذا الحقل مطلوب </string>
   <string name="connection_error">خطأ فى الاتصال</string>
   <string name="no_internet">لا يوجد اتصال بالانترنت، برجاء المحاولة فى وقت لاحق</string>
   <string name="retry">إعادة المحاولة</string>
@@ -52,7 +53,7 @@
   <string name="confirm_header_text">تأكيد حسابك</string>
   <string name="confirm_resend">إعادة ارسال</string>
   <string name="confirm_header">أدخل كود التفعيل المرسل لك على بريدك الإلكتروني</string>
-<!--  <string name="rememeber">تذكرت كلمة المرور</string>-->
+  <!--  <string name="rememeber">تذكرت كلمة المرور</string>-->
   <string name="change_title">كلمة مرور جديدة</string>
   <string name="change_body">من فضللك قم بكتابة كلمة مرور جديدة مع التأكد من عدم علم اي شخص بها</string>
   <string name="old_password">كلمة المرور القديمة</string>

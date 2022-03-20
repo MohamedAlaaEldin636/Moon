@@ -7,7 +7,7 @@
 
   <fragment
       android:id="@+id/tutorial_fragment"
-      android:name="app.grand.tafwak.presentation.intro.tutorial.TutorialFragment"
+      android:name="grand.app.moon.presentation.intro.tutorial.TutorialFragment"
       tools:layout="@layout/fragment_tutorial">
 
     <action
@@ -22,7 +22,7 @@
 
   <fragment
       android:id="@+id/intro_fragment"
-      android:name="app.grand.tafwak.presentation.intro.intro.IntroFragment"
+      android:name="grand.app.moon.presentation.intro.intro.IntroFragment"
       tools:layout="@layout/fragment_intro" />
 
 </navigation>

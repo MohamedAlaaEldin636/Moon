@@ -4,11 +4,11 @@
 
   <data>
 
-    <import type="app.grand.tafwak.domain.utils.Constants" />
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
 
     <variable
       name="toolBar"
-      type="app.grand.tafwak.presentation.base.BaseViewModel" />
+      type="grand.app.moon.presentation.base.BaseViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout

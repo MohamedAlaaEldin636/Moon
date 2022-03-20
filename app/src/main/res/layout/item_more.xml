@@ -6,7 +6,7 @@
 
     <variable
       name="notifyItemViewModels"
-      type="app.grand.tafwak.presentation.home.viewModels.ItemTeacherViewModel" />
+      type="grand.app.moon.presentation.home.viewModels.ItemTeacherViewModel" />
   </data>
 
   <com.google.android.material.card.MaterialCardView
