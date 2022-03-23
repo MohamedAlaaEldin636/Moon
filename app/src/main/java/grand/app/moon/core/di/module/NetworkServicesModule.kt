@@ -10,6 +10,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import grand.app.moon.data.country.data_source.CountriesServices
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -21,6 +22,12 @@ object NetworkServicesModule {
   @Singleton
   fun provideAuthServices(retrofit: Retrofit): AuthServices =
     retrofit.create(AuthServices::class.java)
+
+
+  @Provides
+  @Singleton
+  fun provideCountriesServices(retrofit: Retrofit): CountriesServices =
+    retrofit.create(CountriesServices::class.java)
 
   @Provides
   @Singleton

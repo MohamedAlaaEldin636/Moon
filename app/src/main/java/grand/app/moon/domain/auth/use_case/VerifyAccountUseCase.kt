@@ -23,9 +23,6 @@ class VerifyAccountUseCase @Inject constructor(
       emit(Resource.Loading)
       val result = authRepository.verifyAccount(request)
       if (result is Resource.Success) {
-        userLocalUseCase.registerStep(
-          result.value.data.register_steps.toString()
-        )
         userLocalUseCase.saveToken(
           result.value.data.token
         )

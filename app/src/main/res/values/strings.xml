@@ -1,100 +1,48 @@
 <resources>
-  <string name="app_name_debug" translatable="false">تفوق</string>
-  <string name="app_name" translatable="false">تفوق</string>
+  <string name="app_name_debug" translatable="false">موون</string>
+  <string name="app_name" translatable="false">موون</string>
 
-  <!-- General Strings -->
-  <string name="hide">Hide</string>
-  <string name="empty_warning">This field is required</string>
-  <string name="connection_error">Connection Error</string>
-  <string name="no_internet">No internet connection please try again later</string>
-  <string name="retry">Retry</string>
-  <string name="cancel">Cancel</string>
-  <string name="some_error">Some error occurred, try again later</string>
-  <string name="list_no_result">Sorry, There are no results here!</string>
-
-  <!-- Home -->
-  <string name="home">Home</string>
-  <string name="search">البحث عن المعلمين , المجموعات .. وغيرها</string>
-  <string name="account">Account</string>
-
-  <!-- Tutorial -->
-  <string name="tutorial">Tutorial</string>
-  <string name="dot" translatable="false">•</string>
-  <string name="open_app">Explore App</string>
+  <string name="discover">Discover</string>
+  <string name="my_account">My Account</string>
+  <string name="map">Map</string>
+  <string name="confirm">Confirm</string>
+  <string name="name">Name</string>
+  <string name="confirm_resend">Resend Code</string>
+  <string name="confirm_header_text">Activation Code Number</string>
+  <string name="enter_the_code_sent_to_your_phone">Enter the code sent to you on your phone number to activate your account</string>
+  <string name="email">E-mail</string>
+  <string name="reason_for_contact">Reason for contact</string>
+  <string name="content_of_the_message">Content of the message</string>
+  <string name="send">Send</string>
+  <string name="log_in">Login</string>
+  <string name="phone">Phone</string>
+  <string name="choose_language">Choose Language</string>
   <string name="next">Next</string>
-  <string name="previous_app">السابق</string>
-  <!-- Intro -->
-  <string name="log_in_sign_up">Log In / Sign Up</string>
-
-  <!-- Log In -->
-  <string name="log_in">Log In</string>
-  <string name="email">Email Address</string>
-  <string name="password">Password</string>
-  <string name="forgot_your_password">Forgot your password?</string>
-  <string name="not_have_account">Don\'t have an account?</string>
-  <string name="empty_email">Please enter your email address</string>
-  <string name="invalid_email">Please enter valid email address</string>
-  <string name="empty_password">Please enter your password</string>
-
-  <!-- Sign Up -->
-  <string name="sign_up">Sign Up</string>
-
-  <!-- Account -->
-  <string name="log_out">Log Out</string>
-  <string name="log_out_hint">Are you sure you want to log out?</string>
+  <string name="choose_country">Choose Country</string>
+  <string name="no_internet">No internet connection please try again later</string>
+  <string name="previous_app">Previous</string>
+  <string name="dot">•</string>
+  <string name="required">this is field is required</string>
   <string name="skip">Skip</string>
-<!--  <string name="google_api_key">Continue as Guest</string>-->
-  <string name="send">إرسال</string>
-  <string name="contact_us">تواصل معنا</string>
-  <string name="or">او عن طريق</string>
-  <string name="register_name">اكتب اسمك</string>
-  <string name="register_phone">أدخل رقم الهاتف الجوال</string>
-  <string name="email_hint">أدخل البريد الإلكتروني</string>
-  <string name="password_hint_confirm">قم بتأكيد كلمة المرور</string>
-  <string name="agree_to">أوافق على</string>
-  <string name="have_account">لدي حساب</string>
-  <string name="privacy">سياسة الخصوصية</string>
-  <string name="terms_auth">شروط الاستخدام |</string>
-  <string name="confirm_header_text">تأكيد حسابك</string>
-  <string name="confirm_resend">إعادة ارسال</string>
-  <string name="confirm_header">أدخل كود التفعيل المرسل لك على بريدك الإلكتروني</string>
-<!--  <string name="rememeber">تذكرت كلمة المرور</string>-->
-  <string name="change_title">كلمة مرور جديدة</string>
-  <string name="change_body">من فضللك قم بكتابة كلمة مرور جديدة مع التأكد من عدم علم اي شخص بها</string>
-  <string name="old_password">كلمة المرور القديمة</string>
-  <string name="confirm">تأكيد</string>
-  <string name="profile">بياناتي الشخصية</string>
-  <string name="rate">تقيم</string>
-  <string name="comment">من فضلك قم بأضافة تعليق</string>
-  <string name="terms">الشروط والاحكام</string>
-  <string name="suggestions">الشكاوي والاقتراحات</string>
-  <string name="about">عن التطبيق</string>
-  <string name="share_app">مشاركة التطبيق</string>
-  <string name="rate_app">تقيم التطبيق</string>
-  <string name="message">الرسالة</string>
-  <string name="notifications">الاشعارات</string>
-  <string name="show_details">عرض التفاصيل</string>
-  <string name="change_password">تغير كلمة المرور</string>
-  <string name="change_country">تغير الدولة</string>
-  <string name="save">حفظ</string>
-  <string name="go_home">الذهاب للرئيسية</string>
-  <string name="male">ذكور</string>
-  <string name="female">إناث</string>
-  <string name="accept">قبول</string>
-  <string name="reject">رفض</string>
-  <string name="not_match_password">كلمتا المرور غير متطابقتان</string>
-  <string name="empty_terms">يرجى الموافقه على الشروط والاحكام</string>
-  <string name="empty_image">يرجى اختيار الصورة</string>
-  <string name="continue_register_title">هل تريد استكمال البيانات ؟</string>
-  <string name="yes">نعم</string>
-  <string name="continue_register_body">يمكنك استكمال انشاء حسابك عند اخر خطوة</string>
-  <string name="active">تفعيل الحساب</string>
-  <string name="public_group">مجموعة عامة</string>
-  <string name="private_group">مجموعة خاصة</string>
-  <string name="both">مجموعة مختلطة</string>
-  <string name="female_group">مجموعة اناث</string>
-  <string name="male_group">مجموعة ذكور</string>
-  <string name="social">مواقع التواصل الاجتماعي</string>
-  <string name="rate_warning">يرجى ادخال التقييم اولا</string>
+  <string name="connection_error">Please Check Your Connection</string>
+  <string name="some_error">Some error occurred, try again later</string>
+  <string name="settings">Settings</string>
+  <string name="about_moon">About Moon</string>
+  <string name="contact_us">Contact Us</string>
+  <string name="terms">Terms And Conditions</string>
+  <string name="help">Help</string>
+  <string name="change_language">Change Language</string>
+  <string name="change_country">Change Country</string>
+  <string name="social_media">Social Media</string>
+  <string name="register_as_provider">Register as Provider</string>
+  <string name="share_app">Share App</string>
+  <string name="rate_app">Rate App</string>
+  <string name="save">Save</string>
+    <string name="search">Search</string>
+  <string name="show_more">Show More</string>
+  <string name="departments">Departments</string>
+  <string name="show_all">Show All</string>
+  <string name="follow">Follow</string>
+  <string name="top_stores_rated">Top Stores Rated</string>
 
 </resources>

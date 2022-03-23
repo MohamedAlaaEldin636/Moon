@@ -14,31 +14,137 @@
 
   <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
+    android:paddingBottom="@dimen/dimen50"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/backgroundGray">
-
-      <com.smarteist.autoimageslider.SliderView
-        android:id="@+id/imageSlider"
+      <androidx.cardview.widget.CardView
+        android:id="@+id/img_login"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen180"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:sliderAnimationDuration="600"
-        app:sliderAutoCycleDirection="back_and_forth"
-        app:sliderAutoCycleEnabled="true"
-        app:sliderIndicatorAnimationDuration="600"
-        app:sliderIndicatorGravity="center_horizontal|bottom"
-        app:sliderIndicatorMargin="15dp"
-        app:sliderIndicatorOrientation="horizontal"
-        app:sliderIndicatorPadding="3dp"
-        app:sliderIndicatorRadius="2dp"
-        app:sliderIndicatorSelectedColor="@color/colorPrimary"
-        app:sliderIndicatorUnselectedColor="@color/white"
-        app:sliderScrollTimeInSec="10"
-        app:sliderStartAutoCycle="true" />
+        android:layout_marginTop="@dimen/dimen10"
+        android:layout_marginStart="@dimen/dimen20"
+        android:layout_marginEnd="@dimen/dimen20">
+
+        <androidx.appcompat.widget.AppCompatEditText
+          style="@style/mediumFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@null"
+          android:drawableStart="@drawable/ic_search"
+          android:drawablePadding="@dimen/dimen12"
+          android:focusable="false"
+          android:drawableEnd="@drawable/ic_filter"
+          android:hint="@string/search"
+          android:padding="@dimen/dimen10"
+          android:textSize="@dimen/text_size16" />
+      </androidx.cardview.widget.CardView>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_stories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adapter="@{viewModel.storiesAdapter}"
+        android:layout_marginTop="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/img_login"
+        app:orientation="@{`2`}"
+        app:span="@{`1`}"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_story" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_departments"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen16"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/rv_stories"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/departments" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_more_item"
+        style="@style/mediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorPrimary"
+        android:drawableTint="@color/colorAccent"
+        android:drawableEnd="@drawable/ic_more_sec"
+        android:layout_marginEnd="@dimen/dimen10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_departments"
+        app:layout_constraintTop_toTopOf="@+id/tv_departments"
+        android:text="@string/show_all" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adapter="@{viewModel.categoriesAdapter}"
+        android:layout_marginTop="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/tv_departments"
+        app:orientation="@{`2`}"
+        app:span="@{`1`}"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_category" />
+
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_top_stores"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen16"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/rv_categories"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/top_stores_rated" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_top_stores_all"
+        style="@style/mediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorPrimary"
+        android:drawableTint="@color/colorAccent"
+        android:drawableEnd="@drawable/ic_more_sec"
+        android:layout_marginEnd="@dimen/dimen10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"
+        app:layout_constraintTop_toTopOf="@+id/tv_top_stores"
+        android:text="@string/show_all" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_stores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adapter="@{viewModel.storeAdapter}"
+        app:orientation="@{`1`}"
+        app:span="@{`2`}"
+        android:layout_marginTop="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_store" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.core.widget.NestedScrollView>

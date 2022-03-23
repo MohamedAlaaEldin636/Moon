@@ -5,12 +5,11 @@ import androidx.databinding.ObservableField
 
 @Keep
 class LogInRequest{
-  var email: String = ""
+  var phone: String = ""
     set(value) {
       validation.phoneError.set(null)
       field = value
     }
-  var password: String = ""
   var device_token: String = ""
   var validation: LogInValidationException = LogInValidationException()
 }

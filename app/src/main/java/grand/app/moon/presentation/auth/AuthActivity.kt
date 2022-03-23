@@ -1,8 +1,8 @@
 package grand.app.moon.presentation.auth
 
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseActivity
-import com.structure.base_mvvm.databinding.ActivityAuthBinding
+import grand.app.moon.databinding.ActivityAuthBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -6,86 +6,77 @@
 
     <import type="grand.app.moon.presentation.base.utils.Constants" />
 
+    <import type="android.view.View" />
+
     <variable
       name="countryItemViewModels"
       type="grand.app.moon.presentation.auth.countries.viewModels.ItemCountryViewModel" />
   </data>
 
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dimen4"
-    android:onClick="@{()-> countryItemViewModels.clickEvent(Constants.CLICK_EVENT)}"
     android:orientation="vertical">
 
-    <com.google.android.material.imageview.ShapeableImageView
-      android:id="@+id/img"
-      android:layout_width="@dimen/dimen36"
-      android:layout_height="@dimen/dimen36"
-      android:layout_margin="@dimen/dimen4"
-      android:scaleType="centerCrop"
-      android:src="@drawable/bg_no_image"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:loadImage="@{countryItemViewModels.country.image}"
-      app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/textView14"
-      style="@style/TextMediumFont"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen14"
-      android:layout_marginEnd="@dimen/dimen8"
-      android:text="@{countryItemViewModels.country.name}"
-      android:textAlignment="viewStart"
-      android:textAppearance="@style/TextAppearance.AppCompat.Small"
-      android:textColor="@color/black"
-      app:layout_constraintEnd_toStartOf="@+id/textView15"
-      app:layout_constraintHorizontal_bias="0.5"
-      app:layout_constraintStart_toEndOf="@+id/img"
-      app:layout_constraintTop_toTopOf="@id/img" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/textView15"
-      style="@style/TextMediumFont"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen14"
-      android:layout_marginEnd="@dimen/dimen8"
-      android:text="soon"
-      android:textAlignment="center"
-      android:textAppearance="@style/TextAppearance.AppCompat.Small"
-      android:textColor="@color/black_op"
-      app:layout_constraintEnd_toStartOf="@+id/radio"
-      app:layout_constraintHorizontal_bias="0.5"
-      app:layout_constraintStart_toEndOf="@+id/textView14"
-      app:layout_constraintTop_toTopOf="@id/img" />
-
-    <com.google.android.material.radiobutton.MaterialRadioButton
-      android:id="@+id/radio"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:minWidth="0dp"
-      android:minHeight="0dp"
-      android:onClick="@{()-> countryItemViewModels.clickEvent(Constants.CLICK_EVENT)}"
-      app:buttonTint="@color/blue"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Barrier
+    <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:barrierDirection="bottom"
-      android:id="@+id/br"
-      app:constraint_referenced_ids="img,textView14,textView15"/>
+      android:layout_margin="@dimen/dimen4"
+      android:onClick="@{()-> countryItemViewModels.clickEvent(Constants.CLICK_EVENT)}"
+      android:orientation="vertical">
+
+      <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/dimen46"
+        android:layout_height="@dimen/dimen46"
+        android:layout_alignParentStart="true"
+        android:layout_margin="@dimen/dimen4"
+        android:scaleType="centerCrop"
+
+        android:visibility="@{countryItemViewModels.country.image != null  &amp;&amp; !countryItemViewModels.country.image.empty ? View.VISIBLE : View.GONE}"
+        app:loadImage="@{countryItemViewModels.country.image}"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView14"
+        style="@style/mediumFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dimen14"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:layout_toEndOf="@+id/img"
+        android:layout_toStartOf="@+id/radio"
+        android:text="@{countryItemViewModels.country.name}"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintHorizontal_bias="0.5"
+
+        />
+
+
+      <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:checked="@{countryItemViewModels.country.active==0?false:true}"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:onClick="@{()-> countryItemViewModels.clickEvent(Constants.CLICK_EVENT)}"
+        app:buttonTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView14" />
+    </RelativeLayout>
 
     <View
       android:layout_width="match_parent"
       android:layout_height="@dimen/dimen1"
-      android:layout_marginTop="@dimen/dimen10"
-      android:background="@color/lightGray"
-      app:layout_constraintTop_toBottomOf="@id/br" />
-  </androidx.constraintlayout.widget.ConstraintLayout>
+      android:layout_marginTop="@dimen/dimen4"
+      android:background="@color/lightGray" />
+  </LinearLayout>
 </layout>

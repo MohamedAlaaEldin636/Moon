@@ -28,13 +28,6 @@ class LogInViewModel @Inject constructor(
   var validationException = SingleLiveEvent<Int>()
 
   init {
-    viewModelScope.launch {
-      userLocalUseCase.getRegisterStep().collect {
-        registerStep = it
-        if (registerStep.isNotEmpty())
-          clickEvent.value = Constants.CONTINUE_PROGRESS
-      }
-    }
 
   }
 

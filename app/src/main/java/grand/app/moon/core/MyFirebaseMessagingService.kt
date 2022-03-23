@@ -10,7 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 import com.readystatesoftware.chuck.internal.ui.MainActivity
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {

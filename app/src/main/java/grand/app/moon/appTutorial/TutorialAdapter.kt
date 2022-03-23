@@ -10,8 +10,8 @@ import grand.app.moon.appTutorial.TutorialAdapter.ImagesSliderViewHolder
 import coil.ImageLoader
 import coil.request.ImageRequest
 import grand.app.moon.domain.intro.entity.AppTutorial
-import com.structure.base_mvvm.R
-import com.structure.base_mvvm.databinding.ItemTutorialBinding
+import grand.app.moon.R
+import grand.app.moon.databinding.ItemTutorialBinding
 
 internal class TutorialAdapter(
   private var titleColor: Int,

@@ -7,108 +7,108 @@
 
     <import type="grand.app.moon.presentation.base.utils.Constants" />
 
-    <variable
-      name="viewModel"
-      type="grand.app.moon.presentation.search.viewModels.SearchViewModel" />
+<!--    <variable-->
+<!--      name="viewModel"-->
+<!--      type="grand.app.moon.presentation.search.viewModels.SearchViewModel" />-->
   </data>
 
   <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/backgroundGray">
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--      android:layout_width="match_parent"-->
+<!--      android:layout_height="match_parent"-->
+<!--      android:background="@color/backgroundGray">-->
 
-      <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_search"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen18"
-        android:layout_marginEnd="@dimen/dimen14"
-        android:hint="@string/search"
-        android:textColorHint="@color/gray"
-        app:helperTextTextColor="@color/black"
-        app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:startIconDrawable="@drawable/ic_search"
-        app:startIconTint="@color/blue">
+<!--      <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/input_search"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen14"-->
+<!--        android:layout_marginTop="@dimen/dimen18"-->
+<!--        android:layout_marginEnd="@dimen/dimen14"-->
+<!--        android:hint="@string/search"-->
+<!--        android:textColorHint="@color/gray"-->
+<!--        app:helperTextTextColor="@color/black"-->
+<!--        app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:startIconDrawable="@drawable/ic_search"-->
+<!--        app:startIconTint="@color/blue">-->
 
-        <androidx.appcompat.widget.AppCompatEditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:inputType="text"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/black" />
-      </com.google.android.material.textfield.TextInputLayout>
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:inputType="text"-->
+<!--          android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--          android:textColor="@color/colorPrimaryDark"-->
+<!--          android:textColorHint="@color/black" />-->
+<!--      </com.google.android.material.textfield.TextInputLayout>-->
 
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_suggested_teachers"
-        style="@style/TextMediumFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen10"
-        android:text="@string/teachers"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/input_search"
-        app:layout_constraintTop_toBottomOf="@id/tv_suggested_teachers_all" />
+<!--      <androidx.appcompat.widget.AppCompatTextView-->
+<!--        android:id="@+id/tv_suggested_teachers"-->
+<!--        style="@style/mediumFont"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/dimen10"-->
+<!--        android:text="@string/teachers"-->
+<!--        android:textColor="@color/black"-->
+<!--        app:layout_constraintStart_toStartOf="@id/input_search"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_suggested_teachers_all" />-->
 
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/tv_suggested_teachers_all"
-        style="@style/TextMediumFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen10"
-        android:onClick="@{()->viewModel.clickEvent(Constants.TEACHER_PROFILE)}"
-        android:text="@string/all"
-        android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:cornerRadius="@dimen/dimen8"
-        app:icon="@drawable/ic_filter"
-        app:iconGravity="textStart"
-        app:iconTint="@color/blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_search"
-        app:strokeColor="@color/blue"
-        app:strokeWidth="1dp" />
+<!--      <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/tv_suggested_teachers_all"-->
+<!--        style="@style/mediumFont"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/dimen10"-->
+<!--        android:onClick="@{()->viewModel.clickEvent(Constants.TEACHER_PROFILE)}"-->
+<!--        android:text="@string/all"-->
+<!--        android:textColor="@color/black"-->
+<!--        app:backgroundTint="@color/white"-->
+<!--        app:cornerRadius="@dimen/dimen8"-->
+<!--        app:icon="@drawable/ic_filter"-->
+<!--        app:iconGravity="textStart"-->
+<!--        app:iconTint="@color/blue"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/input_search"-->
+<!--        app:strokeColor="@color/blue"-->
+<!--        app:strokeWidth="1dp" />-->
 
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_suggested_teachers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen10"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/tv_suggested_teachers"
-        tools:listitem="@layout/item_teacher" />
+<!--      <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rc_suggested_teachers"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/dimen10"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_suggested_teachers"-->
+<!--        tools:listitem="@layout/item_teacher" />-->
 
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_suggested_groups"
-        style="@style/TextMediumFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen10"
-        android:text="@string/groups"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/input_search"
-        app:layout_constraintTop_toBottomOf="@id/rc_suggested_teachers" />
+<!--      <androidx.appcompat.widget.AppCompatTextView-->
+<!--        android:id="@+id/tv_suggested_groups"-->
+<!--        style="@style/mediumFont"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/dimen10"-->
+<!--        android:text="@string/groups"-->
+<!--        android:textColor="@color/black"-->
+<!--        app:layout_constraintStart_toStartOf="@id/input_search"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/rc_suggested_teachers" />-->
 
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_suggested_groups"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen10"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/tv_suggested_groups"
-        tools:listitem="@layout/item_groups" />
+<!--      <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rc_suggested_groups"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/dimen10"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_suggested_groups"-->
+<!--        tools:listitem="@layout/item_groups" />-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
   </androidx.core.widget.NestedScrollView>
 </layout>

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
   <!-- Base application theme. -->
-  <style name="Theme.AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+  <style name="Theme.AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
     <!-- Primary brand color. -->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -13,7 +13,7 @@
     <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
     <!-- App Font -->
-    <item name="fontFamily">@font/almarai_medium</item>
+    <item name="fontFamily">@font/medium</item>
 
     <item name="android:windowContentTransitions">true</item>
 
@@ -22,39 +22,55 @@
     <item name="android:windowDisablePreview">true</item>
   </style>
 
+  <style name="ToolBarStyle" parent="Theme.AppCompat">
+    <item name="android:textColorPrimary">@android:color/white</item>
+    <item name="android:textColorSecondary">@color/white</item>
+    <item name="actionMenuTextColor">@android:color/white</item>
+    <item name="colorControlNormal">@color/colorWhite</item>
+  </style>
+
   <style name="TextBoldFont">
     <item name="android:textStyle">bold</item>
-    <item name="fontFamily">@font/almarai_bold</item>
+    <item name="fontFamily">@font/bold</item>
   </style>
 
-  <style name="TitleBoldFont">
+  <style name="boldFont">
     <item name="android:textStyle">bold</item>
-    <item name="fontFamily">@font/syncopate_bold</item>
+    <item name="fontFamily">@font/bold</item>
   </style>
 
-  <style name="TextMediumFont">
-    <item name="fontFamily">@font/almarai_medium</item>
+  <style name="extraBoldFont">
+    <item name="fontFamily">@font/extrabold</item>
   </style>
 
-  <style name="TextRegularFont">
-    <item name="fontFamily">@font/almarai_light</item>
+  <style name="mediumFont">
+    <item name="fontFamily">@font/medium</item>
   </style>
 
-  <style name="TitleRegularFont">
-    <item name="fontFamily">@font/syncopate_regular</item>
+  <style name="lightFont">
+    <item name="fontFamily">@font/light</item>
   </style>
 
-  <style name="ArabicTextRegularFont">
-    <item name="fontFamily">@font/almarai_medium</item>
+  <style name="extraLightFont">
+    <item name="fontFamily">@font/extralight</item>
   </style>
+
+  <style name="regularFont">
+    <item name="fontFamily">@font/regular</item>
+  </style>
+  <style name="blackFont">
+    <item name="fontFamily">@font/black</item>
+  </style>
+
+
   <style name="TutorialTitleFont">
     <item name="android:textSize">@dimen/dimen8</item>
-    <item name="fontFamily">@font/poppins_bold</item>
+    <item name="fontFamily">@font/bold</item>
   </style>
 
   <style name="TutorialContentFont">
     <item name="android:textSize">@dimen/dimen8</item>
-    <item name="fontFamily">@font/poppins_light</item>
+    <item name="fontFamily">@font/light</item>
   </style>
   <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
     <item name="cornerSize">50%</item>

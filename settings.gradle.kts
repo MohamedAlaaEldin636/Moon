@@ -1,4 +1,4 @@
-rootProject.name = "Tafwak"
+rootProject.name = "Moon"
 
 // Include all the existent modules in the project
 rootDir

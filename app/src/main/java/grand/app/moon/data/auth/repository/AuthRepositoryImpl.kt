@@ -14,14 +14,6 @@ class AuthRepositoryImpl @Inject constructor(
 
   override
   suspend fun logIn(request: LogInRequest) = remoteDataSource.logIn(request)
-  override suspend fun changePassword(request: ChangePasswordRequest): Resource<BaseResponse<*>> =
-    remoteDataSource.changePassword(request)
-
-  override suspend fun forgetPassword(request: ForgetPasswordRequest) =
-    remoteDataSource.forgetPassword(request)
-
-  override suspend fun register(request: RegisterRequest): Resource<BaseResponse<*>> =
-    remoteDataSource.register(request)
 
   override suspend fun verifyAccount(request: VerifyAccountRequest): Resource<BaseResponse<User>> =
     remoteDataSource.verifyAccount(request)

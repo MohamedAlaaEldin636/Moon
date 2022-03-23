@@ -7,6 +7,6 @@ class IntroRemoteDataSource @Inject constructor(private val apiService: IntroSer
   BaseRemoteDataSource() {
 
   suspend fun intro() = safeApiCall {
-    apiService.intro()
+    apiService.intro(1)
   }
 }

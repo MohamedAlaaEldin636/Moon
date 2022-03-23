@@ -1,95 +1,48 @@
 <resources>
   <!-- General Strings -->
-  <string name="hide">اخفاء</string>
-  <string name="empty_warning">هذا الحقل مطلوب </string>
-  <string name="connection_error">خطأ فى الاتصال</string>
-  <string name="no_internet">لا يوجد اتصال بالانترنت، برجاء المحاولة فى وقت لاحق</string>
-  <string name="retry">إعادة المحاولة</string>
-  <string name="cancel">إلغاء</string>
-  <string name="some_error">حدث خطأ ما، برجاء المحاولة فى وقت لاحق</string>
-  <string name="list_no_result">عفواً، لا يوجد بيانات</string>
-
-  <!-- Home -->
-  <string name="home">الرئيسية</string>
-  <string name="search">البحث عن المعلمين , المجموعات .. وغيرها</string>
-  <string name="account">حسابى</string>
-
-  <!-- Tutorial -->
-  <string name="tutorial">شرح التطبيق</string>
-  <string name="open_app">تصفح التطبيق</string>
-  <string name="next">التالى</string>
-  <string name="previous_app">السابق</string>
-  <!-- Intro -->
-  <string name="log_in_sign_up">تسجيل الدخول/انشاء حساب</string>
-
-  <!-- Log In -->
-  <string name="log_in">تسجيل الدخول</string>
-  <string name="email">البريد الالكترونى</string>
-  <string name="password">كلمة المرور</string>
-  <string name="forgot_your_password">نسيت كلمة المرور؟</string>
-  <string name="not_have_account">ليس لديك حساب؟</string>
-  <string name="empty_email">برجاء ادخال البريد الإلكترونى الخاص بك</string>
-  <string name="invalid_email">برجاء ادخال بريد إلكترونى صحيح</string>
-  <string name="empty_password">برجاء ادخال كلمة المرور</string>
-
-  <!-- Sign Up -->
-  <string name="sign_up">إنشاء حساب</string>
-
-  <!-- Account -->
-  <string name="log_out">تسجيل الخروج</string>
-  <string name="log_out_hint">هل انت متأكد من انك تريد تسجيل الخروج؟</string>
-  <string name="skip">تخطى</string>
-  <string name="send">ارسال</string>
-  <string name="contact_us">اتصل بنا</string>
-  <string name="or">او عن طريق</string>
-  <string name="register_name">اكتب اسمك</string>
-  <string name="register_phone">أدخل رقم الهاتف الجوال</string>
-  <string name="email_hint">أدخل البريد الإلكتروني</string>
-  <string name="password_hint_confirm">قم بتأكيد كلمة المرور</string>
-  <string name="agree_to">أوافق على</string>
-  <string name="have_account">لدي حساب</string>
-  <string name="privacy">سياسة الخصوصية</string>
-  <string name="terms_auth">| شروط الاستخدام </string>
-  <string name="confirm_header_text">تأكيد حسابك</string>
-  <string name="confirm_resend">إعادة ارسال</string>
-  <string name="confirm_header">أدخل كود التفعيل المرسل لك على بريدك الإلكتروني</string>
-  <!--  <string name="rememeber">تذكرت كلمة المرور</string>-->
-  <string name="change_title">كلمة مرور جديدة</string>
-  <string name="change_body">من فضللك قم بكتابة كلمة مرور جديدة مع التأكد من عدم علم اي شخص بها</string>
-  <string name="old_password">كلمة المرور القديمة</string>
+  <string name="app_name_debug" translatable="false">موون</string>
+  <string name="app_name" translatable="false">موون</string>
+  <string name="discover">إكتشف</string>
+  <string name="confirm_resend">أعد إرسال الرمز</string>
+  <string name="confirm_header_text">رقم رمز التفعيل</string>
+  <string name="enter_the_code_sent_to_your_phone">أدخل الرمز المرسل إليك على رقم هاتفك لتفعيل حسابك</string>
+  <string name="email">بريد الالكتروني</string>
+  <string name="reason_for_contact">السبب للاتصال</string>
+  <string name="my_account">حسابي</string>
+  <string name="map">الخريطة</string>
   <string name="confirm">تأكيد</string>
-  <string name="profile">بياناتي الشخصية</string>
-  <string name="rate">تقيم</string>
-  <string name="comment">من فضلك قم بأضافة تعليق</string>
+  <string name="name">الأسم</string>
+  <string name="content_of_the_message">محتوى الرسالة</string>
+  <string name="send">إرسال</string>
+  <string name="log_in">تسجيل الدخول</string>
+  <string name="phone">هاتف</string>
+  <string name="choose_language">اختر اللغة</string>
+  <string name="next">التالي</string>
+  <string name="choose_country">اختر الدولة</string>
+  <string name="no_internet">لا يوجد اتصال بالانترنت، برجاء المحاولة فى وقت لاحق</string>
+  <string name="previous_app">السابق</string>
+  <string name="dot">•</string>
+  <string name="connection_error">يرجى التحقق من اتصالك</string>
+  <string name="some_error">حدث خطأ ما ، حاول مرة أخرى في وقت لاحق</string>
+  <string name="required">هذا هو الحقل المطلوب</string>
+  <string name="skip">تخطى</string>
+  <string name="settings">الأعدادات</string>
+  <string name="about_moon">عن موون</string>
+  <string name="contact_us">تواصل معنا</string>
   <string name="terms">الشروط والاحكام</string>
-  <string name="suggestions">الشكاوي والاقتراحات</string>
-  <string name="about">عن التطبيق</string>
+  <string name="help">المساعدة</string>
+  <string name="change_language">تغير اللغة</string>
+  <string name="change_country">تغير الدولة</string>
+  <string name="register_as_provider">سجل كتاجر</string>
   <string name="share_app">مشاركة التطبيق</string>
   <string name="rate_app">تقيم التطبيق</string>
-  <string name="message">الرسالة</string>
-  <string name="notifications">Notifications</string>
-  <string name="show_details">عرض التفاصيل</string>
-  <string name="change_password">تغير كلمة المرور</string>
-  <string name="change_country">تغير الدولة</string>
+  <string name="social_media">وسائل التواصل الاجتماعى</string>
   <string name="save">حفظ</string>
-  <string name="go_home">الذهاب للرئيسية</string>
-  <string name="male">ذكور</string>
-  <string name="female">إناث</string>
-  <string name="accept">قبول</string>
-  <string name="reject">رفض</string>
-  <string name="not_match_password">كلمتا المرور غير متطابقتان</string>
-  <string name="empty_terms">يرجى الموافقه على الشروط والاحكام</string>
-  <string name="empty_image">يرجى اختيار الصورة</string>
-  <string name="continue_register_title">هل تريد استكمال البيانات ؟</string>
-  <string name="yes">نعم</string>
-  <string name="continue_register_body">يمكنك استكمال انشاء حسابك عند اخر خطوة</string>
-  <string name="active">تفعيل الحساب</string>
-  <string name="public_group">مجموعة عامة</string>
-  <string name="private_group">مجموعة خاصة</string>
-  <string name="both">مجموعة مختلطة</string>
-  <string name="female_group">مجموعة اناث</string>
-  <string name="male_group">مجموعة ذكور</string>
-  <string name="social">مواقع التواصل الاجتماعي</string>
-  <string name="rate_warning">يرجى ادخال التقييم اولا</string>
+    <string name="search">بحث</string>
+  <string name="show_more">عرض المزيد</string>
+  <string name="departments">الأقسام</string>
+  <string name="show_all">عرض الكل</string>
+  <string name="follow">متابعة</string>
+  <string name="top_stores_rated">أعلى المتاجر تقييما</string>
 
 </resources>

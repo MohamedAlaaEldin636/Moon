@@ -9,16 +9,11 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.account.use_case.SendFirebaseTokenUseCase
 import grand.app.moon.domain.account.use_case.SetFirstTimeUseCase
 import grand.app.moon.domain.auth.repository.AuthRepository
-import grand.app.moon.domain.auth.use_case.ChangePasswordUseCase
 import grand.app.moon.domain.auth.use_case.LogInUseCase
-import grand.app.moon.domain.auth.use_case.RegisterUseCase
 import grand.app.moon.domain.auth.use_case.VerifyAccountUseCase
-import grand.app.moon.domain.countries.repository.CountriesRepository
-import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.domain.general.use_case.ClearPreferencesUseCase
 import grand.app.moon.domain.general.use_case.GeneralUseCases
 import grand.app.moon.domain.home.repository.HomeRepository
-import grand.app.moon.domain.home.repository.local.HomeLocalRepository
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.intro.repository.IntroRepository
 import grand.app.moon.domain.intro.use_case.IntroUseCase
@@ -28,6 +23,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import grand.app.moon.domain.countries.repository.CountriesRepository
+import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import javax.inject.Singleton
 
 @Module
@@ -43,10 +40,11 @@ class UseCaseModule {
 
   @Provides
   @Singleton
-  fun provideRegisterUseCase(
-    authRepository: AuthRepository,
-    userLocalUseCase: UserLocalUseCase
-  ): RegisterUseCase = RegisterUseCase(authRepository, userLocalUseCase)
+  fun provideCountriesUseCase(
+    countriesRepository: CountriesRepository
+  ): CountriesUseCase = CountriesUseCase(countriesRepository)
+
+
 
   @Provides
   @Singleton
@@ -55,25 +53,6 @@ class UseCaseModule {
     userLocalUseCase: UserLocalUseCase
   ): VerifyAccountUseCase = VerifyAccountUseCase(authRepository, userLocalUseCase)
 
-  @Provides
-  @Singleton
-  fun provideChangePasswordUseCase(
-    authRepository: AuthRepository,
-  ): ChangePasswordUseCase = ChangePasswordUseCase(authRepository)
-
-  @Provides
-  @Singleton
-  fun provideCountriesUseCase(
-    countriesRepository: CountriesRepository,
-    userLocalUseCase: UserLocalUseCase
-  ): CountriesUseCase = CountriesUseCase(countriesRepository, userLocalUseCase)
-
-  @Provides
-  @Singleton
-  fun provideHomeUseCase(
-    homeRepository: HomeRepository,
-    homeLocalRepository: HomeLocalRepository
-  ): HomeUseCase = HomeUseCase(homeRepository, homeLocalRepository)
 
   @Provides
   @Singleton

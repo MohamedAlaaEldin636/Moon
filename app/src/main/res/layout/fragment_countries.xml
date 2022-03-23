@@ -7,6 +7,7 @@
   <data>
 
     <import type="grand.app.moon.presentation.base.utils.Constants" />
+    <import type="android.view.View" />
 
     <variable
       name="viewModel"
@@ -18,37 +19,35 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundGray">
 
-    <include
-      android:id="@+id/included_toolbar"
-      layout="@layout/toolbar_blue"
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/logo_header"
       app:layout_constraintTop_toTopOf="parent"
-      bind:toolBar="@{viewModel}" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/tv_countries_title"
-      style="@style/TextBoldFont"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/dimen36"
-      android:text="title"
-      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-      android:textColor="@color/black"
-      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/included_toolbar" />
+      app:layout_constraintEnd_toEndOf="parent"
+      android:scaleType="fitXY"
+      android:layout_marginTop="@dimen/dimen20"
+      android:layout_width="match_parent"
+      android:src="@drawable/logo_header"
+      android:layout_height="wrap_content"/>
 
     <com.google.android.material.card.MaterialCardView
       android:id="@+id/card_country"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_marginStart="@dimen/dimen36"
+      android:layout_marginStart="@dimen/dimen18"
       android:layout_marginTop="@dimen/dimen18"
-      android:layout_marginEnd="@dimen/dimen36"
+      android:layout_marginEnd="@dimen/dimen18"
       android:layout_marginBottom="@dimen/dimen18"
       app:cardCornerRadius="@dimen/dimen5"
       app:cardElevation="2dp"
-      app:layout_constraintBottom_toTopOf="@id/btn_next"
-      app:layout_constraintTop_toBottomOf="@id/tv_countries_title">
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/logo_header"
+      app:layout_constraintBottom_toTopOf="@id/btn_next">
+
+      <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -56,14 +55,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/tv_selected_country"
-          style="@style/TextMediumFont"
+          style="@style/boldFont"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@drawable/corner_blue"
-          android:drawableEnd="@drawable/ic_arrow_down"
+          android:text="@string/choose_country"
+          android:background="@drawable/corner_white"
           android:padding="@dimen/dimen10"
+          android:textStyle="bold"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-          android:textColor="@color/white"
+          android:textColor="@color/colorPrimary"
           app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -77,6 +77,8 @@
           app:span="@{`1`}"
           tools:listitem="@layout/item_country" />
       </androidx.constraintlayout.widget.ConstraintLayout>
+      </androidx.core.widget.NestedScrollView>
+
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -86,8 +88,10 @@
       android:layout_marginStart="@dimen/dimen36"
       android:layout_marginEnd="@dimen/dimen36"
       android:layout_marginBottom="@dimen/dimen12"
-      android:background="@drawable/btn_accent"
+      android:background="@drawable/corner_primary"
       android:text="@string/next"
+      android:onClick="@{ (v) -> viewModel.next(v)}"
+      android:visibility="@{viewModel.countryId.empty ? View.GONE : View.VISIBLE}"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/white"
       app:layout_constraintBottom_toBottomOf="parent"

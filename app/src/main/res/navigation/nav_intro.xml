@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_intro"
-    app:startDestination="@id/tutorial_fragment">
+    app:startDestination="@id/languageFragment">
 
   <fragment
       android:id="@+id/tutorial_fragment"
@@ -24,5 +24,37 @@
       android:id="@+id/intro_fragment"
       android:name="grand.app.moon.presentation.intro.intro.IntroFragment"
       tools:layout="@layout/fragment_intro" />
+  <fragment
+    android:id="@+id/countriesFragment2"
+    android:name="grand.app.moon.presentation.auth.countries.CountriesFragment"
+    android:label="CountriesFragment" >
+    <action
+      android:id="@+id/action_countriesFragment2_to_tutorial_fragment"
+      app:destination="@id/tutorial_fragment"
+      app:enterAnim="@anim/anim_slide_in_top"
+      app:exitAnim="@anim/anim_slide_out_bottom"
+      app:popEnterAnim="@anim/anim_slide_in_bottom"
+      app:popExitAnim="@anim/anim_slide_out_top"/>
+    <argument
+      android:name="from"
+      app:argType="string"
+      android:defaultValue="splash" />
+  </fragment>
+  <fragment
+    android:id="@+id/languageFragment"
+    android:name="grand.app.moon.presentation.auth.language.LanguageFragment"
+    android:label="LanguageFragment" >
+    <argument
+      android:name="type"
+      app:argType="string"
+      android:defaultValue="splash" />
+    <action
+      android:id="@+id/action_languageFragment_to_countriesFragment2"
+      app:destination="@id/countriesFragment2"
+      app:enterAnim="@anim/anim_slide_in_top"
+      app:exitAnim="@anim/anim_slide_out_bottom"
+      app:popEnterAnim="@anim/anim_slide_in_bottom"
+      app:popExitAnim="@anim/anim_slide_out_top"/>
+  </fragment>
 
 </navigation>

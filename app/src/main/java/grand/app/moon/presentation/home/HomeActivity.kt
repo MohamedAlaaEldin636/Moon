@@ -1,17 +1,21 @@
 package grand.app.moon.presentation.home
 
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseActivity
-import com.structure.base_mvvm.databinding.ActivityHomeBinding
+import grand.app.moon.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.presentation.base.extensions.hide
+import grand.app.moon.presentation.base.extensions.show
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
@@ -31,65 +35,66 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
     nav = navHostFragment.findNavController()
     appBarConfiguration = AppBarConfiguration(
-      setOf(
-        R.id.home_fragment,
-        R.id.teachersFragment,
-        R.id.testsFragment,
-        R.id.accountFragment,
-        R.id.contact_fragment,
-        R.id.suggestions_fragment,
-        R.id.about_fragment,
-        R.id.social_fragment,
-        R.id.privacy_fragment,
-        R.id.terms_fragment,
-      ),
-      binding.root,
+      setOf(R.id.home_fragment,R.id.more_fragment , R.id.myAccountFragment, R.id.mapFragment , R.id.discoverFragment)
     )
     setSupportActionBar(binding.toolbar)
-    setupActionBarWithNavController(nav, appBarConfiguration)
-    binding.bottomNavigationView.setupWithNavController(nav)
-    binding.navigationView.setupWithNavController(nav)
-    navChangeListener()
-  }
+    binding.toolbar.setupWithNavController(nav, appBarConfiguration)
 
-  private fun navChangeListener() {
-    nav.addOnDestinationChangedListener { _, destination, _ ->
-      if (destination.id == R.id.privacy_fragment
-        || destination.id == R.id.terms_fragment
-        || destination.id == R.id.about_fragment
-        || destination.id == R.id.social_fragment
-      ) {
-        binding.toolbar.visibility = View.GONE
-        binding.bottomNavigationView.visibility = View.GONE
-        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-      } else {
-        binding.toolbar.visibility = View.VISIBLE
-        if (destination.id == R.id.home_fragment
-          || destination.id == R.id.teachersFragment
-          || destination.id == R.id.testsFragment
-          || destination.id == R.id.accountFragment
-        )
-          binding.bottomNavigationView.visibility = View.VISIBLE
-        else
-          binding.bottomNavigationView.visibility = View.GONE
+    nav.addOnDestinationChangedListener { controller, destination, arguments ->
+      binding.tvHomeTitle.text = destination.label
+      when(destination.id) {
+        R.id.home_fragment -> {
+          binding.bottomNavigationView.show()
+          showTopBarControls()
+          showImage()
+        }
+        R.id.more_fragment , R.id.myAccountFragment, R.id.mapFragment, R.id.discoverFragment ->{
+          showTopBarControls()
+          showText()
+        }
+        else -> {
+          hideTopBarControls()
+          showText()
+        }
 
-        binding.root.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
       }
     }
+
+    binding.bottomNavigationView.setupWithNavController(nav)
+  }
+
+  private fun hideTopBarControls() {
+    binding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+    binding.bottomNavigationView.hide()
+    binding.imgMoonLogo.hide()
+    binding.icNotification.hide()
+    binding.icChat.hide()
+    binding.icMenu.hide()
+  }
+
+  private fun showTopBarControls() {
+    binding.toolbar.background = ContextCompat.getDrawable(this,R.drawable.ic_curve)
+    binding.bottomNavigationView.show()
+    binding.imgMoonLogo.show()
+    binding.icNotification.show()
+    binding.icChat.show()
+    binding.icMenu.show()
+  }
+
+  private fun showImage() {
+    binding.imgMoonLogo.show()
+    binding.tvHomeTitle.hide()
+  }
+
+  private fun showText() {
+    binding.imgMoonLogo.hide()
+    binding.tvHomeTitle.show()
+
   }
 
 
   override fun onSupportNavigateUp(): Boolean {
     return nav.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-  }
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.top_app_bar, menu)
-    return true
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    return item.onNavDestinationSelected(nav) || super.onOptionsItemSelected(item)
   }
 
 }

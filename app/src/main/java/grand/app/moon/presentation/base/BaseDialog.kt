@@ -12,7 +12,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.structure.base_mvvm.R.style
+import grand.app.moon.R.style
 
 abstract class BaseDialog<VB : ViewDataBinding> : DialogFragment() {
 

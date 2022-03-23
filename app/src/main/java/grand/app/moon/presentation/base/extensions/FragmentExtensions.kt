@@ -1,6 +1,10 @@
 package grand.app.moon.presentation.base.extensions
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -9,11 +13,16 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import grand.app.moon.R
 import grand.app.moon.domain.utils.FailureStatus
 import grand.app.moon.domain.utils.Resource.Failure
-import com.structure.base_mvvm.R
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.*
+import androidx.core.content.ContextCompat.startActivity
+
+
+
+
 
 fun Fragment.handleApiError(
   failure: Failure,
@@ -32,28 +41,10 @@ fun Fragment.handleApiError(
       noInternetAction?.invoke()
       showNoInternetAlert(requireActivity())
     }
-    FailureStatus.NOT_ACTIVE -> {
-      notActive?.invoke()
-      failure.message?.let {
-        showNoApiErrorAlertWithAction(
-          requireActivity(),
-          it,
-          getString(R.string.active),
-          notActiveAction
-        )
-      }
-    }
     FailureStatus.TOKEN_EXPIRED -> {
       openActivityAndClearStack(AuthActivity::class.java)
     }
-    else -> {
-      noDataAction?.invoke()
-      requireView().showSnackBar(
-        failure.message ?: resources.getString(R.string.some_error),
-        resources.getString(R.string.retry),
-        retryAction
-      )
-    }
+    else -> showNoApiErrorAlert(requireActivity(), getString(R.string.some_error))
   }
 }
 
@@ -114,4 +105,14 @@ fun Fragment.navigateSafe(directions: NavDirections, navOptions: NavOptions? = n
 
 fun Fragment.backToPreviousScreen() {
   findNavController().navigateUp()
+}
+
+
+fun Fragment.openUrl(url :String) {
+  val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+  try {
+    startActivity(browserIntent)
+  } catch (e: ActivityNotFoundException) {
+    Toast.makeText(requireContext(), "Impossible to find an application for the market", Toast.LENGTH_LONG).show()
+  }
 }

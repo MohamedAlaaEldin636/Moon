@@ -27,12 +27,6 @@ class LogInUseCase @Inject constructor(
       if (result is Resource.Success) {
         userLocalUseCase.saveUserToken(result.value.data.token)
         userLocalUseCase.saveCountryId(result.value.data.country_id)
-        if (result.value.data.register_steps == 4)
-          userLocalUseCase.invoke(result.value.data)
-        else
-          userLocalUseCase.registerStep(
-            result.value.data.register_steps.toString()
-          )
       }
       emit(result)
     }
@@ -40,12 +34,8 @@ class LogInUseCase @Inject constructor(
 
   private  fun checkValidation(request: LogInRequest): Boolean {
     var isValid = true
-    if (request.email.isEmpty()) {
-      request.validation.emailError.set(Constants.EMPTY)
-      isValid = false
-    }
-    if (!request.email.isValidEmail()) {
-      request.validation.emailError.set(Constants.INVALID_EMAIL)
+    if (request.phone.isEmpty()) {
+      request.validation.phoneError.set(Constants.EMPTY)
       isValid = false
     }
     return isValid

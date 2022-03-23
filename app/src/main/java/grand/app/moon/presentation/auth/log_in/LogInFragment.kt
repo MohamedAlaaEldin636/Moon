@@ -3,15 +3,16 @@ package grand.app.moon.presentation.auth.log_in
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import codes.grand.pretty_pop_up.PrettyPopUpHelper
+import com.google.firebase.components.Dependency.required
 import grand.app.moon.domain.auth.enums.AuthFieldsValidation
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.domain.utils.Resource
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.getDeviceId
 import grand.app.moon.presentation.base.utils.showNoApiErrorAlert
-import com.structure.base_mvvm.databinding.FragmentLogInBinding
+import grand.app.moon.databinding.FragmentLogInBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -34,23 +35,15 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   fun setupObservers() {
     viewModel.clickEvent.observe(this) {
       when (it) {
-        Constants.FORGET_PASSWORD -> openForgotPassword()
-        Constants.REGISTER -> openSignUp()
-        Constants.CONTINUE_PROGRESS -> openContinueDialog()
+
       }
 
     }
 
     viewModel.validationException.observe(this) {
       when (it) {
-        AuthFieldsValidation.EMPTY_EMAIL.value -> {
-          showNoApiErrorAlert(requireActivity(), resources.getString(R.string.empty_email))
-        }
-        AuthFieldsValidation.INVALID_EMAIL.value -> {
-          showNoApiErrorAlert(requireActivity(), resources.getString(R.string.invalid_email))
-        }
-        AuthFieldsValidation.EMPTY_PASSWORD.value -> {
-          showNoApiErrorAlert(requireActivity(), resources.getString(R.string.empty_password))
+        AuthFieldsValidation.EMPTY_PHONE.value -> {
+          showNoApiErrorAlert(requireActivity(), resources.getString(R.string.required))
         }
       }
     }
@@ -86,7 +79,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   private fun openConfirm() {
     navigateSafe(
       LogInFragmentDirections.actionLogInFragmentToFragmentConfirmCode(
-        viewModel.request.email,
+        viewModel.request.phone,
         Constants.Verify
       )
     )
@@ -103,25 +96,6 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
       }
     }
 
-  }
-
-  private fun openContinueDialog() {
-    PrettyPopUpHelper.Builder(childFragmentManager)
-      .setStyle(PrettyPopUpHelper.Style.STYLE_2_VERTICAL_BUTTONS)
-      .setTitle(R.string.continue_register_title)
-      .setTitleColor(getMyColor(R.color.black))
-      .setContent(R.string.continue_register_body)
-      .setContentColor(getMyColor(R.color.darkGray))
-      .setPositiveButtonBackground(R.drawable.corner_blue)
-      .setPositiveButtonTextColor(getMyColor(R.color.white))
-      .setPositiveButton(R.string.yes) {
-        it.dismiss()
-        checkNavigate()
-      }
-      .setNegativeButtonBackground(R.drawable.btn_gray)
-      .setNegativeButtonTextColor(getMyColor(R.color.white))
-      .setNegativeButton(getMyString(R.string.cancel), null)
-      .create()
   }
 
   private fun checkNavigate() {

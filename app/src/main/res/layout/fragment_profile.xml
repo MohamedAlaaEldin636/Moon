@@ -7,271 +7,268 @@
 
     <import type="grand.app.moon.presentation.base.utils.Constants" />
 
-    <variable
-      name="viewModel"
-      type="grand.app.moon.presentation.profile.viewModels.ProfileViewModel" />
+<!--    <variable-->
+<!--      name="viewModel"-->
+<!--      type="grand.app.moon.presentation.profile.viewModels.ProfileViewModel" />-->
   </data>
 
   <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--      android:layout_width="match_parent"-->
+<!--      android:layout_height="match_parent">-->
 
-      <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_register_curve"
-        app:layout_constraintTop_toTopOf="parent" />
-
-      <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen10"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:onClick="@{() -> viewModel.onBackClicked()}"
-        android:padding="@dimen/dimen2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back"
-        tools:ignore="ContentDescription" />
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_sign_up"
-        style="@style/TitleBoldFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen14"
-        android:text="@string/profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-      <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_avatar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen16"
-        android:layout_marginTop="@dimen/dimen70"
-        android:layout_marginEnd="@dimen/dimen16"
-        app:cardCornerRadius="@dimen/dimen6"
-        app:cardElevation="@dimen/dimen4"
-        app:layout_constraintTop_toBottomOf="@id/tv_sign_up">
-
-        <androidx.recyclerview.widget.RecyclerView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen14"
-          android:orientation="horizontal"
-          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-          tools:listitem="@layout/item_subject" />
-      </com.google.android.material.card.MaterialCardView>
+<!--&lt;!&ndash;      <androidx.appcompat.widget.AppCompatImageView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:scaleType="fitXY"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:src="@drawable/ic_curve"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
 
 
-      <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen18"
-        android:layout_marginEnd="@dimen/dimen14"
-        android:hint="@string/register_name"
-        android:textColorHint="@color/darkGray"
-        app:helperTextTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_avatar"
-        app:startIconDrawable="@drawable/ic_user">
-        <!--        app:error="@{viewmodel.request.nameError}"-->
-        <!--        android:text="@={viewmodel.request.name}"-->
 
-        <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/auto"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:inputType="textAutoComplete|textAutoCorrect"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/darkGray" />
-      </com.google.android.material.textfield.TextInputLayout>
+<!--&lt;!&ndash;      <androidx.appcompat.widget.AppCompatTextView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/tv_sign_up"&ndash;&gt;-->
+<!--&lt;!&ndash;        style="@style/boldFont"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginTop="@dimen/dimen14"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="@string/profile"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textAppearance="@style/TextAppearance.AppCompat.Title"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textColor="@color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
 
-      <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_phone"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen14"
-        android:layout_marginEnd="@dimen/dimen14"
-        android:hint="@string/register_phone"
-        android:textAlignment="viewEnd"
-        android:textColorHint="@color/darkGray"
-        app:helperTextTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_name"
-        app:startIconDrawable="@drawable/ic_call">
+<!--&lt;!&ndash;-->
+<!--      <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/card_avatar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen16"-->
+<!--        android:layout_marginTop="@dimen/dimen70"-->
+<!--        android:layout_marginEnd="@dimen/dimen16"-->
+<!--        app:cardCornerRadius="@dimen/dimen6"-->
+<!--        app:cardElevation="@dimen/dimen4"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_sign_up">-->
 
-        <androidx.appcompat.widget.AppCompatEditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:inputType="phone"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/darkGray"
-          android:textDirection="ltr" />
-      </com.google.android.material.textfield.TextInputLayout>
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:layout_margin="@dimen/dimen14"-->
+<!--          android:orientation="horizontal"-->
+<!--          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--          tools:listitem="@layout/item_subject" />-->
+<!--      </com.google.android.material.card.MaterialCardView>-->
 
-      <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen14"
-        android:layout_marginEnd="@dimen/dimen14"
-        android:hint="@string/email_hint"
-        android:textColorHint="@color/darkGray"
-        app:helperTextTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_phone"
-        app:startIconDrawable="@drawable/ic_email">
+<!--&ndash;&gt;-->
 
-        <androidx.appcompat.widget.AppCompatEditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:inputType="textEmailAddress"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/darkGray" />
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_job"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen14"
-        android:layout_marginEnd="@dimen/dimen14"
-        android:hint="@string/change_password"
-        android:textAlignment="viewEnd"
-        android:textColorHint="@color/black"
-        app:endIconDrawable="@drawable/ic_next"
-        app:endIconMode="custom"
-        app:endIconTint="@color/blue"
-        app:helperTextTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_email">
-
-        <androidx.appcompat.widget.AppCompatEditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:focusable="false"
-          android:inputType="text"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          android:textColor="@color/colorPrimaryDark" />
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_country"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen14"
-        android:layout_marginEnd="@dimen/dimen14"
-        android:hint="@string/change_country"
-        android:textColorHint="@color/black"
-        app:endIconDrawable="@drawable/ic_next"
-        app:endIconMode="custom"
-        app:endIconTint="@color/blue"
-        app:helperTextTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_job">
-
-        <androidx.appcompat.widget.AppCompatEditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:focusable="false"
-          android:inputType="text"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/darkGray" />
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_study"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen14"
-        android:layout_marginEnd="@dimen/dimen14"
-        android:hint="@string/change_study"
-        android:textColorHint="@color/black"
-        app:endIconDrawable="@drawable/ic_next"
-        app:endIconMode="custom"
-        app:endIconTint="@color/blue"
-        app:helperTextTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_country">
-
-        <androidx.appcompat.widget.AppCompatEditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:focusable="false"
-          android:inputType="text"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          android:textColor="@color/colorPrimaryDark"
-          android:textColorHint="@color/darkGray" />
-      </com.google.android.material.textfield.TextInputLayout>
-
-      <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButtonNext"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen12"
-        android:layout_marginTop="@dimen/dimen20"
-        android:layout_marginBottom="@dimen/dimen20"
-        android:layout_marginEnd="@dimen/dimen12"
-        android:background="@drawable/btn_accent"
-        android:onClick="@{()-> viewModel.clickEvent(Constants.CONFIRM_CODE)}"
-        android:text="@string/save"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_study" />
-      <!--      android:onClick="@{()-> viewModel.register()}"-->
-      <!--      android:background="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?@drawable/corner_view_gradient:@drawable/corner_view_primary_medium,default=@drawable/corner_view_gradient}"-->
-      <!--      android:enabled="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?true:false}"-->
-
-      <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress"
-        style="Widget.MaterialComponents.LinearProgressIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        app:layout_constraintBottom_toBottomOf="@id/appCompatButtonNext"
-        app:layout_constraintStart_toStartOf="@id/appCompatButtonNext"
-        app:layout_constraintTop_toTopOf="@id/appCompatButtonNext"
-        app:trackColor="@color/white"
-        app:trackThickness="@dimen/dimen4" />
-      <!--      android:visibility="@{!TextUtils.isEmpty(viewmodel.message)&amp;&amp;viewmodel.message.equals(Constants.SHOW_PROGRESS)?View.VISIBLE:View.GONE}"-->
+<!--      <com.google.android.material.imageview.ShapeableImageView-->
+<!--        android:id="@+id/img_profile"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:layout_width="@dimen/dimen150"-->
+<!--        android:layout_height="@dimen/dimen150"-->
+<!--        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"-->
+<!--        app:defaultImage="@{@drawable/img_profile}"-->
+<!--        app:loadImage="@{viewModel.request.imagePath}"-->
+<!--        android:onClick="@{()-> viewModel.clickEvent(Constants.PICKER_IMAGE)}"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--      <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/input_name"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen14"-->
+<!--        android:layout_marginTop="@dimen/dimen18"-->
+<!--        android:layout_marginEnd="@dimen/dimen14"-->
+<!--        android:hint="@string/register_name"-->
+<!--        android:textColorHint="@color/darkGray"-->
+<!--        app:helperTextTextColor="@color/black"-->
+
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/img_profile"-->
+<!--        app:startIconDrawable="@drawable/ic_user">-->
+<!--        &lt;!&ndash;        app:error="@{viewmodel.request.nameError}"&ndash;&gt;-->
+<!--        &lt;!&ndash;        android:text="@={viewmodel.request.name}"&ndash;&gt;-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--          android:id="@+id/auto"-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:inputType="textAutoComplete|textAutoCorrect"-->
+<!--          android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--          android:textColor="@color/colorPrimaryDark"-->
+<!--          android:textColorHint="@color/darkGray" />-->
+<!--      </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--      <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/input_phone"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen14"-->
+<!--        android:layout_marginTop="@dimen/dimen14"-->
+<!--        android:layout_marginEnd="@dimen/dimen14"-->
+<!--        android:hint="@string/register_phone"-->
+<!--        android:textAlignment="viewEnd"-->
+<!--        android:textColorHint="@color/darkGray"-->
+<!--        app:helperTextTextColor="@color/black"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/input_name"-->
+<!--        app:startIconDrawable="@drawable/ic_call">-->
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:inputType="phone"-->
+<!--          android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--          android:textColor="@color/colorPrimaryDark"-->
+<!--          android:textColorHint="@color/darkGray"-->
+<!--          android:textDirection="ltr" />-->
+<!--      </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--      <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/input_email"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen14"-->
+<!--        android:layout_marginTop="@dimen/dimen14"-->
+<!--        android:layout_marginEnd="@dimen/dimen14"-->
+<!--        android:hint="@string/email_hint"-->
+<!--        android:textColorHint="@color/darkGray"-->
+<!--        app:helperTextTextColor="@color/black"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/input_phone"-->
+<!--        app:startIconDrawable="@drawable/ic_email">-->
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:inputType="textEmailAddress"-->
+<!--          android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--          android:textColor="@color/colorPrimaryDark"-->
+<!--          android:textColorHint="@color/darkGray" />-->
+<!--      </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--      <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/input_job"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen14"-->
+<!--        android:layout_marginTop="@dimen/dimen14"-->
+<!--        android:layout_marginEnd="@dimen/dimen14"-->
+<!--        android:hint="@string/change_password"-->
+<!--        android:textAlignment="viewEnd"-->
+<!--        android:textColorHint="@color/black"-->
+<!--        app:endIconDrawable="@drawable/ic_next"-->
+<!--        app:endIconMode="custom"-->
+<!--        app:endIconTint="@color/blue"-->
+<!--        app:helperTextTextColor="@color/black"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/input_email">-->
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:focusable="false"-->
+<!--          android:inputType="text"-->
+<!--          android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--          android:textColor="@color/colorPrimaryDark" />-->
+<!--      </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--      <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/input_country"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen14"-->
+<!--        android:layout_marginTop="@dimen/dimen14"-->
+<!--        android:layout_marginEnd="@dimen/dimen14"-->
+<!--        android:hint="@string/change_country"-->
+<!--        android:textColorHint="@color/black"-->
+<!--        app:endIconDrawable="@drawable/ic_next"-->
+<!--        app:endIconMode="custom"-->
+<!--        app:endIconTint="@color/blue"-->
+<!--        app:helperTextTextColor="@color/black"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/input_job">-->
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:focusable="false"-->
+<!--          android:inputType="text"-->
+<!--          android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--          android:textColor="@color/colorPrimaryDark"-->
+<!--          android:textColorHint="@color/darkGray" />-->
+<!--      </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--      <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/input_study"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen14"-->
+<!--        android:layout_marginTop="@dimen/dimen14"-->
+<!--        android:layout_marginEnd="@dimen/dimen14"-->
+<!--        android:hint="@string/change_study"-->
+<!--        android:textColorHint="@color/black"-->
+<!--        app:endIconDrawable="@drawable/ic_next"-->
+<!--        app:endIconMode="custom"-->
+<!--        app:endIconTint="@color/blue"-->
+<!--        app:helperTextTextColor="@color/black"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/input_country">-->
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:focusable="false"-->
+<!--          android:inputType="text"-->
+<!--          android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--          android:textColor="@color/colorPrimaryDark"-->
+<!--          android:textColorHint="@color/darkGray" />-->
+<!--      </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--      <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/appCompatButtonNext"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen12"-->
+<!--        android:layout_marginTop="@dimen/dimen20"-->
+<!--        android:layout_marginBottom="@dimen/dimen20"-->
+<!--        android:layout_marginEnd="@dimen/dimen12"-->
+<!--        android:background="@drawable/btn_accent"-->
+<!--        android:onClick="@{()-> viewModel.clickEvent(Constants.CONFIRM_CODE)}"-->
+<!--        android:text="@string/save"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/input_study" />-->
+<!--      &lt;!&ndash;      android:onClick="@{()-> viewModel.register()}"&ndash;&gt;-->
+<!--      &lt;!&ndash;      android:background="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?@drawable/corner_view_gradient:@drawable/corner_view_primary_medium,default=@drawable/corner_view_gradient}"&ndash;&gt;-->
+<!--      &lt;!&ndash;      android:enabled="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?true:false}"&ndash;&gt;-->
+
+
+<!--      &lt;!&ndash;      android:visibility="@{!TextUtils.isEmpty(viewmodel.message)&amp;&amp;viewmodel.message.equals(Constants.SHOW_PROGRESS)?View.VISIBLE:View.GONE}"&ndash;&gt;-->
+
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
   </androidx.core.widget.NestedScrollView>
 </layout>

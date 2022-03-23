@@ -18,5 +18,14 @@ data class Country(
   val name: String = "",
   @SerializedName("id")
   @Expose
-  val id: Int = 0
+  val id: Int = 0,
+  @SerializedName("active")
+  @Expose
+  var active: Int = 0,
+  @SerializedName("lang")
+  @Expose
+  val lang: String = "",
+  @SerializedName("cities")
+  @Expose
+  val cities : List<Country> = arrayListOf(),
 )

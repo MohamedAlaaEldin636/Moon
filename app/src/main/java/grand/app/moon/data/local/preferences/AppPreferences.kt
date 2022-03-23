@@ -6,7 +6,13 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import grand.app.moon.domain.auth.entity.model.User
+import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.domain.home.models.Country
+//import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.domain.utils.BaseResponse
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -116,8 +122,6 @@ class AppPreferences @Inject constructor(private val context: Context) {
 
   private val appPreferences: SharedPreferences =
     context.getSharedPreferences(APP_PREFERENCES_NAME, MODE)
-  private val sessionPreferences: SharedPreferences =
-    context.getSharedPreferences(SESSION_PREFERENCES_NAME, MODE)
 
   private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
     val editor = edit()
@@ -126,18 +130,47 @@ class AppPreferences @Inject constructor(private val context: Context) {
   }
 
   fun setLocal(key: String, value: String) {
-    sessionPreferences.edit {
+    appPreferences.edit {
       it.putString(key, value)
     }
   }
 
   fun getLocal(key: String): String {
-    return sessionPreferences.getString(key, "").toString()
+    return appPreferences.getString(key, "").toString()
   }
 
   fun clearPreferences() {
-    sessionPreferences.edit {
+    appPreferences.edit {
       it.clear().apply()
     }
+  }
+
+
+  fun saveCategories(response: BaseResponse<ArrayList<CategoryItem>>) {
+    val gson = Gson()
+    val json = gson.toJson(response, object : TypeToken<BaseResponse<ArrayList<CategoryItem>>>(){}.type)
+    appPreferences.edit {
+      it.putString("categoriesResponse", json)
+    }
+  }
+
+  fun getCategories(): BaseResponse<ArrayList<CategoryItem>> {
+    val gson = Gson()
+    val countriesResponse = appPreferences.getString("categoriesResponse", "")
+    return gson.fromJson(countriesResponse, object : TypeToken<BaseResponse<ArrayList<CategoryItem>>>(){}.type)
+  }
+
+  fun saveCountries(countriesResponse: BaseResponse<List<Country>>) {
+    val gson = Gson()
+    val json = gson.toJson(countriesResponse, object : TypeToken<BaseResponse<List<Country>>>(){}.type)
+    appPreferences.edit {
+      it.putString("countriesResponse", json)
+    }
+  }
+
+  fun getCountries(): BaseResponse<List<Country>> {
+    val gson = Gson()
+    val countriesResponse = appPreferences.getString("countriesResponse", "")
+    return gson.fromJson(countriesResponse, object : TypeToken<BaseResponse<List<Country>>>(){}.type)
   }
 }

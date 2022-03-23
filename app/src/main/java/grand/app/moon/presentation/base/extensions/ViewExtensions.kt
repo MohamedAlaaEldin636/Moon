@@ -27,7 +27,7 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.snackbar.Snackbar
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 import java.io.File
 
 fun View.show() {

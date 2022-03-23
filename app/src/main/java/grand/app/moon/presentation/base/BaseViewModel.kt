@@ -10,6 +10,7 @@ open class BaseViewModel : ViewModel(), Observable {
 
   var dataLoadingEvent: SingleLiveEvent<Int> = SingleLiveEvent()
   var clickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+  var submitEvent: SingleLiveEvent<String> = SingleLiveEvent()
   fun clickEvent(action: Int) {
     clickEvent.value = action
   }

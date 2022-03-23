@@ -5,7 +5,13 @@ import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.account.entity.request.SendFirebaseTokenRequest
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.auth.entity.model.User
+import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.domain.home.models.Country
+import grand.app.moon.domain.utils.BaseResponse
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(
@@ -60,13 +66,23 @@ class AccountRepositoryImpl @Inject constructor(
     return appPreferences.getUserToken()
   }
 
-  override suspend fun saveRegisterStep(register_step: String) {
-    appPreferences.registerStep(register_step)
+  override suspend fun saveCategories(countries: BaseResponse<ArrayList<CategoryItem>>) {
+    appPreferences.saveCategories(countries)
   }
 
-  override suspend fun getRegisterStep(): Flow<String> {
-    return appPreferences.getRegisterStep()
+  override suspend fun getCategories(): Flow<BaseResponse<ArrayList<CategoryItem>>> {
+    return flowOf(appPreferences.getCategories())
   }
+
+
+  override suspend fun saveCountries(countries: BaseResponse<List<Country>>) {
+    appPreferences.saveCountries(countries)
+  }
+
+  override suspend fun getCountries(): Flow<BaseResponse<List<Country>>> {
+    return flowOf(appPreferences.getCountries())
+  }
+
 
   override suspend fun saveCountryId(country_id: String) {
     appPreferences.countryId(country_id)

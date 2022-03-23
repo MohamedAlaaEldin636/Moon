@@ -1,6 +1,7 @@
 package grand.app.moon.domain.settings.use_case
 
 import grand.app.moon.domain.auth.enums.AuthFieldsValidation
+import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.domain.settings.models.ContactAppValidationException
 import grand.app.moon.domain.settings.models.ContactUsRequest
 import grand.app.moon.domain.settings.models.SettingsData
@@ -20,19 +21,21 @@ class SettingsUseCase @Inject constructor(
   private val settingsRepository: SettingsRepository
 ) {
 
-  operator fun invoke(type: String, app_type: String): Flow<Resource<BaseResponse<SettingsData>>> =
-    flow {
-      emit(Resource.Loading)
-      val result = settingsRepository.settings(type, app_type)
-      emit(result)
-    }.flowOn(Dispatchers.IO)
-
   operator fun invoke(
     type: String
   ): Flow<Resource<BaseResponse<List<SettingsData>>>> =
     flow {
       emit(Resource.Loading)
       val result = settingsRepository.social(type, Constants.APP_TYPE_GENERAL)
+      emit(result)
+    }.flowOn(Dispatchers.IO)
+
+  fun onBoard(
+    type: String
+  ): Flow<Resource<BaseResponse<List<AppTutorial>>>> =
+    flow {
+      emit(Resource.Loading)
+      val result = settingsRepository.onBoard(type)
       emit(result)
     }.flowOn(Dispatchers.IO)
 

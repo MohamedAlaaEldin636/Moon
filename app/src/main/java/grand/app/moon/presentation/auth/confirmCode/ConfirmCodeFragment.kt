@@ -4,12 +4,12 @@ import android.os.CountDownTimer
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import grand.app.moon.domain.utils.Resource
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.handleApiError
 import grand.app.moon.presentation.base.extensions.hideKeyboard
 import grand.app.moon.presentation.base.extensions.navigateSafe
-import com.structure.base_mvvm.databinding.FragmentConfirmCodeBinding
+import grand.app.moon.databinding.FragmentConfirmCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 

@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import grand.app.moon.domain.intro.entity.AppTutorial
 import com.google.android.material.button.MaterialButton
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 import kotlinx.coroutines.delay
 
 class AppTutorialHelper private constructor(builder: Builder) : LifecycleObserver {
@@ -71,6 +71,7 @@ class AppTutorialHelper private constructor(builder: Builder) : LifecycleObserve
   private var firstTimeCallListener: Boolean = true
 
   private var skipTutorialClick: (() -> Unit)? = null
+  private var previousTutorialClick: (() -> Unit)? = null
 
   init {
     tutorialData = builder.tutorialData
@@ -87,6 +88,7 @@ class AppTutorialHelper private constructor(builder: Builder) : LifecycleObserve
     btnNextTextBackground = builder.btnNextTextBackground
     btnNextIcon = builder.btnNextIcon
     skipTutorialClick = builder.skipTutorialClick
+    previousTutorialClick = builder.previousTutorialClick
 
     setUpSliderContainer()
 
@@ -324,11 +326,7 @@ class AppTutorialHelper private constructor(builder: Builder) : LifecycleObserve
 
   private fun handlePreviousButtonClickListener() {
     btnPrevious.setOnClickListener {
-//      if (tutorialData.size - 1 == currentItem) {
-      currentItem--
-//      } else {
-//        currentItem++
-//      }
+      previousTutorialClick?.invoke()
 
       viewPager.setCurrentItem(currentItem, true)
     }
@@ -366,6 +364,7 @@ class AppTutorialHelper private constructor(builder: Builder) : LifecycleObserve
     internal var btnNextIcon: Int? = null
 
     internal var skipTutorialClick: (() -> Unit)? = null
+    internal var previousTutorialClick: (() -> Unit)? = null
 
     fun setTutorialData(tutorialData: List<AppTutorial>): Builder {
       this.tutorialData = tutorialData
@@ -429,6 +428,11 @@ class AppTutorialHelper private constructor(builder: Builder) : LifecycleObserve
 
     fun setSkipTutorialClick(skipTutorialClick: (() -> Unit)): Builder {
       this.skipTutorialClick = skipTutorialClick
+      return this
+    }
+
+    fun setPreviousTutorialClick(previousTutorialClick: (() -> Unit)): Builder {
+      this.previousTutorialClick = previousTutorialClick
       return this
     }
 

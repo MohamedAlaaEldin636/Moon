@@ -23,22 +23,14 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-      <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_confirm_header"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_confirm_header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_login_logo"
-        android:layout_width="@dimen/dimen150"
-        android:layout_height="@dimen/dimen150"
-        android:src="@drawable/logo_white"
-        app:layout_constraintBottom_toBottomOf="@id/ic_confirm_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,7 +41,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen36"
-        android:layout_marginTop="@dimen/dimen40"
         android:layout_marginEnd="@dimen/dimen36"
         android:text="@string/confirm_header_text"
         android:textAlignment="center"
@@ -57,20 +48,20 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ic_confirm_header" />
+        app:layout_constraintTop_toBottomOf="@+id/img_login_logo" />
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_confirm_header"
-        style="@style/TextMediumFont"
+        style="@style/mediumFont"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen36"
         android:layout_marginTop="@dimen/dimen12"
         android:layout_marginEnd="@dimen/dimen36"
-        android:text="@string/confirm_header"
+        android:text="@string/enter_the_code_sent_to_your_phone"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black_op"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_confirm_header_text" />
@@ -88,13 +79,13 @@
         android:cursorVisible="true"
         android:gravity="center_horizontal"
         android:inputType="number"
-        android:itemBackground="@drawable/corner_view_gray_border"
+        android:itemBackground="@drawable/corner_grey"
         android:padding="8dp"
-        android:textColor="@color/lightBlack"
+        android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
         android:text="@={viewmodel.request.code}"
-        app:cursorColor="@color/black"
+        app:cursorColor="@color/colorPrimary"
         app:cursorWidth="2dp"
         app:hideLineWhenFilled="false"
         app:itemCount="4"
@@ -108,6 +99,22 @@
         app:lineWidth="2dp"
         app:viewType="rectangle" />
 
+      <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButtonNext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen12"
+        android:layout_marginTop="@dimen/dimen20"
+        android:layout_marginEnd="@dimen/dimen12"
+        android:background="@drawable/corner_primary"
+        android:text="@string/confirm"
+        android:onClick="@{()->viewmodel.verifyAccount()}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin_Validate"
+        app:layout_constraintEnd_toEndOf="parent" />
+
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_forget_timer"
         style="@style/TextBoldFont"
@@ -119,37 +126,25 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pin_Validate" />
+        app:layout_constraintTop_toBottomOf="@+id/appCompatButtonNext" />
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_login_forget"
-        style="@style/TextMediumFont"
+        style="@style/mediumFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_timer"
+        android:drawablePadding="@dimen/dimen10"
         android:enabled="false"
-        android:text="@string/confirm_resend"
         android:onClick="@{()->viewmodel.resendCode()}"
+        android:text="@string/confirm_resend"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/darkGray"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_forget_timer" />
 
-      <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButtonNext"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen12"
-        android:layout_marginTop="@dimen/dimen20"
-        android:layout_marginEnd="@dimen/dimen12"
-        android:background="@drawable/btn_accent"
-        android:text="@string/send"
-        android:onClick="@{()->viewmodel.verifyAccount()}"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_login_forget" />
+
       <!--      android:background="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?@drawable/corner_view_primary_dark:@drawable/corner_view_primary_medium,default=@drawable/corner_view_primary_dark}"-->
       <!--      android:enabled="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?true:false}"-->
       <!--      -->

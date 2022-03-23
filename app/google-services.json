@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:232561241324:android:b2eeb2a3f38f04613849c9",
         "android_client_info": {
-          "package_name": "app.grand.tafwak"
+          "package_name": "grand.app.moon"
         }
       },
       "oauth_client": [
@@ -38,7 +38,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:232561241324:android:46f819fa71ca88ec3849c9",
         "android_client_info": {
-          "package_name": "app.grand.tafwak.core"
+          "package_name": "grand.app.moon.core"
         }
       },
       "oauth_client": [

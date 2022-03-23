@@ -1,11 +1,11 @@
 package grand.app.moon.presentation.intro.intro
 
 import androidx.fragment.app.viewModels
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
-import com.structure.base_mvvm.databinding.FragmentIntroBinding
+import grand.app.moon.databinding.FragmentIntroBinding
 import grand.app.moon.presentation.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 

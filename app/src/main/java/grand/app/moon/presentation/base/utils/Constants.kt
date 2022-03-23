@@ -20,27 +20,27 @@ object Constants {
   const val OPEN_BROWSER: Int = 14
   const val GROUP_DETAILS: Int = 15
   const val FIRST_TIME: Int = 16
-  const val IS_LOGGED: Int = 17
-  const val AUTH: Int = 18
+  const val HOME: Int = 17
+  const val ACTION: Int = 17
   const val BUNDLE = "BUNDLE"
   const val STUDENT_TYPE = "student"
   const val TEACHER_TYPE = "instructor"
-  const val IMAGE: String = "image"
+  const val REQUIRED: String = "required"
   const val Verify: String = "verify"
   const val FORGET: String = "reset"
   const val COUNTRY_ID = "COUNTRY_ID"
   const val REGISTER_STEP = "REGISTER_STEP"
-  const val ABOUT_TYPE: String = "about_us"
+  const val SPLASH: String = "splash"
   const val SOCIAL_TYPE: String = "social_media"
   const val PRIVACY_TYPE: String = "privacy_policy"
   const val TERMS_TYPE: String = "terms_conditions"
   const val APP_TYPE_GENERAL: String = "general"
   const val BOTH: String = "both"
   const val MALE: String = "male"
-  const val FEMALE: String = "female"
-  const val PUBLIC: String = "public"
-  const val PRIVATE: String = "private"
+  const val MORE: String = "more"
+  const val NEXT: String = "next"
+  const val SKIP: String = "skip"
   const val EMPTY: String = "EMPTY"
-  const val INVALID_EMAIL: String = "INVALID_EMAIL"
+  const val LANGUAGE: String = "language"
 
 }

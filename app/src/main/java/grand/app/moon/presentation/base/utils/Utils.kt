@@ -13,7 +13,7 @@ import android.util.Patterns
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 import com.tapadoo.alerter.Alerter
 
 fun showMessage(context: Context, message: String?) {

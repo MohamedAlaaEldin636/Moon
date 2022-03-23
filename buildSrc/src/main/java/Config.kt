@@ -1,10 +1,10 @@
 object Config {
   object AppConfig {
-    const val appId = "app.grand.tafwak"
+    const val appId = "grand.app.moon"
     const val compileSdkVersion = 31
     const val minSdkVersion = 23
     const val versionCode = 1
-    const val versionName = "1"
+    const val versionName = "0.0.1"
     const val testRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -42,7 +42,7 @@ object Config {
 
   object Environments {
     const val roomDb = "\"tafwk_db\""
-    const val debugBaseUrl = "\"https://tafawaq.my-staff.net/api/\""
-    const val releaseBaseUrl = "\"https://tafawaq.my-staff.net/api/\""
+    const val debugBaseUrl = "\"https://moontest.my-staff.net/api/\""
+    const val releaseBaseUrl = "\"https://moontest.my-staff.net/api/\""
   }
 }

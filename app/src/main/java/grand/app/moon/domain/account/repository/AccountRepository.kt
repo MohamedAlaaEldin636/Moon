@@ -2,6 +2,9 @@ package grand.app.moon.domain.account.repository
 
 import grand.app.moon.domain.account.entity.request.SendFirebaseTokenRequest
 import grand.app.moon.domain.auth.entity.model.User
+import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.domain.home.models.Country
+//import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -32,9 +35,13 @@ interface AccountRepository {
 
   suspend fun getUserToken(): Flow<String>
 
-  suspend fun saveRegisterStep(register_step: String)
+  suspend fun saveCategories(countries: BaseResponse<ArrayList<CategoryItem>>)
 
-  suspend fun getRegisterStep(): Flow<String>
+  suspend fun getCategories(): Flow<BaseResponse<ArrayList<CategoryItem>>>
+
+  suspend fun saveCountries(countries: BaseResponse<List<Country>>)
+
+  suspend fun getCountries(): Flow<BaseResponse<List<Country>>>
 
   suspend fun saveCountryId(country_id: String)
 

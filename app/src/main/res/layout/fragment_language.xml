@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:bind="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.auth.language.viewModels.LanguagesViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundGray">
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/logo_header"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:scaleType="fitXY"
+      android:layout_marginTop="@dimen/dimen20"
+      android:layout_width="match_parent"
+      android:src="@drawable/logo_header"
+      android:layout_height="wrap_content"/>
+
+    <com.google.android.material.card.MaterialCardView
+      android:id="@+id/card_country"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginStart="@dimen/dimen18"
+      android:layout_marginTop="@dimen/dimen18"
+      android:layout_marginEnd="@dimen/dimen18"
+      android:layout_marginBottom="@dimen/dimen18"
+      app:cardCornerRadius="@dimen/dimen5"
+      app:cardElevation="2dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/logo_header"
+      app:layout_constraintBottom_toTopOf="@id/btn_next">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_selected_country"
+          style="@style/boldFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/corner_white"
+          android:text="@string/choose_language"
+          android:padding="@dimen/dimen10"
+          android:textStyle="bold"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/colorPrimary"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rc_countries"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:adapter="@{viewModel.adapter}"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintTop_toBottomOf="@+id/tv_selected_country"
+          app:orientation="@{`1`}"
+          app:span="@{`1`}"
+          tools:listitem="@layout/item_country" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/btn_next"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/dimen36"
+      android:layout_marginEnd="@dimen/dimen36"
+      android:layout_marginBottom="@dimen/dimen12"
+      android:background="@drawable/corner_primary"
+      android:onClick="@{ (v) -> viewModel.next(v)}"
+      android:visibility="@{viewModel.lang.empty ? View.GONE : View.VISIBLE}"
+      android:text="@string/save"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

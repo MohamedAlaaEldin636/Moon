@@ -11,20 +11,10 @@ class AuthRemoteDataSource @Inject constructor(private val apiService: AuthServi
     apiService.logIn(request)
   }
 
-  suspend fun forgetPassword(request: ForgetPasswordRequest) = safeApiCall {
-    apiService.forgetPassword(request)
-  }
 
   suspend fun verifyAccount(request: VerifyAccountRequest) = safeApiCall {
     apiService.verifyAccount(request)
   }
 
-  suspend fun changePassword(request: ChangePasswordRequest) = safeApiCall {
-    apiService.changePassword(request)
-  }
-
-  suspend fun register(request: RegisterRequest) = safeApiCall {
-    apiService.register(getParameters(request), request.image[0])
-  }
 
 }

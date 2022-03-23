@@ -28,9 +28,9 @@ android {
 
   buildTypes {
     getByName("debug") {
-      manifestPlaceholders["appName"] = "@string/app_name_debug"
-      manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_debug"
-      manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher_debug_round"
+      manifestPlaceholders["appName"] = "@string/ic_launcher"
+      manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
+      manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher"
       buildConfigField("String", "API_BASE_URL", Config.Environments.debugBaseUrl)
       buildConfigField("String", "ROOM_DB", Config.Environments.roomDb)
     }
@@ -53,7 +53,7 @@ android {
 //      resValue("string", "google_api_key", gradleLocalProperties(rootDir).getProperty("GOOGLE_API_KEY"))
       manifestPlaceholders["appName"] = "@string/app_name"
       manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
-      manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher_round"
+      manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher"
 
       buildConfigField("String", "API_BASE_URL", Config.Environments.releaseBaseUrl)
       buildConfigField("String", "ROOM_DB", Config.Environments.roomDb)

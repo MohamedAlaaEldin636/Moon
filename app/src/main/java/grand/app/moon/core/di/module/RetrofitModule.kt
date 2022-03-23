@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.structure.base_mvvm.BuildConfig
+import grand.app.moon.BuildConfig
 import grand.app.moon.data.local.preferences.AppPreferences
 import com.readystatesoftware.chuck.ChuckInterceptor
 import dagger.Module
@@ -12,6 +12,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import okhttp3.Interceptor
@@ -58,7 +59,7 @@ object RetrofitModule {
             "countryId", countryId
           )
           .addHeader("Accept", "application/json")
-          .addHeader("language", "ar")
+          .addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
           .build()
       )
     }

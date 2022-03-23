@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.structure.base_mvvm.R
+import grand.app.moon.R
 
 /**
  * Manages the various graphs needed for a [BottomNavigationView].
