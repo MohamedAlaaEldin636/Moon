@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.ads.viewModels.ItemAdsHomeViewModel" />
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen10">
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_top_stores"
+      style="@style/TextBoldFont"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/dimen10"
+      android:layout_marginTop="@dimen/dimen16"
+      android:layout_marginBottom="@dimen/dimen16"
+      android:text="@{viewModel.category.name}"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/colorPrimary"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_top_stores_all"
+      style="@style/mediumFont"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/dimen10"
+      android:drawableEnd="@drawable/ic_more_sec"
+      android:drawableTint="@color/colorAccent"
+      android:gravity="center"
+      android:text="@string/show_all"
+      android:textAppearance="@style/TextAppearance.AppCompat.Small"
+      android:textColor="@color/colorPrimary"
+      app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/tv_top_stores" />
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv_ads"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:adapter="@{viewModel.adapter}"
+      app:orientation="@{`2`}"
+      app:span="@{`1`}"
+      android:layout_marginTop="@dimen/dimen10"
+      app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      android:orientation="horizontal"
+      tools:listitem="@layout/item_ads" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

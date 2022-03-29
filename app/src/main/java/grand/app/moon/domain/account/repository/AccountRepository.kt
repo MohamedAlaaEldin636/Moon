@@ -17,7 +17,7 @@ interface AccountRepository {
 
   suspend fun isLoggedIn(isLoggedIn: Boolean)
 
-  suspend fun getIsLoggedIn(): Flow<Boolean>
+  fun getIsLoggedIn(): Boolean
 
   suspend fun saveFirebaseTokenToLocal(firebaseToken: String)
 
@@ -27,9 +27,9 @@ interface AccountRepository {
 
   suspend fun isFirstTime(): Flow<Boolean>
 
-  suspend fun saveUserToLocal(user: User)
+  fun saveUserToLocal(user: User)
 
-  suspend fun getUserToLocal(): Flow<User>
+  fun getUserToLocal(): User
 
   suspend fun saveUserToken(userToken: String)
 
@@ -50,6 +50,7 @@ interface AccountRepository {
   fun clearPreferences()
 
   fun saveKeyToLocal(key: String, value: String)
+  fun clearUser()
 
   fun getKeyFromLocal(key: String): String
 }

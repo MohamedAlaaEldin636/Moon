@@ -7,6 +7,8 @@
 
     <import type="grand.app.moon.presentation.base.utils.Constants" />
 
+    <import type="android.view.View" />
+
     <variable
       name="viewModel"
       type="grand.app.moon.presentation.contactUs.viewModels.ContactUsViewModel" />
@@ -18,7 +20,211 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:layout_margin="@dimen/dimen6">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_contact_us_title"
+        style="@style/boldFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen10"
+        android:text="@string/choose_method_of_contact"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size16"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <LinearLayout
+        android:id="@+id/ll_contact_us_social"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_contact_us_title">
+
+        <com.google.android.material.card.MaterialCardView
+          android:layout_width="0dp"
+          android:layout_height="@dimen/dimen70"
+          android:layout_margin="@dimen/dimen10"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen8"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:layout_weight="1"
+          android:visibility="@{viewModel.type.equals(Constants.MAIL) ? View.INVISIBLE : View.VISIBLE}"
+          android:onClick="@{(v)-> viewModel.select(v,Constants.MAIL)}"
+          app:cardCornerRadius="@dimen/dimen6"
+          app:cardElevation="@dimen/dimen4">
+
+          <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dimen40"
+            android:layout_height="@dimen/dimen40"
+            android:layout_gravity="center"
+            android:background="@drawable/corner_silver"
+            android:padding="@dimen/dimen10"
+            android:src="@drawable/ic_email" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+          android:layout_width="0dp"
+          android:layout_height="@dimen/dimen70"
+          android:layout_margin="@dimen/dimen10"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen8"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:layout_weight="1"
+          android:visibility="@{viewModel.type.equals(Constants.PHONE) ? View.INVISIBLE : View.VISIBLE}"
+          android:onClick="@{(v)-> viewModel.select(v,Constants.PHONE)}"
+          app:cardCornerRadius="@dimen/dimen6"
+          app:cardElevation="@dimen/dimen4">
+
+          <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dimen40"
+            android:layout_height="@dimen/dimen40"
+            android:layout_gravity="center"
+            android:background="@drawable/corner_silver"
+            android:padding="@dimen/dimen10"
+            android:src="@drawable/ic_phone" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+          android:layout_width="0dp"
+          android:layout_height="@dimen/dimen70"
+          android:layout_margin="@dimen/dimen10"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen8"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:layout_weight="1"
+          android:visibility="@{viewModel.type.equals(Constants.LOCATION) ? View.INVISIBLE : View.VISIBLE}"
+          android:onClick="@{(v)-> viewModel.select(v,Constants.LOCATION)}"
+          app:cardCornerRadius="@dimen/dimen6"
+          app:cardElevation="@dimen/dimen4">
+
+          <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dimen40"
+            android:layout_height="@dimen/dimen40"
+            android:layout_gravity="center"
+            android:background="@drawable/corner_silver"
+            android:padding="@dimen/dimen10"
+            android:src="@drawable/ic_pin" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+      </LinearLayout>
+
+
+      <com.google.android.material.card.MaterialCardView
+        android:id="@+id/material_selected_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen10"
+        android:visibility="@{viewModel.title.empty ? View.GONE : View.VISIBLE , default = gone}"
+        android:layout_marginStart="@dimen/dimen16"
+        android:layout_marginTop="@dimen/dimen8"
+        android:layout_marginEnd="@dimen/dimen16"
+        app:cardCornerRadius="@dimen/dimen6"
+        app:cardElevation="@dimen/dimen4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_contact_us_social">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+          <RelativeLayout
+            android:id="@+id/rl_image_select_container"
+            android:layout_width="@dimen/dimen60"
+            android:layout_height="@dimen/dimen60"
+            android:layout_gravity="start|center"
+            android:layout_margin="@dimen/dimen6"
+            android:background="@drawable/corner_silver"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+              android:layout_width="@dimen/dimen40"
+              android:layout_height="@dimen/dimen40"
+              android:layout_centerInParent="true"
+              android:layout_gravity="center"
+              android:background="@drawable/corner_silver"
+              android:padding="@dimen/dimen10"
+              app:defaultImage="@{viewModel.imageSelect}" />
+
+
+          </RelativeLayout>
+
+
+          <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rl_image_select_container"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/boldFont"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@{viewModel.title}"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size16"
+              android:textStyle="bold"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/boldFont"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/dimen2"
+              android:drawableEnd="@drawable/ic_more_sec"
+              android:drawableTint="@color/color727C"
+              android:text="@{viewModel.title1}"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size16"
+              android:textStyle="bold"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/mediumFont"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/dimen2"
+              android:drawableEnd="@drawable/ic_more_sec"
+              android:drawableTint="@color/color727C"
+              android:text="@{viewModel.title2}"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size14"
+              android:textStyle="bold"
+              android:visibility="@{viewModel.title2.empty ? View.GONE : View.VISIBLE}"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+
+          </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+      </com.google.android.material.card.MaterialCardView>
 
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_name"
@@ -32,7 +238,8 @@
         android:textColorHint="@color/darkGray"
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/material_selected_contact">
         <!--        app:error="@{viewmodel.request.nameError}"-->
         <!--        android:text="@={viewmodel.request.name}"-->
 
@@ -66,10 +273,11 @@
         <androidx.appcompat.widget.AppCompatEditText
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:drawableEnd="@drawable/ic_down"
           android:focusable="false"
           android:inputType="phone"
-          android:drawableEnd="@drawable/ic_down"
-          android:text="@={viewModel.request.phone}"
+          android:onClick="@{ (v) -> viewModel.chooseReason(v)}"
+          android:text="@={viewModel.request.contact}"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/colorPrimaryDark"
           android:textColorHint="@color/darkGray"
@@ -136,16 +344,16 @@
         android:layout_marginTop="@dimen/dimen20"
         android:layout_marginEnd="@dimen/dimen12"
         android:background="@drawable/corner_primary"
-        android:onClick="@{()-> viewModel.onContactClicked()}"
+        android:onClick="@{(v)-> viewModel.onContactClicked(v)}"
         android:text="@string/send"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_message" />
-      <!--      -->
-      <!--      android:background="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?@drawable/corner_view_gradient:@drawable/corner_view_primary_medium,default=@drawable/corner_view_gradient}"-->
-      <!--      android:enabled="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?true:false}"-->
+
+<!--      android:background="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?@drawable/corner_view_gradient:@drawable/corner_view_primary_medium,default=@drawable/corner_view_gradient}"-->
+<!--      android:enabled="@{TextUtils.isEmpty(viewmodel.message)||viewmodel.message.equals(Constants.HIDE_PROGRESS)?true:false}"-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,13 +7,13 @@ import androidx.annotation.Keep
 @Keep
 data class HomeResponse(
   @SerializedName("category-ads")
-    val categoryAds: List<CategoryAd> = listOf(),
+    val categoryAds: ArrayList<CategoryAdvertisement> = arrayListOf(),
   @SerializedName("followings-stores")
-    val followingsStores: List<Any> = listOf(),
+    val followingsStores: List<Store> = listOf(),
   @SerializedName("most-popular-ads")
-    val mostPopularAds: List<MostPopularAd> = listOf(),
+    val mostPopularAds: List<Advertisement> = listOf(),//1
   @SerializedName("most-rated-stores")
     val mostRatedStores: List<Store> = arrayListOf(),
   @SerializedName("suggested-ads")
-    val suggestedAds: List<SuggestedAd> = listOf()
+    val suggestions: List<Advertisement> = listOf()//2
 )

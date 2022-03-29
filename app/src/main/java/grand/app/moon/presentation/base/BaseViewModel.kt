@@ -1,18 +1,32 @@
 package grand.app.moon.presentation.base
 
+import android.content.Context
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
+import es.dmoral.toasty.Toasty
+import grand.app.moon.R
 
 open class BaseViewModel : ViewModel(), Observable {
   private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
 
-  var dataLoadingEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+  var percentageAds = 90
   var clickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
   var submitEvent: SingleLiveEvent<String> = SingleLiveEvent()
   fun clickEvent(action: Int) {
     clickEvent.value = action
+  }
+
+  fun submitEvent(action: String) {
+    submitEvent.value = action
+  }
+
+  fun showError(context: Context, message : String){
+    Toasty.error(context,message, Toast.LENGTH_SHORT, true).show();
+
   }
 
   override fun addOnPropertyChangedCallback(

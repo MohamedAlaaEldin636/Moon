@@ -16,5 +16,9 @@ class AuthRemoteDataSource @Inject constructor(private val apiService: AuthServi
     apiService.verifyAccount(request)
   }
 
+  suspend fun sendCode(request: VerifyAccountRequest) = safeApiCall {
+    apiService.sendCode(request)
+  }
+
 
 }

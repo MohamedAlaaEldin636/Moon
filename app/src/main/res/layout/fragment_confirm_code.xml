@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
+        android:layout_marginTop="@dimen/dimen16"
         android:src="@drawable/logo_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,6 +116,19 @@
         app:layout_constraintTop_toBottomOf="@+id/pin_Validate"
         app:layout_constraintEnd_toEndOf="parent" />
 
+<!--      <androidx.appcompat.widget.AppCompatTextView-->
+<!--        android:id="@+id/tv_forget_timer"-->
+<!--        style="@style/TextBoldFont"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/dimen28"-->
+<!--        android:layout_marginEnd="@dimen/dimen4"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+<!--        android:textColor="@color/black"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appCompatButtonNext" />-->
+
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_forget_timer"
         style="@style/TextBoldFont"
@@ -122,11 +136,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen28"
         android:layout_marginEnd="@dimen/dimen4"
+        android:visibility="@{viewmodel.resend ? View.GONE : View.VISIBLE}"
+        android:text="@={viewmodel.timerText}"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatButtonNext" />
+
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_login_forget"
@@ -134,9 +151,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_timer"
+        android:layout_marginTop="@dimen/dimen20"
         android:drawablePadding="@dimen/dimen10"
         android:enabled="false"
-        android:onClick="@{()->viewmodel.resendCode()}"
+        android:visibility="@{viewmodel.resend ? View.VISIBLE : View.GONE}"
+        android:onClick="@{()->viewmodel.resend()}"
         android:text="@string/confirm_resend"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"

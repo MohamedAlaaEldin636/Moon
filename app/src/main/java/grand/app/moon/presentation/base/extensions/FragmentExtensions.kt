@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
@@ -19,9 +20,12 @@ import grand.app.moon.domain.utils.Resource.Failure
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.*
 import androidx.core.content.ContextCompat.startActivity
-
-
-
+import androidx.databinding.BindingAdapter
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
+import com.denzcoskun.imageslider.models.SlideModel
+import java.util.ArrayList
 
 
 fun Fragment.handleApiError(
@@ -107,8 +111,30 @@ fun Fragment.backToPreviousScreen() {
   findNavController().navigateUp()
 }
 
+@BindingAdapter("images")
+fun setImages(sliderView: ImageSlider, images: ArrayList<String>) {
+  val list = ArrayList<SlideModel>()
+  for (image in images) {
+    list.add(SlideModel(image, ScaleTypes.FIT))
+  }
+  sliderView.setImageList(list)
+  sliderView.setItemClickListener(object : ItemClickListener {
+    override fun onItemSelected(position: Int) {
+
+    }
+  })
+}
 
 fun Fragment.openUrl(url :String) {
+  val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+  try {
+    startActivity(browserIntent)
+  } catch (e: ActivityNotFoundException) {
+    Toast.makeText(requireContext(), "Impossible to find an application for the market", Toast.LENGTH_LONG).show()
+  }
+}
+
+fun Fragment.startActivity(url :String) {
   val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
   try {
     startActivity(browserIntent)

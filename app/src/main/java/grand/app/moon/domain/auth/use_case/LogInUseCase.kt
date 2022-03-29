@@ -19,25 +19,11 @@ class LogInUseCase @Inject constructor(
 ) {
   operator fun invoke(
     request: LogInRequest
-  ): Flow<Resource<BaseResponse<User>>> = flow {
+  ): Flow<Resource<BaseResponse<*>>> = flow {
 
-    if (checkValidation(request)) {
-      emit(Resource.Loading)
-      val result = authRepository.logIn(request)
-      if (result is Resource.Success) {
-        userLocalUseCase.saveUserToken(result.value.data.token)
-        userLocalUseCase.saveCountryId(result.value.data.country_id)
-      }
-      emit(result)
-    }
+    emit(Resource.Loading)
+    val result = authRepository.logIn(request)
+    emit(result)
   }.flowOn(Dispatchers.IO)
 
-  private  fun checkValidation(request: LogInRequest): Boolean {
-    var isValid = true
-    if (request.phone.isEmpty()) {
-      request.validation.phoneError.set(Constants.EMPTY)
-      isValid = false
-    }
-    return isValid
-  }
 }

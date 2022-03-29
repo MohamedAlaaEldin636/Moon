@@ -1,5 +1,6 @@
 package grand.app.moon.core.di.module
 
+import android.content.Context
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.AccountUseCases
 import grand.app.moon.domain.account.use_case.CheckFirstTimeUseCase
@@ -22,6 +23,7 @@ import grand.app.moon.domain.settings.use_case.SettingsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import grand.app.moon.domain.countries.repository.CountriesRepository
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
@@ -63,8 +65,9 @@ class UseCaseModule {
   @Provides
   @Singleton
   fun provideSettingsUseCase(
+    @ApplicationContext appContext: Context,
     settingsRepository: SettingsRepository
-  ): SettingsUseCase = SettingsUseCase(settingsRepository)
+  ): SettingsUseCase = SettingsUseCase(appContext,settingsRepository)
 
   //public use cases
   @Provides

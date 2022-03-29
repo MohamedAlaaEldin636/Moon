@@ -23,11 +23,20 @@ class VerifyAccountUseCase @Inject constructor(
       emit(Resource.Loading)
       val result = authRepository.verifyAccount(request)
       if (result is Resource.Success) {
-        userLocalUseCase.saveToken(
-          result.value.data.token
+        userLocalUseCase(
+          result.value.data!!
         )
       }
       emit(result)
     }
   }.flowOn(Dispatchers.IO)
+
+  fun sendCode(request: VerifyAccountRequest): Flow<Resource<BaseResponse<*>>> = flow {
+    if (request.code.isNotEmpty()) {
+      emit(Resource.Loading)
+      val result = authRepository.sendCode(request)
+      emit(result)
+    }
+  }.flowOn(Dispatchers.IO)
+
 }

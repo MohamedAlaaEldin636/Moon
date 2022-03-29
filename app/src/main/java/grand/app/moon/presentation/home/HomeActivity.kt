@@ -1,11 +1,9 @@
 package grand.app.moon.presentation.home
 
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.content.Intent
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -14,13 +12,16 @@ import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.extensions.hide
 import grand.app.moon.presentation.base.extensions.show
+import grand.app.moon.presentation.home.viewModels.HomeViewModel
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   private lateinit var appBarConfiguration: AppBarConfiguration
   private lateinit var nav: NavController
+  private val viewModel: HomeViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.activity_home
@@ -31,11 +32,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   }
 
   private fun setUpBottomNavigationWithGraphs() {
+    binding.viewModel = viewModel
     val navHostFragment =
       supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
     nav = navHostFragment.findNavController()
     appBarConfiguration = AppBarConfiguration(
-      setOf(R.id.home_fragment,R.id.more_fragment , R.id.myAccountFragment, R.id.mapFragment , R.id.discoverFragment)
+      setOf(R.id.home_fragment,R.id.settings_fragment , R.id.myAccountFragment, R.id.mapFragment , R.id.discoverFragment)
     )
     setSupportActionBar(binding.toolbar)
     binding.toolbar.setupWithNavController(nav, appBarConfiguration)
@@ -48,7 +50,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showTopBarControls()
           showImage()
         }
-        R.id.more_fragment , R.id.myAccountFragment, R.id.mapFragment, R.id.discoverFragment ->{
+        R.id.myAccountFragment -> {
+          if(!viewModel.userLocalUseCase.isLoggin()) startActivity(Intent(this, AuthActivity::class.java))
+          showTopBarControls()
+          showText()
+        }
+        R.id.settings_fragment , R.id.mapFragment, R.id.discoverFragment ->{
           showTopBarControls()
           showText()
         }

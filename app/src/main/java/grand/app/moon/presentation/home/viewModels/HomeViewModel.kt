@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.home.viewModels
 
+import android.util.Log
 import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,8 +11,12 @@ import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.domain.account.repository.AccountRepository
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.presentation.ads.adapter.AdsAdapter
+import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter
 import grand.app.moon.presentation.store.adapter.StoreisAdapter
 import grand.app.moon.presentation.story.adapter.StoreAdapter
@@ -21,6 +26,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+  var userLocalUseCase: UserLocalUseCase,
   val accountRepository: AccountRepository,
   private val homeUseCase: HomeUseCase) : BaseViewModel() {
 
@@ -44,6 +50,10 @@ class HomeViewModel @Inject constructor(
   @Bindable
   val storeAdapter = StoreAdapter()
 
+  @Bindable
+  val adsHomeAdapter = AdsHomeAdapter()
+
+
   init {
     getCategories()
     homeApi()
@@ -61,6 +71,7 @@ class HomeViewModel @Inject constructor(
 
   private fun homeApi() {
     homeUseCase.invoke()
+
       .onEach { result ->
         _homeResponse.value = result
       }
@@ -80,8 +91,13 @@ class HomeViewModel @Inject constructor(
     notifyPropertyChanged(BR.storiesAdapter)
   }
 
+  private val TAG = "HomeViewModel"
   fun updateList(data: HomeResponse) {
     storeAdapter.differ.submitList(data.mostRatedStores)
     notifyPropertyChanged(BR.storeAdapter)
+
+    Log.d(TAG, "updateList: "+data.categoryAds.size)
+    adsHomeAdapter.differ.submitList(data.categoryAds)
+    notifyPropertyChanged(BR.adsHomeAdapter)
   }
 }

@@ -9,12 +9,14 @@ import retrofit2.http.*
 
 interface AuthServices {
 
-  @POST("v1/auth/login")
-  suspend fun logIn(@Body request: LogInRequest): BaseResponse<User>
+  @POST("v1/authentication")
+  suspend fun logIn(@Body request: LogInRequest): BaseResponse<*>
 
   @POST("v1/auth/verify_code")
   suspend fun verifyAccount(@Body request: VerifyAccountRequest): BaseResponse<User>
 
+  @POST("v1/auth/send_code")
+  suspend fun sendCode(@Body request: VerifyAccountRequest): BaseResponse<User>
 
   @Multipart
   @POST("v1/auth/register")

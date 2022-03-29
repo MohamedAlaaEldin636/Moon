@@ -149,6 +149,18 @@ dependencies {
   //circularprogressbar
   implementation(Libraries.circularprogressbar)
 
+  //bottom Naviation
+  implementation ("com.zagori:bottomnavbar:1.0.2")
+
+  //toasty
+  implementation ("com.github.GrenderG:Toasty:1.5.2")
+
+  //country
+  implementation ("com.hbb20:ccp:2.6.0")
+
+  //slider
+  implementation ("com.github.denzcoskun:ImageSlideshow:0.1.0")
+  
   // Project Modules
   implementation(project(Config.Modules.prettyPopUp))
 

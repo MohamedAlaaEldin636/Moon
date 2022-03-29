@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class MoreViewModel @Inject constructor(
+class SettingsViewModel @Inject constructor(
   private val settingsUseCase: SettingsUseCase
 ) : BaseViewModel() {
   @Bindable

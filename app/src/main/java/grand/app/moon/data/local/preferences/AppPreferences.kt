@@ -3,6 +3,7 @@ package grand.app.moon.data.local.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.content.edit
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
@@ -13,6 +14,7 @@ import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.Country
 //import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -20,6 +22,9 @@ class AppPreferences @Inject constructor(private val context: Context) {
 
   private val STORE_NAME = "app_data_store"
   private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = STORE_NAME)
+
+  private val USER_DATA = Pair("USER_DATA", "")
+
 
   suspend fun saveFireBaseToken(token: String) {
     context.dataStore.edit {
@@ -47,9 +52,9 @@ class AppPreferences @Inject constructor(private val context: Context) {
     }
   }
 
-  fun getIsLoggedIn() = context.dataStore.data.map {
-    it[IS_LOGGED_IN] ?: false
-  }
+//  fun getIsLoggedIn() = context.dataStore.data.map {
+//    it[IS_LOGGED_IN] ?: false
+//  }
 
   suspend fun userToken(userToken: String) {
     context.dataStore.edit {
@@ -81,27 +86,6 @@ class AppPreferences @Inject constructor(private val context: Context) {
     it[COUNTRY_ID] ?: "1"
   }
 
-  suspend fun saveUser(user: User) {
-    Log.e("saveUser", "saveUser: " + user.account_type)
-    context.dataStore.edit { preferences ->
-      preferences[USER_NAME] = user.name
-      preferences[EMAIL] = user.email
-      preferences[USER_PHONE] = user.phone
-      preferences[USER_ID] = user.id
-      preferences[ACCOUNT_TYPE] = user.account_type
-    }
-  }
-
-  fun getUser() = context.dataStore.data.map { preferences ->
-    User(
-      name = preferences[USER_NAME] ?: "",
-      email = preferences[EMAIL] ?: "",
-      id = preferences[USER_ID] ?: 0,
-      phone = preferences[USER_PHONE] ?: "",
-      account_type = preferences[ACCOUNT_TYPE] ?: ""
-    )
-  }
-
   //Old Pref
   companion object {
     val FIREBASE_TOKEN = stringPreferencesKey("FIREBASE_TOKEN")
@@ -129,6 +113,36 @@ class AppPreferences @Inject constructor(private val context: Context) {
     editor.apply()
   }
 
+  fun getIsLoggedIn(): Boolean {
+    return appPreferences.getInt("id", -1) != -1
+  }
+
+  fun saveUser(user: User) {
+    appPreferences.edit {
+      it.putString(USER_DATA.first, Gson().toJson(user))
+      it.putInt("id", user.id)
+      it.apply()
+    }
+  }
+
+  private  val TAG = "AppPreferences"
+  fun getUser(): User {
+    val value: String? = appPreferences.getString(USER_DATA.first, USER_DATA.second)
+    Log.d(TAG, "getUser: $value")
+    if (value != null)
+      return Gson().fromJson(value, User::class.java)
+    else return User()
+  }
+
+
+  fun clearUser() {
+    appPreferences.edit {
+      it.putString(USER_DATA.first, "")
+      it.putInt("id", -1)
+      it.apply()
+    }
+  }
+
   fun setLocal(key: String, value: String) {
     appPreferences.edit {
       it.putString(key, value)
@@ -148,7 +162,8 @@ class AppPreferences @Inject constructor(private val context: Context) {
 
   fun saveCategories(response: BaseResponse<ArrayList<CategoryItem>>) {
     val gson = Gson()
-    val json = gson.toJson(response, object : TypeToken<BaseResponse<ArrayList<CategoryItem>>>(){}.type)
+    val json =
+      gson.toJson(response, object : TypeToken<BaseResponse<ArrayList<CategoryItem>>>() {}.type)
     appPreferences.edit {
       it.putString("categoriesResponse", json)
     }
@@ -157,12 +172,16 @@ class AppPreferences @Inject constructor(private val context: Context) {
   fun getCategories(): BaseResponse<ArrayList<CategoryItem>> {
     val gson = Gson()
     val countriesResponse = appPreferences.getString("categoriesResponse", "")
-    return gson.fromJson(countriesResponse, object : TypeToken<BaseResponse<ArrayList<CategoryItem>>>(){}.type)
+    return gson.fromJson(
+      countriesResponse,
+      object : TypeToken<BaseResponse<ArrayList<CategoryItem>>>() {}.type
+    )
   }
 
   fun saveCountries(countriesResponse: BaseResponse<List<Country>>) {
     val gson = Gson()
-    val json = gson.toJson(countriesResponse, object : TypeToken<BaseResponse<List<Country>>>(){}.type)
+    val json =
+      gson.toJson(countriesResponse, object : TypeToken<BaseResponse<List<Country>>>() {}.type)
     appPreferences.edit {
       it.putString("countriesResponse", json)
     }
@@ -171,6 +190,9 @@ class AppPreferences @Inject constructor(private val context: Context) {
   fun getCountries(): BaseResponse<List<Country>> {
     val gson = Gson()
     val countriesResponse = appPreferences.getString("countriesResponse", "")
-    return gson.fromJson(countriesResponse, object : TypeToken<BaseResponse<List<Country>>>(){}.type)
+    return gson.fromJson(
+      countriesResponse,
+      object : TypeToken<BaseResponse<List<Country>>>() {}.type
+    )
   }
 }

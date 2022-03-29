@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/nav_settings"
+  app:startDestination="@id/settings_fragment">
+  <fragment
+    android:id="@+id/settings_fragment"
+    android:name="grand.app.moon.presentation.more.SettingsFragment"
+    android:label="@string/settings" >
+    <action
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      android:id="@+id/action_more_fragment_to_languageFragment2"
+      app:destination="@id/languageFragment2" />
+    <action
+      android:id="@+id/action_more_fragment_to_countriesFragment3"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/countriesFragment3" />
+    <action
+      android:id="@+id/action_settings_fragment_to_contactUsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/contactUsFragment" />
+  </fragment>
+  <fragment
+    android:id="@+id/languageFragment2"
+    android:name="grand.app.moon.presentation.auth.language.LanguageFragment"
+    android:label="@string/choose_language" >
+    <argument
+      android:name="type"
+      app:argType="string" />
+  </fragment>
+  <fragment
+    android:id="@+id/countriesFragment3"
+    android:name="grand.app.moon.presentation.auth.countries.CountriesFragment"
+    android:label="CountriesFragment" >
+    <argument
+      android:name="from"
+      app:argType="string" />
+  </fragment>
+
+</navigation>

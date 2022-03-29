@@ -5,13 +5,11 @@ import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 
 @Keep
-data class CategoryAd(
-    @SerializedName("advertisements")
-    val advertisements: List<Advertisement> = listOf(),
+data class Parent(
     @SerializedName("id")
     val id: Int = 0,
-    @SerializedName("image")
-    val image: String = "",
     @SerializedName("name")
-    val name: String = ""
+    val name: String = "",
+    @SerializedName("text")
+    val text: String = ""
 )

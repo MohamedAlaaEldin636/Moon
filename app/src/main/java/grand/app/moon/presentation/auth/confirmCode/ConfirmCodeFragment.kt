@@ -3,6 +3,7 @@ package grand.app.moon.presentation.auth.confirmCode
 import android.os.CountDownTimer
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -15,9 +16,9 @@ import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
+  val args: ConfirmCodeFragmentArgs by navArgs()
 
   private val viewModel: ConfirmViewModel by viewModels()
-  private lateinit var countDownTimer: CountDownTimer
 
   override
   fun getLayoutId() = R.layout.fragment_confirm_code
@@ -25,6 +26,8 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
   override
   fun setBindingVariables() {
     binding.viewmodel = viewModel
+    viewModel.request.phone = args.phone
+    viewModel.request.type = args.type
   }
 
   override
@@ -38,21 +41,17 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            if (viewModel.request.type == "verify")
-              openCountry()
-            else
-              openChangePassword()
+            activity?.finish()
           }
           is Resource.Failure -> {
             hideLoading()
-            handleApiError(it, retryAction = { viewModel.verifyAccount() })
+            handleApiError(it)
           }
-          Resource.Default -> {}
         }
       }
     }
     lifecycleScope.launchWhenResumed {
-      viewModel.forgetResponse.collect {
+      viewModel._sendCode.collect {
         when (it) {
           Resource.Loading -> {
             hideKeyboard()
@@ -60,45 +59,23 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            startTimer()
           }
           is Resource.Failure -> {
             hideLoading()
-            handleApiError(it, retryAction = { viewModel.verifyAccount() })
+            handleApiError(it)
           }
-          Resource.Default -> {}
         }
       }
     }
   }
 
-  private fun openCountry() {
-    navigateSafe(ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToCountriesFragment())
-  }
-
-  private fun openChangePassword() {
-    navigateSafe(ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToChangePasswordFragment())
-  }
 
   override fun onStart() {
     super.onStart()
-    startTimer()
-  }
-
-  private fun startTimer() {
-    countDownTimer = object : CountDownTimer(30000, 1000) {
-      override fun onTick(millisUntilFinished: Long) {
-        binding.tvForgetTimer.text = (millisUntilFinished / 1000).toString().plus(": 00")
-      }
-
-      override fun onFinish() {
-        binding.tvLoginForget.isEnabled = true
-      }
-    }.start()
   }
 
   override fun onDestroyView() {
     super.onDestroyView()
-    countDownTimer.cancel()
+//    countDownTimer.cancel()
   }
 }

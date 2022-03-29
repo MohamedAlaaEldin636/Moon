@@ -29,7 +29,7 @@ class AccountRepositoryImpl @Inject constructor(
     appPreferences.isLoggedIn(isLoggedIn)
   }
 
-  override suspend fun getIsLoggedIn(): Flow<Boolean> {
+  override fun getIsLoggedIn(): Boolean {
     return appPreferences.getIsLoggedIn()
   }
 
@@ -50,11 +50,11 @@ class AccountRepositoryImpl @Inject constructor(
     return appPreferences.getIsFirstTime()
   }
 
-  override suspend fun saveUserToLocal(user: User) {
+  override fun saveUserToLocal(user: User) {
     appPreferences.saveUser(user)
   }
 
-  override suspend fun getUserToLocal(): Flow<User> {
+  override fun getUserToLocal(): User {
     return appPreferences.getUser()
   }
 
@@ -86,6 +86,10 @@ class AccountRepositoryImpl @Inject constructor(
 
   override suspend fun saveCountryId(country_id: String) {
     appPreferences.countryId(country_id)
+  }
+
+  override  fun clearUser() {
+    appPreferences.clearUser()
   }
 
   override suspend fun getCountryId(): Flow<String> {

@@ -9,113 +9,113 @@
       type="grand.app.moon.presentation.home.viewModels.HomeViewModel" />
   </data>
 
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/ic_curve"
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:theme="@style/ToolBarStyle" />
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
-      <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_curve"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_notification"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:src="@drawable/ic_notification"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_chat"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:src="@drawable/ic_chat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ic_notification"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_menu"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_marginStart="@dimen/dimen10"
+        android:src="@drawable/ic_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:theme="@style/ToolBarStyle">
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-
-          <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ic_notification"
-            android:layout_width="@dimen/dimen30"
-            android:layout_height="@dimen/dimen30"
-            android:layout_marginEnd="@dimen/dimen10"
-            android:src="@drawable/ic_notification"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-          <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ic_chat"
-            android:layout_width="@dimen/dimen30"
-            android:layout_height="@dimen/dimen30"
-            android:layout_marginEnd="@dimen/dimen10"
-            android:src="@drawable/ic_chat"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ic_notification"
-            app:layout_constraintTop_toTopOf="parent" />
-
-          <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ic_menu"
-            android:layout_width="@dimen/dimen30"
-            android:layout_height="@dimen/dimen30"
-            android:layout_marginStart="@dimen/dimen10"
-            android:src="@drawable/ic_menu"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-          <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgMoonLogo"
-            style="@style/mediumFont"
-            android:layout_width="@dimen/dimen120"
-            android:layout_height="@dimen/dimen80"
-            android:src="@drawable/ic_home_logo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-          <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_home_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@{viewModel.titleToolbar}"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ic_notification"
-            app:layout_constraintStart_toEndOf="@+id/ic_menu"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-      </androidx.appcompat.widget.Toolbar>
-
-
-      <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_host_container"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:navGraph="@navigation/nav_home" />
-
-
-      <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgMoonLogo"
+        style="@style/mediumFont"
+        android:layout_width="@dimen/dimen120"
+        android:layout_height="@dimen/dimen80"
+        android:src="@drawable/ic_home_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:itemIconTint="@drawable/bottom_navigation_color"
-        app:itemTextColor="@drawable/bottom_navigation_color"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_navigation_view" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_home_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@{viewModel.titleToolbar}"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/fragment_host_container"
+      android:name="androidx.navigation.fragment.NavHostFragment"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      app:defaultNavHost="true"
+      app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"
+      app:layout_constraintTop_toBottomOf="@id/toolbar"
+      app:navGraph="@navigation/nav_home" />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+      android:id="@+id/bottom_navigation_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/colorPrimary"
+      app:itemIconTint="@drawable/bottom_navigation_color"
+      app:itemTextColor="@drawable/bottom_navigation_color"
+      app:labelVisibilityMode="labeled"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:menu="@menu/menu_navigation_view" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

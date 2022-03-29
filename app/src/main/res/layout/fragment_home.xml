@@ -14,7 +14,7 @@
 
   <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:paddingBottom="@dimen/dimen50"
+    android:fillViewport="true"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -145,6 +145,22 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
         tools:listitem="@layout/item_store" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_ads_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adapter="@{viewModel.adsHomeAdapter}"
+        app:orientation="@{`1`}"
+        app:span="@{`1`}"
+        android:layout_marginTop="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/rv_stores"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_ads_home" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.core.widget.NestedScrollView>

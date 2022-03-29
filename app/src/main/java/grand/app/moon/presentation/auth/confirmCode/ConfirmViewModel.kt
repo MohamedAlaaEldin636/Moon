@@ -1,5 +1,7 @@
 package grand.app.moon.presentation.auth.confirmCode
 
+import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import grand.app.moon.domain.auth.entity.request.VerifyAccountRequest
@@ -15,22 +17,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConfirmViewModel @Inject constructor(
-  private val verifyAccountUseCase: VerifyAccountUseCase,
-  savedStateHandle: SavedStateHandle
-) :
+  private val verifyAccountUseCase: VerifyAccountUseCase) :
   BaseViewModel() {
   val request = VerifyAccountRequest()
   private val _verifyResponse = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
   val verifyResponse = _verifyResponse
-  private val _forgetResponse = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
-  val forgetResponse = _forgetResponse
+
+  val _sendCode = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
+  val sendCode = _sendCode
 
   init {
-    savedStateHandle.get<String>("email")?.let { email ->
-      request.email = email
-    }
+    startTimer()
   }
-
   fun verifyAccount() {
     verifyAccountUseCase(request)
       .onEach { result ->
@@ -40,7 +38,53 @@ class ConfirmViewModel @Inject constructor(
   }
 
   fun resendCode() {
-
+    Log.d(TAG, "resend: heererer")
+    verifyAccountUseCase.sendCode(request)
+      .onEach { result ->
+        _sendCode.value = result
+      }
+      .launchIn(viewModelScope)
   }
+
+  fun resend() {
+    //call api
+    Log.d(TAG, "resend: ")
+    resend = false
+    resendCode()
+    countDownTimer.start()
+  }
+
+
+  var timerText = "60:00"
+  var resend = false
+  lateinit var countDownTimer: CountDownTimer
+  private val TAG = "ConfirmViewModel"
+  private fun startTimer() {
+    Log.d(TAG, "startTimer: ")
+    countDownTimer = object : CountDownTimer(60000, 1000) {
+      override fun onTick(millisUntilFinished: Long) {
+        timerText = when {
+          (millisUntilFinished / 1000) < 10 -> "0" + (millisUntilFinished / 1000)
+          else -> (millisUntilFinished / 1000)
+        }.toString().plus(" : 00")
+        notifyChange()
+        Log.d(TAG, "onTick: $timerText")
+      }
+
+      override fun onFinish() {
+        resend = true
+        Log.d(TAG, "onFinish: resend")
+        notifyChange()
+      }
+    }.start()
+  }
+
+  override fun onCleared() {
+    Log.d(TAG, "onCleared: cancel")
+    countDownTimer.cancel()
+    super.onCleared()
+  }
+
+
 
 }

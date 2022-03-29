@@ -8,7 +8,7 @@ import grand.app.moon.domain.utils.Resource
 
 interface SettingsRepository {
   suspend fun onBoard(type: String): Resource<BaseResponse<List<AppTutorial>>>
-  suspend fun social(type: String, app_type: String): Resource<BaseResponse<List<SettingsData>>>
+  suspend fun settings(type: String): Resource<BaseResponse<List<SettingsData>>>
   suspend fun contactApp(contactUsRequest: ContactUsRequest): Resource<BaseResponse<*>>
 
 }

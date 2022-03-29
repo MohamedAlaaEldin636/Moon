@@ -2,6 +2,7 @@ package grand.app.moon.presentation.base.extensions
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
@@ -45,6 +46,14 @@ fun View.hide() {
   visibility = View.GONE
   if (this is Group) {
     this.requestLayout()
+  }
+}
+
+@BindingAdapter("width")
+fun viewWidth(view: View, widthPercent: Int) {
+  if(widthPercent < 100) {
+    val total = Resources.getSystem().displayMetrics.widthPixels
+    view.layoutParams.width = (total * widthPercent) / 100
   }
 }
 

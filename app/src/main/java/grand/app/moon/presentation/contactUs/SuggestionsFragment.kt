@@ -2,12 +2,10 @@ package grand.app.moon.presentation.contactUs
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import grand.app.moon.domain.auth.enums.AuthFieldsValidation
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
-import grand.app.moon.presentation.base.utils.showNoApiErrorAlert
 import grand.app.moon.presentation.base.utils.showSuccessAlert
 import grand.app.moon.presentation.contactUs.viewModels.ContactUsViewModel
 import grand.app.moon.databinding.FragmentSuggestionsBinding
@@ -28,34 +26,33 @@ class SuggestionsFragment : BaseFragment<FragmentSuggestionsBinding>() {
   }
 
   override fun setupObservers() {
-
     viewModel.validationException.observe(this) {
       when (it) {
 
       }
     }
 
-    lifecycleScope.launchWhenResumed {
-      viewModel.contactResponse.collect {
-        when (it) {
-          Resource.Loading -> {
-            hideKeyboard()
-            showLoading()
-          }
-          is Resource.Success -> {
-            hideLoading()
-            showSuccessAlert(requireActivity(), it.value.message)
-            backToPreviousScreen()
-          }
-          is Resource.Failure -> {
-            hideLoading()
-            handleApiError(
-              it,
-              retryAction = { viewModel.onContactClicked() })
-          }
-
-        }
-      }
-    }
+//    lifecycleScope.launchWhenResumed {
+//      viewModel.contactReasonResponse.collect {
+//        when (it) {
+//          Resource.Loading -> {
+//            hideKeyboard()
+//            showLoading()
+//          }
+//          is Resource.Success -> {
+//            hideLoading()
+//            showSuccessAlert(requireActivity(), it.value.message)
+//            backToPreviousScreen()
+//          }
+//          is Resource.Failure -> {
+//            hideLoading()
+//            handleApiError(
+//              it,
+//              retryAction = { viewModel.onContactClicked() })
+//          }
+//
+//        }
+//      }
+//    }
   }
 }

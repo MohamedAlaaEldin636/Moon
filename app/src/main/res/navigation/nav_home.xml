@@ -11,37 +11,7 @@
     android:label=""
     tools:layout="@layout/fragment_home">
   </fragment>
-  <fragment
-    android:id="@+id/more_fragment"
-    android:name="grand.app.moon.presentation.more.MoreFragment"
-    android:label="@string/settings" >
-    <action
-      android:id="@+id/action_more_fragment_to_languageFragment2"
-      app:destination="@id/languageFragment2" />
-    <action
-      android:id="@+id/action_more_fragment_to_countriesFragment3"
-      app:destination="@id/countriesFragment3" />
-  </fragment>
-  <fragment
-    android:id="@+id/languageFragment2"
-    android:name="grand.app.moon.presentation.auth.language.LanguageFragment"
-    android:label="@string/choose_language" >
-    <argument
-      android:name="type"
-      app:argType="string" />
-  </fragment>
-  <fragment
-    android:id="@+id/countriesFragment3"
-    android:name="grand.app.moon.presentation.auth.countries.CountriesFragment"
-    android:label="CountriesFragment" >
-    <argument
-      android:name="from"
-      app:argType="string" />
-  </fragment>
-  <fragment
-    android:id="@+id/myAccountFragment"
-    android:name="grand.app.moon.presentation.myAccount.MyAccountFragment"
-    android:label="@string/my_account" />
+
   <fragment
     android:id="@+id/mapFragment"
     android:name="grand.app.moon.presentation.map.MapFragment"
@@ -50,6 +20,19 @@
     android:id="@+id/discoverFragment"
     android:name="grand.app.moon.presentation.discover.DiscoverFragment"
     android:label="@string/discover" />
+  <fragment
+    android:id="@+id/contactUsFragment"
+    android:name="grand.app.moon.presentation.contactUs.ContactUsFragment"
+    android:label="@string/contact_us" />
+
+  <fragment
+    android:id="@+id/myAccountFragment"
+    android:name="grand.app.moon.presentation.myAccount.MyAccountFragment"
+    android:label="@string/my_account" />
+
+  <include app:graph="@navigation/nav_settings" />
+
+
   <!--  <fragment-->
 <!--    android:id="@+id/reviewsFragment"-->
 <!--    android:name="grand.app.moon.presentation.reviews.ReviewsFragment"-->

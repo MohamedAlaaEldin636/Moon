@@ -7,29 +7,42 @@ import androidx.annotation.Keep
 @Keep
 data class Advertisement(
   @SerializedName("average_rate")
-    val averageRate: Int = 0,
+  val averageRate: Int = 0,
   @SerializedName("city")
-    val city: Country = Country(),
+  val city: Country = Country(),
   @SerializedName("country")
-    val country: Country = Country(),
+  val country: Country = Country(),
   @SerializedName("created_at")
-    val createdAt: String = "",
+  val createdAt: String = "",
   @SerializedName("description")
-    val description: String = "",
+  val description: String = "",
   @SerializedName("favorite_count")
-    val favoriteCount: Int = 0,
+  val favoriteCount: Int = 0,
   @SerializedName("id")
-    val id: Int = 0,
+  val id: Int = 0,
   @SerializedName("images")
-    val imageModels: List<ImageModel> = listOf(),
+  var images: ArrayList<String> = arrayListOf(),
+  @SerializedName("properties")
+  val properties: ArrayList<Property> = arrayListOf(),
   @SerializedName("is_negotiable")
-    val isNegotiable: Int = 0,
+  val isNegotiable: Int = 0,
   @SerializedName("premium")
-    val premium: Int = 0,
+  val premium: Int = 0,
   @SerializedName("price")
-    val price: Int = 0,
+  val price: Int = 0,
+  @SerializedName("store")
+  val store: Store = Store(),
   @SerializedName("title")
-    val title: String = "",
+  val title: String = "",
   @SerializedName("views_count")
-    val viewsCount: Int = 0
-)
+  val viewsCount: Int = 0,
+  @SerializedName("share_count")
+  val shareCount: Int = 0,
+  @SerializedName("is_favorite")
+  var isFavorite: Boolean = false,
+
+  @SerializedName("reviews")
+  var reviews: ArrayList<Reviews> = arrayListOf(),
+
+
+  )

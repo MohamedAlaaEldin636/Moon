@@ -6,18 +6,18 @@ import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.databinding.FragmentMoreBinding
+import grand.app.moon.databinding.FragmentSettingsBinding
 import grand.app.moon.presentation.base.utils.Constants
 import java.util.ArrayList
 
 @AndroidEntryPoint
-class MoreFragment : BaseFragment<FragmentMoreBinding>() {
+class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
 
-  private val viewModel: MoreViewModel by viewModels()
+  private val viewModel: SettingsViewModel by viewModels()
 
   override
-  fun getLayoutId() = R.layout.fragment_more
+  fun getLayoutId() = R.layout.fragment_settings
 
   override
   fun setBindingVariables() {
@@ -34,7 +34,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         MoreItem(
           getString(R.string.contact_us),
           getMyDrawable(R.drawable.ic_contact_settings),
-          1
+          Constants.CONTACT
         )
       )
       list.add(
@@ -55,14 +55,14 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
         MoreItem(
           getString(R.string.change_language),
           getMyDrawable(R.drawable.ic_language_settings),
-          2
+          Constants.LANG
         )
       )
       list.add(
         MoreItem(
           getString(R.string.change_country),
           getMyDrawable(R.drawable.ic_country_settings),
-          3
+          Constants.COUNTRY
         )
       )
       list.add(
@@ -107,14 +107,14 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
       }else {
         Log.d(TAG, "setBindingVariables: ${it.id}")
         when(it.id){
-          1 -> {
-
+          Constants.CONTACT -> {
+            navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToContactUsFragment())
           }
-          2 -> {
-            navigateSafe(MoreFragmentDirections.actionMoreFragmentToLanguageFragment2(Constants.MORE))
+          Constants.LANG -> {
+            navigateSafe(SettingsFragmentDirections.actionMoreFragmentToLanguageFragment2(Constants.MORE))
           }
-          3 -> {
-            navigateSafe(MoreFragmentDirections.actionMoreFragmentToCountriesFragment3(Constants.MORE))
+          Constants.COUNTRY -> {
+            navigateSafe(SettingsFragmentDirections.actionMoreFragmentToCountriesFragment3(Constants.MORE))
           }
           else -> {}
         }

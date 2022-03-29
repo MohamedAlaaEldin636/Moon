@@ -30,9 +30,8 @@ class SocialViewModel @Inject constructor(
   }
 
   private fun getSocial() {
-    settingsUseCase(Constants.SOCIAL_TYPE)
+    settingsUseCase.settings(Constants.SOCIAL_TYPE)
       .onEach { result ->
-        println(result.toString())
         _socialResponse.value = result
       }
       .launchIn(viewModelScope)

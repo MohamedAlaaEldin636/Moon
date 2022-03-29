@@ -7,6 +7,7 @@ import grand.app.moon.domain.utils.Resource
 
 interface AuthRepository {
 
-  suspend fun logIn(request: LogInRequest): Resource<BaseResponse<User>>
+  suspend fun logIn(request: LogInRequest): Resource<BaseResponse<*>>
   suspend fun verifyAccount(request: VerifyAccountRequest): Resource<BaseResponse<User>>
+  suspend fun sendCode(request: VerifyAccountRequest): Resource<BaseResponse<*>>
 }

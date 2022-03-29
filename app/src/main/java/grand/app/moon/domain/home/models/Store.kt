@@ -23,7 +23,9 @@ data class Store(
     @SerializedName("phone")
     val phone: String = "",
     @SerializedName("token")
-    val token: Any = Any(),
+    val token: String = "",
     @SerializedName("views_count")
-    val viewsCount: String = "0"
+    val viewsCount: String = "0",
+    @SerializedName("is_following")
+    val isFollowing: Boolean = true
 )

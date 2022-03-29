@@ -18,4 +18,7 @@ class AuthRepositoryImpl @Inject constructor(
   override suspend fun verifyAccount(request: VerifyAccountRequest): Resource<BaseResponse<User>> =
     remoteDataSource.verifyAccount(request)
 
+  override suspend fun sendCode(request: VerifyAccountRequest): Resource<BaseResponse<*>> =
+    remoteDataSource.sendCode(request)
+
 }

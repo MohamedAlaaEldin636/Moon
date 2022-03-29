@@ -16,12 +16,11 @@ interface SettingsServices {
   ): BaseResponse<List<AppTutorial>>
 
   @GET("v1/settings")
-  suspend fun social(
+  suspend fun settings(
     @Query("type") type: String,
-    @Query("app_type") app_type: String
   ): BaseResponse<List<SettingsData>>
 
-  @POST("v1/contact_app")
+  @POST("v1/contact-us")
   suspend fun contactApp(@Body contactUsRequest: ContactUsRequest): BaseResponse<*>
 
 

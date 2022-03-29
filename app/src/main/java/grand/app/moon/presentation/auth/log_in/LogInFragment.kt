@@ -1,10 +1,11 @@
 package grand.app.moon.presentation.auth.log_in
 
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import codes.grand.pretty_pop_up.PrettyPopUpHelper
-import com.google.firebase.components.Dependency.required
-import grand.app.moon.domain.auth.enums.AuthFieldsValidation
+import grand.app.moon.domain.base.FieldsValidation
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
@@ -16,6 +17,9 @@ import grand.app.moon.databinding.FragmentLogInBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import com.hbb20.CountryCodePicker
+import com.hbb20.CountryCodePicker.OnCountryChangeListener
+
 
 @AndroidEntryPoint
 class LogInFragment : BaseFragment<FragmentLogInBinding>() {
@@ -28,28 +32,19 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.request.device_token = getDeviceId(requireActivity())
   }
 
   override
   fun setupObservers() {
+    initView()
     viewModel.clickEvent.observe(this) {
       when (it) {
-
-      }
-
-    }
-
-    viewModel.validationException.observe(this) {
-      when (it) {
-        AuthFieldsValidation.EMPTY_PHONE.value -> {
-          showNoApiErrorAlert(requireActivity(), resources.getString(R.string.required))
-        }
+        Constants.BACK -> activity?.finish()
       }
     }
 
     lifecycleScope.launchWhenResumed {
-      viewModel.logInResponse.collect {
+      viewModel._logInResponse.collect {
         when (it) {
           Resource.Loading -> {
             hideKeyboard()
@@ -57,14 +52,11 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            openHome()
+            openConfirm()
           }
           is Resource.Failure -> {
             hideLoading()
-            handleApiError(
-              it,
-              retryAction = { viewModel.onLogInClicked() },
-              notActiveAction = { openConfirm() })
+            handleApiError(it)
           }
 
         }
@@ -72,36 +64,31 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
     }
   }
 
-  private fun openForgotPassword() {
-    navigateSafe(LogInFragmentDirections.actionOpenForgotPasswordFragment())
+  private  val TAG = "LogInFragment"
+  private fun initView() {
+    viewModel.request.country_code = "+${binding.ccp.selectedCountryCode}"
+    binding.ccp.setOnCountryChangeListener(OnCountryChangeListener {
+      viewModel.request.country_code = "+${binding.ccp.selectedCountryCode}"
+    })
+    binding.edtLoginPhone.addTextChangedListener(object : TextWatcher {
+
+      override fun afterTextChanged(s: Editable) {}
+
+      override fun beforeTextChanged(s: CharSequence, start: Int,
+                                     count: Int, after: Int) {
+        binding.btnPhone.isEnabled = count == 0
+      }
+
+      override fun onTextChanged(s: CharSequence, start: Int,
+                                 before: Int, count: Int) {
+      }
+    })
   }
 
   private fun openConfirm() {
     navigateSafe(
       LogInFragmentDirections.actionLogInFragmentToFragmentConfirmCode(
-        viewModel.request.phone,
-        Constants.Verify
-      )
+        viewModel.request.phone,Constants.Verify)
     )
-  }
-
-  private fun openSignUp() {
-    navigateSafe(LogInFragmentDirections.actionOpenSignUpFragment())
-  }
-
-  private fun openHome() {
-    lifecycleScope.launch {
-      viewModel.userLocalUseCase.invoke().collect { user ->
-
-      }
-    }
-
-  }
-
-  private fun checkNavigate() {
-    if (viewModel.registerStep == "1" || viewModel.registerStep == "2")
-      navigateSafe(LogInFragmentDirections.actionLogInFragmentToCountriesFragment())
-    if (viewModel.registerStep == "3" || viewModel.registerStep == "4")
-      navigateSafe(LogInFragmentDirections.actionLogInFragmentToSchoolGradeFragment())
   }
 }

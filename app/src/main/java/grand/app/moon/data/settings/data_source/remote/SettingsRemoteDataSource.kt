@@ -10,8 +10,8 @@ class SettingsRemoteDataSource @Inject constructor(private val apiService: Setti
     apiService.onBoard(type)
   }
 
-  suspend fun social(type: String, app_type: String) = safeApiCall {
-    apiService.social(type, app_type)
+  suspend fun settings(type: String) = safeApiCall {
+    apiService.settings(type)
   }
 
   suspend fun contactApp(contactUsRequest: ContactUsRequest) = safeApiCall {

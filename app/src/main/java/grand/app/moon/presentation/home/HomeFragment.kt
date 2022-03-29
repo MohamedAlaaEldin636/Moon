@@ -9,8 +9,11 @@ import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.databinding.FragmentHomeBinding
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.domain.home.models.CategoryAdvertisement
+import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.story.entity.StoryItem
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.forEach
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -38,6 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
+            updateList(it.value.data)
             viewModel.updateList(it.value.data)
 
           }
@@ -49,7 +53,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
       }
     }
     lifecycleScope.launchWhenResumed {
-      viewModel.storiesResponse.collect {
+      viewModel.storiesResponse
+        .collect {
         if(it is Resource.Success){
           it.value.data.add(0, StoryItem(name = getString(R.string.show_more),isFirst = true))
           viewModel.updateStories(it.value.data)
@@ -57,6 +62,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
       }
     }
 
+  }
+
+  private fun updateList(data: HomeResponse) {
+    data.categoryAds.forEach {
+      it.name = "${resources.getString(R.string.advertisement)} ${it.name}"
+    }
+    if(data.mostPopularAds.isNotEmpty()){
+      val categoryAdvertisement = CategoryAdvertisement()
+      categoryAdvertisement.name = resources.getString(R.string.suggestions_ads_for_you)
+      categoryAdvertisement.advertisements.addAll(data.suggestions)
+      data.categoryAds.add(0,categoryAdvertisement)
+    }
+    if(data.mostPopularAds.isNotEmpty()){
+      val categoryAdvertisement = CategoryAdvertisement()
+      categoryAdvertisement.name = resources.getString(R.string.most_popular_ads)
+      categoryAdvertisement.advertisements.addAll(data.mostPopularAds)
+      data.categoryAds.add(0,categoryAdvertisement)
+    }
   }
 
 }
