@@ -11,5 +11,5 @@ data class User(
   val image: String = "",
   val phone: String = "",
   val token: String = "",
-  val country_code: String? = "",
+  val country_code: String = "",
 )

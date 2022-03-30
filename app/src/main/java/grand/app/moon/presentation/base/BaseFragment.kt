@@ -2,6 +2,7 @@ package grand.app.moon.presentation.base
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.afollestad.assent.Permission
 import com.afollestad.assent.askForPermissions
 import com.afollestad.assent.isAllGranted
 import com.afollestad.assent.showSystemAppDetailsPage
+import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import grand.app.moon.presentation.base.utils.hideLoadingDialog
 import grand.app.moon.presentation.base.utils.showLoadingDialog
@@ -135,6 +137,10 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
       fragmentActivity.showSystemAppDetailsPage()
       false
     }
+  }
+
+  fun openLoginActivity(){
+    startActivity(Intent(activity, AuthActivity::class.java))
   }
 
   // Pick Single image

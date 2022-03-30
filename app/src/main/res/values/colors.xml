@@ -13,6 +13,7 @@
   <color name="darkGray">#909090</color>
   <color name="silver">#F6F6F6</color>
   <color name="color727C">#727C8E</color>
+  <color name="color55CD6C">#55CD6C</color>
   <color name="color000000D9">#000000D9</color>
   <color name="colorB7B7B7">#B7B7B7</color>
   <color name="colorE50000">#E50000</color>
@@ -22,6 +23,7 @@
   <color name="gray">#BCBCBC</color>
   <color name="grey">#D0D0D0</color>
   <color name="greyText">#C1C1C1</color>
+  <color name="color888888">#888888</color>
   <color name="colorFBFBFB">#FBFBFB</color>
   <!--- NOT USE -->
   <color name="colorAccentDark">#024302</color>

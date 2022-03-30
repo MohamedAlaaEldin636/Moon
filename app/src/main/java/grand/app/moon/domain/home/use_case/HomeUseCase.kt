@@ -15,12 +15,11 @@ class HomeUseCase @Inject constructor(
   private val homeRepository: HomeRepository,
 ) {
 
-  operator fun invoke(): Flow<Resource<BaseResponse<HomeResponse>>> = flow {
+  fun home(): Flow<Resource<BaseResponse<HomeResponse>>> = flow {
     emit(Resource.Loading)
     val result = homeRepository.home()
     emit(result)
   }.flowOn(Dispatchers.IO)
-
 
 
   fun getStories(): Flow<Resource<BaseResponse<ArrayList<StoryItem>>>> = flow {

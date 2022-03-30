@@ -18,12 +18,8 @@ class MyAccountViewModel @Inject constructor(
 ) : BaseViewModel() {
   @Bindable
   val moreAdapter = MoreAdapter()
-  var isLogin = false
+  var isLogin = userLocalUseCase.isLoggin()
   init {
-    checkLogin()
   }
 
-  fun checkLogin(){
-    isLogin = userLocalUseCase.isLoggin()
-  }
 }

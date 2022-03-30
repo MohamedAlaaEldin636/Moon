@@ -29,27 +29,32 @@ object RetrofitModule {
 
   const val REQUEST_TIME_OUT: Long = 60
 
+  private const val TAG = "RetrofitModule"
   @Provides
   @Singleton
   fun provideHeadersInterceptor(appPreferences: AppPreferences) = run {
-    var countryId = ""
-    var userToken = ""
-    GlobalScope.launch {
-      withContext(Dispatchers.IO) {
-        awaitAll(
-          async {
-            appPreferences.getCountryId().collect { country_id ->
-              countryId = country_id
-            }
-          }, async {
-            appPreferences.getUserToken().collect { token ->
-              userToken = token
-            }
-          }
-        )
-      }
-    }
+    var countryId = appPreferences.getLocal(Constants.COUNTRY_ID)
+    var userToken = appPreferences.getLocal(Constants.TOKEN)
+    var token2 = appPreferences.getUser().token
+    Log.d(TAG, "provideHeadersInterceptor: $userToken")
+    Log.d(TAG, "provideHeadersInterceptor___: $token2")
+//    GlobalScope.launch {
+//      withContext(Dispatchers.IO) {
+//        awaitAll(
+//          async {
+//            appPreferences.getCountryId().collect { country_id ->
+//              countryId = country_id
+//            }
+//          }, async {
+//            appPreferences.getUserToken().collect { token ->
+//              userToken = token
+//            }
+//          }
+//        )
+//      }
+//    }
 
+    appPreferences.getUserToken()
     Interceptor { chain ->
       Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken ::  $countryId")
       chain.proceed(

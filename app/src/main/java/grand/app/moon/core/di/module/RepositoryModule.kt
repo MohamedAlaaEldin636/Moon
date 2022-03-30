@@ -23,9 +23,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import grand.app.moon.data.ads.data_source.AdsRemoteDataSource
+import grand.app.moon.data.ads.repository.AdsRepositoryImpl
 import grand.app.moon.data.country.data_source.CountriesRemoteDataSource
 import grand.app.moon.data.country.repository.CountriesRepositoryImpl
+import grand.app.moon.data.store.data_source.StoreRemoteDataSource
+import grand.app.moon.data.store.repository.StoreRepositoryImpl
+import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.countries.repository.CountriesRepository
+import grand.app.moon.domain.store.repository.StoreRepository
 import javax.inject.Singleton
 
 @Module
@@ -39,11 +45,25 @@ class RepositoryModule {
     appPreferences: AppPreferences
   ): GeneralRepository = GeneralRepositoryImpl(remoteDataSource, appPreferences)
 
+
   @Provides
   @Singleton
   fun provideAuthRepository(
     remoteDataSource: AuthRemoteDataSource,
   ): AuthRepository = AuthRepositoryImpl(remoteDataSource)
+
+  @Provides
+  @Singleton
+  fun provideAdsRepository(
+    remoteDataSource: AdsRemoteDataSource,
+  ): AdsRepository = AdsRepositoryImpl(remoteDataSource)
+
+  @Provides
+  @Singleton
+  fun provideStoreRepository(
+    remoteDataSource: StoreRemoteDataSource,
+  ): StoreRepository = StoreRepositoryImpl(remoteDataSource)
+
 
   @Provides
   @Singleton

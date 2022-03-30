@@ -25,8 +25,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import grand.app.moon.domain.ads.repository.AdsRepository
+import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.countries.repository.CountriesRepository
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
+import grand.app.moon.domain.store.repository.StoreRepository
+import grand.app.moon.domain.store.use_case.StoreUseCase
 import javax.inject.Singleton
 
 @Module
@@ -64,12 +68,24 @@ class UseCaseModule {
 
   @Provides
   @Singleton
+  fun provideStoreUseCase(
+    introRepository: StoreRepository
+  ): StoreUseCase = StoreUseCase(introRepository)
+
+
+  @Provides
+  @Singleton
   fun provideSettingsUseCase(
     @ApplicationContext appContext: Context,
     settingsRepository: SettingsRepository
   ): SettingsUseCase = SettingsUseCase(appContext,settingsRepository)
 
-  //public use cases
+  @Provides
+  @Singleton
+  fun provideAdsUseCase(
+    authRepository: AdsRepository,
+  ): AdsUseCase = AdsUseCase(authRepository)
+
   @Provides
   @Singleton
   fun provideCheckFirstTimeUseCase(

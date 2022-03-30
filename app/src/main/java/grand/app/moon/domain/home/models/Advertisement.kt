@@ -7,7 +7,7 @@ import androidx.annotation.Keep
 @Keep
 data class Advertisement(
   @SerializedName("average_rate")
-  val averageRate: Int = 0,
+  val averageRate: String? = "0",
   @SerializedName("city")
   val city: Country = Country(),
   @SerializedName("country")
@@ -31,7 +31,7 @@ data class Advertisement(
   @SerializedName("price")
   val price: Int = 0,
   @SerializedName("store")
-  val store: Store = Store(),
+  val store: Store? = Store(),
   @SerializedName("title")
   val title: String = "",
   @SerializedName("views_count")

@@ -18,10 +18,15 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@drawable/ic_curve"
+      app:titleTextColor="@color/colorWhite"
+      app:titleCentered="true"
+      android:gravity="center"
       android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:theme="@style/ToolBarStyle" />
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+      app:theme="@style/ToolBarStyle"/>
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textSize="@dimen/text_size16"
         android:text="@{viewModel.titleToolbar}"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"

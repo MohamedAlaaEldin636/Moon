@@ -16,7 +16,7 @@
   </data>
 
   <androidx.cardview.widget.CardView
-    android:id="@+id/img_login"
+    android:id="@+id/item_store_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dimen20"
@@ -34,16 +34,13 @@
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_store"
         style="@style/mediumFont"
-        android:layout_width="@dimen/dimen120"
-        android:layout_height="@dimen/dimen120"
+        android:layout_width="@dimen/dimen100"
+        android:layout_height="@dimen/dimen100"
         android:drawableStart="@drawable/ic_search"
         android:drawableEnd="@drawable/ic_filter"
-        android:drawablePadding="@dimen/dimen12"
         android:focusable="false"
         android:scaleType="fitXY"
         android:hint="@string/search"
-        android:padding="@dimen/dimen10"
-        android:textSize="@dimen/text_size16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +54,6 @@
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/dimen10"
         android:gravity="center"
-        android:paddingBottom="@dimen/dimen2"
         android:text="@{itemViewModels.store.name}"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/text_size16"
@@ -72,9 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/dimen10"
-        android:layout_marginTop="@dimen/dimen5"
         android:gravity="center"
-        android:paddingBottom="@dimen/dimen2"
         android:text="@{`(`+itemViewModels.store.nickname+`)`}"
         android:textColor="@color/greyText"
         android:textSize="@dimen/text_size15"
@@ -96,7 +90,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen8"
-        android:layout_marginTop="@dimen/dimen2"
         android:layout_marginEnd="@dimen/dimen8"
         android:progressTint="@color/colorPrimary"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -130,7 +123,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/dimen10"
-        android:layout_marginTop="@dimen/dimen5"
+        android:layout_marginTop="@dimen/dimen2"
         android:drawableStart="@drawable/ic_eye"
         android:drawablePadding="@dimen/dimen5"
         android:drawableTint="@color/greyText"
@@ -150,7 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/dimen10"
-        android:layout_marginTop="@dimen/dimen5"
+        android:layout_marginTop="@dimen/dimen2"
         android:drawableStart="@drawable/ic_ads"
         android:drawablePadding="@dimen/dimen5"
         android:drawableTint="@color/greyText"
@@ -175,6 +168,7 @@
 
 
       <RelativeLayout
+        android:id="@+id/follow"
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -184,17 +178,18 @@
         android:layout_width="0dp"
         android:padding="@dimen/dimen10"
         android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/btn_next"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:gravity="center"
           android:layout_centerInParent="true"
+          android:drawableStart="@{itemViewModels.store.following ? @drawable/ic_close : @drawable/ic_plus }"
           android:drawablePadding="@dimen/dimen10"
-          android:drawableStart="@drawable/ic_plus"
-          android:text="@string/follow"
           android:drawableTint="@color/colorWhite"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:gravity="center"
+          android:text="@{itemViewModels.store.following ? @string/un_follow : @string/follow }"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/white" />
 
       </RelativeLayout>

@@ -7,6 +7,8 @@
 
     <import type="grand.app.moon.presentation.base.utils.Constants" />
 
+    <import type="android.view.View" />
+
     <variable
       name="viewModel"
       type="grand.app.moon.presentation.home.viewModels.HomeViewModel" />

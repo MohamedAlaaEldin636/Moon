@@ -22,6 +22,7 @@ class MyApplication : LocaleAwareApplication() {
 
   override
   fun onCreate() {
+
     super.onCreate()
     updateAndroidSecurityProvider()
   }

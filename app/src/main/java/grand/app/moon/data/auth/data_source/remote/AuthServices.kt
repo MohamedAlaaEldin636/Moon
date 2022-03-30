@@ -2,6 +2,7 @@ package grand.app.moon.data.auth.data_source.remote
 
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.entity.request.LogInRequest
+import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.auth.entity.request.VerifyAccountRequest
 import grand.app.moon.domain.utils.BaseResponse
 import okhttp3.MultipartBody
@@ -25,4 +26,13 @@ interface AuthServices {
     @Part image: MultipartBody.Part?
   ): BaseResponse<*>
 
+  @POST("v1/profile")
+  suspend fun updateProfile(@Body request: UpdateProfileRequest): BaseResponse<User>
+
+  @Multipart
+  @POST("v1/profile")
+  suspend fun updateProfile(
+    @QueryMap map: Map<String, String>,
+    @Part image: MultipartBody.Part?
+  ): BaseResponse<User>
 }

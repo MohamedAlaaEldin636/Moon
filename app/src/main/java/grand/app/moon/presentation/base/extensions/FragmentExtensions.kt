@@ -112,17 +112,19 @@ fun Fragment.backToPreviousScreen() {
 }
 
 @BindingAdapter("images")
-fun setImages(sliderView: ImageSlider, images: ArrayList<String>) {
-  val list = ArrayList<SlideModel>()
-  for (image in images) {
-    list.add(SlideModel(image, ScaleTypes.FIT))
-  }
-  sliderView.setImageList(list)
-  sliderView.setItemClickListener(object : ItemClickListener {
-    override fun onItemSelected(position: Int) {
-
+fun setImages(sliderView: ImageSlider, images: ArrayList<String>?) {
+  images?.let {
+    val list = ArrayList<SlideModel>()
+    for (image in images) {
+      list.add(SlideModel(image, ScaleTypes.FIT))
     }
-  })
+    sliderView.setImageList(list)
+    sliderView.setItemClickListener(object : ItemClickListener {
+      override fun onItemSelected(position: Int) {
+
+      }
+    })
+  }
 }
 
 fun Fragment.openUrl(url :String) {

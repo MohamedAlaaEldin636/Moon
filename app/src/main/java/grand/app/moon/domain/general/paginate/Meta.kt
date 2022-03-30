@@ -1,4 +1,4 @@
-package grand.app.moon.domain.general.paginate
+package com.structure.base_mvvm.domain.general.paginate
 
 data class Meta (
   val path:String="",

@@ -3,6 +3,7 @@ package grand.app.moon.domain.auth.use_case
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.entity.request.LogInRequest
+import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.auth.repository.AuthRepository
 import grand.app.moon.domain.utils.*
 import grand.app.moon.presentation.base.utils.Constants
@@ -23,6 +24,20 @@ class LogInUseCase @Inject constructor(
 
     emit(Resource.Loading)
     val result = authRepository.logIn(request)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun updateProfile(
+    request: UpdateProfileRequest
+  ): Flow<Resource<BaseResponse<User>>> = flow {
+
+    emit(Resource.Loading)
+    val result = authRepository.updateProfile(request)
+    if(result is Resource.Success){
+      userLocalUseCase(
+        result.value.data
+      )
+    }
     emit(result)
   }.flowOn(Dispatchers.IO)
 

@@ -10,6 +10,23 @@
     android:name="grand.app.moon.presentation.home.HomeFragment"
     android:label=""
     tools:layout="@layout/fragment_home">
+    <action
+      android:id="@+id/action_home_fragment_to_adsDetailsFragment"
+
+      app:destination="@id/adsDetailsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_home_fragment_to_storeDetailsFragment"
+
+      app:destination="@id/storeDetailsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
   </fragment>
 
   <fragment
@@ -25,63 +42,78 @@
     android:name="grand.app.moon.presentation.contactUs.ContactUsFragment"
     android:label="@string/contact_us" />
 
-  <fragment
-    android:id="@+id/myAccountFragment"
-    android:name="grand.app.moon.presentation.myAccount.MyAccountFragment"
-    android:label="@string/my_account" />
-
   <include app:graph="@navigation/nav_settings" />
+  <fragment
+    android:id="@+id/adsDetailsFragment"
+    android:name="grand.app.moon.presentation.ads.AdsDetailsFragment"
+    android:label="">
+    <argument
+      android:name="id"
+      app:argType="integer" />
+    <argument
+      android:name="type"
+      app:argType="integer" />
+  </fragment>
+  <include app:graph="@navigation/nav_account" />
+  <fragment
+    android:id="@+id/storeDetailsFragment"
+    android:name="grand.app.moon.presentation.store.StoreDetailsFragment"
+    android:label="@string/store_details">
+    <argument
+      android:name="id"
+      app:argType="integer" />
+  </fragment>
 
 
   <!--  <fragment-->
-<!--    android:id="@+id/reviewsFragment"-->
-<!--    android:name="grand.app.moon.presentation.reviews.ReviewsFragment"-->
-<!--    android:label="ReviewsFragment">-->
-<!--&lt;!&ndash;    <action&ndash;&gt;-->
-<!--&lt;!&ndash;      android:id="@+id/action_reviewsFragment_to_review_dialog_comment"&ndash;&gt;-->
-<!--&lt;!&ndash;      app:destination="@id/review_dialog_comment" />&ndash;&gt;-->
-<!--    <argument-->
-<!--      android:name="instructor_id"-->
-<!--      app:argType="integer" />-->
-<!--  </fragment>-->
+  <!--    android:id="@+id/reviewsFragment"-->
+  <!--    android:name="grand.app.moon.presentation.reviews.ReviewsFragment"-->
+  <!--    android:label="ReviewsFragment">-->
+  <!--&lt;!&ndash;    <action&ndash;&gt;-->
+  <!--&lt;!&ndash;      android:id="@+id/action_reviewsFragment_to_review_dialog_comment"&ndash;&gt;-->
+  <!--&lt;!&ndash;      app:destination="@id/review_dialog_comment" />&ndash;&gt;-->
+  <!--    <argument-->
+  <!--      android:name="instructor_id"-->
+  <!--      app:argType="integer" />-->
+  <!--  </fragment>-->
 
-<!--  <fragment-->
-<!--    android:id="@+id/contact_fragment"-->
-<!--    android:name="grand.app.moon.presentation.contactUs.ContactUsFragment"-->
-<!--    android:label="@string/contact_us">-->
-<!--    <argument-->
-<!--      android:name="type"-->
-<!--      android:defaultValue="contact_us"-->
-<!--      app:argType="string" />-->
-<!--  </fragment>-->
-<!--  <fragment-->
-<!--    android:id="@+id/suggestions_fragment"-->
-<!--    android:name="grand.app.moon.presentation.contactUs.SuggestionsFragment"-->
-<!--    android:label="@string/suggestions">-->
-<!--    <argument-->
-<!--      android:name="type"-->
-<!--      android:defaultValue="complaint"-->
-<!--      app:argType="string" />-->
-<!--  </fragment>-->
-<!--  <dialog-->
-<!--    android:id="@+id/review_dialog_comment"-->
-<!--    android:name="grand.app.moon.presentation.reviews.ReviewDialog"-->
-<!--    tools:layout="@layout/review_dialog">-->
-<!--    <argument-->
-<!--      android:name="instructor_id"-->
-<!--      app:argType="integer" />-->
-<!--  </dialog>-->
-<!--  <fragment-->
-<!--    android:id="@+id/privacy_fragment"-->
-<!--    android:name="grand.app.moon.presentation.privacy.PrivacyFragment"-->
-<!--    android:label="@string/privacy" />-->
-<!--  <fragment-->
-<!--    android:id="@+id/terms_fragment"-->
-<!--    android:name="grand.app.moon.presentation.terms.TermsFragment"-->
-<!--    android:label="@string/terms" />-->
-<!--  <fragment-->
-<!--    android:id="@+id/social_fragment"-->
-<!--    android:name="grand.app.moon.presentation.social.SocialFragment"-->
-<!--    android:label="SocialFragment" />-->
+  <!--  <fragment-->
+  <!--    android:id="@+id/contact_fragment"-->
+  <!--    android:name="grand.app.moon.presentation.contactUs.ContactUsFragment"-->
+  <!--    android:label="@string/contact_us">-->
+  <!--    <argument-->
+  <!--      android:name="type"-->
+  <!--      android:defaultValue="contact_us"-->
+  <!--      app:argType="string" />-->
+  <!--  </fragment>-->
+  <!--  <fragment-->
+  <!--    android:id="@+id/suggestions_fragment"-->
+  <!--    android:name="grand.app.moon.presentation.contactUs.SuggestionsFragment"-->
+  <!--    android:label="@string/suggestions">-->
+  <!--    <argument-->
+  <!--      android:name="type"-->
+  <!--      android:defaultValue="complaint"-->
+  <!--      app:argType="string" />-->
+  <!--  </fragment>-->
+  <!--  <dialog-->
+  <!--    android:id="@+id/review_dialog_comment"-->
+  <!--    android:name="grand.app.moon.presentation.reviews.ReviewDialog"-->
+  <!--    tools:layout="@layout/review_dialog">-->
+  <!--    <argument-->
+  <!--      android:name="instructor_id"-->
+  <!--      app:argType="integer" />-->
+  <!--  </dialog>-->
+  <!--  <fragment-->
+  <!--    android:id="@+id/privacy_fragment"-->
+  <!--    android:name="grand.app.moon.presentation.privacy.PrivacyFragment"-->
+  <!--    android:label="@string/privacy" />-->
+  <!--  <fragment-->
+  <!--    android:id="@+id/terms_fragment"-->
+  <!--    android:name="grand.app.moon.presentation.terms.TermsFragment"-->
+  <!--    android:label="@string/terms" />-->
+  <!--  <fragment-->
+  <!--    android:id="@+id/social_fragment"-->
+  <!--    android:name="grand.app.moon.presentation.social.SocialFragment"-->
+  <!--    android:label="SocialFragment" />-->
 
 </navigation>

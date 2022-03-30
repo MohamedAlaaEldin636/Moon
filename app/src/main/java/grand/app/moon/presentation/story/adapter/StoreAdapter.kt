@@ -14,14 +14,15 @@ import grand.app.moon.databinding.ItemStoreBinding
 import grand.app.moon.databinding.ItemStoryBinding
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
 import grand.app.moon.presentation.story.viewModels.ItemStoryViewModel
 
 class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   lateinit var context: Context
-  var clickEvent: SingleLiveEvent<Store> = SingleLiveEvent()
-
+  var submitEvent: SingleLiveEvent<String> = SingleLiveEvent()
+  var position = 0
   private val differCallback = object : DiffUtil.ItemCallback<Store>() {
     override fun areItemsTheSame(
       oldItem: Store,
@@ -49,10 +50,16 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemStoreViewModel(data)
-//    holder.itemLayoutBinding.itemMore.setOnClickListener {
-//      Log.d(TAG, "onBindViewHolder: ")
-//      clickEvent.value = data
-//    }
+    holder.itemLayoutBinding.itemStoreContainer.setOnClickListener {
+      this.position = position
+      submitEvent.value = Constants.SUBMIT
+    }
+    holder.itemLayoutBinding.follow.setOnClickListener {
+      data.isFollowing = data.isFollowing != true
+      this.position = position
+      submitEvent.value = Constants.FOLLOW
+      notifyItemChanged(position)
+    }
     holder.setViewModel(itemViewModel)
 
   }

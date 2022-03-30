@@ -22,22 +22,25 @@ object Constants {
   const val FIRST_TIME: Int = 16
   const val HOME: Int = 17
   const val ACTION: Int = 18
+  const val LOGIN_REQUIRED: Int = 19
+
 
 
     const val BUNDLE = "BUNDLE"
   const val REQUIRED: String = "required"
   const val Verify: String = "verify"
-  const val FORGET: String = "reset"
+  const val IMAGE: String = "image"
   const val COUNTRY_ID = "COUNTRY_ID"
-  const val REGISTER_STEP = "REGISTER_STEP"
+
+  const val TOKEN = "TOKEN"
   const val SPLASH: String = "splash"
   const val SOCIAL_TYPE: String = "social_media"
-  const val PRIVACY_TYPE: String = "privacy_policy"
-  const val IS_LOGGED_IN: String = "is_logged_in"
+  const val PICKER_IMAGE: String = "PICKER_IMAGE"
+  const val SUBMIT: String = "submit"
   const val MORE: String = "more"
   const val NEXT: String = "next"
   const val SKIP: String = "skip"
-  const val EMPTY: String = "EMPTY"
+  const val FOLLOW: String = "follow"
   const val LANGUAGE: String = "language"
   const val LOGIN: String = "login"
   const val LOGOUT: String = "logout"

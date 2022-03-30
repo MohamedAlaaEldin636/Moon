@@ -81,5 +81,16 @@
   <string name="some_customers_reviews">بعض اراء العملاء</string>
   <string name="report_on_issue">أبلغ عن اساءة</string>
   <string name="similar_ads">إعلانات مشابهة</string>
+  <string name="please_install_whatsapp_on_your_phone">من فضلك قم بتنزيل الواتساب</string>
+  <string name="loading_more">تحميل المزيد</string>
+  <string name="update">تعديل</string>
+  <string name="show_number_hours">عدد ساعات العمل</string>
+  <string name="views">المشاهدات</string>
+  <string name="rates">التقييمات</string>
+  <string name="followers">المتابعين</string>
+  <string name="description_on_shop">وصف عن المتجر</string>
+  <string name="store_map">خريطة المتجر</string>
+  <string name="block_store">حظر المتجر</string>
+  <string name="store_details">تفاصيل المتجر</string>
 
 </resources>

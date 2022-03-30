@@ -3,7 +3,6 @@ package grand.app.moon.presentation.home
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -14,6 +13,7 @@ import grand.app.moon.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.extensions.hide
+import grand.app.moon.presentation.base.extensions.invisible
 import grand.app.moon.presentation.base.extensions.show
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
 
@@ -43,7 +43,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     binding.toolbar.setupWithNavController(nav, appBarConfiguration)
 
     nav.addOnDestinationChangedListener { controller, destination, arguments ->
-      binding.tvHomeTitle.text = destination.label
+      resetTexts()
       when(destination.id) {
         R.id.home_fragment -> {
           binding.bottomNavigationView.show()
@@ -51,15 +51,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showImage()
         }
         R.id.myAccountFragment -> {
+          binding.tvHomeTitle.text = destination.label
           if(!viewModel.userLocalUseCase.isLoggin()) startActivity(Intent(this, AuthActivity::class.java))
           showTopBarControls()
           showText()
         }
         R.id.settings_fragment , R.id.mapFragment, R.id.discoverFragment ->{
+          binding.tvHomeTitle.text = destination.label
           showTopBarControls()
           showText()
         }
+        R.id.adsDetailsFragment ->{
+          hideTopBarControls()
+          hideAllToolbar()
+        }
         else -> {
+          binding.toolbar.title = destination.label
           hideTopBarControls()
           showText()
         }
@@ -68,6 +75,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     }
 
     binding.bottomNavigationView.setupWithNavController(nav)
+    binding.toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
+  }
+
+  private fun resetTexts(){
+    binding.toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.colorWhite))
+    binding.tvHomeTitle.text = ""
+    binding.toolbar.title = ""
   }
 
   private fun hideTopBarControls() {
@@ -77,6 +91,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     binding.icNotification.hide()
     binding.icChat.hide()
     binding.icMenu.hide()
+    binding.toolbar.show()
   }
 
   private fun showTopBarControls() {
@@ -86,17 +101,25 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     binding.icNotification.show()
     binding.icChat.show()
     binding.icMenu.show()
+    binding.toolbar.show()
   }
 
   private fun showImage() {
     binding.imgMoonLogo.show()
-    binding.tvHomeTitle.hide()
+//    binding.tvHomeTitle.hide()
+    binding.toolbar.show()
   }
 
   private fun showText() {
     binding.imgMoonLogo.hide()
     binding.tvHomeTitle.show()
+    binding.toolbar.show()
+  }
 
+  private fun hideAllToolbar() {
+    binding.imgMoonLogo.hide()
+    binding.tvHomeTitle.hide()
+    binding.toolbar.hide()
   }
 
 

@@ -85,9 +85,11 @@ fun View.goneUnless(visible: Boolean) {
 }
 
 @BindingAdapter("app:rate")
-fun RatingBar.rateApp(value: String) {
-  if (value.isNotEmpty())
-    rating = value.toFloat()
+fun RatingBar.rateApp(value: String?) {
+  value?.let {
+    if (value.isNotEmpty())
+      rating = value.toFloat()
+  }
 }
 
 fun ImageView.drawCircle(backgroundColor: String, borderColor: String? = null) {

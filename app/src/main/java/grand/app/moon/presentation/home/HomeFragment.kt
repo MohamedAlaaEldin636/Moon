@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.forEach
 
@@ -26,7 +27,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-
+    viewModel.initAllServices()
   }
 
   override
@@ -41,8 +42,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            updateList(it.value.data)
-            viewModel.updateList(it.value.data)
+
+
+            val hr = it.value.data.copy(
+              categoryAds = ArrayList(it.value.data.categoryAds.map { ca ->
+                ca.copy(name = "jfiosdjfoisdji ${ca.name}")
+              })
+            )
+
+//            updateList(hr)
+            viewModel.updateList(hr)
 
           }
           is Resource.Failure -> {
@@ -52,33 +61,45 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
       }
     }
-    lifecycleScope.launchWhenResumed {
+    lifecycleScope.launchWhenCreated {
       viewModel.storiesResponse
         .collect {
-        if(it is Resource.Success){
-          it.value.data.add(0, StoryItem(name = getString(R.string.show_more),isFirst = true))
-          viewModel.updateStories(it.value.data)
+          if (it is Resource.Success) {
+            it.value.data.add(0, StoryItem(name = getString(R.string.show_more), isFirst = true))
+            viewModel.updateStories(it.value.data)
+          }
         }
-      }
     }
 
+    viewModel.storeAdapter.submitEvent.observe(viewLifecycleOwner, {
+      when (it) {
+        Constants.SUBMIT -> navigateSafe(
+          HomeFragmentDirections.actionHomeFragmentToStoreDetailsFragment(
+            viewModel.storeAdapter.differ.currentList[viewModel.storeAdapter.position].id
+          )
+        )
+        Constants.FOLLOW -> {
+
+        }
+      }
+    })
   }
 
   private fun updateList(data: HomeResponse) {
     data.categoryAds.forEach {
       it.name = "${resources.getString(R.string.advertisement)} ${it.name}"
     }
-    if(data.mostPopularAds.isNotEmpty()){
+    if (data.mostPopularAds.isNotEmpty()) {
       val categoryAdvertisement = CategoryAdvertisement()
       categoryAdvertisement.name = resources.getString(R.string.suggestions_ads_for_you)
       categoryAdvertisement.advertisements.addAll(data.suggestions)
-      data.categoryAds.add(0,categoryAdvertisement)
+      data.categoryAds.add(0, categoryAdvertisement)
     }
-    if(data.mostPopularAds.isNotEmpty()){
+    if (data.mostPopularAds.isNotEmpty()) {
       val categoryAdvertisement = CategoryAdvertisement()
       categoryAdvertisement.name = resources.getString(R.string.most_popular_ads)
       categoryAdvertisement.advertisements.addAll(data.mostPopularAds)
-      data.categoryAds.add(0,categoryAdvertisement)
+      data.categoryAds.add(0, categoryAdvertisement)
     }
   }
 

@@ -21,4 +21,7 @@ class AuthRepositoryImpl @Inject constructor(
   override suspend fun sendCode(request: VerifyAccountRequest): Resource<BaseResponse<*>> =
     remoteDataSource.sendCode(request)
 
+  override suspend fun updateProfile(request: UpdateProfileRequest): Resource<BaseResponse<User>> =
+    remoteDataSource.updateProfile(request)
+
 }

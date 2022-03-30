@@ -120,6 +120,8 @@ class AppPreferences @Inject constructor(private val context: Context) {
   fun saveUser(user: User) {
     appPreferences.edit {
       it.putString(USER_DATA.first, Gson().toJson(user))
+      it.putString(Constants.TOKEN, user.token)
+
       it.putInt("id", user.id)
       it.apply()
     }
@@ -128,7 +130,6 @@ class AppPreferences @Inject constructor(private val context: Context) {
   private  val TAG = "AppPreferences"
   fun getUser(): User {
     val value: String? = appPreferences.getString(USER_DATA.first, USER_DATA.second)
-    Log.d(TAG, "getUser: $value")
     if (value != null)
       return Gson().fromJson(value, User::class.java)
     else return User()
@@ -138,6 +139,7 @@ class AppPreferences @Inject constructor(private val context: Context) {
   fun clearUser() {
     appPreferences.edit {
       it.putString(USER_DATA.first, "")
+      it.putString(Constants.TOKEN, "")
       it.putInt("id", -1)
       it.apply()
     }

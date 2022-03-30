@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.ads.viewModels
 
+import android.view.View
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.story.entity.StoryItem
@@ -10,4 +11,5 @@ class ItemAdsViewModel  constructor(var advertisement: Advertisement) : BaseView
   val adapter = AdsAdapter()
   init {
   }
+
 }

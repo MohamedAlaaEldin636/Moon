@@ -14,6 +14,7 @@ import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
@@ -26,6 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+  var storeUseCase: StoreUseCase,
   var userLocalUseCase: UserLocalUseCase,
   val accountRepository: AccountRepository,
   private val homeUseCase: HomeUseCase) : BaseViewModel() {
@@ -55,6 +57,12 @@ class HomeViewModel @Inject constructor(
 
 
   init {
+//    getCategories()
+//    homeApi()
+//    getStories()
+  }
+
+  fun initAllServices(){
     getCategories()
     homeApi()
     getStories()
@@ -70,8 +78,7 @@ class HomeViewModel @Inject constructor(
   }
 
   private fun homeApi() {
-    homeUseCase.invoke()
-
+    homeUseCase.home()
       .onEach { result ->
         _homeResponse.value = result
       }
@@ -99,5 +106,6 @@ class HomeViewModel @Inject constructor(
     Log.d(TAG, "updateList: "+data.categoryAds.size)
     adsHomeAdapter.differ.submitList(data.categoryAds)
     notifyPropertyChanged(BR.adsHomeAdapter)
+    show.set(true)
   }
 }

@@ -29,6 +29,7 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
+    viewModel.show.set(false)
     setData()
   }
 
@@ -39,7 +40,11 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
       Log.d(TAG, "setBindingVariables: here")
       if (it.id is String) {
         when (it.id) {
-          Constants.LOGIN -> startActivity(Intent(activity, AuthActivity::class.java))
+          Constants.PROFILE-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToProfileFragment())
+          Constants.LOGIN -> openLoginActivity()
+          Constants.FAVOURITE-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(1,resources.getString(R.string.favourite)))
+          Constants.LAST_ADS-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(2,resources.getString(R.string.last_search)))
+          Constants.LAST_SEARCH-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(5,resources.getString(R.string.stores_had_been_followed)))
           Constants.LOGOUT -> {
             Log.d(TAG, "setData: logout")
             viewModel.userLocalUseCase.clearUser()
@@ -131,8 +136,6 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
 
   override fun onResume() {
     super.onResume()
-    viewModel.checkLogin()
-    setList()
   }
 
 }

@@ -44,6 +44,7 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
 
   override
   fun onCreate(savedInstanceState: Bundle?) {
+//    LocaleHelper.setLocale(this, Locale("ar"))
     super.onCreate(savedInstanceState)
     initViewBinding()
     setContentView(binding.root)

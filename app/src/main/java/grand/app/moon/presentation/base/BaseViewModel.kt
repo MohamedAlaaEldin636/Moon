@@ -1,17 +1,24 @@
 package grand.app.moon.presentation.base
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import androidx.databinding.Observable
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.PropertyChangeRegistry
 import es.dmoral.toasty.Toasty
 import grand.app.moon.R
+import kotlinx.coroutines.Job
 
 open class BaseViewModel : ViewModel(), Observable {
   private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
+  val show = ObservableBoolean(false)
+
+  protected var job: Job = Job()
 
   var percentageAds = 90
   var clickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
@@ -26,7 +33,16 @@ open class BaseViewModel : ViewModel(), Observable {
 
   fun showError(context: Context, message : String){
     Toasty.error(context,message, Toast.LENGTH_SHORT, true).show();
+  }
 
+  fun showInfo(context: Context, message : String){
+    Toasty.info(context,message, Toast.LENGTH_SHORT, true).show();
+  }
+
+  fun callPhone(context: Context,phone: String){
+    val call = Uri.parse("tel:$phone")
+    val surf = Intent(Intent.ACTION_DIAL, call)
+    context.startActivity(surf)
   }
 
   override fun addOnPropertyChangedCallback(

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/nav_account"
+  app:startDestination="@id/myAccountFragment">
+
+  <fragment
+    android:id="@+id/myAccountFragment"
+    android:name="grand.app.moon.presentation.myAccount.MyAccountFragment"
+    android:label="@string/my_account">
+
+    <action
+      android:id="@+id/action_myAccountFragment_to_adsListFragment"
+      app:destination="@id/adsListFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_myAccountFragment_to_profileFragment"
+      app:destination="@id/profileFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+  </fragment>
+  <fragment
+    android:id="@+id/adsListFragment"
+    android:name="grand.app.moon.presentation.ads.AdsListFragment"
+    android:label="{title}">
+    <argument
+      android:name="type"
+      app:argType="integer" />
+    <argument
+      android:name="title"
+      app:argType="string" />
+  </fragment>
+  <fragment
+    android:id="@+id/profileFragment"
+    android:name="grand.app.moon.presentation.auth.profile.ProfileFragment"
+    android:label="@string/personal_info" />
+
+</navigation>

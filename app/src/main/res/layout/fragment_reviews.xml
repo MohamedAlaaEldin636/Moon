@@ -7,9 +7,9 @@
 
     <import type="grand.app.moon.presentation.base.utils.Constants" />
 
-<!--    <variable-->
-<!--      name="viewModel"-->
-<!--      type="grand.app.moon.presentation.reviews.viewModels.ReviewsViewModel" />-->
+    <variable
+      name="viewModel"
+      type="app.grand.tafwak.presentation.reviews.viewModels.ReviewsViewModel" />
   </data>
 
   <FrameLayout

@@ -19,7 +19,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:background="@drawable/corner_fbfbfb"
       android:layout_height="wrap_content"
       android:orientation="vertical">
 
@@ -33,7 +32,7 @@
         android:src="@drawable/bg_no_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:loadImage="@{itemViewModels.reviews.image}"
+        app:loadImage="@{itemViewModels.reviews.user.image}"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         app:strokeColor="@color/lightGray"
         app:strokeWidth="@dimen/dimen1" />
@@ -49,7 +48,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="@dimen/text_size14"
-        android:text="@{itemViewModels.reviews.name}"
+        android:text="@{itemViewModels.reviews.user.name}"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
@@ -81,14 +80,14 @@
         android:layout_marginTop="@dimen/dimen7"
         android:layout_marginEnd="@dimen/dimen8"
         android:layout_marginBottom="@dimen/dimen7"
-        android:text="@{itemViewModels.reviews.content}"
+        android:text="@{itemViewModels.reviews.review}"
         android:textAlignment="viewStart"
         android:textSize="@dimen/text_size12"
         android:textColor="@color/color8E8E8E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/img"
-        app:layout_constraintTop_toBottomOf="@+id/img" />
+        app:layout_constraintTop_toBottomOf="@+id/rate" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

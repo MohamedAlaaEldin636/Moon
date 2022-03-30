@@ -5,23 +5,30 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemAdsBinding
-import grand.app.moon.databinding.ItemStoryBinding
 import grand.app.moon.domain.home.models.Advertisement
-import grand.app.moon.domain.story.entity.StoryItem
-import grand.app.moon.presentation.ads.viewModels.ItemAdsHomeViewModel
 import grand.app.moon.presentation.ads.viewModels.ItemAdsViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
-import grand.app.moon.presentation.story.viewModels.ItemStoryViewModel
+import androidx.navigation.NavController
+
+
+
+
+
 
 class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
   lateinit var context: Context
   var clickEvent: SingleLiveEvent<Advertisement> = SingleLiveEvent()
+
+  //view 2 , search 5
+  var type = 2
 
   private val differCallback = object : DiffUtil.ItemCallback<Advertisement>() {
     override fun areItemsTheSame(
@@ -46,12 +53,28 @@ class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
     return ViewHolder(view)
   }
 
-  private  val TAG = "MoreAdapter"
+  private val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemAdsViewModel(data)
     holder.setViewModel(itemViewModel)
 
+
+
+    holder.itemLayoutBinding.itemAdsContainer.setOnClickListener {
+      holder.itemLayoutBinding.root.findNavController().navigate(
+        R.id.adsDetailsFragment, bundleOf(
+          "id" to data.id,
+          "type" to type
+        )
+      )
+    }
+
+    //take-care
+    holder.itemLayoutBinding.icFav.setOnClickListener {
+      data.isFavorite = data.isFavorite != true
+      notifyItemChanged(position)
+    }
   }
 
   override fun getItemCount(): Int {
@@ -67,6 +90,16 @@ class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
     super.onViewDetachedFromWindow(holder)
     holder.unBind()
   }
+
+  fun insertData(insertList: List<Advertisement>) {
+    val array = ArrayList<Advertisement>(differ.currentList)
+    val size = array.size
+    array.addAll(insertList)
+    differ.submitList(array)
+    notifyDataSetChanged()
+  }
+
+
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {

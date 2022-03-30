@@ -11,6 +11,7 @@ open class BaseRequest {
   @Transient
   var image: ArrayList<MultipartBody.Part> = arrayListOf()
   fun setImage(path: String, key: String){
+    image.clear()
     val file = File(path)
     val requestFile: RequestBody = RequestBody.create(
       "multipart/form-data".toMediaTypeOrNull(),

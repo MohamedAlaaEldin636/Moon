@@ -12,6 +12,8 @@ import grand.app.moon.presentation.base.extensions.hideKeyboard
 import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.databinding.FragmentConfirmCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
+import grand.app.moon.presentation.home.HomeActivity
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
@@ -41,7 +43,8 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            activity?.finish()
+            activity?.finishAffinity()
+            openActivityAndClearStack(HomeActivity::class.java)
           }
           is Resource.Failure -> {
             hideLoading()

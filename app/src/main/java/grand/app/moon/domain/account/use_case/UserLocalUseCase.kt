@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class UserLocalUseCase @Inject constructor(private val accountRepository: AccountRepository) {
   suspend operator fun invoke(user: User) = accountRepository.saveUserToLocal(user)
-  suspend operator fun invoke(): User = accountRepository.getUserToLocal()
+  operator fun invoke(): User = accountRepository.getUserToLocal()
   suspend fun saveUserToken(value: String) =
     accountRepository.saveUserToken(value)
 
@@ -29,6 +29,11 @@ class UserLocalUseCase @Inject constructor(private val accountRepository: Accoun
   fun clearUser() {
     accountRepository.clearUser()
   }
+
+  fun getKey(key: String) : String{
+    return accountRepository.getKeyFromLocal(key)
+  }
+
   suspend fun saveToken(value: String) {
     accountRepository.saveFirebaseTokenToLocal(value)
   }

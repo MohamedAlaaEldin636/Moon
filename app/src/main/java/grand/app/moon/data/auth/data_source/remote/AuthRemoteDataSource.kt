@@ -20,5 +20,10 @@ class AuthRemoteDataSource @Inject constructor(private val apiService: AuthServi
     apiService.sendCode(request)
   }
 
-
+  suspend fun updateProfile(request: UpdateProfileRequest) = safeApiCall {
+    if (request.image.isEmpty())
+      apiService.updateProfile(request)
+    else
+      apiService.updateProfile(getParameters(request), request.image[0])
+  }
 }

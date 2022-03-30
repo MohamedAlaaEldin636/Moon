@@ -16,7 +16,7 @@ import grand.app.moon.domain.home.models.Reviews
 class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ViewHolder>() {
   private val differCallback = object : DiffUtil.ItemCallback<Reviews>() {
     override fun areItemsTheSame(oldItem: Reviews, newItem: Reviews): Boolean {
-      return oldItem.id == newItem.id
+      return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: Reviews, newItem: Reviews): Boolean {
