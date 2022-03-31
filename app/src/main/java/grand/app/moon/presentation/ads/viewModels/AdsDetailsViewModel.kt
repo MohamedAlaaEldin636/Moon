@@ -85,23 +85,13 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun whatsapp(v: View) {
-    var url = "https://api.whatsapp.com/send?phone=${advertisement.get()?.store?.phone}"
-    val i = Intent(Intent.ACTION_VIEW)
-    url += "&text=" + URLEncoder.encode(
-      advertisement.get()?.title + "\n" + advertisement.get()?.description,
-      "UTF-8"
-    )
-    try {
-      i.setPackage("com.whatsapp")
-      i.data = Uri.parse(url)
-      v.context.startActivity(i)
-    } catch (e: Exception) {
-      try {
-        i.setPackage("com.whatsapp.w4b")
-        i.data = Uri.parse(url)
-        v.context.startActivity(i)
-      } catch (exception: Exception) {
-        showInfo(v.context, v.context.getString(R.string.please_install_whatsapp_on_your_phone));
+    advertisement.get()?.title?.let {
+      advertisement.get()?.description?.let { it1 ->
+        advertisement.get()?.store?.phone?.let { it2 ->
+          shareWhatsapp(v,
+            it, it1, it2
+          )
+        }
       }
     }
   }

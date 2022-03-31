@@ -2,6 +2,7 @@
   android:width="27dp"
   android:height="27dp"
   android:autoMirrored="true"
+
   android:viewportWidth="27"
 
   android:viewportHeight="27">

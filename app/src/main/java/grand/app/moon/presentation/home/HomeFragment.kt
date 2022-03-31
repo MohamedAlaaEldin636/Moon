@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.home
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import grand.app.moon.domain.utils.Resource
@@ -30,6 +31,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     viewModel.initAllServices()
   }
 
+  private  val TAG = "HomeFragment"
   override
   fun setupObservers() {
 
@@ -46,7 +48,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             val hr = it.value.data.copy(
               categoryAds = ArrayList(it.value.data.categoryAds.map { ca ->
-                ca.copy(name = "jfiosdjfoisdji ${ca.name}")
+                ca.copy(name = "${resources.getString(R.string.advertisement)} ${ca.name}")
               })
             )
 
@@ -70,19 +72,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
           }
         }
     }
-
-    viewModel.storeAdapter.submitEvent.observe(viewLifecycleOwner, {
-      when (it) {
-        Constants.SUBMIT -> navigateSafe(
-          HomeFragmentDirections.actionHomeFragmentToStoreDetailsFragment(
-            viewModel.storeAdapter.differ.currentList[viewModel.storeAdapter.position].id
-          )
-        )
-        Constants.FOLLOW -> {
-
-        }
-      }
-    })
   }
 
   private fun updateList(data: HomeResponse) {

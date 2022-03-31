@@ -22,6 +22,8 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
 
   private val viewModel: AdsDetailsViewModel by viewModels()
 
+  val listChangeFav = HashMap<Int,Boolean>()
+
   override
   fun getLayoutId() = R.layout.fragment_ads_details
 
@@ -54,6 +56,9 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
         }
       }
     }
+    viewModel.adsAdapter.clickEvent.observe(viewLifecycleOwner,{
+
+    })
   }
 
   private  val TAG = "AdsDetailsFragment"

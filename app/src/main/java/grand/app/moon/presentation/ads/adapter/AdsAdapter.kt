@@ -18,11 +18,6 @@ import grand.app.moon.presentation.ads.viewModels.ItemAdsViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import androidx.navigation.NavController
 
-
-
-
-
-
 class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
   lateinit var context: Context
   var clickEvent: SingleLiveEvent<Advertisement> = SingleLiveEvent()
@@ -40,6 +35,7 @@ class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
 
     override fun areContentsTheSame(
       oldItem: Advertisement,
+
       newItem: Advertisement
     ): Boolean {
       return oldItem == newItem
@@ -70,11 +66,11 @@ class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
       )
     }
 
-    //take-care
-    holder.itemLayoutBinding.icFav.setOnClickListener {
-      data.isFavorite = data.isFavorite != true
-      notifyItemChanged(position)
-    }
+//    //take-care
+//    holder.itemLayoutBinding.icFav.setOnClickListener {
+//      data.isFavorite = data.isFavorite != true
+//      notifyItemChanged(position)
+//    }
   }
 
   override fun getItemCount(): Int {

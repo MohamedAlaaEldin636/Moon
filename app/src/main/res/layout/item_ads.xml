@@ -50,14 +50,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-      <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_fav"
-        android:layout_width="@dimen/dimen40"
-        android:layout_height="@dimen/dimen40"
-        android:layout_margin="@dimen/dimen10"
-        android:src="@{viewModel.advertisement.favorite ? @drawable/ic_fav_fill : @drawable/ic_fav_not_selected}"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--      <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:id="@+id/ic_fav"-->
+<!--        android:layout_width="@dimen/dimen40"-->
+<!--        android:layout_height="@dimen/dimen40"-->
+<!--        android:layout_margin="@dimen/dimen10"-->
+<!--        android:src="@{viewModel.advertisement.favorite ? @drawable/ic_fav_fill : @drawable/ic_fav_not_selected}"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
 
@@ -247,6 +247,7 @@
           android:layout_gravity="center"
           android:layout_margin="@dimen/dimen10"
           android:layout_weight="1"
+          android:onClick="@{ (v) -> viewModel.whatsapp(v)}"
           android:background="@drawable/corner_gray_strock"
           android:gravity="center">
 
@@ -254,9 +255,10 @@
             style="@style/mediumFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen10"
+            android:layout_marginStart="@dimen/dimen10"
+            android:layout_marginTop="@dimen/dimen10"
             android:layout_marginEnd="@dimen/dimen10"
-            android:layout_marginBottom="@dimen/dimen6"
+            android:layout_marginBottom="@dimen/dimen10"
             android:drawableStart="@drawable/ic_whatsapp"
             android:drawablePadding="@dimen/dimen6"
             android:text="@string/whatsapp"
@@ -269,6 +271,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:layout_margin="@dimen/dimen10"
+          android:onClick="@{ (v) -> viewModel.phone(v)}"
           android:layout_weight="1"
           android:background="@drawable/corner_gray_strock"
           android:gravity="center">
@@ -277,9 +280,10 @@
             style="@style/mediumFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen10"
+            android:layout_marginStart="@dimen/dimen10"
+            android:layout_marginTop="@dimen/dimen10"
             android:layout_marginEnd="@dimen/dimen10"
-            android:layout_marginBottom="@dimen/dimen6"
+            android:layout_marginBottom="@dimen/dimen10"
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="@dimen/dimen6"
             android:drawableTint="@color/colorPrimary"
@@ -294,6 +298,7 @@
           android:layout_gravity="center"
           android:layout_margin="@dimen/dimen10"
           android:layout_weight="1"
+          android:onClick="@{ (v) -> viewModel.chat(v)}"
           android:background="@drawable/corner_gray_strock"
           android:gravity="center">
 

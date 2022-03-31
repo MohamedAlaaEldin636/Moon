@@ -13,6 +13,8 @@ import androidx.databinding.PropertyChangeRegistry
 import es.dmoral.toasty.Toasty
 import grand.app.moon.R
 import kotlinx.coroutines.Job
+import java.lang.Exception
+import java.net.URLEncoder
 
 open class BaseViewModel : ViewModel(), Observable {
   private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
@@ -75,10 +77,27 @@ open class BaseViewModel : ViewModel(), Observable {
     callbacks.notifyCallbacks(this, fieldId, null)
   }
 
-//  fun getArgs(key: String, dataType: Objects, savedStateHandle: SavedStateHandle): Any? {
-//    savedStateHandle.get<dataType>(key)?.let {
-//      return it
-//    }
-//    return null
-//  }
+
+  fun shareWhatsapp(v: View, title: String, desc: String, phone : String){
+    var url = "https://api.whatsapp.com/send?phone=${phone}"
+    val i = Intent(Intent.ACTION_VIEW)
+    url += "&text=" + URLEncoder.encode(
+      title + "\n" + desc,
+      "UTF-8"
+    )
+    try {
+      i.setPackage("com.whatsapp")
+      i.data = Uri.parse(url)
+      v.context.startActivity(i)
+    } catch (e: Exception) {
+      try {
+        i.setPackage("com.whatsapp.w4b")
+        i.data = Uri.parse(url)
+        v.context.startActivity(i)
+      } catch (exception: Exception) {
+        showInfo(v.context, v.context.getString(R.string.please_install_whatsapp_on_your_phone));
+      }
+    }
+  }
+
 }

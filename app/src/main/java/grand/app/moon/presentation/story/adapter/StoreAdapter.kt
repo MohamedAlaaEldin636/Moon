@@ -5,7 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +25,7 @@ import grand.app.moon.presentation.story.viewModels.ItemStoryViewModel
 
 class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   lateinit var context: Context
-  var submitEvent: SingleLiveEvent<String> = SingleLiveEvent()
+  var submitEvent: MutableLiveData<String> = MutableLiveData()
   var position = 0
   private val differCallback = object : DiffUtil.ItemCallback<Store>() {
     override fun areItemsTheSame(
@@ -51,10 +55,25 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
     val data = differ.currentList[position]
     val itemViewModel = ItemStoreViewModel(data)
     holder.itemLayoutBinding.itemStoreContainer.setOnClickListener {
-      this.position = position
-      submitEvent.value = Constants.SUBMIT
+      Log.d(TAG, "onBindViewHolder: HAY HERE")
+
+      val options = NavOptions.Builder()
+        .setEnterAnim(R.anim.anim_slide_in_right)
+        .setExitAnim(R.anim.anim_slide_out_left)
+        .setPopEnterAnim(R.anim.anim_slide_in_left)
+        .setPopExitAnim(R.anim.anim_slide_out_right)
+        .build()
+      holder.itemLayoutBinding.root.findNavController().navigate(R.id.storeDetailsFragment,
+        bundleOf(
+          "id" to data.id
+        ),options)
+
+
+//      this.position = position
+//      submitEvent.value = Constants.SUBMIT
     }
     holder.itemLayoutBinding.follow.setOnClickListener {
+      Log.d(TAG, "onBindViewHolder: HAY THERE")
       data.isFollowing = data.isFollowing != true
       this.position = position
       submitEvent.value = Constants.FOLLOW

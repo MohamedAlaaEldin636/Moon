@@ -10,6 +10,7 @@ import grand.app.moon.R
 import grand.app.moon.domain.base.FieldsValidation
 import grand.app.moon.domain.base.ValidationException
 import grand.app.moon.domain.intro.entity.AppTutorial
+import grand.app.moon.domain.settings.entity.NotificationPaginateData
 import grand.app.moon.domain.settings.models.ContactAppValidationException
 import grand.app.moon.domain.settings.models.ContactUsRequest
 import grand.app.moon.domain.settings.models.SettingsData
@@ -46,6 +47,14 @@ class SettingsUseCase @Inject constructor(
       val result = settingsRepository.onBoard(type)
       emit(result)
     }.flowOn(Dispatchers.IO)
+
+  fun notifications(): Flow<Resource<BaseResponse<NotificationPaginateData>>> =
+    flow {
+      emit(Resource.Loading)
+      val result = settingsRepository.notifications()
+      emit(result)
+    }.flowOn(Dispatchers.IO)
+
 
   @Throws(ContactAppValidationException::class)
   operator fun invoke(request: ContactUsRequest): Flow<Resource<BaseResponse<*>>> =

@@ -28,8 +28,8 @@
       app:theme="@style/ToolBarStyle"/>
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/constraintLayout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
@@ -85,9 +85,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="@dimen/text_size16"
         android:text="@{viewModel.titleToolbar}"
         android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_size16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,24 +102,48 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       app:defaultNavHost="true"
-      app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view"
+      app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view_container"
       app:layout_constraintTop_toBottomOf="@id/toolbar"
       app:navGraph="@navigation/nav_home" />
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-      android:id="@+id/bottom_navigation_view"
-      android:layout_width="match_parent"
+
+    <androidx.constraintlayout.widget.Guideline
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:background="@color/colorPrimary"
-      app:itemIconTint="@drawable/bottom_navigation_color"
-      app:itemTextColor="@drawable/bottom_navigation_color"
-      app:labelVisibilityMode="labeled"
+      android:id="@+id/guideline8"
+      app:layout_constraintGuide_percent="0.95"
+      android:orientation="horizontal"/>
+
+    <RelativeLayout
+      android:id="@+id/bottom_navigation_view_container"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:menu="@menu/menu_navigation_view" />
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bar"
+        app:itemIconTint="@drawable/bottom_navigation_color"
+        app:itemTextColor="@drawable/bottom_navigation_color"
+        app:labelVisibilityMode="labeled"
+        android:elevation="2dp"
+        app:menu="@menu/menu_navigation_view" />
 
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/img_home_bottom_bar"
+      android:layout_width="@dimen/dimen80"
+      app:layout_constraintBottom_toTopOf="@+id/guideline8"
+      android:layout_height="@dimen/dimen80"
+      android:src="@drawable/ic_home_circle_active"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

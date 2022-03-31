@@ -21,6 +21,7 @@ class StoreUseCase @Inject constructor(
 
 
   fun storeDetails(id: Int): Flow<Resource<BaseResponse<Store>>> = flow {
+    emit(Resource.Loading)
     val result = repository.storeDetails(id)
     emit(result)
   }.flowOn(Dispatchers.IO)

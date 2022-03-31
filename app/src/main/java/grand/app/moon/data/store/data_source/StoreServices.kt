@@ -10,7 +10,8 @@ interface StoreServices {
   @POST("v1/follow")
   suspend fun follow(@Body storeRequest: FollowStoreRequest): BaseResponse<*>
 
-  @POST("v1/stores/{id}")
+  @GET("v1/stores/{id}")
   suspend fun storeDetails(@Path("id") id: Int): BaseResponse<Store>
+
 
 }
