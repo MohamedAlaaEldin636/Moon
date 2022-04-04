@@ -1,6 +1,6 @@
 <resources>
-  <string name="app_name_debug" translatable="false">موون</string>
-  <string name="app_name" translatable="false">موون</string>
+  <string name="app_name_debug" translatable="false">Moon</string>
+  <string name="app_name" translatable="false">Moon</string>
 
   <string name="discover">Discover</string>
   <string name="my_account">My Account</string>
@@ -38,19 +38,19 @@
   <string name="share_app">Share App</string>
   <string name="rate_app">Rate App</string>
   <string name="save">Save</string>
-    <string name="search">Search</string>
+  <string name="search">Search</string>
   <string name="show_more">Show More</string>
   <string name="departments">Departments</string>
   <string name="show_all">Show All</string>
   <string name="follow">Follow</string>
   <string name="un_follow">إلغاء المتابعة</string>
   <string name="top_stores_rated">Top Stores Rated</string>
-    <string name="home">الرئيسية</string>
+  <string name="home">الرئيسية</string>
   <string name="choose_method_of_contact">اختر طريقة التواصل من هنا او قم بملأ البيانات بالاسفل</string>
   <string name="send_mail">ارسل ايميل</string>
   <string name="call_for_phone_list">اتصل علي الأرقام التالية</string>
   <string name="main_moon_location">مقر موون الرئيسي</string>
-    <string name="please_enter_your_name">من فضلك قم بادخال الاسم</string>
+  <string name="please_enter_your_name">من فضلك قم بادخال الاسم</string>
   <string name="please_enter_your_message">من فضلك إدخل الرسالة</string>
   <string name="please_enter_your_email">من فضلك إدخل البريد الالكترونى</string>
   <string name="please_enter_valid_email">من فضلك إدخل بريد الالكترونى صحيح</string>
@@ -63,15 +63,15 @@
   <string name="stores_had_been_blocked">المتاجر المحظورة</string>
   <string name="logout">تسجيل الخروج</string>
   <string name="please_enter_your_phone">من فضلك قم بادخال هاتفك</string>
-    <string name="whatsapp">واتس أب</string>
+  <string name="whatsapp">واتس أب</string>
   <string name="chat">محادثة</string>
   <string name="call">إتصال</string>
-    <string name="suggestions_ads_for_you">إعلانات مقترحة لك</string>
+  <string name="suggestions_ads_for_you">إعلانات مقترحة لك</string>
   <string name="most_popular_ads">أكثر الإعلانات شيوعاً</string>
-    <string name="advertisement">إعلانات</string>
+  <string name="advertisement">إعلانات</string>
   <string name="premium">مميز</string>
   <string name="has_negatiable">قابل للتفاوض</string>
-    <string name="description_on_ads">وصف عن الاعلان</string>
+  <string name="description_on_ads">وصف عن الاعلان</string>
   <string name="ads_owner">مالك الاعلان</string>
   <string name="advices_for_safe">نصائح للأمان</string>
   <string name="check_purchasing_before_buying">تحقق من العنصر قبل الشراء</string>
@@ -92,5 +92,21 @@
   <string name="store_map">خريطة المتجر</string>
   <string name="block_store">حظر المتجر</string>
   <string name="store_details">تفاصيل المتجر</string>
+  <string name="start_app">بدأ التطبيق</string>
+  <string name="please_choose_reason_for_report">من فضلك اختر سبب البلاغ</string>
+  <string name="daily_working_hours">عدد ساعات العمل اليوميه</string>
+  <string name="saturday">السبت</string>
+  <string name="sunday">الاحد</string>
+  <string name="monday">الاثنين</string>
+  <string name="tuesday">الثلاثاء</string>
+  <string name="wednesday">الاربعاء</string>
+  <string name="thursday">الخميس</string>
+  <string name="friday">الجمعة</string>
+  <string name="from">من</string>
+  <string name="morning">صباحا</string>
+  <string name="until">الي</string>
+  <string name="evening">مساءً</string>
+  <string name="closed">مغلق</string>
+  <string name="back">رجوع</string>
 
 </resources>

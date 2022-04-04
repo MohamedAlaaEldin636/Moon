@@ -50,16 +50,11 @@ class SplashViewModel @Inject constructor(
 
   private val TAG = "SplashViewModel"
 
-  fun redirect(){
-    viewModelScope.launch {
-      delay(2000)
-      generalUseCases.checkFirstTimeUseCase().collect { isFirst ->
-        if (isFirst) {
-          Log.d(TAG, ": FIRST")
-          clickEvent.value = Constants.FIRST_TIME
-        } else {
-          clickEvent.value = Constants.HOME
-        }
+  fun redirect() {
+    clickEvent.value =  when (accountRepository.getKeyFromLocal(Constants.INTRO)) {
+      "true" -> Constants.HOME
+      else -> {
+        Constants.FIRST_TIME
       }
     }
   }

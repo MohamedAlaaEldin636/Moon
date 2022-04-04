@@ -8,7 +8,6 @@ import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import app.grand.tafwak.presentation.reviews.adapters.ReviewsAdapter
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
@@ -18,11 +17,9 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.ads.use_case.AdsUseCase
-import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
-import grand.app.moon.presentation.ads.adapter.PropertyAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.openBrowser
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,9 +28,7 @@ import kotlinx.coroutines.flow.onEach
 import java.lang.Exception
 import java.net.URLEncoder
 import javax.inject.Inject
-import androidx.core.content.ContextCompat.startActivity
-
-
+import grand.app.moon.presentation.store.StoreDetailsFragmentDirections
 
 
 @HiltViewModel
@@ -61,6 +56,10 @@ class StoreDetailsViewModel @Inject constructor(
   var isLoggin = userLocalUseCase.isLoggin()
 
 
+  init {
+    adsAdapter.percentageAds = 100
+  }
+
   fun getDetails(id: Int) {
     this.id = id
     storeUseCase.storeDetails(id)
@@ -87,7 +86,7 @@ class StoreDetailsViewModel @Inject constructor(
     var url = "https://api.whatsapp.com/send?phone=${store.get()?.phone}"
     val i = Intent(Intent.ACTION_VIEW)
     url += "&text=" + URLEncoder.encode(
-      store.get()?.name ,
+      store.get()?.name,
       "UTF-8"
     )
     try {
@@ -105,8 +104,27 @@ class StoreDetailsViewModel @Inject constructor(
     }
   }
 
+  fun workingHours(v: View) {
+    store.get()?.let {
+      v.findNavController().navigate(
+        StoreDetailsFragmentDirections.actionStoreDetailsFragmentToWorkingHoursDialog(
+          it
+        )
+      )
+    }
+
+  }
+
+  fun report(v: View) {
+
+  }
+
   fun phone(v: View) {
     store.get()?.phone?.let { callPhone(v.context, it) }
+  }
+
+  fun block(v: View) {
+
   }
 
   fun chat(v: View) {
@@ -117,30 +135,33 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
 
-  fun submit(v:View , type: String){
+  fun submit(v: View, type: String) {
     store.get()?.socialMediaLinks?.forEach {
-      if(it.type == type)
-        openBrowser(v.context,it.link)
+      if (it.type == type)
+        openBrowser(v.context, it.link)
     }
   }
 
-  fun map(v: View){
+  fun map(v: View) {
     val url =
-      "https://www.google.com/maps/dir/?api=1&destination=" + store.get()?.latitude + "," +  store.get()?.longitude + "&travelmode=driving"
+      "https://www.google.com/maps/dir/?api=1&destination=" + store.get()?.latitude + "," + store.get()?.longitude + "&travelmode=driving"
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     v.context.startActivity(intent)
   }
 
-  fun update(data: Store) {
+  fun update(data: Store, days: ArrayList<String>) {
+    data.workingHours.forEachIndexed() { index, element ->
+      data.workingHours[index].day = days[index]
+    }
     store.set(data)
     adsAdapter.differ.submitList(store.get()?.advertisements)
     show.set(true)
   }
 
-  private  val TAG = "AdsDetailsViewModel"
+  private val TAG = "AdsDetailsViewModel"
   fun recallApi(isAuthorize: Boolean) {
     Log.d(TAG, "recallApi: recallApi recallApi")
-    if (!isLoggin && isAuthorize){
+    if (!isLoggin && isAuthorize) {
       Log.d(TAG, "recallApi: DONER")
       isLoggin = isAuthorize
       getDetails(id)

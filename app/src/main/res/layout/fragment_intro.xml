@@ -5,69 +5,142 @@
     >
 
   <data>
+    <import type="android.view.View" />
     <variable
         name="viewModel"
         type="grand.app.moon.presentation.intro.intro.IntroViewModel"
         />
   </data>
 
+
   <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:visibility="@{ viewModel.show ? View.VISIBLE : View.GONE }"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:padding="@dimen/activity_padding"
-      android:layout_height="match_parent"
-      android:background="@color/backgroundGray"
-      android:gravity="center"
-      android:orientation="vertical"
+      android:layout_height="@dimen/dimen350"
       >
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="@dimen/dimen50"-->
-<!--        android:gravity="center"-->
-<!--        android:orientation="horizontal"-->
-<!--        tools:ignore="UseCompoundDrawables"-->
-<!--        >-->
+      <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="@dimen/dimen250"
+        android:layout_height="@dimen/dimen250"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/dimen10"
+        android:layout_centerInParent="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
 
-<!--      <ImageView-->
-<!--          android:layout_width="@dimen/dimen100"-->
-<!--          android:layout_height="@dimen/dimen100"-->
-<!--          android:layout_marginEnd="@dimen/dimen5"-->
-<!--          app:srcCompat="@drawable/ic_app_logo"-->
-<!--          tools:ignore="ContentDescription"-->
-<!--          />-->
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_dots"
+        android:layout_width="@dimen/dimen34"
+        android:layout_height="@dimen/dimen30"
+        android:layout_alignBottom="@+id/animationView"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen25"
+        android:src="@drawable/dot_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animationView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    </LinearLayout>-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-<!--    <TextView-->
-<!--        style="@style/mediumFont"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/dimen50"-->
-<!--        android:layout_marginTop="@dimen/dimen50"-->
-<!--        android:layout_marginBottom="@dimen/dimen50"-->
-<!--        android:background="@drawable/btn_accent"-->
-<!--        android:gravity="center"-->
-<!--        android:onClick="@{() -> viewModel.onLogInClicked()}"-->
-<!--        android:text="@string/log_in_sign_up"-->
-<!--        android:textAllCaps="true"-->
-<!--        android:textColor="@color/colorPrimaryDark"-->
-<!--        android:textSize="@dimen/text_size16"-->
-<!--        />-->
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        style="@style/boldFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/dimen2"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:text="@{viewModel.title}"
+        android:textSize="@dimen/text_size28"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/btn_guest_mode"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="@dimen/dimen50"-->
-<!--        android:gravity="center"-->
-<!--        android:textColor="@color/darkGray"-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:background="?selectableItemBackground"-->
-<!--        android:padding="@dimen/dimen2"-->
-<!--        android:textSize="@dimen/text_size13"-->
-<!--        />-->
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_content"
+        style="@style/TutorialContentFont"
+        android:text="@{viewModel.content}"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/dimen10"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size18"
+        app:layout_constraintBottom_toTopOf="@+id/barrier2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+      <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="btn_next,btn_esc"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="715dp" />
+
+      <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/dimen12"
+        android:background="@drawable/corner_primary"
+        android:text="@{viewModel.isLast ? @string/start_app : @string/next }"
+        android:paddingStart="@dimen/dimen10"
+        android:paddingEnd="@dimen/dimen10"
+        android:onClick="@{ () -> viewModel.next()}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_esc"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_esc"
+        android:layout_width="0dp"
+        android:visibility="@{viewModel.isLast ? View.GONE : View.VISIBLE}"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/dimen12"
+        android:background="@drawable/corner_grey"
+        android:paddingStart="@dimen/dimen10"
+        android:paddingEnd="@dimen/dimen10"
+        android:onClick="@{ () -> viewModel.skip()}"
+        android:text="@string/skip"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_next" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
   </LinearLayout>
-
 </layout>

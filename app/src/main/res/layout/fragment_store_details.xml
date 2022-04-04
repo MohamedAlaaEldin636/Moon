@@ -13,6 +13,7 @@
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
+    android:background="@color/colorFBFBFB"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="@{viewModel.show ? View.VISIBLE : View.GONE}">
@@ -33,6 +34,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
+
           android:layout_height="wrap_content">
 
           <androidx.appcompat.widget.AppCompatImageView
@@ -59,18 +61,21 @@
             android:layout_marginStart="@dimen/dimen12"
             android:layout_marginTop="@dimen/dimen10"
             android:layout_marginEnd="@dimen/dimen12"
+            android:elevation="3dp"
+            app:cardCornerRadius="@dimen/dimen8"
+            app:cardElevation="@dimen/dimen10"
             app:cardMaxElevation="8dp"
-            app:contentPadding="10dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="false"
-            app:cardCornerRadius="@dimen/dimen8"
-            app:cardElevation="@dimen/dimen8"
+
+            app:contentPadding="10dp"
             app:layout_constraintTop_toTopOf="@+id/view_background">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+
               android:padding="@dimen/dimen6">
 
               <androidx.appcompat.widget.AppCompatImageView
@@ -91,8 +96,8 @@
                 android:layout_marginTop="@dimen/dimen5"
                 android:layout_marginEnd="@dimen/dimen10"
                 android:gravity="start"
-                android:textAlignment="viewStart"
                 android:text="@{viewModel.store.name}"
+                android:textAlignment="viewStart"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size14"
                 app:layout_constraintEnd_toStartOf="@+id/btn_follow_store"
@@ -108,8 +113,8 @@
                 android:layout_marginTop="@dimen/dimen1"
                 android:layout_marginEnd="@dimen/dimen10"
                 android:gravity="start"
-                android:textAlignment="viewStart"
                 android:text="@{`( `+viewModel.store.nickname+` )`}"
+                android:textAlignment="viewStart"
                 android:textColor="@color/greyText"
                 android:textSize="@dimen/text_size12"
                 app:layout_constraintEnd_toStartOf="@+id/btn_follow_store"
@@ -169,8 +174,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen5"
-                android:drawablePadding="@dimen/dimen8"
                 android:drawableStart="@drawable/ic_pin"
+                android:drawablePadding="@dimen/dimen8"
                 android:text="@{viewModel.store.country.name + ` / ` + viewModel.store.city.name }"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size16"
@@ -183,10 +188,10 @@
                 style="@style/mediumFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/dimen8"
-
                 android:layout_margin="@dimen/dimen5"
+
                 android:drawableStart="@drawable/ic_world"
+                android:drawablePadding="@dimen/dimen8"
                 android:text="@{viewModel.store.website}"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size16"
@@ -200,10 +205,10 @@
                 style="@style/mediumFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/dimen8"
-
                 android:layout_margin="@dimen/dimen5"
+
                 android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/dimen8"
                 android:text="@{viewModel.store.email}"
                 android:textColor="@color/color888888"
                 android:textSize="@dimen/text_size16"
@@ -343,176 +348,208 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen12"
           android:layout_marginTop="@dimen/dimen10"
-          android:orientation="vertical">
+          android:layout_marginEnd="@dimen/dimen12"
+          android:elevation="3dp"
+          app:cardCornerRadius="@dimen/dimen8"
+          app:cardElevation="@dimen/dimen10"
+          app:cardMaxElevation="8dp"
+          app:cardPreventCornerOverlap="true"
+          app:cardUseCompatPadding="false"
 
+          app:contentPadding="10dp"
+          app:layout_constraintTop_toTopOf="@+id/view_background"
+          app:strokeColor="@color/grey">
 
-          <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_facebook"
-            android:layout_width="@dimen/dimen50"
-            android:layout_height="@dimen/dimen50"
-            android:onClick="@{(v)->viewModel.submit(v,`facebook`)}"
-            android:src="@drawable/ic_facebook"
-
-            app:layout_constraintEnd_toStartOf="@+id/img_instgram"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-          <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_instgram"
-            android:layout_width="@dimen/dimen50"
-            android:layout_height="@dimen/dimen50"
-            android:onClick="@{(v)->viewModel.submit(v,`instgram`)}"
-
-            android:src="@drawable/ic_instgram_details"
-            app:layout_constraintEnd_toStartOf="@+id/img_twitter"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/img_facebook"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-          <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_twitter"
-            android:layout_width="@dimen/dimen50"
-            android:layout_height="@dimen/dimen50"
-            android:onClick="@{(v)->viewModel.submit(v,`youtube`)}"
-            android:src="@drawable/ic_twitter"
-
-            app:layout_constraintEnd_toStartOf="@+id/img_youtube"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/img_instgram"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-          <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_youtube"
-            android:layout_width="@dimen/dimen50"
-            android:layout_height="@dimen/dimen50"
-            android:onClick="@{(v)->viewModel.submit(v,`youtube`)}"
-            android:src="@drawable/ic_youtube_details"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/img_twitter"
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-          style="@style/mediumFont"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_margin="@dimen/dimen12"
-          android:background="@drawable/corner_silver_strock"
-          android:drawableEnd="@drawable/ic_more"
-          android:gravity="start"
-          android:padding="@dimen/dimen6"
-          android:text="@string/show_number_hours"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
-          android:textColor="@color/colorPrimary"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/img_youtube" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-          style="@style/boldFont"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen10"
-          android:text="@string/description_on_shop"
-          android:textColor="@color/colorBlack"
-          android:textSize="@dimen/text_size18"
-          android:textStyle="bold" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-          style="@style/regularFont"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen5"
-          android:text="@{viewModel.store.description}"
-          android:textAlignment="viewStart"
-          android:textColor="@color/colorBlack"
-          android:textSize="@dimen/text_size16"
-          android:textStyle="bold" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-          style="@style/boldFont"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen10"
-          android:text="@string/store_map"
-          android:textColor="@color/colorBlack"
-          android:textSize="@dimen/text_size18"
-          android:textStyle="bold" />
-
-        <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dimen220"
-          android:background="@color/colorAccent"
-          android:onClick="@{ (v) -> viewModel.map(v)}" />
-
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:weightSum="2"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent">
-
-          <Button
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
+          <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/dimen8"
-            android:layout_weight="1"
-            android:background="@drawable/corner_gray_strock"
-            android:text="@string/report_on_issue"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size12"
-            app:icon="@drawable/ic_flag"
-            app:iconGravity="textStart" />
+            android:orientation="vertical">
 
-          <Button
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/dimen8"
-            android:layout_weight="1"
-            android:background="@drawable/corner_gray_strock"
-            android:text="@string/block_store"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size12"
-            app:icon="@drawable/ic_block"
-            app:iconGravity="textStart" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/dimen10"
 
-        </LinearLayout>
+              android:orientation="vertical">
 
 
-        <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/rv_store_ads"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dimen10"
-          android:orientation="horizontal"
-          app:adapter="@{viewModel.adsAdapter}"
-          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-          app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
-          app:orientation="@{`2`}"
-          app:span="@{`1`}"
-          tools:listitem="@layout/item_review" />
+              <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_facebook"
+                android:layout_width="@dimen/dimen50"
+                android:layout_height="@dimen/dimen50"
+                android:onClick="@{(v)->viewModel.submit(v,`facebook`)}"
+                android:src="@drawable/ic_facebook"
+
+                app:layout_constraintEnd_toStartOf="@+id/img_instgram"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+              <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_instgram"
+                android:layout_width="@dimen/dimen50"
+                android:layout_height="@dimen/dimen50"
+                android:onClick="@{(v)->viewModel.submit(v,`instgram`)}"
+
+                android:src="@drawable/ic_instgram_details"
+                app:layout_constraintEnd_toStartOf="@+id/img_twitter"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_facebook"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+              <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_twitter"
+                android:layout_width="@dimen/dimen50"
+                android:layout_height="@dimen/dimen50"
+                android:onClick="@{(v)->viewModel.submit(v,`youtube`)}"
+                android:src="@drawable/ic_twitter"
+
+                app:layout_constraintEnd_toStartOf="@+id/img_youtube"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_instgram"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+              <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_youtube"
+                android:layout_width="@dimen/dimen50"
+                android:layout_height="@dimen/dimen50"
+                android:onClick="@{(v)->viewModel.submit(v,`youtube`)}"
+                android:src="@drawable/ic_youtube_details"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/img_twitter"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/mediumFont"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_margin="@dimen/dimen12"
+              android:background="@drawable/corner_silver_strock"
+              android:drawableEnd="@drawable/ic_next"
+              android:gravity="start|center"
+              android:padding="@dimen/dimen8"
+              android:onClick="@{ (v) -> viewModel.workingHours(v)}"
+
+              android:text="@string/show_number_hours"
+              android:textAppearance="@style/TextAppearance.AppCompat.Small"
+              android:textColor="@color/colorPrimary"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/img_youtube" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/boldFont"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dimen10"
+              android:text="@string/description_on_shop"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size18"
+              android:textStyle="bold" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/regularFont"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dimen5"
+              android:text="@{viewModel.store.description}"
+              android:textAlignment="viewStart"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size16"
+              android:textStyle="bold" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/boldFont"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dimen10"
+              android:text="@string/store_map"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size18"
+              android:textStyle="bold" />
+
+            <View
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dimen220"
+              android:background="@color/colorAccent"
+              android:onClick="@{ (v) -> viewModel.map(v)}" />
+
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:weightSum="2"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent">
+
+              <Button
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="@{ (v) -> viewModel.report(v)}"
+                android:layout_margin="@dimen/dimen8"
+                android:layout_weight="1"
+                android:background="@drawable/corner_gray_strock"
+                android:text="@string/report_on_issue"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size12"
+                app:backgroundTint="@null"
+                app:icon="@drawable/ic_flag"
+                app:iconGravity="textStart" />
+
+              <Button
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/dimen8"
+                android:layout_weight="1"
+                android:onClick="@{ (v) -> viewModel.block(v)}"
+                android:background="@drawable/corner_gray_strock"
+                android:text="@string/block_store"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size12"
+                app:backgroundTint="@null"
+                app:icon="@drawable/ic_block"
+                app:iconGravity="textStart" />
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/rv_store_ads"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/dimen10"
+              android:orientation="horizontal"
+              app:adapter="@{viewModel.adsAdapter}"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+              app:orientation="@{`2`}"
+              app:span="@{`1`}"
+              tools:listitem="@layout/item_review" />
+
+          </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
       </LinearLayout>
 

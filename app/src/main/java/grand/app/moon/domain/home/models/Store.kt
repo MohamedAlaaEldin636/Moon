@@ -4,7 +4,8 @@ package grand.app.moon.domain.home.models
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import grand.app.moon.domain.home.models.store.SocialLink
-import grand.app.moon.domain.home.models.store.WorkingHour
+import grand.app.moon.domain.home.models.store.WorkingHours
+import java.io.Serializable
 
 @Keep
 data class Store(
@@ -48,7 +49,7 @@ data class Store(
   @SerializedName("social_media_links")
   var socialMediaLinks: ArrayList<SocialLink> = arrayListOf(),
   @SerializedName("working_hours")
-  var workingHours: ArrayList<WorkingHour> = arrayListOf(),
+  var workingHours: ArrayList<WorkingHours> = arrayListOf(),
   @SerializedName("advertisements")
   var advertisements: ArrayList<Advertisement> = arrayListOf(),
   @SerializedName("city")
@@ -61,4 +62,4 @@ data class Store(
   val createdAt: String = "",
 
 
-  )
+  ) : Serializable

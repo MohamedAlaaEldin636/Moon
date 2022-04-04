@@ -63,7 +63,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
         .setPopEnterAnim(R.anim.anim_slide_in_left)
         .setPopExitAnim(R.anim.anim_slide_out_right)
         .build()
-      holder.itemLayoutBinding.root.findNavController().navigate(R.id.storeDetailsFragment,
+      holder.itemLayoutBinding.root.findNavController().navigate(R.id.nav_store,
         bundleOf(
           "id" to data.id
         ),options)

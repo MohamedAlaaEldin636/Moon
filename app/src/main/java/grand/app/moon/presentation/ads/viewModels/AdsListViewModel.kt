@@ -40,7 +40,7 @@ class AdsListViewModel @Inject constructor(
   val response = _responseService
 
   init {
-
+    adapter.percentageAds = 100
   }
 
   fun callService(){

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/nav_store"
+  app:startDestination="@id/storeDetailsFragment">
+
+  <fragment
+    android:id="@+id/storeDetailsFragment"
+    android:name="grand.app.moon.presentation.store.StoreDetailsFragment"
+    android:label="@string/store_details">
+    <argument
+      android:name="id"
+      app:argType="integer" />
+    <action
+      android:id="@+id/action_storeDetailsFragment_to_workingHoursDialog"
+      app:destination="@id/workingHoursDialog" />
+  </fragment>
+  <dialog
+    android:id="@+id/workingHoursDialog"
+    android:name="grand.app.moon.presentation.store.dialog.WorkingHoursDialog"
+    android:label="@string/show_number_hours" >
+    <argument
+      android:name="store"
+      app:argType="grand.app.moon.domain.home.models.Store" />
+  </dialog>
+</navigation>

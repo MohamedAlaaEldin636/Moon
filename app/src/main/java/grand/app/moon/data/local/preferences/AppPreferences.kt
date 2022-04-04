@@ -130,7 +130,8 @@ class AppPreferences @Inject constructor(private val context: Context) {
   private  val TAG = "AppPreferences"
   fun getUser(): User {
     val value: String? = appPreferences.getString(USER_DATA.first, USER_DATA.second)
-    if (value != null)
+    Log.d(TAG, "getUser: $value")
+    if (value != null && value.isNotEmpty())
       return Gson().fromJson(value, User::class.java)
     else return User()
   }
@@ -152,6 +153,7 @@ class AppPreferences @Inject constructor(private val context: Context) {
   }
 
   fun getLocal(key: String): String {
+    Log.d(TAG, "getLocal: ${appPreferences.getString(key, "")}")
     return appPreferences.getString(key, "").toString()
   }
 

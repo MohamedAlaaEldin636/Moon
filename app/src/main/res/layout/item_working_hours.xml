@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.store.viewModels.ItemWorkingHoursViewModel" />
+
+  </data>
+
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dimen2"
+    android:layout_marginTop="@dimen/dimen16"
+    android:layout_marginEnd="@dimen/dimen2">
+
+    <androidx.appcompat.widget.AppCompatTextView
+      style="@style/mediumFont"
+      android:id="@+id/item_property_parent_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/dimen10"
+      android:layout_marginEnd="@dimen/dimen10"
+      android:text="@{viewModel.model.day}"
+      android:textColor="@color/black"
+      android:textSize="@dimen/text_size14"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      style="@style/mediumFont"
+      android:id="@+id/item_property_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:layout_marginStart="@dimen/dimen10"
+      android:layout_marginEnd="@dimen/dimen10"
+      android:text="@{viewModel.model.status ?  @string/from.concat(` `+viewModel.model.from +` `+ @string/morning+` `+ @string/until +` `+ viewModel.model.to + ` `+ @string/evening) : @string/closed}"
+      android:textColor="@{viewModel.model.status  ? @color/black : @color/red}"
+      android:textSize="@dimen/text_size14"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

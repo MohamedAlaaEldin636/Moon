@@ -1,6 +1,8 @@
 package grand.app.moon.presentation.splash
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import grand.app.moon.presentation.base.utils.Constants
@@ -25,14 +27,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
   override
   fun getLayoutId() = R.layout.activity_splash
 
+  private val TAG = "SplashActivity"
+
   override
   fun setUpViews() {
     viewModel.lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
-    if(viewModel.lang.isEmpty()){
+    if (viewModel.lang.isEmpty()) {
       viewModel.lang = "ar"
       LocaleHelper.setLocale(this, Locale(viewModel.lang))
     }
-    viewModel.accountRepository.saveKeyToLocal(Constants.LANGUAGE,viewModel.lang)
+    viewModel.accountRepository.saveKeyToLocal(Constants.LANGUAGE, viewModel.lang)
     binding.viewModel = viewModel
     viewModel.home()
     decideNavigationLogic()
@@ -48,7 +52,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
           HomeActivity::class.java
         }
       }
-      updateLocale(viewModel.lang)
+//      updateLocale(viewModel.lang)
       openActivityAndClearStack(targetActivity)
     })
 

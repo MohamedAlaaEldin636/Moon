@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.appTutorial.TutorialAdapter.ImagesSliderViewHolder
 import coil.ImageLoader
+import coil.load
 import coil.request.ImageRequest
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.R
@@ -66,28 +67,27 @@ internal class TutorialAdapter(
 
     private fun showImage(imageUrl: String) {
       if (imageUrl.isNotEmpty()) {
-        val request = ImageRequest.Builder(context)
-          .data(imageUrl)
-          .crossfade(true)
-          .crossfade(400)
-          .placeholder(R.color.colorGray)
-          .error(R.drawable.bg_no_image)
-          .target(
-            onStart = { placeholder ->
-              itemBinding.ivImage.setImageDrawable(placeholder)
-            },
-            onSuccess = { result ->
-              itemBinding.ivImage.setImageDrawable(result)
-            }
-          )
-          .listener(onError = { request: ImageRequest, _: Throwable ->
-            itemBinding.ivImage.setImageDrawable(request.error)
-          })
-          .build()
-
-        ImageLoader(context).enqueue(request)
-      } else {
-        itemBinding.ivImage.setImageResource(R.drawable.bg_no_image)
+        itemBinding.animationView.load(imageUrl)
+//        val request = ImageRequest.Builder(context)
+//          .data(imageUrl)
+//          .crossfade(true)
+//          .crossfade(400)
+//          .placeholder(R.color.colorGray)
+//          .error(R.drawable.bg_no_image)
+//          .target(
+//            onStart = { placeholder ->
+//              itemBinding.ivImage.setImageDrawable(placeholder)
+//            },
+//            onSuccess = { result ->
+//              itemBinding.ivImage.setImageDrawable(result)
+//            }
+//          )
+//          .listener(onError = { request: ImageRequest, _: Throwable ->
+//            itemBinding.ivImage.setImageDrawable(request.error)
+//          })
+//          .build()
+//
+//        ImageLoader(context).enqueue(request)
       }
     }
 

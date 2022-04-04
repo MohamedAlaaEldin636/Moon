@@ -1,7 +1,5 @@
 <resources>
   <!-- General Strings -->
-  <string name="app_name_debug" translatable="false">موون</string>
-  <string name="app_name" translatable="false">موون</string>
   <string name="discover">إكتشف</string>
   <string name="confirm_resend">أعد إرسال الرمز</string>
   <string name="confirm_header_text">رقم رمز التفعيل</string>
@@ -38,18 +36,18 @@
   <string name="rate_app">تقيم التطبيق</string>
   <string name="social_media">وسائل التواصل الاجتماعى</string>
   <string name="save">حفظ</string>
-    <string name="search">بحث</string>
+  <string name="search">بحث</string>
   <string name="show_more">عرض المزيد</string>
   <string name="departments">الأقسام</string>
   <string name="show_all">عرض الكل</string>
   <string name="follow">متابعة</string>
   <string name="top_stores_rated">أعلى المتاجر تقييما</string>
-    <string name="home">الرئيسية</string>
+  <string name="home">الرئيسية</string>
   <string name="choose_method_of_contact">اختر طريقة التواصل من هنا او قم بملأ البيانات بالاسفل</string>
   <string name="send_mail">ارسل ايميل</string>
   <string name="call_for_phone_list">اتصل علي الأرقام التالية</string>
   <string name="main_moon_location">مقر موون الرئيسي</string>
-    <string name="please_enter_your_name">من فضلك قم بادخال الاسم</string>
+  <string name="please_enter_your_name">من فضلك قم بادخال الاسم</string>
   <string name="last_ads_seen">أخر الإعلانات مشاهدة</string>
   <string name="stores_had_been_blocked">المتاجر المحظورة</string>
   <string name="please_enter_your_message">من فضلك إدخل الرسالة</string>
@@ -62,15 +60,15 @@
   <string name="favourite">المفضلة</string>
   <string name="logout">تسجيل الخروج</string>
   <string name="please_enter_your_phone">من فضلك قم بادخال هاتفك</string>
-    <string name="whatsapp">واتس أب</string>
+  <string name="whatsapp">واتس أب</string>
   <string name="chat">محادثة</string>
   <string name="call">إتصال</string>
-    <string name="suggestions_ads_for_you">إعلانات مقترحة لك</string>
+  <string name="suggestions_ads_for_you">إعلانات مقترحة لك</string>
   <string name="most_popular_ads">أكثر الإعلانات شيوعاً</string>
-    <string name="advertisement">إعلانات</string>
+  <string name="advertisement">إعلانات</string>
   <string name="premium">مميز</string>
   <string name="has_negatiable">قابل للتفاوض</string>
-    <string name="description_on_ads">وصف عن الاعلان</string>
+  <string name="description_on_ads">وصف عن الاعلان</string>
   <string name="ads_owner">مالك الاعلان</string>
   <string name="un_follow">إلغاء المتابعة</string>
   <string name="advices_for_safe">نصائح للأمان</string>
@@ -92,5 +90,20 @@
   <string name="store_map">خريطة المتجر</string>
   <string name="block_store">حظر المتجر</string>
   <string name="store_details">تفاصيل المتجر</string>
-
+  <string name="start_app">بدأ التطبيق</string>
+  <string name="please_choose_reason_for_report">من فضلك اختر سبب البلاغ</string>
+  <string name="daily_working_hours">عدد ساعات العمل اليوميه</string>
+  <string name="saturday">السبت</string>
+  <string name="sunday">الاحد</string>
+  <string name="monday">الاثنين</string>
+  <string name="tuesday">الثلاثاء</string>
+  <string name="wednesday">الاربعاء</string>
+  <string name="thursday">الخميس</string>
+  <string name="friday">الجمعة</string>
+  <string name="from">من</string>
+  <string name="morning">صباحا</string>
+  <string name="until">الي</string>
+  <string name="evening">مساءً</string>
+  <string name="closed">مغلق</string>
+  <string name="back">رجوع</string>
 </resources>

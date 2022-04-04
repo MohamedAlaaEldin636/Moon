@@ -3,6 +3,7 @@ package grand.app.moon.domain.home.models
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import java.io.Serializable
 
 @Keep
 data class Country(
@@ -14,4 +15,4 @@ data class Country(
     val image: String = "",
     @SerializedName("name")
     val name: String = ""
-)
+) : Serializable

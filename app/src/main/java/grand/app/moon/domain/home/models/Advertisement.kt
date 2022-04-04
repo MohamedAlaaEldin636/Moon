@@ -3,6 +3,7 @@ package grand.app.moon.domain.home.models
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import java.io.Serializable
 
 @Keep
 data class Advertisement(
@@ -45,4 +46,4 @@ data class Advertisement(
   var reviews: ArrayList<Reviews> = arrayListOf(),
 
 
-  )
+  ) : Serializable

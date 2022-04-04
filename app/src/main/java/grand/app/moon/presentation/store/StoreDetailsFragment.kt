@@ -1,7 +1,6 @@
 package grand.app.moon.presentation.store
 
 import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -10,9 +9,7 @@ import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.databinding.FragmentAdsDetailsBinding
 import grand.app.moon.databinding.FragmentStoreDetailsBinding
-import grand.app.moon.presentation.ads.viewModels.AdsDetailsViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel
 import kotlinx.coroutines.flow.collect
@@ -20,7 +17,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
 
-  private val adsDetailsFragmentArgs : StoreDetailsFragmentArgs by navArgs()
+  private val adsDetailsFragmentArgs: StoreDetailsFragmentArgs by navArgs()
 
   private val viewModel: StoreDetailsViewModel by viewModels()
 
@@ -33,10 +30,20 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
     viewModel.getDetails(adsDetailsFragmentArgs.id)
   }
 
+  val days = arrayListOf<String>()
+
   override
   fun setupObservers() {
-    viewModel.clickEvent.observe(viewLifecycleOwner,{
-      if(it == Constants.LOGIN_REQUIRED) openLoginActivity()
+    days.add(resources.getString(R.string.saturday))
+    days.add(resources.getString(R.string.sunday))
+    days.add(resources.getString(R.string.monday))
+    days.add(resources.getString(R.string.tuesday))
+    days.add(resources.getString(R.string.wednesday))
+    days.add(resources.getString(R.string.thursday))
+    days.add(resources.getString(R.string.friday))
+
+    viewModel.clickEvent.observe(viewLifecycleOwner, {
+      if (it == Constants.LOGIN_REQUIRED) openLoginActivity()
     })
     lifecycleScope.launchWhenResumed {
       viewModel.storeDetailsResponse.collect {
@@ -47,7 +54,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            viewModel.update(it.value.data)
+            viewModel.update(it.value.data,days)
           }
           is Resource.Failure -> {
             hideLoading()
@@ -58,11 +65,11 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>() {
     }
   }
 
-  private  val TAG = "AdsDetailsFragment"
+  private val TAG = "AdsDetailsFragment"
   override fun onResume() {
     super.onResume()
     Log.d(TAG, "token: ${viewModel.userLocalUseCase.getKey(Constants.TOKEN)}")
-    if(!viewModel.isLoggin) {
+    if (!viewModel.isLoggin) {
       val isAuthorize = viewModel.userLocalUseCase.isLoggin()
       viewModel.recallApi(isAuthorize)
     }

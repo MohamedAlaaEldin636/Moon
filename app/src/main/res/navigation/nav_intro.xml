@@ -6,39 +6,35 @@
     app:startDestination="@id/languageFragment">
 
   <fragment
-      android:id="@+id/tutorial_fragment"
-      android:name="grand.app.moon.presentation.intro.tutorial.TutorialFragment"
-      tools:layout="@layout/fragment_tutorial">
-
-    <action
-        android:id="@+id/action_open_intro_fragment"
-        app:destination="@id/intro_fragment"
-        app:enterAnim="@anim/anim_slide_in_top"
-        app:exitAnim="@anim/anim_slide_out_bottom"
-        app:popEnterAnim="@anim/anim_slide_in_bottom"
-        app:popExitAnim="@anim/anim_slide_out_top" />
-
-  </fragment>
-
-  <fragment
       android:id="@+id/intro_fragment"
       android:name="grand.app.moon.presentation.intro.intro.IntroFragment"
-      tools:layout="@layout/fragment_intro" />
+      tools:layout="@layout/fragment_intro" >
+    <action
+      android:id="@+id/action_intro_fragment_self"
+      app:destination="@id/intro_fragment" />
+    <argument
+      android:name="data"
+      app:argType="grand.app.moon.domain.utils.BaseResponse"
+      app:nullable="true" />
+    <argument
+      android:name="position"
+      app:argType="integer"/>
+  </fragment>
   <fragment
     android:id="@+id/countriesFragment2"
     android:name="grand.app.moon.presentation.auth.countries.CountriesFragment"
     android:label="CountriesFragment" >
-    <action
-      android:id="@+id/action_countriesFragment2_to_tutorial_fragment"
-      app:destination="@id/tutorial_fragment"
-      app:enterAnim="@anim/anim_slide_in_top"
-      app:exitAnim="@anim/anim_slide_out_bottom"
-      app:popEnterAnim="@anim/anim_slide_in_bottom"
-      app:popExitAnim="@anim/anim_slide_out_top"/>
     <argument
       android:name="from"
       app:argType="string"
       android:defaultValue="splash" />
+    <action
+      android:id="@+id/action_countriesFragment2_to_intro_fragment"
+      app:enterAnim="@anim/anim_slide_in_top"
+      app:exitAnim="@anim/anim_slide_out_bottom"
+      app:popEnterAnim="@anim/anim_slide_in_bottom"
+      app:popExitAnim="@anim/anim_slide_out_top"
+      app:destination="@id/intro_fragment" />
   </fragment>
   <fragment
     android:id="@+id/languageFragment"

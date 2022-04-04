@@ -3,6 +3,7 @@ package grand.app.moon.domain.home.models.store
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import java.io.Serializable
 
 @Keep
 data class SocialLink(
@@ -10,4 +11,4 @@ data class SocialLink(
     val link: String = "",
     @SerializedName("type")
     val type: String = ""
-)
+) : Serializable

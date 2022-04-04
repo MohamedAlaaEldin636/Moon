@@ -22,7 +22,6 @@ open class BaseViewModel : ViewModel(), Observable {
 
   protected var job: Job = Job()
 
-  var percentageAds = 90
   var clickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
   var submitEvent: SingleLiveEvent<String> = SingleLiveEvent()
   fun clickEvent(action: Int) {

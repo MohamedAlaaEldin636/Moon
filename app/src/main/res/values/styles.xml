@@ -27,6 +27,16 @@
   </style>
 
 
+  <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+  </style>
+
+  <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+    <item name="android:background">@drawable/corner_white_top</item>
+  </style>
+
+
+
   <style name="ToolBarStyle" parent="Theme.AppCompat">
     <item name="android:textColorPrimary">@android:color/white</item>
     <item name="android:textColorSecondary">@color/white</item>

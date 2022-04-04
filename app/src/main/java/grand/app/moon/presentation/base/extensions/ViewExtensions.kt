@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.Html
+import android.util.Log
 import android.view.View
 import android.webkit.URLUtil
 import android.widget.ImageView
@@ -48,10 +49,13 @@ fun View.hide() {
     this.requestLayout()
   }
 }
+private  val TAG = "ViewExtensions"
 
 @BindingAdapter("width")
 fun viewWidth(view: View, widthPercent: Int) {
+  Log.d(TAG, "viewWidth: HEY")
   if(widthPercent < 100) {
+    Log.d(TAG, "viewWidth: ${widthPercent}")
     val total = Resources.getSystem().displayMetrics.widthPixels
     view.layoutParams.width = (total * widthPercent) / 100
   }
