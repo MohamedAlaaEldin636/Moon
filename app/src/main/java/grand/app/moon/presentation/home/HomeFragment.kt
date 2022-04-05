@@ -90,6 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
       categoryAdvertisement.advertisements.addAll(data.mostPopularAds)
       data.categoryAds.add(0, categoryAdvertisement)
     }
+    //hey I'm HERE
   }
 
 }
