@@ -129,6 +129,7 @@
         android:layout_width="@dimen/dimen40"
         android:layout_height="@dimen/dimen40"
         android:padding="@dimen/dimen6"
+        android:onClick="@{ (v) -> viewModel.facebook(v)}"
         android:background="@drawable/corner_white"
         android:src="@drawable/ic_facebook"
         app:layout_constraintEnd_toStartOf="@+id/ic_google"
@@ -141,6 +142,7 @@
         android:layout_width="@dimen/dimen40"
         android:layout_height="@dimen/dimen40"
         android:padding="@dimen/dimen6"
+        android:onClick="@{ (v) -> viewModel.google(v)}"
 
         android:background="@drawable/corner_white"
         android:src="@drawable/ic_google"

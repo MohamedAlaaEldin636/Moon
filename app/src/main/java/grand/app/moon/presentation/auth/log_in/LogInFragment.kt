@@ -1,10 +1,14 @@
 package grand.app.moon.presentation.auth.log_in
 
+import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
 import grand.app.moon.domain.base.FieldsValidation
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.domain.utils.Resource
@@ -91,4 +95,28 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
         viewModel.request.phone,Constants.Verify)
     )
   }
+
+  val activityResultGoogleSignIn = registerForActivityResult(
+    ActivityResultContracts.StartActivityForResult()
+  ) {
+
+    if (it.resultCode == Activity.RESULT_OK) {
+      // The Task returned from this call is always completed, no need to attach
+      // a listener.
+      val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+
+      try {
+        val account = task.getResult(ApiException::class.java)
+
+        val id = account.id!!
+
+
+        viewModel.performSocialLoginWithApi(this, id)
+      }catch (throwable: Throwable) {
+
+        viewModel.showError(requireContext(),getString(R.string.something_went_wrong_please_try_again))
+      }
+    }
+  }
+
 }

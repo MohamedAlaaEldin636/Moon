@@ -163,6 +163,15 @@ dependencies {
   //chat
   implementation ("com.cometchat:pro-android-chat-sdk:3.0.4")
 
+  //social-login
+  /* Google sign in */
+  implementation("com.google.android.gms:play-services-auth:20.1.0")
+  /* For Facebook Sign in */
+  implementation("com.facebook.android:facebook-login:13.0.0")
+
+
+
+
   // Project Modules
   implementation(project(Config.Modules.prettyPopUp))
   implementation(project(":uikit-kotlin"))

@@ -2,7 +2,16 @@ package grand.app.moon.presentation.auth.log_in
 
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.viewModelScope
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginBehavior
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.entity.request.LogInRequest
@@ -46,5 +55,51 @@ class LogInViewModel @Inject constructor(
       }
       .launchIn(viewModelScope)
   }
+
+  fun facebook(v: View){
+    val callbackManager = CallbackManager.Factory.create()
+
+    val loginManager = LoginManager.getInstance()
+
+    loginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK)
+    loginManager.logIn(
+      v.findFragment<LogInFragment>().requireActivity(),
+      callbackManager,
+      listOf("email", "public_profile"/*, "user_friends"*/),
+    )
+
+    loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+      override fun onSuccess(result: LoginResult) {
+        performSocialLoginWithApi(v.findFragment(), result.accessToken.userId)
+      }
+
+      override fun onError(error: FacebookException) {
+        showError(v.context,v.context.getString(R.string.something_went_wrong_please_try_again))
+      }
+
+      override fun onCancel() {
+        showError(v.context,v.context.getString(R.string.something_went_wrong_please_try_again))
+      }
+    })
+  }
+
+  fun performSocialLoginWithApi(fragment: LogInFragment, userId: String) {
+
+  }
+
+
+  fun google(view: View){
+    val fragment = view.findFragment<LogInFragment>()
+
+    val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+      .requestId()
+      .build()
+    val client = GoogleSignIn.getClient(view.context, options)
+
+    //val account = GoogleSignIn.getLastSignedInAccount(view.context)
+
+    fragment.activityResultGoogleSignIn.launch(client.signInIntent)
+  }
+
 
 }
