@@ -43,7 +43,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     viewModel.initAllServices()
   }
 
-  private  val TAG = "HomeFragment"
+  private val TAG = "HomeFragment"
+
   override
   fun setupObservers() {
 
@@ -86,7 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
   }
 
 
-//  private fun updateList(data: HomeResponse) {
+  //  private fun updateList(data: HomeResponse) {
 //    data.categoryAds.forEach {
 //      it.name = "${resources.getString(R.string.advertisement)} ${it.name}"
 //    }
@@ -103,5 +104,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 //      data.categoryAds.add(0, categoryAdvertisement)
 //    }
 //  }
+  private fun updateList(data: HomeResponse) {
+    data.categoryAds.forEach {
+      it.name = "${resources.getString(R.string.advertisement)} ${it.name}"
+    }
+    if (data.mostPopularAds.isNotEmpty()) {
+      val categoryAdvertisement = CategoryAdvertisement()
+      categoryAdvertisement.name = resources.getString(R.string.suggestions_ads_for_you)
+      categoryAdvertisement.advertisements.addAll(data.suggestions)
+      data.categoryAds.add(0, categoryAdvertisement)
+    }
+    if (data.mostPopularAds.isNotEmpty()) {
+      val categoryAdvertisement = CategoryAdvertisement()
+      categoryAdvertisement.name = resources.getString(R.string.most_popular_ads)
+      categoryAdvertisement.advertisements.addAll(data.mostPopularAds)
+      data.categoryAds.add(0, categoryAdvertisement)
+    }
+    //hey I'm HERE
+  }
 
 }
