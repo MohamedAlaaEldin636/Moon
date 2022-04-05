@@ -6,7 +6,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        minSdkVersion 24
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -15,8 +15,9 @@ android {
         renderscriptSupportModeEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+        manifestPlaceholders = [file_provider: "grand.app.moon"]
 
-        ndk {
+      ndk {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }

@@ -1,13 +1,23 @@
 package grand.app.moon.presentation.home
 
 import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
+import com.cometchat.pro.core.AppSettings
+import com.cometchat.pro.core.CometChat
+import com.cometchat.pro.exceptions.CometChatException
+import com.cometchat.pro.models.User
+import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMessageListActivity
+import com.cometchat.pro.uikit.ui_components.users.user_list.CometChatUserList
+import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.databinding.ActivityHomeBinding
@@ -85,6 +95,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     binding.bottomNavigationView.setupWithNavController(nav)
     binding.toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
   }
+
+  private  val TAG = "HomeActivity"
 
 
   private fun resetTexts(){

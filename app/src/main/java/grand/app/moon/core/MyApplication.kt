@@ -1,12 +1,17 @@
 package grand.app.moon.core
 
 import android.content.Context
+import android.util.Log
 import androidx.multidex.MultiDex
+import com.cometchat.pro.core.AppSettings
+import com.cometchat.pro.core.CometChat
+import com.cometchat.pro.exceptions.CometChatException
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
 import com.zeugmasolutions.localehelper.LocaleAwareApplication
 import dagger.hilt.android.HiltAndroidApp
+import grand.app.moon.presentation.base.utils.Constants
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import javax.net.ssl.SSLContext
@@ -24,7 +29,23 @@ class MyApplication : LocaleAwareApplication() {
   fun onCreate() {
 
     super.onCreate()
+    initChat()
     updateAndroidSecurityProvider()
+  }
+
+  private fun initChat() {
+    val appID = Constants.CHAT_APP_ID
+    val region = Constants.CHAT_REGION
+    val appSettings = AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build()
+
+    CometChat.init(this, appID, appSettings, object : CometChat.CallbackListener<String>() {
+      override fun onSuccess(successMessage: String) {
+      }
+
+      override fun onError(p0: CometChatException?) {
+        TODO("Not yet implemented")
+      }
+    })
   }
 
   private fun updateAndroidSecurityProvider() {

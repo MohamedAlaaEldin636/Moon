@@ -88,7 +88,8 @@ class AdsDetailsViewModel @Inject constructor(
     advertisement.get()?.title?.let {
       advertisement.get()?.description?.let { it1 ->
         advertisement.get()?.store?.phone?.let { it2 ->
-          shareWhatsapp(v,
+          shareWhatsapp(
+            v,
             it, it1, it2
           )
         }
@@ -103,7 +104,9 @@ class AdsDetailsViewModel @Inject constructor(
   fun chat(v: View) {
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
-      //call follow API
+      advertisement.get()?.store?.let {
+        startChatConversation(v, it.nickname, it.name, it.image)
+      }
     }
   }
 
@@ -129,10 +132,10 @@ class AdsDetailsViewModel @Inject constructor(
     show.set(true)
   }
 
-  private  val TAG = "AdsDetailsViewModel"
+  private val TAG = "AdsDetailsViewModel"
   fun recallApi(isAuthorize: Boolean) {
     Log.d(TAG, "recallApi: recallApi recallApi")
-    if (!isLoggin && isAuthorize){
+    if (!isLoggin && isAuthorize) {
       Log.d(TAG, "recallApi: DONER")
       isLoggin = isAuthorize
       getDetails(id, type)

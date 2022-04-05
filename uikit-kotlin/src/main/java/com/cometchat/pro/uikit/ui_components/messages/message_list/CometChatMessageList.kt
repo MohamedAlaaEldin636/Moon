@@ -433,18 +433,23 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
         ivAudioCallBtn = view?.findViewById(R.id.iv_audio_call_btn)
         ivVideoCallBtn = view?.findViewById(R.id.iv_video_call_btn)
 
-        FeatureRestriction.isOneOnOneAudioCallEnabled(object : FeatureRestriction.OnSuccessListener{
-            override fun onSuccess(p0: Boolean) {
-                if (p0 && type == CometChatConstants.RECEIVER_TYPE_USER) {
-                    ivAudioCallBtn?.visibility = View.VISIBLE
-                } else ivAudioCallBtn?.visibility = View.GONE
-            }
-        })
-        FeatureRestriction.isOneOnOneVideoCallEnabled(object : FeatureRestriction.OnSuccessListener{
-            override fun onSuccess(p0: Boolean) {
-                if (p0) ivVideoCallBtn?.visibility = View.VISIBLE else ivVideoCallBtn?.visibility = View.GONE
-            }
-        })
+      //un-comment for chat
+      ivAudioCallBtn?.visibility = View.GONE //<-------------------osama add that
+//        FeatureRestriction.isOneOnOneAudioCallEnabled(object : FeatureRestriction.OnSuccessListener{
+//            override fun onSuccess(p0: Boolean) {
+//                if (p0 && type == CometChatConstants.RECEIVER_TYPE_USER) {
+//                    ivAudioCallBtn?.visibility = View.VISIBLE
+//                } else ivAudioCallBtn?.visibility = View.GONE
+//            }
+//        })
+
+      //un-comment for video
+      ivVideoCallBtn?.visibility = View.GONE //<-------------------osama add that
+//      FeatureRestriction.isOneOnOneVideoCallEnabled(object : FeatureRestriction.OnSuccessListener{
+//            override fun onSuccess(p0: Boolean) {
+//                if (p0) ivVideoCallBtn?.visibility = View.VISIBLE else ivVideoCallBtn?.visibility = View.GONE
+//            }
+//        })
 
 
         rvChatListView = view?.findViewById(R.id.rv_message_list)
@@ -565,9 +570,10 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
             ivAudioCallBtn?.isEnabled = true
             ivVideoCallBtn?.isEnabled = true
         }
-        if (type == CometChatConstants.RECEIVER_TYPE_GROUP) {
-            ivAudioCallBtn?.visibility = View.GONE
-        } else ivAudioCallBtn?.visibility = View.VISIBLE
+      //commented-by-osama
+//        if (type == CometChatConstants.RECEIVER_TYPE_GROUP) {
+//            ivAudioCallBtn?.visibility = View.GONE
+//        } else ivAudioCallBtn?.visibility = View.VISIBLE
         ivAudioCallBtn?.setOnClickListener {
             if (type == CometChatConstants.RECEIVER_TYPE_USER) {
                 Utils.initiatecall(requireContext(), Id, CometChatConstants.RECEIVER_TYPE_USER, CometChatConstants.CALL_TYPE_AUDIO)

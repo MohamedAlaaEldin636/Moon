@@ -130,7 +130,9 @@ class StoreDetailsViewModel @Inject constructor(
   fun chat(v: View) {
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
-      //call follow API
+      store.get()?.let {
+        startChatConversation(v,it.nickname,it.name,it.image)
+      }
     }
   }
 

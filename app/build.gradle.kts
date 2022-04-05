@@ -160,7 +160,9 @@ dependencies {
 
   //slider
   implementation ("com.github.denzcoskun:ImageSlideshow:0.1.0")
-  
+  //chat
+  implementation ("com.cometchat:pro-android-chat-sdk:3.0.4")
+
   // Project Modules
   implementation(project(Config.Modules.prettyPopUp))
   implementation(project(":uikit-kotlin"))

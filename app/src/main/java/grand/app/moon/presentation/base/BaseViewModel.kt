@@ -3,6 +3,7 @@ package grand.app.moon.presentation.base
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
@@ -10,8 +11,19 @@ import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.PropertyChangeRegistry
+import com.cometchat.pro.constants.CometChatConstants
+import com.cometchat.pro.constants.CometChatConstants.Errors.ERROR_INVALID_UID
+import com.cometchat.pro.core.CometChat
+import com.cometchat.pro.exceptions.CometChatException
+import com.cometchat.pro.models.User
+import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMessageListActivity
+import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
 import es.dmoral.toasty.Toasty
 import grand.app.moon.R
+import grand.app.moon.core.MyApplication
+import grand.app.moon.presentation.base.extensions.disable
+import grand.app.moon.presentation.base.extensions.enable
+import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.Job
 import java.lang.Exception
 import java.net.URLEncoder
@@ -98,5 +110,59 @@ open class BaseViewModel : ViewModel(), Observable {
       }
     }
   }
+
+  private  val TAG = "BaseViewModel"
+
+  fun startChatConversation(v: View , uid: String, name: String,image: String){
+    Log.d(TAG, "startChatConversation")
+    v.disable()
+    val user = User()
+    user.uid = uid // Replace with the UID for the user to be created
+    user.name = name // Replace with the name of the user
+    user.avatar = image
+    user.link = image
+
+    CometChat.login(user.uid,Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
+      override fun onSuccess(user: User?) {
+        Log.d(TAG, "ologin")
+        if (user != null) {
+          startChatPage(v,user)
+        }
+      }
+      override fun onError(p0: CometChatException?) {
+        Log.d(TAG, "onError: "+p0?.code.toString())
+        if(p0?.code.toString() == "ERR_UID_NOT_FOUND"){
+          Log.d(TAG, "onError: HERER")
+          CometChat.createUser(user,Constants.CHAT_AUTH_KEY,object: CometChat.CallbackListener<User>(){
+            override fun onSuccess(p0: User?) {
+              Log.d(TAG, "onSuccess: DONE")
+              startChatConversation(v,uid, name, image)
+            }
+
+            override fun onError(p0: CometChatException?) {
+              Log.d(TAG, "onErrorAGAIN: "+p0?.message)
+              v.enable()
+            }
+          })
+        }
+      }
+
+    })
+  }
+
+  private fun startChatPage(v: View ,user: User){
+    v.enable()
+    Log.d(TAG, "startChatPage")
+
+    val intent = Intent(v.context, CometChatMessageListActivity::class.java)
+    intent.putExtra(UIKitConstants.IntentStrings.UID, user.uid)
+    intent.putExtra(UIKitConstants.IntentStrings.AVATAR, user.avatar)
+    intent.putExtra(UIKitConstants.IntentStrings.STATUS, user.status)
+    intent.putExtra(UIKitConstants.IntentStrings.NAME, user.name)
+    intent.putExtra(UIKitConstants.IntentStrings.TYPE, CometChatConstants.RECEIVER_TYPE_USER)
+    intent.putExtra(UIKitConstants.IntentStrings.LINK, user.link)
+    v.context.startActivity(intent)
+  }
+
 
 }

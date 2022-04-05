@@ -35,6 +35,8 @@ allprojects {
     mavenCentral()
     jcenter()
     maven(url = Config.Dependencies.jitPackURL)
+    maven(url = "https://dl.cloudsmith.io/public/cometchat/cometchat-pro-android/maven/")
+
   }
 }
 

@@ -109,7 +109,7 @@ class CometChatUserList constructor() : Fragment() {
             }
 
         })
-        if (Utils.isDarkMode(context!!)) {
+        if (Utils.isDarkMode(requireContext())) {
             title!!.setTextColor(resources.getColor(R.color.textColorWhite))
         } else {
             title!!.setTextColor(resources.getColor(R.color.primaryTextColor))
