@@ -19,6 +19,18 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
 
+    <action
+      android:id="@+id/action_log_in_fragment_self"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/log_in_fragment" />
+    <argument
+      android:name="social_id"
+      app:argType="string"
+      app:nullable="true" />
+
 
   </fragment>
 

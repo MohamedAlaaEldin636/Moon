@@ -5,6 +5,7 @@
 
   <data>
 
+    <import type="android.view.View" />
     <import type="grand.app.moon.presentation.base.utils.Constants" />
 
     <variable
@@ -122,6 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen25"
+
         app:layout_constraintTop_toBottomOf="@+id/btn_phone" />
 
       <androidx.appcompat.widget.AppCompatImageView
@@ -129,6 +131,7 @@
         android:layout_width="@dimen/dimen40"
         android:layout_height="@dimen/dimen40"
         android:padding="@dimen/dimen6"
+        android:visibility="@{viewModel.showSocial ? View.VISIBLE : View.GONE }"
         android:onClick="@{ (v) -> viewModel.facebook(v)}"
         android:background="@drawable/corner_white"
         android:src="@drawable/ic_facebook"
@@ -143,7 +146,7 @@
         android:layout_height="@dimen/dimen40"
         android:padding="@dimen/dimen6"
         android:onClick="@{ (v) -> viewModel.google(v)}"
-
+        android:visibility="@{viewModel.showSocial ? View.VISIBLE : View.GONE }"
         android:background="@drawable/corner_white"
         android:src="@drawable/ic_google"
         app:layout_constraintEnd_toStartOf="@+id/ic_twitter"
@@ -158,6 +161,7 @@
         android:src="@drawable/ic_twitter"
         android:padding="@dimen/dimen6"
         android:background="@drawable/corner_white"
+        android:visibility="@{viewModel.showSocial ? View.VISIBLE : View.GONE }"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

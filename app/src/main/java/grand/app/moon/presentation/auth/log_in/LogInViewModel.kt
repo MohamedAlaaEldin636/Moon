@@ -2,6 +2,7 @@ package grand.app.moon.presentation.auth.log_in
 
 import android.util.Log
 import android.view.View
+import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.viewModelScope
 import com.facebook.CallbackManager
@@ -33,6 +34,7 @@ class LogInViewModel @Inject constructor(
   val userLocalUseCase: UserLocalUseCase
 ) : BaseViewModel() {
 
+  val showSocial = ObservableBoolean(true)
   var request = LogInRequest()
   var _logInResponse = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
   val logInResponse = _logInResponse
@@ -57,6 +59,9 @@ class LogInViewModel @Inject constructor(
   }
 
   fun facebook(v: View){
+    LoginManager.getInstance().logOut()
+
+    Log.d(TAG, "facebook: ")
     val callbackManager = CallbackManager.Factory.create()
 
     val loginManager = LoginManager.getInstance()

@@ -9,6 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
+import com.facebook.FacebookSdk.fullyInitialize
+import com.facebook.FacebookSdk.isInitialized
+import com.facebook.FacebookSdk.sdkInitialize
+import com.facebook.FacebookSdk.setAdvertiserIDCollectionEnabled
+import com.facebook.FacebookSdk.setApplicationId
+import com.facebook.FacebookSdk.setAutoInitEnabled
+import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
 import com.zeugmasolutions.localehelper.LocaleHelper
 import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegate
 import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegateImpl
@@ -53,8 +60,19 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
       setUpBottomNavigation()
       setUpNavigationDrawer()
     }
-
+    initFacebook()
     setUpViews()
+  }
+
+  private fun initFacebook() {
+    if (!isInitialized()) {
+      setApplicationId("353837505660520")
+      sdkInitialize(applicationContext)
+      setAutoLogAppEventsEnabled(true)
+      fullyInitialize()
+      setAutoInitEnabled(true)
+      setAdvertiserIDCollectionEnabled(true)
+    }
   }
 
   override
