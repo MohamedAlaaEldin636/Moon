@@ -27,10 +27,13 @@ import grand.app.moon.data.ads.data_source.AdsRemoteDataSource
 import grand.app.moon.data.ads.repository.AdsRepositoryImpl
 import grand.app.moon.data.country.data_source.CountriesRemoteDataSource
 import grand.app.moon.data.country.repository.CountriesRepositoryImpl
+import grand.app.moon.data.explorer.data_source.ExploreRemoteDataSource
+import grand.app.moon.data.explorer.repository.ExploreRepositoryImpl
 import grand.app.moon.data.store.data_source.StoreRemoteDataSource
 import grand.app.moon.data.store.repository.StoreRepositoryImpl
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.countries.repository.CountriesRepository
+import grand.app.moon.domain.explorer.repository.ExploreRepository
 import grand.app.moon.domain.store.repository.StoreRepository
 import javax.inject.Singleton
 
@@ -51,6 +54,12 @@ class RepositoryModule {
   fun provideAuthRepository(
     remoteDataSource: AuthRemoteDataSource,
   ): AuthRepository = AuthRepositoryImpl(remoteDataSource)
+
+  @Provides
+  @Singleton
+  fun provideExploreRepository(
+    remoteDataSource: ExploreRemoteDataSource,
+  ): ExploreRepository = ExploreRepositoryImpl(remoteDataSource)
 
   @Provides
   @Singleton

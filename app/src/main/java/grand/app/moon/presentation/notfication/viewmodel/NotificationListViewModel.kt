@@ -63,6 +63,7 @@ class NotificationListViewModel @Inject constructor(
       if (page == 1) {
 //        adapter = InvoicesAdapter()
         adapter.differ.submitList(it.list)
+        show.set(true)
       } else {
         adapter.insertData(it.list)
       }

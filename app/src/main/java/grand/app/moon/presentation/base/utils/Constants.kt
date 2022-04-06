@@ -51,6 +51,7 @@ object Constants {
   const val LAST_SEARCH: String = "last_search"
   const val FAVOURITE: String = "favourite"
   const val STORES_BLOCKED: String = "stores_blocked"
+  const val VIDEO: String = "video"
 
 
   const val MAIL: String = "mail"

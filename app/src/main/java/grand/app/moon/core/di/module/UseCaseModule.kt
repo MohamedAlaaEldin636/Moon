@@ -29,6 +29,8 @@ import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.countries.repository.CountriesRepository
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
+import grand.app.moon.domain.explorer.repository.ExploreRepository
+import grand.app.moon.domain.explorer.use_case.ExploreUseCase
 import grand.app.moon.domain.store.repository.StoreRepository
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import javax.inject.Singleton
@@ -49,6 +51,12 @@ class UseCaseModule {
   fun provideCountriesUseCase(
     countriesRepository: CountriesRepository
   ): CountriesUseCase = CountriesUseCase(countriesRepository)
+
+  @Provides
+  @Singleton
+  fun provideExploreUseCase(
+    repo: ExploreRepository
+  ): ExploreUseCase = ExploreUseCase(repo)
 
 
 

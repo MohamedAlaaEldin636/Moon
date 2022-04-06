@@ -3,6 +3,7 @@ package grand.app.moon.presentation.base.extensions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
@@ -28,8 +29,16 @@ import coil.load
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import grand.app.moon.R
+import grand.app.moon.domain.explorer.entity.Explore
 import java.io.File
 
 fun View.show() {
@@ -76,7 +85,9 @@ fun TextView.fromHtml(text: String?) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
       setText(Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT));
     } else {
-      setText(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY));
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        setText(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY))
+      };
     }
 }
 
@@ -194,6 +205,62 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
       is Drawable -> setImageDrawable(defaultImage)
     }
   }
+}
+
+
+@BindingAdapter(
+  value = ["app:loadImageExplore", "app:progressBar", "app:defaultImage","app:exploreHeight"],
+  requireAll = false
+)
+fun ShapeableImageView.loadImageExplore(imageUrl: String?, progressBar: ProgressBar?, defaultImage: Any?,position: Int) {
+  if (imageUrl != null && imageUrl.isNotEmpty()) {
+    if (URLUtil.isValidUrl(imageUrl)) {
+      progressBar?.show()
+      Glide.with(this)
+        .load(imageUrl)
+        .listener(object : RequestListener<Drawable> {
+          override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<Drawable>?,
+            isFirstResource: Boolean
+          ): Boolean {
+            progressBar?.hide()
+            return false
+          }
+
+          override fun onResourceReady(
+            resource: Drawable?,
+            model: Any?,
+            target: Target<Drawable>?,
+            dataSource: com.bumptech.glide.load.DataSource?,
+            isFirstResource: Boolean
+          ): Boolean {
+            progressBar?.hide()
+            return false
+          }
+
+        })
+        .into(this)
+    } else {
+      load(File(imageUrl)) {
+        crossfade(750) // 75th percentile of a second
+        build()
+      }
+    }
+
+  } else {
+    progressBar?.hide()
+    when (defaultImage) {
+      null -> setImageResource(R.drawable.bg_no_image)
+      is Int -> setImageResource(defaultImage)
+      is Drawable -> setImageDrawable(defaultImage)
+    }
+  }
+  if(position % 3 == 0){
+   layoutParams.height = resources.getDimension(R.dimen.dimen180).toInt()
+  }else
+    layoutParams.height = resources.getDimension(R.dimen.dimen90).toInt()
 }
 
 @BindingAdapter(value = ["app:loadCircleImage", "app:progressBar"], requireAll = false)

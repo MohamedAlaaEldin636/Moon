@@ -65,6 +65,7 @@
     app:popExitAnim="@anim/anim_slide_out_right" />
 
   <include app:graph="@navigation/nav_store" />
+  <include app:graph="@navigation/nav_explore" />
 
   <!--  <fragment-->
   <!--    android:id="@+id/reviewsFragment"-->
