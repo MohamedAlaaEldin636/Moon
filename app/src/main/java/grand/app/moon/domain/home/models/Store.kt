@@ -42,9 +42,6 @@ data class Store(
   val latitude: Double = 0.0,
   @SerializedName("longitude")
   val longitude: Double = 0.0,
-
-
-
   @SerializedName("is_following")
   var isFollowing: Boolean = true,
   @SerializedName("social_media_links")

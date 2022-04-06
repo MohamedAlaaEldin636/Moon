@@ -18,6 +18,7 @@ import android.widget.ProgressBar
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -212,7 +213,7 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
   value = ["app:loadImageExplore", "app:progressBar", "app:defaultImage","app:exploreHeight"],
   requireAll = false
 )
-fun ShapeableImageView.loadImageExplore(imageUrl: String?, progressBar: ProgressBar?, defaultImage: Any?,position: Int) {
+fun AppCompatImageView.loadImageExplore(imageUrl: String?, progressBar: ProgressBar?, defaultImage: Any?,position: Int) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
     if (URLUtil.isValidUrl(imageUrl)) {
       progressBar?.show()
@@ -258,9 +259,9 @@ fun ShapeableImageView.loadImageExplore(imageUrl: String?, progressBar: Progress
     }
   }
   if(position % 3 == 0){
-   layoutParams.height = resources.getDimension(R.dimen.dimen180).toInt()
+   layoutParams.height = resources.getDimension(R.dimen.dimen300).toInt()
   }else
-    layoutParams.height = resources.getDimension(R.dimen.dimen90).toInt()
+    layoutParams.height = resources.getDimension(R.dimen.dimen150).toInt()
 }
 
 @BindingAdapter(value = ["app:loadCircleImage", "app:progressBar"], requireAll = false)

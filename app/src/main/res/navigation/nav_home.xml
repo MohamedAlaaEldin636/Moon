@@ -32,7 +32,12 @@
   <fragment
     android:id="@+id/mapFragment"
     android:name="grand.app.moon.presentation.map.MapFragment"
-    android:label="@string/map" />
+    android:label="@string/map" >
+    <argument
+      android:name="type"
+      app:argType="string"
+      android:defaultValue="store" />
+  </fragment>
   <fragment
     android:id="@+id/discoverFragment"
     android:name="grand.app.moon.presentation.discover.DiscoverFragment"

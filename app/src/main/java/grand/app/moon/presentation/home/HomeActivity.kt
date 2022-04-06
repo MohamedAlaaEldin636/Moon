@@ -49,7 +49,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
     nav = navHostFragment.findNavController()
     appBarConfiguration = AppBarConfiguration(
-      setOf(R.id.home_fragment,R.id.settings_fragment , R.id.myAccountFragment, R.id.mapFragment , R.id.discoverFragment)
+      setOf(R.id.home_fragment,R.id.settings_fragment , R.id.myAccountFragment, R.id.mapFragment , R.id.exploreFragment)
     )
     setSupportActionBar(binding.toolbar)
     binding.toolbar.setupWithNavController(nav, appBarConfiguration)
@@ -69,7 +69,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showTopBarControls()
           showText()
         }
-        R.id.settings_fragment , R.id.mapFragment, R.id.discoverFragment ->{
+        R.id.exploreFragment , R.id.mapFragment ->{
+          showTopBarControls()
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          binding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+          binding.tvHomeTitle.text = destination.label
+          showText()
+        }
+        R.id.settings_fragment , R.id.discoverFragment  ->{
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
           binding.tvHomeTitle.text = destination.label
           showTopBarControls()

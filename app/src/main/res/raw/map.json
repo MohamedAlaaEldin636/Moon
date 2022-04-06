@@ -1,0 +1,19 @@
+[
+    {
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            },
+            {
+                "saturation": 100
+            },
+            {
+                "lightness": 100
+            },
+            {
+                "weight": 8
+            }
+        ]
+    }
+]
