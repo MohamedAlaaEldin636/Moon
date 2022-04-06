@@ -12,15 +12,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
-import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.story.entity.StoryItem
-import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter
-import grand.app.moon.presentation.store.adapter.StoreisAdapter
-import grand.app.moon.presentation.story.adapter.StoreAdapter
+import grand.app.moon.presentation.story.adapter.StoriesAdapter
+import grand.app.moon.presentation.store.adapter.StoreAdapter
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,14 +36,14 @@ class HomeViewModel @Inject constructor(
   val homeResponse = _homeResponse
 
   private val _storiesResponse =
-    MutableStateFlow<Resource<BaseResponse<ArrayList<StoryItem>>>>(Resource.Default)
+    MutableStateFlow<Resource<BaseResponse<ArrayList<Store>>>>(Resource.Default)
   val storiesResponse = _storiesResponse
 
 
   var titleToolbar = MutableLiveData<String>("")
 
   @Bindable
-  val storiesAdapter = StoreisAdapter()
+  val storiesAdapter = StoriesAdapter()
 
   @Bindable
   val categoriesAdapter = CategoriesAdapter()
@@ -94,7 +93,7 @@ class HomeViewModel @Inject constructor(
       .launchIn(viewModelScope)
   }
 
-  fun updateStories(data: MutableList<StoryItem>) {
+  fun updateStories(data: MutableList<Store>) {
     storiesAdapter.differ.submitList(data)
     notifyPropertyChanged(BR.storiesAdapter)
   }

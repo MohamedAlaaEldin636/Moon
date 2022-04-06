@@ -3,6 +3,8 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
   id(Config.Plugins.androidApplication)
   id(Config.Plugins.kotlinAndroid)
+  id(Config.Plugins.kotlinAndroidExtensions)
+
   id(Config.Plugins.kotlinKapt)
   id(Config.Plugins.navigationSafeArgs)
   id(Config.Plugins.hilt)
@@ -162,6 +164,18 @@ dependencies {
   implementation ("com.github.denzcoskun:ImageSlideshow:0.1.0")
   //chat
   implementation ("com.cometchat:pro-android-chat-sdk:3.0.4")
+
+  //exo-player
+  implementation ("com.google.android.exoplayer:exoplayer:2.10.0")
+
+  //glide
+  implementation ("com.github.bumptech.glide:glide:4.11.0")
+  annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+
+//  //stories
+  implementation ("com.github.bolaware:momentz:v2.0")
+//  implementation 'com.github.teresaholfeld:Stories:1.1.4'
+//  implementation 'com.github.bolaware:momentz:v2.0'
 
   //social-login
   /* Google sign in */

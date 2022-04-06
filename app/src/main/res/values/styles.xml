@@ -90,6 +90,9 @@
   <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
     <item name="cornerSize">50%</item>
   </style>
+  <style name="progressAccent" parent="ThemeOverlay.AppCompat.Light">
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
 
   <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
     <item name="cornerSize">10%</item>

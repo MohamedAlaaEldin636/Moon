@@ -3,6 +3,14 @@
   <color name="colorPrimary">#0D0633</color>
   <color name="colorPrimaryT">#000D0633</color>
   <color name="colorPrimaryDark">#0D0633</color>
+
+
+  <!-- Story Display Progress-->
+  <color name="progress_primary">@color/white</color>
+  <color name="progress_secondary">#8AFFFFFF</color>
+  <color name="progress_max_active">@color/white</color>
+
+
   <color name="blackOpacity1">#E6000000</color>
   <color name="blackOpacity2">#33000000</color>
   <color name="blackOpacity3">#0A000000</color>

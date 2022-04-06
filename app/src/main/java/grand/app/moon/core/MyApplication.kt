@@ -6,6 +6,10 @@ import androidx.multidex.MultiDex
 import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
+import com.google.android.exoplayer2.database.DatabaseProvider
+import com.google.android.exoplayer2.database.ExoDatabaseProvider
+import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
+import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
@@ -31,6 +35,21 @@ class MyApplication : LocaleAwareApplication() {
     super.onCreate()
     initChat()
     updateAndroidSecurityProvider()
+    initStoryViewer()
+
+  }
+
+  private fun initStoryViewer() {
+    val leastRecentlyUsedCacheEvictor = LeastRecentlyUsedCacheEvictor(90 * 1024 * 1024)
+    val databaseProvider: DatabaseProvider = ExoDatabaseProvider(this)
+
+    if (simpleCache == null) {
+      simpleCache = SimpleCache(cacheDir, leastRecentlyUsedCacheEvictor, databaseProvider)
+    }
+  }
+
+  companion object {
+    var simpleCache: SimpleCache? = null
   }
 
   private fun initChat() {

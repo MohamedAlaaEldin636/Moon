@@ -2,6 +2,7 @@ package grand.app.moon.domain.home.use_case
 
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.home.repository.HomeRepository
 import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.domain.utils.BaseResponse
@@ -22,7 +23,7 @@ class HomeUseCase @Inject constructor(
   }.flowOn(Dispatchers.IO)
 
 
-  fun getStories(): Flow<Resource<BaseResponse<ArrayList<StoryItem>>>> = flow {
+  fun getStories(): Flow<Resource<BaseResponse<ArrayList<Store>>>> = flow {
     val result = homeRepository.stories()
     emit(result)
   }.flowOn(Dispatchers.IO)

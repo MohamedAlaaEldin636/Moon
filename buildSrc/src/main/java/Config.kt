@@ -21,6 +21,8 @@ object Config {
   object Plugins {
     const val androidApplication = "com.android.application"
     const val kotlinAndroid = "kotlin-android"
+    const val kotlinAndroidExtensions = "kotlin-android-extensions"
+
     const val kotlinKapt = "kotlin-kapt"
     const val navigationSafeArgs = "androidx.navigation.safeargs"
     const val hilt = "dagger.hilt.android.plugin"

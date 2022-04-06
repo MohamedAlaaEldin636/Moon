@@ -43,6 +43,12 @@
       android:exported="true"
       android:screenOrientation="portrait" />
 
+
+    <activity
+      android:name=".presentation.story.storyView.screen.StoryDisplayActivity"
+      android:exported="true"
+      android:screenOrientation="portrait" />
+
     <activity
       android:name="grand.app.moon.presentation.auth.AuthActivity"
       android:configChanges="orientation|screenSize"

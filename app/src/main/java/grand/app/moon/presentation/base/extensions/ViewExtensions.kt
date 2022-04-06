@@ -88,6 +88,17 @@ fun View.goneUnless(visible: Boolean) {
   }
 }
 
+//@BindingAdapter("app:loading")
+//fun StoriesProgressView.story(value: Boolean?) {
+//  value?.let {
+//    when(it){
+//      true -> pause()
+//      else -> resume()
+//    }
+//  }
+//}
+
+
 @BindingAdapter("app:rate")
 fun RatingBar.rateApp(value: String?) {
   value?.let {

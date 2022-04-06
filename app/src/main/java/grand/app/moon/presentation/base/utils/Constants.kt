@@ -37,7 +37,7 @@ object Constants {
   const val SPLASH: String = "splash"
   const val SOCIAL_TYPE: String = "social_media"
   const val PICKER_IMAGE: String = "PICKER_IMAGE"
-  const val SUBMIT: String = "submit"
+  const val STORIES: String = "stories"
   const val MORE: String = "more"
   const val NEXT: String = "next"
   const val SKIP: String = "skip"

@@ -3,6 +3,7 @@ package grand.app.moon.domain.home.models
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import java.io.Serializable
 
 @Keep
 data class Property(
@@ -14,4 +15,4 @@ data class Property(
   val name: String = "",
   @SerializedName("parent")
   val parent: Parent = Parent()
-)
+) : Serializable

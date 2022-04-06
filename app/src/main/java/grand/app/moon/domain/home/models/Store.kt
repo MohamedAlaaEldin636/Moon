@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import grand.app.moon.domain.home.models.store.SocialLink
 import grand.app.moon.domain.home.models.store.WorkingHours
+import grand.app.moon.domain.story.entity.StoryItem
 import java.io.Serializable
 
 @Keep
@@ -60,6 +61,8 @@ data class Store(
   val description: String = "",
   @SerializedName("created_at")
   val createdAt: String = "",
+  @SerializedName("stories")
+  val stories: ArrayList<StoryItem> = arrayListOf(),
 
 
   ) : Serializable

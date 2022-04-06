@@ -24,6 +24,7 @@ import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.collect
@@ -79,7 +80,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
       viewModel.storiesResponse
         .collect {
           if (it is Resource.Success) {
-            it.value.data.add(0, StoryItem(name = getString(R.string.show_more), isFirst = true))
+            val store = Store()
+            store.stories.add(StoryItem(name = getString(R.string.show_more), isFirst = true))
+            it.value.data.add(0,store )
             viewModel.updateStories(it.value.data)
           }
         }
