@@ -1,15 +1,19 @@
 package grand.app.moon.presentation.home.viewModels
 
 import android.util.Log
+import android.view.View
 import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.R
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.home.models.HomeResponse
@@ -17,6 +21,7 @@ import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter
 import grand.app.moon.presentation.story.adapter.StoriesAdapter
 import grand.app.moon.presentation.store.adapter.StoreAdapter
@@ -54,13 +59,7 @@ class HomeViewModel @Inject constructor(
   @Bindable
   val adsHomeAdapter = AdsHomeAdapter()
 
-
-  init {
-
-//    getCategories()
-//    homeApi()
-//    getStories()
-  }
+  var isLoggin = userLocalUseCase.isLoggin()
 
   fun initAllServices(){
     getCategories()
@@ -96,6 +95,17 @@ class HomeViewModel @Inject constructor(
   fun updateStories(data: MutableList<Store>) {
     storiesAdapter.differ.submitList(data)
     notifyPropertyChanged(BR.storiesAdapter)
+  }
+
+  fun departments(v: View){
+    v.findNavController().navigate(R.id.departmentListFragment,null,Constants.NAVIGATION_OPTIONS)
+  }
+
+  fun chatList(v: View){
+    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
+    else {
+      v.findNavController().navigate(R.id.cometChatConversationList,null,Constants.NAVIGATION_OPTIONS)
+    }
   }
 
   private val TAG = "HomeViewModel"

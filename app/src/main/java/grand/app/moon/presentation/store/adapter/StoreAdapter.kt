@@ -53,16 +53,10 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
     holder.itemLayoutBinding.itemStoreContainer.setOnClickListener {
       Log.d(TAG, "onBindViewHolder: HAY HERE")
 
-      val options = NavOptions.Builder()
-        .setEnterAnim(R.anim.anim_slide_in_right)
-        .setExitAnim(R.anim.anim_slide_out_left)
-        .setPopEnterAnim(R.anim.anim_slide_in_left)
-        .setPopExitAnim(R.anim.anim_slide_out_right)
-        .build()
       holder.itemLayoutBinding.root.findNavController().navigate(R.id.nav_store,
         bundleOf(
           "id" to data.id
-        ),options)
+        ),Constants.NAVIGATION_OPTIONS)
 
 
 //      this.position = position

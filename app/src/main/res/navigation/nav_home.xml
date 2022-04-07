@@ -27,6 +27,16 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_home_fragment_to_departmentListFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/departmentListFragment" />
+    <action
+      android:id="@+id/action_home_fragment_to_cometChatConversationList"
+      app:destination="@id/cometChatConversationList" />
   </fragment>
 
   <fragment
@@ -71,6 +81,14 @@
 
   <include app:graph="@navigation/nav_store" />
   <include app:graph="@navigation/nav_explore" />
+  <fragment
+    android:id="@+id/departmentListFragment"
+    android:name="grand.app.moon.presentation.department.DepartmentListFragment"
+    android:label="@string/departments" />
+  <fragment
+    android:id="@+id/cometChatConversationList"
+    android:name="com.cometchat.pro.uikit.ui_components.chats.CometChatConversationList"
+    android:label="CometChatConversationList" />
 
   <!--  <fragment-->
   <!--    android:id="@+id/reviewsFragment"-->

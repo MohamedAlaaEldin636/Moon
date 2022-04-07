@@ -1,5 +1,8 @@
 package grand.app.moon.presentation.base.utils
 
+import androidx.navigation.NavOptions
+import grand.app.moon.R
+
 object Constants {
   const val PAGE_INDEX = 1
   const val NETWORK_PAGE_SIZE = 2
@@ -52,6 +55,12 @@ object Constants {
   const val FAVOURITE: String = "favourite"
   const val STORES_BLOCKED: String = "stores_blocked"
   const val VIDEO: String = "video"
+  val NAVIGATION_OPTIONS = NavOptions.Builder()
+    .setEnterAnim(R.anim.anim_slide_in_right)
+    .setExitAnim(R.anim.anim_slide_out_left)
+    .setPopEnterAnim(R.anim.anim_slide_in_left)
+    .setPopExitAnim(R.anim.anim_slide_out_right)
+    .build()
 
 
   const val MAIL: String = "mail"

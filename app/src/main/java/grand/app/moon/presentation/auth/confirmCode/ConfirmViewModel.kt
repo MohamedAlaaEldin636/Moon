@@ -27,6 +27,7 @@ class ConfirmViewModel @Inject constructor(
   val sendCode = _sendCode
 
   init {
+    verifyAccountUseCase.baseViewModel = this
     startTimer()
   }
   fun verifyAccount() {

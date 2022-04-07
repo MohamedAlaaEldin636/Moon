@@ -54,6 +54,7 @@
         android:layout_height="@dimen/dimen30"
         android:layout_marginEnd="@dimen/dimen10"
         android:src="@drawable/ic_chat"
+        android:onClick="@{ (v) -> viewModel.chatList(v)}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ic_notification"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,6 +65,7 @@
         android:layout_height="@dimen/dimen30"
         android:layout_marginStart="@dimen/dimen10"
         android:src="@drawable/ic_menu"
+        android:onClick="@{ (v) -> viewModel.departments(v)}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

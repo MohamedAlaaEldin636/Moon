@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -16,7 +17,7 @@ import grand.app.moon.presentation.base.utils.SingleLiveEvent
 
 class MoreAdapter : RecyclerView.Adapter<MoreAdapter.ViewHolder>() {
   lateinit var context: Context
-  var clickEvent: SingleLiveEvent<MoreItem> = SingleLiveEvent()
+  var clickEvent: MutableLiveData<MoreItem> = MutableLiveData()
 
   private val differCallback = object : DiffUtil.ItemCallback<MoreItem>() {
     override fun areItemsTheSame(

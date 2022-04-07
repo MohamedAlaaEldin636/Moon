@@ -6,6 +6,7 @@ import grand.app.moon.domain.auth.entity.request.LogInRequest
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.auth.repository.AuthRepository
 import grand.app.moon.domain.utils.*
+import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +19,8 @@ class LogInUseCase @Inject constructor(
   private val authRepository: AuthRepository,
   private val userLocalUseCase: UserLocalUseCase
 ) {
+  lateinit var baseViewModel: BaseViewModel
+
   operator fun invoke(
     request: LogInRequest
   ): Flow<Resource<BaseResponse<*>>> = flow {

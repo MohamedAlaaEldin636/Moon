@@ -1,8 +1,6 @@
 package grand.app.moon.presentation.myAccount
 
-import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -46,10 +44,9 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
           Constants.LAST_ADS-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(2,resources.getString(R.string.last_search)))
           Constants.LAST_SEARCH-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(5,resources.getString(R.string.stores_had_been_followed)))
           Constants.LOGOUT -> {
-            Log.d(TAG, "setData: logout")
-            viewModel.userLocalUseCase.clearUser()
-            viewModel.isLogin = false
-            setList()
+            viewModel.logoutUser({
+
+            })
           }
         }
       }

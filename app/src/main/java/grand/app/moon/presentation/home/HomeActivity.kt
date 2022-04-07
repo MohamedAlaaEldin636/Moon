@@ -27,6 +27,7 @@ import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.extensions.hide
 import grand.app.moon.presentation.base.extensions.invisible
 import grand.app.moon.presentation.base.extensions.show
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
 
 @AndroidEntryPoint
@@ -53,6 +54,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     )
     setSupportActionBar(binding.toolbar)
     binding.toolbar.setupWithNavController(nav, appBarConfiguration)
+
+   viewModel.clickEvent.observe(this, {
+      if (it == Constants.LOGIN_REQUIRED) startActivity(Intent(this, AuthActivity::class.java))
+    })
+
 
     nav.addOnDestinationChangedListener { controller, destination, arguments ->
       resetTexts()

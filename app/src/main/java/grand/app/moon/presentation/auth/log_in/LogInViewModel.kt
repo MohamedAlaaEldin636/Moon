@@ -40,7 +40,7 @@ class LogInViewModel @Inject constructor(
   val logInResponse = _logInResponse
 
   init {
-
+    logInUseCase.baseViewModel = this
   }
 
 
