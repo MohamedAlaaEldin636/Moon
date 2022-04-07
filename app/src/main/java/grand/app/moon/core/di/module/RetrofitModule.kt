@@ -34,6 +34,7 @@ object RetrofitModule {
   @Singleton
   fun provideHeadersInterceptor(appPreferences: AppPreferences) = run {
     var countryId = appPreferences.getLocal(Constants.COUNTRY_ID)
+    if(countryId.isEmpty()) countryId = "1"
     var userToken = appPreferences.getLocal(Constants.TOKEN)
     var token2 = appPreferences.getUser().token
     Log.d(TAG, "provideHeadersInterceptor: $userToken")

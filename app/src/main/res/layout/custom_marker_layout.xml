@@ -16,15 +16,18 @@
         android:layout_height="wrap_content">
 
 
-      <com.google.android.material.button.MaterialButton
+      <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_marker_text"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"
-        android:textSize="@dimen/text_size12"
+        android:textSize="@dimen/text_size14"
         android:textColor="@color/colorWhite"
-        app:backgroundTint="@color/colorAccent"
+        android:paddingTop="@dimen/dimen6"
+        android:paddingBottom="@dimen/dimen6"
+        android:paddingStart="@dimen/dimen10"
+        android:paddingEnd="@dimen/dimen10"
+        android:background="@drawable/corner_accent_7"
         app:iconGravity="textStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

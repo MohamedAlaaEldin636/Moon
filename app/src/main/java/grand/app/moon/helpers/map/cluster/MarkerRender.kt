@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.widget.AppCompatTextView
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
@@ -33,10 +34,11 @@ class MarkerRender(mapConfig: MapConfig, items: List<ClusterCustomItem?>?) :
   var bitmapStories = HashMap<String, Bitmap>()
   fun addMarker(clusterCustomItem: ClusterCustomItem, markerOptions: Marker?) {
     try {
-      val markerView: View = (mapConfig.context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-        R.layout.custom_marker_layout,
-        null
-      )
+      val markerView: View =
+        (mapConfig.context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+          R.layout.custom_marker_layout,
+          null
+        )
       if (mapConfig.isVisible) {
         drawStory(clusterCustomItem, markerOptions, markerView)
       }
@@ -47,7 +49,14 @@ class MarkerRender(mapConfig: MapConfig, items: List<ClusterCustomItem?>?) :
 
   fun drawStory(clusterCustomItem: ClusterCustomItem, markerOptions: Marker?, markerView: View) {
     try {
-      markerView.findViewById<MaterialButton>(R.id.tv_marker_text).text = clusterCustomItem.getStore().nickname
+      markerView.findViewById<AppCompatTextView>(R.id.tv_marker_text).text =
+        clusterCustomItem.getStore().nickname
+      val iconGenerator = IconGenerator(markerView.context)
+      iconGenerator.setContentView(markerView);
+      markerOptions!!.setIcon(
+        BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon())
+      )
+
     } catch (exception: Exception) {
       exception.printStackTrace()
     }
@@ -57,11 +66,11 @@ class MarkerRender(mapConfig: MapConfig, items: List<ClusterCustomItem?>?) :
     clusterCustomItem: ClusterCustomItem,
     markerOptions: MarkerOptions
   ) {
-    try {
-      markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_foreground))
-    } catch (exception: Exception) {
-      exception.printStackTrace()
-    }
+//    try {
+//      markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_original))
+//    } catch (exception: Exception) {
+//      exception.printStackTrace()
+//    }
   }
 
   //    private final IconGenerator mClusterIconGeneratorBig = new IconGenerator(getCtx());
@@ -77,6 +86,7 @@ class MarkerRender(mapConfig: MapConfig, items: List<ClusterCustomItem?>?) :
 //        super.onClusterItemRendered(clusterItem, marker);
     try {
       marker.tag = clusterItem
+      Log.d(TAG, "onClusterItemRendered: HI")
       addMarker(clusterItem, marker)
     } catch (exception: Exception) {
       exception.printStackTrace()

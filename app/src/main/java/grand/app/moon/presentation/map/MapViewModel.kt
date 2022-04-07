@@ -36,28 +36,16 @@ class MapViewModel @Inject constructor(
   val showProgress = ObservableBoolean(false)
   var type: String = "store"
 
-  val _responseService = MutableStateFlow<Resource<BaseResponse<List<Store>>>>(Resource.Default)
-
-  val response = _responseService
+  val response = MutableStateFlow<Resource<BaseResponse<List<Store>>>>(Resource.Default)
 
   fun setData(data: List<Store>) {
     stores.addAll(data)
   }
 
   fun callService() {
-//    job = mapUseCase.map(type).onEach {
-//      _responseService.value = it
-//      when{
-//        it is Resource.Loading ->  showProgress.set(false)
-//        it is Resource.Success -> {
-//          setData(it.value.data)
-//        }
-//      }
-//    }.launchIn(viewModelScope)
-
     mapUseCase.map(type)
       .onEach { result ->
-        _responseService.value = result
+        response.value = result
       }
       .launchIn(viewModelScope)
 

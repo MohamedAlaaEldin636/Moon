@@ -35,32 +35,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//    super.onViewCreated(view, savedInstanceState)
     (childFragmentManager.findFragmentById(R.id.mapView) as? SupportMapFragment)
       ?.getMapAsync(this)
+    super.onViewCreated(view, savedInstanceState)
   }
   override fun setupObservers() {
-
-    lifecycleScope.launchWhenCreated {
-      viewModel._responseService.collect {
-        Log.d(TAG, "setupObservers: HERE")
-        when (it) {
-          Resource.Loading -> {
-            hideKeyboard()
-            showLoading()
-          }
-          is Resource.Success -> {
-            hideLoading()
-            viewModel.setData(it.value.data)
-            loadMarkers()
-          }
-          is Resource.Failure -> {
-            hideLoading()
-            handleApiError(it)
-          }
-        }
-      }
-    }
 
     lifecycleScope.launchWhenResumed {
       viewModel.response.collect {
@@ -92,14 +71,15 @@ class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
       viewModel.mapConfig.clusterManager?.addItem(clusterItem)
       viewModel.clusterCustomItems.add(clusterItem)
       viewModel.latLngs.add(clusterItem.position)
+    }
 
 
       viewModel.markerRender = MarkerRender(viewModel.mapConfig, viewModel.clusterCustomItems)
-      viewModel.mapConfig.clusterManager?.setRenderer(viewModel.markerRender)
-//                                viewModel.mapConfig.clusterManager?.setOnClusterClickListener(this);
-//                                viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(this);
-      //                                viewModel.mapConfig.clusterManager?.setOnClusterClickListener(this);
-//                                viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(this);
+    viewModel.mapConfig.clusterManager?.renderer = viewModel.markerRender
+////                                viewModel.mapConfig.clusterManager?.setOnClusterClickListener(this);
+////                                viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(this);
+//      //                                viewModel.mapConfig.clusterManager?.setOnClusterClickListener(this);
+////                                viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(this);
       viewModel.mapConfig.getGoogleMap()?.let {
         it.setOnCameraIdleListener(viewModel.mapConfig.clusterManager)
         it.setOnMarkerClickListener(viewModel.mapConfig.clusterManager)
@@ -129,53 +109,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
             true
           })
       }
-    }
   }
 
-  private val TAG = "MapFragment"
-  override fun setUpViews() {
-    super.setUpViews()
-  }
-
-  override fun onStart() {
-    super.onStart()
-//    binding.mapView.onStart()
-  }
-
-  override fun onResume() {
-    super.onResume()
-//    binding.mapView.onResume()
-
-  }
-
-  override fun onPause() {
-    super.onPause()
-//    binding.mapView.onPause()
-
-  }
-
-
-  override fun onStop() {
-    super.onStop()
-//    binding.mapView.onStop()
-
-  }
-
-  override fun onLowMemory() {
-    super.onLowMemory()
-//    binding.mapView.onLowMemory()
-  }
-
-  override fun onDestroy() {
-//    binding.mapView.onDestroy()
-    super.onDestroy()
-  }
-
+  private  val TAG = "MapFragment"
   override fun onMapReady(p0: GoogleMap) {
     Log.d(TAG, "onMapReady: ")
     viewModel.mapConfig = MapConfig(requireContext(), p0)
     viewModel.mapConfig.setMapStyle() //set style google map
-    //cluster manager
+//    //cluster manager
     viewModel.mapConfig.setUpCluster()
     viewModel.callService()
 

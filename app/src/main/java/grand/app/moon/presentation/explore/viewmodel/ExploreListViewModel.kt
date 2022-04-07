@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.domain.explorer.entity.ExploreListPaginateData
 import grand.app.moon.domain.explorer.use_case.ExploreUseCase
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.settings.entity.NotificationPaginateData
 import grand.app.moon.domain.settings.use_case.SettingsUseCase
 import grand.app.moon.domain.utils.BaseResponse
@@ -38,6 +39,9 @@ class ExploreListViewModel @Inject constructor(
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<ExploreListPaginateData>>>(Resource.Default)
 
+  val _responseMap =
+    MutableStateFlow<Resource<BaseResponse<List<Store>>>>(Resource.Default)
+
   val response = _responseService
 
   init {
@@ -45,6 +49,12 @@ class ExploreListViewModel @Inject constructor(
   }
 
   fun callService(){
+    job = useCase.explore()
+      .onEach {
+        response.value = it
+      }
+      .launchIn(viewModelScope)
+
     job = useCase.explore()
       .onEach {
         response.value = it

@@ -1,1 +1,6 @@
 take-care
+remove condition countryId.isEmpty in RetrofitModule
+
+{{Base_URL}}/api/v1/map?type=store
+1- we need data for testing cluster
+2- categories
