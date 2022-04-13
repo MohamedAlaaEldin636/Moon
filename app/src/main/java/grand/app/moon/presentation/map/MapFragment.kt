@@ -17,6 +17,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.helpers.map.cluster.ClusterCustomItem
 import grand.app.moon.helpers.map.cluster.MarkerRender
+import grand.app.moon.presentation.map.viewModel.MapViewModel
 import kotlinx.coroutines.flow.collect
 import java.lang.Exception
 
@@ -30,6 +31,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
 
   override
   fun setBindingVariables() {
+    viewModel.categoryItem.name = resources.getString(R.string.all)
+    viewModel.getCategories()
     binding.viewModel = viewModel
     viewModel.type = args.type
   }
@@ -39,6 +42,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
       ?.getMapAsync(this)
     super.onViewCreated(view, savedInstanceState)
   }
+
   override fun setupObservers() {
 
     lifecycleScope.launchWhenResumed {

@@ -25,21 +25,26 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
 
-  private val adsDetailsFragmentArgs : AdsListFragmentArgs by navArgs()
 
   private val viewModel: AdsListViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_ads_list
 
+  private  val TAG = "AdsListFragment"
+
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.type = adsDetailsFragmentArgs.type
+    arguments?.let {
+      viewModel.type = it.getInt("type")
+    }
     if(arguments?.containsKey(Constants.CATEGORY_ID) == true)
         viewModel.ADS_LIST_URL+="category_id="+arguments?.getInt(Constants.CATEGORY_ID)
     if(arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true)
       viewModel.ADS_LIST_URL+="sub_category_id="+arguments?.getInt(Constants.SUB_CATEGORY_ID)
+    Log.d(TAG, "setBindingVariables: ")
+    Log.d(TAG, "${viewModel.ADS_LIST_URL}")
     viewModel.callService()
   }
 

@@ -54,7 +54,7 @@ class AdsListViewModel @Inject constructor(
       }
       if(type == -1) getAdsProfile()
       else{
-
+        getAdsList()
       }
     }
   }

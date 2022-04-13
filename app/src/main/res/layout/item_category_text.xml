@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.map.viewModel.ItemCategoryTextViewModel" />
+
+  </data>
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/tv_item_category_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen8"
+    android:textColor="@color/colorWhite"
+    android:text="@{viewModel.category.name}"
+    android:background="@{viewModel.selected ? @drawable/corner_accent : @drawable/corner_primary}"
+    android:textSize="@dimen/text_size16"
+    android:layout_marginStart="@dimen/dimen10"
+    android:layout_marginEnd="@dimen/dimen10"
+    android:layout_marginTop="@dimen/dimen6"
+    android:layout_marginBottom="@dimen/dimen6"
+    android:paddingStart="@dimen/dimen10"
+    android:paddingEnd="@dimen/dimen10"
+    android:paddingTop="@dimen/dimen6"
+    android:paddingBottom="@dimen/dimen6"
+    app:iconGravity="textStart" />
+
+  <!--  app:backgroundTint="@{viewModel.selected ? @color/colorAccent : @color/colorPrimary}"-->
+
+
+</layout>

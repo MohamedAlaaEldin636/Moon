@@ -30,7 +30,9 @@ class ItemAdsHomeViewModel constructor(val category: CategoryAdvertisement) : Ba
     if (category.showMore.subCategoryId != -1) {
       category.showMore.subCategoryId?.let { bundle.putInt(Constants.SUB_CATEGORY_ID, it) }
     }
-    bundle.putString(Constants.TabBarText, v.resources.getString(R.string.likes))
+    Log.d(TAG, "showAll_1: ${category.showMore.categoryId}")
+    Log.d(TAG, "showAll_2: ${category.showMore.subCategoryId}")
+    bundle.putString(Constants.TabBarText, category.name)
 
     v.findNavController().navigate(
       R.id.adsListFragment2,

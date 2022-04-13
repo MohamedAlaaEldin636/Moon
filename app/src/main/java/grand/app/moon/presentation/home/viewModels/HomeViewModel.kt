@@ -121,7 +121,6 @@ class HomeViewModel @Inject constructor(
     notifyPropertyChanged(BR.storeAdapter)
 
     Log.d(TAG, "updateList: " + data.categoryAds.size)
-
     adsHomeAdapter.differ.submitList(data.categoryAds)
     notifyPropertyChanged(BR.adsHomeAdapter)
     show.set(true)

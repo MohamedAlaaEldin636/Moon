@@ -7,12 +7,14 @@
 
     <variable
       name="viewModel"
-      type="grand.app.moon.presentation.map.MapViewModel" />
+      type="grand.app.moon.presentation.map.viewModel.MapViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
 
     <androidx.fragment.app.FragmentContainerView
       android:id="@+id/mapView"
@@ -23,6 +25,23 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv_stories"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+
+      app:adapter="@{viewModel.categoriesAdapter}"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:orientation="@{`2`}"
+      app:span="@{`1`}"
+      tools:listitem="@layout/item_category_text" />
+
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

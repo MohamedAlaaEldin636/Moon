@@ -80,18 +80,6 @@ class CategoryDetailsViewModel @Inject constructor(
       .launchIn(viewModelScope)
   }
 
-  private val TAG = "HomeViewModel"
-  fun updateList(data: HomeResponse) {
-    storeAdapter.differ.submitList(data.mostRatedStores)
-    notifyPropertyChanged(BR.storeAdapter)
-
-    Log.d(TAG, "updateList: " + data.categoryAds.size)
-
-    adsHomeAdapter.differ.submitList(data.categoryAds)
-    notifyPropertyChanged(BR.adsHomeAdapter)
-    show.set(true)
-  }
-
   fun setData(data: CategoryDetails, categoryAdvertisement: CategoryAdvertisement) {
     getCategories()
     storeAdapter.differ.submitList(data.stores)
