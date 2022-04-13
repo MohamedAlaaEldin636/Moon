@@ -72,7 +72,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
   }
 
   private fun initView() {
-    viewModel.request.country_code = "+${viewModel.user.country_code}"
+    if(!viewModel.user.country_code.contains("+"))
+      viewModel.request.country_code = "+${viewModel.user.country_code}"
     binding.ccp.setDefaultCountryUsingNameCode(viewModel.user.country_code)
     binding.ccp.setOnCountryChangeListener {
       viewModel.request.country_code = "+${binding.ccp.selectedCountryCode}"

@@ -46,6 +46,7 @@
       android:drawableTint="@color/colorAccent"
       android:gravity="center"
       android:text="@string/show_all"
+      android:onClick="@{(v)->viewModel.showAll(v)}"
       android:textAppearance="@style/TextAppearance.AppCompat.Small"
       android:textColor="@color/colorPrimary"
       app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"

@@ -2,18 +2,19 @@ package grand.app.moon.presentation.explore.viewmodel
 
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
-import com.structure.base_mvvm.presentation.notification.adapter.ExploreAdapter
-import com.structure.base_mvvm.presentation.notification.adapter.NotificationAdapter
+import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
-import grand.app.moon.domain.explorer.entity.ExploreListPaginateData
-import grand.app.moon.domain.explorer.use_case.ExploreUseCase
-import grand.app.moon.domain.home.models.Store
-import grand.app.moon.domain.settings.entity.NotificationPaginateData
-import grand.app.moon.domain.settings.use_case.SettingsUseCase
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.explore.entity.ExploreAction
+import grand.app.moon.domain.explore.entity.ExploreListPaginateData
+import grand.app.moon.domain.explore.use_case.ExploreUseCase
+import grand.app.moon.domain.store.entity.FollowStoreRequest
+import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
+import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,7 +22,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExploreListViewModel @Inject constructor(
+  val userLocalUseCase: UserLocalUseCase,
   private val useCase: ExploreUseCase,
+  private val storeUseCase: StoreUseCase
 ) : BaseViewModel() {
   @Bindable
   var page: Int = 0
@@ -31,16 +34,17 @@ class ExploreListViewModel @Inject constructor(
   var type:Int = -1
 
   var isLast = false
+  var isLoggin = userLocalUseCase.isLoggin()
+
+  val exploreAction = ExploreAction()
 
   @Bindable
-  var adapter = ExploreAdapter()
+  var adapter = ExploreListAdapter()
 
+  val followStoreRequest = FollowStoreRequest()
 
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<ExploreListPaginateData>>>(Resource.Default)
-
-  val _responseMap =
-    MutableStateFlow<Resource<BaseResponse<List<Store>>>>(Resource.Default)
 
   val response = _responseService
 
@@ -49,23 +53,25 @@ class ExploreListViewModel @Inject constructor(
   }
 
   fun callService(){
-    job = useCase.explore()
-      .onEach {
-        response.value = it
+    if (!callingService && !isLast) {
+      callingService = true
+      notifyPropertyChanged(BR.callingService)
+      page++
+      if(page > 1){
+        notifyPropertyChanged(BR.page)
       }
-      .launchIn(viewModelScope)
-
-    job = useCase.explore()
-      .onEach {
-        response.value = it
-      }
-      .launchIn(viewModelScope)
+      job = useCase.explore(page)
+        .onEach {
+          response.value = it
+        }
+        .launchIn(viewModelScope)
+    }
   }
 
   private val TAG = "PackagesViewModel"
 
-  fun setData(data: ExploreListPaginateData?) {
-    data?.let {
+  fun setData(data: ExploreListPaginateData) {
+    data.let {
       println("size:" + data.list.size)
       isLast = data.links.next == null
       if (page == 1) {
@@ -82,8 +88,47 @@ class ExploreListViewModel @Inject constructor(
   }
 
 
+
   override fun onCleared() {
     job.cancel()
     super.onCleared()
   }
+  fun follow() {
+    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
+    else {
+      followStoreRequest.storeId = adapter.differ.currentList[adapter.position].store.id
+      storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
+      adapter.differ.currentList[adapter.position].store.isFollowing = !adapter.differ.currentList[adapter.position].store.isFollowing
+      adapter.notifyItemChanged(adapter.position)
+    }
+  }
+
+  fun fav() {
+    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
+    else {
+      val explore = adapter.differ.currentList[adapter.position]
+      exploreAction.exploreId = explore.id
+      exploreAction.type = 1
+      useCase.setExploreAction(exploreAction)
+      explore.isLike = !explore.isLike
+      if(explore.isLike){
+        explore.likes ++
+      }else explore.likes--
+      adapter.notifyItemChanged(adapter.position)
+    }
+  }
+
+  fun share(){
+    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
+    else {
+      val explore = adapter.differ.currentList[adapter.position]
+      exploreAction.exploreId = explore.id
+      exploreAction.type = 3
+      explore.shares++
+      adapter.notifyItemChanged(adapter.position)
+    }
+
+  }
+
+
 }

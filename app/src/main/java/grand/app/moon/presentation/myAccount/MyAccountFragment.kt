@@ -35,18 +35,43 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
   fun setData() {
     setList()
     viewModel.moreAdapter.clickEvent.observe(this, {
-      Log.d(TAG, "setBindingVariables: here")
+      Log.d(TAG, "setBindingVariables: here $it")
       if (it.id is String) {
         when (it.id) {
-          Constants.PROFILE-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToProfileFragment())
+          Constants.PROFILE -> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToProfileFragment())
           Constants.LOGIN -> openLoginActivity()
-          Constants.FAVOURITE-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(1,resources.getString(R.string.favourite)))
-          Constants.LAST_ADS-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(2,resources.getString(R.string.last_search)))
-          Constants.LAST_SEARCH-> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(5,resources.getString(R.string.stores_had_been_followed)))
-          Constants.LOGOUT -> {
-            viewModel.logoutUser({
+          Constants.LAST_ADS -> navigateSafe(
+            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+              2,
+              resources.getString(R.string.last_ads_seen)
+            )
+          )
+          Constants.FAVOURITE -> navigateSafe(
+            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+              1,
+              resources.getString(R.string.favourite)
+            )
+          )
+          Constants.LAST_SEARCH -> navigateSafe(
+            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+              5,
+              resources.getString(R.string.last_search)
+            )
+          )
+          Constants.STORES_FOLLOWED -> {
+            navigateSafe(
+              MyAccountFragmentDirections.actionMyAccountFragmentToStoreFollowedListFragment()
+            )
+          }
+          Constants.STORES_BLOCKED -> {
 
-            })
+          }
+          Constants.LOGOUT -> {
+//            viewModel.logoutUser {
+            viewModel.userLocalUseCase.clearUser()
+            viewModel.isLogin = false
+            setList()
+//            }
           }
         }
       }

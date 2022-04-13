@@ -1,24 +1,21 @@
-package com.structure.base_mvvm.presentation.notification.adapter
+package grand.app.moon.presentation.explore.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemExploreBinding
-import grand.app.moon.databinding.ItemNotificationBinding
-import grand.app.moon.domain.explorer.entity.Explore
-import grand.app.moon.domain.settings.models.NotificationData
-import grand.app.moon.presentation.base.utils.SingleLiveEvent
+import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
-import grand.app.moon.presentation.notfication.viewmodel.ItemNotificationViewModel
 
 class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
-  var clickEvent: SingleLiveEvent<Explore> = SingleLiveEvent()
+  var clickEvent: MutableLiveData<Int> = MutableLiveData()
   private val differCallback = object : DiffUtil.ItemCallback<Explore>() {
     override fun areItemsTheSame(oldItem: Explore, newItem: Explore): Boolean {
       return oldItem.id == newItem.id
@@ -40,6 +37,9 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
     val data = differ.currentList[position]
     val itemViewModel = ItemExploreViewModel(data,position)
     Log.d(TAG, "onBindViewHolder: "+data.file)
+    holder.itemLayoutBinding.itemExplore.setOnClickListener {
+      clickEvent.value = position
+    }
     holder.setViewModel(itemViewModel)
   }
 

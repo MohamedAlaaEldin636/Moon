@@ -31,9 +31,15 @@ class AdsUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
-  fun getAdsList(type: Int): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
+  fun getProfileAdsList(page: Int, type: Int): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
     emit(Resource.Loading)
-    val result = repo.getAdsList(type)
+    val result = repo.getProfileAdsList(page,type)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun getAdsList(url : String): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
+    emit(Resource.Loading)
+    val result = repo.getAdsList(url)
     emit(result)
   }.flowOn(Dispatchers.IO)
 }

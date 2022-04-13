@@ -13,6 +13,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.data.settings.data_source.remote.SettingsServices
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.store.entity.FollowStoreRequest
@@ -22,17 +23,18 @@ import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.openBrowser
+import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.lang.Exception
 import java.net.URLEncoder
 import javax.inject.Inject
-import grand.app.moon.presentation.store.StoreDetailsFragmentDirections
 
 
 @HiltViewModel
 class StoreDetailsViewModel @Inject constructor(
+  var settingsServices: SettingsServices,
   val userLocalUseCase: UserLocalUseCase,
   private val useCase: AdsUseCase,
   private val storeUseCase: StoreUseCase

@@ -17,4 +17,8 @@ class HomeRemoteDataSource @Inject constructor(private val apiService: HomeServi
   suspend fun getCategories() = safeApiCall {
     apiService.getCategories()
   }
+
+  suspend fun getCategoryDetails(id:Int) = safeApiCall {
+    apiService.getCategoryDetails(id)
+  }
 }

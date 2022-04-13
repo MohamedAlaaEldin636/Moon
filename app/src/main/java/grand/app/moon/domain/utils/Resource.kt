@@ -8,6 +8,7 @@ sealed class Resource<out T> {
       is Failure -> Failure(failureStatus, code, message)
       HideLoading -> HideLoading
       Loading -> Loading
+      DONE -> DONE
       is Success -> Success(conversion(value))
     }
   }
@@ -21,6 +22,8 @@ sealed class Resource<out T> {
   ) : Resource<Nothing>()
 
   object Loading : Resource<Nothing>()
+
+  object DONE : Resource<Nothing>()
 
   object HideLoading : Resource<Nothing>()
 

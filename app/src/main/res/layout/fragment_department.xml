@@ -10,13 +10,36 @@
 
     <variable
       name="viewModel"
-      type="grand.app.moon.presentation.department.viewmodel.DepartmentListViewModel" />
+      type="grand.app.moon.presentation.department.viewModels.DepartmentListViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:visibility="@{viewModel.show ? View.VISIBLE : View.GONE}"
     android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/img_login"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="@dimen/dimen10"
+      android:layout_marginStart="@dimen/dimen20"
+      android:layout_marginEnd="@dimen/dimen20">
+
+      <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_search_department"
+        style="@style/mediumFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/dimen12"
+        android:hint="@string/search_on_department"
+        android:padding="@dimen/dimen10"
+        android:textSize="@dimen/text_size16" />
+    </androidx.cardview.widget.CardView>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerView"
@@ -25,44 +48,17 @@
       android:layout_margin="@dimen/dimen14"
       android:orientation="vertical"
       android:scrollbars="none"
-      app:adapter="@{viewModel.adapter}"
-      app:layout_constraintTop_toTopOf="parent"
+      app:adapter="@{viewModel.categoriesAdapter}"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintBottom_toTopOf="@+id/rl_service_shop_progress"
+      app:layout_constraintTop_toBottomOf="@+id/img_login"
       app:orientation="@{`1`}"
-      app:span="@{`1`}"
+      app:span="@{`3`}"
       tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-      tools:listitem="@layout/item_ads"
+      tools:listitem="@layout/item_category"
       tools:orientation="vertical" />
 
-    <RelativeLayout
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:id="@+id/rl_service_shop_progress"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:visibility="@{viewModel.page > 1 &amp;&amp; viewModel.callingService? View.VISIBLE : View.GONE}"
-      app:layout_constraintBottom_toBottomOf="parent">
-
-      <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="@dimen/dimen20"
-        android:layout_height="@dimen/dimen20"
-        android:theme="@style/progress" />
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="@dimen/dimen5"
-        android:layout_toEndOf="@+id/progress_bar"
-        android:text="@string/loading_more"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size12" />
-
-    </RelativeLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

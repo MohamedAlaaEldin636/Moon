@@ -35,7 +35,7 @@ import grand.app.moon.data.store.data_source.StoreRemoteDataSource
 import grand.app.moon.data.store.repository.StoreRepositoryImpl
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.countries.repository.CountriesRepository
-import grand.app.moon.domain.explorer.repository.ExploreRepository
+import grand.app.moon.domain.explore.repository.ExploreRepository
 import grand.app.moon.domain.map.repository.MapRepository
 import grand.app.moon.domain.store.repository.StoreRepository
 import javax.inject.Singleton

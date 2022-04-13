@@ -22,7 +22,10 @@ class AdsRepositoryImpl @Inject constructor(
   suspend fun favourite(addFavouriteAdsRequest: AddFavouriteAdsRequest) = remoteDataSource.favourite(addFavouriteAdsRequest)
 
   override
-  suspend fun getAdsList(type: Int) = remoteDataSource.getAdsList(type)
+  suspend fun getProfileAdsList(page:Int , type: Int) = remoteDataSource.getProfileAdsList(page,type)
+
+  override
+  suspend fun getAdsList(url : String) = remoteDataSource.getAdsList(url)
 
 
 }

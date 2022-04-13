@@ -16,8 +16,12 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     apiService.favourite(addFavouriteAdsRequest)
   }
 
-  suspend fun getAdsList(type: Int) = safeApiCall {
-    apiService.getAdsList(type)
+  suspend fun getProfileAdsList(page:Int , type: Int) = safeApiCall {
+    apiService.getProfileAdsList(page,type)
+  }
+
+  suspend fun getAdsList(url : String) = safeApiCall {
+    apiService.getAdsList(url)
   }
 
 

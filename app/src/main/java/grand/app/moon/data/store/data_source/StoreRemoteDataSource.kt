@@ -16,4 +16,9 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
   }
 
 
+  suspend fun getFavouriteStores(page: Int) = safeApiCall {
+    apiService.getFavouriteStores(page)
+  }
+
+
 }

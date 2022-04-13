@@ -1,4 +1,4 @@
-package grand.app.moon.domain.explorer.entity
+package grand.app.moon.domain.explore.entity
 
 
 import com.google.gson.annotations.SerializedName
@@ -16,13 +16,13 @@ data class Explore(
   @SerializedName("mime_type")
   val mimeType: String = "",
   @SerializedName("likes_count")
-  val likes: Int = 0,
+  var likes: Int = 0,
   @SerializedName("shares_count")
-  val shares: Int = 0,
+  var shares: Int = 0,
   @SerializedName("comments_count")
   val comments: Int = 0,
   @SerializedName("is_liked")
-  val isLike: Boolean = false,
+  var isLike: Boolean = false,
   @SerializedName("store")
   var store: Store = Store(),
 

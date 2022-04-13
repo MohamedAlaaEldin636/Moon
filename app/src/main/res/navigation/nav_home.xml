@@ -28,16 +28,39 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
     <action
-      android:id="@+id/action_home_fragment_to_departmentListFragment"
+      android:id="@+id/action_home_fragment_to_categoryDetailsFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/departmentListFragment" />
+      app:destination="@id/categoryDetailsFragment" />
     <action
-      android:id="@+id/action_home_fragment_to_cometChatConversationList"
-      app:destination="@id/cometChatConversationList" />
+      android:id="@+id/action_home_fragment_to_adsListFragment2"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/adsListFragment2" />
+
   </fragment>
+
+  <action
+    android:id="@+id/action_home_fragment_to_departmentListFragment"
+    app:enterAnim="@anim/anim_slide_in_right"
+    app:exitAnim="@anim/anim_slide_out_left"
+    app:popEnterAnim="@anim/anim_slide_in_left"
+    app:popExitAnim="@anim/anim_slide_out_right"
+    app:destination="@id/departmentListFragment" />
+
+  <action
+    android:id="@+id/action_home_fragment_to_cometChatConversationList"
+    app:enterAnim="@anim/anim_slide_in_right"
+    app:exitAnim="@anim/anim_slide_out_left"
+    app:popEnterAnim="@anim/anim_slide_in_left"
+    app:popExitAnim="@anim/anim_slide_out_right"
+    app:destination="@id/cometChatConversationList" />
+
+
 
   <fragment
     android:id="@+id/mapFragment"
@@ -84,11 +107,41 @@
   <fragment
     android:id="@+id/departmentListFragment"
     android:name="grand.app.moon.presentation.department.DepartmentListFragment"
-    android:label="@string/departments" />
+    android:label="@string/departments" >
+    <action
+      android:id="@+id/action_departmentListFragment_to_categoryDetailsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/categoryDetailsFragment" />
+  </fragment>
   <fragment
     android:id="@+id/cometChatConversationList"
     android:name="com.cometchat.pro.uikit.ui_components.chats.CometChatConversationList"
     android:label="CometChatConversationList" />
+  <fragment
+    android:id="@+id/categoryDetailsFragment"
+    android:name="grand.app.moon.presentation.department.view.CategoryDetailsFragment"
+    android:label="{tabBarText}" >
+    <argument
+      android:name="category_id"
+      app:argType="integer" />
+    <argument
+      android:name="tabBarText"
+      app:argType="string" />
+    <action
+      android:id="@+id/action_categoryDetailsFragment_to_adsListFragment2"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/adsListFragment2" />
+  </fragment>
+  <fragment
+    android:id="@+id/adsListFragment2"
+    android:name="grand.app.moon.presentation.ads.AdsListFragment"
+    android:label="AdsListFragment" />
 
   <!--  <fragment-->
   <!--    android:id="@+id/reviewsFragment"-->

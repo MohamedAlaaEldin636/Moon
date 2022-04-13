@@ -1,6 +1,7 @@
 package grand.app.moon.data.home.repository
 
 import grand.app.moon.data.home.data_source.remote.HomeRemoteDataSource
+import grand.app.moon.domain.categories.entity.CategoryDetails
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
@@ -16,6 +17,7 @@ class HomeRepositoryImpl @Inject constructor(
   override suspend fun home(): Resource<BaseResponse<HomeResponse>> = homeRemoteDataSource.home()
   override suspend fun stories(): Resource<BaseResponse<ArrayList<Store>>> = homeRemoteDataSource.stories()
   override suspend fun getCategories(): Resource<BaseResponse<ArrayList<CategoryItem>>> = homeRemoteDataSource.getCategories()
+  override suspend fun getCategoryDetails(id: Int): Resource<BaseResponse<CategoryDetails>>  = homeRemoteDataSource.getCategoryDetails(id)
 
 
 }

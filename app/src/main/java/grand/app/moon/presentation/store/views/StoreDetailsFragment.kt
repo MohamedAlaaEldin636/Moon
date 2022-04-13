@@ -1,4 +1,4 @@
-package grand.app.moon.presentation.store
+package grand.app.moon.presentation.store.views
 
 import android.util.Log
 import androidx.fragment.app.viewModels

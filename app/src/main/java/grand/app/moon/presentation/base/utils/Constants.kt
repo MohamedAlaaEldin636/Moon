@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.base.utils
 
 import androidx.navigation.NavOptions
+import grand.app.moon.BuildConfig
 import grand.app.moon.R
 
 object Constants {
@@ -20,12 +21,14 @@ object Constants {
   const val CONTACT = 11
   const val COUNTRY = 12
   const val LANG: Int = 13
-  const val OPEN_BROWSER: Int = 14
-  const val GROUP_DETAILS: Int = 15
+  const val CHAT_LIST: Int = 14
+  const val DEPARTMENTS: Int = 15
   const val FIRST_TIME: Int = 16
   const val HOME: Int = 17
   const val ACTION: Int = 18
   const val LOGIN_REQUIRED: Int = 19
+  const val TOTAL_ADS: Int = 20
+  const val ADVERTISEMENT: Int = 21
 
 
   const val CHAT_APP_ID = "2065015ed5ff1e4d"
@@ -55,6 +58,17 @@ object Constants {
   const val FAVOURITE: String = "favourite"
   const val STORES_BLOCKED: String = "stores_blocked"
   const val VIDEO: String = "video"
+  const val COMMENTS: String = "comments"
+  const val LIKES: String = "likes"
+  const val TabBarText: String = "tabBarText"
+  const val CATEGORY_ID: String = "category_id"
+  const val SUB_CATEGORY_ID: String = "sub_category_id"
+
+
+  const val SHARE: String = "share"
+  const val DELETE: String = "delete"
+
+
   val NAVIGATION_OPTIONS = NavOptions.Builder()
     .setEnterAnim(R.anim.anim_slide_in_right)
     .setExitAnim(R.anim.anim_slide_out_left)

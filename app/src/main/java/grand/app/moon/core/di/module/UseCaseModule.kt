@@ -14,8 +14,6 @@ import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.domain.auth.use_case.VerifyAccountUseCase
 import grand.app.moon.domain.general.use_case.ClearPreferencesUseCase
 import grand.app.moon.domain.general.use_case.GeneralUseCases
-import grand.app.moon.domain.home.repository.HomeRepository
-import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.intro.repository.IntroRepository
 import grand.app.moon.domain.intro.use_case.IntroUseCase
 import grand.app.moon.domain.settings.repository.SettingsRepository
@@ -29,8 +27,8 @@ import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.countries.repository.CountriesRepository
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
-import grand.app.moon.domain.explorer.repository.ExploreRepository
-import grand.app.moon.domain.explorer.use_case.ExploreUseCase
+import grand.app.moon.domain.explore.repository.ExploreRepository
+import grand.app.moon.domain.explore.use_case.ExploreUseCase
 import grand.app.moon.domain.map.repository.MapRepository
 import grand.app.moon.domain.map.use_case.MapUseCase
 import grand.app.moon.domain.store.repository.StoreRepository

@@ -12,8 +12,14 @@ class StoreRepositoryImpl @Inject constructor(
   override
   suspend fun follow(storeRequest: FollowStoreRequest) = remoteDataSource.follow(storeRequest)
 
+
   override
   suspend fun storeDetails(id: Int) = remoteDataSource.storeDetails(id)
+
+
+
+  override
+  suspend fun getFavouriteStores(page: Int) = remoteDataSource.getFavouriteStores(page)
 
 
 }

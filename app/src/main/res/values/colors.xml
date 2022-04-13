@@ -33,6 +33,8 @@
   <color name="greyText">#C1C1C1</color>
   <color name="color888888">#888888</color>
   <color name="colorFBFBFB">#FBFBFB</color>
+  <color name="colorA9A9A9">#A9A9A9</color>
+  <color name="colorF2F2F2">#F2F2F2</color>
   <!--- NOT USE -->
   <color name="colorAccentDark">#024302</color>
   <color name="lightGray">#F3F3F3</color>

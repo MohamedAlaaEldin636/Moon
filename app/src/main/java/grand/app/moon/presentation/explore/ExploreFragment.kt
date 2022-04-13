@@ -1,9 +1,9 @@
 package grand.app.moon.presentation.explore
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import grand.app.moon.domain.utils.Resource
@@ -12,15 +12,14 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentExploreBinding
-import grand.app.moon.databinding.FragmentNotificationBinding
-import grand.app.moon.presentation.explore.viewmodel.ExploreListViewModel
-import grand.app.moon.presentation.notfication.viewmodel.NotificationListViewModel
+import grand.app.moon.domain.explore.entity.ExploreListPaginateData
+import grand.app.moon.presentation.explore.viewmodel.ExploreViewModel
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
 
-  private val viewModel: ExploreListViewModel by viewModels()
+  private val viewModel: ExploreViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_explore
@@ -36,7 +35,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     setRecyclerViewScrollListener()
   }
 
-
+  private  val TAG = "ExploreFragment"
   override fun setupObservers() {
 
     lifecycleScope.launchWhenResumed {
@@ -57,8 +56,14 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
           }
         }
       }
-
     }
+
+    viewModel.adapter.clickEvent.observe(this,{
+      val list = ArrayList(viewModel.adapter.differ.currentList)
+      viewModel.lastData.list.clear()
+      viewModel.lastData.list.addAll(list)
+      navigateSafe(ExploreFragmentDirections.actionExploreFragmentToExploreListFragment(viewModel.lastData,viewModel.page))
+    })
   }
 
 

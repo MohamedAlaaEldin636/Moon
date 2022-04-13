@@ -1,4 +1,6 @@
-package com.structure.base_mvvm.domain.general.paginate
+package grand.app.moon.domain.general.paginate
+
+import java.io.Serializable
 
 data class Meta (
   val path:String="",
@@ -8,4 +10,4 @@ data class Meta (
   val from:Int=0,
   val to:Int=0,
   val current_page:Int=0,
-  )
+  ): Serializable

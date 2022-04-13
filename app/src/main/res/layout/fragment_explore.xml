@@ -10,7 +10,7 @@
 
     <variable
       name="viewModel"
-      type="grand.app.moon.presentation.explore.viewmodel.ExploreListViewModel" />
+      type="grand.app.moon.presentation.explore.viewmodel.ExploreViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout

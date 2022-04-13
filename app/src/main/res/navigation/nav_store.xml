@@ -6,7 +6,7 @@
 
   <fragment
     android:id="@+id/storeDetailsFragment"
-    android:name="grand.app.moon.presentation.store.StoreDetailsFragment"
+    android:name="grand.app.moon.presentation.store.views.StoreDetailsFragment"
     android:label="@string/store_details">
     <argument
       android:name="id"
@@ -14,6 +14,9 @@
     <action
       android:id="@+id/action_storeDetailsFragment_to_workingHoursDialog"
       app:destination="@id/workingHoursDialog" />
+    <action
+      android:id="@+id/action_storeDetailsFragment_to_reportDialog"
+      app:destination="@id/reportDialog" />
   </fragment>
   <dialog
     android:id="@+id/workingHoursDialog"
@@ -22,5 +25,13 @@
     <argument
       android:name="store"
       app:argType="grand.app.moon.domain.home.models.Store" />
+  </dialog>
+  <dialog
+    android:id="@+id/reportDialog"
+    android:name="grand.app.moon.presentation.store.dialog.ReportDialog"
+    android:label="ReportDialog" >
+    <argument
+      android:name="title"
+      app:argType="string" />
   </dialog>
 </navigation>

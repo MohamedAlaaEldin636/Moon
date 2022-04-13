@@ -5,24 +5,24 @@ import android.view.View
 import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
-import grand.app.moon.R
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.use_case.StoreUseCase
-import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter
+import grand.app.moon.presentation.home.HomeFragmentDirections
 import grand.app.moon.presentation.story.adapter.StoriesAdapter
 import grand.app.moon.presentation.store.adapter.StoreAdapter
 import kotlinx.coroutines.flow.*
@@ -34,7 +34,8 @@ class HomeViewModel @Inject constructor(
   var storeUseCase: StoreUseCase,
   var userLocalUseCase: UserLocalUseCase,
   val accountRepository: AccountRepository,
-  private val homeUseCase: HomeUseCase) : BaseViewModel() {
+  private val homeUseCase: HomeUseCase
+) : BaseViewModel() {
 
   private val _homeResponse =
     MutableStateFlow<Resource<BaseResponse<HomeResponse>>>(Resource.Default)
@@ -61,7 +62,9 @@ class HomeViewModel @Inject constructor(
 
   var isLoggin = userLocalUseCase.isLoggin()
 
-  fun initAllServices(){
+  fun initAllServices() {
+    storeAdapter.percentage = 48
+    categoriesAdapter.percentage = 33
     getCategories()
     homeApi()
     getStories()
@@ -84,7 +87,7 @@ class HomeViewModel @Inject constructor(
       .launchIn(viewModelScope)
   }
 
-  private fun getStories(){
+  private fun getStories() {
     homeUseCase.getStories()
       .onEach { result ->
         storiesResponse.value = result
@@ -97,14 +100,18 @@ class HomeViewModel @Inject constructor(
     notifyPropertyChanged(BR.storiesAdapter)
   }
 
-  fun departments(v: View){
-    v.findNavController().navigate(R.id.departmentListFragment,null,Constants.NAVIGATION_OPTIONS)
+  fun departments() {
+    clickEvent.value = Constants.DEPARTMENTS
   }
 
-  fun chatList(v: View){
+  fun departments(v: View) {
+    v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDepartmentListFragment())
+  }
+
+  fun chatList(v: View) {
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
-      v.findNavController().navigate(R.id.cometChatConversationList,null,Constants.NAVIGATION_OPTIONS)
+      clickEvent.value = Constants.CHAT_LIST
     }
   }
 
@@ -113,7 +120,7 @@ class HomeViewModel @Inject constructor(
     storeAdapter.differ.submitList(data.mostRatedStores)
     notifyPropertyChanged(BR.storeAdapter)
 
-    Log.d(TAG, "updateList: "+data.categoryAds.size)
+    Log.d(TAG, "updateList: " + data.categoryAds.size)
 
     adsHomeAdapter.differ.submitList(data.categoryAds)
     notifyPropertyChanged(BR.adsHomeAdapter)

@@ -7,11 +7,12 @@ import androidx.annotation.Keep
 @Keep
 data class CategoryItem(
     @SerializedName("id")
-    val id: Int = 0,
+    val id: Int? = 0,
     @SerializedName("image")
-    val image: String = "",
+    val image: String? = "",
     @SerializedName("name")
-    val name: String = "",
+    var name: String = "",
     @SerializedName("sub-categories")
-    val subCategories: List<SubCategory> = listOf()
+    val subCategories: ArrayList<CategoryItem>?,
+    var total: Int?,
 )

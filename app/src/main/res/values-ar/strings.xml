@@ -106,4 +106,22 @@
   <string name="evening">مساءً</string>
   <string name="closed">مغلق</string>
   <string name="back">رجوع</string>
+    <string name="search_on_department">بحث عن قسم</string>
+  <string name="search_on_advertise">بحث عن اعلان</string>
+  <string name="subsections">الاقسام الفرعية</string>
+  <string name="stores">متاجر</string>
+  <string name="like">إعجاب</string>
+  <string name="likes">الاعجابات</string>
+  <string name="share">مشاركة</string>
+  <string name="show_all_comments">عرض جميع %d تعليق</string>
+  <string name="moon_info">أول منصة تجارية إجتماعية فى الشرق الأوسط</string>
+    <string name="add_your_comment">اضف تعليقكك</string>
+  <string name="please_complete_your_profile">من فضلك قم باكمال ملفك الشخصى</string>
+  <string name="total">تعليق</string>
+  <string name="this_was_liked_by_users">حاذ هذا علي اعجاب %d مستخدم</string>
+  <string name="special_ads">الإعلانات المميزة</string>
+  <string name="see_all_advertisement">مشاهدة جميع الاعلانات</string>
+  <string name="please_choose_block_reason">من فضلك اختر سبب الحظر</string>
+  <string name="please_choose_report_reason">من فضلك اختر سبب البلاغ</string>
+  <string name="submit_report">تقديم البلاغ</string>
 </resources>

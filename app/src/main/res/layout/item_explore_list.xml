@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground">
+
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/img_store"
+      android:layout_width="@dimen/dimen60"
+      android:layout_height="@dimen/dimen60"
+      android:layout_margin="@dimen/dimen10"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:loadImage="@{viewModel.model.store.image}"
+      app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_store_details"
+      style="@style/boldFont"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/dimen10"
+      android:layout_marginEnd="@dimen/dimen10"
+      android:gravity="start"
+      android:text="@{viewModel.model.store.name}"
+      android:textAlignment="viewStart"
+      android:textColor="@color/colorPrimary"
+      android:textSize="@dimen/text_size14"
+      app:layout_constraintBottom_toBottomOf="@+id/img_store"
+      app:layout_constraintEnd_toStartOf="@+id/btn_follow_store"
+      app:layout_constraintStart_toEndOf="@+id/img_store"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/btn_follow_store"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginEnd="@dimen/dimen10"
+      android:onClick="@{(v) -> viewModel.follow(v)}"
+      android:text="@{viewModel.model.store.following ? @string/un_follow : @string/follow }"
+      android:textSize="@dimen/text_size12"
+      app:backgroundTint="@color/colorPrimary"
+      app:icon="@{viewModel.model.store.following ? @drawable/ic_close : @drawable/ic_plus }"
+      app:iconGravity="textStart"
+      app:layout_constraintBottom_toBottomOf="@+id/img_store"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ProgressBar
+      android:id="@+id/progress"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:theme="@style/progressAccent"
+      app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/shapeableImageView" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/shapeableImageView"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dimen220"
+      android:scaleType="fitCenter"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      android:layout_marginTop="@dimen/dimen10"
+      app:layout_constraintTop_toBottomOf="@+id/barrier5"
+      app:loadImageExplore="@{viewModel.model.file}"
+      app:progressBar="@{progress}"
+      app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
+
+
+    <LinearLayout
+      android:id="@+id/ll_item_explore_icons"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen10"
+      android:orientation="horizontal"
+      app:layout_constraintTop_toBottomOf="@+id/shapeableImageView"
+      app:layout_constraintStart_toStartOf="parent"
+      >
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_gravity="center"
+        android:onClick="@{(v) -> viewModel.fav(v)}"
+        android:src="@{viewModel.model.isLike ? @drawable/ic_favourite : @drawable/ic_favourite_empty}" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dimen20"
+        android:onClick="@{(v) -> viewModel.comments(v)}"
+        android:src="@drawable/ic_message" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dimen20"
+        android:onClick="@{(v) -> viewModel.share(v)}"
+        android:src="@drawable/ic_share_explore" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/ll_item_explore_texts"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen10"
+      android:orientation="horizontal"
+      app:layout_constraintTop_toBottomOf="@+id/ll_item_explore_icons"
+      app:layout_constraintStart_toStartOf="parent"
+      >
+
+      <androidx.appcompat.widget.AppCompatTextView
+        style="@style/mediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dimen10"
+        android:gravity="center"
+        android:onClick="@{(v) -> viewModel.likes(v)}"
+        android:text="@{viewModel.model.likes+` `+@string/like}"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size14" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        style="@style/mediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dimen10"
+        android:gravity="center"
+        android:text="@{viewModel.model.shares+` `+@string/share}"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size14" />
+
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+      style="@style/mediumFont"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:layout_margin="@dimen/dimen10"
+      app:layout_constraintStart_toStartOf="parent"
+      android:onClick="@{ (v) -> viewModel.comments(v)}"
+      app:layout_constraintTop_toBottomOf="@+id/ll_item_explore_texts"
+      android:text="@{@string/show_all_comments(viewModel.model.comments)}"
+      android:textColor="@color/colorA9A9A9"
+      android:textSize="@dimen/text_size14" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/img_play"
+      android:layout_width="@dimen/dimen40"
+      android:layout_height="@dimen/dimen40"
+      android:layout_gravity="center"
+      android:src="@drawable/ic_play"
+      android:tint="@color/colorWhite"
+      android:visibility="@{viewModel.model.mimeType.contains(Constants.VIDEO) ? View.VISIBLE : View.GONE , default = gone}"
+      app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
+      app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
+      app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
+      app:layout_constraintTop_toTopOf="@+id/shapeableImageView" />
+
+    <androidx.constraintlayout.widget.Barrier
+      android:id="@+id/barrier5"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:barrierDirection="bottom"
+      app:constraint_referenced_ids="img_store,btn_follow_store,tv_store_details"
+      tools:layout_editor_absoluteY="120dp" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

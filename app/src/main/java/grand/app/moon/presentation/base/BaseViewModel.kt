@@ -11,6 +11,8 @@ import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.PropertyChangeRegistry
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
@@ -19,10 +21,20 @@ import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMess
 import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
 import es.dmoral.toasty.Toasty
 import grand.app.moon.R
+import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.domain.utils.CometChatResource
+import grand.app.moon.domain.utils.ICometChat
+import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.extensions.disable
 import grand.app.moon.presentation.base.extensions.enable
 import grand.app.moon.presentation.base.utils.Constants
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.net.URLEncoder
 
@@ -32,8 +44,8 @@ open class BaseViewModel : ViewModel(), Observable {
 
   protected var job: Job = Job()
 
-  var clickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
-  var submitEvent: SingleLiveEvent<String> = SingleLiveEvent()
+  var clickEvent: MutableLiveData<Int> = MutableLiveData()
+  var submitEvent: MutableLiveData<String> = MutableLiveData()
   fun clickEvent(action: Int) {
     clickEvent.value = action
   }
@@ -130,7 +142,7 @@ open class BaseViewModel : ViewModel(), Observable {
       override fun onError(p0: CometChatException?) {
         Log.d(TAG, "onError: " + p0?.code.toString())
         if (p0?.code.toString() == "ERR_UID_NOT_FOUND") {
-          Log.d(TAG, "onError: HERER")
+          Log.d(TAG, "onError: HERER code")
           CometChat.createUser(
             user,
             Constants.CHAT_AUTH_KEY,
@@ -151,25 +163,29 @@ open class BaseViewModel : ViewModel(), Observable {
     })
   }
 
-  fun logoutUser(callBack : (result: Boolean) -> Unit) {
+  fun logoutUser() :Boolean{
     val loginUser = CometChat.getLoggedInUser()
     if (loginUser != null) {
       CometChat.logout(object : CometChat.CallbackListener<String>() {
         override fun onSuccess(p0: String?) {
-          callBack(true)
+          return
         }
         override fun onError(p0: CometChatException?) {
-          callBack(false)
         }
       })
-    }else callBack(false)
+    }
+    return true
   }
-  fun loginUser(uid: String, name: String,image: String?,callBack: (result: Boolean) -> Unit) {
-    Log.d(TAG, "startChatConversation")
-    logoutUser(callBack)
+
+  fun loginUser(viewmodel : BaseViewModel , uid: String, name: String?,image: String?,iCometChat : ICometChat) {
+    Log.d(TAG, "loginUser")
+    logoutUser()
     val user = User()
     user.uid = uid // Replace with the UID for the user to be created
-    user.name = name // Replace with the name of the user
+    name?.let {
+      user.name = it
+    }
+    user.name = name ?: "guest"
     image?.let {
       user.avatar = it
     }
@@ -179,7 +195,7 @@ open class BaseViewModel : ViewModel(), Observable {
       override fun onSuccess(user: User?) {
         Log.d(TAG, "ologin")
         if (user != null) {
-          callBack(true)
+          iCometChat.setLoggedIn(true)
         }
       }
       override fun onError(p0: CometChatException?) {
@@ -189,11 +205,25 @@ open class BaseViewModel : ViewModel(), Observable {
           CometChat.createUser(user,Constants.CHAT_AUTH_KEY,object: CometChat.CallbackListener<User>(){
             override fun onSuccess(p0: User?) {
               Log.d(TAG, "onSuccess: DONE")
-              loginUser(uid, name, image,callBack)
+
+              CometChat.login(user.uid,Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
+                override fun onSuccess(user: User?) {
+                  Log.d(TAG, "ologin")
+                  if (user != null) {
+                    iCometChat.setLoggedIn(true)
+                  }
+                }
+
+                override fun onError(p0: CometChatException?) {
+                  Log.d(TAG, "onError ${p0?.code}")
+
+                }
+              })
             }
 
             override fun onError(p0: CometChatException?) {
-              callBack(false)
+              Log.d(TAG, "onError: CometChatException create User ${p0?.code}")
+              iCometChat.setLoggedIn(false)
             }
           })
         }

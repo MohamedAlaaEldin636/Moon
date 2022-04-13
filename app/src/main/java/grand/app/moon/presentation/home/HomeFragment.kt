@@ -2,6 +2,7 @@ package grand.app.moon.presentation.home
 
 import android.content.Intent
 import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cometchat.pro.constants.CometChatConstants
@@ -22,6 +23,7 @@ import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.databinding.FragmentHomeBinding
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.NavHomeDirections
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
@@ -34,6 +36,7 @@ import kotlinx.coroutines.flow.forEach
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
   private val viewModel: HomeViewModel by viewModels()
+  private val activityViewModel: HomeViewModel by activityViewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_home
@@ -48,7 +51,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
   override
   fun setupObservers() {
-
     lifecycleScope.launchWhenResumed {
       viewModel.homeResponse.collect {
         when (it) {
@@ -58,8 +60,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-
-
             val hr = it.value.data.copy(
               categoryAds = ArrayList(it.value.data.categoryAds.map { ca ->
                 ca.copy(name = "${resources.getString(R.string.advertisement)} ${ca.name}")

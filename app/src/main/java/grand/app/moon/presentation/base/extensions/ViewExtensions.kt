@@ -1,17 +1,17 @@
 package grand.app.moon.presentation.base.extensions
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.PorterDuff
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.Html
 import android.util.Log
 import android.view.View
+import android.view.animation.LinearInterpolator
 import android.webkit.URLUtil
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -19,6 +19,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -33,13 +34,9 @@ import coil.transform.RoundedCornersTransformation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.transition.Transition
-import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import grand.app.moon.R
-import grand.app.moon.domain.explorer.entity.Explore
 import java.io.File
 
 fun View.show() {
@@ -59,12 +56,13 @@ fun View.hide() {
     this.requestLayout()
   }
 }
-private  val TAG = "ViewExtensions"
+
+private val TAG = "ViewExtensions"
 
 @BindingAdapter("width")
 fun viewWidth(view: View, widthPercent: Int) {
   Log.d(TAG, "viewWidth: HEY")
-  if(widthPercent < 100) {
+  if (widthPercent < 100) {
     Log.d(TAG, "viewWidth: ${widthPercent}")
     val total = Resources.getSystem().displayMetrics.widthPixels
     view.layoutParams.width = (total * widthPercent) / 100
@@ -209,11 +207,44 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
 }
 
 
+@BindingAdapter("app:move")
+fun AppCompatTextView.move(dimentions: Float) {
+  Log.d(TAG, "moveAnimation: ")
+//  startAnimation(AnimationUtils.loadAnimation(context, R.anim.move));
+  val bounds = Rect()
+  val textPaint: Paint = paint
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    textPaint.getTextBounds(text, 0, text.length, bounds)
+  }
+  val width: Int = bounds.width()
+
+  if(width > dimentions) {
+    val animator: ValueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f)
+    animator.repeatCount = ValueAnimator.INFINITE
+    animator.interpolator = LinearInterpolator()
+    animator.duration = 7000L
+    animator.addUpdateListener { animation ->
+      val progress = animation.animatedValue as Float
+      val width: Int = width
+      val translationX = width * progress
+      setTranslationX(translationX)
+
+    }
+    animator.start()
+  }
+
+}
+
 @BindingAdapter(
-  value = ["app:loadImageExplore", "app:progressBar", "app:defaultImage","app:exploreHeight"],
+  value = ["app:loadImageExplore", "app:progressBar", "app:defaultImage", "app:exploreHeight"],
   requireAll = false
 )
-fun AppCompatImageView.loadImageExplore(imageUrl: String?, progressBar: ProgressBar?, defaultImage: Any?,position: Int) {
+fun AppCompatImageView.loadImageExplore(
+  imageUrl: String?,
+  progressBar: ProgressBar?,
+  defaultImage: Any?,
+  position: Int
+) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
     if (URLUtil.isValidUrl(imageUrl)) {
       progressBar?.show()
@@ -258,9 +289,9 @@ fun AppCompatImageView.loadImageExplore(imageUrl: String?, progressBar: Progress
       is Drawable -> setImageDrawable(defaultImage)
     }
   }
-  if(position % 3 == 0){
-   layoutParams.height = resources.getDimension(R.dimen.dimen300).toInt()
-  }else
+  if (position % 3 == 0) {
+    layoutParams.height = resources.getDimension(R.dimen.dimen300).toInt()
+  } else
     layoutParams.height = resources.getDimension(R.dimen.dimen150).toInt()
 }
 

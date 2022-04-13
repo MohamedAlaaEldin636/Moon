@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -22,6 +21,7 @@ import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
 class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   lateinit var context: Context
   var submitEvent: MutableLiveData<String> = MutableLiveData()
+  var percentage = 100
   var position = 0
   private val differCallback = object : DiffUtil.ItemCallback<Store>() {
     override fun areItemsTheSame(
@@ -49,7 +49,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   private  val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemStoreViewModel(data)
+    val itemViewModel = ItemStoreViewModel(data,percentage)
     holder.itemLayoutBinding.itemStoreContainer.setOnClickListener {
       Log.d(TAG, "onBindViewHolder: HAY HERE")
 
@@ -58,9 +58,6 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
           "id" to data.id
         ),Constants.NAVIGATION_OPTIONS)
 
-
-//      this.position = position
-//      submitEvent.value = Constants.SUBMIT
     }
     holder.itemLayoutBinding.follow.setOnClickListener {
       Log.d(TAG, "onBindViewHolder: HAY THERE")

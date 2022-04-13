@@ -2,6 +2,7 @@ package grand.app.moon.domain.store.use_case
 
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.FollowStoreRequest
+import grand.app.moon.domain.store.entity.StoreListPaginateData
 import grand.app.moon.domain.store.repository.StoreRepository
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -25,6 +26,15 @@ class StoreUseCase @Inject constructor(
     val result = repository.storeDetails(id)
     emit(result)
   }.flowOn(Dispatchers.IO)
+
+  fun getFavouriteStores(id: Int): Flow<Resource<BaseResponse<StoreListPaginateData>>> = flow {
+    emit(Resource.Loading)
+    val result = repository.getFavouriteStores(id)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+
+
 
 
 

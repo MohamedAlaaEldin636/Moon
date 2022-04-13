@@ -36,6 +36,10 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
   fun setBindingVariables() {
     binding.viewModel = viewModel
     viewModel.type = adsDetailsFragmentArgs.type
+    if(arguments?.containsKey(Constants.CATEGORY_ID) == true)
+        viewModel.ADS_LIST_URL+="category_id="+arguments?.getInt(Constants.CATEGORY_ID)
+    if(arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true)
+      viewModel.ADS_LIST_URL+="sub_category_id="+arguments?.getInt(Constants.SUB_CATEGORY_ID)
     viewModel.callService()
   }
 

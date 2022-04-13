@@ -11,6 +11,7 @@ import grand.app.moon.domain.utils.Resource
 interface AdsRepository {
   suspend fun getDetails(id: Int,type: Int): Resource<BaseResponse<Advertisement>>
   suspend fun favourite(addFavouriteAdsRequest: AddFavouriteAdsRequest): Resource<BaseResponse<*>>
-  suspend fun getAdsList(type: Int): Resource<BaseResponse<AdsListPaginateData>>
+  suspend fun getProfileAdsList(page: Int , type: Int): Resource<BaseResponse<AdsListPaginateData>>
+  suspend fun getAdsList(url : String): Resource<BaseResponse<AdsListPaginateData>>
 
 }

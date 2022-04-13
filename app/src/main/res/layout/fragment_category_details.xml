@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.department.viewModels.CategoryDetailsViewModel" />
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/backgroundGray">
+      <androidx.cardview.widget.CardView
+        android:id="@+id/img_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/dimen10"
+        android:layout_marginStart="@dimen/dimen20"
+        android:layout_marginEnd="@dimen/dimen20">
+
+        <androidx.appcompat.widget.AppCompatEditText
+          style="@style/mediumFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@null"
+          android:drawableStart="@drawable/ic_search"
+          android:drawablePadding="@dimen/dimen12"
+          android:focusable="false"
+          android:hint="@string/search_on_advertise"
+          android:padding="@dimen/dimen10"
+          android:textSize="@dimen/text_size16" />
+      </androidx.cardview.widget.CardView>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_departments"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen16"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/img_login"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/subsections" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adapter="@{viewModel.categoriesAdapter}"
+        android:layout_marginTop="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/tv_departments"
+        app:orientation="@{`1`}"
+        app:span="@{`3`}"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_category" />
+
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_top_stores"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen16"
+        android:textStyle="bold"
+        android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/rv_categories"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@{viewModel.title}" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_top_stores_all"
+        style="@style/mediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorPrimary"
+        android:drawableTint="@color/colorAccent"
+        android:drawableEnd="@drawable/ic_more_sec"
+        android:layout_marginEnd="@dimen/dimen10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"
+        app:layout_constraintTop_toTopOf="@+id/tv_top_stores"
+        android:text="@string/show_all" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_stores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
+        app:adapter="@{viewModel.storeAdapter}"
+        app:orientation="@{`1`}"
+        app:span="@{`2`}"
+        android:layout_marginTop="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_store" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_ads_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adapter="@{viewModel.adsHomeAdapter}"
+        app:orientation="@{`1`}"
+        app:span="@{`1`}"
+        android:layout_marginTop="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/rv_stores"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_ads_home" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+</layout>
