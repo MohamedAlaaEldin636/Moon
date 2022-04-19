@@ -140,14 +140,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
     binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
-    binding.bottomNavigationView.setOnItemSelectedListener { item ->
-      val id = item.itemId
-      when (id) {
-        R.id.exploreFragment -> binding.bottomNavigationView.selectedItemId = R.id.exploreFragment
-        R.id.nav_account -> binding.bottomNavigationView.selectedItemId = R.id.nav_account
-      }
-      true
-    }
+//    binding.bottomNavigationView.setOnItemSelectedListener { item ->
+//      val id = item.itemId
+//      when (id) {
+//        R.id.exploreFragment -> binding.bottomNavigationView.selectedItemId = R.id.exploreFragment
+//        R.id.nav_account -> binding.bottomNavigationView.selectedItemId = R.id.nav_account
+//      }
+//      true
+//    }
   }
 
   private

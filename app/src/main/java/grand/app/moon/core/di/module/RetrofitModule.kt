@@ -57,7 +57,7 @@ object RetrofitModule {
 
     appPreferences.getUserToken()
     Interceptor { chain ->
-      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken ::  $countryId")
+      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken :,token:$token2:  $countryId")
       chain.proceed(
         chain.request().newBuilder()
           .addHeader("Authorization", "Bearer $userToken")
