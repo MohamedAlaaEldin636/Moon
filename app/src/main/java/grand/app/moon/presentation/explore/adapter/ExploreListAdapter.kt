@@ -1,9 +1,12 @@
 package com.structure.base_mvvm.presentation.notification.adapter
 
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -12,12 +15,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemExploreListBinding
+import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.explore.entity.Explore
+import grand.app.moon.domain.explore.entity.ExploreAction
+import grand.app.moon.domain.explore.use_case.ExploreUseCase
 import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
 
 class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>() {
   var clickEvent: MutableLiveData<String> = MutableLiveData()
   var position = -1
+  var user = User()
+  lateinit var exploreUseCase: ExploreUseCase
+  val exploreAction = ExploreAction()
+
   private val differCallback = object : DiffUtil.ItemCallback<Explore>() {
     override fun areItemsTheSame(oldItem: Explore, newItem: Explore): Boolean {
       return oldItem.id == newItem.id
@@ -38,7 +48,7 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemExploreViewModel(data, position)
+    val itemViewModel = ItemExploreViewModel(data, position,user)
     Log.d(TAG, "onBindViewHolder: " + data.file)
     itemViewModel.submitEventEvent.observeForever {
       Log.d(TAG, "onBindViewHolder: ")
@@ -46,6 +56,17 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
       clickEvent.value = it
     }
 
+    holder.itemLayoutBinding.appCompatEditText.setOnEditorActionListener(TextView.OnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
+      if (i == EditorInfo.IME_ACTION_SEND) {
+        exploreAction.exploreId = data.id
+        exploreAction.comment = holder.itemLayoutBinding.appCompatEditText.text.toString()
+        exploreUseCase.setExploreAction(exploreAction)
+        differ.currentList[position].comments++
+        notifyItemChanged(position)
+        return@OnEditorActionListener true
+      }
+      false
+    })
 
 //    holder.itemLayoutBinding.lifecycleOwner?.let {
 //      itemViewModel.submitEvent.observe(holder.itemLayoutBinding.root, {

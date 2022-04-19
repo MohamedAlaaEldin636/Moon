@@ -50,7 +50,7 @@ class ClusterCustomItem(story: Store, posArray: Int) : ClusterItem,
 
   init {
     position = LatLng(story.latitude, story.longitude)
-    title = if (!story.name.equals("")) story.name else story.nickname
+    title = if (story.name != "") story.name else story.nickname
     snippet = story.nickname
     this.store = story
     this.posArray = posArray

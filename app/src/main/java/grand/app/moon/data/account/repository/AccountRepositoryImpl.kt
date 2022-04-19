@@ -6,11 +6,9 @@ import grand.app.moon.domain.account.entity.request.SendFirebaseTokenRequest
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.categories.entity.CategoryItem
-import grand.app.moon.domain.home.models.Country
+import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.utils.BaseResponse
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
@@ -100,6 +98,14 @@ class AccountRepositoryImpl @Inject constructor(
   fun clearPreferences() = appPreferences.clearPreferences()
   override fun saveKeyToLocal(key: String, value: String) {
     appPreferences.setLocal(key, value)
+  }
+
+  override fun saveSearch(search: String) {
+    appPreferences.saveSearch(search)
+  }
+
+  override fun getSearches() : ArrayList<String?>?{
+    return appPreferences.getSearches()
   }
 
   override fun getKeyFromLocal(key: String): String = appPreferences.getLocal(key)

@@ -17,12 +17,13 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.helpers.map.cluster.ClusterCustomItem
 import grand.app.moon.helpers.map.cluster.MarkerRender
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.map.viewModel.MapViewModel
 import kotlinx.coroutines.flow.collect
 import java.lang.Exception
 
 @AndroidEntryPoint
-class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
+class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
   val args: MapFragmentArgs by navArgs()
   private val viewModel: MapViewModel by viewModels()
 
@@ -34,7 +35,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
     viewModel.categoryItem.name = resources.getString(R.string.all)
     viewModel.getCategories()
     binding.viewModel = viewModel
-    viewModel.type = args.type
+
+//    if(arguments!= null && requireArguments().containsKey(Constants.TYPE))
+//      viewModel.type = requireArguments().getString(Constants.TYPE).toString()
+    if (args.type.isNotEmpty()) viewModel.type = args.type
+    Log.d(TAG, "setBindingVariables: ${viewModel.type}")
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,8 +50,23 @@ class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
 
   override fun setupObservers() {
 
+    viewModel.categoriesAdapter.clickEvent.observe(this, { category ->
+      viewModel.stores.clear()
+      if(category.id == -1){
+        viewModel.stores.addAll(viewModel.backUp)
+      }else {
+        viewModel.backUp.forEach { store ->
+          store.category.forEach { categoryItem ->
+            if (categoryItem.id == category.id)
+              viewModel.stores.add(store)
+          }
+        }
+      }
+      loadMarkers()
+    })
+
     lifecycleScope.launchWhenResumed {
-      viewModel.response.collect {
+      viewModel.responseStores.collect {
         Log.d(TAG, "setupObservers: HERE")
         when (it) {
           Resource.Loading -> {
@@ -65,6 +85,27 @@ class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
         }
       }
     }
+    lifecycleScope.launchWhenResumed {
+      viewModel.responseAds.collect {
+        Log.d(TAG, "setupObservers: HERE")
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            viewModel.setDataAds(it.value.data)
+            loadMarkers()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
+
   }
 
   private fun loadMarkers() {
@@ -78,44 +119,44 @@ class MapFragment : BaseFragment<FragmentMapBinding>() , OnMapReadyCallback{
     }
 
 
-      viewModel.markerRender = MarkerRender(viewModel.mapConfig, viewModel.clusterCustomItems)
+    viewModel.markerRender = MarkerRender(viewModel.mapConfig, viewModel.clusterCustomItems)
     viewModel.mapConfig.clusterManager?.renderer = viewModel.markerRender
 ////                                viewModel.mapConfig.clusterManager?.setOnClusterClickListener(this);
 ////                                viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(this);
 //      //                                viewModel.mapConfig.clusterManager?.setOnClusterClickListener(this);
 ////                                viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(this);
-      viewModel.mapConfig.getGoogleMap()?.let {
-        it.setOnCameraIdleListener(viewModel.mapConfig.clusterManager)
-        it.setOnMarkerClickListener(viewModel.mapConfig.clusterManager)
-        it.setOnInfoWindowClickListener(viewModel.mapConfig.clusterManager)
+    viewModel.mapConfig.getGoogleMap()?.let {
+      it.setOnCameraIdleListener(viewModel.mapConfig.clusterManager)
+      it.setOnMarkerClickListener(viewModel.mapConfig.clusterManager)
+      it.setOnInfoWindowClickListener(viewModel.mapConfig.clusterManager)
 
-        viewModel.mapConfig.clusterManager?.cluster()
-        viewModel.mapConfig.moveCamera(viewModel.latLngs)
+      viewModel.mapConfig.clusterManager?.cluster()
+      viewModel.mapConfig.moveCamera(viewModel.latLngs)
 
-        it.setOnMarkerClickListener(
-          GoogleMap.OnMarkerClickListener { marker ->
-            marker.showInfoWindow()
-            true
-          })
-        it.setOnMapClickListener { latLng -> }
-        viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(
-          OnClusterItemClickListener<ClusterCustomItem?> {
-            try {
-              viewModel.mapConfig.clear()
-              viewModel.mapConfig.clusterManager?.clearItems()
-              //                                            viewModel.mapConfig.getGoogleMap().animateCamera(CameraUpdateFactory
-              //                                                    .newLatLngZoom(placesCluster.getPosition(),
-              //                                                            viewModel.mapConfig.getGoogleMap().getCameraPosition().zoom));
-              //                                            setItemChecked(placesCluster);
-            } catch (exception: Exception) {
-              exception.printStackTrace()
-            }
-            true
-          })
-      }
+      it.setOnMarkerClickListener(
+        GoogleMap.OnMarkerClickListener { marker ->
+          marker.showInfoWindow()
+          true
+        })
+      it.setOnMapClickListener { latLng -> }
+      viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(
+        OnClusterItemClickListener<ClusterCustomItem?> {
+          try {
+            viewModel.mapConfig.clear()
+            viewModel.mapConfig.clusterManager?.clearItems()
+            //                                            viewModel.mapConfig.getGoogleMap().animateCamera(CameraUpdateFactory
+            //                                                    .newLatLngZoom(placesCluster.getPosition(),
+            //                                                            viewModel.mapConfig.getGoogleMap().getCameraPosition().zoom));
+            //                                            setItemChecked(placesCluster);
+          } catch (exception: Exception) {
+            exception.printStackTrace()
+          }
+          true
+        })
+    }
   }
 
-  private  val TAG = "MapFragment"
+  private val TAG = "MapFragment"
   override fun onMapReady(p0: GoogleMap) {
     Log.d(TAG, "onMapReady: ")
     viewModel.mapConfig = MapConfig(requireContext(), p0)

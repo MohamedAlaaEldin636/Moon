@@ -34,6 +34,8 @@ class UserLocalUseCase @Inject constructor(private val accountRepository: Accoun
     return accountRepository.getKeyFromLocal(key)
   }
 
+
+
   suspend fun saveToken(value: String) {
     accountRepository.saveFirebaseTokenToLocal(value)
   }

@@ -7,22 +7,27 @@ import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.media.MediaPlayer
+import android.media.browse.MediaBrowser
+
+import com.google.android.exoplayer2.MediaItem
+
+
 import android.os.Build
 import android.text.Html
 import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.webkit.URLUtil
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RatingBar
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.Group
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.navigation.NavDeepLinkRequest.Builder.Companion.fromUri
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,9 +40,21 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultAllocator
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import com.google.android.material.snackbar.Snackbar
 import grand.app.moon.R
 import java.io.File
+import java.lang.Exception
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
+import com.google.android.exoplayer2.source.MediaSourceFactory
+
 
 fun View.show() {
   if (visibility == View.VISIBLE) return
@@ -206,6 +223,59 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
   }
 }
 
+@BindingAdapter(
+  value = ["app:loadVideo", "app:progressBar"],
+  requireAll = false
+)
+fun PlayerView.loadVideo(videoUrl: String?, progressBar: ProgressBar?) {
+  if (videoUrl != null && videoUrl.isNotEmpty()) {
+    if (URLUtil.isValidUrl(videoUrl)) {
+      val allocator = DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE)
+
+      val loadControl: LoadControl = DefaultLoadControl.Builder()
+        .setAllocator(DefaultAllocator(true, 16))
+        .setBufferDurationsMs(
+          2000,
+          5000,
+          1500,
+          2000
+        )
+        .setTargetBufferBytes(-1)
+        .setPrioritizeTimeOverSizeThresholds(true).createDefaultLoadControl()
+
+
+      val mediaDataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(
+        context,
+        Util.getUserAgent(context, "mediaPlayerSample")
+      )
+      val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory)
+        .createMediaSource(MediaItem.fromUri(videoUrl))
+      val mediaSourceFactory: MediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
+
+      val player = SimpleExoPlayer.Builder(context)
+        .setMediaSourceFactory(mediaSourceFactory)
+        .setLoadControl(loadControl)
+        .build()
+      player.addMediaSource(mediaSource)
+      player.prepare()
+      hideController()
+      useController = false
+      setPlayer(player)
+      player.volume = 0f
+      player.play()
+      player.addListener(object : Player.Listener {
+        override fun onPlaybackStateChanged(state: Int) {
+          if (state == ExoPlayer.STATE_BUFFERING) {
+            progressBar?.show()
+          } else {
+            progressBar?.hide()
+          }
+        }
+      })
+    }
+  }
+}
+
 
 @BindingAdapter("app:move")
 fun AppCompatTextView.move(dimentions: Float) {
@@ -218,7 +288,7 @@ fun AppCompatTextView.move(dimentions: Float) {
   }
   val width: Int = bounds.width()
 
-  if(width > dimentions) {
+  if (width > dimentions) {
     val animator: ValueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f)
     animator.repeatCount = ValueAnimator.INFINITE
     animator.interpolator = LinearInterpolator()
@@ -289,10 +359,10 @@ fun AppCompatImageView.loadImageExplore(
       is Drawable -> setImageDrawable(defaultImage)
     }
   }
-  if (position % 3 == 0) {
-    layoutParams.height = resources.getDimension(R.dimen.dimen300).toInt()
-  } else
-    layoutParams.height = resources.getDimension(R.dimen.dimen150).toInt()
+//  if (position % 3 == 0) {
+//    layoutParams.height = resources.getDimension(R.dimen.dimen300).toInt()
+//  } else
+//    layoutParams.height = resources.getDimension(R.dimen.dimen150).toInt()
 }
 
 @BindingAdapter(value = ["app:loadCircleImage", "app:progressBar"], requireAll = false)
@@ -418,6 +488,5 @@ fun initHorizontalRV(recyclerView: RecyclerView, context: Context?, spanCount: I
   recyclerView.setItemViewCacheSize(30)
   recyclerView.isDrawingCacheEnabled = true
   recyclerView.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
-  recyclerView.layoutManager =
-    GridLayoutManager(context, spanCount, LinearLayoutManager.HORIZONTAL, false)
+  recyclerView.layoutManager = GridLayoutManager(context, spanCount, LinearLayoutManager.HORIZONTAL, false)
 }

@@ -1,14 +1,8 @@
 package grand.app.moon.data.ads.repository
 
 import grand.app.moon.data.ads.data_source.AdsRemoteDataSource
-import grand.app.moon.data.auth.data_source.remote.AuthRemoteDataSource
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.repository.AdsRepository
-import grand.app.moon.domain.auth.entity.model.User
-import grand.app.moon.domain.auth.entity.request.*
-import grand.app.moon.domain.auth.repository.AuthRepository
-import grand.app.moon.domain.utils.BaseResponse
-import grand.app.moon.domain.utils.Resource
 import javax.inject.Inject
 
 class AdsRepositoryImpl @Inject constructor(
@@ -26,6 +20,13 @@ class AdsRepositoryImpl @Inject constructor(
 
   override
   suspend fun getAdsList(url : String) = remoteDataSource.getAdsList(url)
+
+
+  override
+  suspend fun getAdsSubCategory(url : String) = remoteDataSource.getAdsSubCategory(url)
+
+
+
 
 
 }

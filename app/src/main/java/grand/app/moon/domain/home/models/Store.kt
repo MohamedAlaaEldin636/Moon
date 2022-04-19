@@ -3,6 +3,7 @@ package grand.app.moon.domain.home.models
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.store.SocialLink
 import grand.app.moon.domain.home.models.store.WorkingHours
 import grand.app.moon.domain.story.entity.StoryItem
@@ -19,11 +20,11 @@ data class Store(
   @SerializedName("website")
   var website: String = "",
   @SerializedName("id")
-  val id: Int = 0,
+  var id: Int = 0,
   @SerializedName("image")
-  val image: String = "",
+  var image: String = "",
   @SerializedName("name")
-  val name: String = "",
+  var name: String = "",
   @SerializedName("nickname")
   val nickname: String = "",
   @SerializedName("phone")
@@ -39,15 +40,15 @@ data class Store(
   @SerializedName("followers_count")
   val followersCount: String = "0",
   @SerializedName("latitude")
-  val latitude: Double = 0.0,
+  var latitude: Double = 0.0,
   @SerializedName("longitude")
-  val longitude: Double = 0.0,
+  var longitude: Double = 0.0,
   @SerializedName("is_following")
   var isFollowing: Boolean = true,
   @SerializedName("social_media_links")
   var socialMediaLinks: ArrayList<SocialLink> = arrayListOf(),
   @SerializedName("working_hours")
-  var workingHours: ArrayList<WorkingHours> = arrayListOf(),
+  var workingHours: ArrayList<WorkingHours>? = arrayListOf(),
   @SerializedName("advertisements")
   var advertisements: ArrayList<Advertisement> = arrayListOf(),
   @SerializedName("city")
@@ -58,8 +59,11 @@ data class Store(
   val description: String = "",
   @SerializedName("created_at")
   val createdAt: String = "",
+  @SerializedName("category")
+  val category: ArrayList<CategoryItem> = arrayListOf(),
   @SerializedName("stories")
   val stories: ArrayList<StoryItem> = arrayListOf(),
+  var type:String = "Store"
 
 
   ) : Serializable

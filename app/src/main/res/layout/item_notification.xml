@@ -27,6 +27,49 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dimen10">
 
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView2"
+        android:layout_width="@dimen/dimen60"
+        android:layout_height="@dimen/dimen60"
+        app:defaultImage="@{@drawable/ic_logo_notification}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:loadImage="@{viewModel.model.image}" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView"
+        style="@style/mediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen3"
+        android:layout_marginEnd="@dimen/dimen3"
+        android:ellipsize="end"
+        android:lines="2"
+        android:maxLines="2"
+        android:text="@{viewModel.model.text}"
+        app:layout_constraintEnd_toStartOf="@+id/appCompatImageView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="appCompatTextView,appCompatImageView2"
+        tools:layout_editor_absoluteY="60dp" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen120"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toBottomOf="@+id/barrier7"
+        app:defaultImage="@{@drawable/ic_logo_notification}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:loadImage="@{viewModel.model.image}" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.cardview.widget.CardView>

@@ -1,0 +1,122 @@
+package grand.app.moon.presentation.store.views
+
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import grand.app.moon.domain.utils.Resource
+import grand.app.moon.R
+import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.extensions.*
+import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.NavHomeDirections
+import grand.app.moon.databinding.FragmentExploreListBinding
+import grand.app.moon.databinding.FragmentStoreFollowedListBinding
+import grand.app.moon.databinding.FragmentStoreListBinding
+import grand.app.moon.domain.store.entity.StoreFilterRequest
+import grand.app.moon.presentation.auth.AuthActivity
+import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.explore.viewmodel.ExploreListViewModel
+import grand.app.moon.presentation.store.viewModels.StoreFollowedListViewModel
+import grand.app.moon.presentation.store.viewModels.StoreListViewModel
+import kotlinx.coroutines.flow.collect
+
+@AndroidEntryPoint
+class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
+
+  private val viewModel: StoreListViewModel by viewModels()
+
+  override
+  fun getLayoutId() = R.layout.fragment_store_list
+
+  override
+  fun setBindingVariables() {
+    binding.viewModel = viewModel
+    viewModel.callService()
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+      if(bundle.containsKey(Constants.STORE_FILTER)) {
+        viewModel.request = bundle.getSerializable(Constants.STORE_FILTER) as StoreFilterRequest
+        viewModel.reset()
+        viewModel.callService()
+      }
+    }
+  }
+
+  override
+  fun setUpViews() {
+    setRecyclerViewScrollListener()
+  }
+
+
+  private  val TAG = "StoreListFragment"
+  override fun setupObservers() {
+
+    viewModel.clickEvent.observe(this, {
+      when (it) {
+        Constants.GRID_1 -> {
+          Log.d(TAG, "setupObservers: 1")
+          setSpan(1)
+        }
+        Constants.GRID_2 -> {
+          Log.d(TAG, "setupObservers: 2")
+          setSpan(2)
+        }
+      }
+    })
+
+    lifecycleScope.launchWhenResumed {
+      viewModel.response.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            viewModel.setData(it.value.data)
+
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
+  }
+
+  fun setSpan(counter: Int){
+    val gridLayoutManager = GridLayoutManager(context,counter,GridLayoutManager.VERTICAL,false)
+    binding.recyclerView.layoutManager = gridLayoutManager
+    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+      override fun getSpanSize(position: Int): Int {
+        return when(viewModel.adapter.grid){
+          Constants.GRID_1 -> 1
+          else -> 2
+        }
+      }
+    }
+    binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+        super.onScrollStateChanged(recyclerView, newState)
+        if (!recyclerView.canScrollVertically(1)){
+          viewModel.callService()
+        }
+      }
+    })
+  }
+
+  private fun setRecyclerViewScrollListener() {
+    setSpan(2)
+  }
+}

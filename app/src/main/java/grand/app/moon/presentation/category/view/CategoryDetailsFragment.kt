@@ -1,4 +1,4 @@
-package grand.app.moon.presentation.department.view
+package grand.app.moon.presentation.category.view
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentCategoryDetailsBinding
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
-import grand.app.moon.presentation.department.viewModels.CategoryDetailsViewModel
+import grand.app.moon.presentation.category.viewModels.CategoryDetailsViewModel
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
@@ -82,7 +82,7 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
 //  }
   private fun updateList(data: HomeResponse) {
     data.categoryAds.forEach {
-      it.name = "${resources.getString(R.string.advertisement)} ${it.name}"
+      it.name = "${resources.getString(R.string.advertisements)} ${it.name}"
     }
     //hey I'm HERE
   }

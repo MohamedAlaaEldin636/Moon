@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.category.viewModels.ItemCategoryFilterViewModel" />
+  </data>
+
+  <RelativeLayout
+    android:layout_marginTop="@dimen/dimen6"
+    android:layout_marginBottom="@dimen/dimen6"
+    android:layout_marginStart="@dimen/dimen9"
+    android:layout_marginEnd="@dimen/dimen9"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+  <LinearLayout
+    android:id="@+id/ll_category_filter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@{viewModel.selected ? @drawable/corner_white_accent_strock : @drawable/corner_fbfbfb}"
+    tools:background="@drawable/corner_white_accent_strock"
+    android:paddingTop="@dimen/dimen3"
+    android:paddingBottom="@dimen/dimen3"
+    android:paddingStart="@dimen/dimen8"
+    android:paddingEnd="@dimen/dimen8"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/textView14"
+      style="@style/mediumFont"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/dimen14"
+      android:layout_marginEnd="@dimen/dimen8"
+      android:text="@{viewModel.category.name}"
+      tools:text="asdsad"
+      android:textAlignment="viewStart"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/colorPrimary"
+      app:layout_constraintHorizontal_bias="0.5"
+
+      />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/radio"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@{viewModel.selected ? @drawable/ic_correct : null}"
+      tools:src="@drawable/ic_correct"
+      android:minWidth="0dp"
+      android:minHeight="0dp"
+      app:buttonTint="@color/colorPrimary"
+      app:layout_constraintBottom_toBottomOf="@+id/textView14"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/textView14" />
+  </LinearLayout>
+  </RelativeLayout>
+
+</layout>

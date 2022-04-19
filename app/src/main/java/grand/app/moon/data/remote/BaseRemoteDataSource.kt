@@ -1,11 +1,14 @@
 package grand.app.moon.data.remote
 
+import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.JsonArray
 import com.google.gson.JsonSyntaxException
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.ErrorResponse
 import grand.app.moon.domain.utils.FailureStatus
 import grand.app.moon.domain.utils.Resource
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.lang.Exception
@@ -16,15 +19,25 @@ import javax.inject.Inject
 
 open class BaseRemoteDataSource @Inject constructor() {
   var gson: Gson = Gson()
-  protected fun getParameters(requestData: Any): Map<String, String> {
+  private val TAG = "BaseRemoteDataSource"
+  fun getParameters(requestData: Any): Map<String, String> {
     val params: MutableMap<String, String> = HashMap()
     try {
       val jsonObject = JSONObject(gson.toJson(requestData))
       for (i in 0 until jsonObject.names().length()) {
-        params[jsonObject.names().getString(i)] =
-          jsonObject[jsonObject.names().getString(i)].toString() + ""
+        if (jsonObject[jsonObject.names().getString(i)] is JSONArray) {
+          val jsonArray = jsonObject[jsonObject.names().getString(i)] as JSONArray
+          for (j in 0 until jsonArray.length()) {
+            val name = "${jsonObject.names().getString(i)}[$j]"
+            params[name] = jsonArray[j].toString()
+          }
+        } else {
+          params[jsonObject.names().getString(i)] =
+            jsonObject[jsonObject.names().getString(i)].toString()
+        }
       }
     } catch (e: Exception) {
+      Log.d(TAG, "getParameters: EXCE")
       e.stackTrace
     }
     return params

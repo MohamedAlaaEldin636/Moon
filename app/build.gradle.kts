@@ -153,28 +153,28 @@ dependencies {
   implementation(Libraries.circularprogressbar)
 
   //bottom Naviation
-  implementation ("com.zagori:bottomnavbar:1.0.2")
+  implementation("com.zagori:bottomnavbar:1.0.2")
 
   //toasty
-  implementation ("com.github.GrenderG:Toasty:1.5.2")
+  implementation("com.github.GrenderG:Toasty:1.5.2")
 
   //country
-  implementation ("com.hbb20:ccp:2.6.0")
+  implementation("com.hbb20:ccp:2.6.0")
 
   //slider
-  implementation ("com.github.denzcoskun:ImageSlideshow:0.1.0")
+  implementation("com.github.denzcoskun:ImageSlideshow:0.1.0")
   //chat
-  implementation ("com.cometchat:pro-android-chat-sdk:3.0.4")
+  implementation("com.cometchat:pro-android-chat-sdk:3.0.4")
 
   //exo-player
-  implementation ("com.google.android.exoplayer:exoplayer:2.10.0")
+  implementation("com.google.android.exoplayer:exoplayer:2.10.0")
 
   //glide
-  implementation ("com.github.bumptech.glide:glide:4.11.0")
-  annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+  implementation("com.github.bumptech.glide:glide:4.11.0")
+  annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
 
 //  //stories
-  implementation ("com.github.bolaware:momentz:v2.0")
+  implementation("com.github.bolaware:momentz:v2.0")
 
   //social-login
   /* Google sign in */
@@ -183,13 +183,19 @@ dependencies {
   implementation("com.facebook.android:facebook-login:13.0.0")
 
   //map
-  implementation ("com.google.android.gms:play-services-maps:18.0.2")
-  implementation ("com.google.android.gms:play-services-location:19.0.1")
-  implementation ("com.google.android.gms:play-services-places:17.0.0")
-  implementation ("com.google.maps:google-maps-services:0.2.5")
-  implementation ("com.google.android.libraries.places:places:2.6.0")
-  implementation ("com.google.maps.android:android-maps-utils:2.3.0")
+  implementation("com.google.android.gms:play-services-maps:18.0.2")
+  implementation("com.google.android.gms:play-services-location:19.0.1")
+  implementation("com.google.android.gms:play-services-places:17.0.0")
+  implementation("com.google.maps:google-maps-services:0.2.5")
+  implementation("com.google.android.libraries.places:places:2.6.0")
+  implementation("com.google.maps.android:android-maps-utils:2.3.0")
 
+
+  //exoPlayer
+  implementation("com.google.android.exoplayer:exoplayer:2.15.1")
+  implementation("com.google.android.exoplayer:exoplayer-core:2.15.1")
+  implementation("com.google.android.exoplayer:exoplayer-dash:2.15.1")
+  implementation("com.google.android.exoplayer:exoplayer-ui:2.15.1")
 
 
   // Project Modules

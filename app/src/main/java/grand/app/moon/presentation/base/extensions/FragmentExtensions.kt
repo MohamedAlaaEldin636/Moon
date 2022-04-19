@@ -36,6 +36,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.facebook.FacebookSdk.getCacheDir
 import grand.app.moon.BuildConfig
 import grand.app.moon.core.MyApplication
+import grand.app.moon.domain.intro.entity.AppTutorial
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -167,15 +168,15 @@ fun <T> Fragment.setNavigationResult(result: T, key: String = "result") {
 }
 
 fun Fragment.onBackPressedCustomAction(action: () -> Unit) {
-  requireActivity().onBackPressedDispatcher.addCallback(
-    viewLifecycleOwner,
-    object : OnBackPressedCallback(true) {
-      override
-      fun handleOnBackPressed() {
-        action()
-      }
-    }
-  )
+//  requireActivity().onBackPressedDispatcher.addCallback(
+//    viewLifecycleOwner,
+//    object : OnBackPressedCallback(true) {
+//      override
+//      fun handleOnBackPressed() {
+//        action()
+//      }
+//    }
+//  )
 }
 
 fun Fragment.navigateSafe(directions: NavDirections, navOptions: NavOptions? = null) {
@@ -192,6 +193,22 @@ fun setImages(sliderView: ImageSlider, images: ArrayList<String>?) {
     val list = ArrayList<SlideModel>()
     for (image in images) {
       list.add(SlideModel(image, ScaleTypes.FIT))
+    }
+    sliderView.setImageList(list)
+    sliderView.setItemClickListener(object : ItemClickListener {
+      override fun onItemSelected(position: Int) {
+
+      }
+    })
+  }
+}
+
+@BindingAdapter("images")
+fun setImagesAppTutrial(sliderView: ImageSlider, images: ArrayList<AppTutorial>?) {
+  images?.let {
+    val list = ArrayList<SlideModel>()
+    for (image in images) {
+      list.add(SlideModel(image.image, ScaleTypes.FIT))
     }
     sliderView.setImageList(list)
     sliderView.setItemClickListener(object : ItemClickListener {

@@ -9,6 +9,7 @@ import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.settings.entity.NotificationPaginateData
+import grand.app.moon.domain.settings.models.NotificationData
 import grand.app.moon.domain.settings.use_case.SettingsUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -26,16 +27,18 @@ class NotificationListViewModel @Inject constructor(
 ) : BaseViewModel() {
   @Bindable
   var page: Int = 0
+
   @Bindable
   var callingService = false
 
-  var type:Int = -1
+  var type: Int = -1
 
   var isLast = false
 
   @Bindable
   var adapter = NotificationAdapter()
 
+  var sortBy = 1
 
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<NotificationPaginateData>>>(Resource.Default)
@@ -46,7 +49,7 @@ class NotificationListViewModel @Inject constructor(
 
   }
 
-  fun callService(){
+  fun callService() {
     job = useCase.notifications()
       .onEach {
         response.value = it
@@ -63,16 +66,32 @@ class NotificationListViewModel @Inject constructor(
       if (page == 1) {
 //        adapter = InvoicesAdapter()
         adapter.differ.submitList(it.list)
+        notifyPropertyChanged(BR.adapter)
         show.set(true)
       } else {
         adapter.insertData(it.list)
       }
-      notifyPropertyChanged(BR.adapter)
       callingService = false
       notifyPropertyChanged(BR.callingService)
     }
   }
 
+  fun reset() {
+    page = 0
+    callingService = false
+    isLast = false
+  }
+
+
+  fun remove(notificationData: NotificationData?) {
+//    notificationData?.let {
+//      useCase.deleteNotification( it.id)
+//        .catch { exception -> validationException.value = exception.message?.toInt() }
+//        .onEach { result ->
+//          response.value = result
+//        }.launchIn(viewModelScope)
+//    }
+  }
 
   override fun onCleared() {
     job.cancel()

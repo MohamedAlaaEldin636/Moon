@@ -33,12 +33,21 @@ class ReportViewModel @Inject constructor(
   val response = _response
 
 
+
   fun callService() {
     progress.set(true)
     useCase.onBoard("8")
       .onEach {
         response.value = it
       }.launchIn(viewModelScope)
+  }
+
+  fun submitService() {
+//    progress.set(true)
+//    useCase.onBoard("8")
+//      .onEach {
+//        response.value = it
+//      }.launchIn(viewModelScope)
   }
 
   fun setData(data: List<AppTutorial>) {

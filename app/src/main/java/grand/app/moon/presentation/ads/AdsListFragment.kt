@@ -73,10 +73,6 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
             handleApiError(it)
           }
         }
-        println("collection here $it")
-        if(it is Resource.Success){
-          viewModel.setData(it.value.data)
-        }
       }
 
     }

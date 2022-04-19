@@ -11,7 +11,7 @@
 
     <variable
       name="viewModel"
-      type="grand.app.moon.presentation.department.viewModels.CategoryDetailsViewModel" />
+      type="grand.app.moon.presentation.category.viewModels.CategoryDetailsViewModel" />
   </data>
 
   <androidx.core.widget.NestedScrollView

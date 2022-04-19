@@ -11,6 +11,9 @@ interface StoreServices {
   @POST("v1/follow")
   suspend fun follow(@Body storeRequest: FollowStoreRequest): BaseResponse<*>
 
+  @GET("v1/stores")
+  suspend fun getStores( @QueryMap map: Map<String, String>): BaseResponse<StoreListPaginateData>
+
   @GET("v1/stores/{id}")
   suspend fun storeDetails(@Path("id") id: Int): BaseResponse<Store>
 

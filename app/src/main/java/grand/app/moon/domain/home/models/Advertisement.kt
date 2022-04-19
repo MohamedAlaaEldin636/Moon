@@ -21,6 +21,8 @@ data class Advertisement(
   val favoriteCount: Int = 0,
   @SerializedName("id")
   val id: Int = 0,
+  @SerializedName("image")
+  val image: String = "",
   @SerializedName("images")
   var images: ArrayList<String> = arrayListOf(),
   @SerializedName("properties")
@@ -33,6 +35,12 @@ data class Advertisement(
   val price: Int = 0,
   @SerializedName("store")
   val store: Store? = Store(),
+  @SerializedName("latitude")
+  val latitude: Double = 0.0,
+  @SerializedName("longitude")
+  val longitude: Double = 0.0,
+  @SerializedName("category_id")
+  val categoryId: Int = 0,
   @SerializedName("title")
   val title: String = "",
   @SerializedName("views_count")

@@ -73,7 +73,7 @@
   <string name="call">إتصال</string>
   <string name="suggestions_ads_for_you">إعلانات مقترحة لك</string>
   <string name="most_popular_ads">أكثر الإعلانات شيوعاً</string>
-  <string name="advertisement">إعلانات</string>
+  <string name="advertisements">إعلانات</string>
   <string name="premium">مميز</string>
   <string name="has_negatiable">قابل للتفاوض</string>
   <string name="description_on_ads">وصف عن الاعلان</string>
@@ -131,5 +131,23 @@
   <string name="please_choose_block_reason">من فضلك اختر سبب الحظر</string>
   <string name="please_choose_report_reason">من فضلك اختر سبب البلاغ</string>
   <string name="submit_report">تقديم البلاغ</string>
+    <string name="the_oldest">الاقدم</string>
+  <string name="the_most_recent">الاحدث</string>
+  <string name="highest_price">الاعلي سعراً</string>
+  <string name="lowest_price">الأقل سعراً</string>
+  <string name="sort_by">ترتيب حسب</string>
+  <string name="filter">فلترة</string>
+  <string name="filter_sort">تصفية</string>
+    <string name="notification_removed_successfully">تم حذف الإشعار بنجاح</string>
+    <string name="notification_type">نوع الاشعارا</string>
+  <string name="moon_notifications">اشعارات موون</string>
+  <string name="moon_traders">اشعارات التجار</string>
+  <string name="notifications">إشعارات</string>
+    <string name="there_are_no_result_please_try_again">لا يوجد نتائج للبحث , حاول مره أخري</string>
+  <string name="advertisement">إعلان</string>
+  <string name="add_store_now">أضف متجر الان</string>
+    <string name="city">المدينة</string>
+  <string name="filter_by_categories">تصفية حسب الاقسام</string>
+  <string name="filter_search">فلتر البحث</string>
 
 </resources>

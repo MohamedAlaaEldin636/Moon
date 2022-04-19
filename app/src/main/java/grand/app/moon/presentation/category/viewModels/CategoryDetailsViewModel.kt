@@ -1,6 +1,5 @@
-package grand.app.moon.presentation.department.viewModels
+package grand.app.moon.presentation.category.viewModels
 
-import android.util.Log
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -15,7 +14,6 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.CategoryDetails
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.CategoryAdvertisement
-import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter

@@ -154,8 +154,8 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun update(data: Store, days: ArrayList<String>) {
-    data.workingHours.forEachIndexed() { index, element ->
-      data.workingHours[index].day = days[index]
+    data.workingHours?.forEachIndexed() { index, element ->
+      data.workingHours?.get(index)?.day = days[index]
     }
     store.set(data)
     adsAdapter.differ.submitList(store.get()?.advertisements)

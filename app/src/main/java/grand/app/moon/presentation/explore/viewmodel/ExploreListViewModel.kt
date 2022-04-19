@@ -6,6 +6,7 @@ import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.explore.use_case.ExploreUseCase
@@ -24,7 +25,9 @@ import javax.inject.Inject
 class ExploreListViewModel @Inject constructor(
   val userLocalUseCase: UserLocalUseCase,
   private val useCase: ExploreUseCase,
-  private val storeUseCase: StoreUseCase
+  private val storeUseCase: StoreUseCase,
+  private val exploreUseCase: ExploreUseCase,
+
 ) : BaseViewModel() {
   @Bindable
   var page: Int = 0
@@ -47,6 +50,13 @@ class ExploreListViewModel @Inject constructor(
     MutableStateFlow<Resource<BaseResponse<ExploreListPaginateData>>>(Resource.Default)
 
   val response = _responseService
+
+  val user = userLocalUseCase.invoke()
+  init {
+    adapter.user = user
+    adapter.exploreUseCase = exploreUseCase
+  }
+
 
   init {
 
@@ -77,10 +87,10 @@ class ExploreListViewModel @Inject constructor(
       if (page == 1) {
 //        adapter = InvoicesAdapter()
         adapter.differ.submitList(it.list)
+        notifyPropertyChanged(BR.adapter)
       } else {
         adapter.insertData(it.list)
       }
-      notifyPropertyChanged(BR.adapter)
       callingService = false
       notifyPropertyChanged(BR.callingService)
       show.set(true)

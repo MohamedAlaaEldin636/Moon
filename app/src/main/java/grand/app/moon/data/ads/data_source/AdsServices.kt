@@ -3,6 +3,7 @@ package grand.app.moon.data.ads.data_source
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import retrofit2.http.*
 import retrofit2.http.Url
@@ -25,5 +26,8 @@ interface AdsServices {
 
   @GET
   suspend fun getAdsList(@Url url : String): BaseResponse<AdsListPaginateData>
+
+  @GET
+  suspend fun getAdsSubCategory(@Url url : String): BaseResponse<SubCategoryResponse>
 
 }

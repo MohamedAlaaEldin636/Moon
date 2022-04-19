@@ -41,7 +41,7 @@
   <fragment
     android:id="@+id/countriesFragment3"
     android:name="grand.app.moon.presentation.auth.countries.CountriesFragment"
-    android:label="CountriesFragment" >
+    android:label="@string/change_country" >
     <argument
       android:name="from"
       app:argType="string" />

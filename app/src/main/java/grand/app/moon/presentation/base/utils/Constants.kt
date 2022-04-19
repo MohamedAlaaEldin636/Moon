@@ -29,6 +29,13 @@ object Constants {
   const val LOGIN_REQUIRED: Int = 19
   const val TOTAL_ADS: Int = 20
   const val ADVERTISEMENT: Int = 21
+  const val NOTIFICATION: Int = 22
+  const val NOTIFICATION_FILTER: Int = 23
+  const val GRID_1: Int = 24
+  const val GRID_2: Int = 25
+  const val CONFIRM: Int = 26
+
+
 
 
   const val CHAT_APP_ID = "2065015ed5ff1e4d"
@@ -41,6 +48,7 @@ object Constants {
 
   const val TOKEN = "TOKEN"
   const val SPLASH: String = "splash"
+  const val TYPE: String = "type"
   const val SOCIAL_TYPE: String = "social_media"
   const val PICKER_IMAGE: String = "PICKER_IMAGE"
   const val STORIES: String = "stories"
@@ -63,10 +71,21 @@ object Constants {
   const val TabBarText: String = "tabBarText"
   const val CATEGORY_ID: String = "category_id"
   const val SUB_CATEGORY_ID: String = "sub_category_id"
+  const val SEARCH: String = "search"
+  const val ADVERTISEMENT_TEXT: String = "advertisement"
+
+  const val STORE: String = "store"
+  const val BUNDLE: String = "bundle"
+  const val SORT_BY: String = "sort_by"
+  const val STORE_FILTER: String = "store_filter"
+  const val CITES_SELECTED: String = "cities_selected"
+  const val CATEGORIES_SELECTED: String = "categories_selected"
+
+
+
 
 
   const val SHARE: String = "share"
-  const val DELETE: String = "delete"
 
 
   val NAVIGATION_OPTIONS = NavOptions.Builder()

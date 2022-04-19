@@ -44,6 +44,14 @@ class ReportDialog : BottomSheetDialogFragment() {
     return binding.root
   }
 
+  init {
+      viewModel.adapter.changeEvent.observe(this,{
+        if(viewModel.adapter.lastSelected != -1){
+          viewModel.submitService()
+        }
+      })
+  }
+
   fun setupObserver(){
     lifecycleScope.launchWhenResumed {
       viewModel.response.collect {

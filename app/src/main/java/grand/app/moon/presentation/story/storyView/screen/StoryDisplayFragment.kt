@@ -1,44 +1,8 @@
 package grand.app.moon.presentation.story.storyView.screen
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Bundle
-import android.text.format.DateFormat
-import android.view.MotionEvent
-import android.view.View
-import android.widget.Toast
-import androidx.fragment.app.viewModels
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.transition.Transition
-import grand.app.moon.presentation.story.storyView.data.Story
-import grand.app.moon.presentation.story.storyView.data.StoryUser
-import com.c2m.storyviewer.utils.OnSwipeTouchListener
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
-import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
-import com.google.android.exoplayer2.util.Util
-import grand.app.moon.R
-import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentStoryDisplayBinding
-import grand.app.moon.presentation.story.storyView.customview.StoriesProgressView
-import grand.app.moon.presentation.story.viewModels.StoryDisplayViewModel
-import kotlinx.android.synthetic.main.fragment_story_display.*
-import java.util.*
+import grand.app.moon.presentation.base.BaseFragment
 
 @AndroidEntryPoint
 class StoryDisplayFragment : BaseFragment<FragmentStoryDisplayBinding>(){

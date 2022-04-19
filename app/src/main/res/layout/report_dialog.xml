@@ -4,14 +4,14 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <data>
-
+    <import type="android.view.View" />
     <variable
       name="viewModel"
     type="grand.app.moon.presentation.store.viewModels.ReportViewModel" />
 
   </data>
 
-  <LinearLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:padding="@dimen/dimen10"
@@ -32,6 +32,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerView"
       android:layout_width="match_parent"
@@ -50,6 +51,17 @@
       tools:orientation="vertical" />
 
 
+    <ProgressBar
+      android:id="@+id/progress_bar"
+      android:layout_width="@dimen/dimen40"
+      android:layout_height="@dimen/dimen40"
+      android:theme="@style/progress"
+      android:visibility="@{viewModel.progress ? View.VISIBLE : View.GONE}"
+      app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
     <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_back"
       android:layout_width="match_parent"
@@ -58,15 +70,18 @@
       android:layout_margin="@dimen/dimen8"
       android:gravity="center"
       android:text="@string/submit_report"
-      android:textSize="@dimen/text_size16"
       android:textColor="@color/colorWhite"
-      app:backgroundTint="@color/colorPrimary" />
+      android:textSize="@dimen/text_size16"
+      app:backgroundTint="@color/colorPrimary"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
 
 
 
 
 
-  </LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

@@ -55,6 +55,7 @@ class MapCategoriesAdapter : RecyclerView.Adapter<MapCategoriesAdapter.ViewHolde
     holder.itemLayoutBinding.tvItemCategoryText.setOnClickListener {
       if(selected != -1) notifyItemChanged(selected)
       selected = position
+      clickEvent.value = data
       notifyItemChanged(selected)
     }
   }

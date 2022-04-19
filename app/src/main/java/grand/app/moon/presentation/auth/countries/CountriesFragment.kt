@@ -42,7 +42,7 @@ class CountriesFragment : BaseFragment<FragmentCountriesBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            viewModel.updateAdapter(it.value.data)
+            viewModel.updateAdapter(it.value)
           }
           is Resource.Failure -> {
             hideLoading()

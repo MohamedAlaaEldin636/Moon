@@ -5,6 +5,7 @@ import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 
@@ -13,5 +14,6 @@ interface AdsRepository {
   suspend fun favourite(addFavouriteAdsRequest: AddFavouriteAdsRequest): Resource<BaseResponse<*>>
   suspend fun getProfileAdsList(page: Int , type: Int): Resource<BaseResponse<AdsListPaginateData>>
   suspend fun getAdsList(url : String): Resource<BaseResponse<AdsListPaginateData>>
+  suspend fun getAdsSubCategory(url : String): Resource<BaseResponse<SubCategoryResponse>>
 
 }

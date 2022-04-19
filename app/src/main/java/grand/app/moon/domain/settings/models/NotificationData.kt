@@ -4,5 +4,6 @@ data class NotificationData(
   val created_at: String,
   val text: String,
   val id: Int,
+  val image: String,
   val notify_type: String
 )

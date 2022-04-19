@@ -18,6 +18,11 @@ import grand.app.moon.presentation.base.extensions.hide
 import grand.app.moon.presentation.base.extensions.show
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
+import grand.app.moon.presentation.notfication.viewmodel.NotificationListViewModel
+import com.google.android.material.navigation.NavigationBarView
+
+
+
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
@@ -48,7 +53,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       )
     )
     setSupportActionBar(binding.toolbar)
-    binding.toolbar.setupWithNavController(nav, appBarConfiguration)
 
     viewModel.clickEvent.observe(this, {
       Log.d(TAG, "setUpBottomNavigationWithGraphs: $it")
@@ -56,17 +60,34 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         Constants.LOGIN_REQUIRED -> startActivity(Intent(this, AuthActivity::class.java))
         Constants.DEPARTMENTS -> nav.navigate(NavHomeDirections.actionHomeFragmentToDepartmentListFragment())
         Constants.CHAT_LIST -> nav.navigate(NavHomeDirections.actionHomeFragmentToCometChatConversationList())
+        Constants.NOTIFICATION -> {
+          if(viewModel.isLoggin)
+            nav.navigate(NavHomeDirections.moveToNotification())
+          else
+            startActivity(Intent(this, AuthActivity::class.java))
+        }
       }
     })
 
 
+
     nav.addOnDestinationChangedListener { controller, destination, arguments ->
       resetTexts()
+      binding.icNotificationFilter.hide()
       when (destination.id) {
         R.id.home_fragment -> {
           binding.bottomNavigationView.show()
           showTopBarControls()
           showImage()
+        }
+        R.id.notificationFragment -> {
+          binding.toolbar.title =
+            if (arguments != null && arguments.containsKey(Constants.TabBarText)) arguments.getString(
+              Constants.TabBarText
+            ) else destination.label
+          hideTopBarControls()
+          showText()
+          binding.icNotificationFilter.show()
         }
         R.id.myAccountFragment -> {
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
@@ -110,15 +131,27 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       }
     }
     binding.imgHomeBottomBar.setOnClickListener {
-
       nav.navigate(NavHomeDirections.moveToHome())
     }
 
     binding.bottomNavigationView.setupWithNavController(nav)
+
+    binding.toolbar.setupWithNavController(nav, appBarConfiguration)
+
     binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+
+    binding.bottomNavigationView.setOnItemSelectedListener { item ->
+      val id = item.itemId
+      when (id) {
+        R.id.exploreFragment -> binding.bottomNavigationView.selectedItemId = R.id.exploreFragment
+        R.id.nav_account -> binding.bottomNavigationView.selectedItemId = R.id.nav_account
+      }
+      true
+    }
   }
 
-  private val TAG = "HomeActivity"
+  private
+  val TAG = "HomeActivity"
 
 
   private fun resetTexts() {

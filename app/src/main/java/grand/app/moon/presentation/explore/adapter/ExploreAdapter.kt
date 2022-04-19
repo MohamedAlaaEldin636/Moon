@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.cometchat.pro.models.User
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemExploreBinding
 import grand.app.moon.domain.explore.entity.Explore
@@ -16,6 +17,7 @@ import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
 
 class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
   var clickEvent: MutableLiveData<Int> = MutableLiveData()
+  val user = grand.app.moon.domain.auth.entity.model.User()
   private val differCallback = object : DiffUtil.ItemCallback<Explore>() {
     override fun areItemsTheSame(oldItem: Explore, newItem: Explore): Boolean {
       return oldItem.id == newItem.id
@@ -35,15 +37,16 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemExploreViewModel(data,position)
-    Log.d(TAG, "onBindViewHolder: "+data.file)
+    val itemViewModel = ItemExploreViewModel(data,position,user)
+//    Log.d(TAG, "onBindViewHolder: "+data.file)
     holder.itemLayoutBinding.itemExplore.setOnClickListener {
+      Log.d(TAG, "onBindViewHolder: ")
       clickEvent.value = position
     }
     holder.setViewModel(itemViewModel)
   }
 
-  private val TAG = "NotificationAdapter"
+  private val TAG = "ExploreAdapter"
   fun insertData(insertList: List<Explore>) {
     val array = ArrayList<Explore>(differ.currentList)
     val size = array.size

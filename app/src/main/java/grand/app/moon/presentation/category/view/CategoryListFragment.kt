@@ -1,19 +1,18 @@
-package grand.app.moon.presentation.department
+package grand.app.moon.presentation.category.view
 
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.viewModels
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentDepartmentBinding
-import grand.app.moon.presentation.department.viewModels.DepartmentListViewModel
+import grand.app.moon.presentation.category.viewModels.CategoryListViewModel
 
 @AndroidEntryPoint
-class DepartmentListFragment : BaseFragment<FragmentDepartmentBinding>() {
+class CategoryListFragment : BaseFragment<FragmentDepartmentBinding>() {
 
-  private val viewModel: DepartmentListViewModel by viewModels()
+  private val viewModel: CategoryListViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_department

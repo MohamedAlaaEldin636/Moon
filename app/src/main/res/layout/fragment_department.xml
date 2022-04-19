@@ -10,7 +10,7 @@
 
     <variable
       name="viewModel"
-      type="grand.app.moon.presentation.department.viewModels.DepartmentListViewModel" />
+      type="grand.app.moon.presentation.category.viewModels.CategoryListViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout

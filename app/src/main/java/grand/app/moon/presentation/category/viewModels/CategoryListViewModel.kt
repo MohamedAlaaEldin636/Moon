@@ -1,4 +1,4 @@
-package grand.app.moon.presentation.department.viewModels
+package grand.app.moon.presentation.category.viewModels
 
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DepartmentListViewModel @Inject constructor(
+class CategoryListViewModel @Inject constructor(
   private val useCase: SettingsUseCase,
   val accountRepository: AccountRepository,
   ) : BaseViewModel() {

@@ -2,6 +2,7 @@ package grand.app.moon.presentation.home.viewModels
 
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,6 +14,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.R
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.CategoryItem
@@ -31,6 +33,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+
   var storeUseCase: StoreUseCase,
   var userLocalUseCase: UserLocalUseCase,
   val accountRepository: AccountRepository,
@@ -79,6 +82,17 @@ class HomeViewModel @Inject constructor(
     }
   }
 
+  fun stores(v: View) {
+    v.findNavController().navigate(
+      R.id.storeListFragment,
+      bundleOf(
+        Constants.TabBarText to v.resources.getString(R.string.top_stores_rated)
+      ), Constants.NAVIGATION_OPTIONS
+    )
+
+//    v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToStoreListFragment())
+  }
+
   private fun homeApi() {
     homeUseCase.home()
       .onEach { result ->
@@ -104,9 +118,23 @@ class HomeViewModel @Inject constructor(
     clickEvent.value = Constants.DEPARTMENTS
   }
 
+  fun search(v: View){
+    v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
+  }
+
+  fun homeFilter(v: View){
+  }
+
   fun departments(v: View) {
     v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDepartmentListFragment())
   }
+  fun notification(v: View) {
+    clickEvent.value = Constants.NOTIFICATION
+  }
+  fun notificationFilter(v: View) {
+    clickEvent.value = Constants.NOTIFICATION_FILTER
+  }
+
 
   fun chatList(v: View) {
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED

@@ -17,6 +17,7 @@
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
+    android:visibility="@{viewModel.category.advertisements.size() > 0 ? View.VISIBLE : View.GONE}"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dimen10">
 

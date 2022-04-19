@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.store.viewModels.StoreListViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:visibility="@{viewModel.show ? View.VISIBLE : View.GONE}"
+    android:layout_height="match_parent">
+
+
+    <androidx.cardview.widget.CardView
+      android:id="@+id/img_login"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="@dimen/dimen10"
+      android:layout_marginStart="@dimen/dimen20"
+      android:layout_marginEnd="@dimen/dimen20">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatEditText
+          android:id="@+id/appCompatEditText"
+          style="@style/mediumFont"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:background="@null"
+          android:drawableStart="@drawable/ic_search"
+          android:drawablePadding="@dimen/dimen12"
+          android:focusable="false"
+          android:hint="@string/search"
+          android:padding="@dimen/dimen10"
+          android:textSize="@dimen/text_size16"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/appCompatImageView4"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/appCompatImageView4"
+          android:layout_width="@dimen/dimen50"
+          android:layout_height="@dimen/dimen50"
+          android:layout_gravity="end"
+          android:onClick="@{(v) -> viewModel.storeFilter(v)}"
+          android:padding="@dimen/dimen10"
+          android:src="@drawable/ic_filter"
+          android:tint="@color/colorAccent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/grid2"
+      android:layout_width="@dimen/dimen40"
+      android:layout_height="@dimen/dimen40"
+      android:layout_gravity="end"
+      android:layout_marginStart="@dimen/dimen20"
+      android:layout_marginTop="@dimen/dimen10"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/img_login"
+      android:padding="@dimen/dimen10"
+      android:onClick="@{ () -> viewModel.changeGrid(true)}"
+      android:src="@drawable/ic_grid_2"
+      android:background="@{viewModel.isGrid2 ? @drawable/corner_accent : null }"
+      android:tint="@{viewModel.isGrid2 ? @color/colorWhite : @color/colorAccent }" />
+
+
+
+<!--    android:onClick="@{ () -> viewModel.changeGrid()}"-->
+<!--    android:background="@{viewModel.isGrid2 ? null : @drawable/corner_accent}"-->
+<!--    android:tint="@{viewModel.isGrid2 ? @color/colorAccent : @color/colorWhite}"-->
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:layout_width="@dimen/dimen40"
+      android:layout_height="@dimen/dimen40"
+      android:layout_gravity="end"
+      android:layout_marginTop="@dimen/dimen10"
+      app:layout_constraintStart_toEndOf="@+id/grid2"
+      app:layout_constraintTop_toBottomOf="@+id/img_login"
+      android:layout_marginStart="@dimen/dimen10"
+      android:padding="@dimen/dimen10"
+      android:onClick="@{ () -> viewModel.changeGrid(false)}"
+      android:src="@drawable/ic_grid_1"
+      android:background="@{viewModel.isGrid2 ? null : @drawable/corner_accent}"
+      android:tint="@{viewModel.isGrid2 ? @color/colorAccent : @color/colorWhite}" />
+
+
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/appCompatButtonNext"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/dimen12"
+      android:layout_marginTop="@dimen/dimen20"
+      android:layout_marginEnd="@dimen/dimen12"
+      android:background="@drawable/corner_primary"
+      android:text="@string/add_store_now"
+      app:icon="@drawable/ic_arrow_right_24dp"
+      app:iconTint="@color/colorWhite"
+      app:iconGravity="textEnd"
+      android:drawableTint="@color/colorAccent"
+      android:onClick="@{(v)->viewModel.addStoreNow(v)}"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/white"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/grid2"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      android:scrollbars="none"
+      app:adapter="@{viewModel.adapter}"
+      app:orientation="@{`1`}"
+      app:span="@{`2`}"
+      android:layout_marginTop="@dimen/dimen6"
+      app:layout_constraintTop_toBottomOf="@+id/appCompatButtonNext"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/rl_service_shop_progress"
+      tools:listitem="@layout/item_store"
+      tools:orientation="vertical" />
+
+    <RelativeLayout
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:id="@+id/rl_service_shop_progress"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:visibility="@{viewModel.page > 1 &amp;&amp; viewModel.callingService? View.VISIBLE : View.GONE}"
+      app:layout_constraintBottom_toBottomOf="parent">
+
+      <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="@dimen/dimen20"
+        android:layout_height="@dimen/dimen20"
+        android:theme="@style/progress" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dimen5"
+        android:layout_toEndOf="@+id/progress_bar"
+        android:text="@string/loading_more"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size12" />
+
+    </RelativeLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

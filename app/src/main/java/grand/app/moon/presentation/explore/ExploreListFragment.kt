@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
 
-  val exploreListFragmentArgs: grand.app.moon.presentation.explore.ExploreListFragmentArgs by navArgs()
+  val exploreListFragmentArgs: ExploreListFragmentArgs by navArgs()
   private val viewModel: ExploreListViewModel by viewModels()
 
   override
@@ -78,16 +78,13 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
 
 
   private fun setRecyclerViewScrollListener() {
-
-//    val linearLayoutManager = LinearLayoutManager(context)
-//    binding.recyclerView.layoutManager = linearLayoutManager
-    binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-        super.onScrollStateChanged(recyclerView, newState)
-        if (!recyclerView.canScrollVertically(1)){
-          viewModel.callService()
-        }
-      }
-    })
+//    binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//        super.onScrollStateChanged(recyclerView, newState)
+//        if (!recyclerView.canScrollVertically(1)){
+//          viewModel.callService()
+//        }
+//      }
+//    })
   }
 }

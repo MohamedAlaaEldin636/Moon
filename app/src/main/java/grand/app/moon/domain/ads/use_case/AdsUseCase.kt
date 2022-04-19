@@ -8,6 +8,7 @@ import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.repository.HomeRepository
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,12 @@ class AdsUseCase @Inject constructor(
   fun getAdsList(url : String): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
     emit(Resource.Loading)
     val result = repo.getAdsList(url)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun getAdsSubCategory(url : String): Flow<Resource<BaseResponse<SubCategoryResponse>>> = flow {
+    emit(Resource.Loading)
+    val result = repo.getAdsSubCategory(url)
     emit(result)
   }.flowOn(Dispatchers.IO)
 }

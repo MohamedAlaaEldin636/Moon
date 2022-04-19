@@ -11,8 +11,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.categories.entity.CategoryItem
-import grand.app.moon.domain.home.models.Country
-//import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.map
@@ -150,6 +149,26 @@ class AppPreferences @Inject constructor(private val context: Context) {
     appPreferences.edit {
       it.putString(key, value)
     }
+  }
+
+  fun saveSearch(key: String) {
+    val arrayList = getSearches()
+    arrayList?.add(key)
+    val gson = Gson()
+    val json =
+      gson.toJson(arrayList, object : TypeToken<ArrayList<String>>() {}.type)
+    appPreferences.edit {
+      it.putString("searches", json)
+    }
+  }
+
+  fun getSearches() : ArrayList<String?>? {
+    val gson = Gson()
+    val searches = appPreferences.getString("searches", "")
+    return gson.fromJson(
+      searches,
+      object : TypeToken<ArrayList<String>>() {}.type
+    )
   }
 
   fun getLocal(key: String): String {

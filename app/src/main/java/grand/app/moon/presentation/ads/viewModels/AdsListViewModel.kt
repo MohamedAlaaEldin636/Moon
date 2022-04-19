@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.ads.viewModels
 
+import android.util.Log
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -82,13 +83,15 @@ class AdsListViewModel @Inject constructor(
       println("size:" + data.list.size)
       isLast = data.links.next == null
       if (page == 1) {
+        Log.d(TAG, "setData: submitList")
 //        adapter = InvoicesAdapter()
         adapter.differ.submitList(it.list)
         show.set(true)
+        notifyPropertyChanged(BR.adapter)
       } else {
+        Log.d(TAG, "setData: insertData")
         adapter.insertData(it.list)
       }
-      notifyPropertyChanged(BR.adapter)
       callingService = false
       notifyPropertyChanged(BR.callingService)
     }

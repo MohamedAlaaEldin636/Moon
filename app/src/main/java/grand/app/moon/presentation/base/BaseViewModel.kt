@@ -41,6 +41,7 @@ import java.net.URLEncoder
 open class BaseViewModel : ViewModel(), Observable {
   private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
   val show = ObservableBoolean(false)
+  val isGrid2= ObservableBoolean(true)
 
   protected var job: Job = Job()
 

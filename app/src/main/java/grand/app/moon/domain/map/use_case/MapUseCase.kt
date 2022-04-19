@@ -6,6 +6,7 @@ import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.entity.request.LogInRequest
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.auth.repository.AuthRepository
+import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.map.repository.MapRepository
 import grand.app.moon.domain.utils.*
@@ -21,11 +22,23 @@ class MapUseCase @Inject constructor(
   private val repository: MapRepository,
 ) {
 
-  fun map(
+  fun mapStore(
     type: String
   ): Flow<Resource<BaseResponse<List<Store>>>> = flow {
     emit(Resource.Loading)
-    val result = repository.map(type)
+    val result = repository.mapStore(type)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+
+  fun mapAds(
+    type: String,
+    property_id: String? = null,
+    sub_category_id: String?  = null,
+    category_id: String?  = null
+  ): Flow<Resource<BaseResponse<List<Advertisement>>>> = flow {
+    emit(Resource.Loading)
+    val result = repository.mapAds(type,property_id,sub_category_id,category_id)
     emit(result)
   }.flowOn(Dispatchers.IO)
 

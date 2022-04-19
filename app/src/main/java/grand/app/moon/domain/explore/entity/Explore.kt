@@ -20,7 +20,7 @@ data class Explore(
   @SerializedName("shares_count")
   var shares: Int = 0,
   @SerializedName("comments_count")
-  val comments: Int = 0,
+  var comments: Int = 0,
   @SerializedName("is_liked")
   var isLike: Boolean = false,
   @SerializedName("store")

@@ -27,6 +27,7 @@ import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,16 +62,19 @@ class CountriesViewModel @Inject constructor(
       .launchIn(viewModelScope)
   }
 
-  fun updateAdapter(countries: List<Country>) {
-    countries.forEach { it.active = 0 }
-    countries.forEachIndexed { index, it ->
+  fun updateAdapter(countriesResponse:BaseResponse<List<Country>>) {
+    viewModelScope.launch {
+      accountRepository.saveCountries(countriesResponse)
+    }
+    countriesResponse.data.forEach { it.active = 0 }
+    countriesResponse.data.forEachIndexed { index, it ->
       if (countryId.isNotEmpty() && it.id == countryId.toInt()) {
         it.active = 1
         adapter.lastSelected = it.id
         adapter.lastPosition = index
       }
     }
-    adapter.differ.submitList(countries)
+    adapter.differ.submitList(countriesResponse.data)
     notifyPropertyChanged(BR.adapter)
   }
 

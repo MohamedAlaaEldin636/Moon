@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
   <data>
 
@@ -20,9 +21,11 @@
     android:layout_width="match_parent"
     app:width="@{itemViewModels.percentage}"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimen20"
-    android:layout_marginTop="@dimen/dimen10"
-    android:layout_marginEnd="@dimen/dimen20"
+    android:layout_marginStart="@dimen/dimen10"
+    android:layout_marginTop="@dimen/dimen6"
+    app:cardElevation="1dp"
+    app:cardCornerRadius="@dimen/dimen16"
+    android:layout_marginEnd="@dimen/dimen10"
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,10 +38,9 @@
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_store"
         style="@style/mediumFont"
+        android:layout_marginTop="@dimen/dimen10"
         android:layout_width="@dimen/dimen100"
         android:layout_height="@dimen/dimen100"
-        android:drawableStart="@drawable/ic_search"
-        android:drawableEnd="@drawable/ic_filter"
         android:focusable="false"
         android:scaleType="fitXY"
         android:hint="@string/search"
@@ -57,7 +59,7 @@
         android:gravity="center"
         android:text="@{itemViewModels.store.name}"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size16"
+        android:textSize="@dimen/text_size14"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_store" />
@@ -72,7 +74,7 @@
         android:gravity="center"
         android:text="@{`(`+itemViewModels.store.nickname+`)`}"
         android:textColor="@color/greyText"
-        android:textSize="@dimen/text_size15"
+        android:textSize="@dimen/text_size12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_store_name" />
 
@@ -111,63 +113,68 @@
         android:text="@{`(`+itemViewModels.store.averageRate+`)`}"
         tools:text="(400)"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_size15"
+        android:textSize="@dimen/text_size12"
         app:layout_constraintStart_toEndOf="@+id/rate"
         app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname" />
 
 
 
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_store_views"
-        style="@style/mediumFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/dimen10"
-        android:layout_marginTop="@dimen/dimen2"
-        android:drawableStart="@drawable/ic_eye"
-        android:drawablePadding="@dimen/dimen5"
-        android:drawableTint="@color/greyText"
-        android:gravity="center"
-        android:paddingBottom="@dimen/dimen2"
-        android:text="@{itemViewModels.store.viewsCount}"
-        android:textColor="@color/greyText"
-        android:textSize="@dimen/text_size15"
+      <LinearLayout
+        android:id="@+id/ll_ads_view_count"
+        app:layout_constraintTop_toBottomOf="@+id/tv_store_rate_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_store_rate_text" />
-
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_store_ads"
-        style="@style/mediumFont"
-        android:layout_width="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="@dimen/dimen10"
         android:layout_marginTop="@dimen/dimen2"
-        android:drawableStart="@drawable/ic_ads"
-        android:drawablePadding="@dimen/dimen5"
-        android:drawableTint="@color/greyText"
+        android:paddingBottom="@dimen/dimen2"
+        android:gravity="center|start"
+        android:orientation="horizontal">
 
-        android:gravity="center"
-        android:text="@{itemViewModels.store.advertisementsCount}"
-        android:textColor="@color/greyText"
-        android:textSize="@dimen/text_size15"
-        app:layout_constraintStart_toEndOf="@+id/tv_store_views"
-        app:layout_constraintTop_toBottomOf="@+id/tv_store_rate_text" />
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_marginStart="@dimen/dimen10"
+          android:layout_width="@dimen/dimen16"
+          android:layout_height="@dimen/dimen16"
+          android:src="@drawable/ic_eye"
+          android:tint="@color/greyText"
+          />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_store_views"
+          style="@style/mediumFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen5"
+          android:layout_gravity="start"
+          android:text="@{itemViewModels.store.viewsCount}"
+          android:textColor="@color/greyText"
+          android:textSize="@dimen/text_size13"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tv_store_rate_text" />
 
 
 
-      <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="tv_store_views,tv_store_ads"
-        app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname"
-        tools:layout_editor_absoluteY="177dp" />
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_width="@dimen/dimen16"
+          android:layout_height="@dimen/dimen16"
+          android:src="@drawable/ic_ads"
+          android:tint="@color/greyText"
+          />
 
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/mediumFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen5"
+          android:layout_gravity="start"
+          android:text="@{itemViewModels.store.advertisementsCount+` `+@string/advertisement}"
+          android:textColor="@color/greyText"
+          android:textSize="@dimen/text_size13"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tv_store_rate_text" />
+
+      </LinearLayout>
 
       <RelativeLayout
         android:id="@+id/follow"
@@ -175,7 +182,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier4"
+        app:layout_constraintTop_toBottomOf="@+id/ll_ads_view_count"
         android:layout_marginTop="@dimen/dimen10"
         android:layout_width="0dp"
         android:padding="@dimen/dimen10"

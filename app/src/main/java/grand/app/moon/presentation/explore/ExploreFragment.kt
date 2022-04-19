@@ -13,8 +13,12 @@ import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentExploreBinding
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
+import grand.app.moon.domain.utils.SpannedGridLayoutManager
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.explore.viewmodel.ExploreViewModel
 import kotlinx.coroutines.flow.collect
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
@@ -62,6 +66,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
       val list = ArrayList(viewModel.adapter.differ.currentList)
       viewModel.lastData.list.clear()
       viewModel.lastData.list.addAll(list)
+      Collections.swap(viewModel.lastData.list, 0, it);
       navigateSafe(ExploreFragmentDirections.actionExploreFragmentToExploreListFragment(viewModel.lastData,viewModel.page))
     })
   }
@@ -69,13 +74,29 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
 
   private fun setRecyclerViewScrollListener() {
 
-    val gridLayoutManager = GridLayoutManager(context,2)
-    val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-    binding.recyclerView.layoutManager = staggeredGridLayoutManager
-//    staggeredGridLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-    binding.recyclerView.setHasFixedSize(true)
+    val manager = SpannedGridLayoutManager(
+      object : SpannedGridLayoutManager.GridSpanLookup {
+        override fun getSpanInfo(position: Int): SpannedGridLayoutManager.SpanInfo {
+          var x = 0
+          if (position % 9 == 0) {
+            x = position / 9
+          }
+
+          return when {
+            position == 1 || x % 2 == 1 || (position - 1) % 18 == 0 ->
+              SpannedGridLayoutManager.SpanInfo(2, 2)
+            else ->
+              SpannedGridLayoutManager.SpanInfo(1, 1)
+          }
+
+        }
+      },
+      3,  // number of columns
+      1f // how big is default item
+    )
+    binding.recyclerView.layoutManager = manager
     binding.recyclerView.adapter = viewModel.adapter
-//    binding.recyclerView.setItemViewCacheSize(binding.recyclerView.size)
+
 
     binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
       override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

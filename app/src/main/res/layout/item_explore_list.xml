@@ -27,6 +27,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:loadImage="@{viewModel.model.store.image}"
+      android:scaleType="centerInside"
       app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
 
@@ -80,15 +81,14 @@
     <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/shapeableImageView"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/dimen220"
-      android:scaleType="fitCenter"
+      android:layout_height="@dimen/dimen350"
+      android:scaleType="centerInside"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       android:layout_marginTop="@dimen/dimen10"
       app:layout_constraintTop_toBottomOf="@+id/barrier5"
-      app:loadImageExplore="@{viewModel.model.file}"
-      app:progressBar="@{progress}"
-      app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
+      app:loadImage="@{viewModel.model.file}"
+      app:progressBar="@{progress}" />
 
 
     <LinearLayout
@@ -163,6 +163,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_show_all_Comments"
       style="@style/mediumFont"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
@@ -175,6 +176,54 @@
       android:text="@{@string/show_all_comments(viewModel.model.comments)}"
       android:textColor="@color/colorA9A9A9"
       android:textSize="@dimen/text_size14" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_marginTop="@dimen/dimen2"
+      android:layout_marginStart="@dimen/dimen10"
+      android:layout_marginEnd="@dimen/dimen10"
+      android:onClick="@{ (v) -> viewModel.allComments(v) }"
+      android:background="@color/colorF2F2F2"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_show_all_Comments"
+      android:layout_height="wrap_content">
+
+
+      <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_user_image"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_margin="@dimen/dimen10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:loadImage="@{viewModel.user.image}"
+        android:scaleType="centerInside"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+
+
+
+      <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/appCompatEditText"
+        style="@style/mediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_marginStart="@dimen/dimen16"
+        android:imeOptions="actionSend"
+        android:onClick="@{ (v) -> viewModel.allComments(v) }"
+        android:focusable="@{!viewModel.user.name.equals(``) &amp;&amp; !viewModel.user.image.equals(``) ? true : false}"
+        android:hint="@string/add_your_comment"
+        android:padding="@dimen/dimen10"
+        android:textSize="@dimen/text_size16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_user_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.appcompat.widget.AppCompatImageView

@@ -80,7 +80,7 @@
         android:layout_width="@dimen/dimen20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_grid"
+        android:src="@drawable/ic_grid_2"
         android:visibility="@{itemViewModels.story.isFirst == true ? View.VISIBLE  : View.GONE , default = gone}"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

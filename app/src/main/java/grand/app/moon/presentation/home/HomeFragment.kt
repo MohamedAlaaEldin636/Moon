@@ -1,21 +1,8 @@
 package grand.app.moon.presentation.home
 
-import android.content.Intent
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.cometchat.pro.constants.CometChatConstants
-import com.cometchat.pro.core.AppSettings
-import com.cometchat.pro.core.CometChat
-import com.cometchat.pro.exceptions.CometChatException
-import com.cometchat.pro.models.User
-import com.cometchat.pro.uikit.ui_components.cometchat_ui.CometChatUI
-import com.cometchat.pro.uikit.ui_components.groups.admin_moderator_list.CometChatAdminModeratorListActivity
-import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMessageListActivity
-import com.cometchat.pro.uikit.ui_components.messages.threaded_message_list.CometChatThreadMessageListActivity
-import com.cometchat.pro.uikit.ui_components.users.user_details.CometChatUserDetailScreenActivity
-import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -23,14 +10,11 @@ import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.databinding.FragmentHomeBinding
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.NavHomeDirections
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
-import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.forEach
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -62,7 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             hideLoading()
             val hr = it.value.data.copy(
               categoryAds = ArrayList(it.value.data.categoryAds.map { ca ->
-                ca.copy(name = "${resources.getString(R.string.advertisement)} ${ca.name}")
+                ca.copy(name = "${resources.getString(R.string.advertisements)} ${ca.name}")
               })
             )
             hr.categoryAds.forEach {

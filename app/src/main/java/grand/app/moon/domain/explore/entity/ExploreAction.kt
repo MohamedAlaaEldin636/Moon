@@ -10,5 +10,8 @@ class ExploreAction(
   @SerializedName("type")
   @Expose
   var type: Int? = 0,
+  @SerializedName("comment")
+  @Expose
+  var comment: String? = "",
 ) {
 }

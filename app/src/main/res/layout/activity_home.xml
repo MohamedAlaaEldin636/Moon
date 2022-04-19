@@ -7,6 +7,7 @@
     <variable
       name="viewModel"
       type="grand.app.moon.presentation.home.viewModels.HomeViewModel" />
+
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +22,7 @@
       app:titleTextColor="@color/colorWhite"
       app:titleCentered="true"
       android:gravity="center"
+      app:menu="@menu/menu_navigation_view"
       android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
@@ -43,16 +45,31 @@
         android:layout_width="@dimen/dimen30"
         android:layout_height="@dimen/dimen30"
         android:layout_marginEnd="@dimen/dimen10"
+        android:onClick="@{ (v) -> viewModel.notification(v)}"
         android:src="@drawable/ic_notification"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ic_notification_filter"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_notification_filter"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:onClick="@{ (v) -> viewModel.notificationFilter(v)}"
+        android:src="@drawable/ic_filter"
+        android:tint="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_chat"
         android:layout_width="@dimen/dimen30"
         android:layout_height="@dimen/dimen30"
         android:layout_marginEnd="@dimen/dimen10"
+
         android:src="@drawable/ic_chat"
         android:onClick="@{ (v) -> viewModel.chatList(v)}"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -114,7 +131,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/guideline8"
-      app:layout_constraintGuide_percent="0.95"
+      app:layout_constraintGuide_percent="0.995"
       android:orientation="horizontal"/>
 
     <RelativeLayout
@@ -129,7 +146,7 @@
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bar"
+        android:background="@color/colorPrimary"
         app:itemIconTint="@drawable/bottom_navigation_color"
         app:itemTextColor="@drawable/bottom_navigation_color"
         app:labelVisibilityMode="labeled"
@@ -141,9 +158,10 @@
 
     <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/img_home_bottom_bar"
-      android:layout_width="@dimen/dimen80"
+      android:layout_width="@dimen/dimen90"
       app:layout_constraintBottom_toTopOf="@+id/guideline8"
-      android:layout_height="@dimen/dimen80"
+      android:layout_height="@dimen/dimen90"
+
       android:src="@drawable/ic_home_circle_active"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />

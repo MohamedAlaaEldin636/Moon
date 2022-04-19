@@ -3,8 +3,7 @@ package grand.app.moon.domain.account.repository
 import grand.app.moon.domain.account.entity.request.SendFirebaseTokenRequest
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.categories.entity.CategoryItem
-import grand.app.moon.domain.home.models.Country
-//import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -51,6 +50,10 @@ interface AccountRepository {
 
   fun saveKeyToLocal(key: String, value: String)
   fun clearUser()
+
+  fun saveSearch(search: String)
+  fun getSearches() : ArrayList<String?>?
+
 
   fun getKeyFromLocal(key: String): String
 }

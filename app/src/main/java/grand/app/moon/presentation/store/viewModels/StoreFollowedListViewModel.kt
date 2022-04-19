@@ -81,10 +81,10 @@ class StoreFollowedListViewModel @Inject constructor(
       if (page == 1) {
 //        adapter = InvoicesAdapter()
         adapter.differ.submitList(it.list)
+        notifyPropertyChanged(BR.adapter)
       } else {
         adapter.insertData(it.list)
       }
-      notifyPropertyChanged(BR.adapter)
       callingService = false
       notifyPropertyChanged(BR.callingService)
       show.set(true)

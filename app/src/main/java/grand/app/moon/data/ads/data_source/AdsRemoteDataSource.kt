@@ -24,5 +24,9 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     apiService.getAdsList(url)
   }
 
+  suspend fun getAdsSubCategory(url : String) = safeApiCall {
+    apiService.getAdsSubCategory(url)
+  }
+
 
 }
