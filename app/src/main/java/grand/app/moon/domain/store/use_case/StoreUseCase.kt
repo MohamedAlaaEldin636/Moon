@@ -1,5 +1,6 @@
 package grand.app.moon.domain.store.use_case
 
+import android.util.Log
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.entity.StoreFilterRequest
@@ -16,7 +17,9 @@ class StoreUseCase @Inject constructor(
   private val repository: StoreRepository,
 ) {
 
+  private  val TAG = "StoreUseCase"
   fun follow(followStoreRequest: FollowStoreRequest): Flow<Resource<BaseResponse<*>>> = flow {
+    Log.d(TAG, "follow: STORING")
     val result = repository.follow(followStoreRequest)
     emit(result)
   }.flowOn(Dispatchers.IO)

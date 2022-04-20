@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.ads.viewModels
 
 import android.view.View
+import androidx.navigation.findNavController
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel

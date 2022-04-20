@@ -1,4 +1,4 @@
-package grand.app.moon.domain.home.models
+package grand.app.moon.domain.home.models.review
 
 import androidx.annotation.Keep
 import grand.app.moon.domain.auth.entity.model.User

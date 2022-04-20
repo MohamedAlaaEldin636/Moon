@@ -113,7 +113,7 @@
         android:layout_height="@dimen/dimen30"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/dimen20"
-        android:onClick="@{(v) -> viewModel.comments(v)}"
+        android:onClick="@{(v) -> viewModel.allComments(v)}"
         android:src="@drawable/ic_message" />
 
       <androidx.appcompat.widget.AppCompatImageView
@@ -171,7 +171,7 @@
       android:gravity="center"
       android:layout_margin="@dimen/dimen10"
       app:layout_constraintStart_toStartOf="parent"
-      android:onClick="@{ (v) -> viewModel.comments(v)}"
+      android:onClick="@{ (v) -> viewModel.allComments(v)}"
       app:layout_constraintTop_toBottomOf="@+id/ll_item_explore_texts"
       android:text="@{@string/show_all_comments(viewModel.model.comments)}"
       android:textColor="@color/colorA9A9A9"
@@ -214,7 +214,7 @@
         android:layout_marginStart="@dimen/dimen16"
         android:imeOptions="actionSend"
         android:onClick="@{ (v) -> viewModel.allComments(v) }"
-        android:focusable="@{!viewModel.user.name.equals(``) &amp;&amp; !viewModel.user.image.equals(``) ? true : false}"
+        android:focusable="false"
         android:hint="@string/add_your_comment"
         android:padding="@dimen/dimen10"
         android:textSize="@dimen/text_size16"

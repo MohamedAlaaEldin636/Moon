@@ -63,13 +63,8 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
 
     viewModel.clickEvent.observe(this, {
       when (it) {
-        Constants.GRID_1 -> {
-          Log.d(TAG, "setupObservers: 1")
-          setSpan(1)
-        }
-        Constants.GRID_2 -> {
-          Log.d(TAG, "setupObservers: 2")
-          setSpan(2)
+        Constants.GRID_1 , Constants.GRID_2 -> {
+          viewModel.adapter.notifyDataSetChanged()
         }
       }
     })
@@ -96,16 +91,18 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
   }
 
   fun setSpan(counter: Int){
+    Log.d(TAG, "setSpan: $counter")
     val gridLayoutManager = GridLayoutManager(context,counter,GridLayoutManager.VERTICAL,false)
-    binding.recyclerView.layoutManager = gridLayoutManager
     gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
       override fun getSpanSize(position: Int): Int {
         return when(viewModel.adapter.grid){
-          Constants.GRID_1 -> 1
-          else -> 2
+          Constants.GRID_1 -> 2
+          else -> 1
         }
       }
     }
+//    Log.d(TAG, "setSpan: ${gridLayoutManager.spanCount}")
+    binding.recyclerView.layoutManager = gridLayoutManager
     binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
       override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)
@@ -114,6 +111,7 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
         }
       }
     })
+    binding.recyclerView.adapter = viewModel.adapter
   }
 
   private fun setRecyclerViewScrollListener() {

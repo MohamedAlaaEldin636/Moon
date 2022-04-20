@@ -16,7 +16,10 @@ import grand.app.moon.presentation.explore.ExploreListFragmentDirections
 
 class ItemExploreViewModel constructor(val model: Explore, val position: Int,val user : User) : BaseViewModel() {
 
-  private val TAG = "ItemExploreViewModel"
+  private  val TAG = "ItemExploreViewModel"
+  init {
+    Log.d(TAG, ": ${user.image}")
+  }
   val submitEventEvent = MutableLiveData<String>()
   fun follow(v: View) {
     submitEventEvent.value = Constants.FOLLOW
@@ -25,17 +28,6 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int,val
   fun fav(v: View) {
     Log.d(TAG, "fav: ")
     submitEventEvent.value = Constants.FAVOURITE
-  }
-
-  fun comments(v: View) {
-    v.findNavController().navigate(
-      R.id.commentsListFragment,
-      bundleOf(
-        "explore_id" to model.id,
-        "total_comments" to model.comments,
-      ), Constants.NAVIGATION_OPTIONS
-    )
-    submitEventEvent.value = Constants.COMMENTS
   }
 
   fun likes(v: View) {
@@ -56,10 +48,15 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int,val
   }
 
   fun allComments(v: View){
+    Log.d(TAG, "allComments: ${user.name}")
+    Log.d(TAG, "allComments: ${user.image}")
     if(user.id == 0) v.context.startActivity(Intent(v.context,AuthActivity::class.java))
     else if (user.image.isEmpty() || user.name.isEmpty()) {
       showInfo(v.context,v.context.resources.getString(R.string.please_complete_your_profile))
       v.findNavController().navigate(ExploreListFragmentDirections.actionExploreListFragmentToProfileFragment2())
+    }else {
+      submitEventEvent.value = Constants.COMMENTS
+      v.findNavController().navigate(ExploreListFragmentDirections.actionExploreListFragmentToCommentsListFragment(model.id,model.comments))
     }
   }
 }

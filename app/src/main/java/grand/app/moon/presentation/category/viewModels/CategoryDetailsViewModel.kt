@@ -49,19 +49,25 @@ class CategoryDetailsViewModel @Inject constructor(
 
   var isLoggin = userLocalUseCase.isLoggin()
 
+  init {
+    storeAdapter.useCase = storeUseCase
+    storeAdapter.isLogin = isLoggin
+  }
+
   fun initAllServices() {
     storeAdapter.percentage = 48
     categoriesAdapter.percentage = 33
     getCategoryDetails()
   }
-  val categoryItem = CategoryItem(name = "",subCategories = arrayListOf(),total = 0)
+
+  val categoryItem = CategoryItem(name = "", subCategories = arrayListOf(), total = 0)
 
   private fun getCategories() {
     viewModelScope.launch {
       accountRepository.getCategories().collect {
         it.data.forEach {
           if (it.id == categoryId) {
-            it.subCategories?.add(0,categoryItem)
+            it.subCategories?.add(0, categoryItem)
             categoriesAdapter.differ.submitList(it.subCategories)
           }
         }

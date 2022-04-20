@@ -1,6 +1,7 @@
 package grand.app.moon.core.di.module
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -12,11 +13,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import grand.app.moon.core.MyApplication
 import grand.app.moon.presentation.base.utils.Constants
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,15 +31,23 @@ object RetrofitModule {
   const val REQUEST_TIME_OUT: Long = 60
 
   private const val TAG = "RetrofitModule"
+
+//  @Provides
+//  fun provideAppPreference(): SharedPreferences {
+//    return MyApplication.instance.getSharedPreferences(
+//      AppPreferences.APP_PREFERENCES_NAME,
+//      Context.MODE_PRIVATE
+//    )
+//  }
+
   @Provides
   @Singleton
   fun provideHeadersInterceptor(appPreferences: AppPreferences) = run {
-    var countryId = appPreferences.getLocal(Constants.COUNTRY_ID)
-    if(countryId.isEmpty()) countryId = "1"
-    var userToken = appPreferences.getLocal(Constants.TOKEN)
-    var token2 = appPreferences.getUser().token
-    Log.d(TAG, "provideHeadersInterceptor: $userToken")
-    Log.d(TAG, "provideHeadersInterceptor___: $token2")
+
+//    var userToken = appPreferences.getLocal(Constants.TOKEN)
+//    var token2 = appPreferences.getUser().token
+//    Log.d(TAG, "provideHeadersInterceptor: $userToken")
+//    Log.d(TAG, "provideHeadersInterceptor___: $token2")
 //    GlobalScope.launch {
 //      withContext(Dispatchers.IO) {
 //        awaitAll(
@@ -55,17 +64,19 @@ object RetrofitModule {
 //      }
 //    }
 
-    appPreferences.getUserToken()
+
+    Log.d(TAG, "intercept-userToken-here: ${appPreferences.getUserToken()}")
+
     Interceptor { chain ->
-      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken :,token:$token2:  $countryId")
+//      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken :,token:$token2:  $countryId")
       chain.proceed(
         chain.request().newBuilder()
-          .addHeader("Authorization", "Bearer $userToken")
-          .addHeader(
-            "countryId", countryId
-          )
+//          .addHeader("Authorization", "Bearer $userToken")
+//          .addHeader(
+//            "countryId", countryId
+//          )
           .addHeader("Accept", "application/json")
-          .addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
+//          .addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
           .build()
       )
     }
@@ -80,10 +91,36 @@ object RetrofitModule {
   }
 
   @Provides
+  fun provideRequestInterceptor(prefs: AppPreferences) : RequestInterceptor {
+    return RequestInterceptor(prefs)
+  }
+
+
+  class RequestInterceptor constructor(private val pref: AppPreferences) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+      var userToken = pref.getLocal(Constants.TOKEN)
+      val token = pref.getUser().token
+      var countryId = pref.getLocal(Constants.COUNTRY_ID)
+      if(countryId.isEmpty()) countryId = "1"
+
+      Log.d(TAG, "intercept-userToken: $userToken")
+      Log.d(TAG, "intercept-token: $token")
+      val newRequest = chain.request().newBuilder()
+        .addHeader("Authorization", "Bearer $userToken")
+        .addHeader("countryId", countryId)
+        .addHeader("language", pref.getLocal(Constants.LANGUAGE))
+
+      .build()
+      return chain.proceed(newRequest)
+    }
+  }
+
+  @Provides
   @Singleton
   fun provideOkHttpClient(
     headersInterceptor: Interceptor,
     logging: HttpLoggingInterceptor,
+    requestInterceptor: RequestInterceptor,
     @ApplicationContext context: Context
   ): OkHttpClient {
     return if (BuildConfig.DEBUG) {
@@ -93,12 +130,14 @@ object RetrofitModule {
         .addInterceptor(headersInterceptor)
         .addNetworkInterceptor(logging)
         .addInterceptor(ChuckInterceptor(context))
+        .addInterceptor(requestInterceptor)
         .build()
     } else {
       OkHttpClient.Builder()
         .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .addInterceptor(headersInterceptor)
+        .addInterceptor(requestInterceptor)
         .build()
     }
   }

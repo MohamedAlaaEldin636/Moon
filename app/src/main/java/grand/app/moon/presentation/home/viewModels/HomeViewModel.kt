@@ -67,6 +67,8 @@ class HomeViewModel @Inject constructor(
 
   fun initAllServices() {
     storeAdapter.percentage = 48
+    storeAdapter.isLogin = isLoggin
+    storeAdapter.useCase = storeUseCase
     categoriesAdapter.percentage = 33
     getCategories()
     homeApi()
@@ -83,14 +85,7 @@ class HomeViewModel @Inject constructor(
   }
 
   fun stores(v: View) {
-    v.findNavController().navigate(
-      R.id.storeListFragment,
-      bundleOf(
-        Constants.TabBarText to v.resources.getString(R.string.top_stores_rated)
-      ), Constants.NAVIGATION_OPTIONS
-    )
-
-//    v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToStoreListFragment())
+    v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToStoreListFragment(v.resources.getString(R.string.top_stores_rated)))
   }
 
   private fun homeApi() {

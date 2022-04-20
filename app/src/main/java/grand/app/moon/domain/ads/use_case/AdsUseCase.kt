@@ -6,6 +6,8 @@ import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.home.models.review.ReviewRequest
+import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.home.repository.HomeRepository
 import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
@@ -47,6 +49,18 @@ class AdsUseCase @Inject constructor(
   fun getAdsSubCategory(url : String): Flow<Resource<BaseResponse<SubCategoryResponse>>> = flow {
     emit(Resource.Loading)
     val result = repo.getAdsSubCategory(url)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun getReviews(page: Int , advertisement: Int): Flow<Resource<BaseResponse<ReviewsPaginateData>>> = flow {
+    emit(Resource.Loading)
+    val result = repo.getReviews(page,advertisement)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun addReview(request: ReviewRequest): Flow<Resource<BaseResponse<*>>> = flow {
+    emit(Resource.Loading)
+    val result = repo.addReview(request)
     emit(result)
   }.flowOn(Dispatchers.IO)
 }

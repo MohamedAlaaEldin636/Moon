@@ -1,5 +1,6 @@
 package grand.app.moon.domain.explore.use_case
 
+import grand.app.moon.domain.comment.entity.Comment
 import grand.app.moon.domain.comment.entity.CommentListPaginateData
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
@@ -32,6 +33,17 @@ class ExploreUseCase @Inject constructor(
   fun getComments(id: Int,page: Int): Flow<Resource<BaseResponse<CommentListPaginateData>>> = flow {
     emit(Resource.Loading)
     val result = repository.getComments(id,page)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun setComment(exploreAction: ExploreAction,withLoader : Boolean = false): Flow<Resource<BaseResponse<Comment>>> = flow {
+    if(withLoader) emit(Resource.Loading)
+    val result = repository.setComment(exploreAction)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun deleteComment(exploreAction: Int): Flow<Resource<BaseResponse<*>>> = flow {
+    val result = repository.deleteComment(exploreAction)
     emit(result)
   }.flowOn(Dispatchers.IO)
 

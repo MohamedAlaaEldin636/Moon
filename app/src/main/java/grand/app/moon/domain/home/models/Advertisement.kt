@@ -3,6 +3,7 @@ package grand.app.moon.domain.home.models
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import grand.app.moon.domain.home.models.review.Reviews
 import java.io.Serializable
 
 @Keep

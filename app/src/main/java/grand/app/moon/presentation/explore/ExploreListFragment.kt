@@ -1,5 +1,7 @@
 package grand.app.moon.presentation.explore
 
+import android.os.Bundle
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -28,6 +30,16 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
     binding.viewModel = viewModel
     viewModel.page = exploreListFragmentArgs.page
     viewModel.setData(exploreListFragmentArgs.data)
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+      // We use a String here, but any type that can be put in a Bundle is supported
+      val result = bundle.getInt(Constants.TOTAL)
+      viewModel.adapter.updateTotalComments(result)
+      // Do something with the result
+    }
   }
 
   override

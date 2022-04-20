@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/nav_ads"
+  app:startDestination="@id/adsDetailsFragment">
+
+  <fragment
+    android:id="@+id/adsDetailsFragment"
+    android:name="grand.app.moon.presentation.ads.AdsDetailsFragment"
+    android:label="">
+    <argument
+      android:name="id"
+      app:argType="integer" />
+    <argument
+      android:name="type"
+      app:argType="integer" />
+    <action
+      android:id="@+id/action_adsDetailsFragment_to_reviewsFragment"
+      app:destination="@id/reviewsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+  </fragment>
+  <fragment
+    android:id="@+id/reviewsFragment"
+    android:name="grand.app.moon.presentation.reviews.ReviewsFragment"
+    android:label="@string/customers_reviews" >
+    <argument
+      android:name="advertisement_id"
+      app:argType="integer" />
+  </fragment>
+  <dialog
+    android:id="@+id/reviewDialog"
+    android:name="grand.app.moon.presentation.reviews.ReviewDialog"
+    android:label="ReviewDialog" >
+    <argument
+      android:name="advertisement_id"
+      app:argType="integer" />
+  </dialog>
+
+
+</navigation>

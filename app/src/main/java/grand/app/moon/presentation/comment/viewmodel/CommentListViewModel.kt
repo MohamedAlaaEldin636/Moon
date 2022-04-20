@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.comment.entity.Comment
 import grand.app.moon.domain.comment.entity.CommentListPaginateData
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
@@ -55,7 +56,7 @@ class CommentListViewModel @Inject constructor(
 
 
   val _responseSend =
-    MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
+    MutableStateFlow<Resource<BaseResponse<Comment>>>(Resource.Default)
 
 
   init {
@@ -103,9 +104,9 @@ class CommentListViewModel @Inject constructor(
       if(user.name.isEmpty() || user.email.isEmpty() || user.image.isEmpty()){
         showInfo(v.context,v.resources.getString(R.string.please_complete_your_profile))
       }else {
-        exploreAction.type = 2
+        exploreAction.type = null
         exploreAction.exploreId = exploreId
-        useCase.setExploreAction(exploreAction, true).onEach {
+        useCase.setComment(exploreAction, true).onEach {
           _responseSend.value = it
         }.launchIn(viewModelScope)
       }
@@ -114,6 +115,12 @@ class CommentListViewModel @Inject constructor(
   override fun onCleared() {
     job.cancel()
     super.onCleared()
+  }
+
+  fun deleteComment(id: Int) {
+    useCase.deleteComment(id).onEach {
+//      _responseSend.value = it
+    }.launchIn(viewModelScope)
   }
 
 }

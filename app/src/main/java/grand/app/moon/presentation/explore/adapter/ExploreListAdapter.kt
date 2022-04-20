@@ -56,17 +56,17 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
       clickEvent.value = it
     }
 
-    holder.itemLayoutBinding.appCompatEditText.setOnEditorActionListener(TextView.OnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
-      if (i == EditorInfo.IME_ACTION_SEND) {
-        exploreAction.exploreId = data.id
-        exploreAction.comment = holder.itemLayoutBinding.appCompatEditText.text.toString()
-        exploreUseCase.setExploreAction(exploreAction)
-        differ.currentList[position].comments++
-        notifyItemChanged(position)
-        return@OnEditorActionListener true
-      }
-      false
-    })
+//    holder.itemLayoutBinding.appCompatEditText.setOnEditorActionListener(TextView.OnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
+//      if (i == EditorInfo.IME_ACTION_SEND) {
+//        exploreAction.exploreId = data.id
+//        exploreAction.comment = holder.itemLayoutBinding.appCompatEditText.text.toString()
+//        exploreUseCase.setExploreAction(exploreAction)
+//        differ.currentList[position].comments++
+//        notifyItemChanged(position)
+//        return@OnEditorActionListener true
+//      }
+//      false
+//    })
 
 //    holder.itemLayoutBinding.lifecycleOwner?.let {
 //      itemViewModel.submitEvent.observe(holder.itemLayoutBinding.root, {
@@ -108,6 +108,11 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
   override fun onViewDetachedFromWindow(holder: ViewHolder) {
     super.onViewDetachedFromWindow(holder)
     holder.unBind()
+  }
+
+  fun updateTotalComments(total: Int) {
+    differ.currentList[position].comments = total
+    notifyItemChanged(position)
   }
 
   inner class ViewHolder(itemView: View) :

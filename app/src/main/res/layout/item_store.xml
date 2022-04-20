@@ -20,6 +20,7 @@
     android:id="@+id/item_store_container"
     android:layout_width="match_parent"
     app:width="@{itemViewModels.percentage}"
+    android:onClick="@{ (v) -> itemViewModels.storeDetails(v) }"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dimen10"
     android:layout_marginTop="@dimen/dimen6"
@@ -184,6 +185,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_ads_view_count"
         android:layout_marginTop="@dimen/dimen10"
+        android:onClick="@{ (v) -> itemViewModels.follow(v) }"
         android:layout_width="0dp"
         android:padding="@dimen/dimen10"
         android:layout_height="wrap_content">

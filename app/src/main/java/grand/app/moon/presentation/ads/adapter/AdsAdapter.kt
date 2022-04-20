@@ -14,6 +14,7 @@ import grand.app.moon.R
 import grand.app.moon.databinding.ItemAdsBinding
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.presentation.ads.viewModels.ItemAdsViewModel
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 
 class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
@@ -59,13 +60,13 @@ class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
 
     holder.itemLayoutBinding.itemAdsContainer.setOnClickListener {
       holder.itemLayoutBinding.root.findNavController().navigate(
-        R.id.adsDetailsFragment, bundleOf(
+        R.id.nav_ads, bundleOf(
           "id" to data.id,
           "type" to type
         )
       )
     }
-
+//, Constants.NAVIGATION_OPTIONS
 //    //take-care
 //    holder.itemLayoutBinding.icFav.setOnClickListener {
 //      data.isFavorite = data.isFavorite != true

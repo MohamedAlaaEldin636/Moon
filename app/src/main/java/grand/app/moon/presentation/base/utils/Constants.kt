@@ -45,6 +45,7 @@ object Constants {
   const val IMAGE: String = "image"
   const val COUNTRY_ID = "COUNTRY_ID"
   const val INTRO: String = "INTRO"
+  const val TOTAL: String = "TOTAL"
 
   const val TOKEN = "TOKEN"
   const val SPLASH: String = "splash"

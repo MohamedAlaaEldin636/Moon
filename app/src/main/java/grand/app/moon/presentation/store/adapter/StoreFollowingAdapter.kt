@@ -36,7 +36,7 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemStoreViewModel(data, 100)
+    val itemViewModel = ItemStoreViewModel(data, 100,null,false)
     holder.itemLayoutBinding.btnFollowStore.setOnClickListener {
       this.position = position
       clickEvent.value = position
@@ -56,7 +56,10 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
   }
 
   fun removeItem(){
-    differ.currentList.removeAt(position)
+//    Log.d(TAG, "removeItem: $position")
+    val list = ArrayList(differ.currentList)
+    list.removeAt(position)
+    differ.submitList(list)
     notifyItemRemoved(position)
   }
 

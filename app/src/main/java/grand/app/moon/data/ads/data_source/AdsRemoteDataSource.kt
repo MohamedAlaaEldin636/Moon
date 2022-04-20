@@ -3,6 +3,7 @@ package grand.app.moon.data.ads.data_source
 import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.auth.entity.request.*
+import grand.app.moon.domain.home.models.review.ReviewRequest
 import javax.inject.Inject
 
 class AdsRemoteDataSource @Inject constructor(private val apiService: AdsServices) :
@@ -27,6 +28,17 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
   suspend fun getAdsSubCategory(url : String) = safeApiCall {
     apiService.getAdsSubCategory(url)
   }
+
+
+  suspend fun getReviews(page:Int,advertisement:Int) = safeApiCall {
+    apiService.getReviews(page,advertisement)
+  }
+
+  suspend fun addReview(request: ReviewRequest) = safeApiCall {
+    apiService.addReview(request)
+  }
+
+
 
 
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="app.grand.tafwak.presentation.reviews.viewModels.ReviewsViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/corner_white">
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+      android:id="@+id/dialog_review_rate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dimen12"
+      android:numStars="5"
+      android:onRatingChanged="@{viewModel::onRateChange}"
+      android:progressTint="@color/colorPrimaryDark"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+      android:id="@+id/review_dialog_comment"
+      android:layout_width="0dp"
+      android:layout_height="@dimen/dimen70"
+      android:layout_margin="@dimen/dimen8"
+      android:background="@drawable/corner_gray_strock"
+      android:gravity="top"
+      android:hint="@string/add_description_for_rate"
+      android:padding="@dimen/dimen8"
+      android:text="@={viewModel.request.review}"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/dialog_review_rate" />
+
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/btn_rate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_margin="@dimen/dimen8"
+      android:gravity="center"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:paddingStart="@dimen/dimen50"
+      android:paddingEnd="@dimen/dimen50"
+      android:onClick="@{()->viewModel.sendRate()}"
+      app:layout_constraintTop_toBottomOf="@+id/review_dialog_comment"
+      android:text="@string/add_rate"
+      android:textSize="@dimen/text_size16"
+      android:textColor="@color/colorWhite"
+      app:backgroundTint="@color/colorPrimary" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+      android:id="@+id/progress"
+      style="Widget.MaterialComponents.LinearProgressIndicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:indeterminate="true"
+      android:layout_marginTop="@dimen/dimen8"
+      android:visibility="gone"
+      app:trackColor="@color/colorPrimaryDark"
+      app:layout_constraintStart_toStartOf="@id/btn_rate"
+      app:layout_constraintEnd_toEndOf="@id/btn_rate"
+      app:layout_constraintTop_toBottomOf="@+id/review_dialog_comment"
+      app:trackThickness="@dimen/dimen4" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

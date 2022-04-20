@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.store.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,11 +18,17 @@ import grand.app.moon.databinding.ItemStoreBinding
 import grand.app.moon.databinding.ItemStoreLinearBinding
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.domain.store.entity.FollowStoreRequest
+import grand.app.moon.domain.store.use_case.StoreUseCase
+import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
+import kotlinx.coroutines.flow.collect
 
 class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   lateinit var context: Context
+  var isLogin = false
+  lateinit var useCase : StoreUseCase
   var submitEvent: MutableLiveData<String> = MutableLiveData()
   var percentage = 100
   var position = 0
@@ -67,51 +74,16 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
 
   private val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    Log.d(TAG, "onBindViewHolder: $position")
+//    Log.d(TAG, "onBindViewHolder: $position")
     val data = differ.currentList[position]
-    val itemViewModel = ItemStoreViewModel(data, percentage)
+    val itemViewModel = ItemStoreViewModel(data, percentage,useCase,isLogin)
     holder.setViewModel(itemViewModel)
-    when (grid) {
-      Constants.GRID_1 -> {
-        holder.itemLayoutLinearBinding.itemStoreContainer.setOnClickListener {
-          Log.d(TAG, "onBindViewHolder: HAY HERE")
-
-          holder.itemLayoutLinearBinding.root.findNavController().navigate(
-            R.id.nav_store,
-            bundleOf(
-              "id" to data.id
-            ), Constants.NAVIGATION_OPTIONS
-          )
-
-        }
-        holder.itemLayoutLinearBinding.follow.setOnClickListener {
-          Log.d(TAG, "onBindViewHolder: HAY THERE")
-          data.isFollowing = data.isFollowing != true
-          this.position = position
-          submitEvent.value = Constants.FOLLOW
-          notifyItemChanged(position)
-        }
-      }
-      else -> {
-        holder.itemLayoutBinding.itemStoreContainer.setOnClickListener {
-          Log.d(TAG, "onBindViewHolder: HAY HERE")
-
-          holder.itemLayoutBinding.root.findNavController().navigate(
-            R.id.nav_store,
-            bundleOf(
-              "id" to data.id
-            ), Constants.NAVIGATION_OPTIONS
-          )
-
-        }
-        holder.itemLayoutBinding.follow.setOnClickListener {
-          Log.d(TAG, "onBindViewHolder: HAY THERE")
-          data.isFollowing = data.isFollowing != true
-          this.position = position
-          submitEvent.value = Constants.FOLLOW
-          notifyItemChanged(position)
-        }
-      }
+    itemViewModel.submitEvent.observeForever{
+//          Log.d(TAG, "onBindViewHolder: HAY THERE")
+      data.isFollowing = data.isFollowing != true
+      this.position = position
+      //            submitEvent.value = Constants.FOLLOW
+      notifyItemChanged(position)
     }
     holder.setViewModel(itemViewModel)
 
@@ -179,7 +151,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
 
     fun setViewModel(itemViewModel: ItemStoreViewModel) {
       if (differ.currentList.isNotEmpty() && layoutPosition != -1) {
-        Log.d(TAG, "setViewModel: YEPR")
+//        Log.d(TAG, "setViewModel: YEPR")
         when (grid) {
           Constants.GRID_1 -> {
             if (!this::itemLayoutLinearBinding.isInitialized)

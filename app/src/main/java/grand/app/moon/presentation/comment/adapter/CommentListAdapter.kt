@@ -20,7 +20,7 @@ import grand.app.moon.presentation.comment.viewmodel.ItemCommentViewModel
 import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
 
 class CommentListAdapter : RecyclerView.Adapter<CommentListAdapter.ViewHolder>() {
-  var clickEvent: MutableLiveData<String> = MutableLiveData()
+  var clickEvent: MutableLiveData<Int> = MutableLiveData()
   var position = -1
   private val differCallback = object : DiffUtil.ItemCallback<Comment>() {
     override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean {
@@ -45,8 +45,11 @@ class CommentListAdapter : RecyclerView.Adapter<CommentListAdapter.ViewHolder>()
     val itemViewModel = ItemCommentViewModel(data)
     holder.itemLayoutBinding.appCompatImageView.setOnClickListener {
 //      clickEvent.value = Constants.DELETE
-      differ.currentList.removeAt(position)
-      notifyItemChanged(position)
+      clickEvent.value = data.id
+      val list = ArrayList(differ.currentList)
+      list.removeAt(position)
+      differ.submitList(list)
+      notifyItemRemoved(position)
     }
 
 

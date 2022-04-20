@@ -1,5 +1,6 @@
 package grand.app.moon.data.explorer.data_source
 
+import grand.app.moon.domain.comment.entity.Comment
 import grand.app.moon.domain.comment.entity.CommentListPaginateData
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
@@ -11,11 +12,19 @@ interface ExploreServices {
   @GET("v1/explores")
   suspend fun explores(@Query("page") page : Int): BaseResponse<ExploreListPaginateData>
 
-  @GET("v1/explores/{id}")
+  @GET("v1/explores/{id}/comments")
   suspend fun getComments(@Path("id") id : Int,@Query("page") page : Int): BaseResponse<CommentListPaginateData>
 
   @POST("v1/explores")
   suspend fun setExploreAction(@Body page : ExploreAction): BaseResponse<*>
+
+
+  @POST("v1/explores/comments")
+  suspend fun setComment(@Body page : ExploreAction): BaseResponse<Comment>
+
+
+  @DELETE("v1/explores/comments/{id}")
+  suspend fun deleteComment(@Query("id") id: Int): BaseResponse<*>
 
 
   @GET("v1/users/{id}") //<--need api here osama

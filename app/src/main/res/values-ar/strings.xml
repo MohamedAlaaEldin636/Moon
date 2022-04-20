@@ -141,4 +141,10 @@
   <string name="add_store_now">أضف متجر الان</string>
     <string name="filter_by_categories">تصفية حسب الاقسام</string>
   <string name="filter_search">فلتر البحث</string>
+    <string name="there_are_no_customers_reviews">لا توجد آراء العملاء</string>
+  <string name="customers_reviews">إراء العملاء</string>
+  <string name="add_description_for_rate">أضف وصف للتقيم</string>
+  <string name="add_rate">إضافة التقيم</string>
+  <string name="add_review">أضف تقييم</string>
+
 </resources>

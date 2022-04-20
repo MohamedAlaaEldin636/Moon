@@ -16,29 +16,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--      android:id="@+id/rc_suggested_teachers"-->
-<!--      android:layout_width="match_parent"-->
-<!--      android:layout_height="match_parent"-->
-<!--      android:layout_margin="@dimen/dimen10"-->
-<!--      app:adapter="@{viewModel.reviewsAdapter}"-->
-<!--      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--      app:orientation="@{`1`}"-->
-<!--      app:span="@{`1`}"-->
-<!--      tools:listitem="@layout/item_review" />-->
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rc_suggested_teachers"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="@dimen/dimen10"
+      app:adapter="@{viewModel.adapter}"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:orientation="@{`1`}"
+      app:span="@{`1`}"
+      tools:listitem="@layout/item_review" />
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:layout_gravity="bottom|end"-->
-<!--      android:layout_margin="@dimen/dimen16"-->
-<!--      android:contentDescription="@string/app_name"-->
-<!--      android:onClick="@{()->viewModel.clickEvent(Constants.REVIEW_DIALOG)}"-->
-<!--      app:backgroundTint="@color/colorPrimaryDark"-->
-<!--      app:fabSize="auto"-->
-<!--      app:rippleColor="@color/darkGray"-->
-<!--      app:srcCompat="@drawable/ic_add"-->
-<!--      app:tint="@color/white" />-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="@dimen/dimen16"
+      android:contentDescription="@string/app_name"
+      android:onClick="@{()->viewModel.clickEvent(Constants.REVIEW_DIALOG)}"
+      app:backgroundTint="@color/colorAccent"
+      app:fabSize="auto"
+      app:rippleColor="#EE9C3B"
+      app:srcCompat="@drawable/ic_add"
+      app:tint="@color/white" />
   </FrameLayout>
 
 </layout>

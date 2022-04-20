@@ -17,6 +17,15 @@ class ExploreRemoteDataSource @Inject constructor(private val apiService: Explor
     apiService.setExploreAction(page)
   }
 
+  suspend fun setComment(page: ExploreAction) = safeApiCall {
+    apiService.setComment(page)
+  }
+
+  suspend fun deleteComment(page: Int) = safeApiCall {
+    apiService.deleteComment(page)
+  }
+
+
   suspend fun getComments(id: Int,page: Int) = safeApiCall {
     apiService.getComments(id,page)
   }

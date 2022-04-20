@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.grand.tafwak.presentation.reviews.viewModels.ItemReviewViewModel
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemReviewBinding
-import grand.app.moon.domain.home.models.Reviews
+import grand.app.moon.domain.home.models.review.Reviews
 
 class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ViewHolder>() {
   private val differCallback = object : DiffUtil.ItemCallback<Reviews>() {

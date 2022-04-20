@@ -63,10 +63,13 @@ class StoreListViewModel @Inject constructor(
   val response = _responseService
 
   init {
+    adapter.isLogin = isLoggin
+    adapter.useCase = storeUseCase
 
   }
 
   fun changeGrid(isGrid2: Boolean) {
+    Log.d(TAG, "changeGrid: ${isGrid2}")
     this.isGrid2.set(isGrid2)
     if (this.isGrid2.get()) {
       adapter.grid = Constants.GRID_2

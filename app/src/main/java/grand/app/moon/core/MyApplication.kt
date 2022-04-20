@@ -36,6 +36,7 @@ class MyApplication : LocaleAwareApplication() {
     initChat()
     updateAndroidSecurityProvider()
     initStoryViewer()
+    instance = this
 
   }
 
@@ -50,6 +51,7 @@ class MyApplication : LocaleAwareApplication() {
 
   companion object {
     var simpleCache: SimpleCache? = null
+      lateinit var instance : MyApplication
   }
 
   private fun initChat() {

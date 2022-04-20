@@ -149,5 +149,10 @@
     <string name="city">المدينة</string>
   <string name="filter_by_categories">تصفية حسب الاقسام</string>
   <string name="filter_search">فلتر البحث</string>
+    <string name="there_are_no_customers_reviews">"There are no customer reviews "</string>
+  <string name="customers_reviews">إراء العملاء</string>
+  <string name="add_description_for_rate">أضف وصف للتقيم</string>
+  <string name="add_rate">إضافة التقيم</string>
+  <string name="add_review">Add Review</string>
 
 </resources>

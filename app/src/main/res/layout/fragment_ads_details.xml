@@ -393,8 +393,11 @@
                   style="@style/regularFont"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_margin="@dimen/dimen5"
-                  android:text="@string/ads_owner"
+                  android:layout_marginStart="@dimen/dimen5"
+                  android:layout_marginTop="@dimen/dimen5"
+                  android:layout_marginEnd="@dimen/dimen5"
+                  android:layout_marginBottom="@dimen/dimen5"
+                  android:text="@{viewModel.advertisement.store.name}"
                   android:textColor="@color/colorBlack"
                   android:textSize="@dimen/text_size18"
                   android:textStyle="bold" />
@@ -562,7 +565,8 @@
                   android:drawableEnd="@drawable/ic_more_sec"
                   android:drawableTint="@color/colorAccent"
                   android:gravity="center"
-                  android:text="@string/show_all"
+                  android:text="@{viewModel.advertisement.reviews.size() > 0 ? @string/show_all : @string/add_review}"
+                  android:onClick="@{ (v) -> viewModel.showAllReviews(v)}"
                   android:textAppearance="@style/TextAppearance.AppCompat.Small"
                   android:textColor="@color/colorPrimary"
                   app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"
@@ -584,6 +588,13 @@
 
               </androidx.constraintlayout.widget.ConstraintLayout>
 
+              <androidx.appcompat.widget.AppCompatTextView
+                android:layout_marginTop="@dimen/dimen8"
+                android:visibility="@{viewModel.advertisement.reviews.size() == 0 ? View.VISIBLE : View.GONE}"
+                android:text="@string/there_are_no_customers_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             </LinearLayout>
 
           </com.google.android.material.card.MaterialCardView>
@@ -596,9 +607,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dimen10"
             android:background="@drawable/corner_silver_strock"
-            android:drawableEnd="@drawable/ic_more"
             android:gravity="start"
             android:padding="@dimen/dimen6"
+            android:drawableTint="@color/gray"
+            android:drawableEnd="@drawable/ic_more_sec"
             android:text="@string/report_on_issue"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/colorPrimary" />

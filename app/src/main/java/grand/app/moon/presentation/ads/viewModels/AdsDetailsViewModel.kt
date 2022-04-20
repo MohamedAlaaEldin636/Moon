@@ -20,6 +20,7 @@ import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.store.use_case.StoreUseCase
+import grand.app.moon.presentation.ads.AdsDetailsFragmentDirections
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.ads.adapter.PropertyAdapter
 import grand.app.moon.presentation.base.utils.Constants
@@ -130,6 +131,13 @@ class AdsDetailsViewModel @Inject constructor(
     propertiesAdapter.differ.submitList(advertisement.get()?.properties)
     reviewsAdapter.differ.submitList(advertisement.get()?.reviews)
     show.set(true)
+  }
+
+  fun showAllReviews(v: View){
+    if(isLoggin){
+      v.findNavController().navigate(AdsDetailsFragmentDirections.actionAdsDetailsFragmentToReviewsFragment(advertisement.get()!!.id))
+    }else
+      clickEvent.value = Constants.LOGIN_REQUIRED
   }
 
   private val TAG = "AdsDetailsViewModel"

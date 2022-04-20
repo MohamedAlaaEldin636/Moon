@@ -1,5 +1,7 @@
 package grand.app.moon.presentation.comment
 
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -71,8 +73,9 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            val comment = it.value.data as Comment
+            val comment = it.value.data
             viewModel.adapter.add(comment)
+            viewModel.total.set(viewModel.total.get()?.toInt()?.plus(1).toString())
           }
           is Resource.Failure -> {
             hideLoading()
@@ -81,6 +84,11 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
         }
       }
     }
+
+    viewModel.adapter.clickEvent.observe(this,{
+      viewModel.total.set(viewModel.total.get()?.toInt()?.minus(1).toString())
+      viewModel.deleteComment(it)
+    })
 
     viewModel.clickEvent.observe(this, {
       if (it == Constants.LOGIN_REQUIRED) openLoginActivity()
@@ -107,5 +115,10 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
         }
       }
     })
+  }
+
+  override fun onDestroyView() {
+    setFragmentResult(Constants.BUNDLE, bundleOf(Constants.TOTAL to viewModel.total.get()?.toInt()))
+    super.onDestroyView()
   }
 }

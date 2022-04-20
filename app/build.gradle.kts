@@ -197,6 +197,9 @@ dependencies {
   implementation("com.google.android.exoplayer:exoplayer-dash:2.15.1")
   implementation("com.google.android.exoplayer:exoplayer-ui:2.15.1")
 
+  //eventBus
+  implementation("org.greenrobot:eventbus:3.3.1")
+
 
   // Project Modules
   implementation(project(Config.Modules.prettyPopUp))
