@@ -111,8 +111,10 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
   }
 
   fun updateTotalComments(total: Int) {
-    differ.currentList[position].comments = total
-    notifyItemChanged(position)
+    if(position != -1 && position < differ.currentList.size) {
+      differ.currentList[position].comments = total
+      notifyItemChanged(position)
+    }
   }
 
   inner class ViewHolder(itemView: View) :

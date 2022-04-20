@@ -43,7 +43,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
     super.onViewCreated(view, savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
       if(bundle.containsKey(Constants.SORT_BY)) {
-        viewModel.sortBy = bundle.getInt(Constants.SORT_BY)
+        viewModel.type = bundle.getInt(Constants.SORT_BY)
         viewModel.reset()
         viewModel.callService()
       }
@@ -70,7 +70,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
 
     activityViewModel.clickEvent.observe(this,{
       if(it == Constants.NOTIFICATION_FILTER){
-        findNavController().navigate(NotificationFragmentDirections.actionNotificationFragmentToFilterSortDialog(viewModel.sortBy,FilterDialog.NOTIFICATION))
+        findNavController().navigate(NotificationFragmentDirections.actionNotificationFragmentToFilterSortDialog(viewModel.type,FilterDialog.NOTIFICATION))
       }
     })
     lifecycleScope.launchWhenResumed {

@@ -36,8 +36,10 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
     super.onCreate(savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
       // We use a String here, but any type that can be put in a Bundle is supported
-      val result = bundle.getInt(Constants.TOTAL)
-      viewModel.adapter.updateTotalComments(result)
+      if(bundle.containsKey(Constants.TOTAL)) {
+        val result = bundle.getInt(Constants.TOTAL)
+        viewModel.adapter.updateTotalComments(result)
+      }
       // Do something with the result
     }
   }

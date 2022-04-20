@@ -27,6 +27,7 @@
         android:id="@+id/img_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{ (v) -> viewModel.search(v) }"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/dimen10"
         android:layout_marginStart="@dimen/dimen20"
@@ -45,6 +46,21 @@
           android:textSize="@dimen/text_size16" />
       </androidx.cardview.widget.CardView>
 
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_stories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adapter="@{viewModel.storiesAdapter}"
+        android:layout_marginTop="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/img_login"
+        app:orientation="@{`2`}"
+        app:span="@{`1`}"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_story" />
+
+
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_departments"
         style="@style/TextBoldFont"
@@ -56,7 +72,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/colorPrimary"
         android:layout_marginStart="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/img_login"
+        app:layout_constraintTop_toBottomOf="@+id/rv_stories"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/subsections" />
 
@@ -113,8 +129,8 @@
         android:layout_height="wrap_content"
         android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
         app:adapter="@{viewModel.storeAdapter}"
-        app:orientation="@{`1`}"
-        app:span="@{`2`}"
+        app:orientation="@{`2`}"
+        app:span="@{`1`}"
         android:layout_marginTop="@dimen/dimen10"
         app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

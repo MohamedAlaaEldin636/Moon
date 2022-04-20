@@ -13,12 +13,14 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.presentation.ads.AdsDetailsFragmentDirections
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
@@ -133,10 +135,15 @@ class AdsDetailsViewModel @Inject constructor(
     show.set(true)
   }
 
-  fun showAllReviews(v: View){
-    if(isLoggin){
-      v.findNavController().navigate(AdsDetailsFragmentDirections.actionAdsDetailsFragmentToReviewsFragment(advertisement.get()!!.id))
-    }else
+  fun showAllReviews(v: View) {
+    if (isLoggin) {
+      v.findNavController().navigate(
+        AdsDetailsFragmentDirections.actionAdsDetailsFragmentToReviewsFragment(
+          advertisement.get()!!.id,
+          advertisement.get()!!.averageRate
+        )
+      )
+    } else
       clickEvent.value = Constants.LOGIN_REQUIRED
   }
 
@@ -148,5 +155,11 @@ class AdsDetailsViewModel @Inject constructor(
       isLoggin = isAuthorize
       getDetails(id, type)
     }
+  }
+
+  fun updateReviews(result: ReviewsPaginateData) {
+    advertisement.get()!!.reviews.addAll(result.list)
+    reviewsAdapter.differ.submitList(result.list)
+    notifyPropertyChanged(BR.reviewsAdapter)
   }
 }

@@ -74,7 +74,12 @@ object Constants {
   const val SUB_CATEGORY_ID: String = "sub_category_id"
   const val SEARCH: String = "search"
   const val ADVERTISEMENT_TEXT: String = "advertisement"
+  const val RATE: String = "RATE"
+  const val TITLE: String = "title"
 
+
+
+  const val REVIEWS_RESPONSE: String = "reviews_response"
   const val STORE: String = "store"
   const val BUNDLE: String = "bundle"
   const val SORT_BY: String = "sort_by"

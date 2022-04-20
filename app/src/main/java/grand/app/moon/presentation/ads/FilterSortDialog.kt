@@ -46,9 +46,9 @@ class FilterSortDialog : BottomSheetDialogFragment() {
       }
       else -> {
         viewModel.title.set(resources.getString(R.string.notification_type))
-        viewModel.list.add(AppTutorial(1,content = resources.getString(R.string.all)))
-        viewModel.list.add(AppTutorial(2,content = resources.getString(R.string.moon_notifications)))
-        viewModel.list.add(AppTutorial(3,content = resources.getString(R.string.moon_traders)))
+        viewModel.list.add(AppTutorial(3,content = resources.getString(R.string.all)))
+        viewModel.list.add(AppTutorial(1,content = resources.getString(R.string.moon_notifications)))
+        viewModel.list.add(AppTutorial(2,content = resources.getString(R.string.moon_traders)))
       }
     }
     viewModel.setData(filter.selected)

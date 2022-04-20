@@ -8,7 +8,7 @@ import grand.app.moon.domain.utils.Resource
 
 interface HomeRepository {
   suspend fun home(): Resource<BaseResponse<HomeResponse>>
-  suspend fun stories(): Resource<BaseResponse<ArrayList<Store>>>
+  suspend fun stories(categoryId : Int?): Resource<BaseResponse<ArrayList<Store>>>
   suspend fun getCategories(): Resource<BaseResponse<ArrayList<CategoryItem>>>
   suspend fun getCategoryDetails(id: Int): Resource<BaseResponse<CategoryDetails>>
 }

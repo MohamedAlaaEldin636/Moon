@@ -4,6 +4,7 @@ package grand.app.moon.domain.home.models
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.home.models.store.SocialLink
 import grand.app.moon.domain.home.models.store.WorkingHours
 import grand.app.moon.domain.story.entity.StoryItem
@@ -51,6 +52,8 @@ data class Store(
   var workingHours: ArrayList<WorkingHours>? = arrayListOf(),
   @SerializedName("advertisements")
   var advertisements: ArrayList<Advertisement> = arrayListOf(),
+  @SerializedName("explores")
+  var explore: ArrayList<Explore> = arrayListOf(),
   @SerializedName("city")
   val city: Country = Country(),
   @SerializedName("country")

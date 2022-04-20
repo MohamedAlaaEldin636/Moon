@@ -1,4 +1,4 @@
-package com.structure.base_mvvm.presentation.notification.adapter
+package grand.app.moon.presentation.notfication.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemNotificationBinding
 import grand.app.moon.domain.settings.models.NotificationData
+import grand.app.moon.domain.settings.use_case.SettingsUseCase
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import grand.app.moon.presentation.notfication.viewmodel.ItemNotificationViewModel
 
 class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
   var clickEvent: SingleLiveEvent<NotificationData> = SingleLiveEvent()
+  lateinit var useCase: SettingsUseCase
   private val differCallback = object : DiffUtil.ItemCallback<NotificationData>() {
     override fun areItemsTheSame(oldItem: NotificationData, newItem: NotificationData): Boolean {
       return oldItem.id == newItem.id
@@ -35,7 +37,10 @@ class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.ViewHolder>(
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
+    Log.d(TAG, "onBindViewHolder: ${data.id}")
+    Log.d(TAG, "onBindViewHolder: ${data.image}")
     val itemViewModel = ItemNotificationViewModel(data)
+
     holder.setViewModel(itemViewModel)
   }
 

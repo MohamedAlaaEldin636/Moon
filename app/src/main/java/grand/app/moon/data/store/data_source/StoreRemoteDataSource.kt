@@ -3,6 +3,7 @@ package grand.app.moon.data.store.data_source
 import android.util.Log
 import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.store.entity.FollowStoreRequest
+import grand.app.moon.domain.store.entity.ReportStoreRequest
 import grand.app.moon.domain.store.entity.StoreFilterRequest
 import javax.inject.Inject
 
@@ -25,6 +26,10 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
 
   suspend fun getFavouriteStores(page: Int) = safeApiCall {
     apiService.getFavouriteStores(page)
+  }
+
+  suspend fun report(page: ReportStoreRequest) = safeApiCall {
+    apiService.report(page)
   }
 
 

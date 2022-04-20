@@ -8,6 +8,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.domain.settings.use_case.SettingsUseCase
+import grand.app.moon.domain.store.entity.ReportStoreRequest
+import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
@@ -21,8 +23,11 @@ import javax.inject.Inject
 @HiltViewModel
 class ReportViewModel @Inject constructor(
   val useCase: SettingsUseCase,
+  val storeUseCase: StoreUseCase,
 ) : BaseViewModel() {
 
+  var type: Int = -1
+  val request = ReportStoreRequest()
   val progress = ObservableBoolean(false)
   val title = ObservableField("")
   @Bindable
@@ -32,22 +37,28 @@ class ReportViewModel @Inject constructor(
     MutableStateFlow<Resource<BaseResponse<List<AppTutorial>>>>(Resource.Default)
   val response = _response
 
+  val _responseSubmit =
+    MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
+  val responseSubmit = _responseSubmit
+
 
 
   fun callService() {
     progress.set(true)
-    useCase.onBoard("8")
+    useCase.onBoard(type.toString())
       .onEach {
         response.value = it
       }.launchIn(viewModelScope)
   }
 
-  fun submitService() {
-//    progress.set(true)
-//    useCase.onBoard("8")
-//      .onEach {
-//        response.value = it
-//      }.launchIn(viewModelScope)
+  fun report() {
+    if(adapter.lastPosition != -1) {
+      progress.set(true)
+      storeUseCase.report(request)
+        .onEach {
+          responseSubmit.value = it
+        }.launchIn(viewModelScope)
+    }
   }
 
   fun setData(data: List<AppTutorial>) {

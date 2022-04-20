@@ -7,7 +7,7 @@ import androidx.annotation.Keep
 @Keep
 data class CategoryItem(
     @SerializedName("id")
-    val id: Int? = 0,
+    var id: Int? = 0,
     @SerializedName("image")
     val image: String? = "",
     @SerializedName("name")

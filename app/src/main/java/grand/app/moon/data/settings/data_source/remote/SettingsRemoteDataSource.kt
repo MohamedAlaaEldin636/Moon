@@ -14,8 +14,11 @@ class SettingsRemoteDataSource @Inject constructor(private val apiService: Setti
     apiService.settings(type)
   }
 
-  suspend fun notifications() = safeApiCall {
-    apiService.notifications()
+  suspend fun notifications(type: Int) = safeApiCall {
+    apiService.notifications(type)
+  }
+  suspend fun deleteNotification(type: Int) = safeApiCall {
+    apiService.deleteNotification(type)
   }
 
   suspend fun contactApp(contactUsRequest: ContactUsRequest) = safeApiCall {

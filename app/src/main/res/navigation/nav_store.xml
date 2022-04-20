@@ -29,9 +29,15 @@
   <dialog
     android:id="@+id/reportDialog"
     android:name="grand.app.moon.presentation.store.dialog.ReportDialog"
-    android:label="ReportDialog" >
+    android:label="@string/report_on_issue" >
     <argument
       android:name="title"
       app:argType="string" />
+    <argument
+      android:name="type"
+      app:argType="integer" />
+    <argument
+      android:name="store_id"
+      app:argType="integer" />
   </dialog>
 </navigation>

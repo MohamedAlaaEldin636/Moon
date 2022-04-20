@@ -33,6 +33,7 @@ class ItemAdsHomeViewModel constructor(val category: CategoryAdvertisement) : Ba
     Log.d(TAG, "showAll_1: ${category.showMore.categoryId}")
     Log.d(TAG, "showAll_2: ${category.showMore.subCategoryId}")
     bundle.putString(Constants.TabBarText, category.name)
+    bundle.putString(Constants.TITLE, category.name)
 
     v.findNavController().navigate(
       R.id.adsListFragment2,

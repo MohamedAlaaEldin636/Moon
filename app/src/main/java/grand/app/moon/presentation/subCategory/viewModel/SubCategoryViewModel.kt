@@ -17,6 +17,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.story.adapter.StoriesAdapter
 import grand.app.moon.presentation.subCategory.SubCategoryFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -36,6 +37,7 @@ class SubCategoryViewModel @Inject constructor(
   var subCategoryId: Int = -1
 
   var isLast = false
+
 
   val subCategoryResponse = ObservableField<SubCategoryResponse>()
   val gridOne = ObservableBoolean(true)

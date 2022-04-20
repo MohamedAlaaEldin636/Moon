@@ -9,7 +9,7 @@
 
     <variable
       name="viewModel"
-      type="app.grand.tafwak.presentation.reviews.viewModels.ReviewsViewModel" />
+      type="grand.app.moon.presentation.reviews.viewModels.ReviewsViewModel" />
   </data>
 
   <FrameLayout

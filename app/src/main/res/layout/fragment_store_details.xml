@@ -230,6 +230,8 @@
                 <LinearLayout
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:background="@drawable/corner_fbfbfb"
+                  android:padding="@dimen/dimen5"
                   android:layout_weight="1"
                   android:gravity="center"
                   android:orientation="vertical">
@@ -257,6 +259,8 @@
                 <LinearLayout
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:background="@drawable/corner_fbfbfb"
+                  android:padding="@dimen/dimen5"
                   android:layout_weight="1"
                   android:gravity="center"
                   android:orientation="vertical">
@@ -284,6 +288,8 @@
                 <LinearLayout
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:background="@drawable/corner_fbfbfb"
+                  android:padding="@dimen/dimen5"
                   android:layout_weight="1"
                   android:gravity="center"
                   android:orientation="vertical">
@@ -311,6 +317,8 @@
                 <LinearLayout
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:background="@drawable/corner_fbfbfb"
+                  android:padding="@dimen/dimen5"
                   android:layout_weight="1"
                   android:gravity="center"
                   android:orientation="vertical">
@@ -329,7 +337,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen3"
-                    android:text="@string/views"
+                    android:text="@string/advertisements"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size16" />
 
@@ -382,6 +390,7 @@
                 android:id="@+id/img_facebook"
                 android:layout_width="@dimen/dimen50"
                 android:layout_height="@dimen/dimen50"
+                android:visibility="@{viewModel.facebook ? View.VISIBLE : View.GONE}"
                 android:onClick="@{(v)->viewModel.submit(v,`facebook`)}"
                 android:src="@drawable/ic_facebook"
 
@@ -395,6 +404,7 @@
                 android:layout_width="@dimen/dimen50"
                 android:layout_height="@dimen/dimen50"
                 android:onClick="@{(v)->viewModel.submit(v,`instgram`)}"
+                android:visibility="@{viewModel.instgram ? View.VISIBLE : View.GONE}"
 
                 android:src="@drawable/ic_instgram_details"
                 app:layout_constraintEnd_toStartOf="@+id/img_twitter"
@@ -409,6 +419,7 @@
                 android:layout_height="@dimen/dimen50"
                 android:onClick="@{(v)->viewModel.submit(v,`youtube`)}"
                 android:src="@drawable/ic_twitter"
+                android:visibility="@{viewModel.twitter ? View.VISIBLE : View.GONE}"
 
                 app:layout_constraintEnd_toStartOf="@+id/img_youtube"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -422,6 +433,7 @@
                 android:layout_height="@dimen/dimen50"
                 android:onClick="@{(v)->viewModel.submit(v,`youtube`)}"
                 android:src="@drawable/ic_youtube_details"
+                android:visibility="@{viewModel.youtube ? View.VISIBLE : View.GONE}"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -485,11 +497,18 @@
               android:textSize="@dimen/text_size18"
               android:textStyle="bold" />
 
-            <View
+
+            <androidx.fragment.app.FragmentContainerView
+              android:id="@+id/mapView"
+              android:name="com.google.android.gms.maps.SupportMapFragment"
               android:layout_width="match_parent"
               android:layout_height="@dimen/dimen220"
-              android:background="@color/colorAccent"
-              android:onClick="@{ (v) -> viewModel.map(v)}" />
+              android:onClick="@{ (v) -> viewModel.map(v)}"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
 
 
             <LinearLayout
@@ -535,12 +554,41 @@
             </LinearLayout>
 
 
+
+            <com.google.android.material.tabs.TabLayout
+              android:id="@+id/tabLayout"
+              android:layout_width="match_parent"
+              app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
+              android:layout_marginTop="@dimen/dimen10"
+              android:layout_height="wrap_content">
+              <com.google.android.material.tabs.TabItem
+                android:id="@+id/advertisement"
+                app:tabIndicator="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/boldFont"
+                android:text="@string/advertisements"
+                />
+
+              <com.google.android.material.tabs.TabItem
+                android:id="@+id/images"
+                android:layout_width="wrap_content"
+                app:tabIndicator="@color/colorAccent"
+
+                android:layout_height="wrap_content"
+                style="@style/boldFont"
+                android:text="@string/images"
+                />
+            </com.google.android.material.tabs.TabLayout>
+
+
             <androidx.recyclerview.widget.RecyclerView
               android:id="@+id/rv_store_ads"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dimen10"
               android:orientation="horizontal"
+              android:layout_marginTop="@dimen/dimen5"
+              android:visibility="@{viewModel.showAds ? View.VISIBLE : View.GONE}"
               app:adapter="@{viewModel.adsAdapter}"
               app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
               app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
@@ -548,8 +596,23 @@
               app:span="@{`1`}"
               tools:listitem="@layout/item_review" />
 
+
+            <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/rv_store_gallery"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:scrollbars="none"
+              app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+              tools:listitem="@layout/item_ads"
+              tools:orientation="vertical" />
+
+
           </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+
+
 
       </LinearLayout>
 

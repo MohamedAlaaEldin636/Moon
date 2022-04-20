@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
@@ -12,6 +13,7 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.data.settings.data_source.remote.SettingsServices
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
@@ -20,9 +22,11 @@ import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.use_case.StoreUseCase
+import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.openBrowser
+import grand.app.moon.presentation.explore.adapter.ExploreAdapter
 import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -39,12 +43,16 @@ class StoreDetailsViewModel @Inject constructor(
   private val useCase: AdsUseCase,
   private val storeUseCase: StoreUseCase
 ) : BaseViewModel() {
+  lateinit var mapConfig: MapConfig
   var id: Int = -1
 
+  //https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM
 
   @Bindable
   val adsAdapter = AdsAdapter()
 
+  @Bindable
+  var exploreAdapter = ExploreAdapter()
 
   val followStoreRequest = FollowStoreRequest()
   val addFavouriteAdsRequest = AddFavouriteAdsRequest()
@@ -56,7 +64,17 @@ class StoreDetailsViewModel @Inject constructor(
   @Bindable
   val store = ObservableField<Store>()
   var isLoggin = userLocalUseCase.isLoggin()
+  val image = ObservableField<String>("")
 
+
+
+  val showAds = ObservableBoolean(true)
+  val showGallery = ObservableBoolean(false)
+
+  val facebook = ObservableBoolean(true)
+  val instgram = ObservableBoolean(true)
+  val youtube = ObservableBoolean(true)
+  val twitter = ObservableBoolean(true)
 
   init {
     adsAdapter.percentageAds = 100
@@ -118,7 +136,16 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun report(v: View) {
-
+    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
+    else {
+      v.findNavController().navigate(
+        StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
+          v.resources.getString(R.string.please_choose_report_reason),
+          7,
+          store.get()!!.id
+        )
+      )
+    }
   }
 
   fun phone(v: View) {
@@ -126,14 +153,23 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun block(v: View) {
-
+    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
+    else {
+      v.findNavController().navigate(
+        StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
+          v.resources.getString(R.string.please_choose_block_reason),
+          8,
+          store.get()!!.id
+        )
+      )
+    }
   }
 
   fun chat(v: View) {
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
       store.get()?.let {
-        startChatConversation(v,it.nickname,it.name,it.image)
+        startChatConversation(v, it.nickname, it.name, it.image)
       }
     }
   }
@@ -153,12 +189,37 @@ class StoreDetailsViewModel @Inject constructor(
     v.context.startActivity(intent)
   }
 
-  fun update(data: Store, days: ArrayList<String>) {
+  fun update(keyMap: String, data: Store, days: ArrayList<String>) {
     data.workingHours?.forEachIndexed() { index, element ->
       data.workingHours?.get(index)?.day = days[index]
     }
+    if(data.latitude != 0.0 && data.longitude != 0.0) {
+      image.set(
+        "https://maps.googleapis.com/maps/api/staticmap?center=${data.latitude},${data.longitude}" +
+          "&markers=icon:${data.image}|${data.latitude},${data.longitude}" +
+          "&maptype=satellite&zoom=14&size=400x400&key=$keyMap"
+      )
+      Log.d(TAG, "update: ${image.get()}")
+    }
+
     store.set(data)
     adsAdapter.differ.submitList(store.get()?.advertisements)
+    exploreAdapter.differ.submitList(store.get()?.explore)
+
+    store.get()?.socialMediaLinks?.forEach { socialLink ->
+      if(socialLink.link.isEmpty()) {
+        if (socialLink.type == "facebook")
+          facebook.set(false)
+        if (socialLink.type == "twitter")
+          twitter.set(false)
+        if (socialLink.type == "youtube")
+          youtube.set(false)
+        if (socialLink.type == "instgram")
+          instgram.set(false)
+      }
+    }
+
+    notifyPropertyChanged(BR.exploreAdapter)
     show.set(true)
   }
 
@@ -170,5 +231,14 @@ class StoreDetailsViewModel @Inject constructor(
       isLoggin = isAuthorize
       getDetails(id)
     }
+  }
+  fun showAds() {
+    showAds.set(true)
+    showGallery.set(false)
+  }
+
+  fun showGallery() {
+    showGallery.set(true)
+    showAds.set(false)
   }
 }

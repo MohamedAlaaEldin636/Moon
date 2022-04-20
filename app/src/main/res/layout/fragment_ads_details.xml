@@ -442,7 +442,7 @@
                 android:onClick="@{(v)-> viewModel.follow(v)}"
                 android:padding="@dimen/dimen12"
                 android:textSize="@dimen/text_size14"
-                android:drawableStart="@{viewModel.advertisement.store.following ? @drawable/ic_close : @drawable/ic_plus }"
+                android:drawableStart="@{viewModel.advertisement.store.following ? @drawable/ic_close_single : @drawable/ic_plus }"
                 android:text="@{viewModel.advertisement.store.following ? @string/un_follow : @string/follow }"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
@@ -590,6 +590,8 @@
 
               <androidx.appcompat.widget.AppCompatTextView
                 android:layout_marginTop="@dimen/dimen8"
+                android:layout_marginEnd="@dimen/dimen10"
+                android:layout_marginStart="@dimen/dimen10"
                 android:visibility="@{viewModel.advertisement.reviews.size() == 0 ? View.VISIBLE : View.GONE}"
                 android:text="@string/there_are_no_customers_reviews"
                 android:layout_width="match_parent"

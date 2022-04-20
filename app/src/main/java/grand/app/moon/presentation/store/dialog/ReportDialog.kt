@@ -38,21 +38,24 @@ class ReportDialog : BottomSheetDialogFragment() {
   ): View {
     binding = DataBindingUtil.inflate(inflater, R.layout.report_dialog, container, false)
     binding.viewModel = viewModel
+    viewModel.request.storeId = reportArgs.storeId
+    viewModel.type = reportArgs.type
+    viewModel.request.type = when (reportArgs.type) {
+      7 -> 1
+      else -> 2
+    }
     viewModel.title.set(reportArgs.title)
     setupObserver()
+    viewModel.adapter.changeEvent.observe(this, {
+      if (viewModel.adapter.lastSelected != -1) {
+        viewModel.request.reasonId = viewModel.adapter.lastSelected
+      }
+    })
     viewModel.callService()
     return binding.root
   }
 
-  init {
-      viewModel.adapter.changeEvent.observe(this,{
-        if(viewModel.adapter.lastSelected != -1){
-          viewModel.submitService()
-        }
-      })
-  }
-
-  fun setupObserver(){
+  fun setupObserver() {
     lifecycleScope.launchWhenResumed {
       viewModel.response.collect {
         when (it) {
@@ -63,6 +66,25 @@ class ReportDialog : BottomSheetDialogFragment() {
           is Resource.Success -> {
             viewModel.progress.set(false)
             viewModel.setData(it.value.data)
+          }
+          is Resource.Failure -> {
+            viewModel.progress.set(false)
+            handleApiError(it)
+          }
+        }
+      }
+    }
+
+    lifecycleScope.launchWhenResumed {
+      viewModel.responseSubmit.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            viewModel.progress.set(true)
+          }
+          is Resource.Success -> {
+            viewModel.progress.set(false)
+            dismiss()
           }
           is Resource.Failure -> {
             viewModel.progress.set(false)

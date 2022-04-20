@@ -20,9 +20,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerView"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:layout_margin="@dimen/dimen14"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
       android:orientation="vertical"
       android:scrollbars="none"
       app:adapter="@{viewModel.adapter}"
@@ -33,7 +32,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintBottom_toTopOf="@+id/rl_service_shop_progress"
       tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-      tools:listitem="@layout/item_ads"
+      tools:listitem="@layout/item_notification"
       tools:orientation="vertical" />
 
     <RelativeLayout

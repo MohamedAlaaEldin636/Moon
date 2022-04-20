@@ -13,7 +13,7 @@ interface HomeServices {
   suspend fun home(): BaseResponse<HomeResponse>
 
   @GET("v1/stories")
-  suspend fun stories(): BaseResponse<ArrayList<Store>>
+  suspend fun stories(@Query("category_id") category_id: Int?): BaseResponse<ArrayList<Store>>
 
   @GET("v1/categories")
   suspend fun getCategories(): BaseResponse<ArrayList<CategoryItem>>

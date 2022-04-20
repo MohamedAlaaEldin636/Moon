@@ -113,6 +113,7 @@ class AppPreferences @Inject constructor(private val context: Context) {
   }
 
   fun getIsLoggedIn(): Boolean {
+    Log.d(TAG, "getIsLoggedIn: ${appPreferences.getInt("id",-1)}")
     return appPreferences.getInt("id", -1) != -1
   }
 

@@ -25,6 +25,8 @@
       android:layout_height="match_parent"
       android:background="@color/backgroundGray">
 
+
+
       <com.denzcoskun.imageslider.ImageSlider
         android:id="@+id/image_slider"
         android:layout_width="match_parent"

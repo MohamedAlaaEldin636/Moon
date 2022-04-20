@@ -97,7 +97,7 @@ class HomeViewModel @Inject constructor(
   }
 
   private fun getStories() {
-    homeUseCase.getStories()
+    homeUseCase.getStories(null)
       .onEach { result ->
         storiesResponse.value = result
       }

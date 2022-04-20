@@ -4,22 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import app.grand.tafwak.presentation.reviews.viewModels.ReviewsViewModel
+import grand.app.moon.presentation.reviews.viewModels.ReviewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.ReviewDialogBinding
-import grand.app.moon.databinding.WorkingHoursDialogBinding
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.extensions.handleApiError
+import grand.app.moon.presentation.base.extensions.hide
 import grand.app.moon.presentation.base.extensions.hideKeyboard
+import grand.app.moon.presentation.base.extensions.show
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.store.viewModels.WorkingHoursViewModel
 import kotlinx.coroutines.flow.collect
 import java.util.*
 
@@ -35,7 +36,8 @@ class ReviewDialog : BottomSheetDialogFragment() {
   ): View {
     binding = DataBindingUtil.inflate(inflater, R.layout.review_dialog, container, false)
     binding.viewModel = viewModel
-//    viewModel.request.advertisement_id = args.advertisementId
+    viewModel.request.advertisement_id = args.advertisementId
+    viewModel.rate = args.rate
     setupObserver()
     return binding.root
   }
@@ -47,14 +49,17 @@ class ReviewDialog : BottomSheetDialogFragment() {
           Resource.Loading -> {
             hideKeyboard()
             binding.progress.visibility = View.VISIBLE
+            binding.btnRate.hide()
           }
           is Resource.Success -> {
             binding.progress.visibility = View.GONE
+            binding.btnRate.show()
 
           }
           is Resource.Failure -> {
             binding.progress.visibility = View.GONE
             handleApiError(it)
+            binding.btnRate.show()
           }
         }
       }
@@ -63,5 +68,10 @@ class ReviewDialog : BottomSheetDialogFragment() {
 
   override fun getTheme(): Int {
     return R.style.CustomBottomSheetDialogTheme;
+  }
+
+  override fun onDestroy() {
+    setFragmentResult(Constants.BUNDLE, bundleOf(Constants.RATE to viewModel.rate)) // total rate
+    super.onDestroy()
   }
 }

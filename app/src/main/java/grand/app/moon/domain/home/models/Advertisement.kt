@@ -9,7 +9,7 @@ import java.io.Serializable
 @Keep
 data class Advertisement(
   @SerializedName("average_rate")
-  val averageRate: String? = "0",
+  var averageRate: String = "0",
   @SerializedName("city")
   val city: Country = Country(),
   @SerializedName("country")

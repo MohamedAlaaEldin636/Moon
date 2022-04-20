@@ -48,10 +48,17 @@ class SettingsUseCase @Inject constructor(
       emit(result)
     }.flowOn(Dispatchers.IO)
 
-  fun notifications(): Flow<Resource<BaseResponse<NotificationPaginateData>>> =
+  fun notifications(type: Int): Flow<Resource<BaseResponse<NotificationPaginateData>>> =
     flow {
       emit(Resource.Loading)
-      val result = settingsRepository.notifications()
+      val result = settingsRepository.notifications(type)
+      emit(result)
+    }.flowOn(Dispatchers.IO)
+
+  fun delete(type: Int): Flow<Resource<BaseResponse<*>>> =
+    flow {
+//      emit(Resource.Loading)
+      val result = settingsRepository.deleteNotification(type)
       emit(result)
     }.flowOn(Dispatchers.IO)
 

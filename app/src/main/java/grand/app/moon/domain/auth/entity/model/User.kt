@@ -1,6 +1,7 @@
 package grand.app.moon.domain.auth.entity.model
 
 import androidx.annotation.Keep
+import java.io.Serializable
 
 
 @Keep
@@ -12,4 +13,4 @@ data class User(
   val phone: String = "",
   val token: String = "",
   val country_code: String = "",
-)
+) : Serializable

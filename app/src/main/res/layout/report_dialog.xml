@@ -18,6 +18,17 @@
     android:layout_height="wrap_content">
 
 
+    <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/pb_base_loading_bar"
+      android:layout_width="@dimen/dimen60"
+      android:layout_height="@dimen/dimen60"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:lottie_autoPlay="true"
+      app:lottie_fileName="report.json"
+      app:lottie_loop="true" />
+
     <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/tv_title"
       style="@style/boldFont"
@@ -30,7 +41,8 @@
       android:textSize="@dimen/text_size22"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toBottomOf="@+id/pb_base_loading_bar"
+      />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -69,6 +81,8 @@
       android:layout_gravity="center"
       android:layout_margin="@dimen/dimen8"
       android:gravity="center"
+      android:visibility="@{viewModel.progress ? View.GONE : View.VISIBLE}"
+      android:onClick="@{ () -> viewModel.report() }"
       android:text="@string/submit_report"
       android:textColor="@color/colorWhite"
       android:textSize="@dimen/text_size16"

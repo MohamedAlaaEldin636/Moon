@@ -1,6 +1,5 @@
-package app.grand.tafwak.presentation.reviews.viewModels
+package grand.app.moon.presentation.reviews.viewModels
 
-import android.util.Log
 import android.widget.RatingBar
 import androidx.databinding.Bindable
 import androidx.lifecycle.SavedStateHandle
@@ -14,7 +13,6 @@ import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -26,6 +24,8 @@ class ReviewsViewModel @Inject constructor(
   private val reviewsUseCase: AdsUseCase,
   savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
+
+  var rate: String = ""
 
   @Bindable
   var page: Int = 0

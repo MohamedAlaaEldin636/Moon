@@ -148,11 +148,22 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/subCategoryFragment" />
+    <action
+      android:id="@+id/action_categoryDetailsFragment_to_searchFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/searchFragment" />
   </fragment>
   <fragment
     android:id="@+id/adsListFragment2"
     android:name="grand.app.moon.presentation.ads.AdsListFragment"
-    android:label="AdsListFragment" />
+    android:label="{title}" >
+    <argument
+      android:name="title"
+      app:argType="string" />
+  </fragment>
   <fragment
     android:id="@+id/subCategoryFragment"
     android:name="grand.app.moon.presentation.subCategory.SubCategoryFragment"
@@ -210,7 +221,7 @@
   <dialog
     android:id="@+id/filterSortDialog"
     android:name="grand.app.moon.presentation.ads.FilterSortDialog"
-    android:label="FilterSortDialog" >
+    android:label="@string/filter" >
     <argument
       android:name="selected"
       app:argType="integer" />

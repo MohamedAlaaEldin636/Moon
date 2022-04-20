@@ -1,7 +1,9 @@
 package grand.app.moon.presentation.ads
 
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -11,6 +13,7 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentAdsDetailsBinding
+import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.presentation.ads.viewModels.AdsDetailsViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.collect
@@ -22,7 +25,18 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
 
   private val viewModel: AdsDetailsViewModel by viewModels()
 
-  val listChangeFav = HashMap<Int,Boolean>()
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+      // We use a String here, but any type that can be put in a Bundle is supported
+      val result = bundle.getSerializable(Constants.REVIEWS_RESPONSE) as ReviewsPaginateData
+      viewModel.updateReviews(result)
+      viewModel.advertisement.get()!!.averageRate = bundle.getString(Constants.RATE).toString()
+      // Do something with the result
+    }
+  }
+
 
   override
   fun getLayoutId() = R.layout.fragment_ads_details

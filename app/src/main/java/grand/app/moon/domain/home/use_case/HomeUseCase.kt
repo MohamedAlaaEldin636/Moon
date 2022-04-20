@@ -23,8 +23,8 @@ class HomeUseCase @Inject constructor(
   }.flowOn(Dispatchers.IO)
 
 
-  fun getStories(): Flow<Resource<BaseResponse<ArrayList<Store>>>> = flow {
-    val result = homeRepository.stories()
+  fun getStories(categoryId : Int?): Flow<Resource<BaseResponse<ArrayList<Store>>>> = flow {
+    val result = homeRepository.stories(categoryId)
     emit(result)
   }.flowOn(Dispatchers.IO)
 

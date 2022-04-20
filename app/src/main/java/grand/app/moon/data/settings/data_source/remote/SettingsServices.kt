@@ -5,10 +5,7 @@ import grand.app.moon.domain.settings.entity.NotificationPaginateData
 import grand.app.moon.domain.settings.models.ContactUsRequest
 import grand.app.moon.domain.settings.models.SettingsData
 import grand.app.moon.domain.utils.BaseResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface SettingsServices {
   @GET("v1/settings")
@@ -21,8 +18,11 @@ interface SettingsServices {
     @Query("type") type: String,
   ): BaseResponse<List<SettingsData>>
 
-  @GET("v1/settings")
-  suspend fun notifications(): BaseResponse<NotificationPaginateData>
+  @GET("v1/notifications")
+  suspend fun notifications(@Query("notify_type") type: Int): BaseResponse<NotificationPaginateData>
+
+  @DELETE("v1/notifications/{id}")
+  suspend fun deleteNotification(@Path("id") id: Int): BaseResponse<*>
 
 
   @POST("v1/contact-us")

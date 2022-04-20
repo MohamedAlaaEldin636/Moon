@@ -11,6 +11,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentCategoryDetailsBinding
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.home.models.Store
+import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.category.viewModels.CategoryDetailsViewModel
 import kotlinx.coroutines.flow.collect
 
@@ -59,6 +61,17 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
           }
         }
       }
+    }
+    lifecycleScope.launchWhenCreated {
+      viewModel.storiesResponse
+        .collect {
+          if (it is Resource.Success) {
+            val store = Store()
+            store.stories.add(StoryItem(name = getString(R.string.show_more), isFirst = true))
+            it.value.data.add(0,store )
+            viewModel.updateStories(it.value.data)
+          }
+        }
     }
   }
 
