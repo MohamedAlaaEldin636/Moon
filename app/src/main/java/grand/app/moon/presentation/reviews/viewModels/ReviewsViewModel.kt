@@ -4,7 +4,7 @@ import android.widget.RatingBar
 import androidx.databinding.Bindable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import app.grand.tafwak.presentation.reviews.adapters.ReviewsAdapter
+import grand.app.moon.presentation.reviews.adapters.ReviewsAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.domain.ads.use_case.AdsUseCase

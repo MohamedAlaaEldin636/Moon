@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.store.views
 
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -53,7 +54,10 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     days.add(resources.getString(R.string.friday))
 
     viewModel.clickEvent.observe(viewLifecycleOwner, {
-      if (it == Constants.LOGIN_REQUIRED) openLoginActivity()
+      when(it){
+        Constants.LOGIN_REQUIRED -> openLoginActivity()
+        Constants.SCROLL_DOWN -> scrollDown()
+      }
     })
     lifecycleScope.launchWhenResumed {
       viewModel.storeDetailsResponse.collect {
@@ -80,8 +84,14 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     }
   }
 
+  fun scrollDown(){
+    binding.scrollStoreDetails.fullScroll(View.FOCUS_DOWN)
+
+  }
+
   override fun setUpViews() {
     super.setUpViews()
+    setRecyclerViewScrollListener()
     binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
       override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -116,10 +126,6 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     }
   }
 
-  override fun onStart() {
-    super.onStart()
-//    Toast.makeText(context, "onStart", Toast.LENGTH_SHORT).show()
-  }
 
   override fun onMapReady(p0: GoogleMap) {
     viewModel.mapConfig = MapConfig(requireContext(), p0)
@@ -156,5 +162,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     binding.rvStoreGallery.adapter = viewModel.exploreAdapter
 
   }
+
+
 
 }

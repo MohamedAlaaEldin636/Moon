@@ -1,25 +1,17 @@
-package com.structure.base_mvvm.presentation.notification.adapter
+package grand.app.moon.presentation.user.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
-import grand.app.moon.databinding.ItemCommentBinding
-import grand.app.moon.databinding.ItemExploreListBinding
 import grand.app.moon.databinding.ItemUserListBinding
 import grand.app.moon.domain.auth.entity.model.User
-import grand.app.moon.domain.comment.entity.Comment
-import grand.app.moon.domain.explore.entity.Explore
-import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.comment.viewmodel.ItemCommentViewModel
-import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
 import grand.app.moon.presentation.user.viewmodel.ItemUserViewModel
 
 class UserListAdapter : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {

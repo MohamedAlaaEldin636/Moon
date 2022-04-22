@@ -75,6 +75,7 @@ class SearchViewModel @Inject constructor(
     }
     Log.d(TAG, ": ${listSearches.size}")
     adapter.percentageAds = 100
+    adapter.type = 5
   }
 
   fun callService() {

@@ -115,10 +115,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showTopBarControls()
           showText()
         }
-        R.id.adsDetailsFragment -> {
+        R.id.adsDetailsFragment , R.id.storeDetailsFragment -> {
           hideTopBarControls()
           hideAllToolbar()
         }
+
         else -> {
           binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite))
           binding.toolbar.title =

@@ -34,6 +34,10 @@ object Constants {
   const val GRID_1: Int = 24
   const val GRID_2: Int = 25
   const val CONFIRM: Int = 26
+  const val SCROLL_DOWN: Int = 27
+
+
+
 
 
 

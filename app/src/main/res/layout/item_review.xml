@@ -6,7 +6,7 @@
 
     <variable
       name="itemViewModels"
-      type="app.grand.tafwak.presentation.reviews.viewModels.ItemReviewViewModel" />
+      type="grand.app.moon.presentation.reviews.viewModels.ItemReviewViewModel" />
   </data>
 
   <com.google.android.material.card.MaterialCardView

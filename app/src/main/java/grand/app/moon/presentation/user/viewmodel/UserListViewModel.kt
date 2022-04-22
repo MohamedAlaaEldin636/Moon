@@ -1,22 +1,18 @@
 package grand.app.moon.presentation.user.viewmodel
 
-import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.structure.base_mvvm.presentation.notification.adapter.UserListAdapter
+import grand.app.moon.presentation.user.adapter.UserListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
-import grand.app.moon.R
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
-import grand.app.moon.domain.comment.entity.CommentListPaginateData
 import grand.app.moon.domain.explore.use_case.ExploreUseCase
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.user.entity.UserListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
-import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

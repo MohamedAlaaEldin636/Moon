@@ -1,4 +1,4 @@
-package app.grand.tafwak.presentation.reviews.adapters
+package grand.app.moon.presentation.reviews.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import app.grand.tafwak.presentation.reviews.viewModels.ItemReviewViewModel
+import grand.app.moon.presentation.reviews.viewModels.ItemReviewViewModel
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemReviewBinding
 import grand.app.moon.domain.home.models.review.Reviews

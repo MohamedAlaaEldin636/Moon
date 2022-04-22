@@ -7,6 +7,8 @@
 
     <import type="android.view.View" />
 
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
     <variable
       name="viewModel"
       type="grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel" />
@@ -19,6 +21,7 @@
     android:visibility="@{viewModel.show ? View.VISIBLE : View.GONE}">
 
     <androidx.core.widget.NestedScrollView
+      android:id="@+id/scroll_store_details"
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:fillViewport="true"
@@ -45,6 +48,44 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:loadImage="@{viewModel.store.backgroundImage}" />
+
+          <View
+            app:layout_constraintTop_toTopOf="@+id/image_slider"
+            app:layout_constraintBottom_toBottomOf="@+id/image_slider"
+            app:layout_constraintStart_toStartOf="@+id/image_slider"
+            app:layout_constraintEnd_toEndOf="@+id/image_slider"
+            android:layout_width="0dp"
+            android:background="@color/color00000"
+            android:layout_height="0dp"/>
+
+          <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dimen30"
+            android:layout_height="@dimen/dimen30"
+            android:background="@drawable/corner_white"
+            android:layout_marginTop="@dimen/dimen16"
+            android:layout_marginEnd="@dimen/dimen16"
+            android:padding="@dimen/dimen6"
+            android:src="@drawable/ic_share"
+            android:tint="@color/colorBlack"
+            android:onClick="@{ (v) -> viewModel.share(v) }"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+          <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dimen30"
+            android:layout_height="@dimen/dimen30"
+            android:background="@drawable/corner_white"
+            android:layout_marginTop="@dimen/dimen16"
+            android:layout_marginStart="@dimen/dimen16"
+            android:padding="@dimen/dimen2"
+            android:src="@drawable/ic_back_simple"
+            android:rotation="180"
+            android:tint="@color/colorBlack"
+            android:onClick="@{ (v) -> viewModel.back(v) }"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
           <View
             android:id="@+id/view_background"
@@ -243,7 +284,7 @@
                     android:gravity="center"
                     android:text="@{viewModel.store.viewsCount}"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_size16" />
+                    android:textSize="@dimen/text_size14" />
 
                   <androidx.appcompat.widget.AppCompatTextView
                     style="@style/boldFont"
@@ -252,7 +293,7 @@
                     android:layout_marginTop="@dimen/dimen3"
                     android:text="@string/views"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_size16" />
+                    android:textSize="@dimen/text_size14" />
 
                 </LinearLayout>
 
@@ -261,6 +302,7 @@
                   android:layout_height="wrap_content"
                   android:background="@drawable/corner_fbfbfb"
                   android:padding="@dimen/dimen5"
+                  android:onClick="@{ (v) -> viewModel.rates(v)}"
                   android:layout_weight="1"
                   android:gravity="center"
                   android:orientation="vertical">
@@ -272,7 +314,7 @@
                     android:gravity="center"
                     android:text="@{viewModel.store.rateCount}"
                     android:textColor="@color/colorE50000"
-                    android:textSize="@dimen/text_size16" />
+                    android:textSize="@dimen/text_size14" />
 
                   <androidx.appcompat.widget.AppCompatTextView
                     style="@style/boldFont"
@@ -281,7 +323,7 @@
                     android:layout_marginTop="@dimen/dimen3"
                     android:text="@string/rates"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_size16" />
+                    android:textSize="@dimen/text_size14" />
 
                 </LinearLayout>
 
@@ -292,6 +334,7 @@
                   android:padding="@dimen/dimen5"
                   android:layout_weight="1"
                   android:gravity="center"
+                  android:onClick="@{ (v) -> viewModel.followers(v)}"
                   android:orientation="vertical">
 
                   <androidx.appcompat.widget.AppCompatTextView
@@ -301,7 +344,7 @@
                     android:gravity="center"
                     android:text="@{viewModel.store.followersCount}"
                     android:textColor="@color/color008E1C"
-                    android:textSize="@dimen/text_size16" />
+                    android:textSize="@dimen/text_size14" />
 
                   <androidx.appcompat.widget.AppCompatTextView
                     style="@style/boldFont"
@@ -310,7 +353,7 @@
                     android:layout_marginTop="@dimen/dimen3"
                     android:text="@string/followers"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_size16" />
+                    android:textSize="@dimen/text_size14" />
 
                 </LinearLayout>
 
@@ -320,6 +363,7 @@
                   android:background="@drawable/corner_fbfbfb"
                   android:padding="@dimen/dimen5"
                   android:layout_weight="1"
+                  android:onClick="@{ () -> viewModel.clickEvent(Constants.SCROLL_DOWN )}"
                   android:gravity="center"
                   android:orientation="vertical">
 
@@ -330,7 +374,7 @@
                     android:gravity="center"
                     android:text="@{viewModel.store.advertisementsCount}"
                     android:textColor="@color/color0038A8"
-                    android:textSize="@dimen/text_size16" />
+                    android:textSize="@dimen/text_size14" />
 
                   <androidx.appcompat.widget.AppCompatTextView
                     style="@style/boldFont"
@@ -339,7 +383,7 @@
                     android:layout_marginTop="@dimen/dimen3"
                     android:text="@string/advertisements"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_size16" />
+                    android:textSize="@dimen/text_size14" />
 
                 </LinearLayout>
 
@@ -560,10 +604,10 @@
               android:layout_width="match_parent"
               app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
               android:layout_marginTop="@dimen/dimen10"
+              app:tabIndicatorColor="@color/colorAccent"
               android:layout_height="wrap_content">
               <com.google.android.material.tabs.TabItem
                 android:id="@+id/advertisement"
-                app:tabIndicator="@color/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/boldFont"
@@ -573,7 +617,6 @@
               <com.google.android.material.tabs.TabItem
                 android:id="@+id/images"
                 android:layout_width="wrap_content"
-                app:tabIndicator="@color/colorAccent"
 
                 android:layout_height="wrap_content"
                 style="@style/boldFont"

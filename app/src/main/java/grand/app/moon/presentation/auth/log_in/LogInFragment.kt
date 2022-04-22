@@ -100,13 +100,17 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
     ActivityResultContracts.StartActivityForResult()
   ) {
 
+    Log.d(TAG, ": activityResultGoogleSignIn")
+
     if (it.resultCode == Activity.RESULT_OK) {
+      Log.d(TAG, ": RESULT_OK")
       // The Task returned from this call is always completed, no need to attach
       // a listener.
       val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
 
       try {
         val account = task.getResult(ApiException::class.java)
+        Log.d(TAG, ": account")
 
         val id = account.id!!
 

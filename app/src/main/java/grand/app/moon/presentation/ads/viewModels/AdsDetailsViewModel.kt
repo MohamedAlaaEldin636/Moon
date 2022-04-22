@@ -1,20 +1,18 @@
 package grand.app.moon.presentation.ads.viewModels
 
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import android.view.View
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import app.grand.tafwak.presentation.reviews.adapters.ReviewsAdapter
+import grand.app.moon.presentation.reviews.adapters.ReviewsAdapter
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
-import grand.app.moon.R
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.store.entity.FollowStoreRequest
@@ -29,8 +27,6 @@ import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.lang.Exception
-import java.net.URLEncoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -85,6 +81,10 @@ class AdsDetailsViewModel @Inject constructor(
 
   fun back(v: View) {
     v.findNavController().popBackStack()
+  }
+
+  fun share(v: AppCompatImageView){
+    advertisement.get()?.title?.let { advertisement.get()?.description?.let { it1 -> share(v.context, it, it1,v) } }
   }
 
   fun whatsapp(v: View) {

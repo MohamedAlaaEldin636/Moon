@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -44,6 +45,7 @@ class StoreDetailsViewModel @Inject constructor(
   private val storeUseCase: StoreUseCase
 ) : BaseViewModel() {
   lateinit var mapConfig: MapConfig
+
   var id: Int = -1
 
   //https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM
@@ -55,7 +57,6 @@ class StoreDetailsViewModel @Inject constructor(
   var exploreAdapter = ExploreAdapter()
 
   val followStoreRequest = FollowStoreRequest()
-  val addFavouriteAdsRequest = AddFavouriteAdsRequest()
 
   val _storeDetailsResponse =
     MutableStateFlow<Resource<BaseResponse<Store>>>(Resource.Default)
@@ -68,8 +69,8 @@ class StoreDetailsViewModel @Inject constructor(
 
 
 
-  val showAds = ObservableBoolean(true)
-  val showGallery = ObservableBoolean(false)
+  val showAds = ObservableBoolean(false)
+  val showGallery = ObservableBoolean(true)
 
   val facebook = ObservableBoolean(true)
   val instgram = ObservableBoolean(true)
@@ -98,9 +99,24 @@ class StoreDetailsViewModel @Inject constructor(
     }
   }
 
+
   fun back(v: View) {
     v.findNavController().popBackStack()
   }
+
+  fun share(v: AppCompatImageView){
+    store.get()?.name?.let { store.get()?.description?.let { it1 -> share(v.context, it, it1,v) } }
+  }
+
+  fun rates(v: View){
+
+  }
+
+
+  fun followers(v: View){
+
+  }
+
 
   fun whatsapp(v: View) {
     var url = "https://api.whatsapp.com/send?phone=${store.get()?.phone}"
@@ -219,6 +235,7 @@ class StoreDetailsViewModel @Inject constructor(
       }
     }
 
+    Log.d(TAG, "explore: ${exploreAdapter.differ.currentList.size}")
     notifyPropertyChanged(BR.exploreAdapter)
     show.set(true)
   }
@@ -235,10 +252,12 @@ class StoreDetailsViewModel @Inject constructor(
   fun showAds() {
     showAds.set(true)
     showGallery.set(false)
+    clickEvent.value = Constants.SCROLL_DOWN
   }
 
   fun showGallery() {
     showGallery.set(true)
     showAds.set(false)
+    clickEvent.value = Constants.SCROLL_DOWN
   }
 }

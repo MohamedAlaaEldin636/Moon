@@ -1,11 +1,16 @@
 package grand.app.moon.presentation.base
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import androidx.databinding.Observable
@@ -19,7 +24,9 @@ import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.User
 import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMessageListActivity
 import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
+import com.facebook.FacebookSdk.getCacheDir
 import es.dmoral.toasty.Toasty
+import grand.app.moon.BuildConfig
 import grand.app.moon.R
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.CometChatResource
@@ -35,13 +42,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.lang.Exception
 import java.net.URLEncoder
 
 open class BaseViewModel : ViewModel(), Observable {
   private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
   val show = ObservableBoolean(false)
-  val isGrid2= ObservableBoolean(true)
+  val isGrid2 = ObservableBoolean(true)
 
   protected var job: Job = Job()
 
@@ -55,15 +65,15 @@ open class BaseViewModel : ViewModel(), Observable {
     submitEvent.value = action
   }
 
-  fun showError(context: Context, message : String){
-    Toasty.error(context,message, Toast.LENGTH_SHORT, true).show();
+  fun showError(context: Context, message: String) {
+    Toasty.error(context, message, Toast.LENGTH_SHORT, true).show();
   }
 
-  fun showInfo(context: Context, message : String){
-    Toasty.info(context,message, Toast.LENGTH_SHORT, true).show();
+  fun showInfo(context: Context, message: String) {
+    Toasty.info(context, message, Toast.LENGTH_SHORT, true).show();
   }
 
-  fun callPhone(context: Context,phone: String){
+  fun callPhone(context: Context, phone: String) {
     val call = Uri.parse("tel:$phone")
     val surf = Intent(Intent.ACTION_DIAL, call)
     context.startActivity(surf)
@@ -100,7 +110,7 @@ open class BaseViewModel : ViewModel(), Observable {
   }
 
 
-  fun shareWhatsapp(v: View, title: String, desc: String, phone : String){
+  fun shareWhatsapp(v: View, title: String, desc: String, phone: String) {
     var url = "https://api.whatsapp.com/send?phone=${phone}"
     val i = Intent(Intent.ACTION_VIEW)
     url += "&text=" + URLEncoder.encode(
@@ -122,9 +132,78 @@ open class BaseViewModel : ViewModel(), Observable {
     }
   }
 
-  private  val TAG = "BaseViewModel"
 
-  fun startChatConversation(v: View , uid: String, name: String,image: String){
+  open fun share(
+    context: Context,
+    title: String,
+    message: String,
+    imageView: ImageView
+  ) {
+    // save bitmap to cache directory
+    try {
+      try {
+        imageView.invalidate()
+      } catch (exception: Exception) {
+        exception.printStackTrace()
+      }
+      var bitmapDrawable: BitmapDrawable? = null
+      var stream: FileOutputStream? = null
+      if (imageView.drawable != null) {
+        try {
+          bitmapDrawable = imageView.drawable as BitmapDrawable
+          val cachePath = File(getCacheDir(), "images")
+          if (!cachePath.exists()) cachePath.mkdirs() // don't forget to make the directory
+          stream = FileOutputStream("$cachePath/image.png") // overwrites this image every time
+        } catch (e: Exception) {
+          e.printStackTrace()
+        }
+      }
+      if (bitmapDrawable != null && bitmapDrawable.bitmap != null && stream != null) {
+        bitmapDrawable.bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        stream.close()
+        share(context, title, message)
+      } else  share(context, title, message)
+    } catch (e: IOException) {
+      e.printStackTrace()
+    }
+  }
+
+  open fun share(context: Context, title: String, message: String) {
+    val imagePath = File(getCacheDir(), "images")
+    val newFile = File(imagePath, "image.png")
+    val contentUri = FileProvider.getUriForFile(
+      context,
+      BuildConfig.APPLICATION_ID + ".fileprovider",
+      newFile
+    )
+    //
+    if (contentUri != null) {
+      val shareIntent = Intent()
+      shareIntent.action = Intent.ACTION_SEND
+      shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // temp permission for receiving app to read this file
+      shareIntent.setDataAndType(contentUri, context.contentResolver.getType(contentUri))
+      shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+      shareIntent.type = "*/*"
+      shareIntent.putExtra(Intent.EXTRA_SUBJECT, context.resources.getString(R.string.app_name))
+      shareIntent.putExtra(
+        Intent.EXTRA_TEXT, """
+   $title
+   $message
+   """.trimIndent()
+      )
+      context.startActivity(
+        Intent.createChooser(
+          shareIntent,
+          context.resources.getString(R.string.share)
+        )
+      )
+    }
+  }
+
+
+  private val TAG = "BaseViewModel"
+
+  fun startChatConversation(v: View, uid: String, name: String, image: String) {
     Log.d(TAG, "startChatConversation")
     v.disable()
     val user = User()
@@ -133,13 +212,14 @@ open class BaseViewModel : ViewModel(), Observable {
     user.avatar = image
     user.link = image
 
-    CometChat.login(user.uid,Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
+    CometChat.login(user.uid, Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
       override fun onSuccess(user: User?) {
         Log.d(TAG, "ologin")
         if (user != null) {
-          startChatPage(v,user)
+          startChatPage(v, user)
         }
       }
+
       override fun onError(p0: CometChatException?) {
         Log.d(TAG, "onError: " + p0?.code.toString())
         if (p0?.code.toString() == "ERR_UID_NOT_FOUND") {
@@ -164,13 +244,14 @@ open class BaseViewModel : ViewModel(), Observable {
     })
   }
 
-  fun logoutUser() :Boolean{
+  fun logoutUser(): Boolean {
     val loginUser = CometChat.getLoggedInUser()
     if (loginUser != null) {
       CometChat.logout(object : CometChat.CallbackListener<String>() {
         override fun onSuccess(p0: String?) {
           return
         }
+
         override fun onError(p0: CometChatException?) {
         }
       })
@@ -178,7 +259,13 @@ open class BaseViewModel : ViewModel(), Observable {
     return true
   }
 
-  fun loginUser(viewmodel : BaseViewModel , uid: String, name: String?,image: String?,iCometChat : ICometChat) {
+  fun loginUser(
+    viewmodel: BaseViewModel,
+    uid: String,
+    name: String?,
+    image: String?,
+    iCometChat: ICometChat
+  ) {
     Log.d(TAG, "loginUser")
     logoutUser()
     val user = User()
@@ -192,48 +279,55 @@ open class BaseViewModel : ViewModel(), Observable {
     }
     user.link = image
 
-    CometChat.login(user.uid,Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
+    CometChat.login(user.uid, Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
       override fun onSuccess(user: User?) {
         Log.d(TAG, "ologin")
         if (user != null) {
           iCometChat.setLoggedIn(true)
         }
       }
+
       override fun onError(p0: CometChatException?) {
-        Log.d(TAG, "onError: "+p0?.code.toString())
-        if(p0?.code.toString() == "ERR_UID_NOT_FOUND"){
+        Log.d(TAG, "onError: " + p0?.code.toString())
+        if (p0?.code.toString() == "ERR_UID_NOT_FOUND") {
           Log.d(TAG, "onError: HERER")
-          CometChat.createUser(user,Constants.CHAT_AUTH_KEY,object: CometChat.CallbackListener<User>(){
-            override fun onSuccess(p0: User?) {
-              Log.d(TAG, "onSuccess: DONE")
+          CometChat.createUser(
+            user,
+            Constants.CHAT_AUTH_KEY,
+            object : CometChat.CallbackListener<User>() {
+              override fun onSuccess(p0: User?) {
+                Log.d(TAG, "onSuccess: DONE")
 
-              CometChat.login(user.uid,Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
-                override fun onSuccess(user: User?) {
-                  Log.d(TAG, "ologin")
-                  if (user != null) {
-                    iCometChat.setLoggedIn(true)
-                  }
-                }
+                CometChat.login(
+                  user.uid,
+                  Constants.CHAT_AUTH_KEY,
+                  object : CometChat.CallbackListener<User>() {
+                    override fun onSuccess(user: User?) {
+                      Log.d(TAG, "ologin")
+                      if (user != null) {
+                        iCometChat.setLoggedIn(true)
+                      }
+                    }
 
-                override fun onError(p0: CometChatException?) {
-                  Log.d(TAG, "onError ${p0?.code}")
+                    override fun onError(p0: CometChatException?) {
+                      Log.d(TAG, "onError ${p0?.code}")
 
-                }
-              })
-            }
+                    }
+                  })
+              }
 
-            override fun onError(p0: CometChatException?) {
-              Log.d(TAG, "onError: CometChatException create User ${p0?.code}")
-              iCometChat.setLoggedIn(false)
-            }
-          })
+              override fun onError(p0: CometChatException?) {
+                Log.d(TAG, "onError: CometChatException create User ${p0?.code}")
+                iCometChat.setLoggedIn(false)
+              }
+            })
         }
       }
 
     })
   }
 
-  private fun startChatPage(v: View ,user: User){
+  private fun startChatPage(v: View, user: User) {
     v.enable()
     Log.d(TAG, "startChatPage")
 
