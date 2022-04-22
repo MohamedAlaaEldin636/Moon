@@ -41,6 +41,10 @@ object Constants {
   const val CHAT_APP_ID = "2065015ed5ff1e4d"
   const val CHAT_REGION: String = "us"
   const val CHAT_AUTH_KEY: String = "870588dbabec49c8ccaacfcdc7abc262bd53ad64"
+
+  val ONESIGNAL_APP_ID = "ea936a31-ed86-430a-b303-794f461dd317"
+
+
   const val Verify: String = "verify"
   const val IMAGE: String = "image"
   const val COUNTRY_ID = "COUNTRY_ID"

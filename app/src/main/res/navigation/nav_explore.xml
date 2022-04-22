@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/nav_explore"
-  app:startDestination="@id/exploreFragment">
+  app:startDestination="@id/exploreFragment"
+  android:id="@+id/nav_explore">
+
 
   <fragment
     android:id="@+id/exploreFragment"
     android:name="grand.app.moon.presentation.explore.ExploreFragment"
     android:label="@string/discover">
+
+
     <action
-      android:id="@+id/action_exploreFragment_to_exploreListFragment"
-      app:destination="@id/exploreListFragment"
       app:enterAnim="@anim/anim_slide_in_right"
 
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right" />
+      app:popExitAnim="@anim/anim_slide_out_right"
+      android:id="@+id/action_exploreFragment_to_exploreListFragment"
+      app:destination="@id/exploreListFragment" />
   </fragment>
+
   <fragment
     android:id="@+id/exploreListFragment"
     android:name="grand.app.moon.presentation.explore.ExploreListFragment"

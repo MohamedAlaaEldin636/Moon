@@ -105,23 +105,40 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         Log.d(TAG, "setBindingVariables: ")
         openUrl(it.id.toString())
       }else {
-        Log.d(TAG, "setBindingVariables: ${it.id}")
-        when(it.id){
-          Constants.CONTACT -> {
-            navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToContactUsFragment())
+        if(it.id != -1) {
+          Log.d(TAG, "setBindingVariables: ${it.id}")
+          when (it.id) {
+            Constants.CONTACT -> {
+              navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToContactUsFragment())
+            }
+            Constants.LANG -> {
+              navigateSafe(
+                SettingsFragmentDirections.actionMoreFragmentToLanguageFragment2(
+                  Constants.MORE
+                )
+              )
+            }
+            Constants.COUNTRY -> {
+              navigateSafe(
+                SettingsFragmentDirections.actionMoreFragmentToCountriesFragment3(
+                  Constants.MORE
+                )
+              )
+            }
+            else -> {
+            }
           }
-          Constants.LANG -> {
-            navigateSafe(SettingsFragmentDirections.actionMoreFragmentToLanguageFragment2(Constants.MORE))
-          }
-          Constants.COUNTRY -> {
-            navigateSafe(SettingsFragmentDirections.actionMoreFragmentToCountriesFragment3(Constants.MORE))
-          }
-          else -> {}
         }
       }
     })
   }
 
   private val TAG = "MoreFragment"
+
+  override fun onStop() {
+    super.onStop()
+    viewModel.moreAdapter.clickEvent.value = MoreItem(icon = null,id = -1)
+  }
+
 
 }

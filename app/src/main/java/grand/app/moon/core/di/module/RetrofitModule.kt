@@ -75,6 +75,7 @@ object RetrofitModule {
 //          .addHeader(
 //            "countryId", countryId
 //          )
+          .addHeader("platform", "1")
           .addHeader("Accept", "application/json")
 //          .addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
           .build()
@@ -108,6 +109,7 @@ object RetrofitModule {
       val newRequest = chain.request().newBuilder()
         .addHeader("Authorization", "Bearer $userToken")
         .addHeader("countryId", countryId)
+        .addHeader("platform", "1")
         .addHeader("language", pref.getLocal(Constants.LANGUAGE))
 
       .build()

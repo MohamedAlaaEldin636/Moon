@@ -156,6 +156,16 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
 
   }
 
+  override fun onStop() {
+    super.onStop()
+    viewModel.moreAdapter.clickEvent.value = MoreItem(icon = null,id = -1)
+  }
+
+  override fun onDetach() {
+    super.onDetach()
+  }
+
+
   override fun onResume() {
     super.onResume()
   }

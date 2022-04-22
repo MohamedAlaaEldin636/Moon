@@ -13,12 +13,14 @@ import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
+import com.onesignal.OneSignal
 import com.zeugmasolutions.localehelper.LocaleAwareApplication
 import dagger.hilt.android.HiltAndroidApp
 import grand.app.moon.presentation.base.utils.Constants
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import javax.net.ssl.SSLContext
+
 
 @HiltAndroidApp
 class MyApplication : LocaleAwareApplication() {
@@ -27,6 +29,9 @@ class MyApplication : LocaleAwareApplication() {
   fun attachBaseContext(base: Context) {
     super.attachBaseContext(base)
     MultiDex.install(this)
+
+
+
   }
 
   override
@@ -38,6 +43,11 @@ class MyApplication : LocaleAwareApplication() {
     initStoryViewer()
     instance = this
 
+    // Logging set to help debug issues, remove before releasing your app.
+    OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
+    // OneSignal Initialization
+    OneSignal.initWithContext(this)
+    OneSignal.setAppId(Constants.ONESIGNAL_APP_ID)
   }
 
   private fun initStoryViewer() {

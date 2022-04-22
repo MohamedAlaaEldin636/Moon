@@ -86,7 +86,11 @@
   <fragment
     android:id="@+id/discoverFragment"
     android:name="grand.app.moon.presentation.discover.DiscoverFragment"
-    android:label="@string/discover" />
+    android:label="@string/discover" >
+    <action
+      android:id="@+id/action_discoverFragment_to_nav_explore"
+      app:destination="@id/nav_explore" />
+  </fragment>
   <fragment
     android:id="@+id/contactUsFragment"
     android:name="grand.app.moon.presentation.contactUs.ContactUsFragment"
@@ -108,6 +112,7 @@
 
   <include app:graph="@navigation/nav_store" />
   <include app:graph="@navigation/nav_explore" />
+
   <fragment
     android:id="@+id/departmentListFragment"
     android:name="grand.app.moon.presentation.category.view.CategoryListFragment"

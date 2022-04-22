@@ -50,11 +50,11 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
     val data = differ.currentList[position]
     val itemViewModel = ItemExploreViewModel(data, position,user)
     Log.d(TAG, "onBindViewHolder: " + data.file)
-    itemViewModel.submitEventEvent.observeForever {
-      Log.d(TAG, "onBindViewHolder: ")
-      this.position = position
-      clickEvent.value = it
-    }
+//    itemViewModel.submitEventEvent.observeForever {
+//      Log.d(TAG, "onBindViewHolder: ")
+//      this.position = position
+//      clickEvent.value = it
+//    }
 
 //    holder.itemLayoutBinding.appCompatEditText.setOnEditorActionListener(TextView.OnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
 //      if (i == EditorInfo.IME_ACTION_SEND) {

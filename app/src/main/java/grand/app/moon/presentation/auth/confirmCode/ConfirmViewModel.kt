@@ -10,6 +10,7 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConfirmViewModel @Inject constructor(
+  val userLocalUseCase: UserLocalUseCase,
   private val verifyAccountUseCase: VerifyAccountUseCase) :
   BaseViewModel() {
   val request = VerifyAccountRequest()

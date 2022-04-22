@@ -1,5 +1,6 @@
 package grand.app.moon.domain.account.use_case
 
+import com.onesignal.OneSignal
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.auth.entity.model.User
 //import grand.app.moon.domain.countries.entity.Country
@@ -27,6 +28,7 @@ class UserLocalUseCase @Inject constructor(private val accountRepository: Accoun
   }
 
   fun clearUser() {
+    OneSignal.removeExternalUserId();
     accountRepository.clearUser()
   }
 

@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +16,12 @@ import com.cometchat.pro.models.User
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemExploreBinding
 import grand.app.moon.domain.explore.entity.Explore
+import grand.app.moon.domain.explore.entity.ExploreListPaginateData
+import grand.app.moon.presentation.explore.ExploreFragmentDirections
+import grand.app.moon.presentation.explore.viewmodel.ExploreViewModel
 import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
   var clickEvent: MutableLiveData<Int> = MutableLiveData()
@@ -42,6 +50,16 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
     holder.itemLayoutBinding.itemExplore.setOnClickListener {
       Log.d(TAG, "onBindViewHolder: ")
       clickEvent.value = position
+
+//      val list = ArrayList(differ.currentList)
+//      viewModel.lastData.list.clear()
+//      viewModel.lastData.list.addAll(list)
+//      Collections.swap(viewModel.lastData.list, 0, it);
+
+//      var lastData = ExploreListPaginateData()
+//      it!!.findNavController().navigate(ExploreFragmentDirections.actionExploreFragmentToNavExplore(lastData,1))
+
+
     }
     holder.setViewModel(itemViewModel)
   }

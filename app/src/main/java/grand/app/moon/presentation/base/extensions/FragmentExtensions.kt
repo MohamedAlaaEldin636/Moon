@@ -35,6 +35,7 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.facebook.FacebookSdk.getCacheDir
 import grand.app.moon.BuildConfig
+import grand.app.moon.appMoonHelper.ThirdPartyHelper
 import grand.app.moon.core.MyApplication
 import grand.app.moon.domain.intro.entity.AppTutorial
 import java.io.File
@@ -63,6 +64,7 @@ fun Fragment.handleApiError(
       showNoInternetAlert(requireActivity())
     }
     FailureStatus.TOKEN_EXPIRED -> {
+      ThirdPartyHelper.clearOpenSignal()
       openActivityAndClearStack(AuthActivity::class.java)
     }
     else -> showNoApiErrorAlert(requireActivity(), getString(R.string.some_error))

@@ -49,7 +49,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.settings_fragment,
         R.id.myAccountFragment,
         R.id.mapFragment,
-        R.id.exploreFragment
+        R.id.nav_explore
       )
     )
     setSupportActionBar(binding.toolbar)
@@ -72,6 +72,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
 
     nav.addOnDestinationChangedListener { controller, destination, arguments ->
+
       resetTexts()
       binding.icNotificationFilter.hide()
       when (destination.id) {
@@ -119,7 +120,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           hideAllToolbar()
         }
         else -> {
-
+          binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite))
           binding.toolbar.title =
             if (arguments != null && arguments.containsKey(Constants.TabBarText)) arguments.getString(
               Constants.TabBarText
@@ -155,7 +156,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
 
   private fun resetTexts() {
-    binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite))
+    binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+//    binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite))
     binding.tvHomeTitle.text = ""
     binding.toolbar.title = ""
   }

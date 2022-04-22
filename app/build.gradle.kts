@@ -10,6 +10,8 @@ plugins {
   id(Config.Plugins.navigationSafeArgs)
   id(Config.Plugins.hilt)
   id(Config.Plugins.google_services)
+  id ("com.onesignal.androidsdk.onesignal-gradle-plugin")
+
 
 }
 
@@ -199,6 +201,9 @@ dependencies {
 
   //eventBus
   implementation("org.greenrobot:eventbus:3.3.1")
+
+  //oneSignal
+  implementation ("com.onesignal:OneSignal:[4.0.0, 4.99.99]")
 
 
   // Project Modules

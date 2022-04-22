@@ -10,6 +10,8 @@ buildscript {
     classpath(Config.Dependencies.navigationSafeArgs)
     classpath(Config.Dependencies.hilt)
     classpath(Config.Dependencies.google_services)
+    classpath ("gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]")
+
   }
 }
 

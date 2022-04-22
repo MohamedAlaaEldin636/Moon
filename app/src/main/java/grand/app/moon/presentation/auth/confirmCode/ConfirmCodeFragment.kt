@@ -15,6 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.home.HomeActivity
 import kotlinx.coroutines.flow.collect
+import com.onesignal.OneSignal
+
+
+
 
 @AndroidEntryPoint
 class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
@@ -44,6 +48,8 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           is Resource.Success -> {
             hideLoading()
             activity?.finishAffinity()
+            val externalUserId = viewModel.userLocalUseCase.invoke().id
+            OneSignal.setExternalUserId("user_$externalUserId")
             openActivityAndClearStack(HomeActivity::class.java)
           }
           is Resource.Failure -> {

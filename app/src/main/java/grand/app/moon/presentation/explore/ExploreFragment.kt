@@ -1,8 +1,14 @@
 package grand.app.moon.presentation.explore
 
+import android.content.Context
+import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -31,7 +37,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.callService()
   }
 
   override
@@ -39,10 +44,30 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     setRecyclerViewScrollListener()
   }
 
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    Log.d(TAG, "onCreateView: ")
+    return super.onCreateView(inflater, container, savedInstanceState)
+  }
+
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    Log.d(TAG, "onAttach: ")
+  }
+  
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    Log.d(TAG, "onViewCreated: ")
+  }
+
   private  val TAG = "ExploreFragment"
   override fun setupObservers() {
 
-    lifecycleScope.launchWhenResumed {
+    lifecycleScope.launchWhenCreated {
+      viewModel.callService()
       viewModel.response.collect {
         when (it) {
           Resource.Loading -> {
@@ -62,12 +87,19 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
       }
     }
 
-    viewModel.adapter.clickEvent.observe(this,{
-      val list = ArrayList(viewModel.adapter.differ.currentList)
-      viewModel.lastData.list.clear()
-      viewModel.lastData.list.addAll(list)
-      Collections.swap(viewModel.lastData.list, 0, it);
-      navigateSafe(ExploreFragmentDirections.actionExploreFragmentToExploreListFragment(viewModel.lastData,viewModel.page))
+    viewModel.adapter.clickEvent.observe(viewLifecycleOwner,{
+      if(it != -1) {
+        val list = ArrayList(viewModel.adapter.differ.currentList)
+        viewModel.lastData.list.clear()
+        viewModel.lastData.list.addAll(list)
+        Collections.swap(viewModel.lastData.list, 0, it);
+        findNavController().navigate(
+          ExploreFragmentDirections.actionExploreFragmentToExploreListFragment(
+            viewModel.lastData,
+            viewModel.page
+          )
+        )
+      }
     })
   }
 
@@ -106,5 +138,16 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
         }
       }
     })
+  }
+
+  override fun onStop() {
+    super.onStop()
+    viewModel.response.value = Resource.Default
+    viewModel.adapter.clickEvent.value = -1
+  }
+
+  override fun onDetach() {
+    super.onDetach()
+    viewModel.page = 0
   }
 }
