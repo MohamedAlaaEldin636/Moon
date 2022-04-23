@@ -21,6 +21,10 @@
     <item name="android:windowActionBarOverlay">true</item>
   </style>
 
+  <style name="progressWhite" parent="ThemeOverlay.AppCompat.Light">
+    <item name="colorAccent">@color/colorWhite</item>
+  </style>
+
   <style name="CustomShapeAppearance_left" parent="Widget.MaterialComponents.Button.OutlinedButton">
     <item name="cornerSizeTopLeft">16dp</item>
     <item name="cornerSizeBottomLeft">16dp</item>

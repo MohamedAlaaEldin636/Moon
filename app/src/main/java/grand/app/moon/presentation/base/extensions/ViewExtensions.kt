@@ -55,6 +55,7 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSourceFactory
 import grand.app.moon.domain.utils.SpannedGridLayoutManager
+import grand.app.moon.presentation.media.image.utils.ImageMatrixTouchHandler
 
 
 fun View.show() {
@@ -216,13 +217,61 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
 
   } else {
     progressBar?.hide()
-    when (defaultImage) {
-      null -> setImageResource(R.drawable.bg_no_image)
-      is Int -> setImageResource(defaultImage)
-      is Drawable -> setImageDrawable(defaultImage)
+    try {
+      when (defaultImage) {
+        null -> setImageResource(R.drawable.bg_no_image)
+        is Int -> setImageResource(defaultImage)
+        is Drawable -> setImageDrawable(defaultImage)
+      }
+    }catch (e: Exception){
+      e.printStackTrace()
     }
   }
 }
+
+
+@BindingAdapter(
+  value = ["app:imageZoom", "app:progressBar"],
+  requireAll = false
+)
+fun AppCompatImageView.imageZoom(imageUrl: String?, progressBar: ProgressBar?) {
+  if (imageUrl != null && imageUrl.isNotEmpty()) {
+    if (URLUtil.isValidUrl(imageUrl)) {
+      val request = ImageRequest.Builder(context)
+        .data(imageUrl)
+        .crossfade(true)
+        .crossfade(400)
+        .error(R.drawable.bg_no_image)
+        .target(
+          onStart = { placeholder ->
+            progressBar?.show()
+            setImageDrawable(placeholder)
+          },
+          onSuccess = { result ->
+            progressBar?.hide()
+            setImageDrawable(result)
+          }
+        )
+        .listener(onError = { request: ImageRequest, _: Throwable ->
+          progressBar?.hide()
+          setImageDrawable(request.error)
+        })
+        .build()
+
+      ImageLoader(context).enqueue(request)
+      setOnTouchListener(ImageMatrixTouchHandler(context))
+
+    } else {
+      load(File(imageUrl)) {
+        crossfade(750) // 75th percentile of a second
+        build()
+      }
+    }
+
+  }
+}
+
+
 
 @BindingAdapter(
   value = ["app:loadVideo", "app:progressBar"],

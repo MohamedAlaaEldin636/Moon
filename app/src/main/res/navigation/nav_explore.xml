@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  app:startDestination="@id/exploreFragment"
-  android:id="@+id/nav_explore">
+  android:id="@+id/nav_explore"
+  app:startDestination="@id/exploreFragment">
 
 
   <fragment
@@ -12,13 +12,13 @@
 
 
     <action
-      app:enterAnim="@anim/anim_slide_in_right"
+      android:id="@+id/action_exploreFragment_to_exploreListFragment"
 
+      app:destination="@id/exploreListFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      android:id="@+id/action_exploreFragment_to_exploreListFragment"
-      app:destination="@id/exploreListFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
   </fragment>
 
   <fragment
@@ -50,11 +50,17 @@
     <action
       android:id="@+id/action_exploreListFragment_to_profileFragment2"
 
+      app:destination="@id/profileFragment2"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/profileFragment2" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_exploreListFragment_to_videoFragment"
+      app:destination="@id/videoFragment" />
+    <action
+      android:id="@+id/action_exploreListFragment_to_zoomFragment"
+      app:destination="@id/zoomFragment" />
   </fragment>
   <fragment
     android:id="@+id/commentsListFragment"
@@ -86,4 +92,28 @@
     android:id="@+id/profileFragment2"
     android:name="grand.app.moon.presentation.auth.profile.ProfileFragment"
     android:label="@string/personal_info" />
+  <fragment
+    android:id="@+id/zoomFragment"
+    android:name="grand.app.moon.presentation.media.image.ZoomFragment"
+    android:label=""
+    app:enterAnim="@anim/anim_slide_in_right"
+    app:exitAnim="@anim/anim_slide_out_left"
+    app:popEnterAnim="@anim/anim_slide_in_left"
+    app:popExitAnim="@anim/anim_slide_out_right">
+    <argument
+      android:name="image"
+      app:argType="string" />
+  </fragment>
+  <fragment
+    android:id="@+id/videoFragment"
+    android:name="grand.app.moon.presentation.media.video.VideoFragment"
+    android:label=""
+    app:enterAnim="@anim/anim_slide_in_right"
+    app:exitAnim="@anim/anim_slide_out_left"
+    app:popEnterAnim="@anim/anim_slide_in_left"
+    app:popExitAnim="@anim/anim_slide_out_right">
+    <argument
+      android:name="video"
+      app:argType="string" />
+  </fragment>
 </navigation>

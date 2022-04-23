@@ -44,7 +44,7 @@ class FilterSortDialog : BottomSheetDialogFragment() {
         viewModel.list.add(AppTutorial(3,content = resources.getString(R.string.highest_price)))
         viewModel.list.add(AppTutorial(4,content = resources.getString(R.string.lowest_price)))
       }
-      else -> {
+      FilterDialog.NOTIFICATION -> {
         viewModel.title.set(resources.getString(R.string.notification_type))
         viewModel.list.add(AppTutorial(3,content = resources.getString(R.string.all)))
         viewModel.list.add(AppTutorial(1,content = resources.getString(R.string.moon_notifications)))

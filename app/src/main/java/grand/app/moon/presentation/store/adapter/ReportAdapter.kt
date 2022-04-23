@@ -42,7 +42,7 @@ class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
   @SuppressLint("RecyclerView")
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemReportViewModel(data)
+    val itemViewModel = ItemReportViewModel(data,position == lastPosition)
     itemViewModel.clickEvent.observeForever {
       Log.d(TAG, "onBindViewHolder: $lastPosition")
       if(lastPosition != -1) {
@@ -50,7 +50,7 @@ class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
         notifyItemChanged(lastPosition)
       }
       lastPosition = position
-      lastSelected = data.id!!
+      lastSelected = data.id
       differ.currentList[position].active = 1
       changeEvent.value = data // for listen on view
       notifyItemChanged(position)

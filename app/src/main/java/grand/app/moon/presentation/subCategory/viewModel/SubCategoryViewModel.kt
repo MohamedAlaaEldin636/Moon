@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.BuildConfig
 import grand.app.moon.appMoonHelper.FilterDialog
+import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
@@ -20,13 +21,17 @@ import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.story.adapter.StoriesAdapter
 import grand.app.moon.presentation.subCategory.SubCategoryFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SubCategoryViewModel @Inject constructor(
   private val useCase: AdsUseCase,
+  private val accountRepository: AccountRepository,
+
 ) : BaseViewModel() {
   @Bindable
   var page: Int = 0
@@ -35,6 +40,7 @@ class SubCategoryViewModel @Inject constructor(
   var callingService = false
 
   var subCategoryId: Int = -1
+  var categoryId: Int = -1
 
   var isLast = false
 
@@ -47,7 +53,7 @@ class SubCategoryViewModel @Inject constructor(
   @Bindable
   var adapter = AdsAdapter()
 
-  var ADS_LIST_URL =""
+  var ADS_LIST_URL = ""
 
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<SubCategoryResponse>>>(Resource.Default)
@@ -70,14 +76,15 @@ class SubCategoryViewModel @Inject constructor(
     }
   }
 
-  fun reset(){
+  fun reset() {
     page = 0
     callingService = false
     isLast = false
   }
 
   private fun getAdsList() {
-    ADS_LIST_URL =  "${BuildConfig.API_BASE_URL}v1/advertisements?page=${page}&sub_category_id=${subCategoryId}&order_by=$sortBy"
+    ADS_LIST_URL =
+      "${BuildConfig.API_BASE_URL}v1/advertisements?page=${page}&sub_category_id=${subCategoryId}&order_by=$sortBy"
     job = useCase.getAdsSubCategory(ADS_LIST_URL)
       .onEach {
         response.value = it
@@ -85,15 +92,25 @@ class SubCategoryViewModel @Inject constructor(
       .launchIn(viewModelScope)
   }
 
-  fun filter(v: View){
-
+  fun filter(v: View) {
+    v.findNavController().navigate(
+      SubCategoryFragmentDirections.actionSubCategoryFragmentToFilterFragment(
+        categoryId,
+        subCategoryId
+      )
+    )
   }
 
-  fun filterSort(v: View){
-    v.findNavController().navigate(SubCategoryFragmentDirections.actionSubCategoryFragmentToFilterSortDialog(sortBy,FilterDialog.ADVERTISEMENT))
+  fun filterSort(v: View) {
+    v.findNavController().navigate(
+      SubCategoryFragmentDirections.actionSubCategoryFragmentToFilterSortDialog(
+        sortBy,
+        FilterDialog.ADVERTISEMENT
+      )
+    )
   }
 
-  fun map(v: View){
+  fun map(v: View) {
     val action = SubCategoryFragmentDirections.actionSubCategoryFragmentToMapFragment()
     action.type = Constants.ADVERTISEMENT_TEXT
     v.findNavController().navigate(action)
@@ -120,9 +137,24 @@ class SubCategoryViewModel @Inject constructor(
   }
 
 
-
   override fun onCleared() {
     job.cancel()
     super.onCleared()
+  }
+
+  fun setCategoryId() {
+    viewModelScope.launch {
+      accountRepository.getCategories().collect {
+        it.data.forEach { categoryItem ->
+          categoryItem.subCategories?.forEach { subCategory ->
+            if(subCategory.id == subCategoryId){
+              categoryId = categoryItem.id!!
+              return@forEach
+            }
+          }
+        }
+      }
+    }
+
   }
 }

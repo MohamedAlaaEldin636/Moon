@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <variable
+      name="itemViewModels"
+      type="grand.app.moon.presentation.filter.viewModels.ItemFilterViewModel" />
+
+  </data>
+
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/dimen6"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+      style="@style/boldFont"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dimen8"
+      android:layout_marginStart="@dimen/dimen16"
+      android:layout_marginEnd="@dimen/dimen16"
+      android:layout_marginBottom="@dimen/dimen4"
+
+      android:text="@{itemViewModels.model.name}"
+      android:textAlignment="viewEnd"
+      android:textSize="@dimen/text_size16"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/black"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="@string/contact_us" />
+
+    <com.google.android.material.card.MaterialCardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/dimen16"
+      android:layout_marginEnd="@dimen/dimen16"
+      app:cardCornerRadius="@dimen/dimen6"
+      app:cardElevation="@dimen/dimen4">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_more_item"
+          style="@style/mediumFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen8"
+          android:layout_marginTop="@dimen/dimen16"
+          android:layout_marginBottom="@dimen/dimen16"
+          android:textSize="@dimen/text_size14"
+          android:text="@{itemViewModels.model.selectedText}"
+          android:textAlignment="viewEnd"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/black"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="@string/all" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/btn_details"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:src="@drawable/ic_more"
+          android:rotation="180"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+  </LinearLayout>
+
+
+</layout>

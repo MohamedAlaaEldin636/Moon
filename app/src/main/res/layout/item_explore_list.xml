@@ -87,6 +87,7 @@
       app:layout_constraintStart_toStartOf="parent"
       android:layout_marginTop="@dimen/dimen10"
       app:layout_constraintTop_toBottomOf="@+id/barrier5"
+      android:onClick="@{ (v) -> viewModel.click(v) }"
       app:loadImage="@{viewModel.model.file}"
       app:progressBar="@{progress}" />
 

@@ -27,66 +27,64 @@
       app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_home_fragment_to_categoryDetailsFragment"
+      app:destination="@id/categoryDetailsFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/categoryDetailsFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_home_fragment_to_adsListFragment2"
+      app:destination="@id/adsListFragment2"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/adsListFragment2" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_home_fragment_to_searchFragment"
+      app:destination="@id/searchFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/searchFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_home_fragment_to_storeListFragment"
+      app:destination="@id/storeListFragment"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/storeListFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
 
   </fragment>
 
   <action
     android:id="@+id/action_home_fragment_to_departmentListFragment"
+    app:destination="@id/departmentListFragment"
     app:enterAnim="@anim/anim_slide_in_right"
     app:exitAnim="@anim/anim_slide_out_left"
     app:popEnterAnim="@anim/anim_slide_in_left"
-    app:popExitAnim="@anim/anim_slide_out_right"
-    app:destination="@id/departmentListFragment" />
+    app:popExitAnim="@anim/anim_slide_out_right" />
 
   <action
     android:id="@+id/action_home_fragment_to_cometChatConversationList"
+    app:destination="@id/cometChatConversationList"
     app:enterAnim="@anim/anim_slide_in_right"
     app:exitAnim="@anim/anim_slide_out_left"
     app:popEnterAnim="@anim/anim_slide_in_left"
-    app:popExitAnim="@anim/anim_slide_out_right"
-    app:destination="@id/cometChatConversationList" />
-
+    app:popExitAnim="@anim/anim_slide_out_right" />
 
 
   <fragment
     android:id="@+id/mapFragment"
     android:name="grand.app.moon.presentation.map.MapFragment"
-    android:label="@string/map" >
+    android:label="@string/map">
     <argument
       android:name="type"
-      app:argType="string"
       android:defaultValue=""
-      />
+      app:argType="string" />
   </fragment>
   <fragment
     android:id="@+id/discoverFragment"
     android:name="grand.app.moon.presentation.discover.DiscoverFragment"
-    android:label="@string/discover" >
+    android:label="@string/discover">
     <action
       android:id="@+id/action_discoverFragment_to_nav_explore"
       app:destination="@id/nav_explore" />
@@ -116,14 +114,14 @@
   <fragment
     android:id="@+id/departmentListFragment"
     android:name="grand.app.moon.presentation.category.view.CategoryListFragment"
-    android:label="@string/departments" >
+    android:label="@string/departments">
     <action
       android:id="@+id/action_departmentListFragment_to_categoryDetailsFragment"
+      app:destination="@id/categoryDetailsFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/categoryDetailsFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
   </fragment>
   <fragment
     android:id="@+id/cometChatConversationList"
@@ -132,7 +130,7 @@
   <fragment
     android:id="@+id/categoryDetailsFragment"
     android:name="grand.app.moon.presentation.category.view.CategoryDetailsFragment"
-    android:label="{tabBarText}" >
+    android:label="{tabBarText}">
     <argument
       android:name="category_id"
       app:argType="integer" />
@@ -141,76 +139,73 @@
       app:argType="string" />
     <action
       android:id="@+id/action_categoryDetailsFragment_to_adsListFragment2"
+      app:destination="@id/adsListFragment2"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/adsListFragment2" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_categoryDetailsFragment_to_subCategoryFragment"
+      app:destination="@id/subCategoryFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/subCategoryFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_categoryDetailsFragment_to_searchFragment"
+      app:destination="@id/searchFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/searchFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
   </fragment>
   <fragment
     android:id="@+id/adsListFragment2"
     android:name="grand.app.moon.presentation.ads.AdsListFragment"
-    android:label="{title}" >
+    android:label="{tabBarText}">
     <argument
-      android:name="title"
+      android:name="tabBarText"
       app:argType="string" />
   </fragment>
   <fragment
     android:id="@+id/subCategoryFragment"
     android:name="grand.app.moon.presentation.subCategory.SubCategoryFragment"
-    android:label="" >
+    android:label="{tabBarText}">
     <argument
       android:name="sub_category_id"
-      app:argType="integer"
-      android:defaultValue="0" />
+      android:defaultValue="0"
+      app:argType="integer" />
+
+    <argument
+      android:name="tabBarText"
+      app:argType="string" />
+
     <action
       android:id="@+id/action_subCategoryFragment_to_mapFragment"
+      app:destination="@id/mapFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/mapFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_subCategoryFragment_to_filterSortDialog"
       app:destination="@id/filterSortDialog" />
+    <action
+      android:id="@+id/action_subCategoryFragment_to_filterFragment"
+      app:destination="@id/filterFragment" />
   </fragment>
 
-
-<!--  <dialog-->
-<!--    android:id="@+id/filterDialog"-->
-<!--    android:name="grand.app.moon.presentation.ads.FilterSortDialog"-->
-<!--    android:label="FilterDialogFragment" >-->
-<!--    <argument-->
-<!--      android:name="selected"-->
-<!--      app:argType="string" />-->
-
-<!--  </dialog>-->
 
   <dialog
     android:id="@+id/workingHoursDialog"
     android:name="grand.app.moon.presentation.store.dialog.WorkingHoursDialog"
-    android:label="@string/show_number_hours" >
-  </dialog>
+    android:label="@string/show_number_hours"></dialog>
 
 
   <fragment
     android:id="@+id/notificationFragment"
     android:name="grand.app.moon.presentation.notfication.NotificationFragment"
-    android:label="@string/notifications" >
+    android:label="@string/notifications">
 
     <action
       android:id="@+id/action_notificationFragment_to_filterSortDialog"
@@ -226,7 +221,7 @@
   <dialog
     android:id="@+id/filterSortDialog"
     android:name="grand.app.moon.presentation.ads.FilterSortDialog"
-    android:label="@string/filter" >
+    android:label="@string/filter">
     <argument
       android:name="selected"
       app:argType="integer" />
@@ -237,28 +232,28 @@
   <fragment
     android:id="@+id/searchFragment"
     android:name="grand.app.moon.presentation.search.views.SearchFragment"
-    android:label="@string/search" >
+    android:label="@string/search">
     <argument
       android:name="category_id"
-      app:argType="integer"
-      android:defaultValue="-1" />
+      android:defaultValue="-1"
+      app:argType="integer" />
     <argument
       android:name="sub_category_id"
-      app:argType="integer"
-      android:defaultValue="-1" />
+      android:defaultValue="-1"
+      app:argType="integer" />
   </fragment>
 
   <fragment
     android:id="@+id/storeListFragment"
     android:name="grand.app.moon.presentation.store.views.StoreListFragment"
-    android:label="{title}" >
+    android:label="{title}">
     <action
       android:id="@+id/action_storeListFragment_to_storeFilterFragment"
+      app:destination="@id/storeFilterFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/storeFilterFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <argument
       android:name="title"
       app:argType="string" />
@@ -268,10 +263,65 @@
   <fragment
     android:id="@+id/storeFilterFragment"
     android:name="grand.app.moon.presentation.storeFilter.views.StoreFilterFragment"
-    android:label="@string/filter_search" >
+    android:label="@string/filter_search">
     <argument
       android:name="store_filter"
       app:argType="grand.app.moon.domain.store.entity.StoreFilterRequest" />
+  </fragment>
+  <fragment
+    android:id="@+id/filterFragment"
+    android:name="grand.app.moon.presentation.filter.FilterFragment"
+    android:label="@string/filter">
+    <argument
+      android:name="category_id"
+      app:argType="integer" />
+    <argument
+      android:name="sub_category_id"
+      app:argType="integer" />
+    <action
+      android:id="@+id/action_filterFragment_to_filterSingleSelectDialog"
+      app:destination="@id/filterSingleSelectDialog" />
+    <action
+      android:id="@+id/action_filterFragment_to_filterMultiSelectDialog"
+      app:destination="@id/filterMultiSelectDialog" />
+    <action
+      android:id="@+id/action_filterFragment_to_filterResultsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/filterResultsFragment" />
+  </fragment>
+  <dialog
+    android:id="@+id/filterSingleSelectDialog"
+    android:name="grand.app.moon.presentation.filter.dialog.FilterSingleSelectDialog"
+    android:label="{tabBarText}">
+    <argument
+      android:name="propety"
+      app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />
+    <argument
+      android:name="tabBarText"
+      app:argType="string" />
+  </dialog>
+  <dialog
+    android:id="@+id/filterMultiSelectDialog"
+    android:name="grand.app.moon.presentation.filter.dialog.multiCheck.FilterMultiSelectDialog"
+    android:label="FilterMultiSelectDialog">
+
+    <argument
+      android:name="propety"
+      app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />
+    <argument
+      android:name="tabBarText"
+      app:argType="string" />
+  </dialog>
+  <fragment
+    android:id="@+id/filterResultsFragment"
+    android:name="grand.app.moon.presentation.filter.result.FilterResultsFragment"
+    android:label="@string/filter_results" >
+    <argument
+      android:name="filterRequest"
+      app:argType="grand.app.moon.domain.filter.entitiy.FilterResultRequest" />
   </fragment>
 
   <!--  <fragment-->

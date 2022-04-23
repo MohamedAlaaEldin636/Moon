@@ -3,13 +3,11 @@ package grand.app.moon.domain.ads.use_case
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
-import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.domain.filter.entitiy.FilterDetails
+import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.Advertisement
-import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.home.models.review.ReviewsPaginateData
-import grand.app.moon.domain.home.repository.HomeRepository
-import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -61,6 +59,20 @@ class AdsUseCase @Inject constructor(
   fun addReview(request: ReviewRequest): Flow<Resource<BaseResponse<*>>> = flow {
     emit(Resource.Loading)
     val result = repo.addReview(request)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun filterDetails(categoryId: Int , subCategoryId: Int): Flow<Resource<BaseResponse<FilterDetails>>> = flow {
+    emit(Resource.Loading)
+    val result = repo.filterDetails(categoryId,subCategoryId)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun filterResults(resultRequest : FilterResultRequest): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
+    emit(Resource.Loading)
+    if(resultRequest.properties?.isEmpty() == true) resultRequest.properties = null
+    if(resultRequest.cityIds?.isEmpty() == true) resultRequest.cityIds = null
+    val result = repo.filterResults(resultRequest)
     emit(result)
   }.flowOn(Dispatchers.IO)
 }

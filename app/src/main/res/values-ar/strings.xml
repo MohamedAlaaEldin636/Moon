@@ -132,7 +132,7 @@
   <string name="filter">فلترة</string>
   <string name="filter_sort">تصفية</string>
     <string name="notification_removed_successfully">تم حذف الإشعار بنجاح</string>
-    <string name="notification_type">نوع الاشعارا</string>
+    <string name="notification_type">نوع الاشعارات</string>
   <string name="moon_notifications">اشعارات موون</string>
   <string name="moon_traders">اشعارات التجار</string>
   <string name="notifications">إشعارات</string>
@@ -146,5 +146,10 @@
   <string name="add_description_for_rate">أضف وصف للتقيم</string>
   <string name="add_rate">إضافة التقيم</string>
   <string name="add_review">أضف تقييم</string>
+  <string name="other_options">اختيارات اخري</string>
+  <string name="all_ads">جميع الإعلانات</string>
+  <string name="premium_ads">إعلانات مميزة فقط</string>
+  <string name="free_ads">إعلانات مجانية</string>
+  <string name="filter_results">نتائج البحث</string>
 
 </resources>

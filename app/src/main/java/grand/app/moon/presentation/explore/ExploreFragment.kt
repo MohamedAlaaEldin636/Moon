@@ -87,7 +87,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
       }
     }
 
-    viewModel.adapter.clickEvent.observe(viewLifecycleOwner,{
+    viewModel.adapter.clickEvent.observe(this,{
       if(it != -1) {
         val list = ArrayList(viewModel.adapter.differ.currentList)
         viewModel.lastData.list.clear()

@@ -94,7 +94,7 @@ object Constants {
   const val BUNDLE: String = "bundle"
   const val SORT_BY: String = "sort_by"
   const val STORE_FILTER: String = "store_filter"
-  const val CITES_SELECTED: String = "cities_selected"
+  const val PROPERTY: String = "property"
   const val CATEGORIES_SELECTED: String = "categories_selected"
 
 

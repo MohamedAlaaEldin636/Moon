@@ -42,6 +42,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
   fun setBindingVariables() {
     binding.viewModel = viewModel
     viewModel.subCategoryId = args.subCategoryId
+    viewModel.setCategoryId()
     viewModel.callService()
   }
 

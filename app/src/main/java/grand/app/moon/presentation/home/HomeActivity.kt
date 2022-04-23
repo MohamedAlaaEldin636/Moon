@@ -49,7 +49,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.settings_fragment,
         R.id.myAccountFragment,
         R.id.mapFragment,
-        R.id.nav_explore
+        R.id.exploreFragment
       )
     )
     setSupportActionBar(binding.toolbar)
@@ -93,16 +93,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.myAccountFragment -> {
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
           binding.tvHomeTitle.text = destination.label
-          if (!viewModel.userLocalUseCase.isLoggin()) startActivity(
-            Intent(
-              this,
-              AuthActivity::class.java
-            )
-          )
+//          if (!viewModel.userLocalUseCase.isLoggin()) startActivity(
+//            Intent(
+//              this,
+//              AuthActivity::class.java
+//            )
+//          )
           showTopBarControls()
           showText()
         }
         R.id.exploreFragment, R.id.mapFragment -> {
+          Log.d(TAG, "setUpBottomNavigationWithGraphs: ")
           showTopBarControls()
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
           binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
@@ -121,6 +122,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
 
         else -> {
+          Log.d(TAG, "setUpBottomNavigationWithGraphs: ${destination.label}")
           binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite))
           binding.toolbar.title =
             if (arguments != null && arguments.containsKey(Constants.TabBarText)) arguments.getString(

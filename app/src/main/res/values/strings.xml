@@ -154,5 +154,10 @@
   <string name="add_description_for_rate">أضف وصف للتقيم</string>
   <string name="add_rate">إضافة التقيم</string>
   <string name="add_review">Add Review</string>
+  <string name="other_options">اختيارات اخري</string>
+  <string name="all_ads">جميع الإعلانات</string>
+  <string name="premium_ads">إعلانات مميزة فقط</string>
+  <string name="free_ads">إعلانات مجانية</string>
+  <string name="filter_results">نتائج البحث</string>
 
 </resources>

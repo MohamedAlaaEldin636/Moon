@@ -49,7 +49,7 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
     val itemViewModel = ItemExploreViewModel(data,position,user)
     Log.d(TAG, "onBindViewHolder: "+data.file)
     holder.itemLayoutBinding.itemExplore.setOnClickListener {
-      Log.d(TAG, "onBindViewHolder: ")
+      Log.d(TAG, "onBindViewHolder: $position")
       clickEvent.value = position
 
 //      val list = ArrayList(differ.currentList)

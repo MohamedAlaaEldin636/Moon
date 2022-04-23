@@ -53,6 +53,7 @@
         android:layout_centerInParent="true"
         android:minWidth="0dp"
         android:minHeight="0dp"
+        android:checked="@{countryItemViewModels.selected}"
         android:onClick="@{()-> countryItemViewModels.clickEvent(Constants.CLICK_EVENT)}"
         app:buttonTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/textView14"

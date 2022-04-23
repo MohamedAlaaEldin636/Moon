@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.filter.dialog.multiCheck.ItemFilterMultiViewModel" />
+  </data>
+
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dimen4"
+      android:onClick="@{()-> viewModel.clickEvent(Constants.CLICK_EVENT)}"
+      android:orientation="vertical">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView14"
+        style="@style/mediumFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dimen14"
+        android:layout_marginEnd="@dimen/dimen8"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/radio"
+        android:text="@{viewModel.model.content}"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintHorizontal_bias="0.5"
+
+        />
+
+
+      <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:buttonTint="@color/colorPrimary"
+        android:checked="@{viewModel.selected}"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:onClick="@{()-> viewModel.clickEvent(Constants.CLICK_EVENT)}"
+        app:buttonTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView14" />
+    </RelativeLayout>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dimen1"
+      android:layout_marginTop="@dimen/dimen4"
+      android:background="@color/lightGray" />
+  </LinearLayout>
+</layout>
