@@ -58,6 +58,7 @@ class FilterResultsFragment : BaseFragment<FragmentFilterResultsBinding>() {
           is Resource.Success -> {
             hideLoading()
             viewModel.setData(it.value.data)
+            Log.d(TAG, "setupObservers: ${it.value.data.list.size}")
 
           }
           is Resource.Failure -> {

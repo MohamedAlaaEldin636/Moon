@@ -44,7 +44,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
   }
 
   suspend fun filterResults(request: FilterResultRequest) = safeApiCall {
-    apiService.filterDetails(getParameters(request))
+    apiService.filterResults(getParameters(request))
   }
 
 

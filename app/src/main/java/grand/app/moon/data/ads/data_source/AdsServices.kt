@@ -51,8 +51,8 @@ interface AdsServices {
     @Query("sub_category_id") sub_category_id: Int
   ): BaseResponse<FilterDetails>
 
-  @GET("v1/filter/details")
-  suspend fun filterDetails(
+  @GET("v1/filter/results")
+  suspend fun filterResults(
     @QueryMap map: Map<String, String>
   ): BaseResponse<AdsListPaginateData>
 

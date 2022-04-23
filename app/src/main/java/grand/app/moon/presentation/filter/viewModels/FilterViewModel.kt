@@ -67,6 +67,8 @@ class FilterViewModel @Inject constructor(
     property.type = 1
     property.filterType = FILTER_TYPE.OTHER_OPTIONS
     property.name = MyApplication.instance.resources.getString(R.string.other_options)
+    property.selectedList.add(1)
+    property.selectedText = MyApplication.instance.resources.getString(R.string.all_ads)
 
     ///1: all , premium: 2 , free: 3
     property.children.add(
@@ -116,8 +118,7 @@ class FilterViewModel @Inject constructor(
 
   fun updateCallBack(filterProperty: FilterProperty) {
     if (filterProperty.filterType == FILTER_TYPE.OTHER_OPTIONS) {
-      request.other_options =
-        if (filterProperty.selectedList.isEmpty()) null else filterProperty.selectedList[0]
+      request.other_options = filterProperty.selectedList[0]
     }
     adapter.updateFilterSelected(filterProperty)
   }
@@ -125,15 +126,16 @@ class FilterViewModel @Inject constructor(
   fun filterSubmit(v: View) {
     request.properties?.clear()
     request.cityIds?.clear()
-    if(adapter.differ.currentList.isNotEmpty() && adapter.differ.currentList[0].selectedList.isNotEmpty()){
+    if (adapter.differ.currentList.isNotEmpty() && adapter.differ.currentList[0].selectedList.isNotEmpty()) {
       request.cityIds?.addAll(adapter.differ.currentList[0].selectedList)
     }
-    if(adapter.differ.currentList.isNotEmpty()){
+    if (adapter.differ.currentList.isNotEmpty()) {
       adapter.differ.currentList.forEach {
-        if(it.selectedList.isNotEmpty())
+        if (it.selectedList.isNotEmpty())
           request.properties?.add(it)
       }
     }
-    v.findNavController().navigate(FilterFragmentDirections.actionFilterFragmentToFilterResultsFragment(request))
+    v.findNavController()
+      .navigate(FilterFragmentDirections.actionFilterFragmentToFilterResultsFragment(request))
   }
 }
