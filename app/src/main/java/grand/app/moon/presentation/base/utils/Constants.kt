@@ -35,6 +35,8 @@ object Constants {
   const val GRID_2: Int = 25
   const val CONFIRM: Int = 26
   const val SCROLL_DOWN: Int = 27
+  const val SHARE_IMAGE: Int = 28
+
 
 
 

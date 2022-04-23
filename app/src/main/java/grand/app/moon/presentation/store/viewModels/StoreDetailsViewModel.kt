@@ -28,6 +28,7 @@ import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.openBrowser
 import grand.app.moon.presentation.explore.adapter.ExploreAdapter
+import grand.app.moon.presentation.explore.adapter.ExploreWithoutDifferAdapter
 import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -53,8 +54,7 @@ class StoreDetailsViewModel @Inject constructor(
   @Bindable
   val adsAdapter = AdsAdapter()
 
-  @Bindable
-  var exploreAdapter = ExploreAdapter()
+  var exploreAdapter = ExploreWithoutDifferAdapter()
 
   val followStoreRequest = FollowStoreRequest()
 
@@ -105,7 +105,18 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun share(v: AppCompatImageView){
-    store.get()?.name?.let { store.get()?.description?.let { it1 -> share(v.context, it, it1,v) } }
+//    val name  = (store.get()?.name != null? "" : "")
+
+    var name = ""
+    store.get()?.name?.let {
+      name = it
+    }
+    var description = ""
+    store.get()?.description?.let {
+      description = it
+    }
+//    val name = if(store.get()?.name == null) "" else store.get()?.name
+    share(v.context, name,description,v)
   }
 
   fun rates(v: View){
@@ -220,7 +231,10 @@ class StoreDetailsViewModel @Inject constructor(
 
     store.set(data)
     adsAdapter.differ.submitList(store.get()?.advertisements)
-    exploreAdapter.differ.submitList(store.get()?.explore)
+
+    store.get()?.explore?.let { exploreAdapter.list.addAll(it) }
+//    notifyPropertyChanged(BR.exploreAdapter)
+    exploreAdapter.notifyDataSetChanged()
 
     store.get()?.socialMediaLinks?.forEach { socialLink ->
       if(socialLink.link.isEmpty()) {
@@ -235,8 +249,7 @@ class StoreDetailsViewModel @Inject constructor(
       }
     }
 
-    Log.d(TAG, "explore: ${exploreAdapter.differ.currentList.size}")
-    notifyPropertyChanged(BR.exploreAdapter)
+    Log.d(TAG, "explore: ${exploreAdapter.list.size}")
     show.set(true)
   }
 

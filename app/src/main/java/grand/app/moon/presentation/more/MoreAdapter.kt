@@ -47,7 +47,6 @@ class MoreAdapter : RecyclerView.Adapter<MoreAdapter.ViewHolder>() {
     val data = differ.currentList[position]
     val itemViewModel = ItemMoreViewModel(data)
     holder.itemLayoutBinding.itemMore.setOnClickListener {
-      Log.d(TAG, "onBindViewHolder: ")
       clickEvent.value = data
     }
     holder.setViewModel(itemViewModel)

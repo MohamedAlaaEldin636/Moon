@@ -54,6 +54,7 @@ import java.lang.Exception
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSourceFactory
+import grand.app.moon.domain.utils.SpannedGridLayoutManager
 
 
 fun View.show() {
@@ -471,6 +472,37 @@ fun getItemsV2Binding(
   ) else initHorizontalRV(recyclerView, recyclerView.context, spanCount.toInt())
   recyclerView.adapter = itemsAdapter
 }
+
+@BindingAdapter("app:adapterGallery")
+fun adapterGallery(
+  recyclerView: RecyclerView,
+  itemsAdapter: RecyclerView.Adapter<*>?,
+) {
+
+  val manager = SpannedGridLayoutManager(
+    object : SpannedGridLayoutManager.GridSpanLookup {
+      override fun getSpanInfo(position: Int): SpannedGridLayoutManager.SpanInfo {
+        var x = 0
+        if (position % 9 == 0) {
+          x = position / 9
+        }
+
+        return when {
+          position == 1 || x % 2 == 1 || (position - 1) % 18 == 0 ->
+            SpannedGridLayoutManager.SpanInfo(2, 2)
+          else ->
+            SpannedGridLayoutManager.SpanInfo(1, 1)
+        }
+
+      }
+    },
+    3,  // number of columns
+    1f // how big is default item
+  )
+  recyclerView.layoutManager = manager
+  recyclerView.adapter = itemsAdapter
+}
+
 
 @SuppressLint("WrongConstant")
 fun initVerticalRV(recyclerView: RecyclerView, context: Context?, spanCount: Int) {

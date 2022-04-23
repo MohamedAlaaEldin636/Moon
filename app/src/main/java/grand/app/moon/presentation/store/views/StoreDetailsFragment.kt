@@ -22,7 +22,11 @@ import grand.app.moon.domain.utils.SpannedGridLayoutManager
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import javax.security.auth.callback.Callback
 
 @AndroidEntryPoint
@@ -54,9 +58,12 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     days.add(resources.getString(R.string.friday))
 
     viewModel.clickEvent.observe(viewLifecycleOwner, {
-      when(it){
+      when (it) {
         Constants.LOGIN_REQUIRED -> openLoginActivity()
         Constants.SCROLL_DOWN -> scrollDown()
+        Constants.SHARE_IMAGE -> {
+          viewModel.share(binding.imageSlider)
+        }
       }
     })
     lifecycleScope.launchWhenResumed {
@@ -84,18 +91,18 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     }
   }
 
-  fun scrollDown(){
+  fun scrollDown() {
     binding.scrollStoreDetails.fullScroll(View.FOCUS_DOWN)
 
   }
 
   override fun setUpViews() {
     super.setUpViews()
-    setRecyclerViewScrollListener()
+//    setRecyclerViewScrollListener()
     binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
       override fun onTabSelected(tab: TabLayout.Tab?) {
-        when(tab?.position){
+        when (tab?.position) {
           0 -> viewModel.showAds()
           else -> viewModel.showGallery()
         }
@@ -128,41 +135,47 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 
 
   override fun onMapReady(p0: GoogleMap) {
-    viewModel.mapConfig = MapConfig(requireContext(), p0)
-    viewModel.mapConfig.setMapStyle() //set style google map
-    p0.addMarker(MarkerOptions().title(viewModel.store.get()!!.name).position(LatLng(
-      viewModel.store.get()!!.latitude,
-      viewModel.store.get()!!.longitude
-    )))
+    lifecycleScope.launch(Dispatchers.Main) {
+      delay(500)
+      viewModel.mapConfig = MapConfig(requireContext(), p0)
+      viewModel.mapConfig.setMapStyle() //set style google map
+      p0.addMarker(
+        MarkerOptions().title(viewModel.store.get()!!.name).position(
+          LatLng(
+            viewModel.store.get()!!.latitude,
+            viewModel.store.get()!!.longitude
+          )
+        )
+      )
+    }
   }
 
-  private fun setRecyclerViewScrollListener() {
-
-    val manager = SpannedGridLayoutManager(
-      object : SpannedGridLayoutManager.GridSpanLookup {
-        override fun getSpanInfo(position: Int): SpannedGridLayoutManager.SpanInfo {
-          var x = 0
-          if (position % 9 == 0) {
-            x = position / 9
-          }
-
-          return when {
-            position == 1 || x % 2 == 1 || (position - 1) % 18 == 0 ->
-              SpannedGridLayoutManager.SpanInfo(2, 2)
-            else ->
-              SpannedGridLayoutManager.SpanInfo(1, 1)
-          }
-
-        }
-      },
-      3,  // number of columns
-      1f // how big is default item
-    )
-    binding.rvStoreGallery.layoutManager = manager
-    binding.rvStoreGallery.adapter = viewModel.exploreAdapter
-
-  }
-
+//  private fun setRecyclerViewScrollListener() {
+//    Log.d(TAG, "setRecyclerViewScrollListener: ")
+//    val manager = SpannedGridLayoutManager(
+//      object : SpannedGridLayoutManager.GridSpanLookup {
+//        override fun getSpanInfo(position: Int): SpannedGridLayoutManager.SpanInfo {
+//          var x = 0
+//          if (position % 9 == 0) {
+//            x = position / 9
+//          }
+//
+//          return when {
+//            position == 1 || x % 2 == 1 || (position - 1) % 18 == 0 ->
+//              SpannedGridLayoutManager.SpanInfo(2, 2)
+//            else ->
+//              SpannedGridLayoutManager.SpanInfo(1, 1)
+//          }
+//
+//        }
+//      },
+//      3,  // number of columns
+//      1f // how big is default item
+//    )
+//    binding.rvStoreGallery.layoutManager = manager
+//    binding.rvStoreGallery.adapter = viewModel.exploreAdapter
+//
+//  }
 
 
 }

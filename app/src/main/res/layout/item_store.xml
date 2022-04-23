@@ -18,7 +18,7 @@
 
   <androidx.cardview.widget.CardView
     android:id="@+id/item_store_container"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     app:width="@{itemViewModels.percentage}"
     android:onClick="@{ (v) -> itemViewModels.storeDetails(v) }"
     android:layout_height="wrap_content"

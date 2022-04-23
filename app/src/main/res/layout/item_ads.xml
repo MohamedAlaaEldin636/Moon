@@ -255,15 +255,14 @@
             style="@style/mediumFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen10"
+            android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/dimen10"
-            android:layout_marginEnd="@dimen/dimen10"
             android:layout_marginBottom="@dimen/dimen10"
             android:drawableStart="@drawable/ic_whatsapp"
             android:drawablePadding="@dimen/dimen6"
             android:text="@string/whatsapp"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size12" />
+            android:textSize="9sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -280,16 +279,15 @@
             style="@style/mediumFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen10"
+            android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/dimen10"
-            android:layout_marginEnd="@dimen/dimen10"
             android:layout_marginBottom="@dimen/dimen10"
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="@dimen/dimen6"
             android:drawableTint="@color/colorPrimary"
             android:text="@string/call"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size12" />
+            android:textSize="9sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -306,15 +304,14 @@
             style="@style/mediumFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen10"
+            android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/dimen10"
-            android:layout_marginEnd="@dimen/dimen10"
             android:layout_marginBottom="@dimen/dimen10"
             android:drawableStart="@drawable/ic_chat_ads"
             android:drawablePadding="@dimen/dimen6"
             android:text="@string/chat"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size12" />
+            android:textSize="9sp" />
         </RelativeLayout>
 
 

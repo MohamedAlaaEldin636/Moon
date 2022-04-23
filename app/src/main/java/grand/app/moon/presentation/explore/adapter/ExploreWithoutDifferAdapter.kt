@@ -23,20 +23,13 @@ import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
+class ExploreWithoutDifferAdapter: RecyclerView.Adapter<ExploreWithoutDifferAdapter.ViewHolder>() {
   var clickEvent: MutableLiveData<Int> = MutableLiveData()
   val user = grand.app.moon.domain.auth.entity.model.User()
-  private val differCallback = object : DiffUtil.ItemCallback<Explore>() {
-    override fun areItemsTheSame(oldItem: Explore, newItem: Explore): Boolean {
-      return oldItem.id == newItem.id
-    }
+  val list = ArrayList<Explore>()
 
-    override fun areContentsTheSame(oldItem: Explore, newItem: Explore): Boolean {
-      return oldItem == newItem
-    }
 
-  }
-  val differ = AsyncListDiffer(this, differCallback)
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view = LayoutInflater.from(parent.context).inflate(R.layout.item_explore, parent, false)
     Log.d(TAG, "onCreateViewHolder: WELCOMe")
@@ -45,7 +38,7 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
 
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val data = differ.currentList[position]
+    val data = list[position]
     val itemViewModel = ItemExploreViewModel(data,position,user)
     Log.d(TAG, "onBindViewHolder: "+data.file)
     holder.itemLayoutBinding.itemExplore.setOnClickListener {
@@ -68,24 +61,19 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
 
   private val TAG = "ExploreAdapter"
   fun insertData(insertList: List<Explore>) {
-    val array = ArrayList<Explore>(differ.currentList)
+    val array = ArrayList<Explore>(list.size)
     val size = array.size
     array.addAll(insertList)
     Log.d(TAG, "insertData: "+size)
 //    notifyItemRangeInserted(size,array.size)
-    differ.submitList(array)
+    list.addAll(array)
     notifyDataSetChanged()
   }
 
-  fun removeItem(i: Int){
-    val array = ArrayList(differ.currentList)
-    array.remove(array[i])
-    differ.submitList(array)
-    notifyItemRemoved(i)
-  }
+
 
   override fun getItemCount(): Int {
-    return differ.currentList.size
+    return list.size
   }
 
   override fun onViewAttachedToWindow(holder: ViewHolder) {

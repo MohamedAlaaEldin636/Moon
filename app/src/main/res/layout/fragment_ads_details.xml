@@ -5,6 +5,8 @@
 
   <data>
 
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
     <import type="android.view.View" />
 
     <variable
@@ -28,14 +30,22 @@
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginStart="@dimen/dimen12"
-        android:layout_marginEnd="@dimen/dimen12"
         android:layout_height="match_parent">
 
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/img_share"
+          app:loadImage="@{viewModel.advertisement.images[0]}"
+          android:layout_width="match_parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          android:visibility="gone"
+          android:layout_height="@dimen/dimen250" />
         <com.denzcoskun.imageslider.ImageSlider
           android:id="@+id/image_slider"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dimen220"
+          android:layout_height="@dimen/dimen300"
           app:images="@{viewModel.advertisement.images}"
           app:iss_auto_cycle="true"
           app:iss_delay="0"
@@ -147,7 +157,7 @@
           android:layout_width="@dimen/dimen40"
           android:layout_height="@dimen/dimen40"
           android:layout_margin="@dimen/dimen20"
-          android:onClick="@{ (v) -> viewModel.share(v) }"
+          android:onClick="@{ () -> viewModel.clickEvent(Constants.SHARE_IMAGE)}"
           android:src="@drawable/ic_share_primary"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/ic_fav" />

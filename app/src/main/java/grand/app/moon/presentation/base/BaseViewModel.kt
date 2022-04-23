@@ -139,11 +139,11 @@ open class BaseViewModel : ViewModel(), Observable {
     message: String,
     imageView: ImageView
   ) {
-    // save bitmap to cache directory
     try {
       try {
         imageView.invalidate()
       } catch (exception: Exception) {
+        Log.d(TAG, "share: ${exception.message}")
         exception.printStackTrace()
       }
       var bitmapDrawable: BitmapDrawable? = null
@@ -155,6 +155,7 @@ open class BaseViewModel : ViewModel(), Observable {
           if (!cachePath.exists()) cachePath.mkdirs() // don't forget to make the directory
           stream = FileOutputStream("$cachePath/image.png") // overwrites this image every time
         } catch (e: Exception) {
+          Log.d(TAG, "share: ${e.message}")
           e.printStackTrace()
         }
       }
@@ -164,6 +165,7 @@ open class BaseViewModel : ViewModel(), Observable {
         share(context, title, message)
       } else  share(context, title, message)
     } catch (e: IOException) {
+      Log.d(TAG, "share: ${e.message}")
       e.printStackTrace()
     }
   }
