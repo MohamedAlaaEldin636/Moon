@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -16,7 +17,7 @@ import grand.app.moon.presentation.base.extensions.backToPreviousScreen
 import grand.app.moon.presentation.base.utils.Constants
 
 @AndroidEntryPoint
-class FilterSingleSelectDialog : BottomSheetDialogFragment() {
+class FilterSingleSelectDialog : DialogFragment() {
   val args: FilterSingleSelectDialogArgs by navArgs()
   private val viewModel: FilterChildrenDialogViewModel by viewModels()
   lateinit var binding: FilterSingleSelectDialogBinding
@@ -43,6 +44,6 @@ class FilterSingleSelectDialog : BottomSheetDialogFragment() {
     return binding.root
   }
   override fun getTheme(): Int {
-    return R.style.CustomBottomSheetDialogTheme;
+    return R.style.CustomDialogFullScreen;
   }
 }

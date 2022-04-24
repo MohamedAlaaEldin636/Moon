@@ -30,7 +30,7 @@ class MarkerRender(mapConfig: MapConfig, items: List<ClusterCustomItem?>?) :
   ) {
   private val mIconGenerator: IconGenerator
   private val mClusterIconGenerator: IconGenerator
-  private val mapConfig: MapConfig
+  private val mapConfig: MapConfig = mapConfig
   var bitmapStories = HashMap<String, Bitmap>()
   fun addMarker(clusterCustomItem: ClusterCustomItem, markerOptions: Marker?) {
     try {
@@ -40,6 +40,7 @@ class MarkerRender(mapConfig: MapConfig, items: List<ClusterCustomItem?>?) :
           null
         )
       if (mapConfig.isVisible) {
+        markerOptions?.tag = clusterCustomItem.getStore().id
         drawStory(clusterCustomItem, markerOptions, markerView)
       }
     } catch (e: Exception) {
@@ -106,7 +107,6 @@ class MarkerRender(mapConfig: MapConfig, items: List<ClusterCustomItem?>?) :
   }
 
   init {
-    this.mapConfig = mapConfig
     mIconGenerator = IconGenerator(mapConfig.context)
     mClusterIconGenerator = IconGenerator(mapConfig.context)
     //        mapConfig.clusterManager.addItems(items);

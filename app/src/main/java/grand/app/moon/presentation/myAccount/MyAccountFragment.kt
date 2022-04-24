@@ -35,7 +35,7 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
   fun setData() {
     setList()
     viewModel.moreAdapter.clickEvent.observe(this, {
-      Log.d(TAG, "setBindingVariables: here $it")
+//      Log.d(TAG, "setBindingVariables: here $it")
       if (it.id is String) {
         when (it.id) {
           Constants.PROFILE -> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToProfileFragment())

@@ -52,6 +52,12 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_home_fragment_to_filterHomeFragment"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/filterHomeFragment" />
 
   </fragment>
 
@@ -75,12 +81,7 @@
   <fragment
     android:id="@+id/mapFragment"
     android:name="grand.app.moon.presentation.map.MapFragment"
-    android:label="@string/map">
-    <argument
-      android:name="type"
-      android:defaultValue=""
-      app:argType="string" />
-  </fragment>
+    android:label="@string/map" />
   <fragment
     android:id="@+id/discoverFragment"
     android:name="grand.app.moon.presentation.discover.DiscoverFragment"
@@ -181,8 +182,8 @@
       app:argType="string" />
 
     <action
-      android:id="@+id/action_subCategoryFragment_to_mapFragment"
-      app:destination="@id/mapFragment"
+      android:id="@+id/action_subCategoryFragment_to_mapSubCategoryFragment"
+      app:destination="@id/mapSubCategoryFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
@@ -199,7 +200,7 @@
   <dialog
     android:id="@+id/workingHoursDialog"
     android:name="grand.app.moon.presentation.store.dialog.WorkingHoursDialog"
-    android:label="@string/show_number_hours"></dialog>
+    android:label="@string/show_number_hours" />
 
 
   <fragment
@@ -322,6 +323,36 @@
     <argument
       android:name="filterRequest"
       app:argType="grand.app.moon.domain.filter.entitiy.FilterResultRequest" />
+  </fragment>
+  <fragment
+    android:id="@+id/filterHomeFragment"
+    android:name="grand.app.moon.presentation.filter.FilterHomeFragment"
+    android:label="@string/filter_search" >
+    <action
+      android:id="@+id/action_filterHomeFragment_to_filterSingleSelectDialog"
+      app:destination="@id/filterSingleSelectDialog" />
+    <action
+      android:id="@+id/action_filterHomeFragment_to_filterMultiSelectDialog"
+      app:destination="@id/filterMultiSelectDialog" />
+    <action
+      android:id="@+id/action_filterHomeFragment_to_filterResultsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/filterResultsFragment" />
+  </fragment>
+  <fragment
+    android:id="@+id/mapSubCategoryFragment"
+    android:name="grand.app.moon.presentation.map.MapSubCategoryFragment"
+    android:label="@string/map" >
+    <argument
+      android:name="sub_category"
+      app:argType="integer"
+      android:defaultValue="-1" />
+    <argument
+      android:name="subCategoryResponse"
+      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
   </fragment>
 
   <!--  <fragment-->

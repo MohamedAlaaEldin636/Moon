@@ -2,6 +2,7 @@ package grand.app.moon.presentation.filter.result
 
 import android.util.Log
 import androidx.databinding.Bindable
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
@@ -41,6 +42,7 @@ class FilterResultsViewModel @Inject constructor(
     MutableStateFlow<Resource<BaseResponse<AdsListPaginateData>>>(Resource.Default)
 
   val response = _responseService
+  val noData = ObservableBoolean(false)
 
   lateinit var request: FilterResultRequest
 
@@ -71,9 +73,15 @@ class FilterResultsViewModel @Inject constructor(
       if (page == 1) {
         Log.d(TAG, "setData: submitList")
 //        adapter = InvoicesAdapter()
-        adapter.differ.submitList(it.list)
+        when{
+          it.list.size > 0 -> {
+            noData.set(false)
+            adapter.differ.submitList(it.list)
+            notifyPropertyChanged(BR.adapter)
+          }
+          else -> noData.set(true)
+        }
         show.set(true)
-        notifyPropertyChanged(BR.adapter)
       } else {
         Log.d(TAG, "setData: insertData")
         adapter.insertData(it.list)

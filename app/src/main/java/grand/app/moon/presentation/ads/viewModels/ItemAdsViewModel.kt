@@ -15,6 +15,7 @@ class ItemAdsViewModel(
   }
 
 
+
   fun whatsapp(v: View){
     advertisement.store?.phone?.let {
       shareWhatsapp(v,advertisement.title,advertisement.description,

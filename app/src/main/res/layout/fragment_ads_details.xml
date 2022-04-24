@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
   <data>
 
@@ -276,6 +277,7 @@
           <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            card_view:cardUseCompatPadding="true"
             android:layout_marginTop="@dimen/dimen10"
             app:cardCornerRadius="@dimen/dimen6"
             app:cardElevation="@dimen/dimen4">
@@ -299,6 +301,7 @@
           <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            card_view:cardUseCompatPadding="true"
             android:layout_marginTop="@dimen/dimen10"
             app:cardCornerRadius="@dimen/dimen6"
             app:cardElevation="@dimen/dimen4">
@@ -337,6 +340,8 @@
           <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
+            card_view:cardUseCompatPadding="true"
             android:layout_marginTop="@dimen/dimen10"
             app:cardElevation="@dimen/dimen4">
 
@@ -361,6 +366,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen20"
             app:cardCornerRadius="@dimen/dimen6"
+            card_view:cardUseCompatPadding="true"
             app:cardElevation="@dimen/dimen4">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -471,6 +477,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen20"
+            card_view:cardUseCompatPadding="true"
             app:cardCornerRadius="@dimen/dimen6"
             app:cardElevation="@dimen/dimen4">
 
@@ -539,6 +546,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen20"
+            card_view:cardUseCompatPadding="true"
             app:cardCornerRadius="@dimen/dimen6"
             app:cardElevation="@dimen/dimen4">
 

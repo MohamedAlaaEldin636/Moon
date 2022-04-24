@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.filter.viewModels.FilterHomeViewModel" />
+  </data>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_above="@+id/btn_phone"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#FBFBFB"
+      android:fillViewport="true">
+
+
+      <LinearLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:background="#FBFBFB"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="@dimen/dimen16"
+          app:adapter="@{viewModel.adapter}"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:orientation="@{`1`}"
+          app:span="@{`1`}"
+          tools:listitem="@layout/item_filter" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen10"
+          android:onClick="@{()-> viewModel.changeRate(5)}"
+          android:orientation="horizontal">
+
+          <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rate"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/colorAccent"
+            android:rating="5"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/dimen6"
+            android:buttonTint="@color/colorPrimary"
+            android:checked="@{viewModel.rateSelected[5]}"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:buttonTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{()-> viewModel.changeRate(4)}"
+          android:orientation="horizontal">
+
+          <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rate4"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/colorAccent"
+            android:rating="4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/radio4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/dimen6"
+            android:buttonTint="@color/colorPrimary"
+            android:checked="@{viewModel.rateSelected[4]}"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:buttonTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{()-> viewModel.changeRate(3)}"
+          android:orientation="horizontal">
+
+          <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rate3"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/colorAccent"
+            android:rating="3"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/radio3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/dimen6"
+            android:buttonTint="@color/colorPrimary"
+            android:checked="@{viewModel.rateSelected[3]}"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:buttonTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{()-> viewModel.changeRate(3)}"
+          android:orientation="horizontal">
+
+          <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rate2"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/colorAccent"
+            android:rating="2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/radio2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/dimen6"
+            android:buttonTint="@color/colorPrimary"
+            android:checked="@{viewModel.rateSelected[2]}"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:buttonTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{()-> viewModel.changeRate(1)}"
+          android:orientation="horizontal">
+
+          <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rate1"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/colorAccent"
+            android:rating="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/dimen6"
+            android:buttonTint="@color/colorPrimary"
+            android:checked="@{viewModel.rateSelected[1]}"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:buttonTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+      </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/btn_phone"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:background="@color/colorPrimary"
+      android:text="@string/confirm"
+      android:onClick="@{ (v) -> viewModel.filterSubmit(v) }"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+
+  </RelativeLayout>
+
+</layout>

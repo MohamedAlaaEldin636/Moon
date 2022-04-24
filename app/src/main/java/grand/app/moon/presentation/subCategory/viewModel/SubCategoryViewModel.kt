@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.subCategory.viewModel
 
+import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableBoolean
@@ -32,7 +33,7 @@ class SubCategoryViewModel @Inject constructor(
   private val useCase: AdsUseCase,
   private val accountRepository: AccountRepository,
 
-) : BaseViewModel() {
+  ) : BaseViewModel() {
   @Bindable
   var page: Int = 0
 
@@ -111,9 +112,12 @@ class SubCategoryViewModel @Inject constructor(
   }
 
   fun map(v: View) {
-    val action = SubCategoryFragmentDirections.actionSubCategoryFragmentToMapFragment()
-    action.type = Constants.ADVERTISEMENT_TEXT
-    v.findNavController().navigate(action)
+    this.subCategoryResponse.get()?.let {
+      val action =
+        SubCategoryFragmentDirections.actionSubCategoryFragmentToMapSubCategoryFragment(it)
+      action.subCategory = subCategoryId
+      v.findNavController().navigate(action)
+    }
   }
 
   private val TAG = "PackagesViewModel"
@@ -147,7 +151,7 @@ class SubCategoryViewModel @Inject constructor(
       accountRepository.getCategories().collect {
         it.data.forEach { categoryItem ->
           categoryItem.subCategories?.forEach { subCategory ->
-            if(subCategory.id == subCategoryId){
+            if (subCategory.id == subCategoryId) {
               categoryId = categoryItem.id!!
               return@forEach
             }
@@ -155,6 +159,15 @@ class SubCategoryViewModel @Inject constructor(
         }
       }
     }
+  }
 
+  fun changeGrid() {
+    if (adapter.grid == Constants.GRID_2) {
+      adapter.grid = Constants.GRID_1
+      clickEvent.value = Constants.GRID_1
+    } else {
+      adapter.grid = Constants.GRID_2
+      clickEvent.value = Constants.GRID_2
+    }
   }
 }

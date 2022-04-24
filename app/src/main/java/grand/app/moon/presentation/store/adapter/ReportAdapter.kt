@@ -44,7 +44,7 @@ class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
     val data = differ.currentList[position]
     val itemViewModel = ItemReportViewModel(data,position == lastPosition)
     itemViewModel.clickEvent.observeForever {
-      Log.d(TAG, "onBindViewHolder: $lastPosition")
+//      Log.d(TAG, "onBindViewHolder: $lastPosition")
       if(lastPosition != -1) {
         differ.currentList[lastPosition].active = 0
         notifyItemChanged(lastPosition)

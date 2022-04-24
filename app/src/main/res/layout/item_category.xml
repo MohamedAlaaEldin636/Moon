@@ -30,7 +30,6 @@
       android:layout_height="match_parent"
       card_view:cardBackgroundColor="@android:color/white"
       card_view:cardElevation="2dp"
-      card_view:cardUseCompatPadding="true"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent">
 

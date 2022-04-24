@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemCategoryTextBinding
 import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import grand.app.moon.presentation.map.viewModel.ItemCategoryTextViewModel
 

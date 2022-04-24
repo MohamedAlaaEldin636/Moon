@@ -21,6 +21,7 @@ class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
   lateinit var context: Context
   var clickEvent: SingleLiveEvent<Advertisement> = SingleLiveEvent()
   var percentageAds = 90
+  var grid = Constants.GRID_1
 
 
   //view 2 , search 5

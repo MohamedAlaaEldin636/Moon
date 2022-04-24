@@ -14,32 +14,33 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentMapBinding
+import grand.app.moon.databinding.FragmentMapSubCategoryBinding
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.helpers.map.cluster.ClusterCustomItem
 import grand.app.moon.helpers.map.cluster.MarkerRender
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.map.viewModel.MapSubCategoryViewModel
 import grand.app.moon.presentation.map.viewModel.MapViewModel
 import kotlinx.coroutines.flow.collect
 import java.lang.Exception
 
 @AndroidEntryPoint
-class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
-  private val viewModel: MapViewModel by viewModels()
+class MapSubCategoryFragment : BaseFragment<FragmentMapSubCategoryBinding>(), OnMapReadyCallback {
+  val args: MapSubCategoryFragmentArgs by navArgs()
+  private val viewModel: MapSubCategoryViewModel by viewModels()
 
   override
-  fun getLayoutId() = R.layout.fragment_map
+  fun getLayoutId() = R.layout.fragment_map_sub_category
 
   override
   fun setBindingVariables() {
     viewModel.categoryItem.name = resources.getString(R.string.all)
     binding.viewModel = viewModel
-
-//    if(arguments!= null && requireArguments().containsKey(Constants.TYPE))
-//      viewModel.type = requireArguments().getString(Constants.TYPE).toString()
-    viewModel.type = Constants.STORE
-    viewModel.getCategories() // store
-
+    if(args.subCategory != -1){
+      viewModel.subCategoryId = args.subCategory.toString() //ads
+      viewModel.setProperties(args.subCategoryResponse.properties)
+    }
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,7 +67,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     })
 
     lifecycleScope.launchWhenResumed {
-      viewModel.responseStores.collect {
+      viewModel.responseAds.collect {
         Log.d(TAG, "setupObservers: HERE")
         when (it) {
           Resource.Loading -> {
@@ -75,7 +76,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
           }
           is Resource.Success -> {
             hideLoading()
-            viewModel.setData(it.value.data)
+            viewModel.setDataAds(it.value.data)
             loadMarkers()
           }
           is Resource.Failure -> {
@@ -117,11 +118,16 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         GoogleMap.OnMarkerClickListener { marker ->
           Log.d(TAG, "loadMarkers: ${marker.id}")
           Log.d(TAG, "loadMarkers: ${marker.tag}")
+          try {
+            viewModel.setSelectedAds(marker.tag as Int)
+          }catch (e: Exception){e.printStackTrace()}
 //          Toast.makeText(context, "HERE", Toast.LENGTH_SHORT).show()
           marker.showInfoWindow()
           true
         })
-      it.setOnMapClickListener { latLng -> }
+      it.setOnMapClickListener { latLng ->
+        viewModel.showAdvertisement.set(false)
+      }
       viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(
         OnClusterItemClickListener<ClusterCustomItem?> {
           try {

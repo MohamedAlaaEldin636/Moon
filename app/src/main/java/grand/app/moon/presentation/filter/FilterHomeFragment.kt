@@ -1,7 +1,6 @@
 package grand.app.moon.presentation.filter
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -13,21 +12,22 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentFilterBinding
+import grand.app.moon.databinding.FragmentFilterHomeBinding
 import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.filter.viewModels.FilterHomeViewModel
 import grand.app.moon.presentation.filter.viewModels.FilterViewModel
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class FilterFragment : BaseFragment<FragmentFilterBinding>() {
-  val args: FilterFragmentArgs by navArgs()
-  private val viewModel: FilterViewModel by viewModels()
+class FilterHomeFragment : BaseFragment<FragmentFilterHomeBinding>() {
+  private val viewModel: FilterHomeViewModel by viewModels()
 
-  private val TAG = "FilterFragment"
+  private val TAG = "FilterHomeFragment"
 
   override
-  fun getLayoutId() = R.layout.fragment_filter
+  fun getLayoutId() = R.layout.fragment_filter_home
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -41,43 +41,20 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.request.categoryId = args.categoryId
-    viewModel.request.sub_category_id = args.subCategoryId
-    viewModel.callService()
   }
 
 
   override fun setupObservers() {
-
-    lifecycleScope.launchWhenResumed {
-      viewModel.response.collect {
-        when (it) {
-          Resource.Loading -> {
-            hideKeyboard()
-            showLoading()
-          }
-          is Resource.Success -> {
-            hideLoading()
-            viewModel.setData(it.value.data)
-          }
-          is Resource.Failure -> {
-            hideLoading()
-            handleApiError(it)
-          }
-        }
-      }
-    }
     viewModel.adapter.clickEvent.observe(this, {
-      Log.d(TAG, "setupObservers: HERE")
       when (it.filterType) {
-        FILTER_TYPE.SINGLE_SELECT , FILTER_TYPE.OTHER_OPTIONS -> findNavController().navigate(
-          FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
+        FILTER_TYPE.SINGLE_SELECT, FILTER_TYPE.SORT_BY, FILTER_TYPE.OTHER_OPTIONS, FILTER_TYPE.CATEGORY, FILTER_TYPE.SUB_CATEGORY -> findNavController().navigate(
+          FilterHomeFragmentDirections.actionFilterHomeFragmentToFilterSingleSelectDialog(
             it,
             it.name
           )
         )
         FILTER_TYPE.CITY, FILTER_TYPE.MULTI_SELECT -> findNavController().navigate(
-          FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
+          FilterHomeFragmentDirections.actionFilterHomeFragmentToFilterMultiSelectDialog(
             it,
             it.name
           )
@@ -85,7 +62,6 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
       }
     })
   }
-
 
 
   override fun onStop() {

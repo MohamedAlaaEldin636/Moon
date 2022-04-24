@@ -27,7 +27,7 @@ data class Store(
   @SerializedName("name")
   var name: String = "",
   @SerializedName("nickname")
-  val nickname: String = "",
+  var nickname: String = "",
   @SerializedName("phone")
   val phone: String = "",
   @SerializedName("token")

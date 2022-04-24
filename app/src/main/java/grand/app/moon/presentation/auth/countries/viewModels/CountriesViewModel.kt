@@ -54,7 +54,7 @@ class CountriesViewModel @Inject constructor(
 
   private val TAG = "CountriesViewModel"
   private fun getCountries() {
-    Log.d(TAG, "getCountries: $countryId")
+//    Log.d(TAG, "getCountries: $countryId")
     countriesUseCase.invoke()
       .onEach { result ->
         _countriesPasswordResponse.value = result

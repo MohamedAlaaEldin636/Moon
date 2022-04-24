@@ -8,6 +8,7 @@ import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.intro.entity.AppTutorial
+import java.io.Serializable
 
 @Keep
 data class SubCategoryResponse(
@@ -18,4 +19,4 @@ data class SubCategoryResponse(
   @SerializedName("slider")
   @Expose var slider: ArrayList<AppTutorial> = arrayListOf(),
 
-  )
+  ) : Serializable

@@ -4,10 +4,11 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <data>
-
+    <import type="android.view.View" />
     <variable
       name="viewModel"
       type="grand.app.moon.presentation.map.viewModel.MapViewModel" />
+
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,14 +16,13 @@
     android:layout_height="match_parent">
 
 
-
     <androidx.fragment.app.FragmentContainerView
       android:id="@+id/mapView"
       android:name="com.google.android.gms.maps.SupportMapFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,6 +40,7 @@
       app:orientation="@{`2`}"
       app:span="@{`1`}"
       tools:listitem="@layout/item_category_text" />
+
 
 
   </androidx.constraintlayout.widget.ConstraintLayout>

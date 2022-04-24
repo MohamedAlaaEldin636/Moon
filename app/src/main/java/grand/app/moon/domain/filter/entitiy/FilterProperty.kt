@@ -22,6 +22,10 @@ data class FilterProperty(
   val text: String = "",
   @SerializedName("type")
   var type: Int = 0,
+  @SerializedName("from")
+  var from: String? = "",
+  @SerializedName("to")
+  var to: String? = "",
   var selectedText: String = MyApplication.instance.resources.getString(R.string.all),
   var filterType: FILTER_TYPE = FILTER_TYPE.SINGLE_SELECT,
   var selectedList: ArrayList<Int> = arrayListOf()

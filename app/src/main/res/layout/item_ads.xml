@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
   <data>
 
@@ -20,6 +21,7 @@
     android:id="@+id/item_ads_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true"
     app:width="@{viewModel.percentageAds}"
     android:layout_margin="@dimen/dimen5"
     android:layout_weight="1"

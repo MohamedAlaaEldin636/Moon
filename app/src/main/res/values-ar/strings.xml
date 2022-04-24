@@ -151,5 +151,10 @@
   <string name="premium_ads">إعلانات مميزة فقط</string>
   <string name="free_ads">إعلانات مجانية</string>
   <string name="filter_results">نتائج البحث</string>
+    <string name="main_section">القسم الرئيسي</string>
+  <string name="sub_section">القسم الفرعي</string>
+  <string name="most_compatible">الأكثر تطابقا</string>
+  <string name="to">الي</string>
+  <string name="filter_by_price">تصفية حسب السعر</string>
 
 </resources>

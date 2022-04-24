@@ -76,6 +76,7 @@
   <string name="advertisements">إعلانات</string>
   <string name="premium">مميز</string>
   <string name="has_negatiable">قابل للتفاوض</string>
+  <string name="not_negatiable">غير قابل للتفاوض</string>
   <string name="description_on_ads">وصف عن الاعلان</string>
   <string name="ads_owner">مالك الاعلان</string>
   <string name="advices_for_safe">نصائح للأمان</string>
@@ -159,5 +160,10 @@
   <string name="premium_ads">إعلانات مميزة فقط</string>
   <string name="free_ads">إعلانات مجانية</string>
   <string name="filter_results">نتائج البحث</string>
+    <string name="main_section">القسم الرئيسي</string>
+  <string name="sub_section">القسم الفرعي</string>
+  <string name="most_compatible">الأكثر تطابقا</string>
+  <string name="to">الي</string>
+  <string name="filter_by_price">تصفية حسب السعر</string>
 
 </resources>

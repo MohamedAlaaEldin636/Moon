@@ -37,8 +37,8 @@ class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.ViewHolder>(
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    Log.d(TAG, "onBindViewHolder: ${data.id}")
-    Log.d(TAG, "onBindViewHolder: ${data.image}")
+//    Log.d(TAG, "onBindViewHolder: ${data.id}")
+//    Log.d(TAG, "onBindViewHolder: ${data.image}")
     val itemViewModel = ItemNotificationViewModel(data)
 
     holder.setViewModel(itemViewModel)

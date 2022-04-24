@@ -1,5 +1,6 @@
 package grand.app.moon.domain.ads.use_case
 
+import android.util.Log
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
@@ -68,10 +69,13 @@ class AdsUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
+  private val TAG = "AdsUseCase"
   fun filterResults(resultRequest : FilterResultRequest): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
     emit(Resource.Loading)
     if(resultRequest.properties?.isEmpty() == true) resultRequest.properties = null
     if(resultRequest.cityIds?.isEmpty() == true) resultRequest.cityIds = null
+    Log.d(TAG, "filterResults: ${resultRequest.properties}")
+    Log.d(TAG, "filterResults_cityIds: ${resultRequest.cityIds}")
     val result = repo.filterResults(resultRequest)
     emit(result)
   }.flowOn(Dispatchers.IO)
