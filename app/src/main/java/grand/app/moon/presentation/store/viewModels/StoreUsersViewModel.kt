@@ -1,4 +1,4 @@
-package grand.app.moon.presentation.user.viewmodel
+package grand.app.moon.presentation.store.viewModels
 
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
@@ -13,24 +13,24 @@ import grand.app.moon.domain.user.entity.UserListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
+import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class UserListViewModel @Inject constructor(
-  val userLocalUseCase: UserLocalUseCase,
-  private val useCase: ExploreUseCase,
-  private val storeUseCase: StoreUseCase
+class StoreUsersViewModel @Inject constructor(
+  private val useCase: StoreUseCase
 ) : BaseViewModel() {
   @Bindable
   var page: Int = 0
   @Bindable
   var callingService = false
-  var exploreId = -1
+  var storeId = -1
+  var type: String = Constants.FOLLOWERS
 
-  val title = ObservableField("")
+  val title = ObservableField<String>("")
 
   var isLast = false
 
@@ -54,7 +54,7 @@ class UserListViewModel @Inject constructor(
       if(page > 1){
         notifyPropertyChanged(BR.page)
       }
-      job = useCase.getUsers(exploreId,page)
+      job = useCase.getUsersViewFollowing(storeId,type)
         .onEach {
           response.value = it
         }

@@ -96,6 +96,8 @@ object Constants {
   const val STORE_FILTER: String = "store_filter"
   const val PROPERTY: String = "property"
   const val CATEGORIES_SELECTED: String = "categories_selected"
+  const val FOLLOWERS: String = "followers"
+  const val VIEWS: String = "views"
 
 
 

@@ -88,6 +88,15 @@ fun viewWidth(view: View, widthPercent: Int) {
   }
 }
 
+@BindingAdapter("widthSquare")
+fun widthSquare(view: View, count: Int) {
+  Log.d(TAG, "viewWidth: HEY")
+  val width = Resources.getSystem().displayMetrics.widthPixels / count
+  view.layoutParams.width = width
+  view.layoutParams.height = width
+}
+
+
 fun View.invisible() {
   if (visibility == View.INVISIBLE) return
 
@@ -223,7 +232,7 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
         is Int -> setImageResource(defaultImage)
         is Drawable -> setImageDrawable(defaultImage)
       }
-    }catch (e: Exception){
+    } catch (e: Exception) {
       e.printStackTrace()
     }
   }
@@ -270,7 +279,6 @@ fun AppCompatImageView.imageZoom(imageUrl: String?, progressBar: ProgressBar?) {
 
   }
 }
-
 
 
 @BindingAdapter(
@@ -569,5 +577,6 @@ fun initHorizontalRV(recyclerView: RecyclerView, context: Context?, spanCount: I
   recyclerView.setItemViewCacheSize(30)
   recyclerView.isDrawingCacheEnabled = true
   recyclerView.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
-  recyclerView.layoutManager = GridLayoutManager(context, spanCount, LinearLayoutManager.HORIZONTAL, false)
+  recyclerView.layoutManager =
+    GridLayoutManager(context, spanCount, LinearLayoutManager.HORIZONTAL, false)
 }

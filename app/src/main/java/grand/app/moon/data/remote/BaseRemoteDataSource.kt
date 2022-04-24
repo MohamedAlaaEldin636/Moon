@@ -29,7 +29,14 @@ open class BaseRemoteDataSource @Inject constructor() {
           val jsonArray = jsonObject[jsonObject.names().getString(i)] as JSONArray
           for (j in 0 until jsonArray.length()) {
             val name = "${jsonObject.names().getString(i)}[$j]"
-            params[name] = jsonArray[j].toString()
+            if(jsonArray[j] is JSONObject){
+              val jsonObjectParameter = JSONObject(gson.toJson(jsonArray[j]))
+              for (k in 0 until jsonObjectParameter.names().length()) {
+                params[jsonObjectParameter.names().getString(k)] =
+                  jsonObject[jsonObjectParameter.names().getString(k)].toString()
+              }
+            }else
+              params[name] = jsonArray[j].toString()
           }
         } else {
           params[jsonObject.names().getString(i)] =

@@ -25,10 +25,47 @@
 
       <LinearLayout
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
         android:background="#FBFBFB"
         android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+          android:id="@+id/img_login"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintTop_toTopOf="parent"
+          android:layout_marginTop="@dimen/dimen10"
+          android:layout_marginStart="@dimen/dimen20"
+          android:layout_marginEnd="@dimen/dimen20">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatEditText
+              android:id="@+id/appCompatEditText"
+              style="@style/mediumFont"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:background="@null"
+              android:text="@={viewModel.request.search}"
+              android:drawableStart="@drawable/ic_search"
+              android:drawablePadding="@dimen/dimen12"
+              android:hint="@string/search"
+              android:padding="@dimen/dimen10"
+              android:textSize="@dimen/text_size16"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
 
         <androidx.recyclerview.widget.RecyclerView
           android:layout_width="match_parent"

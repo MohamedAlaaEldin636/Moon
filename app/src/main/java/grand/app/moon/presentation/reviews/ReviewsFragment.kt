@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
-  val reviewsFragmentArgs : ReviewsFragmentArgs by navArgs()
+  val reviewsFragmentArgs: ReviewsFragmentArgs by navArgs()
   private val viewModel: ReviewsViewModel by viewModels()
-  private  val TAG = "ReviewsFragment"
+  private val TAG = "ReviewsFragment"
 
   override
   fun getLayoutId() = R.layout.fragment_reviews
@@ -32,7 +32,11 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.request.advertisement_id = reviewsFragmentArgs.advertisementId
+    if (reviewsFragmentArgs.advertisementId != -1)
+      viewModel.request.advertisement_id = reviewsFragmentArgs.advertisementId.toString()
+    else if (reviewsFragmentArgs.storeId != -1)
+      viewModel.request.store_id = reviewsFragmentArgs.storeId.toString()
+
     viewModel.getReviews()
   }
 
@@ -48,10 +52,17 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
 
   override fun setupObservers() {
 
-    viewModel.clickEvent.observe(this,{
-      when(it){
+    viewModel.clickEvent.observe(this, {
+      when (it) {
         Constants.REVIEW_DIALOG -> {
-          findNavController().navigate(ReviewsFragmentDirections.actionReviewsFragmentToReviewDialog(viewModel.request.advertisement_id,viewModel.rate))
+          val action = ReviewsFragmentDirections.actionReviewsFragmentToReviewDialog(viewModel.rate)
+          viewModel.request.advertisement_id?.let {
+            action.advertisementId = it.toInt()
+          }
+          viewModel.request.store_id?.let {
+            action.storeId = it.toInt()
+          }
+          findNavController().navigate(action)
         }
       }
     })

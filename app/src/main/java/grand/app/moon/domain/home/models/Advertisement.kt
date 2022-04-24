@@ -53,6 +53,8 @@ data class Advertisement(
 
   @SerializedName("reviews")
   var reviews: ArrayList<Reviews> = arrayListOf(),
+  @SerializedName("similar_ads")
+  var similarAds: ArrayList<Advertisement> = arrayListOf(),
 
 
   ) : Serializable

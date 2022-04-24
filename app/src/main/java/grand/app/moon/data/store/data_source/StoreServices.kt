@@ -3,7 +3,9 @@ package grand.app.moon.data.store.data_source
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.entity.ReportStoreRequest
+import grand.app.moon.domain.store.entity.ShareRequest
 import grand.app.moon.domain.store.entity.StoreListPaginateData
+import grand.app.moon.domain.user.entity.UserListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import retrofit2.http.*
 
@@ -23,5 +25,11 @@ interface StoreServices {
 
   @POST("v1/store/report_block")
   suspend fun report(@Body page: ReportStoreRequest): BaseResponse<*>
+
+  @POST("v1/share")
+  suspend fun share(@Body page: ShareRequest): BaseResponse<*>
+
+  @GET("v1/stores/{id}/{type}")
+  suspend fun getUsersViewFollowing( @Path("id") storeId: Int ,@Path("type") type: String ): BaseResponse<UserListPaginateData>
 
 }

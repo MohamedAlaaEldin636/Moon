@@ -14,21 +14,19 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.data.settings.data_source.remote.SettingsServices
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
-import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.domain.store.entity.ShareRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.openBrowser
-import grand.app.moon.presentation.explore.adapter.ExploreAdapter
-import grand.app.moon.presentation.explore.adapter.ExploreWithoutDifferAdapter
+import grand.app.moon.presentation.explore.adapter.ExploreGridEqualAdapter
 import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -54,7 +52,7 @@ class StoreDetailsViewModel @Inject constructor(
   @Bindable
   val adsAdapter = AdsAdapter()
 
-  var exploreAdapter = ExploreWithoutDifferAdapter()
+  var exploreAdapter = ExploreGridEqualAdapter()
 
   val followStoreRequest = FollowStoreRequest()
 
@@ -69,7 +67,7 @@ class StoreDetailsViewModel @Inject constructor(
 
 
 
-  val showAds = ObservableBoolean(false)
+  val showAds = ObservableBoolean(true)
   val showGallery = ObservableBoolean(true)
 
   val facebook = ObservableBoolean(true)
@@ -79,6 +77,7 @@ class StoreDetailsViewModel @Inject constructor(
 
   init {
     adsAdapter.percentageAds = 100
+
   }
 
   fun getDetails(id: Int) {
@@ -99,13 +98,19 @@ class StoreDetailsViewModel @Inject constructor(
     }
   }
 
+  fun share(){
+  }
+
+
 
   fun back(v: View) {
     v.findNavController().popBackStack()
   }
 
   fun share(v: AppCompatImageView){
+    Log.d(TAG, "share: ==========================")
 //    val name  = (store.get()?.name != null? "" : "")
+    storeUseCase.share(ShareRequest(store.get()?.id))
 
     var name = ""
     store.get()?.name?.let {
@@ -120,12 +125,17 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun rates(v: View){
-
+    v.findNavController().navigate(StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReviewsFragment2(store.get()!!.id,Constants.FOLLOWERS,v.resources.getString(R.string.rates)))
   }
 
 
   fun followers(v: View){
-
+    v.findNavController().navigate(StoreDetailsFragmentDirections.
+    actionStoreDetailsFragmentToStoreUsersFragment(store.get()!!.id,Constants.FOLLOWERS,v.resources.getString(R.string.followers)))
+  }
+  fun seen(v: View){
+    v.findNavController().navigate(StoreDetailsFragmentDirections.
+    actionStoreDetailsFragmentToStoreUsersFragment(store.get()!!.id,Constants.VIEWS,v.resources.getString(R.string.views)))
   }
 
 
@@ -169,6 +179,7 @@ class StoreDetailsViewModel @Inject constructor(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_report_reason),
           7,
+          -1,
           store.get()!!.id
         )
       )
@@ -186,6 +197,7 @@ class StoreDetailsViewModel @Inject constructor(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_block_reason),
           8,
+          -1,
           store.get()!!.id
         )
       )
@@ -229,12 +241,13 @@ class StoreDetailsViewModel @Inject constructor(
       Log.d(TAG, "update: ${image.get()}")
     }
 
+//    Log.d(TAG, "update: ${data.advertisements.size}")
     store.set(data)
-    adsAdapter.differ.submitList(store.get()?.advertisements)
-
-    store.get()?.explore?.let { exploreAdapter.list.addAll(it) }
+    adsAdapter.differ.submitList(data.advertisements)
+    exploreAdapter.differ.submitList(data.explore)
+//    store.get()?.explore?.let { exploreAdapter.differ.currentList.addAll(it) }
 //    notifyPropertyChanged(BR.exploreAdapter)
-    exploreAdapter.notifyDataSetChanged()
+//    exploreAdapter.notifyDataSetChanged()
 
     store.get()?.socialMediaLinks?.forEach { socialLink ->
       if(socialLink.link.isEmpty()) {
@@ -249,7 +262,7 @@ class StoreDetailsViewModel @Inject constructor(
       }
     }
 
-    Log.d(TAG, "explore: ${exploreAdapter.list.size}")
+//    Log.d(TAG, "explore: ${exploreAdapter.list.size}")
     show.set(true)
   }
 

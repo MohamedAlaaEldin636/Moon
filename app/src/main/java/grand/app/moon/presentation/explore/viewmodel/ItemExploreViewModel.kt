@@ -4,6 +4,8 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import grand.app.moon.R
@@ -12,7 +14,10 @@ import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.explore.ExploreListFragment
 import grand.app.moon.presentation.explore.ExploreListFragmentDirections
+import grand.app.moon.presentation.store.views.StoreDetailsFragment
+import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 
 class ItemExploreViewModel constructor(val model: Explore, val position: Int, val user: User) :
   BaseViewModel() {
@@ -70,9 +75,21 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
   }
 
   fun click(v: View) {
-    val action = if (model.mimeType.contains(Constants.VIDEO))
-      ExploreListFragmentDirections.actionExploreListFragmentToVideoFragment(model.file)
-    else ExploreListFragmentDirections.actionExploreListFragmentToZoomFragment(model.file)
-    v.findNavController().navigate(action)
+//    val f = v.findFragment<Fragment>()
+//    when (f) {
+//      is ExploreListFragment -> {
+        val action = if (model.mimeType.contains(Constants.VIDEO))
+          ExploreListFragmentDirections.actionExploreListFragmentToVideoFragment(model.file)
+        else ExploreListFragmentDirections.actionExploreListFragmentToZoomFragment(model.file)
+        v.findNavController().navigate(action)
+//      }
+//      is StoreDetailsFragment -> {
+//        val action = if (model.mimeType.contains(Constants.VIDEO))
+//          StoreDetailsFragmentDirections.actionExploreListFragmentToVideoFragment(model.file)
+//        else ExploreListFragmentDirections.actionExploreListFragmentToZoomFragment(model.file)
+//        v.findNavController().navigate(action)
+//      }
+//    }
   }
+
 }

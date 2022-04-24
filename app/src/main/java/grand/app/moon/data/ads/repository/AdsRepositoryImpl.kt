@@ -31,8 +31,8 @@ class AdsRepositoryImpl @Inject constructor(
 
 
   override
-  suspend fun getReviews(page: Int, advertisement: Int) =
-    remoteDataSource.getReviews(page, advertisement)
+  suspend fun getReviews(page: Int, store: String?, advertisement: String?) =
+    remoteDataSource.getReviews(page,store, advertisement)
 
 
   override

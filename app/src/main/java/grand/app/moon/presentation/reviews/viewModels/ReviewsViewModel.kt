@@ -35,7 +35,7 @@ class ReviewsViewModel @Inject constructor(
   @Bindable
   val adapter: ReviewsAdapter = ReviewsAdapter()
 
-  var request: ReviewRequest = ReviewRequest()
+  var request: ReviewRequest = ReviewRequest(null,null)
   private val _reviewsResponse =
     MutableStateFlow<Resource<BaseResponse<ReviewsPaginateData>>>(Resource.Default)
   val reviewsResponse = _reviewsResponse
@@ -54,7 +54,7 @@ class ReviewsViewModel @Inject constructor(
         if(page > 1){
           notifyPropertyChanged(BR.page)
         }
-        reviewsUseCase.getReviews(page,request.advertisement_id)
+        reviewsUseCase.getReviews(page,request.store_id.toString(),request.advertisement_id.toString())
           .onEach { result ->
             println(result.toString())
             _reviewsResponse.value = result

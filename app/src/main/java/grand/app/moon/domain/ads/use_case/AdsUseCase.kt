@@ -51,9 +51,9 @@ class AdsUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
-  fun getReviews(page: Int , advertisement: Int): Flow<Resource<BaseResponse<ReviewsPaginateData>>> = flow {
+  fun getReviews(page: Int , store: String?, advertisement: String?): Flow<Resource<BaseResponse<ReviewsPaginateData>>> = flow {
     emit(Resource.Loading)
-    val result = repo.getReviews(page,advertisement)
+    val result = repo.getReviews(page,store,advertisement)
     emit(result)
   }.flowOn(Dispatchers.IO)
 

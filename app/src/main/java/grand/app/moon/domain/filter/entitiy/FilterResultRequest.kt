@@ -5,6 +5,8 @@ import java.io.Serializable
 import java.math.BigInteger
 
 class FilterResultRequest(
+  @SerializedName("search")
+  var search: String = "",
   @SerializedName("category_id")
   var categoryId: Int = -1,
   @SerializedName("sub_category_id")

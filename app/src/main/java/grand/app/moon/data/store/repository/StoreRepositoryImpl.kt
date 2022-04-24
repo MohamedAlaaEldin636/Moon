@@ -3,6 +3,7 @@ package grand.app.moon.data.store.repository
 import grand.app.moon.data.store.data_source.StoreRemoteDataSource
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.entity.ReportStoreRequest
+import grand.app.moon.domain.store.entity.ShareRequest
 import grand.app.moon.domain.store.entity.StoreFilterRequest
 import grand.app.moon.domain.store.repository.StoreRepository
 import javax.inject.Inject
@@ -31,6 +32,13 @@ class StoreRepositoryImpl @Inject constructor(
 
   override
   suspend fun report(page: ReportStoreRequest) = remoteDataSource.report(page)
+
+  override
+  suspend fun share(page: ShareRequest) = remoteDataSource.share(page)
+
+  override
+  suspend fun getUsersViewFollowing(storeId: Int ,type: String) = remoteDataSource.getUsersViewFollowing(storeId,type)
+
 
 
 

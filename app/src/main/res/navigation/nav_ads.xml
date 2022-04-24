@@ -21,20 +21,29 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_adsDetailsFragment_to_reportDialog"
+      app:destination="@id/reportDialog" />
   </fragment>
+
   <fragment
     android:id="@+id/reviewsFragment"
     android:name="grand.app.moon.presentation.reviews.ReviewsFragment"
     android:label="@string/customers_reviews" >
     <argument
       android:name="advertisement_id"
+      app:argType="integer"
+      />
+    <argument
+      android:name="rate"
+      app:argType="string" />
+    <argument
+      android:name="store_id"
       app:argType="integer" />
     <action
       android:id="@+id/action_reviewsFragment_to_reviewDialog"
       app:destination="@id/reviewDialog" />
-    <argument
-      android:name="rate"
-      app:argType="string" />
+
   </fragment>
   <dialog
     android:id="@+id/reviewDialog"
@@ -42,10 +51,37 @@
     android:label="ReviewDialog" >
     <argument
       android:name="advertisement_id"
-      app:argType="integer" />
+      app:argType="integer"
+      android:defaultValue="-1"
+      />
+    <argument
+      android:name="store_id"
+      app:argType="integer"
+      android:defaultValue="-1"
+      />
     <argument
       android:name="rate"
       app:argType="string" />
+  </dialog>
+
+  <dialog
+    android:id="@+id/reportDialog"
+    android:name="grand.app.moon.presentation.store.dialog.ReportDialog"
+    android:label="@string/report_on_issue">
+    <argument
+      android:name="title"
+      app:argType="string" />
+    <argument
+      android:name="type"
+      app:argType="integer" />
+    <argument
+      android:name="advertisement_id"
+      app:argType="integer"
+      />
+    <argument
+      android:name="store_id"
+      app:argType="integer"
+      />
   </dialog>
 
 

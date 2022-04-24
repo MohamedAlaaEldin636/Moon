@@ -2,11 +2,9 @@ package grand.app.moon.domain.store.use_case
 
 import android.util.Log
 import grand.app.moon.domain.home.models.Store
-import grand.app.moon.domain.store.entity.FollowStoreRequest
-import grand.app.moon.domain.store.entity.ReportStoreRequest
-import grand.app.moon.domain.store.entity.StoreFilterRequest
-import grand.app.moon.domain.store.entity.StoreListPaginateData
+import grand.app.moon.domain.store.entity.*
 import grand.app.moon.domain.store.repository.StoreRepository
+import grand.app.moon.domain.user.entity.UserListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -49,6 +47,19 @@ class StoreUseCase @Inject constructor(
     val result = repository.report(id)
     emit(result)
   }.flowOn(Dispatchers.IO)
+
+  fun share(id: ShareRequest): Flow<Resource<BaseResponse<*>>> = flow {
+    val result = repository.share(id)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun getUsersViewFollowing(id: Int, type: String): Flow<Resource<BaseResponse<UserListPaginateData>>> = flow {
+    emit(Resource.Loading)
+    val result = repository.getUsersViewFollowing(id,type)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+
 
 
 

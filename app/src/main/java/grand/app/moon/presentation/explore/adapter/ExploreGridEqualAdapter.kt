@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cometchat.pro.models.User
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemExploreBinding
+import grand.app.moon.databinding.ItemExploreGidEqualBinding
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.presentation.explore.ExploreFragmentDirections
@@ -23,26 +24,32 @@ import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ExploreWithoutDifferAdapter: RecyclerView.Adapter<ExploreWithoutDifferAdapter.ViewHolder>() {
+class ExploreGridEqualAdapter: RecyclerView.Adapter<ExploreGridEqualAdapter.ViewHolder>() {
   var clickEvent: MutableLiveData<Int> = MutableLiveData()
   val user = grand.app.moon.domain.auth.entity.model.User()
-  val list = ArrayList<Explore>()
+  private val differCallback = object : DiffUtil.ItemCallback<Explore>() {
+    override fun areItemsTheSame(oldItem: Explore, newItem: Explore): Boolean {
+      return oldItem.id == newItem.id
+    }
 
+    override fun areContentsTheSame(oldItem: Explore, newItem: Explore): Boolean {
+      return oldItem == newItem
+    }
 
-
+  }
+  val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_explore, parent, false)
-    Log.d(TAG, "onCreateViewHolder: WELCOMe")
+    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_explore_gid_equal, parent, false)
     return ViewHolder(view)
   }
 
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val data = list[position]
+    val data = differ.currentList[position]
     val itemViewModel = ItemExploreViewModel(data,position,user)
     Log.d(TAG, "onBindViewHolder: "+data.file)
     holder.itemLayoutBinding.itemExplore.setOnClickListener {
-      Log.d(TAG, "onBindViewHolder: ")
+      Log.d(TAG, "onBindViewHolder: $position")
       clickEvent.value = position
 
 //      val list = ArrayList(differ.currentList)
@@ -61,19 +68,24 @@ class ExploreWithoutDifferAdapter: RecyclerView.Adapter<ExploreWithoutDifferAdap
 
   private val TAG = "ExploreAdapter"
   fun insertData(insertList: List<Explore>) {
-    val array = ArrayList<Explore>(list.size)
+    val array = ArrayList<Explore>(differ.currentList)
     val size = array.size
     array.addAll(insertList)
     Log.d(TAG, "insertData: "+size)
 //    notifyItemRangeInserted(size,array.size)
-    list.addAll(array)
+    differ.submitList(array)
     notifyDataSetChanged()
   }
 
-
+  fun removeItem(i: Int){
+    val array = ArrayList(differ.currentList)
+    array.remove(array[i])
+    differ.submitList(array)
+    notifyItemRemoved(i)
+  }
 
   override fun getItemCount(): Int {
-    return list.size
+    return differ.currentList.size
   }
 
   override fun onViewAttachedToWindow(holder: ViewHolder) {
@@ -88,7 +100,7 @@ class ExploreWithoutDifferAdapter: RecyclerView.Adapter<ExploreWithoutDifferAdap
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    lateinit var itemLayoutBinding: ItemExploreBinding
+    lateinit var itemLayoutBinding: ItemExploreGidEqualBinding
 
     init {
       bind()

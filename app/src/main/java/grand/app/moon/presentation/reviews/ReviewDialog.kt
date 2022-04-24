@@ -36,7 +36,7 @@ class ReviewDialog : BottomSheetDialogFragment() {
   ): View {
     binding = DataBindingUtil.inflate(inflater, R.layout.review_dialog, container, false)
     binding.viewModel = viewModel
-    viewModel.request.advertisement_id = args.advertisementId
+    viewModel.request.advertisement_id = args.advertisementId.toString()
     viewModel.rate = args.rate
     setupObserver()
     return binding.root

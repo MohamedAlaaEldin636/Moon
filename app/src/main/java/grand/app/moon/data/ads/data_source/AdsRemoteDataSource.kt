@@ -31,8 +31,8 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
   }
 
 
-  suspend fun getReviews(page: Int, advertisement: Int) = safeApiCall {
-    apiService.getReviews(advertisement, page)
+  suspend fun getReviews(page: Int, storeId: String?, advertisementId: String?) = safeApiCall {
+    apiService.getReviews(storeId,advertisementId, page)
   }
 
   suspend fun addReview(request: ReviewRequest) = safeApiCall {

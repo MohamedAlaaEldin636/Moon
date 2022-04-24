@@ -630,6 +630,7 @@
             android:background="@drawable/corner_silver_strock"
             android:gravity="start"
             android:padding="@dimen/dimen6"
+            android:onClick="@{ (v) -> viewModel.reportAds(v) }"
             android:drawableTint="@color/gray"
             android:drawableEnd="@drawable/ic_more_sec"
             android:text="@string/report_on_issue"

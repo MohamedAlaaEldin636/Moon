@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.GoogleMap
@@ -21,13 +22,16 @@ import grand.app.moon.databinding.FragmentStoreDetailsBinding
 import grand.app.moon.domain.utils.SpannedGridLayoutManager
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.explore.ExploreFragmentDirections
 import grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.Dispatcher
+import java.util.*
 import javax.security.auth.callback.Callback
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapReadyCallback {
@@ -43,6 +47,11 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   fun setBindingVariables() {
     binding.viewModel = viewModel
     viewModel.getDetails(adsDetailsFragmentArgs.id)
+    viewModel.exploreAdapter.clickEvent.observe(this,{
+      if(it != -1) {
+
+      }
+    })
   }
 
   val days = arrayListOf<String>()
@@ -62,6 +71,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
         Constants.LOGIN_REQUIRED -> openLoginActivity()
         Constants.SCROLL_DOWN -> scrollDown()
         Constants.SHARE_IMAGE -> {
+          Log.d(TAG, "setupObservers: hrer")
           viewModel.share(binding.imageSlider)
         }
       }
@@ -93,9 +103,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 
   fun scrollDown() {
     binding.scrollStoreDetails.fullScroll(View.FOCUS_DOWN)
-
   }
-
   override fun setUpViews() {
     super.setUpViews()
 //    setRecyclerViewScrollListener()

@@ -35,14 +35,15 @@ interface AdsServices {
   @GET
   suspend fun getAdsSubCategory(@Url url: String): BaseResponse<SubCategoryResponse>
 
-  @GET("v1/advertisements/{id}/reviews")
+  @GET("v1/reviews")
   suspend fun getReviews(
-    @Path("id") id: Int,
+    @Query("store_id") storeId: String?,
+    @Query("advertisement_id") adsId: String?,
     @Query("page") page: Int
   ): BaseResponse<ReviewsPaginateData>
 
 
-  @POST("v1/advertisements/review")
+  @POST("v1/review")
   suspend fun addReview(@Body request: ReviewRequest): BaseResponse<*>
 
   @GET("v1/filter/details")

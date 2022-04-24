@@ -279,6 +279,8 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_weight="1"
+                  android:onClick="@{ (v) -> viewModel.seen(v)}"
+
                   android:background="@drawable/corner_fbfbfb"
                   android:gravity="center"
                   android:orientation="vertical"
@@ -613,20 +615,8 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-              android:id="@+id/rv_store_gallery"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:scrollbars="none"
-              app:adapterGallery="@{viewModel.exploreAdapter}"
-              app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
-              tools:listitem="@layout/item_explore"
-              tools:orientation="vertical" />
-
             <com.google.android.material.tabs.TabLayout
               android:id="@+id/tabLayout"
-              android:visibility="gone"
               android:layout_width="match_parent"
               app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
               android:layout_marginTop="@dimen/dimen10"
@@ -651,20 +641,33 @@
             </com.google.android.material.tabs.TabLayout>
 
 
-<!--            android:visibility="@{viewModel.showAds ? View.VISIBLE : View.GONE}"-->
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--              android:id="@+id/rv_store_ads"-->
-<!--              android:layout_width="match_parent"-->
-<!--              android:layout_height="wrap_content"-->
-<!--              android:orientation="horizontal"-->
-<!--              android:layout_marginTop="@dimen/dimen5"-->
-<!--              android:visibility="gone"-->
-<!--              app:adapter="@{viewModel.adsAdapter}"-->
-<!--              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--              app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"-->
-<!--              app:orientation="@{`2`}"-->
-<!--              app:span="@{`1`}"-->
-<!--              tools:listitem="@layout/item_review" />-->
+            <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/rv_store_ads"
+              android:visibility="@{viewModel.showAds ? View.VISIBLE : View.GONE}"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:layout_marginTop="@dimen/dimen5"
+              app:adapter="@{viewModel.adsAdapter}"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+              app:orientation="@{`1`}"
+              app:span="@{`1`}"
+              tools:listitem="@layout/item_review" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/rv_store_gallery"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:visibility="@{viewModel.showAds ? View.GONE : View.VISIBLE}"
+              app:orientation="@{`1`}"
+              app:span="@{`3`}"
+              app:adapter="@{viewModel.exploreAdapter}"
+              app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+              tools:listitem="@layout/item_explore"
+              tools:orientation="vertical" />
 
 
 
