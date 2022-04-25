@@ -42,12 +42,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:loadImage="@{viewModel.advertisement.images[0]}" />
+        app:loadImage="@{viewModel.advertisement.image}" />
 
       <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/special"
+        android:scaleType="centerCrop"
+        android:visibility="@{viewModel.advertisement.premium == 1 ? View.VISIBLE : View.GONE , default = gone}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

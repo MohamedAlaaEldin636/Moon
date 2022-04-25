@@ -16,6 +16,7 @@ import com.facebook.FacebookSdk.setAdvertiserIDCollectionEnabled
 import com.facebook.FacebookSdk.setApplicationId
 import com.facebook.FacebookSdk.setAutoInitEnabled
 import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
+import com.google.firebase.auth.FirebaseAuth
 import com.zeugmasolutions.localehelper.LocaleHelper
 import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegate
 import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegateImpl
@@ -74,6 +75,7 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
       setAdvertiserIDCollectionEnabled(true)
     }
   }
+
 
   override
   fun onRestoreInstanceState(savedInstanceState: Bundle) {

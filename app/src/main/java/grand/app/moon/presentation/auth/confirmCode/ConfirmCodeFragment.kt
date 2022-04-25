@@ -47,10 +47,7 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            activity?.finishAffinity()
-            val externalUserId = viewModel.userLocalUseCase.invoke().id
-            OneSignal.setExternalUserId("user_$externalUserId")
-            openActivityAndClearStack(HomeActivity::class.java)
+            makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
           }
           is Resource.Failure -> {
             hideLoading()

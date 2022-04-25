@@ -38,6 +38,7 @@ android {
       manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher"
       buildConfigField("String", "API_BASE_URL", Config.Environments.debugBaseUrl)
       buildConfigField("String", "ROOM_DB", Config.Environments.roomDb)
+      buildConfigField("String", "SERVER_CLIENT_ID", Config.Environments.SERVER_CLIENT_ID)
     }
 
     signingConfigs {
@@ -62,6 +63,7 @@ android {
 
       buildConfigField("String", "API_BASE_URL", Config.Environments.releaseBaseUrl)
       buildConfigField("String", "ROOM_DB", Config.Environments.roomDb)
+      buildConfigField("String", "SERVER_CLIENT_ID", Config.Environments.SERVER_CLIENT_ID)
     }
   }
 
@@ -84,6 +86,7 @@ dependencies {
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
   //Room
   implementation(Libraries.roomVersion)
+  implementation("com.google.firebase:firebase-auth-ktx:21.0.3")
   kapt(Libraries.roomCompiler)
   implementation(Libraries.roomktx)
   implementation(Libraries.roomCommon)
@@ -192,6 +195,14 @@ dependencies {
   implementation("com.google.android.libraries.places:places:2.6.0")
   implementation("com.google.maps.android:android-maps-utils:2.3.0")
 
+  //firebase - signIn
+  // Import the BoM for the Firebase platform
+  implementation ("com.google.firebase:firebase-bom:29.3.1")
+  // Declare the dependency for the Firebase Authentication library
+  // When using the BoM, you don't specify versions in Firebase library dependencies
+  implementation ("com.google.firebase:firebase-auth")
+  // Also declare the dependency for the Google Play services library and specify its version
+  implementation ("com.google.android.gms:play-services-auth:20.1.0")
 
   //exoPlayer
   implementation("com.google.android.exoplayer:exoplayer:2.15.1")

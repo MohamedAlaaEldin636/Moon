@@ -6,6 +6,7 @@ import grand.app.moon.domain.auth.entity.request.*
 import grand.app.moon.domain.auth.repository.AuthRepository
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.helpers.login.SocialRequest
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -14,6 +15,10 @@ class AuthRepositoryImpl @Inject constructor(
 
   override
   suspend fun logIn(request: LogInRequest) = remoteDataSource.logIn(request)
+
+  override suspend fun socialRegister(request: SocialRequest): Resource<BaseResponse<User>> =
+    remoteDataSource.socialRegister(request)
+
 
   override suspend fun verifyAccount(request: VerifyAccountRequest): Resource<BaseResponse<User>> =
     remoteDataSource.verifyAccount(request)

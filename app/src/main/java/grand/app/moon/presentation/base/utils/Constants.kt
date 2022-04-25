@@ -5,6 +5,7 @@ import grand.app.moon.BuildConfig
 import grand.app.moon.R
 
 object Constants {
+  const val RC_SIGN_IN = 8888
   const val PAGE_INDEX = 1
   const val NETWORK_PAGE_SIZE = 2
 
@@ -36,6 +37,9 @@ object Constants {
   const val CONFIRM: Int = 26
   const val SCROLL_DOWN: Int = 27
   const val SHARE_IMAGE: Int = 28
+  const val GOOGLE: Int = 29
+  const val FACEBOOK: Int = 30
+
 
 
 

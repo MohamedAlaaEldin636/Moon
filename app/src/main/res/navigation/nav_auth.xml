@@ -5,6 +5,8 @@
   android:id="@+id/nav_auth"
   app:startDestination="@id/log_in_fragment">
 
+
+
   <fragment
     android:id="@+id/log_in_fragment"
     android:name="grand.app.moon.presentation.auth.log_in.LogInFragment"

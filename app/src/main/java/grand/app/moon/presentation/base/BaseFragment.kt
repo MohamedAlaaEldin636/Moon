@@ -17,10 +17,13 @@ import com.afollestad.assent.Permission
 import com.afollestad.assent.askForPermissions
 import com.afollestad.assent.isAllGranted
 import com.afollestad.assent.showSystemAppDetailsPage
+import com.onesignal.OneSignal
 import grand.app.moon.presentation.auth.AuthActivity
+import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import grand.app.moon.presentation.base.utils.hideLoadingDialog
 import grand.app.moon.presentation.base.utils.showLoadingDialog
+import grand.app.moon.presentation.home.HomeActivity
 import gun0912.tedbottompicker.TedRxBottomPicker
 import java.util.Locale
 
@@ -44,6 +47,12 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
     }
 
     return mRootView
+  }
+
+  fun makeIntegrationWithRedirectHome(externalUserId: Int){
+    activity?.finishAffinity()
+    OneSignal.setExternalUserId("user_$externalUserId")
+    openActivityAndClearStack(HomeActivity::class.java)
   }
 
   private fun initViewBinding(inflater: LayoutInflater, container: ViewGroup?) {

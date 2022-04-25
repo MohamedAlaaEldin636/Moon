@@ -194,7 +194,7 @@ fun setImages(sliderView: ImageSlider, images: ArrayList<String>?) {
   images?.let {
     val list = ArrayList<SlideModel>()
     for (image in images) {
-      list.add(SlideModel(image, ScaleTypes.FIT))
+      list.add(SlideModel(image, ScaleTypes.CENTER_CROP))
     }
     sliderView.setImageList(list)
     sliderView.setItemClickListener(object : ItemClickListener {

@@ -33,7 +33,7 @@ class ProfileViewModel @Inject constructor(val userUseCase: UserLocalUseCase,
   val user = userUseCase.invoke()
   init {
     request.name = user.name
-    request.phone = user.phone
+    request.phone = user.phone.toString()
     request.country_code = user.country_code
     request.email = user.email
     request.imagePath = user.image

@@ -5,6 +5,7 @@ import grand.app.moon.domain.auth.entity.request.LogInRequest
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.auth.entity.request.VerifyAccountRequest
 import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.helpers.login.SocialRequest
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
@@ -12,6 +13,9 @@ interface AuthServices {
 
   @POST("v1/authentication")
   suspend fun logIn(@Body request: LogInRequest): BaseResponse<*>
+
+  @POST("v1/auth/social/login")
+  suspend fun socialRegister(@Body request: SocialRequest): BaseResponse<User>
 
   @POST("v1/auth/verify_code")
   suspend fun verifyAccount(@Body request: VerifyAccountRequest): BaseResponse<User>
