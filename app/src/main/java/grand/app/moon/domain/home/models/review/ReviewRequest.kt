@@ -9,10 +9,10 @@ import com.google.gson.annotations.SerializedName
 class ReviewRequest(
   @SerializedName("advertisement_id")
   @Expose
-  var advertisement_id: String?,
+  var advertisement_id: String? = null,
   @SerializedName("store_id")
   @Expose
-  var store_id: String?,
+  var store_id: String? = null,
   @SerializedName("rate")
   @Expose
   var rate: String = "",

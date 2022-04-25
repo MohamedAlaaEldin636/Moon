@@ -81,6 +81,10 @@ class AdsDetailsViewModel @Inject constructor(
     }
   }
 
+  fun storeDetails(v: View){
+    v.findNavController().navigate(AdsDetailsFragmentDirections.actionAdsDetailsFragmentToStoreDetailsFragment3(advertisement.get()?.store!!.id))
+  }
+
   fun back(v: View) {
     v.findNavController().popBackStack()
   }
@@ -119,7 +123,7 @@ class AdsDetailsViewModel @Inject constructor(
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
       advertisement.get()?.store?.let {
-        startChatConversation(v, it.nickname, it.name, it.image)
+        startChatConversation(v, "${it.id}")
       }
     }
   }

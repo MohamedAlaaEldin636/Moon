@@ -23,7 +23,7 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
 
   private val adsDetailsFragmentArgs : AdsDetailsFragmentArgs by navArgs()
 
-  private val viewModel: AdsDetailsViewModel by viewModels()
+  val viewModel: AdsDetailsViewModel by viewModels()
 
 
   override fun onCreate(savedInstanceState: Bundle?) {

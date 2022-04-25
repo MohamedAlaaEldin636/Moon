@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
+import coil.size.Scale
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.bumptech.glide.Glide
@@ -197,6 +198,7 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
     if (URLUtil.isValidUrl(imageUrl)) {
       val request = ImageRequest.Builder(context)
         .data(imageUrl)
+        .scale(Scale.FIT)
         .crossfade(true)
         .crossfade(400)
         .error(R.drawable.bg_no_image)

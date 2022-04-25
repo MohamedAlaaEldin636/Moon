@@ -39,8 +39,10 @@ open class BaseRemoteDataSource @Inject constructor() {
               params[name] = jsonArray[j].toString()
           }
         } else {
-          params[jsonObject.names().getString(i)] =
-            jsonObject[jsonObject.names().getString(i)].toString()
+          if(jsonObject[jsonObject.names().getString(i)] != null && jsonObject.names().getString(i) != null) {
+            params[jsonObject.names().getString(i)] =
+              jsonObject[jsonObject.names().getString(i)].toString()
+          }
         }
       }
     } catch (e: Exception) {

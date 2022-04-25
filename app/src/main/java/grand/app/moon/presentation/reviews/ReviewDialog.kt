@@ -16,10 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.ReviewDialogBinding
 import grand.app.moon.domain.utils.Resource
-import grand.app.moon.presentation.base.extensions.handleApiError
-import grand.app.moon.presentation.base.extensions.hide
-import grand.app.moon.presentation.base.extensions.hideKeyboard
-import grand.app.moon.presentation.base.extensions.show
+import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.collect
 import java.util.*
@@ -54,7 +51,8 @@ class ReviewDialog : BottomSheetDialogFragment() {
           is Resource.Success -> {
             binding.progress.visibility = View.GONE
             binding.btnRate.show()
-
+            showMessage(it.value.message)
+            dismiss()
           }
           is Resource.Failure -> {
             binding.progress.visibility = View.GONE
@@ -71,7 +69,7 @@ class ReviewDialog : BottomSheetDialogFragment() {
   }
 
   override fun onDestroy() {
-    setFragmentResult(Constants.BUNDLE, bundleOf(Constants.RATE to viewModel.rate)) // total rate
+    setFragmentResult(Constants.BUNDLE, bundleOf(Constants.REVIEW to viewModel.reviewAdded)) // total rate
     super.onDestroy()
   }
 }

@@ -10,6 +10,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -29,15 +31,20 @@ import grand.app.moon.presentation.base.utils.*
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
+import com.cometchat.pro.core.CometChat
+import com.cometchat.pro.exceptions.CometChatException
+import com.cometchat.pro.models.User
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.facebook.FacebookSdk.getCacheDir
-import grand.app.moon.BuildConfig
+import com.onesignal.OneSignal
 import grand.app.moon.appMoonHelper.ThirdPartyHelper
 import grand.app.moon.core.MyApplication
 import grand.app.moon.domain.intro.entity.AppTutorial
+import grand.app.moon.presentation.home.HomeActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -64,12 +71,39 @@ fun Fragment.handleApiError(
       showNoInternetAlert(requireActivity())
     }
     FailureStatus.TOKEN_EXPIRED -> {
-      ThirdPartyHelper.clearOpenSignal()
+      logout()
       openActivityAndClearStack(AuthActivity::class.java)
     }
     else -> showNoApiErrorAlert(requireActivity(), getString(R.string.some_error))
   }
 }
+fun Fragment.logout(){
+  OneSignal.removeExternalUserId();
+  ThirdPartyHelper.clearOpenSignal()
+  CometChat.logout(object : CometChat.CallbackListener<String?>() {
+    override fun onSuccess(p0: String?) {
+      TODO("Not yet implemented")
+    }
+
+    override fun onError(p0: CometChatException?) {
+      TODO("Not yet implemented")
+    }
+  })
+}
+
+fun Fragment.makeIntegrationWithRedirectHome(externalUserId: Int){
+  requireActivity().finishAffinity()
+  OneSignal.setExternalUserId("user_$externalUserId")
+  CometChat.login("user_$externalUserId", Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
+    override fun onSuccess(user: User?) {
+
+    }
+    override fun onError(p0: CometChatException?) {
+    }
+  })
+  openActivityAndClearStack(HomeActivity::class.java)
+}
+
 
 fun Fragment.shareCustom(activity: Context, title: String, message: String, imageView: ImageView) {
   // save bitmap to cache directory

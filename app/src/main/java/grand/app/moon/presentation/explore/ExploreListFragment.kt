@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.explore
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +21,7 @@ import kotlinx.coroutines.flow.collect
 class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
 
   val exploreListFragmentArgs: ExploreListFragmentArgs by navArgs()
-  private val viewModel: ExploreListViewModel by viewModels()
+  val viewModel: ExploreListViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_explore_list
@@ -46,9 +47,9 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
 
   override
   fun setUpViews() {
-    setRecyclerViewScrollListener()
   }
 
+  private val TAG = "ExploreListFragment"
 
   override fun setupObservers() {
 
@@ -76,30 +77,11 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
       if (it == Constants.LOGIN_REQUIRED) openLoginActivity()
     })
 
-    viewModel.adapter.clickEvent.observe(this,{
-      when(it){
-        Constants.FAVOURITE -> viewModel.fav()
-        Constants.SHARE -> {
-          viewModel.adapter.differ.currentList[viewModel.adapter.position].shares++
-          viewModel.adapter.notifyItemChanged(viewModel.adapter.position)
-          context?.let { it1 -> share(it1,resources.getString(R.string.app_name),resources.getString(R.string.moon_info)+"\n"+viewModel.adapter.differ.currentList[viewModel.adapter.position].file) }
-        }
-        Constants.FOLLOW -> viewModel.follow()
-      }
-    })
-
   }
-
-
-  private fun setRecyclerViewScrollListener() {
-//    binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//        super.onScrollStateChanged(recyclerView, newState)
-//        if (!recyclerView.canScrollVertically(1)){
-//          viewModel.callService()
-//        }
-//      }
-//    })
+  fun share(){
+    viewModel.adapter.differ.currentList[viewModel.adapter.position].shares++
+    viewModel.adapter.notifyItemChanged(viewModel.adapter.position)
+    context?.let { it1 -> share(it1,resources.getString(R.string.app_name),resources.getString(R.string.moon_info)+"\n"+viewModel.adapter.differ.currentList[viewModel.adapter.position].file) }
   }
 
   override fun onResume() {

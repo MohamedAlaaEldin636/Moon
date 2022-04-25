@@ -14,6 +14,7 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import grand.app.moon.NavAdsDirections
 import grand.app.moon.R
 import grand.app.moon.data.settings.data_source.remote.SettingsServices
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
@@ -125,17 +126,17 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun rates(v: View){
-    v.findNavController().navigate(StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReviewsFragment2(store.get()!!.id,Constants.FOLLOWERS,v.resources.getString(R.string.rates)))
+//    v.findNavController().navigate(StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReviewsFragment2(store.get()!!.id,Constants.FOLLOWERS,v.resources.getString(R.string.rates)))
   }
 
 
   fun followers(v: View){
-    v.findNavController().navigate(StoreDetailsFragmentDirections.
-    actionStoreDetailsFragmentToStoreUsersFragment(store.get()!!.id,Constants.FOLLOWERS,v.resources.getString(R.string.followers)))
+//    v.findNavController().navigate(StoreDetailsFragmentDirections.
+//    actionStoreDetailsFragmentToStoreUsersFragment(store.get()!!.id,Constants.FOLLOWERS,v.resources.getString(R.string.followers)))
   }
   fun seen(v: View){
-    v.findNavController().navigate(StoreDetailsFragmentDirections.
-    actionStoreDetailsFragmentToStoreUsersFragment(store.get()!!.id,Constants.VIEWS,v.resources.getString(R.string.views)))
+//    v.findNavController().navigate(StoreDetailsFragmentDirections.
+//    actionStoreDetailsFragmentToStoreUsersFragment(store.get()!!.id,Constants.VIEWS,v.resources.getString(R.string.views)))
   }
 
 
@@ -207,9 +208,12 @@ class StoreDetailsViewModel @Inject constructor(
   fun chat(v: View) {
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
-      store.get()?.let {
-        startChatConversation(v, it.nickname, it.name, it.image)
-      }
+      v.findNavController().
+      navigate(NavAdsDirections.toChatDetailsFragment())
+
+//      store.get()?.let {
+//        startChatConversation(v, it.nickname, it.name, it.image)
+//      }
     }
   }
 

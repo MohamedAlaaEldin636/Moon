@@ -2,6 +2,7 @@ package grand.app.moon.presentation.myAccount
 
 import android.util.Log
 import androidx.fragment.app.viewModels
+import com.cometchat.pro.core.CometChat.logout
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
@@ -67,6 +68,7 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
 
           }
           Constants.LOGOUT -> {
+            logout()
 //            viewModel.logoutUser {
             viewModel.userLocalUseCase.clearUser()
             viewModel.isLogin = false

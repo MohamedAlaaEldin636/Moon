@@ -1,21 +1,18 @@
 package grand.app.moon.presentation.splash
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.onesignal.OneSignal
-import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.R
-import grand.app.moon.presentation.base.BaseActivity
-import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
-import grand.app.moon.databinding.ActivitySplashBinding
-import grand.app.moon.presentation.home.HomeActivity
-import grand.app.moon.presentation.intro.IntroActivity
 import com.zeugmasolutions.localehelper.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.R
+import grand.app.moon.databinding.ActivitySplashBinding
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.presentation.base.BaseActivity
+import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
+import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.home.HomeActivity
+import grand.app.moon.presentation.intro.IntroActivity
 import kotlinx.coroutines.flow.collect
 import java.util.*
 
@@ -42,6 +39,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     viewModel.home()
     decideNavigationLogic()
   }
+
 
   private fun decideNavigationLogic() {
     viewModel.clickEvent.observe(this, {

@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.models.review.ReviewRequest
+import grand.app.moon.domain.home.models.review.Reviews
 import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -25,6 +26,7 @@ class ReviewsViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
+  var reviewAdded: Reviews = Reviews()
   var rate: String = ""
 
   @Bindable
@@ -35,7 +37,7 @@ class ReviewsViewModel @Inject constructor(
   @Bindable
   val adapter: ReviewsAdapter = ReviewsAdapter()
 
-  var request: ReviewRequest = ReviewRequest(null,null)
+  var request: ReviewRequest = ReviewRequest()
   private val _reviewsResponse =
     MutableStateFlow<Resource<BaseResponse<ReviewsPaginateData>>>(Resource.Default)
   val reviewsResponse = _reviewsResponse
@@ -54,7 +56,7 @@ class ReviewsViewModel @Inject constructor(
         if(page > 1){
           notifyPropertyChanged(BR.page)
         }
-        reviewsUseCase.getReviews(page,request.store_id.toString(),request.advertisement_id.toString())
+        reviewsUseCase.getReviews(page,request.store_id,request.advertisement_id)
           .onEach { result ->
             println(result.toString())
             _reviewsResponse.value = result

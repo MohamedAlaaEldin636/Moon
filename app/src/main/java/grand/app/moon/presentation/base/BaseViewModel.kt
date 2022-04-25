@@ -205,21 +205,18 @@ open class BaseViewModel : ViewModel(), Observable {
 
   private val TAG = "BaseViewModel"
 
-  fun startChatConversation(v: View, uid: String, name: String, image: String) {
+  fun startChatConversation(v: View, uid: String) {
     Log.d(TAG, "startChatConversation")
     v.disable()
     val user = User()
     user.uid = uid // Replace with the UID for the user to be created
-    user.name = name // Replace with the name of the user
-    user.avatar = image
-    user.link = image
 
     CometChat.login(user.uid, Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
       override fun onSuccess(user: User?) {
         Log.d(TAG, "ologin")
-        if (user != null) {
-          startChatPage(v, user)
-        }
+//        if (user != null) {
+//          startChatPage(v, user)
+//        }
       }
 
       override fun onError(p0: CometChatException?) {
@@ -232,7 +229,7 @@ open class BaseViewModel : ViewModel(), Observable {
             object : CometChat.CallbackListener<User>() {
               override fun onSuccess(p0: User?) {
                 Log.d(TAG, "onSuccess: DONE")
-                startChatConversation(v, uid, name, image)
+                startChatConversation(v, uid)
               }
 
               override fun onError(p0: CometChatException?) {

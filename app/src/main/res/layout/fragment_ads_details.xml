@@ -393,6 +393,7 @@
                 android:layout_width="@dimen/dimen60"
                 android:layout_height="@dimen/dimen60"
                 android:layout_marginTop="@dimen/dimen12"
+                android:onClick="@{ (v) -> viewModel.storeDetails(v) }"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_ads_details_store_header"
                 app:loadImage="@{viewModel.advertisement.store.image}" />

@@ -46,52 +46,52 @@
       app:defaultImage="@{@drawable/corner_primary}" />
 
 
-<!--    <LinearLayout-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:orientation="horizontal"-->
-<!--      android:layout_margin="@dimen/dimen10"-->
-<!--      app:layout_constraintEnd_toEndOf="parent"-->
-<!--      app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView">-->
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_margin="@dimen/dimen10"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView">
 
-<!--      <androidx.appcompat.widget.AppCompatImageView-->
-<!--        android:src="@drawable/ic_chats"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_width="@dimen/dimen30"-->
-<!--        android:tint="@color/colorWhite"-->
-<!--        android:layout_height="@dimen/dimen30"/>-->
+      <androidx.appcompat.widget.AppCompatImageView
+        android:src="@drawable/ic_chats"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/dimen30"
+        android:tint="@color/colorWhite"
+        android:layout_height="@dimen/dimen30"/>
 
-<!--      <androidx.appcompat.widget.AppCompatTextView-->
-<!--        style="@style/mediumFont"-->
-<!--        android:layout_marginStart="@dimen/dimen10"-->
-<!--        android:textColor="@color/colorWhite"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:gravity="center"-->
-<!--        android:text="@{viewModel.model.comments+``}"-->
-<!--        android:textSize="@dimen/text_size14"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"/>-->
+      <androidx.appcompat.widget.AppCompatTextView
+        style="@style/mediumFont"
+        android:layout_marginStart="@dimen/dimen10"
+        android:textColor="@color/colorWhite"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@{viewModel.model.comments+``}"
+        android:textSize="@dimen/text_size14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-<!--      <androidx.appcompat.widget.AppCompatImageView-->
-<!--        android:src="@drawable/ic_like"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginStart="@dimen/dimen20"-->
-<!--        android:tint="@color/colorWhite"-->
-<!--        android:layout_width="@dimen/dimen30"-->
-<!--        android:layout_height="@dimen/dimen30"/>-->
+      <androidx.appcompat.widget.AppCompatImageView
+        android:src="@drawable/ic_like"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dimen20"
+        android:tint="@color/colorWhite"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"/>
 
-<!--      <androidx.appcompat.widget.AppCompatTextView-->
-<!--        style="@style/mediumFont"-->
-<!--        android:layout_marginStart="@dimen/dimen10"-->
-<!--        android:textColor="@color/colorWhite"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:text="@{viewModel.model.likes+``}"-->
-<!--        android:gravity="center"-->
-<!--        android:textSize="@dimen/text_size14"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"/>-->
+      <androidx.appcompat.widget.AppCompatTextView
+        style="@style/mediumFont"
+        android:layout_marginStart="@dimen/dimen10"
+        android:textColor="@color/colorWhite"
+        android:layout_gravity="center"
+        android:text="@{viewModel.model.likes+``}"
+        android:gravity="center"
+        android:textSize="@dimen/text_size14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-<!--    </LinearLayout>-->
+    </LinearLayout>
 
 
 <!--    <com.google.android.exoplayer2.ui.PlayerView-->

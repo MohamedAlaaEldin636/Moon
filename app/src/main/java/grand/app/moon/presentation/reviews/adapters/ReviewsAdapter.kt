@@ -63,7 +63,18 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsAdapter.ViewHolder>() {
     holder.unBind()
   }
 
-  inner class ViewHolder(itemView: View) :
+    fun add(review: Reviews) {
+      differ.currentList.add(review)
+      val array = ArrayList<Reviews>(differ.currentList)
+      val size = array.size
+      array.add(review)
+      Log.d(TAG, "insertData: "+size)
+//    notifyItemRangeInserted(size,array.size)
+      differ.submitList(array)
+      notifyDataSetChanged()
+    }
+
+    inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     private lateinit var itemLayoutBinding: ItemReviewBinding
 

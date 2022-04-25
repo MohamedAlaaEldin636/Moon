@@ -90,6 +90,7 @@ object Constants {
   const val ADVERTISEMENT_TEXT: String = "advertisement"
   const val RATE: String = "RATE"
   const val TITLE: String = "title"
+  const val REVIEW: String = "review"
 
 
 

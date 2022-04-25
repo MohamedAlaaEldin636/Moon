@@ -59,7 +59,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       when (it) {
         Constants.LOGIN_REQUIRED -> startActivity(Intent(this, AuthActivity::class.java))
         Constants.DEPARTMENTS -> nav.navigate(NavHomeDirections.actionHomeFragmentToDepartmentListFragment())
-        Constants.CHAT_LIST -> nav.navigate(NavHomeDirections.actionHomeFragmentToCometChatConversationList())
+        Constants.CHAT_LIST -> nav.navigate(NavHomeDirections.actionHomeFragmentToChatFragment())
         Constants.NOTIFICATION -> {
           if(viewModel.isLoggin)
             nav.navigate(NavHomeDirections.moveToNotification())

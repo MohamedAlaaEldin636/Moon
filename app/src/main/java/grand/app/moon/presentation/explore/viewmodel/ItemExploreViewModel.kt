@@ -30,15 +30,31 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
 
   val submitEventEvent = MutableLiveData<String>()
   fun follow(v: View) {
-    submitEventEvent.value = Constants.FOLLOW
+    if (user.id == 0) {
+      v.context.startActivity(Intent(v.context, AuthActivity::class.java))
+      return
+    }
+    val fragment = v.findFragment<ExploreListFragment>()
+    fragment.viewModel.adapter.position = position
+    fragment.viewModel.follow()
+
   }
 
   fun fav(v: View) {
-    Log.d(TAG, "fav: ")
-    submitEventEvent.value = Constants.FAVOURITE
+    if (user.id == 0) {
+      v.context.startActivity(Intent(v.context, AuthActivity::class.java))
+      return
+    }
+    val fragment = v.findFragment<ExploreListFragment>()
+    fragment.viewModel.adapter.position = position
+    fragment.viewModel.fav()
   }
 
   fun likes(v: View) {
+    if (user.id == 0) {
+      v.context.startActivity(Intent(v.context, AuthActivity::class.java))
+      return
+    }
     v.findNavController().navigate(
       R.id.userListFragment,
       bundleOf(
@@ -51,13 +67,12 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
   }
 
   fun share(v: View) {
-    Log.d(TAG, "share: ")
-    submitEventEvent.value = Constants.SHARE
+    val fragment = v.findFragment<ExploreListFragment>()
+    fragment.viewModel.adapter.position = position
+    fragment.share()
   }
 
   fun allComments(v: View) {
-    Log.d(TAG, "allComments: ${user.name}")
-    Log.d(TAG, "allComments: ${user.image}")
     if (user.id == 0) v.context.startActivity(Intent(v.context, AuthActivity::class.java))
     else if (user.image.isEmpty() || user.name.isEmpty()) {
       showInfo(v.context, v.context.resources.getString(R.string.please_complete_your_profile))

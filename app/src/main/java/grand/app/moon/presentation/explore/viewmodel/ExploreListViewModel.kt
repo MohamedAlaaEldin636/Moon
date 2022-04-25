@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.explore.viewmodel
 
+import android.util.Log
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
@@ -114,8 +115,10 @@ class ExploreListViewModel @Inject constructor(
   }
 
   fun fav() {
+    Log.d(TAG, "fav: FAVOURUTE")
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
+      Log.d(TAG, "fav: HERE")
       val explore = adapter.differ.currentList[adapter.position]
       exploreAction.exploreId = explore.id
       exploreAction.type = 1

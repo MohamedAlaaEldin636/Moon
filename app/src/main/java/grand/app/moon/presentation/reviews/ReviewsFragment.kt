@@ -12,9 +12,11 @@ import grand.app.moon.presentation.reviews.viewModels.ReviewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentReviewsBinding
+import grand.app.moon.domain.home.models.review.Reviews
 import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.extensions.backToPreviousScreen
 import grand.app.moon.presentation.base.extensions.handleApiError
 import grand.app.moon.presentation.base.extensions.hideKeyboard
 import grand.app.moon.presentation.base.utils.Constants
@@ -22,7 +24,6 @@ import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
-  val reviewsFragmentArgs: ReviewsFragmentArgs by navArgs()
   private val viewModel: ReviewsViewModel by viewModels()
   private val TAG = "ReviewsFragment"
 
@@ -32,19 +33,23 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    if (reviewsFragmentArgs.advertisementId != -1)
-      viewModel.request.advertisement_id = reviewsFragmentArgs.advertisementId.toString()
-    else if (reviewsFragmentArgs.storeId != -1)
-      viewModel.request.store_id = reviewsFragmentArgs.storeId.toString()
-
+    requireArguments().let {
+      if(requireArguments().containsKey("advertisement_id")  && requireArguments().getInt("advertisement_id") != -1) {
+        viewModel.request.advertisement_id = requireArguments().getInt("advertisement_id").toString()
+      }
+      if(requireArguments().containsKey("store_id") && requireArguments().getInt("store_id") != -1 ) {
+        viewModel.request.store_id = requireArguments().getInt("store_id").toString()
+      }
+    }
     viewModel.getReviews()
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+      backToPreviousScreen()
       // We use a String here, but any type that can be put in a Bundle is supported
-      viewModel.rate = bundle.getString(Constants.RATE).toString()
+//      viewModel.adapter.add(bundle.getSerializable(Constants.REVIEW) as Reviews)
       // Do something with the result
     }
   }
@@ -55,14 +60,15 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
     viewModel.clickEvent.observe(this, {
       when (it) {
         Constants.REVIEW_DIALOG -> {
-          val action = ReviewsFragmentDirections.actionReviewsFragmentToReviewDialog(viewModel.rate)
-          viewModel.request.advertisement_id?.let {
-            action.advertisementId = it.toInt()
-          }
-          viewModel.request.store_id?.let {
-            action.storeId = it.toInt()
-          }
-          findNavController().navigate(action)
+
+//          val action = ReviewsFragmentDirections.actionReviewsFragmentToReviewDialog(viewModel.rate)
+//          viewModel.request.advertisement_id?.let {
+//            action.advertisementId = it.toInt()
+//          }
+//          viewModel.request.store_id?.let {
+//            action.storeId = it.toInt()
+//          }
+//          findNavController().navigate(action)
         }
       }
     })
