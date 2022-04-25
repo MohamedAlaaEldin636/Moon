@@ -43,6 +43,8 @@ import com.facebook.FacebookSdk.getCacheDir
 import com.onesignal.OneSignal
 import grand.app.moon.appMoonHelper.ThirdPartyHelper
 import grand.app.moon.core.MyApplication
+import grand.app.moon.core.extenstions.loginCometChat
+import grand.app.moon.core.extenstions.logoutCometChat
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.presentation.home.HomeActivity
 import java.io.File
@@ -80,27 +82,18 @@ fun Fragment.handleApiError(
 fun Fragment.logout(){
   OneSignal.removeExternalUserId();
   ThirdPartyHelper.clearOpenSignal()
-  CometChat.logout(object : CometChat.CallbackListener<String?>() {
-    override fun onSuccess(p0: String?) {
-      TODO("Not yet implemented")
-    }
-
-    override fun onError(p0: CometChatException?) {
-      TODO("Not yet implemented")
-    }
-  })
+  requireContext().logoutCometChat()
 }
 
+/*
+01010998759
+1016171926
+ */
+private const val TAG = "FragmentExtensions"
 fun Fragment.makeIntegrationWithRedirectHome(externalUserId: Int){
   requireActivity().finishAffinity()
   OneSignal.setExternalUserId("user_$externalUserId")
-  CometChat.login("user_$externalUserId", Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
-    override fun onSuccess(user: User?) {
-
-    }
-    override fun onError(p0: CometChatException?) {
-    }
-  })
+  requireContext().loginCometChat(externalUserId)
   openActivityAndClearStack(HomeActivity::class.java)
 }
 

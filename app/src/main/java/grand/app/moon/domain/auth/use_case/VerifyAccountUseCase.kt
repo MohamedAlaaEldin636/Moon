@@ -32,18 +32,6 @@ class VerifyAccountUseCase @Inject constructor(
       val result = authRepository.verifyAccount(request)
       if (result is Resource.Success) {
 
-        baseViewModel.loginUser(
-          baseViewModel,
-          result.value.data.id.toString(),
-          result.value.data.name,
-          result.value.data.image,object : ICometChat {
-            override fun setLoggedIn(boolean: Boolean) {
-              Log.d(TAG, "setLoggedIn: $boolean")
-              if(boolean) {
-              }
-            }
-          })
-
         userLocalUseCase(result.value.data)
 
       }

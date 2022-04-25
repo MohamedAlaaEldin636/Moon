@@ -74,7 +74,7 @@ class MyApplication : LocaleAwareApplication() {
       }
 
       override fun onError(p0: CometChatException?) {
-        TODO("Not yet implemented")
+//        TODO("Not yet implemented")
       }
     })
   }

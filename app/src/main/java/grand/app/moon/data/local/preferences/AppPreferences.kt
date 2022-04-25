@@ -100,7 +100,7 @@ class AppPreferences @Inject constructor(private val context: Context) {
     val IS_LOGGED_IN = booleanPreferencesKey("isLoggedIn")
     const val APP_PREFERENCES_NAME = "APP-NAME-Cache"
     private const val SESSION_PREFERENCES_NAME = "APP-NAME-UserCache"
-    private const val MODE = Context.MODE_PRIVATE
+    const val MODE = Context.MODE_PRIVATE
   }
 
   private val appPreferences: SharedPreferences =

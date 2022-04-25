@@ -5,6 +5,9 @@ import android.view.View
 import androidx.fragment.app.findFragment
 import androidx.navigation.findNavController
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLogin
+import grand.app.moon.core.extenstions.isLoginWithOpenAuth
+import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.presentation.ads.AdsDetailsFragment
 import grand.app.moon.presentation.ads.AdsDetailsFragmentDirections
@@ -37,14 +40,10 @@ class ItemAdsViewModel(
 
   //take-care
   fun chat(v: View) {
-    val destination = v.findNavController().currentDestination?.id
-    if(destination ==  R.id.adsDetailsFragment){
-      val fragment = v.findFragment<AdsDetailsFragment>()
-      if(!fragment.viewModel.isLoggin) {
-        v.context.startActivity(Intent(v.context, AuthActivity::class.java))
-        return
+    if(v.context.isLoginWithOpenAuth()) {
+      advertisement.store?.let {
+        v.context.openChatStore(v, it.id, it.name, it.image)
       }
-      v.findNavController().navigate(AdsDetailsFragmentDirections.toChatDetailsFragment())
     }
   }
 

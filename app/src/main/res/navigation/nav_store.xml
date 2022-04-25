@@ -97,17 +97,4 @@
       app:argType="integer"
       android:defaultValue="-1" />
   </fragment>
-  <fragment
-    android:id="@+id/chatDetailsFragment"
-    android:name="grand.app.moon.presentation.chat.ChatDetailsFragment"
-    android:label="@string/chat" />
-
-  <action
-    android:id="@+id/to_chatDetailsFragment"
-    app:destination="@id/chatDetailsFragment"
-    app:enterAnim="@anim/anim_slide_in_right"
-    app:exitAnim="@anim/anim_slide_out_left"
-    app:popEnterAnim="@anim/anim_slide_in_left"
-    app:popExitAnim="@anim/anim_slide_out_right" />
-
 </navigation>
