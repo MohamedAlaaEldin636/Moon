@@ -53,8 +53,8 @@ android {
     getByName("release") {
       signingConfig = signingConfigs.getByName("releaseConfig")
 
-      isMinifyEnabled = true
-      isShrinkResources = true
+      isMinifyEnabled = false
+      isShrinkResources = false
 
 //      resValue("string", "google_api_key", gradleLocalProperties(rootDir).getProperty("GOOGLE_API_KEY"))
       manifestPlaceholders["appName"] = "@string/app_name"

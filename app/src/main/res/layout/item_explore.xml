@@ -57,9 +57,9 @@
       <androidx.appcompat.widget.AppCompatImageView
         android:src="@drawable/ic_chats"
         android:layout_gravity="center"
-        android:layout_width="@dimen/dimen30"
+        android:layout_width="@dimen/dimen8"
         android:tint="@color/colorWhite"
-        android:layout_height="@dimen/dimen30"/>
+        android:layout_height="@dimen/dimen8"/>
 
       <androidx.appcompat.widget.AppCompatTextView
         style="@style/mediumFont"
@@ -68,7 +68,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@{viewModel.model.comments+``}"
-        android:textSize="@dimen/text_size14"
+        android:textSize="7sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -76,9 +76,9 @@
         android:src="@drawable/ic_like"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/dimen20"
+        android:layout_width="@dimen/dimen8"
         android:tint="@color/colorWhite"
-        android:layout_width="@dimen/dimen30"
-        android:layout_height="@dimen/dimen30"/>
+        android:layout_height="@dimen/dimen8"/>
 
       <androidx.appcompat.widget.AppCompatTextView
         style="@style/mediumFont"
@@ -87,7 +87,7 @@
         android:layout_gravity="center"
         android:text="@{viewModel.model.likes+``}"
         android:gravity="center"
-        android:textSize="@dimen/text_size14"
+        android:textSize="7sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

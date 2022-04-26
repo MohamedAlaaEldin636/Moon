@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class StoreFollowedListFragment : BaseFragment<FragmentStoreFollowedListBinding>() {
 
-  private val viewModel: StoreFollowedListViewModel by viewModels()
+  val viewModel: StoreFollowedListViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_store_followed_list

@@ -76,7 +76,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //    Log.d(TAG, "onBindViewHolder: $position")
     val data = differ.currentList[position]
-    val itemViewModel = ItemStoreViewModel(data, percentage,useCase,isLogin)
+    val itemViewModel = ItemStoreViewModel(data, percentage,useCase,position)
     holder.setViewModel(itemViewModel)
     itemViewModel.submitEvent.observeForever{
 //          Log.d(TAG, "onBindViewHolder: HAY THERE")

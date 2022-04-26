@@ -34,6 +34,30 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/reviewsFragment2" />
+    <action
+      android:id="@+id/action_storeDetailsFragment_to_zoomFragment2"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/zoomFragment2" />
+
+    <action
+      android:id="@+id/action_storeDetailsFragment_to_videoFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/videoFragment" />
+    <action
+      android:id="@+id/action_storeDetailsFragment_to_zoomFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/zoomFragment" />
+    
+    
   </fragment>
   <dialog
     android:id="@+id/workingHoursDialog"
@@ -96,5 +120,48 @@
       android:name="advertisement_id"
       app:argType="integer"
       android:defaultValue="-1" />
+    <action
+      android:id="@+id/action_reviewsFragment_to_reviewDialog"
+      app:destination="@id/reviewDialog" />
+
   </fragment>
+  <dialog
+    android:id="@+id/reviewDialog"
+    android:name="grand.app.moon.presentation.reviews.ReviewDialog"
+    android:label="ReviewDialog" >
+    <argument
+      android:name="advertisement_id"
+      app:argType="integer"
+      android:defaultValue="-1"
+      />
+    <argument
+      android:name="store_id"
+      app:argType="integer"
+      android:defaultValue="-1"
+      />
+    <argument
+      android:name="rate"
+      app:argType="string" />
+  </dialog>
+  <fragment
+    android:id="@+id/zoomFragment2"
+    android:name="grand.app.moon.presentation.media.image.ZoomFragment"
+    android:label="" >
+    <argument
+      android:name="image"
+      app:argType="string" />
+  </fragment>
+  <fragment
+    android:id="@+id/videoFragment"
+    android:name="grand.app.moon.presentation.media.video.VideoFragment"
+    android:label=""
+    app:enterAnim="@anim/anim_slide_in_right"
+    app:exitAnim="@anim/anim_slide_out_left"
+    app:popEnterAnim="@anim/anim_slide_in_left"
+    app:popExitAnim="@anim/anim_slide_out_right">
+    <argument
+      android:name="video"
+      app:argType="string" />
+  </fragment>
+
 </navigation>

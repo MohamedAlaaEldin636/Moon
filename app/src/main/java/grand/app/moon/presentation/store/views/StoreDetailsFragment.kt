@@ -47,11 +47,11 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   fun setBindingVariables() {
     binding.viewModel = viewModel
     viewModel.getDetails(adsDetailsFragmentArgs.id)
-    viewModel.exploreAdapter.clickEvent.observe(this,{
-      if(it != -1) {
-
-      }
-    })
+//    viewModel.exploreAdapter.clickEvent.observe(this,{
+//      if(it != -1) {
+//
+//      }
+//    })
   }
 
   val days = arrayListOf<String>()
@@ -66,9 +66,10 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     days.add(resources.getString(R.string.thursday))
     days.add(resources.getString(R.string.friday))
 
-    viewModel.clickEvent.observe(viewLifecycleOwner, {
+    viewModel.clickEvent.observe(this, {
+      Log.d(TAG, "setupObservers: ${it}")
       when (it) {
-        Constants.LOGIN_REQUIRED -> openLoginActivity()
+//        Constants.LOGIN_REQUIRED -> openLoginActivity()
         Constants.SCROLL_DOWN -> scrollDown()
         Constants.SHARE_IMAGE -> {
           Log.d(TAG, "setupObservers: hrer")
@@ -102,7 +103,8 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   }
 
   fun scrollDown() {
-    binding.scrollStoreDetails.fullScroll(View.FOCUS_DOWN)
+    binding.scrollStoreDetails.scrollTo(0, binding.tabLayout.y.toInt())
+//    binding.scrollStoreDetails.fullScroll(View.FOCUS_DOWN)
   }
   override fun setUpViews() {
     super.setUpViews()

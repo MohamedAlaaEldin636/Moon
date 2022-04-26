@@ -90,21 +90,20 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
   }
 
   fun click(v: View) {
-//    val f = v.findFragment<Fragment>()
-//    when (f) {
-//      is ExploreListFragment -> {
+    val f = v.findFragment<Fragment>()
+    when (f) {
+      is ExploreListFragment -> {
         val action = if (model.mimeType.contains(Constants.VIDEO))
           ExploreListFragmentDirections.actionExploreListFragmentToVideoFragment(model.file)
         else ExploreListFragmentDirections.actionExploreListFragmentToZoomFragment(model.file)
         v.findNavController().navigate(action)
-//      }
-//      is StoreDetailsFragment -> {
-//        val action = if (model.mimeType.contains(Constants.VIDEO))
-//          StoreDetailsFragmentDirections.actionExploreListFragmentToVideoFragment(model.file)
-//        else ExploreListFragmentDirections.actionExploreListFragmentToZoomFragment(model.file)
-//        v.findNavController().navigate(action)
-//      }
-//    }
+      }
+      is StoreDetailsFragment -> {
+        val action = if (model.mimeType.contains(Constants.VIDEO))
+          StoreDetailsFragmentDirections.actionStoreDetailsFragmentToVideoFragment(model.file)
+        else StoreDetailsFragmentDirections.actionStoreDetailsFragmentToZoomFragment2(model.file)
+        v.findNavController().navigate(action)
+      }
+    }
   }
-
 }

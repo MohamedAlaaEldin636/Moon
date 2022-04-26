@@ -279,6 +279,7 @@
             android:layout_height="wrap_content"
             card_view:cardUseCompatPadding="true"
             android:layout_marginTop="@dimen/dimen10"
+            android:onClick="@{ (v) -> viewModel.location(v) }"
             app:cardCornerRadius="@dimen/dimen6"
             app:cardElevation="@dimen/dimen4">
 

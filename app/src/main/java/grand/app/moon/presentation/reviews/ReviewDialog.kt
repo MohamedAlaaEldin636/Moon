@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.reviews
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ class ReviewDialog : BottomSheetDialogFragment() {
   val args: ReviewDialogArgs by navArgs()
   private val viewModel: ReviewsViewModel by viewModels()
   lateinit var binding: ReviewDialogBinding
+  private  val TAG = "ReviewDialog"
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -33,7 +35,12 @@ class ReviewDialog : BottomSheetDialogFragment() {
   ): View {
     binding = DataBindingUtil.inflate(inflater, R.layout.review_dialog, container, false)
     binding.viewModel = viewModel
-    viewModel.request.advertisement_id = args.advertisementId.toString()
+    if( args.advertisementId != -1)
+      viewModel.request.advertisement_id = args.advertisementId.toString()
+    if( args.storeId != -1)
+      viewModel.request.store_id = args.storeId.toString()
+    Log.d(TAG, "onCreateView: ${viewModel.request.advertisement_id}")
+    Log.d(TAG, "onCreateView: ${viewModel.request.store_id}")
     viewModel.rate = args.rate
     setupObserver()
     return binding.root

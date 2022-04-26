@@ -1,5 +1,6 @@
 package grand.app.moon.data.ads.data_source
 
+import android.util.Log
 import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.auth.entity.request.*
@@ -10,6 +11,7 @@ import javax.inject.Inject
 class AdsRemoteDataSource @Inject constructor(private val apiService: AdsServices) :
   BaseRemoteDataSource() {
 
+  private val TAG = "AdsRemoteDataSource"
   suspend fun getDetails(id: Int, type: Int) = safeApiCall {
     apiService.details(id, type)
   }
@@ -19,6 +21,8 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
   }
 
   suspend fun getProfileAdsList(page: Int, type: Int) = safeApiCall {
+    Log.d(TAG, "getProfileAdsList: $page")
+    Log.d(TAG, "getProfileAdsList: $type")
     apiService.getProfileAdsList(page, type)
   }
 

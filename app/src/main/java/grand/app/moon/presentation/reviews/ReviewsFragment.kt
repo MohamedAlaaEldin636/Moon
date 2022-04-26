@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.reviews
 
 import android.os.Bundle
+import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -47,7 +48,10 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
-      backToPreviousScreen()
+      if(bundle.containsKey(Constants.REVIEW)) {
+        backToPreviousScreen()
+        bundle.remove(Constants.BUNDLE)
+      }
       // We use a String here, but any type that can be put in a Bundle is supported
 //      viewModel.adapter.add(bundle.getSerializable(Constants.REVIEW) as Reviews)
       // Do something with the result
@@ -60,15 +64,16 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
     viewModel.clickEvent.observe(this, {
       when (it) {
         Constants.REVIEW_DIALOG -> {
-
-//          val action = ReviewsFragmentDirections.actionReviewsFragmentToReviewDialog(viewModel.rate)
-//          viewModel.request.advertisement_id?.let {
-//            action.advertisementId = it.toInt()
-//          }
-//          viewModel.request.store_id?.let {
-//            action.storeId = it.toInt()
-//          }
-//          findNavController().navigate(action)
+          val action = ReviewsFragmentDirections.actionReviewsFragmentToReviewDialog(viewModel.rate)
+          Log.d(TAG, "setupObservers: ${viewModel.request.advertisement_id}")
+          Log.d(TAG, "setupObservers: ${viewModel.request.store_id}")
+          viewModel.request.advertisement_id?.let {
+            action.advertisementId = it.toInt()
+          }
+          viewModel.request.store_id?.let {
+            action.storeId = it.toInt()
+          }
+          findNavController().navigate(action)
         }
       }
     })

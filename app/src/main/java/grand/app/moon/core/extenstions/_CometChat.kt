@@ -17,8 +17,9 @@ import grand.app.moon.presentation.base.extensions.enable
 import grand.app.moon.presentation.base.utils.Constants
 
 private val TAG = "_CometChat"
-fun startChatPage(v: View, user: User) {
+fun Context.startChatPage(v: View, user: User) {
   v.enable()
+  Log.d(TAG, "startChatPage: WORKED")
   val intent = Intent(v.context, CometChatMessageListActivity::class.java)
   intent.putExtra(UIKitConstants.IntentStrings.UID, user.uid)
   intent.putExtra(UIKitConstants.IntentStrings.AVATAR, user.avatar)

@@ -14,6 +14,11 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
   suspend fun follow(storeRequest: FollowStoreRequest) = safeApiCall {
     apiService.follow(storeRequest)
   }
+  suspend fun unBlock(storeRequest: FollowStoreRequest) = safeApiCall {
+    apiService.unBlock(storeRequest)
+  }
+
+
 
   suspend fun storeDetails(id: Int) = safeApiCall {
     apiService.storeDetails(id)
@@ -28,6 +33,11 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
   suspend fun getFavouriteStores(page: Int) = safeApiCall {
     apiService.getFavouriteStores(page)
   }
+
+  suspend fun getBlockedStores(page: Int) = safeApiCall {
+    apiService.getBlockedStores(page)
+  }
+
 
   suspend fun report(page: ReportStoreRequest) = safeApiCall {
     apiService.report(page)

@@ -45,9 +45,11 @@
             android:id="@+id/image_slider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen220"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{ (v) -> viewModel.zoomImage(v) }"
             app:loadImage="@{viewModel.store.backgroundImage}" />
 
           <View
@@ -101,9 +103,9 @@
           <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen12"
+            android:layout_marginStart="@dimen/dimen8"
+            android:layout_marginEnd="@dimen/dimen8"
             android:layout_marginTop="@dimen/dimen10"
-            android:layout_marginEnd="@dimen/dimen12"
             card_view:cardUseCompatPadding="true"
             android:elevation="3dp"
             app:cardCornerRadius="@dimen/dimen8"
@@ -240,7 +242,7 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size16"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/barrier4"
+                app:layout_constraintEnd_toEndOf="parent"
 
                 app:layout_constraintStart_toEndOf="@+id/img_store"
                 app:layout_constraintTop_toBottomOf="@+id/tv_store_location" />
@@ -259,7 +261,7 @@
                 android:textColor="@color/color888888"
                 android:textSize="@dimen/text_size16"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/barrier4"
+                app:layout_constraintEnd_toEndOf="parent"
 
                 app:layout_constraintStart_toEndOf="@+id/img_store"
                 app:layout_constraintTop_toBottomOf="@+id/tv_store_webiste" />
@@ -421,9 +423,9 @@
         <com.google.android.material.card.MaterialCardView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen12"
+          android:layout_marginStart="@dimen/dimen8"
+          android:layout_marginEnd="@dimen/dimen8"
           android:layout_marginTop="@dimen/dimen10"
-          android:layout_marginEnd="@dimen/dimen12"
           android:elevation="3dp"
           card_view:cardUseCompatPadding="true"
           app:cardCornerRadius="@dimen/dimen8"
@@ -582,6 +584,7 @@
               app:layout_constraintStart_toStartOf="parent">
 
               <Button
+                android:textStyle="bold"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -598,6 +601,7 @@
                 app:iconGravity="textStart" />
 
               <Button
+                android:textStyle="bold"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -618,7 +622,7 @@
             <com.google.android.material.tabs.TabLayout
               android:id="@+id/tabLayout"
               android:layout_width="match_parent"
-              app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
+              app:tabTextAppearance="@style/TabLayoutTextStyle"
               android:layout_marginTop="@dimen/dimen10"
               app:tabIndicatorColor="@color/colorAccent"
               android:layout_height="wrap_content">

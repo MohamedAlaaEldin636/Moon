@@ -156,5 +156,7 @@
   <string name="most_compatible">الأكثر تطابقا</string>
   <string name="to">الي</string>
   <string name="filter_by_price">تصفية حسب السعر</string>
+    <string name="cancel_ban">الغاء الحظر</string>
+  <string name="code_had_been_sent">تم إرسال الكود بنجاح</string>
 
 </resources>

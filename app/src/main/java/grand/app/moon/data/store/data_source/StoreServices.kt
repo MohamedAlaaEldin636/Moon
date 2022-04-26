@@ -23,6 +23,12 @@ interface StoreServices {
   @GET("v1/profile/followings")
   suspend fun getFavouriteStores(@Query("page") page: Int): BaseResponse<StoreListPaginateData>
 
+  @POST("v1/store/unblock")
+  suspend fun unBlock(@Body storeRequest: FollowStoreRequest): BaseResponse<*>
+
+  @GET("v1/profile/blocked")
+  suspend fun getBlockedStores(@Query("page") page: Int): BaseResponse<StoreListPaginateData>
+
   @POST("v1/store/report_block")
   suspend fun report(@Body page: ReportStoreRequest): BaseResponse<*>
 

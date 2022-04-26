@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.cometchat.pro.models.Conversation
 import com.cometchat.pro.models.User
+import com.cometchat.pro.uikit.ui_components.chats.CometChatConversationList
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
@@ -13,6 +15,11 @@ import grand.app.moon.databinding.FragmentChatListBinding
 import com.cometchat.pro.uikit.ui_components.users.user_list.CometChatUserList
 import com.cometchat.pro.uikit.ui_components.users.user_list.CometChatUserList.Companion.setItemClickListener
 import com.cometchat.pro.uikit.ui_resources.utils.item_clickListener.OnItemClickListener
+import com.google.gson.Gson
+import grand.app.moon.core.extenstions.startChatPage
+
+
+
 
 
 @AndroidEntryPoint
@@ -29,10 +36,11 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>() {
   fun setBindingVariables() {
     binding.viewModel = viewModel
     viewModel.callService()
-    setItemClickListener(object : OnItemClickListener<Any>() {
+    CometChatConversationList.setItemClickListener(object : OnItemClickListener<Any>() {
       override fun OnItemClick(t: Any, position: Int) {
-        val user = t as User
-        Log.d(TAG, "OnItemClick: ${user.uid}")
+        val conversation = t as Conversation
+        val user = conversation.conversationWith as User
+        requireContext().startChatPage(requireView(),user)
       }
     })
   }

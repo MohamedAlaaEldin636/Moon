@@ -1,5 +1,7 @@
 package grand.app.moon.presentation.ads.viewModels
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
@@ -31,6 +33,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+import androidx.core.content.ContextCompat.startActivity
+import java.util.*
+
 
 @HiltViewModel
 class AdsDetailsViewModel @Inject constructor(
@@ -116,6 +121,17 @@ class AdsDetailsViewModel @Inject constructor(
         }
       }
     }
+  }
+
+  fun location(v: View){
+    val uri: String = java.lang.String.format(
+      Locale.ENGLISH,
+      "http://maps.google.com/maps?q=loc:%f,%f",
+      advertisement.get()?.latitude,
+      advertisement.get()?.longitude
+    )
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+    v.context.startActivity(intent)
   }
 
   fun phone(v: View) {

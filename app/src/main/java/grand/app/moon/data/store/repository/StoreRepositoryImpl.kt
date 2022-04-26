@@ -17,6 +17,10 @@ class StoreRepositoryImpl @Inject constructor(
 
 
   override
+  suspend fun unBlock(storeRequest: FollowStoreRequest) = remoteDataSource.unBlock(storeRequest)
+
+
+  override
   suspend fun storeDetails(id: Int) = remoteDataSource.storeDetails(id)
 
 
@@ -28,7 +32,8 @@ class StoreRepositoryImpl @Inject constructor(
   override
   suspend fun getFavouriteStores(page: Int) = remoteDataSource.getFavouriteStores(page)
 
-
+  override
+  suspend fun getBlockedStores(page: Int) = remoteDataSource.getBlockedStores(page)
 
   override
   suspend fun report(page: ReportStoreRequest) = remoteDataSource.report(page)

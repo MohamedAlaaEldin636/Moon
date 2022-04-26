@@ -69,7 +69,6 @@ class StoreDetailsViewModel @Inject constructor(
   val image = ObservableField<String>("")
 
 
-
   val showAds = ObservableBoolean(true)
   val showGallery = ObservableBoolean(true)
 
@@ -92,8 +91,7 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun follow(v: View) {
-    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
-    else {
+    if (v.context.isLoginWithOpenAuth()) {
       followStoreRequest.storeId = store.get()?.id
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
       store.get()?.isFollowing = store.get()?.isFollowing != true
@@ -101,16 +99,12 @@ class StoreDetailsViewModel @Inject constructor(
     }
   }
 
-  fun share(){
-  }
-
-
 
   fun back(v: View) {
     v.findNavController().popBackStack()
   }
 
-  fun share(v: AppCompatImageView){
+  fun share(v: AppCompatImageView) {
     Log.d(TAG, "share: ==========================")
 //    val name  = (store.get()?.name != null? "" : "")
     storeUseCase.share(ShareRequest(store.get()?.id))
@@ -124,21 +118,48 @@ class StoreDetailsViewModel @Inject constructor(
       description = it
     }
 //    val name = if(store.get()?.name == null) "" else store.get()?.name
-    share(v.context, name,description,v)
+    share(v.context, name, description, v)
   }
 
-  fun rates(v: View){
-    v.findNavController().navigate(StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReviewsFragment2(store.get()!!.id,Constants.FOLLOWERS,v.resources.getString(R.string.rates)))
+  fun zoomImage(v: View) {
+    v.findNavController()
+      .navigate(
+        StoreDetailsFragmentDirections.actionStoreDetailsFragmentToZoomFragment2(
+          store.get()!!.backgroundImage
+        )
+      )
+  }
+
+  fun rates(v: View) {
+    v.findNavController()
+      .navigate(
+        StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReviewsFragment2(
+          store.get()!!.id,
+          Constants.FOLLOWERS,
+          v.resources.getString(R.string.rates)
+        )
+      )
   }
 
 
-  fun followers(v: View){
-    v.findNavController().navigate(StoreDetailsFragmentDirections.
-    actionStoreDetailsFragmentToStoreUsersFragment(store.get()!!.id,Constants.FOLLOWERS,v.resources.getString(R.string.followers)))
+  fun followers(v: View) {
+    v.findNavController().navigate(
+      StoreDetailsFragmentDirections.actionStoreDetailsFragmentToStoreUsersFragment(
+        store.get()!!.id,
+        Constants.FOLLOWERS,
+        v.resources.getString(R.string.followers)
+      )
+    )
   }
-  fun seen(v: View){
-    v.findNavController().navigate(StoreDetailsFragmentDirections.
-    actionStoreDetailsFragmentToStoreUsersFragment(store.get()!!.id,Constants.VIEWS,v.resources.getString(R.string.views)))
+
+  fun seen(v: View) {
+    v.findNavController().navigate(
+      StoreDetailsFragmentDirections.actionStoreDetailsFragmentToStoreUsersFragment(
+        store.get()!!.id,
+        Constants.VIEWS,
+        v.resources.getString(R.string.views)
+      )
+    )
   }
 
 
@@ -176,8 +197,7 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun report(v: View) {
-    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
-    else {
+    if (v.context.isLoginWithOpenAuth()) {
       v.findNavController().navigate(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_report_reason),
@@ -194,8 +214,7 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun block(v: View) {
-    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
-    else {
+    if (v.context.isLoginWithOpenAuth()) {
       v.findNavController().navigate(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_block_reason),
@@ -208,9 +227,9 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun chat(v: View) {
-    if(v.context.isLoginWithOpenAuth()) {
+    if (v.context.isLoginWithOpenAuth()) {
       store.get()?.let {
-          v.context.openChatStore(v, it.id, it.name, it.image)
+        v.context.openChatStore(v, it.id, it.name, it.image)
       }
     }
   }
@@ -234,11 +253,11 @@ class StoreDetailsViewModel @Inject constructor(
     data.workingHours?.forEachIndexed() { index, element ->
       data.workingHours?.get(index)?.day = days[index]
     }
-    if(data.latitude != 0.0 && data.longitude != 0.0) {
+    if (data.latitude != 0.0 && data.longitude != 0.0) {
       image.set(
         "https://maps.googleapis.com/maps/api/staticmap?center=${data.latitude},${data.longitude}" +
           "&markers=icon:${data.image}|${data.latitude},${data.longitude}" +
-          "&maptype=satellite&zoom=14&size=400x400&key=$keyMap"
+          "&zoom=14&size=400x400&key=$keyMap"
       )
       Log.d(TAG, "update: ${image.get()}")
     }
@@ -252,7 +271,7 @@ class StoreDetailsViewModel @Inject constructor(
 //    exploreAdapter.notifyDataSetChanged()
 
     store.get()?.socialMediaLinks?.forEach { socialLink ->
-      if(socialLink.link.isEmpty()) {
+      if (socialLink.link.isEmpty()) {
         if (socialLink.type == "facebook")
           facebook.set(false)
         if (socialLink.type == "twitter")
@@ -277,6 +296,7 @@ class StoreDetailsViewModel @Inject constructor(
       getDetails(id)
     }
   }
+
   fun showAds() {
     showAds.set(true)
     showGallery.set(false)

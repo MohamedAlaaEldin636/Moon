@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.splash
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.zeugmasolutions.localehelper.LocaleHelper
@@ -43,11 +44,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
   private fun decideNavigationLogic() {
     viewModel.clickEvent.observe(this, {
+      Log.d(TAG, "decideNavigationLogic: ")
       val targetActivity = when (it) {
         Constants.FIRST_TIME -> {
+          Log.d(TAG, "FIRST_TIME: ")
           IntroActivity::class.java
         }
         else -> {
+          Log.d(TAG, "HomeActivity: ")
           HomeActivity::class.java
         }
       }

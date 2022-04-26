@@ -1,52 +1,34 @@
-package grand.app.moon.presentation.ads
+package grand.app.moon.presentation.store.views
 
-import android.os.Bundle
-import android.util.Log
-import android.view.inputmethod.EditorInfo
-import android.widget.Toast
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.databinding.FragmentAdsDetailsBinding
-import grand.app.moon.databinding.FragmentAdsListBinding
-import grand.app.moon.presentation.ads.viewModels.AdsDetailsViewModel
-import grand.app.moon.presentation.ads.viewModels.AdsListViewModel
+import grand.app.moon.databinding.FragmentExploreListBinding
+import grand.app.moon.databinding.FragmentStoreBlockListBinding
+import grand.app.moon.databinding.FragmentStoreFollowedListBinding
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.explore.viewmodel.ExploreListViewModel
+import grand.app.moon.presentation.store.viewModels.StoreBlockListViewModel
+import grand.app.moon.presentation.store.viewModels.StoreFollowedListViewModel
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
+class StoreBlockListFragment : BaseFragment<FragmentStoreBlockListBinding>() {
 
-
-  private val viewModel: AdsListViewModel by viewModels()
+  val viewModel: StoreBlockListViewModel by viewModels()
 
   override
-  fun getLayoutId() = R.layout.fragment_ads_list
-
-  private  val TAG = "AdsListFragment"
+  fun getLayoutId() = R.layout.fragment_store_block_list
 
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    arguments?.let {
-      viewModel.type = it.getInt("type")
-    }
-    if(arguments?.containsKey(Constants.CATEGORY_ID) == true)
-        viewModel.ADS_LIST_URL+="category_id="+arguments?.getInt(Constants.CATEGORY_ID)
-    if(arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true)
-      viewModel.ADS_LIST_URL+="sub_category_id="+arguments?.getInt(Constants.SUB_CATEGORY_ID)
-    if(viewModel.type != -1)
-      viewModel.ADS_LIST_URL+="type="+viewModel.type
-    Log.d(TAG, "setBindingVariables: ")
-    Log.d(TAG, "${viewModel.ADS_LIST_URL}")
     viewModel.callService()
   }
 
@@ -76,15 +58,14 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
           }
         }
       }
-
     }
   }
 
 
   private fun setRecyclerViewScrollListener() {
 
-    val layoutManager = LinearLayoutManager(requireContext())
-    binding.recyclerView.layoutManager = layoutManager
+//    val linearLayoutManager = LinearLayoutManager(context)
+//    binding.recyclerView.layoutManager = linearLayoutManager
     binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
       override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)

@@ -61,6 +61,7 @@ class AdsListViewModel @Inject constructor(
   }
 
   private fun getAdsProfile() {
+    Log.d(TAG, "getAdsProfile: ${page} , $type")
     job = useCase.getProfileAdsList(page, type)
       .onEach {
         response.value = it

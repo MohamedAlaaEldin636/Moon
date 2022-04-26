@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
+import grand.app.moon.databinding.ItemStoreBlockedBinding
 import grand.app.moon.databinding.ItemStoreFollowedBinding
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
 
-class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHolder>() {
+class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
   var clickEvent: MutableLiveData<Int> = MutableLiveData()
-  var position  = 0
+  var position  = -1
   private val differCallback = object : DiffUtil.ItemCallback<Store>() {
     override fun areItemsTheSame(oldItem: Store, newItem: Store): Boolean {
       return oldItem.id == newItem.id
@@ -29,7 +30,7 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
   }
   val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_store_followed, parent, false)
+    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_store_blocked, parent, false)
     return ViewHolder(view)
   }
 
@@ -37,10 +38,6 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemStoreViewModel(data, 100,null,position)
-    holder.itemLayoutBinding.btnFollowStore.setOnClickListener {
-      this.position = position
-      clickEvent.value = position
-    }
     holder.setViewModel(itemViewModel)
   }
 
@@ -79,7 +76,7 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    lateinit var itemLayoutBinding: ItemStoreFollowedBinding
+    lateinit var itemLayoutBinding: ItemStoreBlockedBinding
 
     init {
       bind()

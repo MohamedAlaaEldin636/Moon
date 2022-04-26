@@ -23,6 +23,13 @@ class StoreUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
+  fun unBlock(followStoreRequest: FollowStoreRequest): Flow<Resource<BaseResponse<*>>> = flow {
+    Log.d(TAG, "follow: STORING")
+    val result = repository.unBlock(followStoreRequest)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+
 
   fun storeDetails(id: Int): Flow<Resource<BaseResponse<Store>>> = flow {
     emit(Resource.Loading)
@@ -41,6 +48,13 @@ class StoreUseCase @Inject constructor(
     val result = repository.getFavouriteStores(id)
     emit(result)
   }.flowOn(Dispatchers.IO)
+
+  fun getBlockedStores(id: Int): Flow<Resource<BaseResponse<StoreListPaginateData>>> = flow {
+    emit(Resource.Loading)
+    val result = repository.getBlockedStores(id)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
 
   fun report(id: ReportStoreRequest): Flow<Resource<BaseResponse<*>>> = flow {
     emit(Resource.Loading)

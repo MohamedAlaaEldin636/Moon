@@ -65,7 +65,7 @@ class MapConfig {
     try {
       val isSuccess =
         mMap!!.setMapStyle(context?.let { MapStyleOptions.loadRawResourceStyle(it, R.raw.map) })
-      mMap!!.mapType = GoogleMap.MAP_TYPE_HYBRID;
+//      mMap!!.mapType = GoogleMap.MAP_TYPE_HYBRID;
       if (!isSuccess) Log.e("errorMapStyle", "errorMap")
     } catch (ex: Resources.NotFoundException) {
       ex.printStackTrace()

@@ -30,9 +30,9 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
     super.onCreate(savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
       // We use a String here, but any type that can be put in a Bundle is supported
-      val result = bundle.getSerializable(Constants.REVIEWS_RESPONSE) as ReviewsPaginateData
-      viewModel.updateReviews(result)
-      viewModel.advertisement.get()!!.averageRate = bundle.getString(Constants.RATE).toString()
+//      val result = bundle.getSerializable(Constants.REVIEWS_RESPONSE) as ReviewsPaginateData
+//      viewModel.updateReviews(result)
+//      viewModel.advertisement.get()!!.averageRate = bundle.getString(Constants.RATE).toString()
       // Do something with the result
     }
   }

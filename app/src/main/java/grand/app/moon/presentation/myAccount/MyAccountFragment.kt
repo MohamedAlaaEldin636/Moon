@@ -2,6 +2,7 @@ package grand.app.moon.presentation.myAccount
 
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.cometchat.pro.core.CometChat.logout
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -65,7 +66,7 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
             )
           }
           Constants.STORES_BLOCKED -> {
-
+            findNavController().navigate(MyAccountFragmentDirections.actionMyAccountFragmentToStoreBlockListFragment())
           }
           Constants.LOGOUT -> {
             logout()

@@ -1,12 +1,9 @@
 package com.cometchat.pro.uikit.ui_components.chats
 
-import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -14,7 +11,6 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -79,82 +75,82 @@ class CometChatConversationList : Fragment(), TextWatcher {
         conversationShimmer = vw?.findViewById(R.id.shimmer_layout)
         clearSearch = vw?.findViewById(R.id.clear_search)
         ivStartConversation = vw?.findViewById(R.id.iv_start_conversation)
-//        if (!FeatureRestriction.isChatSearchEnabled()) {
-//            searchEdit?.visibility = View.GONE
-//            clearSearch?.visibility = View.GONE
-//        }
-//        checkDarkMode()
-//        ivStartConversation?.setOnClickListener {
-//            var intent = Intent(context, CometChatStartConversation::class.java)
-//            startActivity(intent)
-//        }
-//        searchEdit?.setOnEditorActionListener(OnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
-//            if (i == EditorInfo.IME_ACTION_SEARCH) {
-//                rvConversation?.searchConversation(textView.text.toString())
-//                clearSearch?.visibility = View.VISIBLE
-//                return@OnEditorActionListener true
-//            }
-//            false
-//        })
-//        clearSearch?.setOnClickListener {
-//            searchEdit?.setText("")
-//            clearSearch?.visibility = View.GONE
-//            rvConversation?.searchConversation(searchEdit?.text.toString())
-//            val inputMethodManager: InputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            // Hide the soft keyboard
-//            inputMethodManager.hideSoftInputFromWindow(searchEdit?.windowToken, 0)
-//        }
-//
-//        // Uses to fetch next list of conversations if rvConversationList (RecyclerView) is scrolled in upward direction.
-//        rvConversation?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                if (!recyclerView.canScrollVertically(1)) {
-//                    makeConversationList()
-//                }
-//            }
-//        })
-//
-//        // Used to trigger event on click of conversation item in rvConversationList (RecyclerView)
-//        rvConversation?.setItemClickListener(object : OnItemClickListener<Conversation>() {
-//
-//            override fun OnItemClick(t: Any, position: Int) {
-//                conversation = t as Conversation
-//                if (events != null)
-//                    events.OnItemClick(t as Conversation, position)
-//            }
-//        })
-//
-//        val swipeHelper: RecyclerViewSwipeListener = object : RecyclerViewSwipeListener(context) {
-//            override fun instantiateUnderlayButton(
-//                viewHolder: RecyclerView.ViewHolder?,
-//                underlayButtons: MutableList<UnderlayButton>?
-//            ) {
-//                val deleteBitmap: Bitmap = Utils.drawableToBitmap(
-//                    resources.getDrawable(R.drawable.ic_delete_white)
-//                )
-//                FeatureRestriction.isDeleteConversationEnabled(object :
-//                    FeatureRestriction.OnSuccessListener {
-//                    override fun onSuccess(booleanVal: Boolean) {
-//                        if (booleanVal) {
-//                            underlayButtons?.add(UnderlayButton(
-//                                "",
-//                                deleteBitmap,
-//                                resources.getColor(R.color.red),
-//                                object : UnderlayButtonClickListener {
-//                                    override fun onClick(pos: Int) {
-//                                        val conversation: Conversation? = rvConversation?.getConversation(pos)
-//                                        if (conversation != null) {
-//                                            deleteConversations(conversation)
-//                                        }
-//                                    }
-//                                }
-//                            ))
-//                        }
-//                    }
-//                })
-//            }
-//        }
-//        swipeHelper.attachToRecyclerView(rvConversation)
+        if (!FeatureRestriction.isChatSearchEnabled()) {
+            searchEdit?.visibility = View.GONE
+            clearSearch?.visibility = View.GONE
+        }
+        checkDarkMode()
+        ivStartConversation?.setOnClickListener {
+            var intent = Intent(context, CometChatStartConversation::class.java)
+            startActivity(intent)
+        }
+        searchEdit?.setOnEditorActionListener(TextView.OnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
+          if (i == EditorInfo.IME_ACTION_SEARCH) {
+            rvConversation?.searchConversation(textView.text.toString())
+            clearSearch?.visibility = View.VISIBLE
+            return@OnEditorActionListener true
+          }
+          false
+        })
+        clearSearch?.setOnClickListener {
+            searchEdit?.setText("")
+            clearSearch?.visibility = View.GONE
+            rvConversation?.searchConversation(searchEdit?.text.toString())
+            val inputMethodManager: InputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            // Hide the soft keyboard
+            inputMethodManager.hideSoftInputFromWindow(searchEdit?.windowToken, 0)
+        }
+
+        // Uses to fetch next list of conversations if rvConversationList (RecyclerView) is scrolled in upward direction.
+        rvConversation?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (!recyclerView.canScrollVertically(1)) {
+                    makeConversationList()
+                }
+            }
+        })
+
+        // Used to trigger event on click of conversation item in rvConversationList (RecyclerView)
+        rvConversation?.setItemClickListener(object : OnItemClickListener<Conversation>() {
+
+            override fun OnItemClick(t: Any, position: Int) {
+                conversation = t as Conversation
+                if (events != null)
+                    events.OnItemClick(t as Conversation, position)
+            }
+        })
+
+        val swipeHelper: RecyclerViewSwipeListener = object : RecyclerViewSwipeListener(context) {
+            override fun instantiateUnderlayButton(
+                viewHolder: RecyclerView.ViewHolder?,
+                underlayButtons: MutableList<UnderlayButton>?
+            ) {
+                val deleteBitmap: Bitmap = Utils.drawableToBitmap(
+                    resources.getDrawable(R.drawable.ic_delete_white)
+                )
+                FeatureRestriction.isDeleteConversationEnabled(object :
+                    FeatureRestriction.OnSuccessListener {
+                    override fun onSuccess(booleanVal: Boolean) {
+                        if (booleanVal) {
+                            underlayButtons?.add(UnderlayButton(
+                                "",
+                                deleteBitmap,
+                                resources.getColor(R.color.red),
+                                object : UnderlayButtonClickListener {
+                                    override fun onClick(pos: Int) {
+                                        val conversation: Conversation? = rvConversation?.getConversation(pos)
+                                        if (conversation != null) {
+                                            deleteConversations(conversation)
+                                        }
+                                    }
+                                }
+                            ))
+                        }
+                    }
+                })
+            }
+        }
+        swipeHelper.attachToRecyclerView(rvConversation)
         return vw
     }
 
@@ -427,6 +423,7 @@ class CometChatConversationList : Fragment(), TextWatcher {
          */
         fun setItemClickListener(onItemClickListener: OnItemClickListener<Any>) {
             events = onItemClickListener
+          Log.d(TAG, "setItemClickListener: HERER")
         }
     }
 }

@@ -7,8 +7,11 @@ import grand.app.moon.domain.utils.Resource
 
 interface StoreRepository {
   suspend fun follow(storeRequest: FollowStoreRequest): Resource<BaseResponse<*>>
+  suspend fun unBlock(storeRequest: FollowStoreRequest): Resource<BaseResponse<*>>
   suspend fun storeDetails(id: Int): Resource<BaseResponse<Store>>
   suspend fun getFavouriteStores(page: Int): Resource<BaseResponse<StoreListPaginateData>>
+  suspend fun getBlockedStores(page: Int): Resource<BaseResponse<StoreListPaginateData>>
+
   suspend fun report(page: ReportStoreRequest): Resource<BaseResponse<*>>
   suspend fun getStores(request: StoreFilterRequest): Resource<BaseResponse<StoreListPaginateData>>
   suspend fun share(request: ShareRequest): Resource<BaseResponse<*>>
