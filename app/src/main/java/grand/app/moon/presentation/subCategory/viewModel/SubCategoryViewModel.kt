@@ -1,6 +1,5 @@
 package grand.app.moon.presentation.subCategory.viewModel
 
-import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableBoolean
@@ -12,6 +11,7 @@ import grand.app.moon.BR
 import grand.app.moon.BuildConfig
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.domain.account.repository.AccountRepository
+import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
@@ -19,7 +19,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.story.adapter.StoriesAdapter
+import grand.app.moon.presentation.subCategory.PropertiesAdapter
 import grand.app.moon.presentation.subCategory.SubCategoryFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -45,21 +45,29 @@ class SubCategoryViewModel @Inject constructor(
 
   var isLast = false
 
-
+  val propertiesAdapter = PropertiesAdapter()
   val subCategoryResponse = ObservableField<SubCategoryResponse>()
-  val gridOne = ObservableBoolean(true)
 
+
+  val isSub = ObservableBoolean(false)
+  val gridOne = ObservableBoolean(true)
+  var propertyId = ""
+  var search = ""
   var sortBy = 1
+  var type: Int = -1
 
   @Bindable
   var adapter = AdsAdapter()
 
   var ADS_LIST_URL = ""
 
-  val _responseService =
+  val _responseIsSubService =
     MutableStateFlow<Resource<BaseResponse<SubCategoryResponse>>>(Resource.Default)
 
-  val response = _responseService
+  val _responseListAds =
+    MutableStateFlow<Resource<BaseResponse<AdsListPaginateData>>>(Resource.Default)
+
+  val response = _responseIsSubService
 
   init {
     adapter.percentageAds = 100
@@ -84,18 +92,31 @@ class SubCategoryViewModel @Inject constructor(
   }
 
   private fun getAdsList() {
-    ADS_LIST_URL =
-      "${BuildConfig.API_BASE_URL}v1/advertisements?page=${page}&sub_category_id=${subCategoryId}&order_by=$sortBy"
-    job = useCase.getAdsSubCategory(ADS_LIST_URL)
-      .onEach {
-        response.value = it
-      }
-      .launchIn(viewModelScope)
+    ADS_LIST_URL = "${BuildConfig.API_BASE_URL}v1/advertisements?page=${page}&order_by=$sortBy"
+    if(categoryId != -1) ADS_LIST_URL +=  "&category_id=${categoryId}"
+    if(subCategoryId != -1) ADS_LIST_URL +=  "&sub_category_id=${subCategoryId}"
+    if(search.trim().isNotEmpty()) ADS_LIST_URL += "&search=$search"
+    if(propertyId.trim().isNotEmpty()) ADS_LIST_URL += "&property_id=$propertyId"
+    if(type != -1) {
+      ADS_LIST_URL += "&type=$type"
+      job = useCase.getAdsList(ADS_LIST_URL)
+        .onEach {
+          _responseListAds.value = it
+        }
+        .launchIn(viewModelScope)
+
+    }else {
+      job = useCase.getAdsSubCategory(ADS_LIST_URL)
+        .onEach {
+          response.value = it
+        }
+        .launchIn(viewModelScope)
+    }
   }
 
   fun filter(v: View) {
     v.findNavController().navigate(
-      SubCategoryFragmentDirections.actionSubCategoryFragmentToFilterFragment(
+      SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterFragment(
         categoryId,
         subCategoryId
       )
@@ -104,7 +125,7 @@ class SubCategoryViewModel @Inject constructor(
 
   fun filterSort(v: View) {
     v.findNavController().navigate(
-      SubCategoryFragmentDirections.actionSubCategoryFragmentToFilterSortDialog(
+      SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterSortDialog(
         sortBy,
         FilterDialog.ADVERTISEMENT
       )
@@ -114,10 +135,16 @@ class SubCategoryViewModel @Inject constructor(
   fun map(v: View) {
     this.subCategoryResponse.get()?.let {
       val action =
-        SubCategoryFragmentDirections.actionSubCategoryFragmentToMapSubCategoryFragment(it)
+        SubCategoryFragmentDirections.actionNavCategoryListAdsToMapnavCategoryListAds(it)
       action.subCategory = subCategoryId
       v.findNavController().navigate(action)
     }
+  }
+
+  fun propertySelect(){
+    propertiesAdapter.submitSelect()
+    reset()
+    callService()
   }
 
   private val TAG = "PackagesViewModel"
@@ -129,6 +156,7 @@ class SubCategoryViewModel @Inject constructor(
       isLast = data.advertisements.links.next == null
       if (page == 1) {
 //        adapter = InvoicesAdapter()
+        propertiesAdapter.differ.submitList(it.properties)
         adapter.differ.submitList(it.advertisements.list)
         show.set(true)
         notifyPropertyChanged(BR.adapter)
@@ -170,4 +198,5 @@ class SubCategoryViewModel @Inject constructor(
       clickEvent.value = Constants.GRID_2
     }
   }
+
 }

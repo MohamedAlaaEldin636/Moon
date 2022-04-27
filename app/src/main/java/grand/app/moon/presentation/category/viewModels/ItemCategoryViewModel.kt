@@ -4,6 +4,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
+import grand.app.moon.NavAdListArgs
+import grand.app.moon.NavCategoryListAdsArgs
 import grand.app.moon.R
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.story.entity.StoryItem
@@ -27,7 +29,7 @@ class ItemCategoryViewModel constructor(val category: CategoryItem, var percenta
         )
       } else {
         v.findNavController().navigate(
-          R.id.subCategoryFragment,
+          R.id.navCategoryListAds,
           bundleOf(
             "sub_category_id" to category.id,
             "tabBarText" to category.name
@@ -35,7 +37,20 @@ class ItemCategoryViewModel constructor(val category: CategoryItem, var percenta
         )
       }
     } else {
-      v.findNavController().navigate(CategoryDetailsFragmentDirections.actionCategoryDetailsFragmentToAdsListFragment2(category.name))
+
+
+//      CategoryDetailsFragmentDirections
+//        .actionCategoryDetailsFragmentToNavAdList(category.name,category.id!!)
+//
+      val builder = NavCategoryListAdsArgs.Builder()
+      builder.categoryId = category.id!!
+      builder.tabBarText = category.name
+
+      v.findNavController()
+        .navigate(
+          R.id.nav_category_list_ads, builder.build().toBundle(),
+          Constants.NAVIGATION_OPTIONS
+        )
 //      v.findNavController().navigate(
 //        R.id.adsListFragment2,
 //        bundleOf(

@@ -10,7 +10,7 @@
 
     <variable
       name="viewModel"
-      type="grand.app.moon.presentation.map.viewModel.ItemCategoryTextViewModel" />
+      type="grand.app.moon.presentation.subCategory.viewModel.ItemPropertyViewModel" />
 
   </data>
 

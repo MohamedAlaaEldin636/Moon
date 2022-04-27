@@ -36,16 +36,16 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    arguments?.let {
-      viewModel.type = it.getInt("type")
+    if(arguments?.containsKey(Constants.TYPE) == true && arguments?.getInt(Constants.TYPE) != -1){
+      viewModel.ADS_LIST_URL+="type="+requireArguments().getInt(Constants.TYPE)
     }
-    if(arguments?.containsKey(Constants.CATEGORY_ID) == true)
+
+    if(arguments?.containsKey(Constants.CATEGORY_ID) == true && arguments?.getInt(Constants.CATEGORY_ID) != -1)
         viewModel.ADS_LIST_URL+="category_id="+arguments?.getInt(Constants.CATEGORY_ID)
-    if(arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true)
+    if(arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true && arguments?.getInt(Constants.SUB_CATEGORY_ID) != -1)
       viewModel.ADS_LIST_URL+="sub_category_id="+arguments?.getInt(Constants.SUB_CATEGORY_ID)
     if(viewModel.type != -1)
-      viewModel.ADS_LIST_URL+="type="+viewModel.type
-    Log.d(TAG, "setBindingVariables: ")
+    Log.d(TAG, "setBindingVariables: ${viewModel.ADS_LIST_URL}")
     Log.d(TAG, "${viewModel.ADS_LIST_URL}")
     viewModel.callService()
   }

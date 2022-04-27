@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/nav_category_list_ads"
+  app:startDestination="@id/navCategoryListAds">
+
+  <argument
+    android:name="tabBarText"
+    app:argType="string"
+    android:defaultValue=""
+    />
+  <argument
+    android:name="is_sub"
+    app:argType="boolean"
+    android:defaultValue="true"/>
+  <argument
+    android:name="category_id"
+    app:argType="integer"
+    android:defaultValue="-1"/>
+  <argument
+    android:name="sub_category"
+    app:argType="integer"
+    android:defaultValue="-1"/>
+
+  <argument
+    android:name="type"
+    app:argType="integer"
+    android:defaultValue="-1"/>
+
+
+  <fragment
+    android:id="@+id/navCategoryListAds"
+    android:name="grand.app.moon.presentation.subCategory.SubCategoryFragment"
+    android:label="{tabBarText}">
+    <argument
+      android:name="tabBarText"
+      app:argType="string"
+      android:defaultValue=""
+      />
+
+    <argument
+      android:name="is_sub"
+      app:argType="boolean"
+      android:defaultValue="true"/>
+
+    <argument
+      android:name="category_id"
+      app:argType="integer"
+      android:defaultValue="-1"/>
+    <argument
+      android:name="sub_category"
+      app:argType="integer"
+      android:defaultValue="-1"/>
+    <argument
+      android:name="type"
+      app:argType="integer"
+      android:defaultValue="-1"/>
+
+    <action
+      android:id="@+id/action_navCategoryListAds_to_mapnavCategoryListAds"
+      app:destination="@id/mapSubCategoryFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+    <action
+      android:id="@+id/action_navCategoryListAds_to_filterSortDialog"
+      app:destination="@id/filterSortDialog" />
+    <action
+      android:id="@+id/action_navCategoryListAds_to_filterFragment"
+      app:destination="@id/filterFragment" />
+    <action
+      android:id="@+id/action_navCategoryListAds_to_nav_ad_list"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/nav_ad_list" />
+
+
+
+  </fragment>
+  <fragment
+    android:id="@+id/mapSubCategoryFragment"
+    android:name="grand.app.moon.presentation.map.MapSubCategoryFragment"
+    android:label="@string/map" >
+    <argument
+      android:name="sub_category"
+      app:argType="integer"
+      android:defaultValue="-1" />
+    <argument
+      android:name="subCategoryResponse"
+      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
+  </fragment>
+
+  <fragment
+    android:id="@+id/filterFragment"
+    android:name="grand.app.moon.presentation.filter.FilterFragment"
+    android:label="@string/filter">
+    <argument
+      android:name="category_id"
+      app:argType="integer" />
+    <argument
+      android:name="sub_category_id"
+      app:argType="integer" />
+    <action
+      android:id="@+id/action_filterFragment_to_filterSingleSelectDialog"
+      app:destination="@id/filterSingleSelectDialog" />
+    <action
+      android:id="@+id/action_filterFragment_to_filterMultiSelectDialog"
+      app:destination="@id/filterMultiSelectDialog" />
+    <action
+      android:id="@+id/action_filterFragment_to_filterResultsFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/filterResultsFragment" />
+  </fragment>
+  <dialog
+    android:id="@+id/filterSingleSelectDialog"
+    android:name="grand.app.moon.presentation.filter.dialog.FilterSingleSelectDialog"
+    android:label="{tabBarText}">
+    <argument
+      android:name="propety"
+      app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />
+    <argument
+      android:name="tabBarText"
+      app:argType="string" />
+  </dialog>
+  <fragment
+    android:id="@+id/filterResultsFragment"
+    android:name="grand.app.moon.presentation.filter.result.FilterResultsFragment"
+    android:label="@string/filter_results" >
+    <argument
+      android:name="filterRequest"
+      app:argType="grand.app.moon.domain.filter.entitiy.FilterResultRequest" />
+  </fragment>
+
+  <dialog
+    android:id="@+id/filterMultiSelectDialog"
+    android:name="grand.app.moon.presentation.filter.dialog.multiCheck.FilterMultiSelectDialog"
+    android:label="FilterMultiSelectDialog">
+
+    <argument
+      android:name="propety"
+      app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />
+    <argument
+      android:name="tabBarText"
+      app:argType="string" />
+  </dialog>
+
+  <dialog
+    android:id="@+id/filterSortDialog"
+    android:name="grand.app.moon.presentation.ads.FilterSortDialog"
+    android:label="@string/filter">
+    <argument
+      android:name="selected"
+      app:argType="integer" />
+    <argument
+      android:name="kind"
+      app:argType="grand.app.moon.appMoonHelper.FilterDialog" />
+  </dialog>
+
+</navigation>

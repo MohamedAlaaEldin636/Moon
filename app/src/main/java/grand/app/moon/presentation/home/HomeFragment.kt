@@ -101,12 +101,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     if (data.mostPopularAds.isNotEmpty()) {
       val categoryAdvertisement = CategoryAdvertisement()
       categoryAdvertisement.name = resources.getString(R.string.most_popular_ads)
+      categoryAdvertisement.type = 2
       categoryAdvertisement.advertisements.addAll(data.mostPopularAds)
       data.categoryAds.add(0, categoryAdvertisement)
     }
     if (data.suggestions.isNotEmpty()) {
       val categoryAdvertisement = CategoryAdvertisement()
       categoryAdvertisement.name = resources.getString(R.string.suggestions_ads_for_you)
+      categoryAdvertisement.type = 1
       categoryAdvertisement.advertisements.addAll(data.suggestions)
       data.categoryAds.add(0, categoryAdvertisement)
     }

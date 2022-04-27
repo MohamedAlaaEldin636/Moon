@@ -100,20 +100,24 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
     fun bind() {
       Log.d(TAG, "bind: $layoutPosition")
       if(layoutPosition != -1) {
-        if (differ.currentList.isNotEmpty() && differ.currentList[layoutPosition].total == null) {
-          Log.d(TAG, "bind: YES")
-          itemLayoutBinding = DataBindingUtil.bind(itemView)!!
-        }else
-          itemLayoutTotalAdsBinding = DataBindingUtil.bind(itemView)!!
+        if(differ.currentList.isNotEmpty() && layoutPosition < differ.currentList.size) {
+          if (differ.currentList[layoutPosition].total == null) {
+            Log.d(TAG, "bind: YES")
+            itemLayoutBinding = DataBindingUtil.bind(itemView)!!
+          } else
+            itemLayoutTotalAdsBinding = DataBindingUtil.bind(itemView)!!
+        }
       }
     }
 
     fun unBind() {
       if(layoutPosition != -1) {
-        if(differ.currentList.isNotEmpty() && differ.currentList[layoutPosition].total == null)
-          itemLayoutBinding.unbind()
-        else
-          itemLayoutTotalAdsBinding.unbind()
+        if(differ.currentList.isNotEmpty() && layoutPosition < differ.currentList.size) {
+          if (differ.currentList[layoutPosition].total == null)
+            itemLayoutBinding.unbind()
+          else
+            itemLayoutTotalAdsBinding.unbind()
+        }
       }
 
 

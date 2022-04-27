@@ -12,6 +12,7 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
+import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -53,7 +54,8 @@ class AdsListViewModel @Inject constructor(
       if (page > 1) {
         notifyPropertyChanged(BR.page)
       }
-      if(type == -1) getAdsProfile()
+      if(type == -1 && !ADS_LIST_URL.contains(Constants.CATEGORY_ID)
+        && !ADS_LIST_URL.contains(Constants.SUB_CATEGORY_ID)) getAdsProfile()
       else{
         getAdsList()
       }

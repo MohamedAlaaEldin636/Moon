@@ -15,7 +15,7 @@ data class SubCategoryResponse(
   @SerializedName("properties")
   @Expose val properties: ArrayList<Property> = arrayListOf(),
   @SerializedName("advertisements")
-  @Expose val advertisements: AdsListPaginateData = AdsListPaginateData(),
+  @Expose var advertisements: AdsListPaginateData = AdsListPaginateData(),
   @SerializedName("slider")
   @Expose var slider: ArrayList<AppTutorial> = arrayListOf(),
 

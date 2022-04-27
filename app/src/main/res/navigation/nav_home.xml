@@ -11,14 +11,6 @@
     android:label=""
     tools:layout="@layout/fragment_home">
     <action
-      android:id="@+id/action_home_fragment_to_adsDetailsFragment"
-      app:destination="@id/nav_account"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right" />
-    <action
       android:id="@+id/action_home_fragment_to_nav_ads"
       app:destination="@id/nav_ads"
       app:enterAnim="@anim/anim_slide_in_right"
@@ -28,13 +20,6 @@
     <action
       android:id="@+id/action_home_fragment_to_categoryDetailsFragment"
       app:destination="@id/categoryDetailsFragment"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right" />
-    <action
-      android:id="@+id/action_home_fragment_to_adsListFragment2"
-      app:destination="@id/adsListFragment2"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
@@ -58,6 +43,15 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/filterHomeFragment" />
+    <action
+      android:id="@+id/action_home_fragment_to_nav_category_list_ads"
+
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/nav_category_list_ads" />
 
   </fragment>
 
@@ -94,6 +88,7 @@
     android:id="@+id/contactUsFragment"
     android:name="grand.app.moon.presentation.contactUs.ContactUsFragment"
     android:label="@string/contact_us" />
+  <include app:graph="@navigation/nav_category_list_ads" />
 
   <include app:graph="@navigation/nav_settings" />
 
@@ -136,15 +131,8 @@
       android:name="tabBarText"
       app:argType="string" />
     <action
-      android:id="@+id/action_categoryDetailsFragment_to_adsListFragment2"
-      app:destination="@id/adsListFragment2"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right" />
-    <action
-      android:id="@+id/action_categoryDetailsFragment_to_subCategoryFragment"
-      app:destination="@id/subCategoryFragment"
+      android:id="@+id/action_categoryDetailsFragment_to_nav_category_list_ads"
+      app:destination="@id/nav_category_list_ads"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
@@ -156,41 +144,13 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
-  </fragment>
-  <fragment
-    android:id="@+id/adsListFragment2"
-    android:name="grand.app.moon.presentation.ads.AdsListFragment"
-    android:label="{tabBarText}">
-    <argument
-      android:name="tabBarText"
-      app:argType="string" />
-  </fragment>
-  <fragment
-    android:id="@+id/subCategoryFragment"
-    android:name="grand.app.moon.presentation.subCategory.SubCategoryFragment"
-    android:label="{tabBarText}">
-    <argument
-      android:name="sub_category_id"
-      android:defaultValue="0"
-      app:argType="integer" />
-
-    <argument
-      android:name="tabBarText"
-      app:argType="string" />
-
     <action
-      android:id="@+id/action_subCategoryFragment_to_mapSubCategoryFragment"
-      app:destination="@id/mapSubCategoryFragment"
+      android:id="@+id/action_categoryDetailsFragment_to_nav_ad_list"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right" />
-    <action
-      android:id="@+id/action_subCategoryFragment_to_filterSortDialog"
-      app:destination="@id/filterSortDialog" />
-    <action
-      android:id="@+id/action_subCategoryFragment_to_filterFragment"
-      app:destination="@id/filterFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/nav_ad_list" />
   </fragment>
 
 
@@ -266,30 +226,6 @@
       android:name="store_filter"
       app:argType="grand.app.moon.domain.store.entity.StoreFilterRequest" />
   </fragment>
-  <fragment
-    android:id="@+id/filterFragment"
-    android:name="grand.app.moon.presentation.filter.FilterFragment"
-    android:label="@string/filter">
-    <argument
-      android:name="category_id"
-      app:argType="integer" />
-    <argument
-      android:name="sub_category_id"
-      app:argType="integer" />
-    <action
-      android:id="@+id/action_filterFragment_to_filterSingleSelectDialog"
-      app:destination="@id/filterSingleSelectDialog" />
-    <action
-      android:id="@+id/action_filterFragment_to_filterMultiSelectDialog"
-      app:destination="@id/filterMultiSelectDialog" />
-    <action
-      android:id="@+id/action_filterFragment_to_filterResultsFragment"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/filterResultsFragment" />
-  </fragment>
   <dialog
     android:id="@+id/filterSingleSelectDialog"
     android:name="grand.app.moon.presentation.filter.dialog.FilterSingleSelectDialog"
@@ -339,22 +275,12 @@
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/filterResultsFragment" />
   </fragment>
-  <fragment
-    android:id="@+id/mapSubCategoryFragment"
-    android:name="grand.app.moon.presentation.map.MapSubCategoryFragment"
-    android:label="@string/map" >
-    <argument
-      android:name="sub_category"
-      app:argType="integer"
-      android:defaultValue="-1" />
-    <argument
-      android:name="subCategoryResponse"
-      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
-  </fragment>
+
   <fragment
     android:id="@+id/chatFragment"
     android:name="grand.app.moon.presentation.chat.ChatListFragment"
     android:label="@string/chats" />
+  <include app:graph="@navigation/nav_ad_list" />
 
   <!--  <fragment-->
   <!--    android:id="@+id/reviewsFragment"-->

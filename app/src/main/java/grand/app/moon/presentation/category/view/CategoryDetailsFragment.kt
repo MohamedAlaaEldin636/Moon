@@ -66,10 +66,12 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
       viewModel.storiesResponse
         .collect {
           if (it is Resource.Success) {
-            val store = Store()
-            store.stories.add(StoryItem(name = getString(R.string.show_more), isFirst = true))
-            it.value.data.add(0,store )
-            viewModel.updateStories(it.value.data)
+            if(it.value.data.size > 0) {
+              val store = Store()
+              store.stories.add(StoryItem(name = getString(R.string.show_more), isFirst = true))
+              it.value.data.add(0, store)
+              viewModel.updateStories(it.value.data)
+            }
           }
         }
     }

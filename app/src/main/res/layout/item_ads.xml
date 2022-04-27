@@ -23,8 +23,6 @@
     android:layout_height="wrap_content"
     card_view:cardUseCompatPadding="true"
     app:width="@{viewModel.percentageAds}"
-    android:layout_margin="@dimen/dimen5"
-    android:layout_weight="1"
     app:cardCornerRadius="@dimen/dimen6"
     app:cardElevation="@dimen/dimen4"
     app:layout_constraintEnd_toEndOf="parent"

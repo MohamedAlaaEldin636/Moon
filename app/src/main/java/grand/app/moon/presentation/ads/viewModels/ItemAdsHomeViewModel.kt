@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
+import grand.app.moon.NavAdListArgs
+import grand.app.moon.NavCategoryListAdsArgs
 import grand.app.moon.R
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.CategoryAdvertisement
@@ -23,21 +25,18 @@ class ItemAdsHomeViewModel constructor(val category: CategoryAdvertisement) : Ba
   }
 
   fun showAll(v: View) {
-    val bundle = Bundle()
-    if (category.showMore.categoryId != -1) {
-      category.showMore.categoryId?.let { bundle.putInt(Constants.CATEGORY_ID, it) }
+    val builder = NavCategoryListAdsArgs.Builder()
+    builder.categoryId = category.id
+    builder.tabBarText = category.name
+    if(category.type != -1) {
+      builder.isSub = false
+      builder.type = category.type
     }
-    if (category.showMore.subCategoryId != -1) {
-      category.showMore.subCategoryId?.let { bundle.putInt(Constants.SUB_CATEGORY_ID, it) }
-    }
-    Log.d(TAG, "showAll_1: ${category.showMore.categoryId}")
-    Log.d(TAG, "showAll_2: ${category.showMore.subCategoryId}")
-    bundle.putString(Constants.TabBarText, category.name)
-    bundle.putString(Constants.TITLE, category.name)
+    v.findNavController()
+      .navigate(
+        R.id.nav_category_list_ads, builder.build().toBundle(),
+        Constants.NAVIGATION_OPTIONS
+      )
 
-    v.findNavController().navigate(
-      R.id.adsListFragment2,
-      bundle, Constants.NAVIGATION_OPTIONS
-    )
   }
 }

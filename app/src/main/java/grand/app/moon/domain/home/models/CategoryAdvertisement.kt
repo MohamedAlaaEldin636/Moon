@@ -10,6 +10,8 @@ data class CategoryAdvertisement(
   val advertisements: ArrayList<Advertisement> = ArrayList(),
   @SerializedName("id")
   var id: Int = -1,
+  @SerializedName("type")
+  var type: Int = -1,
   @SerializedName("name")
   var name: String = "",
   @SerializedName("image")

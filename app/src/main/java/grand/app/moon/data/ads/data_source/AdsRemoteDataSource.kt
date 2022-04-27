@@ -1,6 +1,7 @@
 package grand.app.moon.data.ads.data_source
 
 import android.util.Log
+import grand.app.moon.BuildConfig
 import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.auth.entity.request.*
@@ -44,7 +45,9 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
   }
 
   suspend fun filterDetails(categoryId: Int, subCategoryId: Int) = safeApiCall {
-    apiService.filterDetails(categoryId, subCategoryId)
+    var url = "${BuildConfig.API_BASE_URL}v1/filter/details?category_id=$categoryId"
+    if(subCategoryId != -1) url += "&sub_category_id=$subCategoryId"
+    apiService.filterDetails(url)
   }
 
   suspend fun filterResults(request: FilterResultRequest) = safeApiCall {

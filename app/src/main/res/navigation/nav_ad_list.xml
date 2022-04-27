@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/nav_ad_list"
+  app:startDestination="@id/advertisementListFragment">
+  <argument
+    android:name="type"
+    app:argType="integer"
+    android:defaultValue="-1"
+    />
+  <argument
+    android:name="tabBarText"
+    app:argType="string"
+    android:defaultValue=""
+    />
+  <argument
+    android:name="category_id"
+    app:argType="integer"
+    android:defaultValue="-1"/>
+  <argument
+    android:name="sub_category"
+    app:argType="integer"
+    android:defaultValue="-1"/>
+
+
+  <fragment
+    android:id="@+id/advertisementListFragment"
+    android:name="grand.app.moon.presentation.ads.AdsListFragment"
+    android:label="{tabBarText}">
+    <argument
+      android:name="type"
+      app:argType="integer"
+      android:defaultValue="-1"
+      />
+    <argument
+      android:name="tabBarText"
+      app:argType="string"
+      android:defaultValue=""
+      />
+    <argument
+      android:name="category_id"
+      app:argType="integer"
+      android:defaultValue="-1"/>
+    <argument
+      android:name="sub_category"
+      app:argType="integer"
+      android:defaultValue="-1"/>
+
+  </fragment>
+
+</navigation>
