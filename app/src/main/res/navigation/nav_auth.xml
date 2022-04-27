@@ -41,11 +41,19 @@
     android:name="grand.app.moon.presentation.auth.confirmCode.ConfirmCodeFragment"
     tools:layout="@layout/fragment_confirm_code" >
     <argument
+      android:name="country_code"
+      app:argType="string" />
+    <argument
       android:name="phone"
       app:argType="string" />
     <argument
       android:name="type"
       app:argType="string" />
+    <argument
+      android:name="verificationId"
+      app:argType="string"
+      app:nullable="true"
+      />
   </fragment>
 
 </navigation>

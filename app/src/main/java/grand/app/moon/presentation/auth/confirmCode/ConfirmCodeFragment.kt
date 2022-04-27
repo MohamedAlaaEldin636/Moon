@@ -27,6 +27,8 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
   override
   fun setBindingVariables() {
     binding.viewmodel = viewModel
+    viewModel.request.verificationId = args.verificationId.toString()
+    viewModel.request.country_code = args.countryCode
     viewModel.request.phone = args.phone
     viewModel.request.type = args.type
   }
@@ -52,23 +54,23 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
       }
     }
 
-    lifecycleScope.launchWhenResumed {
-      viewModel._sendCode.collect {
-        when (it) {
-          Resource.Loading -> {
-            hideKeyboard()
-            showLoading()
-          }
-          is Resource.Success -> {
-            hideLoading()
-          }
-          is Resource.Failure -> {
-            hideLoading()
-            handleApiError(it)
-          }
-        }
-      }
-    }
+//    lifecycleScope.launchWhenResumed {
+//      viewModel._sendCode.collect {
+//        when (it) {
+//          Resource.Loading -> {
+//            hideKeyboard()
+//            showLoading()
+//          }
+//          is Resource.Success -> {
+//            hideLoading()
+//          }
+//          is Resource.Failure -> {
+//            hideLoading()
+//            handleApiError(it)
+//          }
+//        }
+//      }
+//    }
   }
 
 

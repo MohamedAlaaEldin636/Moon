@@ -4,6 +4,7 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.entity.request.LogInRequest
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
+import grand.app.moon.domain.auth.entity.request.VerifyAccountRequest
 import grand.app.moon.domain.auth.repository.AuthRepository
 import grand.app.moon.domain.utils.*
 import grand.app.moon.helpers.login.SocialRequest
@@ -23,11 +24,16 @@ class LogInUseCase @Inject constructor(
   lateinit var baseViewModel: BaseViewModel
 
   operator fun invoke(
-    request: LogInRequest
-  ): Flow<Resource<BaseResponse<*>>> = flow {
+    request: VerifyAccountRequest
+  ): Flow<Resource<BaseResponse<User>>> = flow {
 
     emit(Resource.Loading)
     val result = authRepository.logIn(request)
+    if(result is Resource.Success){
+      userLocalUseCase(
+        result.value.data
+      )
+    }
     emit(result)
   }.flowOn(Dispatchers.IO)
 

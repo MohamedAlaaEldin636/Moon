@@ -12,7 +12,7 @@ import retrofit2.http.*
 interface AuthServices {
 
   @POST("v1/authentication")
-  suspend fun logIn(@Body request: LogInRequest): BaseResponse<*>
+  suspend fun logIn(@Body request: VerifyAccountRequest): BaseResponse<User>
 
   @POST("v1/auth/social/login")
   suspend fun socialRegister(@Body request: SocialRequest): BaseResponse<User>

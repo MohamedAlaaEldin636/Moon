@@ -110,11 +110,11 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   }
 
   private fun openConfirm() {
-    navigateSafe(
-      LogInFragmentDirections.actionLogInFragmentToFragmentConfirmCode(
-        viewModel.request.phone, Constants.Verify
-      )
-    )
+//    navigateSafe(
+//      LogInFragmentDirections.actionLogInFragmentToFragmentConfirmCode(
+//        viewModel.request.country_code,viewModel.request.phone, Constants.Verify
+//      )
+//    )
   }
 
 

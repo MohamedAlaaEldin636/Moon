@@ -1,34 +1,93 @@
 {
   "project_info": {
-    "project_number": "232561241324",
-    "project_id": "tafwak-12c50",
-    "storage_bucket": "tafwak-12c50.appspot.com"
+    "project_number": "400502133831",
+    "firebase_url": "https://moon-263108.firebaseio.com",
+    "project_id": "moon-263108",
+    "storage_bucket": "moon-263108.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:232561241324:android:b2eeb2a3f38f04613849c9",
+        "mobilesdk_app_id": "1:400502133831:android:36bbf529507a02c4a44d62",
         "android_client_info": {
           "package_name": "grand.app.moon"
         }
       },
       "oauth_client": [
         {
-          "client_id": "232561241324-hf5jgkpna0f9o64q5h9p5g1p2slvs8hc.apps.googleusercontent.com",
+          "client_id": "400502133831-6daiue21bc73djbb7r5f0sn05fr8j14v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moon",
+            "certificate_hash": "1549b5e99d1dfd3a2dcb410d1c1de14031e424f3"
+          }
+        },
+        {
+          "client_id": "400502133831-d2pia847pi99au7r14mca1tgkbqo7ecp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moon",
+            "certificate_hash": "b05f52a38aa13bd2cbf159c60470ec815dd161f5"
+          }
+        },
+        {
+          "client_id": "400502133831-ha5vvac8ujdvulg936c2s3r1cds8asql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moon",
+            "certificate_hash": "8dc0e619495d02f4b9b1dd347d9c3685b2c4b1d7"
+          }
+        },
+        {
+          "client_id": "400502133831-ta6vb8opipjipeo4pmblhvmfuch6kual.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moon",
+            "certificate_hash": "30ea1f773fd0108f738258d46196f962a4ec1df2"
+          }
+        },
+        {
+          "client_id": "400502133831-tnvbfik8rjtkhu33eatj95gehc6thu0p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moon",
+            "certificate_hash": "bc8c8209b8c109b13e33fa81ea119a69307a392b"
+          }
+        },
+        {
+          "client_id": "400502133831-ubn6e6dve3fhm8iifplih4nareajq3s4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moon",
+            "certificate_hash": "13629fa2e85475b5b5bc601836c9f525a374820c"
+          }
+        },
+        {
+          "client_id": "400502133831-sbmbslnil6gnvelg1heq7s5ctfo1ndb2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA6pM5kpf0yMj0JzMywhcQisMLs_vyDjnw"
+          "current_key": "AIzaSyBQNQyTLfZJEoHYVxlY_AmUJ-oYQrh3edU"
+        },
+        {
+          "current_key": "AIzaSyDiXcjiSsbDuLl74TCcJxtI-fAAdqfkDFM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "232561241324-hf5jgkpna0f9o64q5h9p5g1p2slvs8hc.apps.googleusercontent.com",
+              "client_id": "400502133831-o4e80vm31aoe66id35fjgel300thnmdk.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "400502133831-2tf27a8jvcakpkcjlg3lqoaifemnkk78.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.2grand.Moon"
+              }
             }
           ]
         }
@@ -36,28 +95,125 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:232561241324:android:46f819fa71ca88ec3849c9",
+        "mobilesdk_app_id": "1:400502133831:android:de3e4c69f2cc1c84a44d62",
         "android_client_info": {
-          "package_name": "grand.app.moon.core"
+          "package_name": "grand.app.moondelegate"
         }
       },
       "oauth_client": [
         {
-          "client_id": "232561241324-hf5jgkpna0f9o64q5h9p5g1p2slvs8hc.apps.googleusercontent.com",
+          "client_id": "400502133831-6pmef3oadjo4un1ja5cl3pnco0o17qle.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moondelegate",
+            "certificate_hash": "bc8c8209b8c109b13e33fa81ea119a69307a392b"
+          }
+        },
+        {
+          "client_id": "400502133831-cjergkofn4krkr9nkqrr1desboaffvoe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moondelegate",
+            "certificate_hash": "30ea1f773fd0108f738258d46196f962a4ec1df2"
+          }
+        },
+        {
+          "client_id": "400502133831-sbmbslnil6gnvelg1heq7s5ctfo1ndb2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA6pM5kpf0yMj0JzMywhcQisMLs_vyDjnw"
+          "current_key": "AIzaSyBQNQyTLfZJEoHYVxlY_AmUJ-oYQrh3edU"
+        },
+        {
+          "current_key": "AIzaSyDiXcjiSsbDuLl74TCcJxtI-fAAdqfkDFM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "232561241324-hf5jgkpna0f9o64q5h9p5g1p2slvs8hc.apps.googleusercontent.com",
+              "client_id": "400502133831-o4e80vm31aoe66id35fjgel300thnmdk.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "400502133831-2tf27a8jvcakpkcjlg3lqoaifemnkk78.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.2grand.Moon"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400502133831:android:15d60e6241dfac6ca44d62",
+        "android_client_info": {
+          "package_name": "grand.app.moonshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "400502133831-2jp24d6ckbnkc4gqc81gk21mm6cgjbs1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moonshop",
+            "certificate_hash": "bc8c8209b8c109b13e33fa81ea119a69307a392b"
+          }
+        },
+        {
+          "client_id": "400502133831-5k010nkggdambfphq1ouf554fukc8db7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moonshop",
+            "certificate_hash": "30ea1f773fd0108f738258d46196f962a4ec1df2"
+          }
+        },
+        {
+          "client_id": "400502133831-i9tfagsj9deo95nqhc363bjt1hh2dj4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moonshop",
+            "certificate_hash": "b05f52a38aa13bd2cbf159c60470ec815dd161f5"
+          }
+        },
+        {
+          "client_id": "400502133831-k2e7qi9uoogotf7amb8rmdh7gde226ud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "grand.app.moonshop",
+            "certificate_hash": "8dc0e619495d02f4b9b1dd347d9c3685b2c4b1d7"
+          }
+        },
+        {
+          "client_id": "400502133831-sbmbslnil6gnvelg1heq7s5ctfo1ndb2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQNQyTLfZJEoHYVxlY_AmUJ-oYQrh3edU"
+        },
+        {
+          "current_key": "AIzaSyDiXcjiSsbDuLl74TCcJxtI-fAAdqfkDFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "400502133831-o4e80vm31aoe66id35fjgel300thnmdk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "400502133831-2tf27a8jvcakpkcjlg3lqoaifemnkk78.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.2grand.Moon"
+              }
             }
           ]
         }
