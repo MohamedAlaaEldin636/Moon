@@ -2,20 +2,13 @@ package grand.app.moon.core.extenstions
 
 import android.content.Context
 import android.widget.Toast
+import es.dmoral.toasty.Toasty
 import grand.app.moon.core.MyApplication
 
-fun Context.showSuccessToast(msg: String) {
-	(applicationContext as? MyApplication)?.showSuccessToast(msg) ?: simpleToast(msg)
+fun Context.showError( message: String) {
+  Toasty.error(this, message, Toast.LENGTH_SHORT, true).show();
 }
 
-fun Context.showErrorToast(msg: String) {
-	(applicationContext as? MyApplication)?.showErrorToast(msg) ?: simpleToast(msg)
-}
-
-fun Context.showNormalToast(msg: String) {
-	(applicationContext as? MyApplication)?.showNormalToast(msg) ?: simpleToast(msg)
-}
-
-private fun Context.simpleToast(msg: String) {
-	Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+fun Context.showInfo( message: String) {
+  Toasty.info(this, message, Toast.LENGTH_SHORT, true).show();
 }

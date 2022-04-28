@@ -20,7 +20,7 @@ import grand.app.moon.databinding.FragmentLogInBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import com.hbb20.CountryCodePicker.OnCountryChangeListener
-import grand.app.moon.core.extenstions.showErrorToast
+import grand.app.moon.core.extenstions.showError
 import grand.app.moon.helpers.login.SocialRequest
 
 
@@ -146,7 +146,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
         )
       } catch (throwable: Throwable) {
         Log.d(TAG, "${throwable.message}: ")
-        requireContext().showErrorToast(getString(R.string.something_went_wrong_please_try_again))
+        requireContext().showError(getString(R.string.something_went_wrong_please_try_again))
       }
     }
   }

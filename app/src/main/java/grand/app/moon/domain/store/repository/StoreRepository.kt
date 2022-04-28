@@ -16,5 +16,6 @@ interface StoreRepository {
   suspend fun getStores(request: StoreFilterRequest): Resource<BaseResponse<StoreListPaginateData>>
   suspend fun share(request: ShareRequest): Resource<BaseResponse<*>>
   suspend fun getUsersViewFollowing(id:Int , type: String): Resource<BaseResponse<UserListPaginateData>>
+  suspend fun storyAction(request: StoryRequest): Resource<BaseResponse<*>>
 
 }

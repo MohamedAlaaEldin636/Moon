@@ -39,6 +39,9 @@ object Constants {
   const val SHARE_IMAGE: Int = 28
   const val GOOGLE: Int = 29
   const val FACEBOOK: Int = 30
+  const val EXIT: Int = 31
+  const val STORE_DETAILS: Int = 32
+
 
 
 

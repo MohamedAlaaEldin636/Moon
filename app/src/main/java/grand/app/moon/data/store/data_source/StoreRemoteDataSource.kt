@@ -2,10 +2,7 @@ package grand.app.moon.data.store.data_source
 
 import android.util.Log
 import grand.app.moon.data.remote.BaseRemoteDataSource
-import grand.app.moon.domain.store.entity.FollowStoreRequest
-import grand.app.moon.domain.store.entity.ReportStoreRequest
-import grand.app.moon.domain.store.entity.ShareRequest
-import grand.app.moon.domain.store.entity.StoreFilterRequest
+import grand.app.moon.domain.store.entity.*
 import javax.inject.Inject
 
 class StoreRemoteDataSource @Inject constructor(private val apiService: StoreServices) :
@@ -29,6 +26,13 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
     Log.d(TAG, "getStores: ")
     apiService.getStores(getParameters(request))
   }
+
+  suspend fun storyAction(request: StoryRequest) = safeApiCall {
+    Log.d(TAG, "getStores: ")
+    apiService.storyAction(request)
+  }
+
+
 
   suspend fun getFavouriteStores(page: Int) = safeApiCall {
     apiService.getFavouriteStores(page)

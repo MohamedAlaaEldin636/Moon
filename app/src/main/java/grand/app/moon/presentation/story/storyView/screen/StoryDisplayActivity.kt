@@ -2,7 +2,6 @@ package grand.app.moon.presentation.story.storyView.screen
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.viewModels
@@ -33,7 +32,9 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(),
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding.viewModel = viewModel
+    observe()
     store = intent.getSerializableExtra(Constants.STORIES) as Store
+    viewModel.store.set(store)
     store.stories.forEach { story ->
       val locallyLoadedImageView = AppCompatImageView(this)
       locallyLoadedImageView.scaleType = ImageView.ScaleType.FIT_CENTER
@@ -42,11 +43,28 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(),
     Momentz(this, list, binding.container, this).start()
   }
 
+  private fun observe() {
+    viewModel.clickEvent.observe(this,{
+      when(it){
+        Constants.SHARE_IMAGE -> {
+          viewModel.storyRequest.type = 3
+          viewModel.callService()
+          viewModel.share(this,store.name,"", binding.imgShare)
+        }
+        Constants.EXIT -> finish()
+        Constants.STORE_DETAILS -> {
+
+        }
+      }
+    })
+  }
+
   private  val TAG = "StoryDisplayActivity"
   fun loadImage(view: AppCompatImageView?, momentz: Momentz?,index: Int) {
     if (index >= 0 && index < store.stories.size) {
       momentz?.pause(false)
       viewModel.startLoading()
+      viewModel.image.set(store.stories[index].file)
       view?.let {
         Glide.with(applicationContext)
           .load(store.stories[index].file)
@@ -91,6 +109,9 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(),
   }
 
   override fun onNextCalled(view: View, momentz: Momentz, index: Int) {
+    viewModel.storyRequest.story_id = store.stories[index].id
+    viewModel.storyRequest.type = 1
+    viewModel.callService()
     loadImage(view as AppCompatImageView,momentz,index)
   }
 }

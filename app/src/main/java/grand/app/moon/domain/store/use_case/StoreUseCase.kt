@@ -74,7 +74,10 @@ class StoreUseCase @Inject constructor(
   }.flowOn(Dispatchers.IO)
 
 
-
+  fun storyAction(id: StoryRequest): Flow<Resource<BaseResponse<*>>> = flow {
+    val result = repository.storyAction(id)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
 
 
 

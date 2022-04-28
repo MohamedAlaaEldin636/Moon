@@ -27,7 +27,6 @@ import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.sendFirebaseSMS
-import grand.app.moon.core.extenstions.showErrorToast
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import grand.app.moon.helpers.login.SocialRequest

@@ -77,7 +77,7 @@ fun Context.verifyCode(v: View,verificationId : String, code: String,callBack: (
         when{
           task.isSuccessful -> callBack(true)
           else -> {
-            showErrorToast(getString(R.string.verification_code_not_valid))
+            v.context.showError(v.context.resources.getString(R.string.verification_code_not_valid))
             callBack(false)
           }
         }
