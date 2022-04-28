@@ -159,5 +159,6 @@
     <string name="cancel_ban">الغاء الحظر</string>
   <string name="code_had_been_sent">تم إرسال الكود بنجاح</string>
     <string name="verification_code_not_valid">Verification Code Not Valid</string>
+  <string name="filter_by_rate">تصفية حسب التقيم</string>
 
 </resources>

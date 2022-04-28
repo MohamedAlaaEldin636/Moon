@@ -76,7 +76,13 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/nav_ad_list" />
-
+    <action
+      android:id="@+id/action_navCategoryListAds_to_filterHomeFragment2"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/filterHomeFragment2" />
 
 
   </fragment>
@@ -161,5 +167,9 @@
       android:name="kind"
       app:argType="grand.app.moon.appMoonHelper.FilterDialog" />
   </dialog>
+  <fragment
+    android:id="@+id/filterHomeFragment2"
+    android:name="grand.app.moon.presentation.filter.FilterHomeFragment"
+    android:label="FilterHomeFragment" />
 
 </navigation>

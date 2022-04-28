@@ -9,4 +9,6 @@ enum class FILTER_TYPE {
   PRICE,
   CATEGORY,
   SUB_CATEGORY,
+  RATE,
+
 }

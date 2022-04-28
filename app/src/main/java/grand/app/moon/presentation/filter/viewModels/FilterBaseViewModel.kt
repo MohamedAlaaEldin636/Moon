@@ -1,31 +1,19 @@
 package grand.app.moon.presentation.filter.viewModels
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
-import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
 import grand.app.moon.domain.account.repository.AccountRepository
-import grand.app.moon.domain.ads.use_case.AdsUseCase
-import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.filter.entitiy.Children
-import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
-import grand.app.moon.domain.utils.BaseResponse
-import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.filter.FILTER_TYPE
-import grand.app.moon.presentation.filter.FilterAdapter
-import grand.app.moon.presentation.filter.FilterFragmentDirections
-import kotlinx.coroutines.flow.MutableStateFlow
+import grand.app.moon.presentation.filter.adapter.FilterAdapter
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -57,6 +45,18 @@ open class FilterBaseViewModel @Inject constructor(
           }
         }
       }
+    }
+    callBack(property)
+  }
+
+  fun addRates(callBack : (result: FilterProperty) -> Unit){
+    val property = FilterProperty()
+    property.filterType = FILTER_TYPE.RATE
+    property.name = MyApplication.instance.resources.getString(R.string.filter_by_rate)
+
+    var list = arrayListOf<FilterProperty>()
+    for(i in 5 downTo 1){
+      list.add(FilterProperty(id = i))
     }
     callBack(property)
   }

@@ -115,12 +115,21 @@ class SubCategoryViewModel @Inject constructor(
   }
 
   fun filter(v: View) {
-    v.findNavController().navigate(
-      SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterFragment(
-        categoryId,
-        subCategoryId
-      )
-    )
+    when{
+      categoryId == -1 ->{
+        v.findNavController().navigate(
+          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterFragment(
+            categoryId,
+            subCategoryId
+          )
+        )
+      }
+      else -> {
+        v.findNavController().navigate(
+          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterHomeFragment2()
+        )
+      }
+    }
   }
 
   fun filterSort(v: View) {

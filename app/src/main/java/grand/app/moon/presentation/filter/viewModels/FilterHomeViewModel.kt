@@ -5,14 +5,16 @@ import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.filter.entitiy.FilterProperty
-import grand.app.moon.presentation.filter.FilterFragmentDirections
 import grand.app.moon.presentation.filter.FilterHomeFragmentDirections
+import grand.app.moon.presentation.filter.adapter.FilterRateAdapter
 import javax.inject.Inject
 
 @HiltViewModel
 class FilterHomeViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
 ) : FilterBaseViewModel(accountRepository) {
+
+  val filterAdapter = FilterRateAdapter()
 
   val list = ArrayList<FilterProperty>()
   init {
@@ -34,6 +36,10 @@ class FilterHomeViewModel @Inject constructor(
     addAnotherOptions{
       list.add(it)
     }
+    addRates{
+      list.add(it)
+    }
+
     adapter.differ.submitList(list)
   }
 

@@ -1,4 +1,4 @@
-package grand.app.moon.presentation.filter.rate
+package grand.app.moon.presentation.filter.adapter
 
 import android.content.Context
 import android.util.Log
@@ -13,9 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemFilterBinding
 import grand.app.moon.domain.filter.entitiy.FilterProperty
+import grand.app.moon.presentation.filter.FILTER_TYPE
 import grand.app.moon.presentation.filter.viewModels.ItemFilterViewModel
 
-class FilterRateAdapter : RecyclerView.Adapter<FilterRateAdapter.ViewHolder>() {
+class FilterAdapter : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
   lateinit var context: Context
   var position = -1
   var clickEvent: MutableLiveData<FilterProperty> = MutableLiveData()
@@ -43,7 +44,7 @@ class FilterRateAdapter : RecyclerView.Adapter<FilterRateAdapter.ViewHolder>() {
     return ViewHolder(view)
   }
 
-  private  val TAG = "MoreAdapter"
+  private val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemFilterViewModel(data)
@@ -76,6 +77,18 @@ class FilterRateAdapter : RecyclerView.Adapter<FilterRateAdapter.ViewHolder>() {
     differ.currentList[position].selectedText = property.selectedText
     differ.currentList[position].selectedList = property.selectedList
     notifyItemChanged(position)
+  }
+
+  fun replaceSubCategories(it: FilterProperty) {
+    differ.currentList.forEachIndexed { index, filterProperty ->
+      run {
+        if (filterProperty.filterType == FILTER_TYPE.SUB_CATEGORY) {
+          filterProperty.children.clear()
+          filterProperty.children.addAll(it.children)
+          notifyItemChanged(index)
+        }
+      }
+    }
   }
 
   inner class ViewHolder(itemView: View) :

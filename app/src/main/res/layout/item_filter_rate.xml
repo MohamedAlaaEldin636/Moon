@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.filter.dialog.multiCheck.ItemFilterMultiViewModel" />
+  </data>
+
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:onClick="@{()-> viewModel.clickEvent(Constants.CLICK_EVENT)}"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+      android:id="@+id/rate3"
+      style="@style/Widget.AppCompat.RatingBar.Indicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:progressTint="@color/colorAccent"
+      android:rating="@{ 5 - viewModel.position }"
+      android:textAppearance="@style/TextAppearance.AppCompat.Large"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+      android:id="@+id/radio3"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_centerInParent="true"
+      android:layout_marginEnd="@dimen/dimen6"
+      android:buttonTint="@color/colorPrimary"
+      android:checked="@{viewModel.selected}"
+      android:minWidth="0dp"
+      android:minHeight="0dp"
+      app:buttonTint="@color/colorPrimary"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
