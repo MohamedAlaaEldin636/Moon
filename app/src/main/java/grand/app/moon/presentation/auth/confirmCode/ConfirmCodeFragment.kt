@@ -27,7 +27,6 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
   override
   fun setBindingVariables() {
     binding.viewmodel = viewModel
-    viewModel.request.verificationId = args.verificationId.toString()
     viewModel.request.country_code = args.countryCode
     viewModel.request.phone = args.phone
     viewModel.request.type = args.type

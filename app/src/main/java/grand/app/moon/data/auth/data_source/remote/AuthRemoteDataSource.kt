@@ -8,7 +8,7 @@ import javax.inject.Inject
 class AuthRemoteDataSource @Inject constructor(private val apiService: AuthServices) :
   BaseRemoteDataSource() {
 
-  suspend fun logIn(request: VerifyAccountRequest) = safeApiCall {
+  suspend fun logIn(request: LogInRequest) = safeApiCall {
     apiService.logIn(request)
   }
 

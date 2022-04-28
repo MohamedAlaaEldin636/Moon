@@ -49,11 +49,7 @@
     <argument
       android:name="type"
       app:argType="string" />
-    <argument
-      android:name="verificationId"
-      app:argType="string"
-      app:nullable="true"
-      />
+
   </fragment>
 
 </navigation>

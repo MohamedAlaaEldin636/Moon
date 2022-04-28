@@ -26,7 +26,6 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
-import grand.app.moon.core.extenstions.sendFirebaseSMS
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import grand.app.moon.helpers.login.SocialRequest
@@ -40,23 +39,23 @@ class LogInViewModel @Inject constructor(
   val userLocalUseCase: UserLocalUseCase
 ) : BaseViewModel() {
 
-  lateinit var socialRequest: SocialRequest
+  lateinit var  socialRequest: SocialRequest
   lateinit var registerRequest: SocialRequest
   val showSocial = ObservableBoolean(true)
   var request = LogInRequest()
   var _logInResponse = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
+  var loginResponse = _logInResponse
   var typeRequest = Constants.SOCIAL_TYPE
-
   init {
     logInUseCase.baseViewModel = this
   }
 
-  fun checkUser(): Boolean {
+  fun checkUser(): Boolean{
     val user = userUseCase.invoke()
     return user.phone.isNotEmpty()
   }
 
-  private val TAG = "LogInViewModel"
+  private  val TAG = "LogInViewModel"
   fun onLogInClicked(v: View) {
     Log.d(TAG, "onLogInClicked: login")
     if (request.phone.trim().isEmpty()) {
@@ -64,26 +63,15 @@ class LogInViewModel @Inject constructor(
       return
     }
     typeRequest = Constants.LOGIN
-    val fragment = v.findFragment<LogInFragment>()
-    v.context.sendFirebaseSMS(
-      fragment.requireActivity(),
-      v,
-      request.country_code + request.phone
-    ) { verificationId ->
-      v.findNavController().navigate(
-        LogInFragmentDirections.actionLogInFragmentToFragmentConfirmCode(
-          request.country_code, request.phone, Constants.Verify, verificationId
-        )
-      )
-    }
-//    logInUseCase(request)
-//      .onEach { result ->
-//        _logInResponse.value = result
-//      }
-//      .launchIn(viewModelScope)
+    logInUseCase(request)
+      .onEach { result ->
+        Log.d(TAG, "onLogInClicked: HEREREEREE")
+        loginResponse.value = result
+      }
+      .launchIn(viewModelScope)
   }
 
-  fun facebook(view: View) {
+  fun facebook(view: View){
 //    LoginManager.getInstance().logOut()
 ///*val accessToken = AccessToken.getCurrentAccessToken()
 //		val isLoggedIn = accessToken != null && !accessToken.isExpired

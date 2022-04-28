@@ -8,6 +8,4 @@ data class VerifyAccountRequest(
   var country_code: String = "",
   var phone: String = "",
   var code: String = "",
-  @Transient
-  var verificationId: String = "",
   )

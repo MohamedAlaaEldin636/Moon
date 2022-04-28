@@ -24,15 +24,17 @@ class LogInUseCase @Inject constructor(
   lateinit var baseViewModel: BaseViewModel
 
   operator fun invoke(
-    request: VerifyAccountRequest
+    request: LogInRequest
   ): Flow<Resource<BaseResponse<User>>> = flow {
 
     emit(Resource.Loading)
     val result = authRepository.logIn(request)
     if(result is Resource.Success){
-      userLocalUseCase(
-        result.value.data
-      )
+      result.value.data?.id?.let {
+        userLocalUseCase(
+          result.value.data
+        )
+      }
     }
     emit(result)
   }.flowOn(Dispatchers.IO)

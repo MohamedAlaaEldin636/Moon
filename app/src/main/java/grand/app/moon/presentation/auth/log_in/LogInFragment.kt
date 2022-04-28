@@ -54,7 +54,8 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
     }
 
     lifecycleScope.launchWhenResumed {
-      viewModel._logInResponse.collect {
+      viewModel.loginResponse.collect {
+        Log.d(TAG, "setupObservers: ")
         when (it) {
           Resource.Loading -> {
             hideKeyboard()
@@ -62,6 +63,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
+            Log.d(TAG, "setupObservers: SUCCESS")
             when (viewModel.typeRequest) {
               Constants.SOCIAL_TYPE -> when (viewModel.checkUser()) {
                 true -> makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
@@ -110,11 +112,11 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   }
 
   private fun openConfirm() {
-//    navigateSafe(
-//      LogInFragmentDirections.actionLogInFragmentToFragmentConfirmCode(
-//        viewModel.request.country_code,viewModel.request.phone, Constants.Verify
-//      )
-//    )
+    navigateSafe(
+      LogInFragmentDirections.actionLogInFragmentToFragmentConfirmCode(
+        viewModel.request.country_code,viewModel.request.phone, Constants.Verify
+      )
+    )
   }
 
 

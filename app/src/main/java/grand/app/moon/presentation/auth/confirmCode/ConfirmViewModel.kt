@@ -38,48 +38,48 @@ class ConfirmViewModel @Inject constructor(
   private val _verifyResponse = MutableStateFlow<Resource<BaseResponse<User>>>(Resource.Default)
   val verifyResponse = _verifyResponse
 
-//  val _logInResponse = MutableStateFlow<Resource<BaseResponse<User>>>(Resource.Default)
-//  val sendCode = _sendCode
+  val _sendCode = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
+  val sendCode = _sendCode
 
   init {
     verifyAccountUseCase.baseViewModel = this
     startTimer()
   }
   fun verifyAccount(v: View) {
-//    verifyAccountUseCase(request)
-//      .onEach { result ->
-//        _verifyResponse.value = result
-//      }
-//      .launchIn(viewModelScope)
-    v.context.verifyCode(v,request.verificationId,request.code) {
-      if (it) {
-        logInUseCase(request)
-          .onEach { result ->
-            _verifyResponse.value = result
-          }
-          .launchIn(viewModelScope)
+    verifyAccountUseCase(request)
+      .onEach { result ->
+        _verifyResponse.value = result
       }
-    }
+      .launchIn(viewModelScope)
+//    v.context.verifyCode(v,request.verificationId,request.code) {
+//      if (it) {
+//        logInUseCase(request)
+//          .onEach { result ->
+//            _verifyResponse.value = result
+//          }
+//          .launchIn(viewModelScope)
+//      }
+//    }
   }
 
-//  fun resendCode() {
-//    Log.d(TAG, "resend: heererer")
-//    verifyAccountUseCase.sendCode(request)
-//      .onEach { result ->
-//        _sendCode.value = result
-//      }
-//      .launchIn(viewModelScope)
-//  }
+  fun resendCode() {
+    Log.d(TAG, "resend: heererer")
+    verifyAccountUseCase.sendCode(request)
+      .onEach { result ->
+        _sendCode.value = result
+      }
+      .launchIn(viewModelScope)
+  }
 
   fun resend(v: View) {
     Log.d(TAG, "resend: ")
     resend = false
-//    resendCode()
+    resendCode()
     countDownTimer.start()
-    val fragment = v.findFragment<LoginFragment>()
-    v.context.sendFirebaseSMS(fragment.requireActivity(),v,request.country_code+request.phone) { verificationId ->
-     request.verificationId = verificationId
-    }
+//    val fragment = v.findFragment<LoginFragment>()
+//    v.context.sendFirebaseSMS(fragment.requireActivity(),v,request.country_code+request.phone) { verificationId ->
+//     request.verificationId = verificationId
+//    }
   }
 
 

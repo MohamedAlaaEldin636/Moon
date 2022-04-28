@@ -8,7 +8,7 @@ import grand.app.moon.helpers.login.SocialRequest
 
 interface AuthRepository {
 
-  suspend fun logIn(request: VerifyAccountRequest): Resource<BaseResponse<User>>
+  suspend fun logIn(request: LogInRequest): Resource<BaseResponse<User>>
   suspend fun socialRegister(request: SocialRequest): Resource<BaseResponse<User>>
   suspend fun updateProfile(request: UpdateProfileRequest): Resource<BaseResponse<User>>
   suspend fun verifyAccount(request: VerifyAccountRequest): Resource<BaseResponse<User>>
