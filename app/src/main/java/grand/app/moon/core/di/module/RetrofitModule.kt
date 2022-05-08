@@ -65,6 +65,7 @@ object RetrofitModule {
 //    }
 
 
+    Log.d(TAG, "provideHeadersInterceptor-language: ${appPreferences.getLocal(Constants.LANGUAGE)}")
     Log.d(TAG, "intercept-userToken-here: ${appPreferences.getUserToken()}")
 
     Interceptor { chain ->
@@ -75,8 +76,9 @@ object RetrofitModule {
 //          .addHeader(
 //            "countryId", countryId
 //          )
-          .addHeader("platform", "1")
-          .addHeader("Accept", "application/json")
+//          .addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
+//          .addHeader("platform", "1")
+//          .addHeader("Accept", "application/json")
 //          .addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
           .build()
       )

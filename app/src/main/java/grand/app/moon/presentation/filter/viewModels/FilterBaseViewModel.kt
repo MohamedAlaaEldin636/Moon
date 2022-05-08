@@ -27,8 +27,7 @@ open class FilterBaseViewModel @Inject constructor(
   val adapter = FilterAdapter()
 
 
-
-  fun addCities(callBack : (result: FilterProperty) -> Unit){
+  fun addCities(callBack: (result: FilterProperty) -> Unit) {
     val property = FilterProperty()
     viewModelScope.launch {
       accountRepository.getCountries().collect {
@@ -49,19 +48,23 @@ open class FilterBaseViewModel @Inject constructor(
     callBack(property)
   }
 
-  fun addRates(callBack : (result: FilterProperty) -> Unit){
+  fun addRates(callBack: (result: FilterProperty) -> Unit) {
+    Log.d(TAG, "addRates: ")
     val property = FilterProperty()
     property.filterType = FILTER_TYPE.RATE
     property.name = MyApplication.instance.resources.getString(R.string.filter_by_rate)
 
     var list = arrayListOf<FilterProperty>()
-    for(i in 5 downTo 1){
+    Log.d(TAG, "addRates: ${list.size}")
+    for (i in 5 downTo 1) {
+      Log.d(TAG, "addRates: $i")
       list.add(FilterProperty(id = i))
+      property.children.add(Children(id = i, name = ""))
     }
     callBack(property)
   }
 
-  fun addPrice(callBack : (result: FilterProperty) -> Unit) {
+  fun addPrice(callBack: (result: FilterProperty) -> Unit) {
     val property = FilterProperty()
     property.type = 1
     property.filterType = FILTER_TYPE.PRICE
@@ -98,7 +101,7 @@ open class FilterBaseViewModel @Inject constructor(
   }
 
 
-  fun addSortBy(callBack : (result: FilterProperty) -> Unit) {
+  fun addSortBy(callBack: (result: FilterProperty) -> Unit) {
     val property = FilterProperty()
     property.type = 1
     property.filterType = FILTER_TYPE.SORT_BY
@@ -134,7 +137,7 @@ open class FilterBaseViewModel @Inject constructor(
     callBack(property)
   }
 
-  fun addAnotherOptions(callBack : (result: FilterProperty) -> Unit) {
+  fun addAnotherOptions(callBack: (result: FilterProperty) -> Unit) {
     val property = FilterProperty()
     property.type = 1
     property.filterType = FILTER_TYPE.OTHER_OPTIONS
@@ -164,7 +167,7 @@ open class FilterBaseViewModel @Inject constructor(
     callBack(property)
   }
 
-  fun addCategories(callBack: (result: FilterProperty) -> Unit){
+  fun addCategories(callBack: (result: FilterProperty) -> Unit) {
     val property = FilterProperty()
     property.type = 1
     property.filterType = FILTER_TYPE.CATEGORY
@@ -185,7 +188,7 @@ open class FilterBaseViewModel @Inject constructor(
     }
   }
 
-  fun addSubCategories(categoryId : Int? = 0, callBack: (result: FilterProperty) -> Unit){
+  fun addSubCategories(categoryId: Int? = 0, callBack: (result: FilterProperty) -> Unit) {
     Log.d(TAG, "getSubCategories: $categoryId")
     val property = FilterProperty()
     property.type = 1
@@ -196,7 +199,7 @@ open class FilterBaseViewModel @Inject constructor(
       accountRepository.getCategories().collect {
         it.data.forEach { category ->
           categoryId?.let { categorySelected ->
-            if(category.id == categorySelected){
+            if (category.id == categorySelected) {
               category.subCategories?.forEach { subCategory ->
                 property.children.add(
                   Children(
@@ -241,8 +244,10 @@ open class FilterBaseViewModel @Inject constructor(
       FILTER_TYPE.OTHER_OPTIONS -> request.other_options = filterProperty.selectedList[0]
       FILTER_TYPE.SORT_BY -> request.order_by = filterProperty.selectedList[0]
       FILTER_TYPE.PRICE -> {
-        if ( filterProperty.from?.trim()?.isNotEmpty() == true) request.min_price = filterProperty.from else request.min_price = null
-        if ( filterProperty.to?.trim()?.isNotEmpty() == true) request.max_price = filterProperty.to else request.max_price = null
+        if (filterProperty.from?.trim()?.isNotEmpty() == true) request.min_price =
+          filterProperty.from else request.min_price = null
+        if (filterProperty.to?.trim()?.isNotEmpty() == true) request.max_price =
+          filterProperty.to else request.max_price = null
       }
       FILTER_TYPE.CATEGORY -> {
         request.categoryId = filterProperty.selectedList[0]

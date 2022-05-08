@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.filter.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,21 +11,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 //import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.R
+import grand.app.moon.databinding.ItemFilterRateBinding
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import grand.app.moon.databinding.ItemReportBinding
+import grand.app.moon.domain.filter.entitiy.Children
+import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.intro.entity.AppTutorial
+import grand.app.moon.presentation.filter.dialog.multiCheck.ItemFilterMultiViewModel
+import grand.app.moon.presentation.filter.viewModels.ItemFilterRateViewModel
 import grand.app.moon.presentation.store.viewModels.ItemReportViewModel
 
 class FilterRateAdapter : RecyclerView.Adapter<FilterRateAdapter.ViewHolder>() {
   var lastSelected = -1
   var lastPosition = -1
-  var changeEvent: SingleLiveEvent<AppTutorial> = SingleLiveEvent()
-  private val differCallback = object : DiffUtil.ItemCallback<AppTutorial>() {
-    override fun areItemsTheSame(oldItem: AppTutorial, newItem: AppTutorial): Boolean {
+  var changeEvent: SingleLiveEvent<Children> = SingleLiveEvent()
+  private val differCallback = object : DiffUtil.ItemCallback<Children>() {
+    override fun areItemsTheSame(oldItem: Children, newItem: Children): Boolean {
       return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: AppTutorial, newItem: AppTutorial): Boolean {
+    override fun areContentsTheSame(oldItem: Children, newItem: Children): Boolean {
       return oldItem == newItem
     }
   }
@@ -38,20 +44,21 @@ class FilterRateAdapter : RecyclerView.Adapter<FilterRateAdapter.ViewHolder>() {
   @SuppressLint("RecyclerView")
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemReportViewModel(data,position == lastPosition)
+    Log.d(TAG, "onBindViewHolder: ${data.id}")
+    val itemViewModel = ItemFilterRateViewModel(data,position,position == lastPosition)
     itemViewModel.clickEvent.observeForever {
 //      Log.d(TAG, "onBindViewHolder: $lastPosition")
       if(lastPosition != -1) {
-        differ.currentList[lastPosition].active = 0
-        notifyItemChanged(lastPosition)
+        lastSelected = lastPosition
+        lastPosition = -1
+        notifyItemChanged(lastSelected)
       }
       lastPosition = position
       lastSelected = data.id
-      differ.currentList[position].active = 1
       changeEvent.value = data // for listen on view
       notifyItemChanged(position)
     }
-    holder.itemLayoutBinding.radio.isChecked = lastPosition == position
+//    holder.itemLayoutBinding.radio.isChecked = lastPosition == position
     holder.setViewModel(itemViewModel)
 
   }
@@ -72,7 +79,7 @@ class FilterRateAdapter : RecyclerView.Adapter<FilterRateAdapter.ViewHolder>() {
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    lateinit var itemLayoutBinding: ItemReportBinding
+    lateinit var itemLayoutBinding: ItemFilterRateBinding
 
     init {
       bind()
@@ -86,8 +93,8 @@ class FilterRateAdapter : RecyclerView.Adapter<FilterRateAdapter.ViewHolder>() {
       itemLayoutBinding.unbind()
     }
 
-    fun setViewModel(itemViewModel: ItemReportViewModel) {
-      itemLayoutBinding.countryItemViewModels = itemViewModel
+    fun setViewModel(itemViewModel: ItemFilterRateViewModel) {
+      itemLayoutBinding.viewModel = itemViewModel
     }
   }
 }

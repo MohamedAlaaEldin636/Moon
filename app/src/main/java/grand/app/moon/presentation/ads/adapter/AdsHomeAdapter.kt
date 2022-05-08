@@ -1,23 +1,18 @@
 package grand.app.moon.presentation.ads.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemAdsHomeBinding
-import grand.app.moon.databinding.ItemStoryBinding
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.presentation.ads.viewModels.ItemAdsHomeViewModel
-import grand.app.moon.presentation.ads.viewModels.ItemAdsViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
-import grand.app.moon.presentation.story.viewModels.ItemStoryViewModel
 
 class AdsHomeAdapter : RecyclerView.Adapter<AdsHomeAdapter.ViewHolder>() {
   lateinit var context: Context

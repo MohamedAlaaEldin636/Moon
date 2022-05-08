@@ -170,6 +170,6 @@
   <fragment
     android:id="@+id/filterHomeFragment2"
     android:name="grand.app.moon.presentation.filter.FilterHomeFragment"
-    android:label="FilterHomeFragment" />
+    android:label="@string/filter" />
 
 </navigation>

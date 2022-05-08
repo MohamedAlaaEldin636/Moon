@@ -5,6 +5,7 @@ import java.io.Serializable
 
 data class AppTutorial(
   var id: Int = 0,
+  var name: String? = "",
   var title: String? = "",
   var content: String? = "",
   var image: String = "",

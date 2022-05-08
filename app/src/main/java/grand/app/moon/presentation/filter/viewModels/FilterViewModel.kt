@@ -30,7 +30,7 @@ class FilterViewModel @Inject constructor(
   val response = _responseService
 
   fun callService() {
-    job = useCase.filterDetails(request.categoryId, request.sub_category_id)
+    job = useCase.filterDetails(request.categoryId!!, request.sub_category_id!!)
       .onEach {
         response.value = it
       }

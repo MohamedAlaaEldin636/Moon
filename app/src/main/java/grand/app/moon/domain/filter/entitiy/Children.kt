@@ -16,5 +16,6 @@ data class Children(
     @SerializedName("text")
     val text: String = "",
     @SerializedName("type")
-    val type: Int = 0
-) : Serializable
+    val type: Int = 0,
+    var active: Int = 0,
+    ) : Serializable

@@ -5,5 +5,5 @@ import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 
-class ItemReportViewModel  constructor(var model: AppTutorial,val selected: Boolean) : BaseViewModel(){
+class ItemReportViewModel  constructor(var model: AppTutorial,val position:Int = 0,val selected: Boolean) : BaseViewModel(){
 }

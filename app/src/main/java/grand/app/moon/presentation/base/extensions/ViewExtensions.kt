@@ -55,6 +55,7 @@ import java.lang.Exception
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSourceFactory
+import grand.app.moon.core.extenstions.isEnglish
 import grand.app.moon.domain.utils.SpannedGridLayoutManager
 import grand.app.moon.presentation.media.image.utils.ImageMatrixTouchHandler
 
@@ -510,6 +511,19 @@ fun ImageView.loadRoundImage(imageUrl: String?, progressBar: ProgressBar?) {
     }
   }
 }
+
+@BindingAdapter("premium")
+fun loadPremium(imageView: ImageView,isPremium : Int) {
+  if(isPremium == 0)
+    imageView.visibility = View.GONE
+  else {
+    if (imageView.context.isEnglish()) {
+      imageView.setImageResource(R.drawable.premium)
+    } else
+      imageView.setImageResource(R.drawable.special)
+  }
+}
+
 
 @BindingAdapter("load_drawable")
 fun loadDrawable(imageView: ImageView, drawable: Drawable?) {

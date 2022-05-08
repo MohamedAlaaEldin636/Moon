@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.category.viewModels
 
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -16,6 +17,10 @@ import grand.app.moon.presentation.category.view.CategoryDetailsFragmentDirectio
 class ItemCategoryViewModel constructor(val category: CategoryItem, var percentage: Int) :
   BaseViewModel() {
 
+  private  val TAG = "ItemCategoryViewModel"
+  init {
+    Log.d(TAG, ": ${category.name}")
+  }
 
   fun submit(v: View) {
     if (category.total == null) {

@@ -44,6 +44,8 @@ class SplashViewModel @Inject constructor(
 
   fun saveCategories(data: BaseResponse<ArrayList<CategoryItem>>) {
     viewModelScope.launch {
+      for (category in data.data)
+      Log.d(TAG, "saveCategories: ${category.name}")
       accountRepository.saveCategories(data)
     }
   }

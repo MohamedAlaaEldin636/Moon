@@ -20,9 +20,9 @@ class ItemAdsViewModel(
   var percentageAds: Int
 ) : BaseViewModel(){
   val adapter = AdsAdapter()
+
   init {
   }
-
 
 
   fun whatsapp(v: View){

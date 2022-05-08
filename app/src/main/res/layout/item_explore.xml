@@ -57,28 +57,28 @@
       <androidx.appcompat.widget.AppCompatImageView
         android:src="@drawable/ic_chats"
         android:layout_gravity="center"
-        android:layout_width="@dimen/dimen8"
+        android:layout_width="@dimen/dimen26"
         android:tint="@color/colorWhite"
-        android:layout_height="@dimen/dimen8"/>
+        android:layout_height="@dimen/dimen26"/>
 
       <androidx.appcompat.widget.AppCompatTextView
         style="@style/mediumFont"
-        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginStart="@dimen/dimen3"
         android:textColor="@color/colorWhite"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@{viewModel.model.comments+``}"
-        android:textSize="7sp"
+        android:textSize="@dimen/text_size12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
       <androidx.appcompat.widget.AppCompatImageView
         android:src="@drawable/ic_like"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/dimen20"
-        android:layout_width="@dimen/dimen8"
+        android:layout_marginStart="@dimen/dimen26"
+        android:layout_width="@dimen/dimen26"
         android:tint="@color/colorWhite"
-        android:layout_height="@dimen/dimen8"/>
+        android:layout_height="@dimen/dimen26"/>
 
       <androidx.appcompat.widget.AppCompatTextView
         style="@style/mediumFont"
@@ -87,7 +87,7 @@
         android:layout_gravity="center"
         android:text="@{viewModel.model.likes+``}"
         android:gravity="center"
-        android:textSize="7sp"
+        android:textSize="@dimen/text_size12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

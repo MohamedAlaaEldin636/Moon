@@ -118,15 +118,15 @@ class SubCategoryViewModel @Inject constructor(
     when{
       categoryId == -1 ->{
         v.findNavController().navigate(
-          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterFragment(
-            categoryId,
-            subCategoryId
-          )
+          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterHomeFragment2()
         )
       }
       else -> {
         v.findNavController().navigate(
-          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterHomeFragment2()
+          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterFragment(
+            categoryId,
+            subCategoryId
+          )
         )
       }
     }

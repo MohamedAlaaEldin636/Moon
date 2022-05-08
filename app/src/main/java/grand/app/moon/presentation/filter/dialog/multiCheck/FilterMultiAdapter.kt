@@ -41,7 +41,7 @@ class FilterMultiAdapter : RecyclerView.Adapter<FilterMultiAdapter.ViewHolder>()
   @SuppressLint("RecyclerView")
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemFilterMultiViewModel(data,selected.contains(data.id))
+    val itemViewModel = ItemFilterMultiViewModel(data,position,selected.contains(data.id))
     itemViewModel.clickEvent.observeForever {
       val children: AppTutorial = differ.currentList[position]
       if (selected.contains(children.id)) {

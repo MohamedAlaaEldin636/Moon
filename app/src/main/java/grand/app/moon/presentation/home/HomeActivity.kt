@@ -20,8 +20,8 @@ import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import grand.app.moon.presentation.notfication.viewmodel.NotificationListViewModel
 import com.google.android.material.navigation.NavigationBarView
-
-
+import com.zeugmasolutions.localehelper.LocaleHelper
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -36,6 +36,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   override
   fun setUpBottomNavigation() {
     setUpBottomNavigationWithGraphs()
+  }
+
+  override fun setUpViews() {
+    super.setUpViews()
+    val lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
+    if (lang.isEmpty()) {
+      LocaleHelper.setLocale(this, Locale(lang))
+    }
   }
 
   private fun setUpBottomNavigationWithGraphs() {
@@ -61,7 +69,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         Constants.DEPARTMENTS -> nav.navigate(NavHomeDirections.actionHomeFragmentToDepartmentListFragment())
         Constants.CHAT_LIST -> nav.navigate(NavHomeDirections.actionHomeFragmentToChatFragment())
         Constants.NOTIFICATION -> {
-          if(viewModel.isLoggin)
+          if (viewModel.isLoggin)
             nav.navigate(NavHomeDirections.moveToNotification())
           else
             startActivity(Intent(this, AuthActivity::class.java))
@@ -116,7 +124,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showTopBarControls()
           showText()
         }
-        R.id.adsDetailsFragment , R.id.storeDetailsFragment -> {
+        R.id.adsDetailsFragment, R.id.storeDetailsFragment -> {
           hideTopBarControls()
           hideAllToolbar()
         }

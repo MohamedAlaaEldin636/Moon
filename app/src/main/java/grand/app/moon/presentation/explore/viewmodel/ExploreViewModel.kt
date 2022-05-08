@@ -37,9 +37,6 @@ class ExploreViewModel @Inject constructor(
 
   val response = _responseService
 
-  init {
-
-  }
 
   fun callService(){
     if (!callingService && !isLast) {
@@ -58,8 +55,6 @@ class ExploreViewModel @Inject constructor(
   }
 
   var lastData = ExploreListPaginateData()
-
-  private val TAG = "PackagesViewModel"
 
   fun setData(data: ExploreListPaginateData?) {
     data?.let {
