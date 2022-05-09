@@ -8,7 +8,7 @@ import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 
 class ItemPropertyViewModel  constructor(var property: Property) : BaseViewModel(){
-  val adapter = AdsAdapter()
+//  val adapter = AdsAdapter()
   init {
   }
 }

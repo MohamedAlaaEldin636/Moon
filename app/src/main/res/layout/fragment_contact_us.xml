@@ -60,7 +60,7 @@
           android:visibility="@{viewModel.type.equals(Constants.MAIL) ? View.INVISIBLE : View.VISIBLE}"
           android:onClick="@{(v)-> viewModel.select(v,Constants.MAIL)}"
           app:cardCornerRadius="@dimen/dimen6"
-          app:cardElevation="@dimen/dimen4">
+          app:cardElevation="@dimen/dimen1">
 
           <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/dimen40"
@@ -83,7 +83,7 @@
           android:visibility="@{viewModel.type.equals(Constants.PHONE) ? View.INVISIBLE : View.VISIBLE}"
           android:onClick="@{(v)-> viewModel.select(v,Constants.PHONE)}"
           app:cardCornerRadius="@dimen/dimen6"
-          app:cardElevation="@dimen/dimen4">
+          app:cardElevation="@dimen/dimen1">
 
           <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/dimen40"
@@ -106,7 +106,7 @@
           android:visibility="@{viewModel.type.equals(Constants.LOCATION) ? View.INVISIBLE : View.VISIBLE}"
           android:onClick="@{(v)-> viewModel.select(v,Constants.LOCATION)}"
           app:cardCornerRadius="@dimen/dimen6"
-          app:cardElevation="@dimen/dimen4">
+          app:cardElevation="@dimen/dimen1">
 
           <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/dimen40"
@@ -132,7 +132,7 @@
         android:layout_marginTop="@dimen/dimen8"
         android:layout_marginEnd="@dimen/dimen16"
         app:cardCornerRadius="@dimen/dimen6"
-        app:cardElevation="@dimen/dimen4"
+        app:cardElevation="@dimen/dimen1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_contact_us_social">

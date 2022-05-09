@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemAdsHomeBinding
+import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.presentation.ads.viewModels.ItemAdsHomeViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
+import javax.inject.Inject
 
-class AdsHomeAdapter : RecyclerView.Adapter<AdsHomeAdapter.ViewHolder>() {
+class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepository) : RecyclerView.Adapter<AdsHomeAdapter.ViewHolder>() {
   lateinit var context: Context
   var clickEvent: SingleLiveEvent<CategoryAdvertisement> = SingleLiveEvent()
 
@@ -44,7 +46,7 @@ class AdsHomeAdapter : RecyclerView.Adapter<AdsHomeAdapter.ViewHolder>() {
   private  val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemAdsHomeViewModel(data)
+    val itemViewModel = ItemAdsHomeViewModel(data,adsRepository)
     holder.itemLayoutBinding.rvAds.isNestedScrollingEnabled = false;
 
     holder.setViewModel(itemViewModel)

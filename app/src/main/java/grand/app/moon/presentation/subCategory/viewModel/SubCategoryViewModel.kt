@@ -56,8 +56,10 @@ class SubCategoryViewModel @Inject constructor(
   var sortBy = 1
   var type: Int = -1
 
+  @Inject
   @Bindable
-  var adapter = AdsAdapter()
+  lateinit var  adapter : AdsAdapter
+
 
   var ADS_LIST_URL = ""
 

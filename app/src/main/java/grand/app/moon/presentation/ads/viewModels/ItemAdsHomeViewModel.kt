@@ -1,22 +1,23 @@
 package grand.app.moon.presentation.ads.viewModels
 
-import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.os.bundleOf
+import androidx.databinding.Bindable
 import androidx.navigation.findNavController
-import grand.app.moon.NavAdListArgs
 import grand.app.moon.NavCategoryListAdsArgs
 import grand.app.moon.R
-import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.CategoryAdvertisement
-import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
+import javax.inject.Inject
 
-class ItemAdsHomeViewModel constructor(val category: CategoryAdvertisement) : BaseViewModel() {
-  val adapter = AdsAdapter()
+class ItemAdsHomeViewModel(val category: CategoryAdvertisement, adsRepository: AdsRepository) : BaseViewModel() {
+
+  @Bindable
+  var  adapter : AdsAdapter = AdsAdapter(adsRepository)
+
   private val TAG = "ItemAdsHomeViewModel"
 
   init {

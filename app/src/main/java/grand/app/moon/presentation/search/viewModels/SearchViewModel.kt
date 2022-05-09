@@ -39,8 +39,10 @@ class SearchViewModel @Inject constructor(
 
   var isLast = false
 
+  @Inject
   @Bindable
-  var adapter = AdsAdapter()
+  lateinit var  adapter : AdsAdapter
+
 
   var ADS_API = BuildConfig.API_BASE_URL + "v1/advertisements?"
   var ADS_LIST_URL = ""

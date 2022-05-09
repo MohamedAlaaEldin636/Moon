@@ -5,7 +5,7 @@ import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 
 class ItemWorkingHoursViewModel  constructor(var model: WorkingHours) : BaseViewModel(){
-  val adapter = AdsAdapter()
+//  val adapter = AdsAdapter()
   init {
   }
 }

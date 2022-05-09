@@ -60,8 +60,9 @@ class HomeViewModel @Inject constructor(
   @Bindable
   val storeAdapter = StoreAdapter()
 
+  @Inject
   @Bindable
-  val adsHomeAdapter = AdsHomeAdapter()
+  lateinit var  adsHomeAdapter : AdsHomeAdapter
 
   var isLoggin = userLocalUseCase.isLoggin()
 

@@ -24,7 +24,7 @@
     card_view:cardUseCompatPadding="true"
     app:width="@{viewModel.percentageAds}"
     app:cardCornerRadius="@dimen/dimen6"
-    app:cardElevation="@dimen/dimen4"
+    app:cardElevation="@dimen/dimen1"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -262,6 +262,7 @@
             android:drawableStart="@drawable/ic_whatsapp"
             android:drawablePadding="@dimen/dimen6"
             android:text="@string/whatsapp"
+            android:gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="9sp" />
         </RelativeLayout>
@@ -287,6 +288,7 @@
             android:drawablePadding="@dimen/dimen6"
             android:drawableTint="@color/colorPrimary"
             android:text="@string/call"
+            android:gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="9sp" />
         </RelativeLayout>
@@ -310,6 +312,7 @@
             android:layout_marginBottom="@dimen/dimen10"
             android:drawableStart="@drawable/ic_chat_ads"
             android:drawablePadding="@dimen/dimen6"
+            android:gravity="center"
             android:text="@string/chat"
             android:textColor="@color/colorBlack"
             android:textSize="9sp" />

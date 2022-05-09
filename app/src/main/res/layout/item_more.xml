@@ -21,7 +21,7 @@
     android:layout_marginEnd="@dimen/dimen16"
     android:onClick="@{()-> itemViewModels.clickEvent(Constants.ACTION)}"
     app:cardCornerRadius="@dimen/dimen6"
-    app:cardElevation="@dimen/dimen4">
+    app:cardElevation="@dimen/dimen1">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/item_more"

@@ -52,8 +52,10 @@ class StoreDetailsViewModel @Inject constructor(
 
   //https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM
 
+  @Inject
   @Bindable
-  val adsAdapter = AdsAdapter()
+  lateinit var  adsAdapter : AdsAdapter
+
 
   var exploreAdapter = ExploreGridEqualAdapter()
 

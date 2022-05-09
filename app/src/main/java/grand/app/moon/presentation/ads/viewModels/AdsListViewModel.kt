@@ -32,8 +32,9 @@ class AdsListViewModel @Inject constructor(
 
   var isLast = false
 
+  @Inject
   @Bindable
-  var adapter = AdsAdapter()
+  lateinit var adapter: AdsAdapter
 
   var ADS_LIST_URL = BuildConfig.API_BASE_URL + "v1/advertisements?"
 

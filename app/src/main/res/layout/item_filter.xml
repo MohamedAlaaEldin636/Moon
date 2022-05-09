@@ -48,7 +48,7 @@
       card_view:cardUseCompatPadding="true"
       android:layout_marginEnd="@dimen/dimen16"
       app:cardCornerRadius="@dimen/dimen6"
-      app:cardElevation="@dimen/dimen4">
+      app:cardElevation="@dimen/dimen1">
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_more"
@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"
         card_view:cardUseCompatPadding="true"
         app:cardCornerRadius="@dimen/dimen6"
-        app:cardElevation="@dimen/dimen4">
+        app:cardElevation="@dimen/dimen1">
 
         <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/edt_from"
@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         card_view:cardUseCompatPadding="true"
         app:cardCornerRadius="@dimen/dimen6"
-        app:cardElevation="@dimen/dimen4">
+        app:cardElevation="@dimen/dimen1">
 
         <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/edt_to"

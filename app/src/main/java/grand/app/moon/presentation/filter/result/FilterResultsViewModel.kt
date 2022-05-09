@@ -35,8 +35,10 @@ class FilterResultsViewModel @Inject constructor(
 
   var isLast = false
 
+  @Inject
   @Bindable
-  var adapter = AdsAdapter()
+  lateinit var  adapter : AdsAdapter
+
 
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<AdsListPaginateData>>>(Resource.Default)

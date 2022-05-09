@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemAdsBinding
+import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.presentation.ads.viewModels.ItemAdsViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
+import javax.inject.Inject
 
-class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
+class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
   lateinit var context: Context
   var clickEvent: SingleLiveEvent<Advertisement> = SingleLiveEvent()
   var percentageAds = 90
@@ -54,7 +56,7 @@ class AdsAdapter : RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
   private val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemAdsViewModel(data,percentageAds)
+    val itemViewModel = ItemAdsViewModel(data,percentageAds,adsRepository)
     holder.setViewModel(itemViewModel)
 
 

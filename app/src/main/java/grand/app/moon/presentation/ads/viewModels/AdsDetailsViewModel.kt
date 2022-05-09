@@ -52,8 +52,9 @@ class AdsDetailsViewModel @Inject constructor(
   @Bindable
   var reviewsAdapter = ReviewsAdapter()
 
+  @Inject
   @Bindable
-  val adsAdapter = AdsAdapter()
+  lateinit var  adsAdapter : AdsAdapter
 
 
   val followStoreRequest = FollowStoreRequest()
@@ -113,7 +114,7 @@ class AdsDetailsViewModel @Inject constructor(
   fun whatsapp(v: View) {
     advertisement.get()?.title?.let {
       advertisement.get()?.description?.let { it1 ->
-        advertisement.get()?.store?.phone?.let { it2 ->
+        advertisement.get()?.phone?.let { it2 ->
           shareWhatsapp(
             v,
             it, it1, it2
@@ -135,7 +136,7 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun phone(v: View) {
-    advertisement.get()?.store?.phone?.let { callPhone(v.context, it) }
+    advertisement.get()?.phone?.let { callPhone(v.context, it) }
   }
 
   fun chat(v: View) {

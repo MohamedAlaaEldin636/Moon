@@ -34,6 +34,8 @@ data class Advertisement(
   val premium: Int = 0,
   @SerializedName("price")
   val price: Int = 0,
+  @SerializedName("phone")
+  val phone: String = "",
   @SerializedName("store")
   val store: Store? = Store(),
   @SerializedName("latitude")
