@@ -39,7 +39,6 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
   val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view = LayoutInflater.from(parent.context).inflate(R.layout.item_explore, parent, false)
-    Log.d(TAG, "onCreateViewHolder: WELCOMe")
     return ViewHolder(view)
   }
 
@@ -97,6 +96,29 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
     super.onViewDetachedFromWindow(holder)
     holder.unBind()
   }
+
+  fun updateExplores(result: ExploreListPaginateData) {
+    notifyDataSetChanged()
+//    Log.d(TAG, "updateExplores: ${result.list.size}")
+//    var changed: Boolean
+//    differ.currentList.forEachIndexed{ index, explore ->
+//      changed = false
+//      Log.d(TAG, "updateExplores: ${explore.likes}")
+//      Log.d(TAG, "updateExplores: ${result.list[index].likes}")
+//      Log.d(TAG, "=================================================")
+//
+//      if(explore.likes != result.list[index].likes){
+//        changed = true
+//        explore.likes = result.list[index].likes
+//      }
+//      if(explore.comments != result.list[index].comments){
+//        changed = true
+//        explore.comments = result.list[index].comments
+//      }
+//      if(changed) notifyItemChanged(index)
+//    }
+  }
+
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {

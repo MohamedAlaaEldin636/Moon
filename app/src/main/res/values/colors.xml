@@ -11,9 +11,9 @@
   <color name="progress_max_active">@color/white</color>
 
 
-  <color name="blackOpacity1">#E6000000</color>
+  <color name="blackOpacity1">#80000000</color>
   <color name="blackOpacity2">#33000000</color>
-  <color name="blackOpacity3">#0A000000</color>
+  <color name="blackOpacity3">#03000000</color>
   <color name="colorAccent">#EE9936</color>
   <color name="black">#000000</color>
   <color name="black_op">#B3000000</color>
@@ -29,6 +29,7 @@
   <color name="color0038A8">#0038A8</color>
   <color name="color8E8E8E">#8E8E8E</color>
   <color name="color777777">#777777</color>
+  <color name="color9F9F9F">#9F9F9F</color>
   <color name="gray">#BCBCBC</color>
   <color name="grey">#D0D0D0</color>
   <color name="greyText">#C1C1C1</color>

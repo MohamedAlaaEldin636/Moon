@@ -106,6 +106,8 @@ object Constants {
   const val CATEGORIES_SELECTED: String = "categories_selected"
   const val FOLLOWERS: String = "followers"
   const val VIEWS: String = "views"
+  const val EXPLORES: String = "explores"
+
 
 
 

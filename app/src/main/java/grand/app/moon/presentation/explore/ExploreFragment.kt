@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentExploreBinding
+import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.utils.SpannedGridLayoutManager
 import grand.app.moon.presentation.base.utils.Constants
@@ -44,23 +46,24 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     setRecyclerViewScrollListener()
   }
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    Log.d(TAG, "onCreateView: ")
-    return super.onCreateView(inflater, container, savedInstanceState)
-  }
-
   override fun onAttach(context: Context) {
     super.onAttach(context)
     Log.d(TAG, "onAttach: ")
   }
-  
+
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    Log.d(TAG, "onViewCreated: ")
+    setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+      Log.d(TAG, "onCreate: WORKED HERE")
+      // We use a String here, but any type that can be put in a Bundle is supported
+      if(bundle.containsKey(Constants.EXPLORES)) {
+        Log.d(TAG, "onCreate: HWERE")
+        val result = bundle.getSerializable(Constants.EXPLORES) as ExploreListPaginateData
+        viewModel.adapter.updateExplores(result)
+      }
+      // Do something with the result
+    }
   }
 
   private  val TAG = "ExploreFragment"
@@ -86,6 +89,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
         }
       }
     }
+
 
     viewModel.adapter.clickEvent.observe(this,{
       if(it != -1) {

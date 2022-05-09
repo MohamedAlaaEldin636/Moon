@@ -65,6 +65,7 @@ android {
       buildConfigField("String", "ROOM_DB", Config.Environments.roomDb)
       buildConfigField("String", "SERVER_CLIENT_ID", Config.Environments.SERVER_CLIENT_ID)
     }
+
   }
 
   compileOptions {

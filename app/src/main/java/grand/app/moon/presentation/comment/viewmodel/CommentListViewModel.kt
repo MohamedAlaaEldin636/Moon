@@ -37,7 +37,8 @@ class CommentListViewModel @Inject constructor(
   var page: Int = 0
   @Bindable
   var callingService = false
-  val exploreAction = ExploreAction()
+  @Bindable
+  val exploreAction = ObservableField(ExploreAction())
   var exploreId = -1
   var type:Int = -1
 
@@ -104,9 +105,9 @@ class CommentListViewModel @Inject constructor(
       if(user.name.isEmpty() || user.email.isEmpty() || user.image.isEmpty()){
         showInfo(v.context,v.resources.getString(R.string.please_complete_your_profile))
       }else {
-        exploreAction.type = null
-        exploreAction.exploreId = exploreId
-        useCase.setComment(exploreAction, true).onEach {
+        exploreAction.get()!!.type = null
+        exploreAction.get()!!.exploreId = exploreId
+        useCase.setComment(exploreAction.get()!!, true).onEach {
           _responseSend.value = it
         }.launchIn(viewModelScope)
       }
@@ -121,6 +122,11 @@ class CommentListViewModel @Inject constructor(
     useCase.deleteComment(id).onEach {
 //      _responseSend.value = it
     }.launchIn(viewModelScope)
+  }
+
+  fun clearModel() {
+    exploreAction.get()!!.comment = ""
+    notifyPropertyChanged(BR.exploreAction)
   }
 
 }

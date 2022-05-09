@@ -2,6 +2,10 @@ package grand.app.moon.presentation.explore
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +17,7 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentExploreListBinding
+import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.explore.viewmodel.ExploreListViewModel
 import kotlinx.coroutines.flow.collect
@@ -35,16 +40,22 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    Log.d(TAG, "onViewCreated: HERE")
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+      Log.d(TAG, "onViewCreated: BUNDLE")
       // We use a String here, but any type that can be put in a Bundle is supported
       if(bundle.containsKey(Constants.TOTAL)) {
         val result = bundle.getInt(Constants.TOTAL)
+        Log.d(TAG, "onViewCreated: ${result}")
         viewModel.adapter.updateTotalComments(result)
       }
       // Do something with the result
     }
   }
-
   override
   fun setUpViews() {
   }
@@ -88,5 +99,15 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
     super.onResume()
     viewModel.adapter.user = viewModel.userLocalUseCase.invoke()
     viewModel.adapter.notifyDataSetChanged()
+  }
+
+  override fun onDestroy() {
+    Log.d(TAG, "onDestroy: EXPLORE LIST")
+    val bundle = Bundle()
+    val paginateData = ExploreListPaginateData()
+    paginateData.list.addAll(viewModel.adapter.differ.currentList)
+    bundle.putSerializable(Constants.EXPLORES,paginateData)
+    setFragmentResult(Constants.BUNDLE, bundle)
+    super.onDestroy()
   }
 }

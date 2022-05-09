@@ -131,14 +131,17 @@
   <string name="sort_by">ترتيب حسب</string>
   <string name="filter">فلترة</string>
   <string name="filter_sort">تصفية</string>
-    <string name="notification_removed_successfully">تم حذف الإشعار بنجاح</string>
+  <string name="city">المدينة</string>
+  <string name="comments">التعليقات</string>
+
+  <string name="notification_removed_successfully">تم حذف الإشعار بنجاح</string>
     <string name="notification_type">نوع الاشعارات</string>
   <string name="moon_notifications">اشعارات موون</string>
   <string name="moon_traders">اشعارات التجار</string>
   <string name="notifications">إشعارات</string>
   <string name="advertisement">إعلان</string>
   <string name="there_are_no_result_please_try_again">لا يوجد نتائج للبحث , حاول مره أخري</string>
-  <string name="add_store_now">أضف متجر الان</string>
+  <string name="add_store_now">أضف متجرك الان</string>
     <string name="filter_by_categories">تصفية حسب الاقسام</string>
   <string name="filter_search">فلتر البحث</string>
     <string name="there_are_no_customers_reviews">لا توجد آراء العملاء</string>

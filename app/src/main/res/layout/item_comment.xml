@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto">
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -56,11 +57,13 @@
           android:layout_height="wrap_content"
           android:ellipsize="end"
           android:maxLines="1"
+          android:textSize="12sp"
           android:text="@{viewModel.model.user.name}"
           android:textAlignment="viewStart"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-          android:textColor="@color/black"
+          android:textColor="@color/color9F9F9F"
           app:layout_constraintBottom_toTopOf="@+id/tv_time"
+          tools:text="asdasd"
           app:layout_constraintTop_toTopOf="parent" />
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/tv_time"
@@ -71,10 +74,13 @@
           android:layout_marginTop="@dimen/dimen2"
           android:ellipsize="end"
           android:maxLines="1"
+          android:textSize="8sp"
+
+          tools:text="asdasdasd asd sada sasd "
           android:text="@{viewModel.model.user.name}"
           android:textAlignment="viewStart"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-          android:textColor="@color/black" />
+          android:textColor="@color/color9F9F9F" />
       </LinearLayout>
 
 
@@ -88,7 +94,9 @@
         android:maxLines="2"
         android:ellipsize="end"
         android:lines="2"
+        tools:text="asdasdasd asd sada sasd "
         android:text="@{viewModel.model.comment}"
+        android:gravity="center|start"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/darkGray"

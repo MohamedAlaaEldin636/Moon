@@ -122,11 +122,14 @@ class ExploreListViewModel @Inject constructor(
       val explore = adapter.differ.currentList[adapter.position]
       exploreAction.exploreId = explore.id
       exploreAction.type = 1
-      useCase.setExploreAction(exploreAction)
+      Log.d(TAG, "fav: ${exploreAction.exploreId}")
+      Log.d(TAG, "fav: ${exploreAction.type}")
+      useCase.setExploreAction(exploreAction).launchIn(viewModelScope)
       explore.isLike = !explore.isLike
       if(explore.isLike){
         explore.likes ++
       }else explore.likes--
+
       adapter.notifyItemChanged(adapter.position)
     }
   }

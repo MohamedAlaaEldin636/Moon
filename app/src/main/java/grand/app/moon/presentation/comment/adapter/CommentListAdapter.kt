@@ -96,8 +96,12 @@ class CommentListAdapter : RecyclerView.Adapter<CommentListAdapter.ViewHolder>()
   }
 
   fun add(comment: Comment) {
-    this.differ.currentList.add(comment)
-    notifyItemInserted(this.differ.currentList.size-1)
+//    differ.submitList()
+    val array = ArrayList(differ.currentList)
+    array.add(comment)
+    differ.submitList(array)
+//    notifyItemInserted(this.differ.currentList.size-1)
+    notifyDataSetChanged()
   }
 
   inner class ViewHolder(itemView: View) :

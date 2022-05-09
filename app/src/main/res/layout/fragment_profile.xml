@@ -16,161 +16,184 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-      android:orientation="vertical"
-      android:layout_margin="@dimen/dimen20"
+    <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="wrap_content">
 
-      <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/img_profile"
-        android:scaleType="centerCrop"
-        android:layout_width="@dimen/dimen150"
+      <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dimen150"
-        android:layout_gravity="center"
-        app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-        app:defaultImage="@{@drawable/default_profile}"
-        app:loadImage="@{viewModel.request.imagePath}"
-        android:onClick="@{()-> viewModel.submitEvent(Constants.PICKER_IMAGE)}"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_curve"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-      <androidx.appcompat.widget.AppCompatTextView
-        style="@style/regularFont"
-        android:layout_marginTop="@dimen/dimen20"
-        android:textSize="@dimen/text_size14"
-        android:textColor="@color/colorBlack"
-        android:text="@string/name"
+      <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
         android:layout_width="match_parent"
+        app:layout_constraintGuide_percent="0.05"
+        android:orientation="horizontal"
         android:layout_height="wrap_content"/>
-
-
-      <androidx.appcompat.widget.AppCompatEditText
-        android:layout_width="match_parent"
-        android:background="@drawable/corner_silver_strock"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen10"
-        android:layout_marginStart="@dimen/dimen6"
-        android:minHeight="@dimen/dimen50"
-        android:hint="@string/please_enter_your_name"
-        android:padding="@dimen/dimen10"
-        android:inputType="text"
-        android:text="@={viewModel.request.name}"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/colorPrimaryDark"
-        android:textColorHint="@color/gray" />
-
-
-
-      <androidx.appcompat.widget.AppCompatTextView
-        style="@style/regularFont"
-        android:layout_marginTop="@dimen/dimen20"
-        android:textSize="@dimen/text_size14"
-        android:textColor="@color/colorBlack"
-        android:text="@string/phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
 
       <LinearLayout
-        android:id="@+id/ll_phone_content"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal"
-        android:layout_marginStart="@dimen/dimen14"
-        android:layout_marginTop="@dimen/dimen10"
-        android:layout_marginEnd="@dimen/dimen14"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ic_moon_logo">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dimen20"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/guideline"
+        tools:layout_editor_absoluteX="20dp">
 
-        <com.hbb20.CountryCodePicker
-          android:id="@+id/ccp"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          app:ccpDialog_backgroundColor="@color/colorWhite"
-          app:ccpDialog_fastScroller_bubbleColor="@color/colorPrimary"
-          app:ccpDialog_searchEditTextTint="@color/colorWhite"
-          app:ccpDialog_showTitle="false"
+
+        <com.google.android.material.imageview.ShapeableImageView
+          android:id="@+id/img_profile"
+          android:layout_width="@dimen/dimen150"
+          android:layout_height="@dimen/dimen150"
           android:layout_gravity="center"
-          android:gravity="center"
-          app:ccp_autoDetectCountry="true"
-          app:ccp_areaCodeDetectedCountry="true"
-          app:ccp_autoDetectLanguage="true"
-          app:ccp_autoFormatNumber="true"
-          app:ccp_countryAutoDetectionPref="LOCALE_NETWORK"
-          app:ccp_arrowColor="@color/colorPrimary"
-          app:ccp_contentColor="@color/colorPrimary"
-          app:ccpDialog_rippleEnable="true"
-          app:ccp_useDummyEmojiForPreview="true"
-          android:background="@drawable/corner_silver_strock"
-          app:ccpDialog_textColor="@color/colorPrimary" />
+          android:onClick="@{()-> viewModel.submitEvent(Constants.PICKER_IMAGE)}"
+          android:scaleType="centerCrop"
+          app:defaultImage="@{@drawable/default_profile}"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:loadImage="@{viewModel.request.imagePath}"
+          app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/regularFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen20"
+          android:text="@string/name"
+          android:textColor="@color/colorBlack"
+          android:textSize="@dimen/text_size14" />
+
 
         <androidx.appcompat.widget.AppCompatEditText
-          android:id="@+id/edt_login_phone"
           android:layout_width="match_parent"
-          android:background="@drawable/corner_silver_strock"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen6"
+          android:layout_marginTop="@dimen/dimen10"
+          android:background="@drawable/corner_silver_strock"
+          android:hint="@string/please_enter_your_name"
+          android:inputType="text"
           android:minHeight="@dimen/dimen50"
-          android:hint="@string/please_enter_your_phone"
           android:padding="@dimen/dimen10"
-          android:inputType="phone"
-          android:textDirection="ltr"
-          android:text="@={viewModel.request.phone}"
+          android:text="@={viewModel.request.name}"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/colorPrimaryDark"
           android:textColorHint="@color/gray" />
 
 
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/regularFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen20"
+          android:text="@string/phone"
+          android:textColor="@color/colorBlack"
+          android:textSize="@dimen/text_size14" />
+
+
+        <LinearLayout
+          android:id="@+id/ll_phone_content"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen14"
+          android:layout_marginTop="@dimen/dimen10"
+          android:layout_marginEnd="@dimen/dimen14"
+          android:layoutDirection="ltr"
+          android:orientation="horizontal"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/ic_moon_logo">
+
+          <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/corner_silver_strock"
+            android:gravity="center"
+            app:ccpDialog_backgroundColor="@color/colorWhite"
+            app:ccpDialog_fastScroller_bubbleColor="@color/colorPrimary"
+            app:ccpDialog_rippleEnable="true"
+            app:ccpDialog_searchEditTextTint="@color/colorWhite"
+            app:ccpDialog_showTitle="false"
+            app:ccpDialog_textColor="@color/colorPrimary"
+            app:ccp_areaCodeDetectedCountry="true"
+            app:ccp_arrowColor="@color/colorPrimary"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_autoDetectLanguage="true"
+            app:ccp_autoFormatNumber="true"
+            app:ccp_contentColor="@color/colorPrimary"
+            app:ccp_countryAutoDetectionPref="LOCALE_NETWORK"
+            app:ccp_useDummyEmojiForPreview="true" />
+
+          <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_login_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen6"
+            android:background="@drawable/corner_silver_strock"
+            android:hint="@string/please_enter_your_phone"
+            android:inputType="phone"
+            android:minHeight="@dimen/dimen50"
+            android:padding="@dimen/dimen10"
+            android:text="@={viewModel.request.phone}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/gray"
+            android:textDirection="ltr" />
+
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/regularFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen20"
+          android:text="@string/email"
+          android:textColor="@color/colorBlack"
+          android:textSize="@dimen/text_size14" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen6"
+          android:layout_marginTop="@dimen/dimen10"
+          android:background="@drawable/corner_silver_strock"
+          android:hint="@string/please_enter_your_email"
+          android:inputType="textEmailAddress"
+          android:minHeight="@dimen/dimen50"
+          android:padding="@dimen/dimen10"
+          android:text="@={viewModel.request.email}"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/colorPrimaryDark"
+          android:textColorHint="@color/gray" />
+
+        <com.google.android.material.button.MaterialButton
+          android:id="@+id/btn_phone"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen12"
+          android:layout_marginTop="@dimen/dimen30"
+          android:layout_marginEnd="@dimen/dimen12"
+          android:background="@drawable/corner_primary"
+          android:onClick="@{(v)-> viewModel.updateProfile(v)}"
+          android:text="@string/update"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/white"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/ll_phone_content" />
+
+
       </LinearLayout>
-
-      <androidx.appcompat.widget.AppCompatTextView
-        style="@style/regularFont"
-        android:layout_marginTop="@dimen/dimen20"
-        android:textSize="@dimen/text_size14"
-        android:textColor="@color/colorBlack"
-        android:text="@string/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
-      <androidx.appcompat.widget.AppCompatEditText
-        android:layout_width="match_parent"
-        android:background="@drawable/corner_silver_strock"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen10"
-        android:layout_marginStart="@dimen/dimen6"
-        android:minHeight="@dimen/dimen50"
-        android:hint="@string/please_enter_your_email"
-        android:padding="@dimen/dimen10"
-        android:inputType="textEmailAddress"
-        android:text="@={viewModel.request.email}"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/colorPrimaryDark"
-        android:textColorHint="@color/gray" />
-
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen12"
-        android:layout_marginTop="@dimen/dimen30"
-        android:layout_marginEnd="@dimen/dimen12"
-        android:background="@drawable/corner_primary"
-        android:onClick="@{(v)-> viewModel.updateProfile(v)}"
-        android:text="@string/update"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_phone_content" />
-
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.core.widget.NestedScrollView>
 </layout>

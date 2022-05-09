@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.comment
 
+import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -11,6 +12,7 @@ import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.BR
 import grand.app.moon.databinding.FragmentCommentsBinding
 import grand.app.moon.databinding.FragmentExploreListBinding
 import grand.app.moon.domain.comment.entity.Comment
@@ -42,6 +44,7 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
     setRecyclerViewScrollListener()
   }
 
+  private val TAG = "CommentsListFragment"
 
   override fun setupObservers() {
 
@@ -73,9 +76,10 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            val comment = it.value.data
-            viewModel.adapter.add(comment)
+            viewModel.adapter.add(it.value.data)
             viewModel.total.set(viewModel.total.get()?.toInt()?.plus(1).toString())
+            viewModel.clearModel()
+
           }
           is Resource.Failure -> {
             hideLoading()

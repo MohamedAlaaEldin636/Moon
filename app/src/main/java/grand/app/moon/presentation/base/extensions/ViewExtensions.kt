@@ -520,7 +520,7 @@ fun loadPremium(imageView: ImageView,isPremium : Int) {
     if (imageView.context.isEnglish()) {
       imageView.setImageResource(R.drawable.premium)
     } else
-      imageView.setImageResource(R.drawable.special)
+      imageView.setImageResource(R.drawable.premium_ar)
   }
 }
 
