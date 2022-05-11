@@ -4,15 +4,20 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonSyntaxException
+import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.ErrorResponse
 import grand.app.moon.domain.utils.FailureStatus
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.helpers.paging.MAResult
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.lang.Exception
 import java.net.ConnectException
+import java.net.SocketException
 import java.net.UnknownHostException
 import java.util.HashMap
 import javax.inject.Inject
@@ -157,6 +162,63 @@ open class BaseRemoteDataSource @Inject constructor() {
 
         else -> {
           return Resource.Failure(FailureStatus.OTHER)
+        }
+      }
+    }
+  }
+
+  suspend fun <T> safeApiCall2(
+    apiCall: suspend () -> MABaseResponse<T>
+  ): MAResult.Immediate<MABaseResponse<T>> = withContext(Dispatchers.IO) {
+    try {
+
+
+      val response = apiCall()
+
+      val errorStatus = when (response.code) {
+        200 -> {
+          return@withContext MAResult.Success(response)
+        }
+        403 -> {
+          MAResult.Failure.Status.TOKEN_EXPIRED
+        }
+        /*405 -> {
+            // Not used in this project as always on login you should re-verify, and in
+            // case of social login check if has phone number if so then just ignore
+            // verification step
+            MAResult.Failure.Status.ACTIVATION_NOT_VERIFIED
+        }*/
+        401 -> {
+          MAResult.Failure.Status.ERROR
+        }
+        in 500 until 600 -> {
+          MAResult.Failure.Status.SERVER_ERROR
+        }
+        else -> {
+          MAResult.Failure.Status.OTHER
+        }
+      }
+
+      MAResult.Failure(errorStatus, response.code, response.message)
+    }catch (throwable: Throwable) {
+      Log.d(TAG, "iduaosiudaso eeeeeeeeeeeeeee")
+
+      when (throwable) {
+        is HttpException -> {
+
+          val errorStatus = when (throwable.code()) {
+            in 400 until 500 -> MAResult.Failure.Status.ERROR
+            in 500 until 600 -> MAResult.Failure.Status.SERVER_ERROR
+            else -> MAResult.Failure.Status.OTHER
+          }
+
+          MAResult.Failure(errorStatus, throwable.code(), throwable.message())
+        }
+        is UnknownHostException, is SocketException, is ConnectException -> {
+        MAResult.Failure(MAResult.Failure.Status.NO_INTERNET, message = throwable.message)
+      }
+        else -> {
+          MAResult.Failure(MAResult.Failure.Status.OTHER, message = throwable.message)
         }
       }
     }

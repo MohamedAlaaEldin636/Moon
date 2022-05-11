@@ -83,7 +83,8 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
       v.findNavController().navigate(
         ExploreListFragmentDirections.actionExploreListFragmentToCommentsListFragment(
           model.id,
-          model.comments
+          model.comments,
+          position
         )
       )
     }

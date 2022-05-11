@@ -51,7 +51,7 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
       if(bundle.containsKey(Constants.TOTAL)) {
         val result = bundle.getInt(Constants.TOTAL)
         Log.d(TAG, "onViewCreated: ${result}")
-        viewModel.adapter.updateTotalComments(result)
+        viewModel.adapter.updateTotalComments(bundle.getInt(Constants.POSITION),result)
       }
       // Do something with the result
     }

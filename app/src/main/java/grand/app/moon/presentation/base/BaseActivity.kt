@@ -67,7 +67,7 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
 
   private fun initFacebook() {
     if (!isInitialized()) {
-      setApplicationId("353837505660520")
+      setApplicationId("716648052821423")
       sdkInitialize(applicationContext)
       setAutoLogAppEventsEnabled(true)
       fullyInitialize()

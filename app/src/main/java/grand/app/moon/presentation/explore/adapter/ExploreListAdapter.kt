@@ -50,8 +50,6 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
     val data = differ.currentList[position]
     val itemViewModel = ItemExploreViewModel(data, position,user)
     Log.d(TAG, "onBindViewHolder: " + data.file)
-
-
 //    holder.itemLayoutBinding.appCompatEditText.setOnEditorActionListener(TextView.OnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
 //      if (i == EditorInfo.IME_ACTION_SEND) {
 //        exploreAction.exploreId = data.id
@@ -106,8 +104,10 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
     holder.unBind()
   }
 
-  fun updateTotalComments(total: Int) {
+  fun updateTotalComments(position: Int, total: Int) {
+    Log.d(TAG, "updateTotalComments: ")
     if(position != -1 && position < differ.currentList.size) {
+      Log.d(TAG, "updateTotalComments: $position")
       differ.currentList[position].comments = total
       notifyItemChanged(position)
     }

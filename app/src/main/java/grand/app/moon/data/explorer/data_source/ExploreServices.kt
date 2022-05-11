@@ -1,11 +1,13 @@
 package grand.app.moon.data.explorer.data_source
 
+import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
 import grand.app.moon.domain.comment.entity.Comment
 import grand.app.moon.domain.comment.entity.CommentListPaginateData
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.user.entity.UserListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.helpers.paging.MABasePaging
 import retrofit2.http.*
 
 interface ExploreServices {
@@ -13,7 +15,7 @@ interface ExploreServices {
   suspend fun explores(@Query("page") page : Int): BaseResponse<ExploreListPaginateData>
 
   @GET("v1/explores/{id}/comments")
-  suspend fun getComments(@Path("id") id : Int,@Query("page") page : Int): BaseResponse<CommentListPaginateData>
+  suspend fun getComments(@Path("id") id : Int,@Query("page") page : Int): MABaseResponse<MABasePaging<Comment>>
 
   @POST("v1/explores")
   suspend fun setExploreAction(@Body page : ExploreAction): BaseResponse<*>
@@ -24,7 +26,7 @@ interface ExploreServices {
 
 
   @DELETE("v1/explores/comments/{id}")
-  suspend fun deleteComment(@Query("id") id: Int): BaseResponse<*>
+  suspend fun deleteComment(@Path("id") id: Int): BaseResponse<*>
 
 
   @GET("v1/users/{id}") //<--need api here osama

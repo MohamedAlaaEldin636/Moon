@@ -1,14 +1,18 @@
 package grand.app.moon.presentation.auth.log_in
 
 import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import grand.app.moon.presentation.base.utils.Constants
@@ -22,6 +26,10 @@ import kotlinx.coroutines.flow.collect
 import com.hbb20.CountryCodePicker.OnCountryChangeListener
 import grand.app.moon.core.extenstions.showError
 import grand.app.moon.helpers.login.SocialRequest
+import java.lang.Exception
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -38,7 +46,16 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
       if (it.containsKey("social_id") && it.getString("social_id") != null)
         viewModel.showSocial.set(false)
     }
+    setupFacebookLogin()
   }
+
+  private fun setupFacebookLogin() {
+    LoginManager.getInstance().logOut()
+    binding.btnFacebook.setPermissions(Arrays.asList("email", "public_profile"))
+    viewModel.btnFacebook = binding.btnFacebook
+    viewModel.setupFacebookSignIn()
+  }
+
 
   override
   fun setupObservers() {
@@ -152,6 +169,4 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
       }
     }
   }
-
-
 }

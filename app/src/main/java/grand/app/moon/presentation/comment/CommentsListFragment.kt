@@ -1,11 +1,19 @@
 package grand.app.moon.presentation.comment
 
+import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
@@ -16,17 +24,38 @@ import grand.app.moon.BR
 import grand.app.moon.databinding.FragmentCommentsBinding
 import grand.app.moon.databinding.FragmentExploreListBinding
 import grand.app.moon.domain.comment.entity.Comment
+import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.comment.viewmodel.CommentListViewModel
 //import grand.app.moon.presentation.explore.ExploreListFragmentArgs
 import grand.app.moon.presentation.explore.viewmodel.ExploreListViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
 
-  val exploreListFragmentArgs: CommentsListFragmentArgs by navArgs()
-  private val viewModel: CommentListViewModel by viewModels()
+  private val exploreListFragmentArgs: CommentsListFragmentArgs by navArgs()
+  val viewModel: CommentListViewModel by viewModels()
+
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+//    binding.recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+//    binding.recyclerView.adapter = viewModel.adapter.withDefaultHeaderAndFooterAdapters()
+//    down()
+    viewModel.exploreId = exploreListFragmentArgs.exploreId
+    viewModel.total.set(exploreListFragmentArgs.totalComments.toString())
+    viewModel.callService()
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewModel.response.collectLatest {
+          viewModel.adapter.submitData(it)
+        }
+      }
+    }
+  }
 
   override
   fun getLayoutId() = R.layout.fragment_comments
@@ -34,39 +63,15 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.exploreId = exploreListFragmentArgs.exploreId
-    viewModel.total.set(exploreListFragmentArgs.totalComments.toString())
-    viewModel.callService()
   }
 
   override
   fun setUpViews() {
-    setRecyclerViewScrollListener()
   }
 
   private val TAG = "CommentsListFragment"
 
   override fun setupObservers() {
-
-    lifecycleScope.launchWhenResumed {
-      viewModel.response.collect {
-        when (it) {
-          Resource.Loading -> {
-            hideKeyboard()
-            showLoading()
-          }
-          is Resource.Success -> {
-            hideLoading()
-            viewModel.setData(it.value.data)
-
-          }
-          is Resource.Failure -> {
-            hideLoading()
-            handleApiError(it)
-          }
-        }
-      }
-    }
     lifecycleScope.launchWhenResumed {
       viewModel._responseSend.collect {
         when (it) {
@@ -76,7 +81,7 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            viewModel.adapter.add(it.value.data)
+            viewModel.adapter.refresh()
             viewModel.total.set(viewModel.total.get()?.toInt()?.plus(1).toString())
             viewModel.clearModel()
 
@@ -88,41 +93,30 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
         }
       }
     }
-
-    viewModel.adapter.clickEvent.observe(this,{
-      viewModel.total.set(viewModel.total.get()?.toInt()?.minus(1).toString())
-      viewModel.deleteComment(it)
-    })
-
-    viewModel.clickEvent.observe(this, {
-      if (it == Constants.LOGIN_REQUIRED) openLoginActivity()
-    })
-
-//    viewModel.adapter.clickEvent.observe(viewLifecycleOwner,{
-//      when(it){
-//        Constants.DELETE -> viewModel.fav()
-//      }
-//    })
-
-  }
-
-
-  private fun setRecyclerViewScrollListener() {
-
-//    val linearLayoutManager = LinearLayoutManager(context)
-//    binding.recyclerView.layoutManager = linearLayoutManager
-    binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-        super.onScrollStateChanged(recyclerView, newState)
-        if (!recyclerView.canScrollVertically(1)){
-          viewModel.callService()
+    lifecycleScope.launchWhenResumed {
+      viewModel._responseDelete.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            viewModel.total.set(viewModel.total.get()?.toInt()?.minus(1).toString())
+            viewModel.adapter.refresh()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
         }
       }
-    })
+    }
+
   }
 
   override fun onDestroyView() {
-    setFragmentResult(Constants.BUNDLE, bundleOf(Constants.TOTAL to viewModel.total.get()?.toInt()))
+    setFragmentResult(Constants.BUNDLE, bundleOf(Constants.TOTAL to viewModel.total.get()?.toInt(), Constants.POSITION to exploreListFragmentArgs.position))
     super.onDestroyView()
   }
 }

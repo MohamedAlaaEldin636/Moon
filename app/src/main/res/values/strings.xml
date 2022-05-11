@@ -3,8 +3,9 @@
   tools:ignore="MissingTranslation">
   <string name="app_name_debug" translatable="false">Moon</string>
   <string name="app_name" translatable="false">Moon</string>
-  <string name="fb_login_protocol_scheme"  translatable="false">fb353837505660520</string>
-  <string name="facebook_app_id"  translatable="false">2976885465678018</string>
+  <string name="fb_login_protocol_scheme"  translatable="false">fb716648052821423</string>
+  <string name="facebook_app_id"  translatable="false">716648052821423</string>
+  <string name="facebook_client_token">80b99f338097c575f40acb5b3a0be4a9</string>
 
   <string name="google_direction_api"  translatable="false">AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM</string>
   <string name="moon_info">أول منصة تجارية إجتماعية فى الشرق الأوسط</string>
@@ -171,4 +172,5 @@
   <string name="cancel_ban">cancel ban</string>
   <string name="code_had_been_sent">code had been sent</string>
   <string name="filter_by_rate">filter by rate</string>
+    <string name="no_data_found">لا توجد بيانات</string>
 </resources>

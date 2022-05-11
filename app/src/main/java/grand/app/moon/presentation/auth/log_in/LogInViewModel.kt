@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.auth.log_in
 
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -7,13 +8,13 @@ import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
+import com.facebook.GraphRequest.GraphJSONObjectCallback
 import com.facebook.login.LoginBehavior
 import com.facebook.login.LoginFragment
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -29,6 +30,8 @@ import grand.app.moon.R
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import grand.app.moon.helpers.login.SocialRequest
+import org.json.JSONException
+import org.json.JSONObject
 import kotlin.math.log
 
 
@@ -38,6 +41,9 @@ class LogInViewModel @Inject constructor(
   val userUseCase: UserLocalUseCase,
   val userLocalUseCase: UserLocalUseCase
 ) : BaseViewModel() {
+
+  lateinit var btnFacebook: LoginButton
+  var callbackManager: CallbackManager? = null
 
   lateinit var  socialRequest: SocialRequest
   lateinit var registerRequest: SocialRequest
@@ -134,6 +140,35 @@ class LogInViewModel @Inject constructor(
         _logInResponse.value = result
       }
       .launchIn(viewModelScope)
+  }
+
+  fun setupFacebookSignIn() {
+    // Callback registration
+    btnFacebook.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+
+      override fun onSuccess(result: LoginResult?) {
+        result?.let {
+          val request: GraphRequest = GraphRequest.newMeRequest(result.accessToken) { ob, response ->
+            Log.d(TAG, ob.toString())
+            Log.d(TAG, response.toString())
+          }
+          val parameters = Bundle()
+          parameters.putString("fields", "id,name,email")
+          request.parameters = parameters
+          request.executeAsync()
+        }
+
+      }
+
+      override fun onCancel() {
+        TODO("Not yet implemented")
+      }
+
+      override fun onError(error: FacebookException) {
+        TODO("Not yet implemented")
+      }
+    })
+
   }
 
 

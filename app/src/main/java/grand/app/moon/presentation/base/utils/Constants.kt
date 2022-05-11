@@ -63,6 +63,7 @@ object Constants {
   const val COUNTRY_ID = "COUNTRY_ID"
   const val INTRO: String = "INTRO"
   const val TOTAL: String = "TOTAL"
+  const val POSITION: String = "POSITION"
 
   const val TOKEN = "TOKEN"
   const val SPLASH: String = "splash"
