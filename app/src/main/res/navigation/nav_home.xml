@@ -37,12 +37,7 @@
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
-    <action
-      android:id="@+id/action_home_fragment_to_filterHomeFragment"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/filterHomeFragment" />
+
     <action
       android:id="@+id/action_home_fragment_to_nav_category_list_ads"
 
@@ -205,13 +200,7 @@
     android:id="@+id/storeListFragment"
     android:name="grand.app.moon.presentation.store.views.StoreListFragment"
     android:label="{title}">
-    <action
-      android:id="@+id/action_storeListFragment_to_storeFilterFragment"
-      app:destination="@id/storeFilterFragment"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right" />
+
     <argument
       android:name="title"
       app:argType="string" />
@@ -226,55 +215,37 @@
       android:name="store_filter"
       app:argType="grand.app.moon.domain.store.entity.StoreFilterRequest" />
   </fragment>
-  <dialog
-    android:id="@+id/filterSingleSelectDialog"
-    android:name="grand.app.moon.presentation.filter.dialog.FilterSingleSelectDialog"
-    android:label="{tabBarText}">
-    <argument
-      android:name="propety"
-      app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />
-    <argument
-      android:name="tabBarText"
-      app:argType="string" />
-  </dialog>
-  <dialog
-    android:id="@+id/filterMultiSelectDialog"
-    android:name="grand.app.moon.presentation.filter.dialog.multiCheck.FilterMultiSelectDialog"
-    android:label="FilterMultiSelectDialog">
+<!--  <dialog-->
+<!--    android:id="@+id/filterSingleSelectDialog"-->
+<!--    android:name="grand.app.moon.presentation.filter.dialog.FilterSingleSelectDialog"-->
+<!--    android:label="{tabBarText}">-->
+<!--    <argument-->
+<!--      android:name="propety"-->
+<!--      app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />-->
+<!--    <argument-->
+<!--      android:name="tabBarText"-->
+<!--      app:argType="string" />-->
+<!--  </dialog>-->
 
-    <argument
-      android:name="propety"
-      app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />
-    <argument
-      android:name="tabBarText"
-      app:argType="string" />
-  </dialog>
-  <fragment
-    android:id="@+id/filterResultsFragment"
-    android:name="grand.app.moon.presentation.filter.result.FilterResultsFragment"
-    android:label="@string/filter_results" >
-    <argument
-      android:name="filterRequest"
-      app:argType="grand.app.moon.domain.filter.entitiy.FilterResultRequest" />
-  </fragment>
-  <fragment
-    android:id="@+id/filterHomeFragment"
-    android:name="grand.app.moon.presentation.filter.FilterHomeFragment"
-    android:label="@string/filter_search" >
-    <action
-      android:id="@+id/action_filterHomeFragment_to_filterSingleSelectDialog"
-      app:destination="@id/filterSingleSelectDialog" />
-    <action
-      android:id="@+id/action_filterHomeFragment_to_filterMultiSelectDialog"
-      app:destination="@id/filterMultiSelectDialog" />
-    <action
-      android:id="@+id/action_filterHomeFragment_to_filterResultsFragment"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/filterResultsFragment" />
-  </fragment>
+
+<!--  <fragment-->
+<!--    android:id="@+id/filterHomeFragment"-->
+<!--    android:name="grand.app.moon.presentation.filter.FilterFragment"-->
+<!--    android:label="@string/filter_search" >-->
+<!--    <action-->
+<!--      android:id="@+id/action_filterHomeFragment_to_filterSingleSelectDialog"-->
+<!--      app:destination="@id/filterSingleSelectDialog" />-->
+<!--    <action-->
+<!--      android:id="@+id/action_filterHomeFragment_to_filterMultiSelectDialog"-->
+<!--      app:destination="@id/filterMultiSelectDialog" />-->
+<!--    <action-->
+<!--      android:id="@+id/action_filterHomeFragment_to_filterResultsFragment"-->
+<!--      app:enterAnim="@anim/anim_slide_in_right"-->
+<!--      app:exitAnim="@anim/anim_slide_out_left"-->
+<!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
+<!--      app:popExitAnim="@anim/anim_slide_out_right"-->
+<!--      app:destination="@id/filterResultsFragment" />-->
+<!--  </fragment>-->
 
   <fragment
     android:id="@+id/chatFragment"
@@ -333,4 +304,15 @@
   <!--    android:name="grand.app.moon.presentation.social.SocialFragment"-->
   <!--    android:label="SocialFragment" />-->
 
+
+  <action
+    android:id="@+id/to_filter"
+    app:enterAnim="@anim/anim_slide_in_right"
+    app:exitAnim="@anim/anim_slide_out_left"
+    app:popEnterAnim="@anim/anim_slide_in_left"
+    app:popExitAnim="@anim/anim_slide_out_right"
+    app:destination="@id/nav_filter" >
+
+  </action>
+  <include app:graph="@navigation/nav_filter" />
 </navigation>

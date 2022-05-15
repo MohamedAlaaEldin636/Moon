@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <import type="grand.app.moon.presentation.filter.FILTER_TYPE" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="itemViewModels"
+      type="grand.app.moon.presentation.filter.viewModels.ItemFilterViewModel" />
+
+  </data>
+
+  <com.google.android.material.card.MaterialCardView
+    android:id="@+id/item_filter_more"
+    android:layout_width="match_parent"
+    android:visibility="@{!itemViewModels.minMax ? View.VISIBLE : View.GONE, default = gone}"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dimen16"
+    android:layout_marginEnd="@dimen/dimen16"
+    app:cardCornerRadius="@dimen/dimen6"
+    app:cardElevation="@dimen/dimen1"
+    card_view:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_more_item"
+        style="@style/mediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen16"
+        android:text="@{itemViewModels.model.selectedText}"
+        android:textAlignment="viewEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/all" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen16"
+        android:rotation="180"
+        android:src="@drawable/ic_more"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </com.google.android.material.card.MaterialCardView>
+
+
+
+</layout>

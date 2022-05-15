@@ -42,8 +42,8 @@ class LogInViewModel @Inject constructor(
   val userLocalUseCase: UserLocalUseCase
 ) : BaseViewModel() {
 
-  lateinit var btnFacebook: LoginButton
-  var callbackManager: CallbackManager? = null
+//  lateinit var btnFacebook: LoginButton
+//  var callbackManager: CallbackManager? = null
 
   lateinit var  socialRequest: SocialRequest
   lateinit var registerRequest: SocialRequest
@@ -144,30 +144,30 @@ class LogInViewModel @Inject constructor(
 
   fun setupFacebookSignIn() {
     // Callback registration
-    btnFacebook.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
-
-      override fun onSuccess(result: LoginResult?) {
-        result?.let {
-          val request: GraphRequest = GraphRequest.newMeRequest(result.accessToken) { ob, response ->
-            Log.d(TAG, ob.toString())
-            Log.d(TAG, response.toString())
-          }
-          val parameters = Bundle()
-          parameters.putString("fields", "id,name,email")
-          request.parameters = parameters
-          request.executeAsync()
-        }
-
-      }
-
-      override fun onCancel() {
-        TODO("Not yet implemented")
-      }
-
-      override fun onError(error: FacebookException) {
-        TODO("Not yet implemented")
-      }
-    })
+//    btnFacebook.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+//
+//      override fun onSuccess(result: LoginResult?) {
+//        result?.let {
+//          val request: GraphRequest = GraphRequest.newMeRequest(result.accessToken) { ob, response ->
+//            Log.d(TAG, ob.toString())
+//            Log.d(TAG, response.toString())
+//          }
+//          val parameters = Bundle()
+//          parameters.putString("fields", "id,name,email")
+//          request.parameters = parameters
+//          request.executeAsync()
+//        }
+//
+//      }
+//
+//      override fun onCancel() {
+//        TODO("Not yet implemented")
+//      }
+//
+//      override fun onError(error: FacebookException) {
+//        TODO("Not yet implemented")
+//      }
+//    })
 
   }
 

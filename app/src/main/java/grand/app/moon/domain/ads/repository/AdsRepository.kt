@@ -22,7 +22,7 @@ interface AdsRepository {
   suspend fun getAdsSubCategory(url : String): Resource<BaseResponse<SubCategoryResponse>>
   suspend fun getReviews(page:Int,store : String?,advertisement:String?): Resource<BaseResponse<ReviewsPaginateData>>
   suspend fun addReview(url : ReviewRequest): Resource<BaseResponse<*>>
-  suspend fun filterDetails(categoryId: Int , subCategoryId: Int): Resource<BaseResponse<FilterDetails>>
+  suspend fun filterDetails(categoryId: Int , subCategoryId: Int?): Resource<BaseResponse<FilterDetails>>
   suspend fun filterResults(url : FilterResultRequest): Resource<BaseResponse<AdsListPaginateData>>
 
 }

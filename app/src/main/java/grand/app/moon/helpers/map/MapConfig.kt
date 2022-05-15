@@ -68,6 +68,7 @@ class MapConfig {
 //      mMap!!.mapType = GoogleMap.MAP_TYPE_HYBRID;
       if (!isSuccess) Log.e("errorMapStyle", "errorMap")
     } catch (ex: Resources.NotFoundException) {
+      Log.d(TAG, "setMapStyle: ${ex.message}")
       ex.printStackTrace()
     }
   }

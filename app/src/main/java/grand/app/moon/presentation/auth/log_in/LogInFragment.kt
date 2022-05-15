@@ -50,10 +50,10 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   }
 
   private fun setupFacebookLogin() {
-    LoginManager.getInstance().logOut()
-    binding.btnFacebook.setPermissions(Arrays.asList("email", "public_profile"))
-    viewModel.btnFacebook = binding.btnFacebook
-    viewModel.setupFacebookSignIn()
+//    LoginManager.getInstance().logOut()
+//    binding.btnFacebook.setPermissions(Arrays.asList("email", "public_profile"))
+//    viewModel.btnFacebook = binding.btnFacebook
+//    viewModel.setupFacebookSignIn()
   }
 
 

@@ -47,7 +47,7 @@ class FilterMultiSelectAdapter : RecyclerView.Adapter<FilterMultiSelectAdapter.V
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemFilterViewModel(data)
-    holder.itemLayoutBinding.itemMore.setOnClickListener {
+    holder.itemLayoutBinding.itemMore.itemFilterMore.setOnClickListener {
       this.position = position
       clickEvent.value = data
     }

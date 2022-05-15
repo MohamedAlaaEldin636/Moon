@@ -1,8 +1,10 @@
 package grand.app.moon.presentation.home
 
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.rizlee.rangeseekbar.RangeSeekBar
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -17,7 +19,7 @@ import grand.app.moon.domain.story.entity.StoryItem
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSeekBarPostListener {
 
   private val viewModel: HomeViewModel by viewModels()
   private val activityViewModel: HomeViewModel by activityViewModels()
@@ -113,6 +115,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
       data.categoryAds.add(0, categoryAdvertisement)
     }
     //hey I'm HERE
+  }
+
+  override fun onValuesChanged(minValue: Float, maxValue: Float) {
+    Log.d(TAG, "onValuesChanged: THERE $minValue , $maxValue")
+  }
+
+  override fun onValuesChanged(minValue: Int, maxValue: Int) {
+    Log.d(TAG, "onValuesChanged: HERE $minValue , $maxValue")
   }
 
 }

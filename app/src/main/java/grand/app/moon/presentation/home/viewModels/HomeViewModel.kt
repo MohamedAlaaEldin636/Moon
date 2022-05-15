@@ -119,7 +119,7 @@ class HomeViewModel @Inject constructor(
   }
 
   fun homeFilter(v: View){
-    v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFilterHomeFragment())
+    toFilter(v)
   }
 
   fun departments(v: View) {

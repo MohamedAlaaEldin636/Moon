@@ -82,7 +82,7 @@
   <string name="please_install_whatsapp_on_your_phone">من فضلك قم بتنزيل الواتساب</string>
   <string name="loading_more">تحميل المزيد</string>
   <string name="update">تعديل</string>
-  <string name="show_number_hours">عدد ساعات العمل</string>
+  <string name="show_number_hours">عرض عدد ساعات العمل</string>
   <string name="views">المشاهدات</string>
   <string name="rates">التقييمات</string>
   <string name="followers">المتابعين</string>
@@ -129,7 +129,7 @@
   <string name="highest_price">الاعلي سعراً</string>
   <string name="lowest_price">الأقل سعراً</string>
   <string name="sort_by">ترتيب حسب</string>
-  <string name="filter">فلترة</string>
+  <string name="filter">فلترة البحث</string>
   <string name="filter_sort">تصفية</string>
   <string name="city">المدينة</string>
   <string name="comments">التعليقات</string>

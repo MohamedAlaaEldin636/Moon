@@ -44,9 +44,9 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     apiService.addReview(getParameters(request))
   }
 
-  suspend fun filterDetails(categoryId: Int, subCategoryId: Int) = safeApiCall {
+  suspend fun filterDetails(categoryId: Int, subCategoryId: Int?) = safeApiCall {
     var url = "${BuildConfig.API_BASE_URL}v1/filter/details?category_id=$categoryId"
-    if(subCategoryId != -1) url += "&sub_category_id=$subCategoryId"
+    if(subCategoryId != null && subCategoryId != -1) url += "&sub_category_id=$subCategoryId"
     apiService.filterDetails(url)
   }
 

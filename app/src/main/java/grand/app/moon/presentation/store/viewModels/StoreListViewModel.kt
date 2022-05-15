@@ -85,7 +85,7 @@ class StoreListViewModel @Inject constructor(
   }
 
   fun storeFilter(v: View) {
-    v.findNavController().navigate(StoreListFragmentDirections.actionStoreListFragmentToStoreFilterFragment(request))
+//    v.findNavController().navigate(StoreListFragmentDirections.actionStoreListFragmentToStoreFilterFragment(request))
   }
 
   fun callService() {

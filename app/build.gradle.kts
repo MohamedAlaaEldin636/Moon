@@ -215,6 +215,16 @@ dependencies {
   implementation("com.google.android.exoplayer:exoplayer-dash:2.15.1")
   implementation("com.google.android.exoplayer:exoplayer-ui:2.15.1")
 
+
+//  implementation ("com.github.MohammedAlaaMorsi:RangeSeekBar:1.0.6")
+  implementation ("com.github.sephiroth74:RangeSeekBar:1.1.0")
+  implementation ("com.crystal:crystalrangeseekbar:1.1.3")
+  implementation ("com.github.Jay-Goo:RangeSeekBar:v2.0.1")
+
+//  implementation ("com.github.Innovattic:range-seek-bar:1.0.0")
+  implementation ("com.rizlee.view:rangeseekbar:1.0.0")
+
+
   //eventBus
   implementation("org.greenrobot:eventbus:3.3.1")
 

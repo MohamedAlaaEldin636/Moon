@@ -1,17 +1,23 @@
 package grand.app.moon.presentation.store.views
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.FacebookSdk.getApplicationContext
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.material.tabs.TabLayout
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
@@ -148,16 +154,64 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     lifecycleScope.launch(Dispatchers.Main) {
       delay(500)
       viewModel.mapConfig = MapConfig(requireContext(), p0)
-      viewModel.mapConfig.setMapStyle() //set style google map
-      p0.addMarker(
-        MarkerOptions().title(viewModel.store.get()!!.name).position(
-          LatLng(
-            viewModel.store.get()!!.latitude,
-            viewModel.store.get()!!.longitude
-          )
-        )
+//      viewModel.mapConfig.setMapStyle() //set style google map
+      viewModel.mapConfig.getGoogleMap()?.setMapStyle(context?.let {
+        MapStyleOptions.loadRawResourceStyle(
+          it,R.raw.map)
+      })
+//      setMapStyle(context?.let { MapStyleOptions.loadRawResourceStyle(it, R.raw.map) })
+      val location = LatLng(viewModel.store.get()!!.latitude, viewModel.store.get()!!.longitude)
+      viewModel.mapConfig.getGoogleMap()?.addMarker(
+        MarkerOptions().position(location)
+          .title(viewModel.store.get()!!.name) // below line is use to add custom marker on our map.
+          .icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_location))
       )
+
+//      p0.addMarker(
+//        MarkerOptions().title(viewModel.store.get()!!.name).position(
+//          LatLng(
+//            viewModel.store.get()!!.latitude,
+//            viewModel.store.get()!!.longitude
+//          )
+//        )
+//      )
+      viewModel.mapConfig.getGoogleMap()?.moveCamera(CameraUpdateFactory.newLatLng(location))
+
     }
+  }
+
+  private fun BitmapFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+    // below line is use to generate a drawable.
+    val vectorDrawable: Drawable? = ContextCompat.getDrawable(context, vectorResId)
+
+    // below line is use to set bounds to our vector drawable.
+    vectorDrawable?.setBounds(
+      0,
+      0,
+      vectorDrawable.getIntrinsicWidth(),
+      vectorDrawable.getIntrinsicHeight()
+    )
+
+    // below line is use to create a bitmap for our
+    // drawable which we have added.
+    vectorDrawable?.let {
+      val bitmap: Bitmap = Bitmap.createBitmap(
+        it.intrinsicWidth,
+        it.intrinsicHeight,
+        Bitmap.Config.ARGB_8888
+      )
+      val canvas = Canvas(bitmap)
+
+      // below line is use to draw our
+      // vector drawable in canvas.
+      vectorDrawable.draw(canvas)
+      return BitmapDescriptorFactory.fromBitmap(bitmap)
+
+    }
+    return null
+    // below line is use to add bitmap in our canvas.
+
+    // after generating our bitmap we are returning our bitmap.
   }
 
 //  private fun setRecyclerViewScrollListener() {
@@ -187,5 +241,11 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 //
 //  }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    viewModel.mapConfig.let {
+      it.getGoogleMap()?.clear()
+    }
+  }
 
 }

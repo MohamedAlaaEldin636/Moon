@@ -28,12 +28,15 @@
 
       <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img"
-        android:layout_width="@dimen/dimen46"
-        android:layout_height="@dimen/dimen46"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
         android:layout_alignParentStart="true"
-        android:layout_margin="@dimen/dimen4"
-        android:scaleType="centerCrop"
+        android:layout_marginStart="@dimen/dimen4"
 
+        android:layout_marginTop="@dimen/dimen4"
+        android:layout_marginEnd="@dimen/dimen4"
+        android:layout_marginBottom="@dimen/dimen4"
+        android:scaleType="centerCrop"
         android:visibility="@{countryItemViewModels.country.image != null  &amp;&amp; !countryItemViewModels.country.image.empty ? View.VISIBLE : View.GONE}"
         app:loadImage="@{countryItemViewModels.country.image}"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <import type="grand.app.moon.presentation.filter.FILTER_TYPE" />
+
+    <import type="android.view.View" />
+
+    <variable
+      name="itemViewModels"
+      type="grand.app.moon.presentation.filter.viewModels.ItemFilterViewModel" />
+
+  </data>
+
+  <com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dimen16"
+    android:layout_marginEnd="@dimen/dimen16"
+    app:cardCornerRadius="@dimen/dimen6"
+    app:cardElevation="@dimen/dimen1"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <com.rizlee.rangeseekbar.RangeSeekBar
+        android:id="@+id/rangeSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:active="true"
+        app:additionalTextMargin="6dp"
+        app:range="@{itemViewModels.model}"
+        android:visibility="@{itemViewModels.range ? View.VISIBLE : View.GONE, default = gone}"
+        app:enableGradient="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:roundedCorners="false"
+        app:minValue="10"
+        app:thumbsNormal="@drawable/ic_radio"
+        app:thumbsPressed="@drawable/ic_radio"
+        app:transitionColor="@color/colorAccent"
+        app:sideColor="@color/blackOpacity2"
+        app:centerColor="@color/colorAccent"
+        app:stepValue="1"
+        app:maxValue="100"
+        app:showAdditionalText="none"
+        app:showThumbsText="above"
+        app:textColor="@android:color/black"
+        app:thumbsTextMargin="6dp" />
+
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen16"
+        android:orientation="horizontal"
+        android:layoutDirection="ltr"
+        android:weightSum="2">
+
+
+
+          <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_from"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            style="@style/regularFont"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dimen5"
+            android:layout_marginTop="@dimen/dimen10"
+            android:layout_marginEnd="@dimen/dimen5"
+            android:layout_marginBottom="@dimen/dimen10"
+            android:padding="@dimen/dimen10"
+            android:background="@drawable/corner_gray_strock"
+            android:drawablePadding="@dimen/dimen2"
+            android:focusable="@{itemViewModels.range ? false : true}"
+            android:hint="@string/from"
+            android:inputType="number"
+            android:text="@={itemViewModels.model.from}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textColorHint="#4A4A4A"
+            android:textSize="@dimen/text_size12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/from" />
+
+
+
+          <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_to"
+            style="@style/regularFont"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dimen5"
+            android:layout_marginTop="@dimen/dimen10"
+            android:layout_marginEnd="@dimen/dimen5"
+            android:layout_marginBottom="@dimen/dimen10"
+            android:padding="@dimen/dimen10"
+            android:background="@drawable/corner_gray_strock"
+            android:drawablePadding="@dimen/dimen2"
+            android:hint="@string/to"
+            android:inputType="number"
+            android:focusable="@{itemViewModels.range ? false : true}"
+            android:text="@={itemViewModels.model.to}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:textSize="@dimen/text_size12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/to" />
+
+
+
+      </LinearLayout>
+    </LinearLayout>
+
+  </com.google.android.material.card.MaterialCardView>
+
+
+</layout>

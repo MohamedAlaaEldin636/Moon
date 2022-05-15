@@ -25,3 +25,19 @@ fun loadDrawable(recyclerView: RecyclerView, percentage: Int,adapter: RecyclerVi
   recyclerView.layoutManager = l
   recyclerView.adapter = adapter
 }
+
+
+@BindingAdapter("rv_vertical","adapter_percentage","span")
+fun loadRecyclerView(recyclerView: RecyclerView, percentage: Int,adapter: RecyclerView.Adapter<*>?,span: Int?) {
+  val l = object : GridLayoutManager(recyclerView.context, span!!) {
+    override fun checkLayoutParams(lp: RecyclerView.LayoutParams?): Boolean {
+      if (lp != null) {
+        lp.width = (width.toFloat() * (percentage.toFloat() / 100f)).roundToInt()
+      }
+
+      return super.checkLayoutParams(lp)
+    }
+  }
+  recyclerView.layoutManager = l
+  recyclerView.adapter = adapter
+}

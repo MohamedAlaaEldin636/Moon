@@ -64,7 +64,7 @@ class AdsUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
-  fun filterDetails(categoryId: Int , subCategoryId: Int): Flow<Resource<BaseResponse<FilterDetails>>> = flow {
+  fun filterDetails(categoryId: Int , subCategoryId: Int?): Flow<Resource<BaseResponse<FilterDetails>>> = flow {
     emit(Resource.Loading)
     val result = repo.filterDetails(categoryId,subCategoryId)
     emit(result)

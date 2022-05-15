@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.BuildConfig
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
+import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.utils.BaseResponse
@@ -21,6 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FilterResultsViewModel @Inject constructor(
+  private val adsRepository: AdsRepository,
   private val useCase: AdsUseCase,
 ) : BaseViewModel() {
   private val TAG = "FilterResultsViewModel"
@@ -35,9 +37,8 @@ class FilterResultsViewModel @Inject constructor(
 
   var isLast = false
 
-  @Inject
   @Bindable
-  lateinit var  adapter : AdsAdapter
+  var  adapter : AdsAdapter = AdsAdapter(adsRepository)
 
 
   val _responseService =

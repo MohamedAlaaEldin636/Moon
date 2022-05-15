@@ -38,6 +38,7 @@ import coil.size.Scale
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
@@ -55,9 +56,13 @@ import java.lang.Exception
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSourceFactory
+import com.google.android.material.slider.RangeSlider
+import com.rizlee.rangeseekbar.RangeSeekBar
 import grand.app.moon.core.extenstions.isEnglish
+import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.utils.SpannedGridLayoutManager
 import grand.app.moon.presentation.media.image.utils.ImageMatrixTouchHandler
+import kotlinx.android.synthetic.main.pausable_progress.view.*
 
 
 fun View.show() {
@@ -97,6 +102,36 @@ fun widthSquare(view: View, count: Int) {
   view.layoutParams.width = width
   view.layoutParams.height = width
 }
+
+@BindingAdapter("range")
+fun valuesFromTo(range: RangeSeekBar?, model: FilterProperty) {
+  Log.d(TAG, "viewWidth: HEY")
+  Log.d(TAG, "valuesFromMin: ${model.min}")
+  Log.d(TAG, "valuesFromTax: ${model.max}")
+//  view?.valueFrom = model.min!!
+//  view?.valueTo = model.max!!
+
+  if(model.min != null && model.max != null) {
+    range.let {
+      it?.setRange(model.min!!, model.max!!, 1)
+    }
+  }
+
+
+//  range?.setOnScrollChangeListener { view, i, i2, i3, i4 ->
+//    Log.d(TAG, "valuesFromTo1: $i")
+//    Log.d(TAG, "valuesFromTo2: $i2")
+//    Log.d(TAG, "valuesFromTo3: $i3")
+//    Log.d(TAG, "valuesFromTo4: $i4")
+//  }
+
+//  model.min?.let {
+//  }
+//  model.max?.let {
+//  }
+//  model.max = model.max?.plus(1)
+}
+
 
 
 fun View.invisible() {
@@ -197,29 +232,34 @@ fun View.showSnackBar(
 fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultImage: Any?) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
     if (URLUtil.isValidUrl(imageUrl)) {
-      val request = ImageRequest.Builder(context)
-        .data(imageUrl)
-        .scale(Scale.FIT)
-        .crossfade(true)
-        .crossfade(400)
-        .error(R.drawable.bg_no_image)
-        .target(
-          onStart = { placeholder ->
-            progressBar?.show()
-            setImageDrawable(placeholder)
-          },
-          onSuccess = { result ->
-            progressBar?.hide()
-            setImageDrawable(result)
-          }
-        )
-        .listener(onError = { request: ImageRequest, _: Throwable ->
-          progressBar?.hide()
-          setImageDrawable(request.error)
-        })
-        .build()
-
-      ImageLoader(context).enqueue(request)
+      Glide
+        .with(context)
+        .load(imageUrl)
+        .diskCacheStrategy(DiskCacheStrategy.DATA)
+        .into(this);
+//      val request = ImageRequest.Builder(context)
+//        .data(imageUrl)
+//        .scale(Scale.FIT)
+//        .crossfade(true)
+//        .crossfade(400)
+//        .error(R.drawable.bg_no_image)
+//        .target(
+//          onStart = { placeholder ->
+//            progressBar?.show()
+//            setImageDrawable(placeholder)
+//          },
+//          onSuccess = { result ->
+//            progressBar?.hide()
+//            setImageDrawable(result)
+//          }
+//        )
+//        .listener(onError = { request: ImageRequest, _: Throwable ->
+//          progressBar?.hide()
+//          setImageDrawable(request.error)
+//        })
+//        .build()
+//
+//      ImageLoader(context).enqueue(request)
     } else {
       load(File(imageUrl)) {
         crossfade(750) // 75th percentile of a second

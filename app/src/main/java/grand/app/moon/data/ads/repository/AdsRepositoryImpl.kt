@@ -39,7 +39,7 @@ class AdsRepositoryImpl @Inject constructor(
   suspend fun addReview(url: ReviewRequest) = remoteDataSource.addReview(url)
 
   override
-  suspend fun filterDetails(categoryId: Int, subCategoryId: Int) =
+  suspend fun filterDetails(categoryId: Int, subCategoryId: Int?) =
     remoteDataSource.filterDetails(categoryId, subCategoryId)
 
   override

@@ -7,12 +7,12 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import com.rizlee.rangeseekbar.RangeSeekBar
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.databinding.FragmentFilterBinding
+import grand.app.moon.databinding.FragmentFilterHomeBinding
 import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.utils.Constants
@@ -20,20 +20,20 @@ import grand.app.moon.presentation.filter.viewModels.FilterViewModel
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class FilterFragment : BaseFragment<FragmentFilterBinding>() {
-  val args: FilterFragmentArgs by navArgs()
+class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.OnRangeSeekBarPostListener  {
   private val viewModel: FilterViewModel by viewModels()
 
-  private val TAG = "FilterFragment"
+  private val TAG = "FilterHomeFragment"
 
   override
-  fun getLayoutId() = R.layout.fragment_filter
+  fun getLayoutId() = R.layout.fragment_filter_home
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
       if (bundle.containsKey(Constants.PROPERTY)) {
         viewModel.updateCallBack(bundle.getSerializable(Constants.PROPERTY) as FilterProperty)
+        viewModel.submit(bundle.getSerializable(Constants.PROPERTY) as FilterProperty)
       }
     }
   }
@@ -41,13 +41,37 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.request.categoryId = args.categoryId
-    viewModel.request.sub_category_id = args.subCategoryId
-    viewModel.callService()
   }
 
 
   override fun setupObservers() {
+    viewModel.adapter.clickEvent.observe(this, {
+      when (it.filterType) {
+        FILTER_TYPE.SUB_CATEGORY -> {
+          viewModel.request.categoryId?.let { categoryId ->
+            findNavController().navigate(
+              FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
+                it,
+                it.name
+              )
+            )
+          }
+        }
+        FILTER_TYPE.SINGLE_SELECT, FILTER_TYPE.SORT_BY, FILTER_TYPE.OTHER_OPTIONS, FILTER_TYPE.CATEGORY ->
+          findNavController().navigate(
+          FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
+            it,
+            it.name
+          )
+        )
+        FILTER_TYPE.CITY, FILTER_TYPE.MULTI_SELECT -> findNavController().navigate(
+          FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
+            it,
+            it.name
+          )
+        )
+      }
+    })
 
     lifecycleScope.launchWhenResumed {
       viewModel.response.collect {
@@ -67,30 +91,19 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
         }
       }
     }
-    viewModel.adapter.clickEvent.observe(this, {
-      Log.d(TAG, "setupObservers: HERE")
-      when (it.filterType) {
-        FILTER_TYPE.SINGLE_SELECT , FILTER_TYPE.OTHER_OPTIONS -> findNavController().navigate(
-          FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
-            it,
-            it.name
-          )
-        )
-        FILTER_TYPE.CITY, FILTER_TYPE.MULTI_SELECT -> findNavController().navigate(
-          FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
-            it,
-            it.name
-          )
-        )
-      }
-    })
   }
-
 
 
   override fun onStop() {
     super.onStop()
   }
+
+  override fun onValuesChanged(minValue: Float, maxValue: Float) {
+    Log.d(TAG, "onValuesChanged: sadas")
+  }
+
+  override fun onValuesChanged(minValue: Int, maxValue: Int) {
+    Log.d(TAG, "onValuesChanged: asdasdassad")  }
 
 
 }

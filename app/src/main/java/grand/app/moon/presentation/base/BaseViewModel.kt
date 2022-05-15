@@ -6,11 +6,13 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import androidx.databinding.Observable
@@ -18,6 +20,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.findNavController
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
@@ -28,6 +31,7 @@ import com.facebook.FacebookSdk.getCacheDir
 import es.dmoral.toasty.Toasty
 import grand.app.moon.BuildConfig
 import grand.app.moon.R
+import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.CometChatResource
 import grand.app.moon.domain.utils.ICometChat
@@ -35,6 +39,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.extensions.disable
 import grand.app.moon.presentation.base.extensions.enable
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.filter.FilterFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
@@ -202,6 +207,17 @@ open class BaseViewModel : ViewModel(), Observable {
     }
   }
 
+  fun toFilter(v: View){
+    v.findNavController()
+      .navigate(R.id.to_filter, Bundle(),Constants.NAVIGATION_OPTIONS)
+
+  }
+
+  fun toFilterResult(v: View,request: FilterResultRequest){
+    v.findNavController()
+      .navigate(FilterFragmentDirections.actionFilterFragmentToFilterResultsFragment(request))
+
+  }
 
   private val TAG = "BaseViewModel"
 

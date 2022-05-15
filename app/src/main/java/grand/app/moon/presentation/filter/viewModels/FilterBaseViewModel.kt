@@ -13,6 +13,8 @@ import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.filter.FILTER_TYPE
 import grand.app.moon.presentation.filter.adapter.FilterAdapter
+import grand.app.moon.presentation.filter.adapter.FilterRadioSelectAdapter
+import grand.app.moon.presentation.filter.adapter.FilterRateAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,6 +27,9 @@ open class FilterBaseViewModel @Inject constructor(
   val request = FilterResultRequest()
   var rateSelected = BooleanArray(7)
   val adapter = FilterAdapter()
+  val adapterSort = FilterRadioSelectAdapter()
+  val adapterAdsType = FilterRadioSelectAdapter()
+  val rateAdapter = FilterRateAdapter()
 
 
   fun addCities(callBack: (result: FilterProperty) -> Unit) {
@@ -64,10 +69,10 @@ open class FilterBaseViewModel @Inject constructor(
     callBack(property)
   }
 
-  fun addPrice(callBack: (result: FilterProperty) -> Unit) {
+  fun addPriceText(callBack: (result: FilterProperty) -> Unit) {
     val property = FilterProperty()
     property.type = 1
-    property.filterType = FILTER_TYPE.PRICE
+    property.filterType = FILTER_TYPE.PRICE_TEXT
     property.name = MyApplication.instance.resources.getString(R.string.filter_by_price)
     property.selectedList.add(1)
     property.selectedText = MyApplication.instance.resources.getString(R.string.most_compatible)
@@ -221,6 +226,11 @@ open class FilterBaseViewModel @Inject constructor(
     request.min_rate = stars
   }
 
+  protected fun resetSelected() {
+    request.min_price = null
+    request.max_price = null
+  }
+
   fun prepareRequest() {
     request.properties?.clear()
     if (adapter.differ.currentList.isNotEmpty()) {
@@ -231,24 +241,32 @@ open class FilterBaseViewModel @Inject constructor(
        */
       request.properties = arrayListOf()
       adapter.differ.currentList.forEachIndexed { index, property ->
+        when(property.filterType){
+          FILTER_TYPE.PRICE_TEXT -> {
+            if (property.from?.isNotEmpty() == true) request.min_price = property.from
+            if (property.to?.isNotEmpty() == true) request.max_price = property.to
+          }
+        }
         if (property.selectedList.isNotEmpty() && index != 0 && index != adapter.differ.currentList.size - 1) {
           Log.d(TAG, "filterSubmit: ${property.id}")
           request.properties!!.add(property)
         }
       }
     }
+    if (adapterSort.lastSelected != -1) request.order_by = adapterSort.lastSelected
+    if (adapterAdsType.lastSelected != -1) request.other_options = adapterAdsType.lastSelected
   }
 
   fun updateCallBack(filterProperty: FilterProperty) {
     when (filterProperty.filterType) {
       FILTER_TYPE.OTHER_OPTIONS -> request.other_options = filterProperty.selectedList[0]
       FILTER_TYPE.SORT_BY -> request.order_by = filterProperty.selectedList[0]
-      FILTER_TYPE.PRICE -> {
-        if (filterProperty.from?.trim()?.isNotEmpty() == true) request.min_price =
-          filterProperty.from else request.min_price = null
-        if (filterProperty.to?.trim()?.isNotEmpty() == true) request.max_price =
-          filterProperty.to else request.max_price = null
-      }
+//      FILTER_TYPE.PRICE -> {
+//        if (filterProperty.from?.trim()?.isNotEmpty() == true) request.min_price =
+//          filterProperty.from else request.min_price = null
+//        if (filterProperty.to?.trim()?.isNotEmpty() == true) request.max_price =
+//          filterProperty.to else request.max_price = null
+//      }
       FILTER_TYPE.CATEGORY -> {
         request.categoryId = filterProperty.selectedList[0]
         addSubCategories(request.categoryId) {
@@ -266,5 +284,23 @@ open class FilterBaseViewModel @Inject constructor(
     adapter.updateFilterSelected(filterProperty)
   }
 
+  fun addStaticData() {
+
+    adapterSort.lastPosition = 0
+    adapterSort.lastSelected = 1
+    addSortBy {
+      adapterSort.differ.submitList(it.children)
+    }
+    adapterAdsType.lastPosition = 0
+    adapterAdsType.lastSelected = 1
+    addAnotherOptions {
+      adapterAdsType.differ.submitList(it.children)
+    }
+    rateAdapter.lastPosition = 4
+    rateAdapter.lastSelected = 1
+    addRates {
+      rateAdapter.differ.submitList(it.children)
+    }
+  }
 
 }

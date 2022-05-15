@@ -76,6 +76,8 @@ class ConfirmViewModel @Inject constructor(
     resend = false
     resendCode()
     countDownTimer.start()
+    notifyChange()
+
 //    val fragment = v.findFragment<LoginFragment>()
 //    v.context.sendFirebaseSMS(fragment.requireActivity(),v,request.country_code+request.phone) { verificationId ->
 //     request.verificationId = verificationId
@@ -83,13 +85,13 @@ class ConfirmViewModel @Inject constructor(
   }
 
 
-  var timerText = "60:00"
+  var timerText = "10:00"
   var resend = false
   lateinit var countDownTimer: CountDownTimer
   private val TAG = "ConfirmViewModel"
   private fun startTimer() {
     Log.d(TAG, "startTimer: ")
-    countDownTimer = object : CountDownTimer(60000, 1000) {
+    countDownTimer = object : CountDownTimer(10000, 1000) {
       override fun onTick(millisUntilFinished: Long) {
         timerText = when {
           (millisUntilFinished / 1000) < 10 -> "0" + (millisUntilFinished / 1000)

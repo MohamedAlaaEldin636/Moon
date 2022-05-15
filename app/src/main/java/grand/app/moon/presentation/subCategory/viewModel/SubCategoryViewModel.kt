@@ -124,12 +124,12 @@ class SubCategoryViewModel @Inject constructor(
         )
       }
       else -> {
-        v.findNavController().navigate(
-          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterFragment(
-            categoryId,
-            subCategoryId
-          )
-        )
+//        v.findNavController().navigate(
+//          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterFragment(
+//            categoryId,
+//            subCategoryId
+//          )
+//        )
       }
     }
   }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
     <variable
       name="viewModel"
-      type="grand.app.moon.presentation.filter.viewModels.FilterHomeViewModel" />
+      type="grand.app.moon.presentation.filter.viewModels.FilterViewModel" />
   </data>
 
   <RelativeLayout
@@ -16,9 +17,9 @@
 
 
     <androidx.core.widget.NestedScrollView
-      android:layout_above="@+id/btn_phone"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_above="@+id/btn_phone"
       android:background="#FBFBFB"
       android:fillViewport="true">
 
@@ -29,19 +30,21 @@
         android:background="#FBFBFB"
         android:orientation="vertical">
 
+        <include layout="@layout/layout_curve_top" />
+
         <androidx.cardview.widget.CardView
           android:id="@+id/img_login"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:layout_constraintTop_toTopOf="parent"
-          android:layout_marginTop="@dimen/dimen10"
           android:layout_marginStart="@dimen/dimen20"
-          android:layout_marginEnd="@dimen/dimen20">
+          android:layout_marginTop="@dimen/dimen10"
+          android:layout_marginEnd="@dimen/dimen20"
+          app:layout_constraintTop_toTopOf="parent">
 
           <androidx.constraintlayout.widget.ConstraintLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatEditText
               android:id="@+id/appCompatEditText"
@@ -49,11 +52,11 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:background="@null"
-              android:text="@={viewModel.request.search}"
               android:drawableStart="@drawable/ic_search"
               android:drawablePadding="@dimen/dimen12"
               android:hint="@string/search"
               android:padding="@dimen/dimen10"
+              android:text="@={viewModel.request.search}"
               android:textSize="@dimen/text_size16"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
@@ -78,16 +81,128 @@
           app:span="@{`1`}"
           tools:listitem="@layout/item_filter" />
 
-        <androidx.recyclerview.widget.RecyclerView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginTop="@dimen/dimen16"
-          app:adapter="@{viewModel.filterAdapter}"
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/boldFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen25"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:layout_marginBottom="@dimen/dimen4"
+          android:text="@string/sort_by"
+          android:textAlignment="viewEnd"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/black"
+          android:textSize="@dimen/text_size16"
           app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          app:orientation="@{`1`}"
-          app:span="@{`1`}"
-          tools:listitem="@layout/item_filter_rate" />
+          tools:text="@string/sort_by" />
+
+        <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginEnd="@dimen/dimen16"
+          app:cardCornerRadius="@dimen/dimen6"
+          app:cardElevation="@dimen/dimen1"
+          card_view:cardUseCompatPadding="true">
+
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen16"
+            app:adapter="@{viewModel.adapterSort}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:orientation="@{`1`}"
+            app:span="@{`1`}"
+            tools:listitem="@layout/item_report" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/boldFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen25"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:layout_marginBottom="@dimen/dimen4"
+          android:text="@string/other_options"
+          android:textAlignment="viewEnd"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/black"
+          android:textSize="@dimen/text_size16"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="@string/contact_us" />
+
+        <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginEnd="@dimen/dimen16"
+          app:cardCornerRadius="@dimen/dimen6"
+          app:cardElevation="@dimen/dimen1"
+          card_view:cardUseCompatPadding="true">
+
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen16"
+            app:adapter="@{viewModel.adapterAdsType}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:orientation="@{`1`}"
+            app:span="@{`1`}"
+            tools:listitem="@layout/item_filter" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/boldFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginTop="@dimen/dimen16"
+          android:layout_marginEnd="@dimen/dimen16"
+          android:layout_marginBottom="@dimen/dimen4"
+          android:text="@string/filter_by_rate"
+          android:textAlignment="viewEnd"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/black"
+          android:textSize="@dimen/text_size16"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="@string/filter_by_rate" />
+
+        <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen16"
+          android:layout_marginEnd="@dimen/dimen16"
+          app:cardCornerRadius="@dimen/dimen6"
+          app:cardElevation="@dimen/dimen1"
+          card_view:cardUseCompatPadding="true">
+
+
+          <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen16"
+            app:adapter="@{viewModel.rateAdapter}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:orientation="@{`1`}"
+            app:span="@{`1`}"
+            tools:listitem="@layout/item_report" />
+        </com.google.android.material.card.MaterialCardView>
 
       </LinearLayout>
 
@@ -100,8 +215,8 @@
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
       android:background="@color/colorPrimary"
-      android:text="@string/confirm"
       android:onClick="@{ (v) -> viewModel.filterSubmit(v) }"
+      android:text="@string/confirm"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/white"
       app:layout_constraintEnd_toEndOf="parent"

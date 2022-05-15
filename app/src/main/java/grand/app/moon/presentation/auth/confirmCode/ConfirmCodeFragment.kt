@@ -53,23 +53,23 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
       }
     }
 
-//    lifecycleScope.launchWhenResumed {
-//      viewModel._sendCode.collect {
-//        when (it) {
-//          Resource.Loading -> {
-//            hideKeyboard()
-//            showLoading()
-//          }
-//          is Resource.Success -> {
-//            hideLoading()
-//          }
-//          is Resource.Failure -> {
-//            hideLoading()
-//            handleApiError(it)
-//          }
-//        }
-//      }
-//    }
+    lifecycleScope.launchWhenResumed {
+      viewModel._sendCode.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
   }
 
 

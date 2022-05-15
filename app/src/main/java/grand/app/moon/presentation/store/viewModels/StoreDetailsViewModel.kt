@@ -20,6 +20,7 @@ import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.data.settings.data_source.remote.SettingsServices
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.models.Store
@@ -41,7 +42,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StoreDetailsViewModel @Inject constructor(
-  var settingsServices: SettingsServices,
+  var adsRepository: AdsRepository,
   val userLocalUseCase: UserLocalUseCase,
   private val useCase: AdsUseCase,
   private val storeUseCase: StoreUseCase
@@ -52,9 +53,8 @@ class StoreDetailsViewModel @Inject constructor(
 
   //https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM
 
-  @Inject
   @Bindable
-  lateinit var  adsAdapter : AdsAdapter
+  var  adsAdapter : AdsAdapter = AdsAdapter(adsRepository)
 
 
   var exploreAdapter = ExploreGridEqualAdapter()
