@@ -15,10 +15,8 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
-import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
-import grand.app.moon.data.settings.data_source.remote.SettingsServices
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.store.entity.FollowStoreRequest
@@ -50,6 +48,7 @@ class StoreDetailsViewModel @Inject constructor(
   lateinit var mapConfig: MapConfig
 
   var id: Int = -1
+  var type: Int = 3
 
   //https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM
 
@@ -79,14 +78,16 @@ class StoreDetailsViewModel @Inject constructor(
   val youtube = ObservableBoolean(true)
   val twitter = ObservableBoolean(true)
 
+
   init {
     adsAdapter.percentageAds = 100
 
   }
 
-  fun getDetails(id: Int) {
+  fun getDetails(id: Int, type: Int) {
     this.id = id
-    storeUseCase.storeDetails(id)
+    this.type = type
+    storeUseCase.storeDetails(id,type)
       .onEach {
         _storeDetailsResponse.value = it
       }.launchIn(viewModelScope)
@@ -295,7 +296,7 @@ class StoreDetailsViewModel @Inject constructor(
     if (!isLoggin && isAuthorize) {
       Log.d(TAG, "recallApi: DONER")
       isLoggin = isAuthorize
-      getDetails(id)
+      getDetails(id, type)
     }
   }
 

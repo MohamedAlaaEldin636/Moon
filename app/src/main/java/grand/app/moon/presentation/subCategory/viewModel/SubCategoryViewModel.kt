@@ -1,5 +1,7 @@
 package grand.app.moon.presentation.subCategory.viewModel
 
+import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableBoolean
@@ -57,8 +59,10 @@ class SubCategoryViewModel @Inject constructor(
   var search = ""
   var sortBy = 1
   var type: Int = -1
+  var categoryName:String? = null
+  var subCategoryName:String? = null
 
-  var  adapter : AdsAdapter = AdsAdapter(adsRepository)
+  var adapter: AdsAdapter = AdsAdapter(adsRepository)
 
   var noData = ObservableBoolean(false)
   var ADS_LIST_URL = ""
@@ -100,6 +104,7 @@ class SubCategoryViewModel @Inject constructor(
     if (subCategoryId != -1) ADS_LIST_URL += "&sub_category_id=${subCategoryId}"
     if (search.trim().isNotEmpty()) ADS_LIST_URL += "&search=$search"
     if (propertyId.trim().isNotEmpty()) ADS_LIST_URL += "&property_id=$propertyId"
+
     if (type != -1) {
       ADS_LIST_URL += "&type=$type"
       job = useCase.getAdsList(ADS_LIST_URL)
@@ -118,19 +123,20 @@ class SubCategoryViewModel @Inject constructor(
   }
 
   fun filter(v: View) {
-    when{
-      categoryId == -1 ->{
+    when {
+      categoryId == -1 -> {
         v.findNavController().navigate(
           SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterHomeFragment2()
         )
       }
       else -> {
-//        v.findNavController().navigate(
-//          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterFragment(
-//            categoryId,
-//            subCategoryId
-//          )
-//        )
+        toFilter(
+          v,
+          categoryId,
+          categoryName,
+          subCategoryId,
+          subCategoryName
+        )
       }
     }
   }
@@ -153,7 +159,7 @@ class SubCategoryViewModel @Inject constructor(
     }
   }
 
-  fun propertySelect(){
+  fun propertySelect() {
     propertiesAdapter.submitSelect()
     reset()
     callService()
@@ -163,7 +169,7 @@ class SubCategoryViewModel @Inject constructor(
 
   fun setData(data: SubCategoryResponse) {
     this.subCategoryResponse.set(data)
-    if(data.advertisements.list.size == 0 && page == 1) noData.set(true)
+    if (data.advertisements.list.size == 0 && page == 1) noData.set(true)
     data.let {
       println("size:" + data.advertisements.list.size)
       isLast = data.advertisements.links.next == null
@@ -188,13 +194,41 @@ class SubCategoryViewModel @Inject constructor(
   }
 
   fun setCategoryId() {
+//    viewModelScope.launch {
+//      accountRepository.getCategories().collect {
+//        it.data.forEach { categoryItem ->
+//          categoryItem.subCategories?.forEach { subCategory ->
+//            if (subCategory.id == subCategoryId) {
+//              categoryId = categoryItem.id!!
+//              return@forEach
+//            }
+//          }
+//        }
+//      }
+//    }
+
+    Log.d(TAG, "setCategoryId: HERE")
+    Log.d(TAG, "setCategoryId: $categoryId")
+    Log.d(TAG, "setCategoryId: $subCategoryId")
     viewModelScope.launch {
       accountRepository.getCategories().collect {
-        it.data.forEach { categoryItem ->
-          categoryItem.subCategories?.forEach { subCategory ->
-            if (subCategory.id == subCategoryId) {
-              categoryId = categoryItem.id!!
-              return@forEach
+        it.data.forEach { category ->
+          if(categoryId != -1) {
+            if (category.id == categoryId) {
+              categoryName = category.name
+            }
+          }else{
+            categoryId = category.id!!
+            Log.d(TAG, "setCategoryId: ${categoryId}")
+            Log.d(TAG, "subCategories: ${subCategoryId}")
+            category.subCategories?.forEach {
+              if(it.id == subCategoryId){
+                categoryName = category.name
+                subCategoryName = it.name
+                Log.d(TAG, "categoryName: ${categoryName}")
+                Log.d(TAG, "subCategoryName: ${subCategoryName}")
+
+              }
             }
           }
         }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.cometchat.pro.core.CometChat
 import com.zeugmasolutions.localehelper.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -34,6 +35,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     if (viewModel.lang.isEmpty()) {
       viewModel.lang = "ar"
       LocaleHelper.setLocale(this, Locale(viewModel.lang))
+
     }
     viewModel.accountRepository.saveKeyToLocal(Constants.LANGUAGE, viewModel.lang)
     binding.viewModel = viewModel

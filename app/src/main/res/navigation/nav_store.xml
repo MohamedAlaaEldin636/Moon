@@ -11,6 +11,10 @@
     <argument
       android:name="id"
       app:argType="integer" />
+    <argument
+      android:name="type"
+      app:argType="integer"
+      android:defaultValue="3" />
     <action
       android:id="@+id/action_storeDetailsFragment_to_workingHoursDialog"
       app:destination="@id/workingHoursDialog" />
@@ -56,8 +60,8 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/zoomFragment" />
-    
-    
+
+
   </fragment>
   <dialog
     android:id="@+id/workingHoursDialog"

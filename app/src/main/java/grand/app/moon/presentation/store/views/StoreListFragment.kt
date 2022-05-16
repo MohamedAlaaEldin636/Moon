@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -48,6 +50,7 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
       if(bundle.containsKey(Constants.STORE_FILTER)) {
         viewModel.request = bundle.getSerializable(Constants.STORE_FILTER) as StoreFilterRequest
         viewModel.reset()
+        viewModel.adapter.type = 4
         viewModel.callService()
       }
     }
@@ -56,6 +59,17 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
   override
   fun setUpViews() {
     setRecyclerViewScrollListener()
+    binding.appCompatEditText.setOnEditorActionListener(TextView.OnEditorActionListener { textView, i, keyEvent ->
+      if (i == EditorInfo.IME_ACTION_SEARCH && textView.text.trim().isNotEmpty()) {
+        viewModel.reset()
+        viewModel.adapter.type = 4
+        viewModel.request.search =  textView.text.toString()
+        viewModel.callService()
+        return@OnEditorActionListener true
+      }
+      false
+    })
+
   }
 
 

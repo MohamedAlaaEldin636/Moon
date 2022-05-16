@@ -37,7 +37,7 @@ class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemStoreViewModel(data, 100,null,position)
+    val itemViewModel = ItemStoreViewModel(data,3, 100,null,position)
     holder.setViewModel(itemViewModel)
   }
 

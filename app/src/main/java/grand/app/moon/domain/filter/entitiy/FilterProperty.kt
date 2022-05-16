@@ -14,6 +14,8 @@ data class FilterProperty(
   var children: ArrayList<Children> = arrayListOf(),
   @SerializedName("id")
   val id: Int = 0,
+  @Transient
+  var allowChange: Boolean = true,
   @SerializedName("is_range")
   val isRange: Int = 0,
   @SerializedName("name")

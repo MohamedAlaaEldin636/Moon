@@ -8,6 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -94,6 +96,18 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
         }
       }
     }
+
+    val layoutManager = LinearLayoutManager(requireContext())
+    binding.rvAdsCategory.layoutManager = layoutManager
+    binding.rvAdsCategory.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+        super.onScrollStateChanged(recyclerView, newState)
+        if (!recyclerView.canScrollVertically(1)){
+          viewModel.callService()
+        }
+      }
+    })
+
   }
 
 

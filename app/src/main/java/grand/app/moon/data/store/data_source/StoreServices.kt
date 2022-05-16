@@ -15,7 +15,7 @@ interface StoreServices {
   suspend fun getStores( @QueryMap map: Map<String, String>): BaseResponse<StoreListPaginateData>
 
   @GET("v1/stores/{id}")
-  suspend fun storeDetails(@Path("id") id: Int): BaseResponse<Store>
+  suspend fun storeDetails(@Path("id") id: Int,@Query("type")type: Int): BaseResponse<Store>
 
   @GET("v1/profile/followings")
   suspend fun getFavouriteStores(@Query("page") page: Int): BaseResponse<StoreListPaginateData>

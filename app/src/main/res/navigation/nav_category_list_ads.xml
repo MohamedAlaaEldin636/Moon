@@ -172,4 +172,13 @@
     android:name="grand.app.moon.presentation.filter.FilterFragment"
     android:label="@string/filter" />
 
+  <action
+    android:id="@+id/to_filter"
+    app:enterAnim="@anim/anim_slide_in_right"
+    app:exitAnim="@anim/anim_slide_out_left"
+    app:popEnterAnim="@anim/anim_slide_in_left"
+    app:popExitAnim="@anim/anim_slide_out_right"
+    app:destination="@id/nav_filter"  />
+  <include app:graph="@navigation/nav_filter" />
+
 </navigation>

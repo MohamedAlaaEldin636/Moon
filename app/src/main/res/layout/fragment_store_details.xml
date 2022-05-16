@@ -225,7 +225,7 @@
                 android:drawablePadding="@dimen/dimen8"
                 android:text="@{viewModel.store.country.name + ` / ` + viewModel.store.city.name }"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size16"
+                android:textSize="@dimen/text_size12"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/barrier4"
                 app:layout_constraintStart_toEndOf="@+id/img_store"
@@ -237,12 +237,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen5"
-
+                android:textAlignment="viewStart"
                 android:drawableStart="@drawable/ic_world"
                 android:drawablePadding="@dimen/dimen8"
                 android:text="@{viewModel.store.website}"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size16"
+                android:textSize="@dimen/text_size12"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
 
@@ -256,12 +256,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen5"
+                android:textAlignment="viewStart"
 
                 android:drawableStart="@drawable/ic_mail"
                 android:drawablePadding="@dimen/dimen8"
                 android:text="@{viewModel.store.email}"
                 android:textColor="@color/color888888"
-                android:textSize="@dimen/text_size16"
+                android:textSize="@dimen/text_size12"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
 

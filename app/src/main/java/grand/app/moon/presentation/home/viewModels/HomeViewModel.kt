@@ -1,13 +1,12 @@
 package grand.app.moon.presentation.home.viewModels
 
+import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -17,7 +16,7 @@ import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
-import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.use_case.StoreUseCase
@@ -149,8 +148,12 @@ class HomeViewModel @Inject constructor(
     storeAdapter.differ.submitList(data.mostRatedStores)
     notifyPropertyChanged(BR.storeAdapter)
 
+    val homeList = ArrayList<CategoryAdvertisement>()
+    data.categoryAds.forEach {
+     if(it.advertisements.size > 0) homeList.add(it)
+    }
     Log.d(TAG, "updateList: " + data.categoryAds.size)
-    adsHomeAdapter.differ.submitList(data.categoryAds)
+    adsHomeAdapter.differ.submitList(homeList)
     notifyPropertyChanged(BR.adsHomeAdapter)
     show.set(true)
   }

@@ -17,8 +17,8 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
 
 
 
-  suspend fun storeDetails(id: Int) = safeApiCall {
-    apiService.storeDetails(id)
+  suspend fun storeDetails(id: Int,type: Int) = safeApiCall {
+    apiService.storeDetails(id,type)
   }
 
   private val TAG = "StoreRemoteDataSource"

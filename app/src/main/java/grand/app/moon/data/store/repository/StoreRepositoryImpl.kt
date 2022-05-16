@@ -18,7 +18,7 @@ class StoreRepositoryImpl @Inject constructor(
 
 
   override
-  suspend fun storeDetails(id: Int) = remoteDataSource.storeDetails(id)
+  suspend fun storeDetails(id: Int,type:Int ) = remoteDataSource.storeDetails(id,type)
 
 
   override

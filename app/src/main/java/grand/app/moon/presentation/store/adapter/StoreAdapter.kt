@@ -33,6 +33,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   var percentage = 100
   var position = 0
   var grid = Constants.GRID_2
+  var type = 3
   private val differCallback = object : DiffUtil.ItemCallback<Store>() {
     override fun areItemsTheSame(
       oldItem: Store,
@@ -76,7 +77,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //    Log.d(TAG, "onBindViewHolder: $position")
     val data = differ.currentList[position]
-    val itemViewModel = ItemStoreViewModel(data, percentage,useCase,position)
+    val itemViewModel = ItemStoreViewModel(data,type, percentage,useCase,position)
     holder.setViewModel(itemViewModel)
     itemViewModel.submitEvent.observeForever{
 //          Log.d(TAG, "onBindViewHolder: HAY THERE")

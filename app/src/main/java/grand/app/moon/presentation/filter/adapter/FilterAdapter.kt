@@ -173,6 +173,20 @@ class FilterAdapter : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
 //    notifyItemChanged(position)
   }
 
+  fun setName(pos: Int, name: String) {
+    val array = ArrayList(differ.currentList)
+    array[pos].selectedText = name
+    differ.submitList(null)
+    differ.submitList(array)
+  }
+
+  fun allowClickable(pos: Int, check: Boolean) {
+    val array = ArrayList(differ.currentList)
+    array[pos].allowChange = check
+    differ.submitList(null)
+    differ.submitList(array)
+  }
+
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {

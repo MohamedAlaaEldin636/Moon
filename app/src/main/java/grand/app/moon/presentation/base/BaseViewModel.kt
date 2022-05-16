@@ -1,6 +1,5 @@
 package grand.app.moon.presentation.base
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -12,41 +11,20 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
-import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.cometchat.pro.constants.CometChatConstants
-import com.cometchat.pro.core.CometChat
-import com.cometchat.pro.exceptions.CometChatException
-import com.cometchat.pro.models.User
-import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMessageListActivity
-import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
 import com.facebook.FacebookSdk.getCacheDir
 import es.dmoral.toasty.Toasty
 import grand.app.moon.BuildConfig
 import grand.app.moon.R
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
-import grand.app.moon.domain.utils.BaseResponse
-import grand.app.moon.domain.utils.CometChatResource
-import grand.app.moon.domain.utils.ICometChat
-import grand.app.moon.domain.utils.Resource
-import grand.app.moon.presentation.base.extensions.disable
-import grand.app.moon.presentation.base.extensions.enable
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.filter.FilterFragmentDirections
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -168,7 +146,7 @@ open class BaseViewModel : ViewModel(), Observable {
         bitmapDrawable.bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         stream.close()
         share(context, title, message)
-      } else  share(context, title, message)
+      } else share(context, title, message)
     } catch (e: IOException) {
       Log.d(TAG, "share: ${e.message}")
       e.printStackTrace()
@@ -207,13 +185,31 @@ open class BaseViewModel : ViewModel(), Observable {
     }
   }
 
-  fun toFilter(v: View){
+  fun toFilter(
+    v: View, category_id: Int = -1, category_name: String? = null, sub_category_id: Int = -1,
+    sub_category_name: String? = null, store_id: Int = -1
+  ) {
+    val bundle = Bundle()
+
+    bundle.putInt("category_id", category_id)
+    bundle.putInt("sub_category_id", sub_category_id)
+    bundle.putInt("store_id", store_id)
+
+    category_name?.let {
+      bundle.putString("category_name", it)
+    }
+
+    sub_category_name?.let {
+      bundle.putString("sub_category_name", it)
+    }
+
+
     v.findNavController()
-      .navigate(R.id.to_filter, Bundle(),Constants.NAVIGATION_OPTIONS)
+      .navigate(R.id.to_filter, bundle, Constants.NAVIGATION_OPTIONS)
 
   }
 
-  fun toFilterResult(v: View,request: FilterResultRequest){
+  fun toFilterResult(v: View, request: FilterResultRequest) {
     v.findNavController()
       .navigate(FilterFragmentDirections.actionFilterFragmentToFilterResultsFragment(request))
 

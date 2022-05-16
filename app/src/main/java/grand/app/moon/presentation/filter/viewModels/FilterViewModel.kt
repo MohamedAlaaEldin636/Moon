@@ -108,8 +108,31 @@ class FilterViewModel @Inject constructor(
         else -> it.filterType = FILTER_TYPE.MULTI_SELECT
       }
     }
+    if(request.categoryName != null){
+      adapter.setName(0,request.categoryName!!)
+    }
+    if(request.subCategoryName != null){
+      adapter.setName(1,request.subCategoryName!!)
+    }
     adapter.addAll(3, sizeBefore, response.filterProperties)
     sizeBefore = response.filterProperties.size
+  }
+
+  fun setCategoryId(int: Int,name: String) {
+    request.categoryId = int
+    request.categoryName = name
+    updateCallBack(adapter.differ.currentList[0])
+    callService()
+  }
+  fun setSubCategoryId(int: Int,name: String) {
+    request.sub_category_id = int
+    request.subCategoryName = name
+  }
+  fun setStoreId(int: Int) {
+    request.store_id = int
+  }
+  fun allowChangeCategory(check: Boolean){
+    adapter.allowClickable(1,check)
   }
 
 

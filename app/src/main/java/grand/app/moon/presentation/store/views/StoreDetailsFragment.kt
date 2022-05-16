@@ -5,13 +5,10 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.util.Log
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,19 +22,13 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentStoreDetailsBinding
-import grand.app.moon.domain.utils.SpannedGridLayoutManager
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.explore.ExploreFragmentDirections
 import grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
-import java.util.*
-import javax.security.auth.callback.Callback
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapReadyCallback {
@@ -52,7 +43,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.getDetails(adsDetailsFragmentArgs.id)
+    viewModel.getDetails(adsDetailsFragmentArgs.id,adsDetailsFragmentArgs.type)
 //    viewModel.exploreAdapter.clickEvent.observe(this,{
 //      if(it != -1) {
 //

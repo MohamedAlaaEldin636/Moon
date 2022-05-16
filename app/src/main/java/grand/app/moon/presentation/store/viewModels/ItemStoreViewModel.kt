@@ -23,13 +23,14 @@ import grand.app.moon.presentation.store.views.StoreFollowedListFragment
 import kotlinx.coroutines.flow.launchIn
 
 //store/unblock
-class ItemStoreViewModel(val store: Store,var percentage: Int,var useCase: StoreUseCase?,var position : Int) : BaseViewModel(){
+class ItemStoreViewModel(val store: Store,val type: Int,var percentage: Int,var useCase: StoreUseCase?,var position : Int) : BaseViewModel(){
 
   fun storeDetails(v: View){
     v.findNavController().navigate(
       R.id.nav_store,
       bundleOf(
-        "id" to store.id
+        "id" to store.id,
+        "type" to type
       ),Constants.NAVIGATION_OPTIONS)
   }
 

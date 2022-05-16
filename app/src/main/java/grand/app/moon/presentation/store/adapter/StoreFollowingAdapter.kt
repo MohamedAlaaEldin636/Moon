@@ -36,7 +36,7 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemStoreViewModel(data, 100,null,position)
+    val itemViewModel = ItemStoreViewModel(data, 100,3,null,position)
     holder.itemLayoutBinding.btnFollowStore.setOnClickListener {
       this.position = position
       clickEvent.value = position

@@ -1,7 +1,10 @@
 package com.cometchat.pro.uikit.ui_components.messages.message_list
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +21,7 @@ import com.cometchat.pro.uikit.ui_components.messages.message_actions.listener.M
 import com.cometchat.pro.uikit.ui_components.messages.message_actions.listener.OnMessageLongClick
 import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
 import com.cometchat.pro.uikit.ui_settings.UIKitSettings
+import java.util.*
 
 
 /**
@@ -34,90 +38,155 @@ import com.cometchat.pro.uikit.ui_settings.UIKitSettings
  * @see CometChatConstants
  * @see CometChatMessageList
  */
-class CometChatMessageListActivity : AppCompatActivity(), MessageAdapter.OnMessageLongClick {
-    private val messageLongClick: OnMessageLongClick? = null
-    var fragment: Fragment? = CometChatMessageList()
+
+class CometChatMessageListActivity : AppCompatActivity(),
+  MessageAdapter.OnMessageLongClick {
+  private val messageLongClick: OnMessageLongClick? = null
+  var fragment: Fragment? = CometChatMessageList()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cometchat_message_list)
+  protected fun changeLanguage(context: Context) {
+    val locale = Locale(UIKitSettings.LANGUAGE)
+    Locale.setDefault(locale)
+    val config = Configuration()
+    config.locale = locale
+    context.resources.updateConfiguration(
+      config,
+      context.resources.displayMetrics
+    )
+    setLanguage(UIKitSettings.LANGUAGE)
+  }
 
-        if (UIKitSettings.color != null)
-            window.statusBarColor = Color.parseColor(UIKitSettings.color)
+  protected fun setLanguage(language: String) {
+    val userDetails: SharedPreferences = getSharedPreferences(UIKitSettings.LANGUAGE_DATA, Context.MODE_PRIVATE)
+    val editor = userDetails.edit()
+    editor.putString(UIKitSettings.LANGUAGE, language)
+    editor.commit()
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+
+    super.onCreate(savedInstanceState)
+    changeLanguage(this)
+    setContentView(R.layout.activity_cometchat_message_list)
+
+    if (UIKitSettings.color != null)
+      window.statusBarColor = Color.parseColor(UIKitSettings.color)
 
 
-        val config: EmojiCompat.Config = BundledEmojiCompatConfig(this)
-        EmojiCompat.init(config)
+    val config: EmojiCompat.Config = BundledEmojiCompatConfig(this)
+    EmojiCompat.init(config)
 
-        if (intent != null) {
-            val bundle = Bundle()
-            bundle.putString(UIKitConstants.IntentStrings.AVATAR, intent.getStringExtra(UIKitConstants.IntentStrings.AVATAR))
-            bundle.putString(UIKitConstants.IntentStrings.NAME, intent.getStringExtra(UIKitConstants.IntentStrings.NAME))
-            bundle.putString(UIKitConstants.IntentStrings.TYPE, intent.getStringExtra(UIKitConstants.IntentStrings.TYPE))
-            if (intent.hasExtra(UIKitConstants.IntentStrings.TYPE) && intent.getStringExtra(UIKitConstants.IntentStrings.TYPE) == CometChatConstants.RECEIVER_TYPE_USER) {
-                bundle.putString(UIKitConstants.IntentStrings.UID, intent.getStringExtra(UIKitConstants.IntentStrings.UID))
-                bundle.putString(UIKitConstants.IntentStrings.STATUS, intent.getStringExtra(UIKitConstants.IntentStrings.STATUS))
-                bundle.putString(UIKitConstants.IntentStrings.LINK, intent.getStringExtra(UIKitConstants.IntentStrings.LINK))
-                bundle.putBoolean("isReply", intent.getBooleanExtra("isReply", false))
-                bundle.putString("baseMessageMetadata", intent.getStringExtra("baseMessageMetadata"))
-            } else {
-                bundle.putString(UIKitConstants.IntentStrings.GUID, intent.getStringExtra(UIKitConstants.IntentStrings.GUID))
-                bundle.putString(UIKitConstants.IntentStrings.GROUP_OWNER, intent.getStringExtra(UIKitConstants.IntentStrings.GROUP_OWNER))
-                bundle.putInt(UIKitConstants.IntentStrings.MEMBER_COUNT, intent.getIntExtra(UIKitConstants.IntentStrings.MEMBER_COUNT, 0))
-                bundle.putString(UIKitConstants.IntentStrings.GROUP_TYPE, intent.getStringExtra(UIKitConstants.IntentStrings.GROUP_TYPE))
-                bundle.putString(UIKitConstants.IntentStrings.GROUP_DESC, intent.getStringExtra(UIKitConstants.IntentStrings.GROUP_DESC))
-                bundle.putString(UIKitConstants.IntentStrings.GROUP_PASSWORD, intent.getStringExtra(UIKitConstants.IntentStrings.GROUP_PASSWORD))
-            }
-            fragment!!.arguments = bundle
-            supportFragmentManager.beginTransaction().replace(R.id.ChatFragment, fragment!!).commit()
-        }
+    if (intent != null) {
+      val bundle = Bundle()
+      bundle.putString(
+        UIKitConstants.IntentStrings.AVATAR,
+        intent.getStringExtra(UIKitConstants.IntentStrings.AVATAR)
+      )
+      bundle.putString(
+        UIKitConstants.IntentStrings.NAME,
+        intent.getStringExtra(UIKitConstants.IntentStrings.NAME)
+      )
+      bundle.putString(
+        UIKitConstants.IntentStrings.TYPE,
+        intent.getStringExtra(UIKitConstants.IntentStrings.TYPE)
+      )
+      if (intent.hasExtra(UIKitConstants.IntentStrings.TYPE) && intent.getStringExtra(UIKitConstants.IntentStrings.TYPE) == CometChatConstants.RECEIVER_TYPE_USER) {
+        bundle.putString(
+          UIKitConstants.IntentStrings.UID,
+          intent.getStringExtra(UIKitConstants.IntentStrings.UID)
+        )
+        bundle.putString(
+          UIKitConstants.IntentStrings.STATUS,
+          intent.getStringExtra(UIKitConstants.IntentStrings.STATUS)
+        )
+        bundle.putString(
+          UIKitConstants.IntentStrings.LINK,
+          intent.getStringExtra(UIKitConstants.IntentStrings.LINK)
+        )
+        bundle.putBoolean("isReply", intent.getBooleanExtra("isReply", false))
+        bundle.putString("baseMessageMetadata", intent.getStringExtra("baseMessageMetadata"))
+      } else {
+        bundle.putString(
+          UIKitConstants.IntentStrings.GUID,
+          intent.getStringExtra(UIKitConstants.IntentStrings.GUID)
+        )
+        bundle.putString(
+          UIKitConstants.IntentStrings.GROUP_OWNER,
+          intent.getStringExtra(UIKitConstants.IntentStrings.GROUP_OWNER)
+        )
+        bundle.putInt(
+          UIKitConstants.IntentStrings.MEMBER_COUNT,
+          intent.getIntExtra(UIKitConstants.IntentStrings.MEMBER_COUNT, 0)
+        )
+        bundle.putString(
+          UIKitConstants.IntentStrings.GROUP_TYPE,
+          intent.getStringExtra(UIKitConstants.IntentStrings.GROUP_TYPE)
+        )
+        bundle.putString(
+          UIKitConstants.IntentStrings.GROUP_DESC,
+          intent.getStringExtra(UIKitConstants.IntentStrings.GROUP_DESC)
+        )
+        bundle.putString(
+          UIKitConstants.IntentStrings.GROUP_PASSWORD,
+          intent.getStringExtra(UIKitConstants.IntentStrings.GROUP_PASSWORD)
+        )
+      }
+      fragment!!.arguments = bundle
+      supportFragmentManager.beginTransaction().replace(R.id.ChatFragment, fragment!!).commit()
     }
+  }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val fragment = supportFragmentManager.findFragmentById(R.id.ChatFragment)
-        fragment?.onActivityResult(requestCode,resultCode,data)
-    }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.d(TAG, "onRequestPermissionsResult: ")
-    }
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    val fragment = supportFragmentManager.findFragmentById(R.id.ChatFragment)
+    fragment?.onActivityResult(requestCode, resultCode, data)
+  }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        return super.onCreateOptionsMenu(menu)
-    }
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<String>,
+    grantResults: IntArray
+  ) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    Log.d(TAG, "onRequestPermissionsResult: ")
+  }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    return super.onCreateOptionsMenu(menu)
+  }
+
+  override fun onBackPressed() {
+    super.onBackPressed()
 //        startActivity(Intent(this, CometChatUI::class.java))
-        finish()
-    }
+    finish()
+  }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return super.onOptionsItemSelected(item)
+  }
 
-    override fun setLongMessageClick(baseMessage: List<BaseMessage>?) {
-        if (fragment != null) (fragment as OnMessageLongClick).setLongMessageClick(baseMessage)
-    }
+  override fun setLongMessageClick(baseMessage: List<BaseMessage>?) {
+    if (fragment != null) (fragment as OnMessageLongClick).setLongMessageClick(baseMessage)
+  }
 
-    override fun onResume() {
-        super.onResume()
-    }
+  override fun onResume() {
+    changeLanguage(this)
+    super.onResume()
+  }
 
-    override fun onPause() {
-        super.onPause()
-    }
+  override fun onPause() {
+    super.onPause()
+  }
 
-    public fun handleDialogClose(dialog: DialogInterface) {
-        if (fragment != null)
-            (fragment as MessageActionCloseListener).handleDialogClose(dialog)
-        dialog.dismiss()
-    }
+  public fun handleDialogClose(dialog: DialogInterface) {
+    if (fragment != null)
+      (fragment as MessageActionCloseListener).handleDialogClose(dialog)
+    dialog.dismiss()
+  }
 
-    companion object {
-        private const val TAG = "CometChatMessageListAct"
-    }
+  companion object {
+    private const val TAG = "CometChatMessageListAct"
+  }
 }
