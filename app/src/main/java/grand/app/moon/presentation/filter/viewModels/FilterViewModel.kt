@@ -121,7 +121,9 @@ class FilterViewModel @Inject constructor(
   fun setCategoryId(int: Int,name: String) {
     request.categoryId = int
     request.categoryName = name
-    updateCallBack(adapter.differ.currentList[0])
+    addSubCategories(request.categoryId) {
+      adapter.replaceSubCategories(it)
+    }
     callService()
   }
   fun setSubCategoryId(int: Int,name: String) {
