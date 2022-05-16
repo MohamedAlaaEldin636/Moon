@@ -190,12 +190,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/corner_primary"
-        android:paddingTop="@dimen/dimen3"
         android:paddingStart="@dimen/dimen8"
+        android:paddingTop="@dimen/dimen3"
         android:paddingEnd="@dimen/dimen8"
         android:paddingBottom="@dimen/dimen3"
-        app:layout_constraintEnd_toEndOf="@+id/img_store"
-        app:layout_constraintStart_toStartOf="@+id/img_store"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/dimen10"
         app:layout_constraintTop_toTopOf="@+id/tv_store_rate_text">
 
         <androidx.appcompat.widget.AppCompatTextView

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
+import grand.app.moon.databinding.ItemStoryAllBinding
 import grand.app.moon.databinding.ItemStoryBinding
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.StoreListPaginateData
@@ -22,7 +23,7 @@ import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import grand.app.moon.presentation.story.storyView.screen.StoryDisplayActivity
 import grand.app.moon.presentation.story.viewModels.ItemStoryViewModel
 
-class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
+class StoriesAllAdapter : RecyclerView.Adapter<StoriesAllAdapter.ViewHolder>() {
   lateinit var context: Context
   var clickEvent: SingleLiveEvent<Store> = SingleLiveEvent()
   val storiesPaginate = StoreListPaginateData()
@@ -45,7 +46,7 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
   val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view = LayoutInflater.from(parent.context)
-      .inflate(R.layout.item_story, parent, false)
+      .inflate(R.layout.item_story_all, parent, false)
     context = parent.context
     return ViewHolder(view)
   }
@@ -57,23 +58,9 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
     holder.itemLayoutBinding.itemMore.setOnClickListener {
 //      Log.d(TAG, "onBindViewHolder: ")
 //      clickEvent.value = data
-      when (position) {
-        0 -> {
-          holder.itemLayoutBinding.root.findNavController().navigate(
-            R.id.to_stories,
-            bundleOf(
-              "stories" to storiesPaginate
-            ), Constants.NAVIGATION_OPTIONS
-          )
-
-        }
-        else -> {
-          val intent =
-            Intent(holder.itemLayoutBinding.root.context, StoryDisplayActivity::class.java)
-          intent.putExtra(Constants.STORIES, data)
-          holder.itemLayoutBinding.root.context.startActivity(intent)
-        }
-      }
+      val intent = Intent(holder.itemLayoutBinding.root.context, StoryDisplayActivity::class.java)
+      intent.putExtra(Constants.STORIES, data)
+      holder.itemLayoutBinding.root.context.startActivity(intent)
     }
     holder.setViewModel(itemViewModel)
 
@@ -95,7 +82,7 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    lateinit var itemLayoutBinding: ItemStoryBinding
+    lateinit var itemLayoutBinding: ItemStoryAllBinding
 
     init {
       bind()

@@ -43,7 +43,9 @@ fun Context.openChatStore(v: View, uid: Int, name: String, image:String) {
 fun Context.loginCometChat(externalUserId: Int){
   CometChat.login("user_$externalUserId", Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
     override fun onSuccess(user: User?) {
-      Log.d(TAG, "onSuccess: ")
+      user?.let {
+        Log.d(TAG, "onSuccess: ${it.uid}")
+      }
     }
     override fun onError(p0: CometChatException?) {
       Log.d(TAG, "failed: ")

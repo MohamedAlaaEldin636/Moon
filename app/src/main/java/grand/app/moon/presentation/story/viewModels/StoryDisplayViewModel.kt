@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
+import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.core.extenstions.startChatPage
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.StoryRequest
@@ -40,13 +41,16 @@ class StoryDisplayViewModel @Inject constructor(
 
   fun chat(v: View){
     if(v.context.isLoginWithOpenAuth()){
-//      v.context.startChatPage(v)
+      store.get()?.let {
+        v.context.openChatStore(v, it.id, it.name, it.image)
+      }
     }
   }
 
   fun like(v: View){
     if(v.context.isLoginWithOpenAuth()){
       storyRequest.type = 2
+      callService()
     }
   }
 

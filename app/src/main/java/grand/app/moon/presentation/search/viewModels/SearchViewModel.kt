@@ -11,6 +11,7 @@ import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.AccountUseCases
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
+import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -26,8 +27,10 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
   val accountRepository: AccountRepository,
   val userLocalUseCase: UserLocalUseCase,
+  val adsRepository: AdsRepository,
   private val useCase: AdsUseCase,
 ) : BaseViewModel() {
+
 
   @Bindable
   var page: Int = 0
@@ -39,9 +42,8 @@ class SearchViewModel @Inject constructor(
 
   var isLast = false
 
-  @Inject
-  @Bindable
-  lateinit var  adapter : AdsAdapter
+  var  adapter : AdsAdapter = AdsAdapter(adsRepository)
+
 
 
   var ADS_API = BuildConfig.API_BASE_URL + "v1/advertisements?"
@@ -109,6 +111,11 @@ class SearchViewModel @Inject constructor(
 
 
   private fun getAdsList() {
+    if(ADS_LIST_URL.isNotEmpty()){
+      if(ADS_LIST_URL.substring(ADS_LIST_URL.length - 1) == "&"){
+        ADS_LIST_URL = ADS_LIST_URL.substring(0,ADS_LIST_URL.length - 1)
+      }
+    }
     job = useCase.getAdsList(ADS_LIST_URL)
       .onEach {
         response.value = it

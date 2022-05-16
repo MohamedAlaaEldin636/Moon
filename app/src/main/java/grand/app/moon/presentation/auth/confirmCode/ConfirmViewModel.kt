@@ -85,7 +85,7 @@ class ConfirmViewModel @Inject constructor(
   }
 
 
-  var timerText = "10:00"
+  var timerText = "60:00"
   var resend = false
   lateinit var countDownTimer: CountDownTimer
   private val TAG = "ConfirmViewModel"
@@ -94,7 +94,7 @@ class ConfirmViewModel @Inject constructor(
     countDownTimer = object : CountDownTimer(10000, 1000) {
       override fun onTick(millisUntilFinished: Long) {
         timerText = when {
-          (millisUntilFinished / 1000) < 10 -> "0" + (millisUntilFinished / 1000)
+          (millisUntilFinished / 60000) < 10 -> "0" + (millisUntilFinished / 1000)
           else -> (millisUntilFinished / 1000)
         }.toString().plus(" : 00")
         notifyChange()

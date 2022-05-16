@@ -51,6 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layoutDirection="ltr"
+        android:background="@drawable/corner_silver_strock"
+
         android:orientation="horizontal"
         android:layout_marginStart="@dimen/dimen14"
         android:layout_marginTop="@dimen/dimen18"
@@ -69,6 +71,7 @@
           app:ccpDialog_showTitle="false"
           android:layout_gravity="center"
           android:gravity="center"
+          app:ccp_textSize="@dimen/text_size14"
           app:ccp_autoDetectCountry="true"
           app:ccp_areaCodeDetectedCountry="true"
           app:ccp_autoDetectLanguage="true"
@@ -78,18 +81,17 @@
           app:ccp_contentColor="@color/colorPrimary"
           app:ccpDialog_rippleEnable="true"
           app:ccp_useDummyEmojiForPreview="true"
-          android:background="@drawable/corner_silver_strock"
           app:ccpDialog_textColor="@color/colorPrimary" />
 
         <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/edt_login_phone"
           android:layout_width="match_parent"
-          android:background="@drawable/corner_silver_strock"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen6"
           android:minHeight="@dimen/dimen50"
           android:hint="@string/phone"
           android:padding="@dimen/dimen10"
+          android:background="@null"
           android:inputType="phone"
           android:textDirection="ltr"
           android:text="@={viewModel.request.phone}"

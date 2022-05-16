@@ -42,11 +42,11 @@ class VerifyAccountUseCase @Inject constructor(
   }.flowOn(Dispatchers.IO)
 
   fun sendCode(request: VerifyAccountRequest): Flow<Resource<BaseResponse<*>>> = flow {
-    if (request.code.isNotEmpty()) {
+//    if (request.code.isNotEmpty()) {
       emit(Resource.Loading)
       val result = authRepository.sendCode(request)
       emit(result)
-    }
+//    }
   }.flowOn(Dispatchers.IO)
 
 }

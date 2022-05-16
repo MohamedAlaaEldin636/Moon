@@ -32,6 +32,7 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
 
   private val viewModel: StoreListViewModel by viewModels()
 
+
   override
   fun getLayoutId() = R.layout.fragment_store_list
 

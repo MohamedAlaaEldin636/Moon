@@ -152,7 +152,6 @@
         android:drawableStart="@drawable/ic_timer"
         android:layout_marginTop="@dimen/dimen20"
         android:drawablePadding="@dimen/dimen10"
-        android:enabled="false"
         android:visibility="@{viewmodel.resend ? View.VISIBLE : View.GONE}"
         android:onClick="@{(v)->viewmodel.resend(v)}"
         android:text="@string/confirm_resend"

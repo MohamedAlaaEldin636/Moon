@@ -235,7 +235,7 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
       Glide
         .with(context)
         .load(imageUrl)
-        .diskCacheStrategy(DiskCacheStrategy.DATA)
+//        .diskCacheStrategy(DiskCacheStrategy.DATA)
         .into(this);
 //      val request = ImageRequest.Builder(context)
 //        .data(imageUrl)

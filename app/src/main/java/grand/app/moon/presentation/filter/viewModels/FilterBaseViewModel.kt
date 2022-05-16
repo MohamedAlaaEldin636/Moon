@@ -61,7 +61,7 @@ open class FilterBaseViewModel @Inject constructor(
 
     var list = arrayListOf<FilterProperty>()
     Log.d(TAG, "addRates: ${list.size}")
-    for (i in 5 downTo 1) {
+    for (i in 1..5) {
       Log.d(TAG, "addRates: $i")
       list.add(FilterProperty(id = i))
       property.children.add(Children(id = i, name = ""))
@@ -296,7 +296,7 @@ open class FilterBaseViewModel @Inject constructor(
     addAnotherOptions {
       adapterAdsType.differ.submitList(it.children)
     }
-    rateAdapter.lastPosition = 4
+    rateAdapter.lastPosition = 0
     rateAdapter.lastSelected = 1
     addRates {
       rateAdapter.differ.submitList(it.children)

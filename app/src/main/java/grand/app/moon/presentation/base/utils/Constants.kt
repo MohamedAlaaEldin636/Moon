@@ -51,9 +51,9 @@ object Constants {
 
 
 
-  const val CHAT_APP_ID = "209071d53fb8f4ec"
+  const val CHAT_APP_ID = "2093943501fa6b66"
   const val CHAT_REGION: String = "eu"
-  const val CHAT_AUTH_KEY: String = "e368e0704ace0662323ec6d9bc15043da5f256e9"
+  const val CHAT_AUTH_KEY: String = "83d95ac0cb93239d1e08ba375efe7ab73e541dbd"
 
   val ONESIGNAL_APP_ID = "ea936a31-ed86-430a-b303-794f461dd317"
 

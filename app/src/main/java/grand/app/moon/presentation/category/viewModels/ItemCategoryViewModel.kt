@@ -34,9 +34,9 @@ class ItemCategoryViewModel constructor(val category: CategoryItem, var percenta
         )
       } else {
         v.findNavController().navigate(
-          R.id.navCategoryListAds,
+          R.id.nav_category_list_ads,
           bundleOf(
-            "sub_category_id" to category.id,
+            "sub_category" to category.id,
             "tabBarText" to category.name
           ), Constants.NAVIGATION_OPTIONS
         )

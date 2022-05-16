@@ -27,6 +27,7 @@ import grand.app.moon.presentation.category.adapter.CategoriesAdapter
 import grand.app.moon.presentation.home.HomeFragmentDirections
 import grand.app.moon.presentation.story.adapter.StoriesAdapter
 import grand.app.moon.presentation.store.adapter.StoreAdapter
+import grand.app.moon.presentation.story.adapter.StoriesAllAdapter
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -53,6 +54,9 @@ class HomeViewModel @Inject constructor(
 
   @Bindable
   val storiesAdapter = StoriesAdapter()
+
+  @Bindable
+  val storiesAllAdapter = StoriesAllAdapter()
 
   @Bindable
   val categoriesAdapter = CategoriesAdapter()

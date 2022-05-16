@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
         android:layout_margin="@dimen/dimen10"
         android:scaleType="fitXY"
-        app:loadImage="@{itemViewModels.story.file}"
+        app:loadImage="@{itemViewModels.store.image}"
         app:progressBar="@{progress}"
         android:visibility="@{itemViewModels.story.isFirst == true ? View.GONE  : View.VISIBLE}"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"

@@ -12,6 +12,7 @@ import grand.app.moon.BuildConfig
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
+import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
@@ -31,6 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SubCategoryViewModel @Inject constructor(
   private val useCase: AdsUseCase,
+  private val adsRepository: AdsRepository,
   private val accountRepository: AccountRepository,
 
   ) : BaseViewModel() {
@@ -56,11 +58,9 @@ class SubCategoryViewModel @Inject constructor(
   var sortBy = 1
   var type: Int = -1
 
-  @Inject
-  @Bindable
-  lateinit var  adapter : AdsAdapter
+  var  adapter : AdsAdapter = AdsAdapter(adsRepository)
 
-
+  var noData = ObservableBoolean(false)
   var ADS_LIST_URL = ""
 
   val _responseIsSubService =
@@ -68,6 +68,7 @@ class SubCategoryViewModel @Inject constructor(
 
   val _responseListAds =
     MutableStateFlow<Resource<BaseResponse<AdsListPaginateData>>>(Resource.Default)
+
 
   val response = _responseIsSubService
 
@@ -95,11 +96,11 @@ class SubCategoryViewModel @Inject constructor(
 
   private fun getAdsList() {
     ADS_LIST_URL = "${BuildConfig.API_BASE_URL}v1/advertisements?page=${page}&order_by=$sortBy"
-    if(categoryId != -1) ADS_LIST_URL +=  "&category_id=${categoryId}"
-    if(subCategoryId != -1) ADS_LIST_URL +=  "&sub_category_id=${subCategoryId}"
-    if(search.trim().isNotEmpty()) ADS_LIST_URL += "&search=$search"
-    if(propertyId.trim().isNotEmpty()) ADS_LIST_URL += "&property_id=$propertyId"
-    if(type != -1) {
+    if (categoryId != -1) ADS_LIST_URL += "&category_id=${categoryId}"
+    if (subCategoryId != -1) ADS_LIST_URL += "&sub_category_id=${subCategoryId}"
+    if (search.trim().isNotEmpty()) ADS_LIST_URL += "&search=$search"
+    if (propertyId.trim().isNotEmpty()) ADS_LIST_URL += "&property_id=$propertyId"
+    if (type != -1) {
       ADS_LIST_URL += "&type=$type"
       job = useCase.getAdsList(ADS_LIST_URL)
         .onEach {
@@ -107,7 +108,7 @@ class SubCategoryViewModel @Inject constructor(
         }
         .launchIn(viewModelScope)
 
-    }else {
+    } else {
       job = useCase.getAdsSubCategory(ADS_LIST_URL)
         .onEach {
           response.value = it
@@ -162,6 +163,7 @@ class SubCategoryViewModel @Inject constructor(
 
   fun setData(data: SubCategoryResponse) {
     this.subCategoryResponse.set(data)
+    if(data.advertisements.list.size == 0 && page == 1) noData.set(true)
     data.let {
       println("size:" + data.advertisements.list.size)
       isLast = data.advertisements.links.next == null

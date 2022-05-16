@@ -21,6 +21,7 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.base.utils.openBrowser
 import grand.app.moon.presentation.store.adapter.StoreAdapter
 import grand.app.moon.presentation.store.adapter.StoreFollowingAdapter
 import grand.app.moon.presentation.store.views.StoreListFragmentDirections
@@ -81,11 +82,11 @@ class StoreListViewModel @Inject constructor(
   }
 
   fun addStoreNow(v: View) {
-
+    openBrowser(v.context, "https://moontest.my-staff.net/store/register")
   }
 
   fun storeFilter(v: View) {
-//    v.findNavController().navigate(StoreListFragmentDirections.actionStoreListFragmentToStoreFilterFragment(request))
+    v.findNavController().navigate(StoreListFragmentDirections.actionStoreListFragmentToStoreFilterFragment(request))
   }
 
   fun callService() {
