@@ -9,49 +9,39 @@
     app:argType="grand.app.moon.domain.filter.entitiy.FilterResultRequest" />
 
 
-
-
-
   <fragment
     android:id="@+id/filterFragment"
     android:name="grand.app.moon.presentation.filter.FilterFragment"
-    android:label="@string/filter" >
+    android:label="@string/filter">
     <argument
       android:name="allow_change_category"
-      app:argType="boolean"
-      android:defaultValue="true" />
+      android:defaultValue="true"
+      app:argType="boolean" />
 
     <argument
       android:name="category_id"
-      app:argType="integer"
-      android:defaultValue="-1" />
+      android:defaultValue="-1"
+      app:argType="integer" />
 
     <argument
       android:name="sub_category_id"
-      app:argType="integer"
-      android:defaultValue="-1" />
+      android:defaultValue="-1"
+      app:argType="integer" />
 
     <argument
       android:name="sub_category_name"
-      app:argType="string"
-      android:defaultValue="" />
+      android:defaultValue=""
+      app:argType="string" />
 
     <argument
       android:name="category_name"
-      app:argType="string"
-      android:defaultValue=""/>
+      android:defaultValue=""
+      app:argType="string" />
 
     <argument
       android:name="store_id"
-      app:argType="integer"
-      android:defaultValue="-1" />
-
-    <action
-      android:id="@+id/action_filterFragment_to_filterSingleSelectDialog"
-      app:destination="@id/filterSingleSelectDialog" />
-    <action
-      android:id="@+id/action_filterFragment_to_filterMultiSelectDialog"
-      app:destination="@id/filterMultiSelectDialog" />
+      android:defaultValue="-1"
+      app:argType="integer" />
     <action
       android:id="@+id/action_filterFragment_to_filterResultsFragment"
       app:enterAnim="@anim/anim_slide_in_right"
@@ -59,6 +49,13 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/filterResultsFragment" />
+    <action
+      android:id="@+id/action_filterFragment_to_filterSingleSelectDialog"
+      app:destination="@id/filterSingleSelectDialog" />
+    <action
+      android:id="@+id/action_filterFragment_to_filterMultiSelectDialog"
+      app:destination="@id/filterMultiSelectDialog" />
+
 
   </fragment>
 
@@ -83,14 +80,19 @@
     <argument
       android:name="propety"
       app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />
+
     <argument
       android:name="tabBarText"
       app:argType="string" />
+
+    <argument
+      android:name="last_select_id"
+      android:defaultValue="-1" />
   </dialog>
   <fragment
     android:id="@+id/filterResultsFragment"
     android:name="grand.app.moon.presentation.filter.result.FilterResultsFragment"
-    android:label="@string/filter_results" >
+    android:label="@string/filter_results">
     <argument
       android:name="filterRequest"
       app:argType="grand.app.moon.domain.filter.entitiy.FilterResultRequest" />

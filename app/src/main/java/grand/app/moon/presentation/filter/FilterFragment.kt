@@ -63,18 +63,34 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
   override fun setupObservers() {
     viewModel.adapter.clickEvent.observe(this, {
       when (it.filterType) {
+        FILTER_TYPE.CATEGORY -> {
+          viewModel.request.categoryId?.let { categoryId ->
+
+            FilterFragmentDirections.toFilter()
+
+            findNavController().navigate(
+              FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
+                it,
+                it.name,
+                viewModel.request.categoryId
+              )
+            )
+          }
+        }
         FILTER_TYPE.SUB_CATEGORY -> {
           viewModel.request.categoryId?.let { categoryId ->
             findNavController().navigate(
               FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
                 it,
-                it.name
+                it.name,
+                viewModel.request.sub_category_id
               )
             )
           }
         }
-        FILTER_TYPE.SINGLE_SELECT, FILTER_TYPE.SORT_BY, FILTER_TYPE.OTHER_OPTIONS, FILTER_TYPE.CATEGORY ->
+        FILTER_TYPE.SINGLE_SELECT, FILTER_TYPE.SORT_BY, FILTER_TYPE.OTHER_OPTIONS ->
           findNavController().navigate(
+
           FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
             it,
             it.name
@@ -88,6 +104,7 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
         )
       }
     })
+
 
     lifecycleScope.launchWhenResumed {
       viewModel.response.collect {

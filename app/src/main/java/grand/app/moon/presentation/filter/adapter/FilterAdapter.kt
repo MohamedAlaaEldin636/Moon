@@ -54,8 +54,10 @@ class FilterAdapter : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
     val data = differ.currentList[position]
     val itemViewModel = ItemFilterViewModel(data)
     holder.itemLayoutBinding.itemMore.itemFilterMore.setOnClickListener {
-      this.position = position
-      clickEvent.value = data
+      if(data.allowChange) {
+        this.position = position
+        clickEvent.value = data
+      }
     }
 
     if(data.type == 3) {
@@ -185,6 +187,10 @@ class FilterAdapter : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
     array[pos].allowChange = check
     differ.submitList(null)
     differ.submitList(array)
+  }
+
+  fun stopChanging(i: Int, b: Boolean) {
+
   }
 
 

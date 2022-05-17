@@ -135,7 +135,8 @@ class SubCategoryViewModel @Inject constructor(
           categoryId,
           categoryName,
           subCategoryId,
-          subCategoryName
+          subCategoryName,
+          allow_change_category = false
         )
       }
     }

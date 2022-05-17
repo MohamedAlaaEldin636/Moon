@@ -40,7 +40,9 @@ class FilterSingleSelectDialog : DialogFragment() {
       setFragmentResult(Constants.BUNDLE, bundle)
       backToPreviousScreen()
     }
-    viewModel.setData(args.propety)
+    args.lastSelectId?.let {
+      viewModel.setData(args.propety,it)
+    }
     return binding.root
   }
   override fun getTheme(): Int {

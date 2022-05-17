@@ -60,6 +60,8 @@ class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
 
   }
 
+
+
   override fun getItemCount(): Int {
     return differ.currentList.size
   }
@@ -72,6 +74,18 @@ class ReportAdapter : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
   override fun onViewDetachedFromWindow(holder: ViewHolder) {
     super.onViewDetachedFromWindow(holder)
     holder.unBind()
+  }
+
+  fun setSelect(selectId: Int) {
+    if(selectId != -1){
+      differ.currentList.forEachIndexed{ index , data ->
+        if(data.id == selectId){
+          lastPosition = index
+          lastSelected = selectId
+          notifyItemChanged(lastPosition)
+        }
+      }
+    }
   }
 
   inner class ViewHolder(itemView: View) :
