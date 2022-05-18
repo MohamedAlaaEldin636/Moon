@@ -2,11 +2,14 @@ package grand.app.moon.presentation.ads.viewModels
 
 import android.util.Log
 import androidx.databinding.Bindable
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.BuildConfig
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
+import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -20,6 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AdsListViewModel @Inject constructor(
+  val adsRepository: AdsRepository,
   private val useCase: AdsUseCase,
 ) : BaseViewModel() {
   @Bindable
@@ -28,15 +32,24 @@ class AdsListViewModel @Inject constructor(
   @Bindable
   var callingService = false
 
-  var type: Int = -1
+  var type: Int = 3
 
   var isLast = false
 
-  @Inject
   @Bindable
-  lateinit var adapter: AdsAdapter
+  var adapter: AdsAdapter = AdsAdapter(adsRepository)
+  val list = ObservableField(AdsListPaginateData())
+
+  var isProfile = ObservableBoolean(false)
+  var total = ObservableField("0")
 
   var ADS_LIST_URL = BuildConfig.API_BASE_URL + "v1/advertisements?"
+
+  var categoryId : Int? = null
+  var subCateoryId : Int? = null
+  var orderBy : Int = 1
+  var storeId : Int? = null
+
 
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<AdsListPaginateData>>>(Resource.Default)
@@ -52,11 +65,9 @@ class AdsListViewModel @Inject constructor(
       callingService = true
       notifyPropertyChanged(BR.callingService)
       page++
-      if (page > 1) {
-        notifyPropertyChanged(BR.page)
-      }
-      if(type == -1 && !ADS_LIST_URL.contains(Constants.CATEGORY_ID)
-        && !ADS_LIST_URL.contains(Constants.SUB_CATEGORY_ID)) getAdsProfile()
+      notifyPropertyChanged(BR.page)
+
+      if(categoryId == null && subCateoryId == null) getAdsProfile()
       else{
         getAdsList()
       }
@@ -65,6 +76,7 @@ class AdsListViewModel @Inject constructor(
 
   private fun getAdsProfile() {
     Log.d(TAG, "getAdsProfile: ${page} , $type")
+    if(type == 2) isProfile.set(true)
     job = useCase.getProfileAdsList(page, type)
       .onEach {
         response.value = it
@@ -73,7 +85,7 @@ class AdsListViewModel @Inject constructor(
   }
 
   private fun getAdsList() {
-    job = useCase.getAdsList(ADS_LIST_URL)
+    job = useCase.getAdsList(type,categoryId,subCateoryId,orderBy,storeId ,"",page)
       .onEach {
         response.value = it
       }
@@ -83,10 +95,12 @@ class AdsListViewModel @Inject constructor(
   private val TAG = "PackagesViewModel"
 
   fun setData(data: AdsListPaginateData?) {
+    list.set(data)
     data?.let {
       println("size:" + data.list.size)
       isLast = data.links.next == null
       if (page == 1) {
+        total.set(it.list.size.toString())
         Log.d(TAG, "setData: submitList")
 //        adapter = InvoicesAdapter()
         adapter.differ.submitList(it.list)

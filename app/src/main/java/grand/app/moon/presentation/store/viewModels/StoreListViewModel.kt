@@ -137,5 +137,12 @@ class StoreListViewModel @Inject constructor(
     super.onCleared()
   }
 
+  fun follow() {
+    followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
+    storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
+    adapter.changeFollowingText()
+  }
+
+
 
 }

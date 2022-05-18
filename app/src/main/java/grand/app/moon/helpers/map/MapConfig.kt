@@ -61,12 +61,47 @@ class MapConfig {
     // Add cluster items (markers) to the cluster manager.
   }
 
+  fun setSettings() {
+    mMap?.let {
+      it.mapType = GoogleMap.MAP_TYPE_NORMAL
+      //        mMap.setTrafficEnabled(true);
+//        mMap.setBuildingsEnabled(true);
+      it.isIndoorEnabled = true
+      it.uiSettings.isRotateGesturesEnabled = false
+      it.uiSettings.isZoomControlsEnabled = true
+      it.uiSettings.isZoomGesturesEnabled = true
+    }
+
+  }
+
   fun setMapStyle() {
+    Log.d(TAG, "setMapStyle: ")
     try {
+      val style = MapStyleOptions("[" +
+        "  {" +
+        "    \"featureType\":\"poi.business\"," +
+        "    \"elementType\":\"all\"," +
+        "    \"stylers\":[" +
+        "      {" +
+        "        \"visibility\":\"off\"" +
+        "      }" +
+        "    ]" +
+        "  }," +
+        "  {" +
+        "    \"featureType\":\"transit\"," +
+        "    \"elementType\":\"all\"," +
+        "    \"stylers\":[" +
+        "      {" +
+        "        \"visibility\":\"off\"" +
+        "      }" +
+        "    ]" +
+        "  }" +
+        "]");
       val isSuccess =
-        mMap!!.setMapStyle(context?.let { MapStyleOptions.loadRawResourceStyle(it, R.raw.map) })
+        mMap!!.setMapStyle(context?.let { MapStyleOptions.loadRawResourceStyle(it, R.raw.map_style) })
 //      mMap!!.mapType = GoogleMap.MAP_TYPE_HYBRID;
       if (!isSuccess) Log.e("errorMapStyle", "errorMap")
+      else Log.d(TAG, "errorMapStyle: not found ")
     } catch (ex: Resources.NotFoundException) {
       Log.d(TAG, "setMapStyle: ${ex.message}")
       ex.printStackTrace()
@@ -113,9 +148,9 @@ class MapConfig {
 
   fun addMarker(latLng: LatLng?, icon: Int, title: String?): Marker? {
     val marker = latLng?.let {
-        MarkerOptions().position(it)
-          .icon(BitmapDescriptorFactory.fromResource(icon))
-          .title(title)
+      MarkerOptions().position(it)
+        .icon(BitmapDescriptorFactory.fromResource(icon))
+        .title(title)
     }?.let {
       mMap!!.addMarker(
         it
@@ -129,10 +164,10 @@ class MapConfig {
 
   fun addMarker(latLng: LatLng?, icon: Int, title: String?, snipped: String?): Marker? {
     val marker = latLng?.let {
-        MarkerOptions().position(it)
-          .icon(BitmapDescriptorFactory.fromResource(icon))
-          .title(title)
-          .snippet(snipped)
+      MarkerOptions().position(it)
+        .icon(BitmapDescriptorFactory.fromResource(icon))
+        .title(title)
+        .snippet(snipped)
     }?.let {
       mMap!!.addMarker(
         it

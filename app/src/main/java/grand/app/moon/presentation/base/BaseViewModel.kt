@@ -186,13 +186,15 @@ open class BaseViewModel : ViewModel(), Observable {
   }
 
   fun toFilter(
-    v: View, category_id: Int = -1, category_name: String? = null, sub_category_id: Int = -1,
+    v: View, category_id: Int? = -1, category_name: String? = null, sub_category_id: Int? = -1,
     sub_category_name: String? = null,allow_change_category : Boolean = true, store_id: Int = -1
   ) {
     val bundle = Bundle()
 
-    bundle.putInt("category_id", category_id)
-    bundle.putInt("sub_category_id", sub_category_id)
+    category_id?.let { bundle.putInt("category_id", it) }
+    if (sub_category_id != null) {
+      bundle.putInt("sub_category_id", sub_category_id)
+    }
     bundle.putInt("store_id", store_id)
     bundle.putBoolean("allow_change_category",allow_change_category)
 

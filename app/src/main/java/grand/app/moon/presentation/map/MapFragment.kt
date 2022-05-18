@@ -26,6 +26,7 @@ import java.lang.Exception
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
   private val viewModel: MapViewModel by viewModels()
+  var map : SupportMapFragment? = null
 
   override
   fun getLayoutId() = R.layout.fragment_map
@@ -43,8 +44,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    (childFragmentManager.findFragmentById(R.id.mapView) as? SupportMapFragment)
-      ?.getMapAsync(this)
+    map = childFragmentManager.findFragmentById(R.id.mapView) as? SupportMapFragment
+    map?.getMapAsync(this)
     super.onViewCreated(view, savedInstanceState)
   }
 
@@ -89,29 +90,30 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
   }
 
   private fun loadMarkers() {
-    viewModel.mapConfig.clear()
-    viewModel.mapConfig.clusterManager?.cluster()
+
+    viewModel.mapConfig?.clear()
+    viewModel.mapConfig?.clusterManager?.cluster()
     viewModel.stores.forEachIndexed { index, store ->
       val clusterItem = ClusterCustomItem(store, index)
-      viewModel.mapConfig.clusterManager?.addItem(clusterItem)
+      viewModel.mapConfig?.clusterManager?.addItem(clusterItem)
       viewModel.clusterCustomItems.add(clusterItem)
       viewModel.latLngs.add(clusterItem.position)
     }
 
 
-    viewModel.markerRender = MarkerRender(viewModel.mapConfig, viewModel.clusterCustomItems)
-    viewModel.mapConfig.clusterManager?.renderer = viewModel.markerRender
+    viewModel.markerRender = viewModel.mapConfig?.let { MarkerRender(it, viewModel.clusterCustomItems) }
+    viewModel.mapConfig?.clusterManager?.renderer = viewModel.markerRender
 ////                                viewModel.mapConfig.clusterManager?.setOnClusterClickListener(this);
 ////                                viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(this);
 //      //                                viewModel.mapConfig.clusterManager?.setOnClusterClickListener(this);
 ////                                viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(this);
-    viewModel.mapConfig.getGoogleMap()?.let {
-      it.setOnCameraIdleListener(viewModel.mapConfig.clusterManager)
-      it.setOnMarkerClickListener(viewModel.mapConfig.clusterManager)
-      it.setOnInfoWindowClickListener(viewModel.mapConfig.clusterManager)
+    viewModel.mapConfig?.getGoogleMap()?.let {
+      it.setOnCameraIdleListener(viewModel.mapConfig?.clusterManager)
+      it.setOnMarkerClickListener(viewModel.mapConfig?.clusterManager)
+      it.setOnInfoWindowClickListener(viewModel.mapConfig?.clusterManager)
 
-      viewModel.mapConfig.clusterManager?.cluster()
-      viewModel.mapConfig.moveCamera(viewModel.latLngs)
+      viewModel.mapConfig?.clusterManager?.cluster()
+      viewModel.mapConfig?.moveCamera(viewModel.latLngs)
 
       it.setOnMarkerClickListener(
         GoogleMap.OnMarkerClickListener { marker ->
@@ -122,11 +124,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
           true
         })
       it.setOnMapClickListener { latLng -> }
-      viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(
+      viewModel.mapConfig?.clusterManager?.setOnClusterItemClickListener(
         OnClusterItemClickListener<ClusterCustomItem?> {
           try {
-            viewModel.mapConfig.clear()
-            viewModel.mapConfig.clusterManager?.clearItems()
+            viewModel.mapConfig?.clear()
+            viewModel.mapConfig?.clusterManager?.clearItems()
             //                                            viewModel.mapConfig.getGoogleMap().animateCamera(CameraUpdateFactory
             //                                                    .newLatLngZoom(placesCluster.getPosition(),
             //                                                            viewModel.mapConfig.getGoogleMap().getCameraPosition().zoom));
@@ -143,10 +145,39 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
   override fun onMapReady(p0: GoogleMap) {
     Log.d(TAG, "onMapReady: ")
     viewModel.mapConfig = MapConfig(requireContext(), p0)
-    viewModel.mapConfig.setMapStyle() //set style google map
+    viewModel.mapConfig!!.setMapStyle() //set style google map
 //    //cluster manager
-    viewModel.mapConfig.setUpCluster()
+    viewModel.mapConfig!!.setUpCluster()
     viewModel.callService()
 
+  }
+
+  override fun onStart() {
+    super.onStart()
+    map?.onStart()
+  }
+
+  override fun onPause() {
+    super.onPause()
+    map?.onPause()
+
+  }
+
+
+  override fun onStop() {
+    super.onStop()
+    map?.onStop()
+
+  }
+
+
+  override fun onLowMemory() {
+    super.onLowMemory()
+    map?.onLowMemory()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    viewModel.mapConfig?.getGoogleMap()?.clear()
   }
 }

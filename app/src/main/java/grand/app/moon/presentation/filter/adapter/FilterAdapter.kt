@@ -17,6 +17,7 @@ import grand.app.moon.databinding.ItemFilterBinding
 import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.presentation.filter.FILTER_TYPE
 import grand.app.moon.presentation.filter.viewModels.ItemFilterViewModel
+import kotlin.math.log
 
 
 class FilterAdapter : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {

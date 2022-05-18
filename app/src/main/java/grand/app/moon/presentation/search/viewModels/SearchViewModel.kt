@@ -44,16 +44,19 @@ class SearchViewModel @Inject constructor(
 
   var  adapter : AdsAdapter = AdsAdapter(adsRepository)
 
+  var categoryId : Int? = null
+  var subCategoryId : Int? = null
+  var search = ""
 
 
   var ADS_API = BuildConfig.API_BASE_URL + "v1/advertisements?"
   var ADS_LIST_URL = ""
-  var tmp = ""
-  val myMap = mutableMapOf(
-    Constants.SEARCH to "",
-    Constants.CATEGORY_ID to "",
-    Constants.SUB_CATEGORY_ID to ""
-  )
+//  var tmp = ""
+//  val myMap = mutableMapOf(
+//    Constants.SEARCH to "",
+//    Constants.CATEGORY_ID to "",
+//    Constants.SUB_CATEGORY_ID to ""
+//  )
 
 
   val _responseService =
@@ -84,20 +87,16 @@ class SearchViewModel @Inject constructor(
 
   fun callService() {
     isStart.set(false)
-    myMap.forEach {
-      if (it.value.isNotEmpty())
-        tmp += "${it.key}=${it.value}&"
-    }
-    if (myMap[Constants.SEARCH]?.trim()?.isNotEmpty() == true && !localSearchArrayList.contains(myMap[Constants.SEARCH])) {
+    if (search.trim().isNotEmpty() == true && !localSearchArrayList.contains(search)) {
       if (localSearches.isEmpty() )
-        accountRepository.saveKeyToLocal(Constants.SEARCH, myMap[Constants.SEARCH].toString())
+        accountRepository.saveKeyToLocal(Constants.SEARCH, search)
       else
         accountRepository.saveKeyToLocal(
           Constants.SEARCH,
-          localSearches + "||" + myMap[Constants.SEARCH].toString()
+          "$localSearches||$search"
         )
     }
-    ADS_LIST_URL = ADS_API + tmp
+//    ADS_LIST_URL = ADS_API + tmp
     if (!callingService && !isLast) {
       callingService = true
       notifyPropertyChanged(BR.callingService)
@@ -116,7 +115,7 @@ class SearchViewModel @Inject constructor(
         ADS_LIST_URL = ADS_LIST_URL.substring(0,ADS_LIST_URL.length - 1)
       }
     }
-    job = useCase.getAdsList(ADS_LIST_URL)
+    job = useCase.getAdsList(4,categoryId,subCategoryId,null,null,search,page)
       .onEach {
         response.value = it
       }

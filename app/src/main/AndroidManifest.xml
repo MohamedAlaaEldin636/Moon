@@ -33,6 +33,7 @@
         android:name="android.support.FILE_PROVIDER_PATHS"
         android:resource="@xml/provider_paths" />
     </provider>
+    <uses-library android:name="com.google.android.maps" />
     <uses-library
       android:name="org.apache.http.legacy"
       android:required="false" />
@@ -45,7 +46,7 @@
       android:value="@integer/google_play_services_version" />
     <meta-data
       android:name="com.google.android.geo.API_KEY"
-      android:value="@string/google_direction_api" />
+      android:value="AIzaSyC09l2FLnCPe5VzuIQr34UkMtYxXbtcq0E" />
 
 
     <meta-data

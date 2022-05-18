@@ -11,9 +11,9 @@ import grand.app.moon.BR
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.map.use_case.MapUseCase
-import grand.app.moon.domain.subCategory.entity.Property
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.helpers.map.MapConfig
@@ -23,12 +23,9 @@ import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.map.MapCategoriesAdapter
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import java.util.*
-import javax.annotation.Nullable
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 

@@ -18,12 +18,14 @@
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorFBFBFB"
     android:visibility="@{viewModel.show ? View.VISIBLE : View.GONE}">
 
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:fillViewport="true"
+      android:background="@color/colorFBFBFB"
       app:layout_constraintBottom_toTopOf="@+id/linearLayout"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +33,7 @@
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/colorFBFBFB"
         android:layout_height="match_parent">
 
 
@@ -70,15 +73,18 @@
 
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/item_ads_rate"
+          style="@style/mediumFont"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen10"
           android:layout_marginBottom="@dimen/dimen6"
           android:drawableStart="@drawable/ic_star"
-          android:drawablePadding="@dimen/dimen10"
+          android:drawablePadding="@dimen/dimen5"
+          android:gravity="center"
+          tools:text="(10)"
           android:text="@{`(`+viewModel.advertisement.averageRate+`)`}"
           android:textColor="@color/white"
-          android:textSize="@dimen/text_size12"
+          android:textSize="8sp"
           app:layout_constraintBottom_toBottomOf="@+id/image_slider"
           app:layout_constraintStart_toStartOf="parent" />
 
@@ -88,13 +94,16 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen10"
           android:layout_marginBottom="@dimen/dimen6"
+          style="@style/mediumFont"
+
           android:drawableStart="@drawable/ic_favourite"
-          android:drawablePadding="@dimen/dimen10"
-          android:text="@{``+viewModel.advertisement.favoriteCount}"
+          android:drawablePadding="@dimen/dimen5"
+          android:text="@{`(`+viewModel.advertisement.favoriteCount+`)`}"
           android:textColor="@color/white"
-          android:textSize="@dimen/text_size12"
+          android:textSize="8sp"
           app:layout_constraintBottom_toBottomOf="@+id/image_slider"
-          app:layout_constraintStart_toEndOf="@+id/item_ads_rate" />
+          app:layout_constraintStart_toEndOf="@+id/item_ads_rate"
+          app:layout_constraintTop_toTopOf="@+id/item_ads_rate" />
 
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/item_ads_views"
@@ -104,12 +113,13 @@
           android:layout_marginStart="@dimen/dimen10"
           android:layout_marginBottom="@dimen/dimen6"
           android:drawableStart="@drawable/ic_view_ads"
-          android:drawablePadding="@dimen/dimen10"
-          android:text="@{``+viewModel.advertisement.viewsCount}"
+          android:drawablePadding="@dimen/dimen5"
+          android:text="@{`(`+viewModel.advertisement.viewsCount+`)`}"
           android:textColor="@color/white"
-          android:textSize="@dimen/text_size12"
+          android:textSize="8sp"
           app:layout_constraintBottom_toBottomOf="@+id/image_slider"
-          app:layout_constraintStart_toEndOf="@+id/item_ads_fav" />
+          app:layout_constraintStart_toEndOf="@+id/item_ads_fav"
+          app:layout_constraintTop_toTopOf="@+id/item_ads_rate" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -120,12 +130,13 @@
           android:layout_marginStart="@dimen/dimen10"
           android:layout_marginBottom="@dimen/dimen6"
           android:drawableStart="@drawable/ic_share"
-          android:drawablePadding="@dimen/dimen10"
-          android:text="@{``+viewModel.advertisement.shareCount}"
+          android:drawablePadding="@dimen/dimen5"
+          android:text="@{`(`+viewModel.advertisement.shareCount+`)`}"
           android:textColor="@color/white"
-          android:textSize="@dimen/text_size12"
+          android:textSize="8sp"
           app:layout_constraintBottom_toBottomOf="@+id/image_slider"
-          app:layout_constraintStart_toEndOf="@+id/item_ads_views" />
+          app:layout_constraintStart_toEndOf="@+id/item_ads_views"
+          app:layout_constraintTop_toTopOf="@+id/item_ads_rate" />
 
         <androidx.appcompat.widget.AppCompatButton
           android:id="@+id/item_ads_premium"
@@ -332,7 +343,7 @@
                 android:text="@{viewModel.advertisement.description}"
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size16"
+                android:textSize="@dimen/text_size14"
                 android:textStyle="bold" />
 
             </LinearLayout>

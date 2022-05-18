@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.subCategory
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +11,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemCategoryPropertyBinding
-import grand.app.moon.databinding.ItemCategoryTextBinding
-import grand.app.moon.domain.categories.entity.CategoryItem
-import grand.app.moon.domain.subCategory.entity.Property
-import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.domain.home.models.Property
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
-import grand.app.moon.presentation.map.viewModel.ItemCategoryTextViewModel
 import grand.app.moon.presentation.subCategory.viewModel.ItemPropertyViewModel
 
 class PropertiesAdapter : RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
@@ -57,12 +54,11 @@ class PropertiesAdapter : RecyclerView.Adapter<PropertiesAdapter.ViewHolder>() {
     val data = differ.currentList[position]
     val itemViewModel = ItemPropertyViewModel(data, position,selected == position)
     holder.setViewModel(itemViewModel)
-    holder.itemLayoutBinding.tvItemCategoryText.setOnClickListener {
-
-    }
   }
 
+  private  val TAG = "PropertiesAdapter"
   fun submitSelect(){
+    Log.d(TAG, "submitSelect: HERE")
     if(selected != -1) notifyItemChanged(selected)
     selected = position
     notifyItemChanged(selected)

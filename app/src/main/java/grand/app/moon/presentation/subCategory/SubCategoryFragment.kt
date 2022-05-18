@@ -1,13 +1,17 @@
 package grand.app.moon.presentation.subCategory
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.domain.utils.Resource
@@ -45,7 +49,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.subCategoryId = args.subCategory
+    if(args.subCategory != -1) viewModel.subCategoryId = args.subCategory
     viewModel.categoryId = args.categoryId
     viewModel.type = args.type
     viewModel.isSub.set(args.isSub)
@@ -57,6 +61,24 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
 
   override
   fun setupObservers() {
+    binding.edtSearch.setOnEditorActionListener(TextView.OnEditorActionListener { textView, i, keyEvent ->
+      if (i == EditorInfo.IME_ACTION_SEARCH && textView.text.trim().isNotEmpty()) {
+        viewModel.reset()
+        viewModel.search = textView.text.toString()
+        viewModel.callService()
+        return@OnEditorActionListener true
+      }
+      false
+    })
+
+    viewModel.clickEvent.observe(this, {
+      when (it) {
+        Constants.GRID_1 , Constants.GRID_2 -> {
+          viewModel.adapter.notifyDataSetChanged()
+        }
+      }
+    })
+
     lifecycleScope.launchWhenResumed {
       viewModel.response.collect {
         when (it) {
@@ -97,8 +119,17 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
       }
     }
 
-    val layoutManager = LinearLayoutManager(requireContext())
-    binding.rvAdsCategory.layoutManager = layoutManager
+    val gridLayoutManager = GridLayoutManager(context,2, GridLayoutManager.VERTICAL,false)
+    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+      override fun getSpanSize(position: Int): Int {
+        return when(viewModel.adapter.grid){
+          Constants.GRID_1 -> 2
+          else -> 1
+        }
+      }
+    }
+
+    binding.rvAdsCategory.layoutManager = gridLayoutManager
     binding.rvAdsCategory.addOnScrollListener(object : RecyclerView.OnScrollListener() {
       override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)
@@ -107,6 +138,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
         }
       }
     })
+    binding.rvAdsCategory.adapter = viewModel.adapter
 
   }
 

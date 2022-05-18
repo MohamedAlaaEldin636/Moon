@@ -85,9 +85,7 @@
       android:name="tabBarText"
       app:argType="string" />
 
-    <argument
-      android:name="last_select_id"
-      android:defaultValue="-1" />
+
   </dialog>
   <fragment
     android:id="@+id/filterResultsFragment"

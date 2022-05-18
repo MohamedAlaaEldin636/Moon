@@ -63,7 +63,7 @@ data class Store(
   @SerializedName("created_at")
   val createdAt: String = "",
   @SerializedName("category")
-  val category: ArrayList<CategoryItem> = arrayListOf(),
+  val category: ArrayList<Property> = arrayListOf(),
   @SerializedName("stories")
   val stories: ArrayList<StoryItem> = arrayListOf(),
   var type:String = "Store"

@@ -20,23 +20,25 @@
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
     android:elevation="5dp"
+    android:layout_margin="@dimen/dimen16"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/dimen10">
+      android:layout_margin="@dimen/dimen10"
+      android:layout_height="wrap_content">
 
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_store_followed"
-        app:loadImage="@{viewModel.store.image}"
-        android:onClick="@{ (v) -> viewModel.storeDetails(v)}"
         android:layout_width="@dimen/dimen80"
         android:layout_height="@dimen/dimen80"
+        android:onClick="@{ (v) -> viewModel.storeDetails(v)}"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:loadImage="@{viewModel.store.image}" />
 
       <LinearLayout
         android:layout_width="0dp"
@@ -65,6 +67,23 @@
           app:layout_constraintStart_toEndOf="@+id/img_store"
           app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_store_nickname"
+          style="@style/boldFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen10"
+          android:layout_marginTop="@dimen/dimen5"
+          android:layout_marginEnd="@dimen/dimen10"
+          android:gravity="start"
+          android:text="@{viewModel.store.nickname}"
+          android:textAlignment="viewStart"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/text_size14"
+          app:layout_constraintEnd_toStartOf="@+id/btn_follow_store"
+          app:layout_constraintStart_toEndOf="@+id/img_store"
+
+          app:layout_constraintTop_toTopOf="parent" />
 
 
         <LinearLayout

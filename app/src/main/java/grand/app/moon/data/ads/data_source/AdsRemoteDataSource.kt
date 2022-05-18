@@ -6,6 +6,7 @@ import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.auth.entity.request.*
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
+import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import javax.inject.Inject
 
@@ -26,18 +27,49 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     Log.d(TAG, "getProfileAdsList: $type")
     apiService.getProfileAdsList(page, type)
   }
+  /*
+      @Query("type") type: Int?,
+    @Query("category_id") categoryId: Int?,
+    @Query("sub_category_id") subCategoryId: Int?,
+    @Query("order_by") orderBy: Int? = 1,
+    @Query("store_id") storeId: Int?,
+    @Query("page") page: Int?,
+   */
 
-  suspend fun getAdsList(url: String) = safeApiCall {
-    apiService.getAdsList(url)
+  suspend fun getAdsList(
+    type: Int?,
+    categoryId: Int?,
+    subCategoryId: Int?,
+    orderBy: Int?,
+    storeId: Int?,
+    search: String = "",
+    page: Int?
+  ) = safeApiCall {
+    apiService.getAds(type, categoryId, subCategoryId, orderBy, storeId, search, page)
   }
 
-  suspend fun getAdsSubCategory(url: String) = safeApiCall {
-    apiService.getAdsSubCategory(url)
+
+  suspend fun getAdsSubCategory(
+    type: Int?,
+    categoryId: Int?,
+    subCategoryId: Int?,
+    orderBy: Int?,
+    storeId: Int?,
+    search: String = "",
+    properties: ArrayList<Property>?,
+    page: Int?
+  ) = safeApiCall {
+    var propery: Int? = null
+    properties?.let {
+      if(it.isNotEmpty()) propery = it[0].id
+    }
+    Log.d(TAG, "getAdsSubCategory: $propery")
+    apiService.getAdsSubCategory(type, categoryId, subCategoryId, orderBy, storeId, search,propery, page)
   }
 
 
   suspend fun getReviews(page: Int, storeId: String?, advertisementId: String?) = safeApiCall {
-    apiService.getReviews(storeId,advertisementId, page)
+    apiService.getReviews(storeId, advertisementId, page)
   }
 
   suspend fun addReview(request: ReviewRequest) = safeApiCall {
@@ -46,7 +78,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 
   suspend fun filterDetails(categoryId: Int, subCategoryId: Int?) = safeApiCall {
     var url = "${BuildConfig.API_BASE_URL}v1/filter/details?category_id=$categoryId"
-    if(subCategoryId != null && subCategoryId != -1) url += "&sub_category_id=$subCategoryId"
+    if (subCategoryId != null && subCategoryId != -1) url += "&sub_category_id=$subCategoryId"
     apiService.filterDetails(url)
   }
 

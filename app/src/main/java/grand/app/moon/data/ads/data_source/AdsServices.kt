@@ -5,6 +5,7 @@ import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.home.models.review.Reviews
 import grand.app.moon.domain.home.models.review.ReviewsPaginateData
@@ -33,8 +34,28 @@ interface AdsServices {
   @GET
   suspend fun getAdsList(@Url url: String): BaseResponse<AdsListPaginateData>
 
-  @GET
-  suspend fun getAdsSubCategory(@Url url: String): BaseResponse<SubCategoryResponse>
+  @GET("v1/profile/advertisements")
+  suspend fun getAds(
+    @Query("type") type: Int?,
+    @Query("category_id") categoryId: Int?,
+    @Query("sub_category_id") subCategoryId: Int?,
+    @Query("order_by") orderBy: Int? = 1,
+    @Query("store_id") storeId: Int?,
+    @Query("search") search: String?,
+    @Query("page") page: Int?,
+    ): BaseResponse<AdsListPaginateData>
+
+  @GET("v1/advertisements")
+  suspend fun getAdsSubCategory(
+    @Query("type") type: Int?,
+    @Query("category_id") categoryId: Int?,
+    @Query("sub_category_id") subCategoryId: Int?,
+    @Query("order_by") orderBy: Int? = 1,
+    @Query("store_id") storeId: Int?,
+    @Query("search") search: String?,
+    @Query("properties[0][id]") properties: Int?,
+    @Query("page") page: Int?,
+  ): BaseResponse<SubCategoryResponse>
 
   @GET("v1/reviews")
   suspend fun getReviews(

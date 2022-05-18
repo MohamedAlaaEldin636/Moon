@@ -48,7 +48,8 @@
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundGray">
+            android:background="@color/backgroundGray"
+            android:paddingBottom="@dimen/dimen10">
 
             <com.denzcoskun.imageslider.ImageSlider
               android:id="@+id/image_slider"
@@ -73,46 +74,54 @@
               android:layout_marginStart="@dimen/dimen20"
               android:layout_marginTop="@dimen/dimen10"
               android:layout_marginEnd="@dimen/dimen20"
+              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 &amp;&amp; viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
               app:layout_constraintBottom_toBottomOf="@+id/grid"
               app:layout_constraintEnd_toStartOf="@+id/grid"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@+id/image_slider">
 
               <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_search"
                 style="@style/mediumFont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:drawableStart="@drawable/ic_search"
                 android:drawablePadding="@dimen/dimen12"
-                android:focusable="false"
                 android:hint="@string/search_on_advertise"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:lines="1"
                 android:padding="@dimen/dimen10"
                 android:text="@={viewModel.search}"
                 android:textSize="@dimen/text_size16" />
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
               android:id="@+id/grid"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/dimen20"
-              android:layout_marginTop="@dimen/dimen10"
-              android:layout_marginEnd="@dimen/dimen20"
-              android:background="@color/colorWhite"
+              android:layout_margin="@dimen/dimen10"
+              android:background="@drawable/corner_white_10"
               android:onClick="@{ () -> viewModel.changeGrid()}"
+              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 &amp;&amp; viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintTop_toBottomOf="@+id/image_slider">
 
               <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/dimen50"
-                android:layout_height="@dimen/dimen50"
-                android:padding="@dimen/dimen10"
+                android:layout_width="@dimen/dimen30"
+                android:layout_height="@dimen/dimen30"
+                android:layout_marginStart="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen10"
+                android:layout_marginEnd="@dimen/dimen10"
+                android:layout_marginBottom="@dimen/dimen10"
+                android:padding="@dimen/dimen5"
                 android:src="@{viewModel.gridOne ? @drawable/ic_grid_2 : @drawable/ic_grid_1 }"
-                android:tint="@color/colorAccent" />
+                android:tint="@color/colorAccent"
+                tools:src="@drawable/ic_grid_2" />
 
-            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
           </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -120,16 +129,19 @@
 
 
       <LinearLayout
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
           android:id="@+id/ll_sub_category_options"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen6"
           android:background="@color/silver"
           android:orientation="horizontal"
+          android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 &amp;&amp; viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
           android:weightSum="3"
           app:layout_behavior="@string/appbar_scrolling_view_behavior"
           app:layout_constraintEnd_toEndOf="parent"
@@ -197,7 +209,6 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
-          android:visibility="@{viewModel.isSub ? View.VISIBLE : View.GONE}"
           app:adapter="@{viewModel.propertiesAdapter}"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           app:layout_constraintEnd_toEndOf="parent"
@@ -207,18 +218,68 @@
           app:span="@{`1`}"
           tools:listitem="@layout/item_category_text" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/regularFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen12"
+          android:text="@{@string/total_ads_count(viewModel.totalAds)}"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/text_size14"
+          android:textStyle="bold" />
+
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/rv_ads_category"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/dimen2"
           android:orientation="horizontal"
-          app:adapter="@{viewModel.adapter}"
+          android:visibility="@{viewModel.subCategoryResponse.advertisements.list.size() > 0 ? View.VISIBLE : View.GONE}"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           app:layout_constraintTop_toBottomOf="@+id/rv_properties"
-          app:orientation="@{`1`}"
-          app:span="@{`1`}"
           tools:listitem="@layout/item_ads_home" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/white"
+          android:visibility="@{viewModel.subCategoryResponse.advertisements.list.size() == 0 ? View.VISIBLE : View.GONE}">
+
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+              android:id="@+id/pb_base_loading_bar"
+              android:layout_width="@dimen/dimen250"
+              android:layout_height="@dimen/dimen250"
+              android:layout_gravity="center"
+              app:lottie_autoPlay="true"
+              app:lottie_fileName="no_data.json"
+              app:lottie_loop="true" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/boldFont"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginTop="@dimen/dimen10"
+              android:gravity="center"
+              android:text="@string/there_are_no_result_please_try_again"
+              android:textSize="@dimen/text_size16" />
+
+
+          </LinearLayout>
+
+        </LinearLayout>
+
 
         <androidx.constraintlayout.widget.Barrier
           android:id="@+id/barrier6"
@@ -229,48 +290,7 @@
       </LinearLayout>
 
 
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <LinearLayout
-      android:visibility="@{viewModel.noData ? View.VISIBLE : View.GONE}"
-      android:layout_width="match_parent"
-      android:background="@color/white"
-      android:layout_height="match_parent">
-
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.airbnb.lottie.LottieAnimationView
-          android:id="@+id/pb_base_loading_bar"
-          android:layout_width="@dimen/dimen250"
-          android:layout_height="@dimen/dimen250"
-          android:layout_gravity="center"
-          app:lottie_autoPlay="true"
-          app:lottie_fileName="no_data.json"
-          app:lottie_loop="true" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-          style="@style/boldFont"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginTop="@dimen/dimen10"
-          android:gravity="center"
-          android:text="@string/there_are_no_result_please_try_again"
-          android:textSize="@dimen/text_size16" />
-
-
-      </LinearLayout>
-
-    </LinearLayout>
   </RelativeLayout>
 </layout>

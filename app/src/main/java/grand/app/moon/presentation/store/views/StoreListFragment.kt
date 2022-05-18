@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
 
-  private val viewModel: StoreListViewModel by viewModels()
+  val viewModel: StoreListViewModel by viewModels()
 
 
   override

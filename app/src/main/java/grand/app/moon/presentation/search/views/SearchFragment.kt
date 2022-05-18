@@ -40,10 +40,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
       viewModel.type = it.getInt("type")
     }
     if (arguments?.containsKey(Constants.CATEGORY_ID) == true && arguments?.getInt(Constants.CATEGORY_ID) != -1)
-      viewModel.myMap[Constants.CATEGORY_ID] = arguments?.getInt(Constants.CATEGORY_ID).toString()
+      viewModel.categoryId = arguments?.getInt(Constants.CATEGORY_ID)
     if (arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true && arguments?.getInt(Constants.SUB_CATEGORY_ID) != -1)
-      viewModel.myMap[Constants.SUB_CATEGORY_ID] =
-        arguments?.getInt(Constants.SUB_CATEGORY_ID).toString()
+      viewModel.subCategoryId = arguments?.getInt(Constants.SUB_CATEGORY_ID)
 
     val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
       requireContext(),
@@ -54,7 +53,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
       AdapterView.OnItemClickListener { parent, view, position, id ->
 //        showMessage("welcome $position")
         binding.edtSearch.setText(viewModel.localSearchArrayList[position])
-        viewModel.myMap[Constants.SEARCH] = viewModel.localSearchArrayList[position]
+        viewModel.search = viewModel.localSearchArrayList[position]
         viewModel.callService()
       }
   }
@@ -64,7 +63,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     binding.edtSearch.setOnEditorActionListener(TextView.OnEditorActionListener { textView, i, keyEvent ->
       if (i == EditorInfo.IME_ACTION_SEARCH && textView.text.trim().isNotEmpty()) {
         viewModel.reset()
-        viewModel.myMap[Constants.SEARCH] = textView.text.toString()
+        viewModel.search = textView.text.toString()
         viewModel.callService()
         return@OnEditorActionListener true
       }

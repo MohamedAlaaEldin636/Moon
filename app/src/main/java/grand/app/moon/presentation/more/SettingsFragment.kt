@@ -103,7 +103,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
       Log.d(TAG, "setBindingVariables: here")
       if(it.id is String){
         Log.d(TAG, "setBindingVariables: ")
-        openUrl(it.id.toString())
+        navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToWebFragment(it.title!!, it.id.toString()))
+//        openUrl(it.id.toString())
       }else {
         if(it.id != -1) {
           Log.d(TAG, "setBindingVariables: ${it.id}")

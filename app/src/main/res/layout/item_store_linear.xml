@@ -192,6 +192,7 @@
         android:background="@drawable/corner_primary"
         android:paddingStart="@dimen/dimen8"
         android:paddingTop="@dimen/dimen3"
+        android:onClick="@{ (v) -> itemViewModels.follow(v) }"
         android:paddingEnd="@dimen/dimen8"
         android:paddingBottom="@dimen/dimen3"
         app:layout_constraintEnd_toEndOf="parent"

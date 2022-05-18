@@ -56,12 +56,20 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
   }
 
   fun removeItem(){
-//    Log.d(TAG, "removeItem: $position")
     val list = ArrayList(differ.currentList)
-    list.removeAt(position)
-    differ.submitList(list)
-    notifyItemRemoved(position)
+    list[position].isFollowing = !list[position].isFollowing
+    notifyItemChanged(position)
+//    list.removeAt(position)
+//    differ.submitList(list)
+//    notifyItemRemoved(position)
   }
+
+  fun changeFollowingText(){
+    val list = ArrayList(differ.currentList)
+    list[position].isFollowing = !list[position].isFollowing
+    notifyItemChanged(position)
+  }
+
 
   override fun getItemCount(): Int {
     return differ.currentList.size

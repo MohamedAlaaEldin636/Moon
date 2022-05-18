@@ -6,6 +6,7 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.Expose
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.intro.entity.AppTutorial
 import java.io.Serializable
@@ -18,5 +19,7 @@ data class SubCategoryResponse(
   @Expose var advertisements: AdsListPaginateData = AdsListPaginateData(),
   @SerializedName("slider")
   @Expose var slider: ArrayList<AppTutorial> = arrayListOf(),
+  @SerializedName("ads_count")
+  @Expose val totalAds: String = "",
 
   ) : Serializable

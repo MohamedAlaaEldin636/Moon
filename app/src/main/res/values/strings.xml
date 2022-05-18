@@ -172,5 +172,7 @@
   <string name="cancel_ban">cancel ban</string>
   <string name="code_had_been_sent">code had been sent</string>
   <string name="filter_by_rate">filter by rate</string>
-    <string name="no_data_found">لا توجد بيانات</string>
+  <string name="no_data_found">No Data Found</string>
+  <string name="total_ads_count">Total Advertisements %s advertisement</string>
+  <string name="advertisements_had_been_viewd">%s advertisements had been viewed</string>
 </resources>

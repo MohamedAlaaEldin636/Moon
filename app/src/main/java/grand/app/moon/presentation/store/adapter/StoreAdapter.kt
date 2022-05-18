@@ -91,6 +91,12 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   }
 
 
+  fun changeFollowingText(){
+    val list = ArrayList(differ.currentList)
+    list[position].isFollowing = !list[position].isFollowing
+    notifyItemChanged(position)
+  }
+
   override fun getItemCount(): Int {
     return differ.currentList.size
   }

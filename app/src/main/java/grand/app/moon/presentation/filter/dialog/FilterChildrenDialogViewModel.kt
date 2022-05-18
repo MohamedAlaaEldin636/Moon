@@ -28,7 +28,7 @@ class FilterChildrenDialogViewModel @Inject constructor(
   }
 
   private  val TAG = "FilterChildrenDialogVie"
-  fun setData(property : FilterProperty, selectId: Int) {
+  fun setData(property : FilterProperty) {
     this.property = property
     property.children.forEachIndexed { index, children ->
       list.add(AppTutorial(children.id,content = children.name))
@@ -38,6 +38,6 @@ class FilterChildrenDialogViewModel @Inject constructor(
       }
     }
     adapter.differ.submitList(list)
-    adapter.setSelect(selectId)
+//    adapter.setSelect(selectId)
   }
 }

@@ -135,7 +135,7 @@ class FilterViewModel @Inject constructor(
     request.store_id = int
   }
   fun allowChangeCategory(check: Boolean){
-    adapter.allowClickable(1,check)
+    adapter.allowClickable(0,check)
   }
 
 

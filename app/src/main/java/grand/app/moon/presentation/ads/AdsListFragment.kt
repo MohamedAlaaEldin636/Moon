@@ -31,23 +31,11 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
   override
   fun getLayoutId() = R.layout.fragment_ads_list
 
-  private  val TAG = "AdsListFragment"
+  private val TAG = "AdsListFragment"
 
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    if(arguments?.containsKey(Constants.TYPE) == true && arguments?.getInt(Constants.TYPE) != -1){
-      viewModel.ADS_LIST_URL+="type="+requireArguments().getInt(Constants.TYPE)
-    }
-
-    if(arguments?.containsKey(Constants.CATEGORY_ID) == true && arguments?.getInt(Constants.CATEGORY_ID) != -1)
-        viewModel.ADS_LIST_URL+="category_id="+arguments?.getInt(Constants.CATEGORY_ID)
-    if(arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true && arguments?.getInt(Constants.SUB_CATEGORY_ID) != -1)
-      viewModel.ADS_LIST_URL+="sub_category_id="+arguments?.getInt(Constants.SUB_CATEGORY_ID)
-    if(viewModel.type != -1)
-    Log.d(TAG, "setBindingVariables: ${viewModel.ADS_LIST_URL}")
-    Log.d(TAG, "${viewModel.ADS_LIST_URL}")
-    viewModel.callService()
   }
 
   override
@@ -88,10 +76,23 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
     binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
       override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)
-        if (!recyclerView.canScrollVertically(1)){
+        if (!recyclerView.canScrollVertically(1)) {
           viewModel.callService()
         }
       }
     })
+  }
+
+  override fun onResume() {
+    super.onResume()
+    if (arguments?.containsKey(Constants.TYPE) == true && arguments?.getInt(Constants.TYPE) != -1) {
+      viewModel.type = requireArguments().getInt(Constants.TYPE)
+    }
+    if (arguments?.containsKey(Constants.CATEGORY_ID) == true && arguments?.getInt(Constants.CATEGORY_ID) != -1)
+      viewModel.categoryId = arguments?.getInt(Constants.CATEGORY_ID)
+    if (arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true && arguments?.getInt(Constants.SUB_CATEGORY_ID) != -1)
+      viewModel.subCateoryId = arguments?.getInt(Constants.SUB_CATEGORY_ID)
+    if (viewModel.type != -1)
+      viewModel.callService()
   }
 }

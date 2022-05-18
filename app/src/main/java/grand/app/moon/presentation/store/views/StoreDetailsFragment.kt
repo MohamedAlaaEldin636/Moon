@@ -4,11 +4,15 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,6 +26,7 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentStoreDetailsBinding
+import grand.app.moon.domain.home.models.Property
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel
@@ -34,21 +39,25 @@ import kotlinx.coroutines.launch
 class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapReadyCallback {
 
   private val adsDetailsFragmentArgs: StoreDetailsFragmentArgs by navArgs()
-
-  private val viewModel: StoreDetailsViewModel by viewModels()
+  var map : SupportMapFragment? = null
+  val viewModel: StoreDetailsViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_store_details
 
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+      if (bundle.containsKey(Constants.SORT_BY)) {
+        viewModel.setSortAds(bundle.getInt(Constants.SORT_BY))
+      }
+    }
+  }
+
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.getDetails(adsDetailsFragmentArgs.id,adsDetailsFragmentArgs.type)
-//    viewModel.exploreAdapter.clickEvent.observe(this,{
-//      if(it != -1) {
-//
-//      }
-//    })
+    viewModel.getDetails(adsDetailsFragmentArgs.id, adsDetailsFragmentArgs.type)
   }
 
   val days = arrayListOf<String>()
@@ -72,6 +81,9 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
           Log.d(TAG, "setupObservers: hrer")
           viewModel.share(binding.imageSlider)
         }
+        Constants.GRID_1, Constants.GRID_2 -> {
+          viewModel.adsAdapter.notifyDataSetChanged()
+        }
       }
     })
     lifecycleScope.launchWhenResumed {
@@ -84,6 +96,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
           is Resource.Success -> {
             hideLoading()
             updateMap()
+            it.value.data.category.add(Property(0, name = resources.getString(R.string.show_all)))
             viewModel.update(
               resources.getString(R.string.google_direction_api),
               it.value.data,
@@ -97,12 +110,26 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
         }
       }
     }
+    val gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+      override fun getSpanSize(position: Int): Int {
+        return when (viewModel.adsAdapter.grid) {
+          Constants.GRID_1 -> 2
+          else -> 1
+        }
+      }
+    }
+
+    binding.rvAds.layoutManager = gridLayoutManager
+    binding.rvAds.adapter = viewModel.adsAdapter
+
   }
 
   fun scrollDown() {
     binding.scrollStoreDetails.scrollTo(0, binding.tabLayout.y.toInt())
 //    binding.scrollStoreDetails.fullScroll(View.FOCUS_DOWN)
   }
+
   override fun setUpViews() {
     super.setUpViews()
 //    setRecyclerViewScrollListener()
@@ -126,8 +153,9 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   }
 
   private fun updateMap() {
-    (childFragmentManager.findFragmentById(R.id.mapView) as? SupportMapFragment)
-      ?.getMapAsync(this)
+    map = childFragmentManager.findFragmentById(R.id.mapView) as? SupportMapFragment
+    
+    map?.getMapAsync(this)
   }
 
   private val TAG = "AdsDetailsFragment"
@@ -143,16 +171,17 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 
   override fun onMapReady(p0: GoogleMap) {
     lifecycleScope.launch(Dispatchers.Main) {
-      delay(500)
+      delay(400)
       viewModel.mapConfig = MapConfig(requireContext(), p0)
 //      viewModel.mapConfig.setMapStyle() //set style google map
-      viewModel.mapConfig.getGoogleMap()?.setMapStyle(context?.let {
+      viewModel.mapConfig!!.getGoogleMap()?.setMapStyle(context?.let {
         MapStyleOptions.loadRawResourceStyle(
-          it,R.raw.map)
+          it, R.raw.map_style
+        )
       })
 //      setMapStyle(context?.let { MapStyleOptions.loadRawResourceStyle(it, R.raw.map) })
       val location = LatLng(viewModel.store.get()!!.latitude, viewModel.store.get()!!.longitude)
-      viewModel.mapConfig.getGoogleMap()?.addMarker(
+      viewModel.mapConfig!!.getGoogleMap()?.addMarker(
         MarkerOptions().position(location)
           .title(viewModel.store.get()!!.name) // below line is use to add custom marker on our map.
           .icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_location))
@@ -166,7 +195,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 //          )
 //        )
 //      )
-      viewModel.mapConfig.getGoogleMap()?.moveCamera(CameraUpdateFactory.newLatLng(location))
+      viewModel.mapConfig!!.getGoogleMap()?.moveCamera(CameraUpdateFactory.newLatLng(location))
 
     }
   }
@@ -205,38 +234,34 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     // after generating our bitmap we are returning our bitmap.
   }
 
-//  private fun setRecyclerViewScrollListener() {
-//    Log.d(TAG, "setRecyclerViewScrollListener: ")
-//    val manager = SpannedGridLayoutManager(
-//      object : SpannedGridLayoutManager.GridSpanLookup {
-//        override fun getSpanInfo(position: Int): SpannedGridLayoutManager.SpanInfo {
-//          var x = 0
-//          if (position % 9 == 0) {
-//            x = position / 9
-//          }
-//
-//          return when {
-//            position == 1 || x % 2 == 1 || (position - 1) % 18 == 0 ->
-//              SpannedGridLayoutManager.SpanInfo(2, 2)
-//            else ->
-//              SpannedGridLayoutManager.SpanInfo(1, 1)
-//          }
-//
-//        }
-//      },
-//      3,  // number of columns
-//      1f // how big is default item
-//    )
-//    binding.rvStoreGallery.layoutManager = manager
-//    binding.rvStoreGallery.adapter = viewModel.exploreAdapter
-//
-//  }
+
+  override fun onStart() {
+    super.onStart()
+    map?.onStart()
+  }
+
+  override fun onPause() {
+    super.onPause()
+    map?.onPause()
+
+  }
+
+
+  override fun onStop() {
+    super.onStop()
+    map?.onStop()
+
+  }
+  
+
+  override fun onLowMemory() {
+    super.onLowMemory()
+    map?.onLowMemory()
+  }
 
   override fun onDestroy() {
     super.onDestroy()
-    viewModel.mapConfig.let {
-      it.getGoogleMap()?.clear()
-    }
+    viewModel.mapConfig?.getGoogleMap()?.clear()
   }
 
 }

@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.store.viewModels
 
 import androidx.databinding.Bindable
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,6 +46,7 @@ class StoreFollowedListViewModel @Inject constructor(
 
   val followStoreRequest = FollowStoreRequest()
 
+  val list = ObservableField(StoreListPaginateData())
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<StoreListPaginateData>>>(Resource.Default)
 
@@ -61,9 +63,8 @@ class StoreFollowedListViewModel @Inject constructor(
       callingService = true
       notifyPropertyChanged(BR.callingService)
       page++
-      if (page > 1) {
-        notifyPropertyChanged(BR.page)
-      }
+      notifyPropertyChanged(BR.page)
+
       job = storeUseCase.getFavouriteStores(page)
         .onEach {
           response.value = it
@@ -75,6 +76,7 @@ class StoreFollowedListViewModel @Inject constructor(
   private val TAG = "PackagesViewModel"
 
   fun setData(data: StoreListPaginateData) {
+    list.set(data)
     data.let {
       println("size:" + data.list.size)
       isLast = data.links.next == null
@@ -101,7 +103,6 @@ class StoreFollowedListViewModel @Inject constructor(
     followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
     storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
     adapter.removeItem()
-
   }
 
 

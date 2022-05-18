@@ -1,7 +1,5 @@
 package grand.app.moon.presentation.map.viewModel
 
-import android.util.Log
-import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -13,7 +11,6 @@ import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.map.use_case.MapUseCase
-import grand.app.moon.domain.subCategory.entity.Property
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.helpers.map.MapConfig
@@ -27,8 +24,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.util.*
-import javax.annotation.Nullable
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -37,7 +32,7 @@ class MapViewModel @Inject constructor(
   private val mapUseCase: MapUseCase,
   val accountRepository: AccountRepository,
 ) : BaseViewModel() {
-  lateinit var mapConfig: MapConfig
+  var mapConfig: MapConfig? = null
   val clusterCustomItems = arrayListOf<ClusterCustomItem>()
   var backUp = arrayListOf<Store>()
   var stores = arrayListOf<Store>()

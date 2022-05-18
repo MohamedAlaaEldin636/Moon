@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.store.viewModels
 
 import androidx.databinding.Bindable
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,6 +45,7 @@ class StoreBlockListViewModel @Inject constructor(
 
   val followStoreRequest = FollowStoreRequest()
 
+  val list = ObservableField(StoreListPaginateData())
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<StoreListPaginateData>>>(Resource.Default)
 
@@ -68,6 +70,7 @@ class StoreBlockListViewModel @Inject constructor(
   private val TAG = "PackagesViewModel"
 
   fun setData(data: StoreListPaginateData) {
+    list.set(data)
     data.let {
       println("size:" + data.list.size)
       isLast = data.links.next == null
@@ -79,6 +82,7 @@ class StoreBlockListViewModel @Inject constructor(
         adapter.insertData(it.list)
       }
       callingService = false
+      notifyPropertyChanged(BR.page)
       notifyPropertyChanged(BR.callingService)
       show.set(true)
     }

@@ -20,6 +20,7 @@ import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.store.views.StoreBlockListFragment
 import grand.app.moon.presentation.store.views.StoreFollowedListFragment
+import grand.app.moon.presentation.store.views.StoreListFragment
 import kotlinx.coroutines.flow.launchIn
 
 //store/unblock
@@ -36,9 +37,19 @@ class ItemStoreViewModel(val store: Store,val type: Int,var percentage: Int,var 
 
   fun follow(v: View){
     if(v.context.isLoginWithOpenAuth()){
-      val fragment = v.findFragment<StoreFollowedListFragment>()
-      fragment.viewModel.adapter.position = position
-      fragment.viewModel.follow()
+      val destination = v.findNavController().currentDestination
+      when(destination?.id){
+        R.id.storeFollowedListFragment -> {
+          val fragment = v.findFragment<StoreFollowedListFragment>()
+          fragment.viewModel.adapter.position = position
+          fragment.viewModel.follow()
+        }
+        R.id.storeListFragment -> {
+          val fragment = v.findFragment<StoreListFragment>()
+          fragment.viewModel.adapter.position = position
+          fragment.viewModel.follow()
+        }
+      }
     }
   }
 

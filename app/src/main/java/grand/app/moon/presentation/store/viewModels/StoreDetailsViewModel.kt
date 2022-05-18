@@ -15,12 +15,15 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.ads.use_case.AdsUseCase
+import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.ShareRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
@@ -30,6 +33,8 @@ import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.openBrowser
 import grand.app.moon.presentation.explore.adapter.ExploreGridEqualAdapter
 import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
+import grand.app.moon.presentation.subCategory.PropertiesAdapter
+import grand.app.moon.presentation.subCategory.SubCategoryFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -45,16 +50,19 @@ class StoreDetailsViewModel @Inject constructor(
   private val useCase: AdsUseCase,
   private val storeUseCase: StoreUseCase
 ) : BaseViewModel() {
-  lateinit var mapConfig: MapConfig
+  var mapConfig: MapConfig? = null
+  val gridOne = ObservableBoolean(true)
 
   var id: Int = -1
   var type: Int = 3
+  var sortBy = 1
 
   //https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM
 
   @Bindable
-  var  adsAdapter : AdsAdapter = AdsAdapter(adsRepository)
+  var adsAdapter: AdsAdapter = AdsAdapter(adsRepository)
 
+  val propertiesAdapter = PropertiesAdapter()
 
   var exploreAdapter = ExploreGridEqualAdapter()
 
@@ -87,7 +95,7 @@ class StoreDetailsViewModel @Inject constructor(
   fun getDetails(id: Int, type: Int) {
     this.id = id
     this.type = type
-    storeUseCase.storeDetails(id,type)
+    storeUseCase.storeDetails(id, type)
       .onEach {
         _storeDetailsResponse.value = it
       }.launchIn(viewModelScope)
@@ -268,6 +276,8 @@ class StoreDetailsViewModel @Inject constructor(
 //    Log.d(TAG, "update: ${data.advertisements.size}")
     store.set(data)
     adsAdapter.differ.submitList(data.advertisements)
+    propertiesAdapter.selected = 0
+    propertiesAdapter.differ.submitList(data.category)
     exploreAdapter.differ.submitList(data.explore)
 //    store.get()?.explore?.let { exploreAdapter.differ.currentList.addAll(it) }
 //    notifyPropertyChanged(BR.exploreAdapter)
@@ -300,6 +310,20 @@ class StoreDetailsViewModel @Inject constructor(
     }
   }
 
+  fun filter(v: View) {
+    store.get()?.id?.let { toFilter(v,store_id = it) }
+  }
+
+
+  fun filterSort(v: View) {
+    v.findNavController().navigate(
+      StoreDetailsFragmentDirections.actionStoreDetailsFragmentToFilterSortDialog2(
+        sortBy,
+        FilterDialog.ADVERTISEMENT
+      )
+    )
+  }
+
   fun showAds() {
     showAds.set(true)
     showGallery.set(false)
@@ -310,5 +334,66 @@ class StoreDetailsViewModel @Inject constructor(
     showGallery.set(true)
     showAds.set(false)
     clickEvent.value = Constants.SCROLL_DOWN
+  }
+
+  fun setSortAds(sortBy: Int) {
+    this.sortBy = sortBy
+    val list = ArrayList(adsAdapter.differ.currentList)
+    when (sortBy) {
+      1 -> { // الاحدث
+        val sortedList = list.sortedWith(compareBy { it.createdAt }).reversed()
+        adsAdapter.differ.submitList(null)
+        adsAdapter.differ.submitList(sortedList)
+      }
+      2 -> { // الاقدم
+        val sortedList = list.sortedWith(compareBy { it.createdAt })
+        adsAdapter.differ.submitList(null)
+        adsAdapter.differ.submitList(sortedList)
+      }
+      3 -> { // الاعلى سعرا
+        val sortedList = list.sortedWith(compareBy { it.price }).reversed()
+        sortedList.forEach {
+          Log.d(TAG, "setSortAdsHigh: ${it.price}")
+        }
+        adsAdapter.differ.submitList(null)
+        adsAdapter.differ.submitList(sortedList)
+      }
+      4 -> { // الاقل سعراا
+        val sortedList = list.sortedWith(compareBy { it.price })
+        sortedList.forEach {
+          Log.d(TAG, "setSortAdsLow: ${it.price}")
+        }
+        adsAdapter.differ.submitList(null)
+        adsAdapter.differ.submitList(sortedList)
+      }
+    }
+  }
+
+  //sort ads By Category
+  fun propertySelect() {
+    propertiesAdapter.submitSelect()
+    if (propertiesAdapter.position == 0) { // show-all
+      adsAdapter.differ.submitList(null)
+      adsAdapter.differ.submitList(store.get()?.advertisements)
+    } else {
+      val id = propertiesAdapter.differ.currentList[propertiesAdapter.position].id
+      val list = ArrayList<Advertisement>()
+      store.get()?.advertisements?.forEach {
+        if (it.categoryId == id)
+          list.add(it)
+      }
+      adsAdapter.differ.submitList(null)
+      adsAdapter.differ.submitList(list)
+    }
+  }
+
+  fun changeGrid() {
+    if (adsAdapter.grid == Constants.GRID_2) {
+      adsAdapter.grid = Constants.GRID_1
+      clickEvent.value = Constants.GRID_1
+    } else {
+      adsAdapter.grid = Constants.GRID_2
+      clickEvent.value = Constants.GRID_2
+    }
   }
 }

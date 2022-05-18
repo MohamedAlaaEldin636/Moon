@@ -29,6 +29,13 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/contactUsFragment" />
+    <action
+      android:id="@+id/action_settings_fragment_to_webFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/webFragment" />
   </fragment>
   <fragment
     android:id="@+id/languageFragment2"
@@ -44,6 +51,17 @@
     android:label="@string/change_country" >
     <argument
       android:name="from"
+      app:argType="string" />
+  </fragment>
+  <fragment
+    android:id="@+id/webFragment"
+    android:name="grand.app.moon.presentation.more.WebFragment"
+    android:label="{tabBarText}" >
+    <argument
+      android:name="tabBarText"
+      app:argType="string" />
+    <argument
+      android:name="url"
       app:argType="string" />
   </fragment>
 

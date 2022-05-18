@@ -8,5 +8,8 @@ import grand.app.moon.domain.home.models.Advertisement
 
 class AdsListPaginateData(
     @SerializedName("data")
-  val list: ArrayList<Advertisement> = arrayListOf(), meta: Meta = Meta(), links: Links=Links()
+  val list: ArrayList<Advertisement> = arrayListOf(), meta: Meta = Meta(), links: Links=Links(),
+
+    @SerializedName("total")
+    val total: Int = 0,
 ) : Paginate(meta, links)

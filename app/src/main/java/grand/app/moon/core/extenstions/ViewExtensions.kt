@@ -554,14 +554,14 @@ fun ImageView.loadRoundImage(imageUrl: String?, progressBar: ProgressBar?) {
 
 @BindingAdapter("premium")
 fun loadPremium(imageView: ImageView,isPremium : Int) {
-  if(isPremium == 0)
-    imageView.visibility = View.GONE
-  else {
+  if(isPremium == 1){
+    imageView.show()
     if (imageView.context.isEnglish()) {
       imageView.setImageResource(R.drawable.premium)
     } else
       imageView.setImageResource(R.drawable.premium_ar)
-  }
+  }else
+    imageView.hide()
 }
 
 

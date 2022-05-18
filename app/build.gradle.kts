@@ -193,7 +193,7 @@ dependencies {
   implementation("com.facebook.android:facebook-login:13.0.0")
 
   //map
-  implementation("com.google.android.gms:play-services-maps:18.0.2")
+//  implementation("com.google.android.gms:play-services-maps:18.0.2")
   implementation("com.google.android.gms:play-services-location:19.0.1")
   implementation("com.google.android.gms:play-services-places:17.0.0")
   implementation("com.google.maps:google-maps-services:0.2.5")

@@ -326,9 +326,8 @@
     app:exitAnim="@anim/anim_slide_out_left"
     app:popEnterAnim="@anim/anim_slide_in_left"
     app:popExitAnim="@anim/anim_slide_out_right"
-    app:destination="@id/nav_filter" >
+    app:destination="@id/nav_filter" />
 
-  </action>
   <include app:graph="@navigation/nav_filter" />
   <fragment
     android:id="@+id/storiesListFragment"

@@ -45,7 +45,7 @@ object Versions {
   const val hiltVersion = "2.40.5"
 
   // Map
-  const val map = "17.0.1"
+  const val map = "18.0.2"
   const val playServicesLocation = "18.0.0"
   const val rxLocation = "1.0"
 
