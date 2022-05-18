@@ -57,18 +57,11 @@
       android:defaultValue="-1"/>
 
     <action
-      android:id="@+id/action_navCategoryListAds_to_mapnavCategoryListAds"
-      app:destination="@id/mapSubCategoryFragment"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right" />
-    <action
       android:id="@+id/action_navCategoryListAds_to_filterSortDialog"
       app:destination="@id/filterSortDialog" />
-    <action
-      android:id="@+id/action_navCategoryListAds_to_filterFragment"
-      app:destination="@id/filterFragment" />
+<!--    <action-->
+<!--      android:id="@+id/action_navCategoryListAds_to_filterFragment"-->
+<!--      app:destination="@id/filterFragment" />-->
     <action
       android:id="@+id/action_navCategoryListAds_to_nav_ad_list"
       app:enterAnim="@anim/anim_slide_in_right"
@@ -76,27 +69,16 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/nav_ad_list" />
+
     <action
-      android:id="@+id/action_navCategoryListAds_to_filterHomeFragment2"
+      android:id="@+id/action_navCategoryListAds_to_mapFragment2"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/filterHomeFragment2" />
+      app:destination="@id/mapFragment2" />
 
 
-  </fragment>
-  <fragment
-    android:id="@+id/mapSubCategoryFragment"
-    android:name="grand.app.moon.presentation.map.MapSubCategoryFragment"
-    android:label="@string/map" >
-    <argument
-      android:name="sub_category"
-      app:argType="integer"
-      android:defaultValue="-1" />
-    <argument
-      android:name="subCategoryResponse"
-      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
   </fragment>
 
 <!--  <fragment-->
@@ -171,10 +153,7 @@
       android:name="kind"
       app:argType="grand.app.moon.appMoonHelper.FilterDialog" />
   </dialog>
-  <fragment
-    android:id="@+id/filterHomeFragment2"
-    android:name="grand.app.moon.presentation.filter.FilterFragment"
-    android:label="@string/filter" />
+
 
   <action
     android:id="@+id/to_filter"
@@ -184,5 +163,33 @@
     app:popExitAnim="@anim/anim_slide_out_right"
     app:destination="@id/nav_filter"  />
   <include app:graph="@navigation/nav_filter" />
+
+  <fragment
+    android:id="@+id/mapFragment2"
+    android:name="grand.app.moon.presentation.map.MapFragment"
+    android:label="@string/map" >
+    <argument android:name="type"
+      android:defaultValue="store"
+      app:argType="string" />
+    <argument
+      android:name="category_id"
+      app:argType="string"
+      android:defaultValue="@null"
+      app:nullable="true"/>
+    <argument
+      android:name="sub_category_id"
+      app:argType="string"
+      android:defaultValue="@null"
+      app:nullable="true"/>
+    <argument
+      android:name="property_id"
+      app:argType="string"
+      android:defaultValue="@null"
+      app:nullable="true"/>
+    <argument
+      android:name="subCategory"
+      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
+
+  </fragment>
 
 </navigation>

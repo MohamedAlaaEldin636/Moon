@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:id="@+id/nav_filter"
-  app:startDestination="@id/filterFragment">
+  app:startDestination="@id/filterFragmentNav">
 
   <argument
     android:name="filterRequest"
@@ -10,7 +10,7 @@
 
 
   <fragment
-    android:id="@+id/filterFragment"
+    android:id="@+id/filterFragmentNav"
     android:name="grand.app.moon.presentation.filter.FilterFragment"
     android:label="@string/filter">
     <argument

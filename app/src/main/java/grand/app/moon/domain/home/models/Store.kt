@@ -22,6 +22,8 @@ data class Store(
   var website: String = "",
   @SerializedName("id")
   var id: Int = 0,
+  @SerializedName("sub_category_id")
+  val subCategoryId: Int = 0,
   @SerializedName("image")
   var image: String = "",
   @SerializedName("name")

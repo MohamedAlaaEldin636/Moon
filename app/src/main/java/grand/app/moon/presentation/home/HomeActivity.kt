@@ -96,6 +96,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             ) else destination.label
           hideTopBarControls()
           showText()
+          binding.tvHomeTitle.text = destination.label
           binding.icNotificationFilter.show()
         }
         R.id.myAccountFragment -> {

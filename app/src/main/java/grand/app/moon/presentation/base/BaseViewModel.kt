@@ -213,6 +213,7 @@ open class BaseViewModel : ViewModel(), Observable {
   }
 
   fun toFilterResult(v: View, request: FilterResultRequest) {
+
     v.findNavController()
       .navigate(FilterFragmentDirections.actionFilterFragmentToFilterResultsFragment(request))
 

@@ -488,7 +488,7 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
 //        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
 //        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         if (Utils.isDarkMode(requireContext())) {
-            toolbar?.setBackgroundColor(resources.getColor(R.color.grey))
+            toolbar?.setBackgroundColor(resources.getColor(R.color.colorPrimary))
             editMessageLayout?.background = resources.getDrawable(R.drawable.left_border_dark)
             composeBox?.setBackgroundColor(resources.getColor(R.color.darkModeBackground))
             rvChatListView?.setBackgroundColor(resources.getColor(R.color.darkModeBackground))
@@ -496,13 +496,13 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
 //            rlMessageAction?.setBackgroundColor(resources.getColor(R.color.darkModeBackground))
             tvName?.setTextColor(resources.getColor(R.color.textColorWhite))
         } else {
-            toolbar?.setBackgroundColor(resources.getColor(R.color.textColorWhite))
+            toolbar?.setBackgroundColor(resources.getColor(R.color.colorPrimary))
             editMessageLayout?.background = resources.getDrawable(R.drawable.left_border)
             composeBox?.setBackgroundColor(resources.getColor(R.color.textColorWhite))
             rvChatListView?.setBackgroundColor(resources.getColor(R.color.textColorWhite))
             replyMessageLayout?.background = resources.getDrawable(R.drawable.left_border)
 //            rlMessageAction!!.setBackgroundColor(resources.getColor(R.color.textColorWhite))
-            tvName?.setTextColor(resources.getColor(R.color.primaryTextColor))
+            tvName?.setTextColor(resources.getColor(R.color.textColorWhite))
         }
         KeyBoardUtils.setKeyboardVisibilityListener(requireActivity(), rvChatListView?.parent as View, object : KeyboardVisibilityListener {
             override fun onKeyboardVisibilityChanged(keyboardVisible: Boolean) {

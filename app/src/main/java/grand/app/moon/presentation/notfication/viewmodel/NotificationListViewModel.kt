@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.notfication.viewmodel
 
 import androidx.databinding.Bindable
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import grand.app.moon.presentation.notfication.adapter.NotificationAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,6 +38,7 @@ class NotificationListViewModel @Inject constructor(
 
   val followStoreRequest = FollowStoreRequest()
 
+  val list = ObservableField(NotificationPaginateData())
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<NotificationPaginateData>>>(Resource.Default)
 
@@ -48,9 +50,7 @@ class NotificationListViewModel @Inject constructor(
       callingService = true
       notifyPropertyChanged(BR.callingService)
       page++
-      if (page > 1) {
-        notifyPropertyChanged(BR.page)
-      }
+      notifyPropertyChanged(BR.page)
       job = useCase.notifications(type)
         .onEach {
           response.value = it
@@ -63,6 +63,7 @@ class NotificationListViewModel @Inject constructor(
 
   fun setData(data: NotificationPaginateData) {
     data.let {
+      list.set(data)
       println("size:" + data.list.size)
       isLast = data.links.next == null
       if (page == 1) {

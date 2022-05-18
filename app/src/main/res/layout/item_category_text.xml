@@ -21,7 +21,6 @@
     android:layout_margin="@dimen/dimen8"
     android:textColor="@color/colorWhite"
     android:text="@{viewModel.category.name}"
-    android:onClick="@{ (v) -> viewModel.submit(v)}"
     android:background="@{viewModel.selected ? @drawable/corner_accent : @drawable/corner_primary}"
     android:textSize="@dimen/text_size16"
     android:layout_marginStart="@dimen/dimen10"

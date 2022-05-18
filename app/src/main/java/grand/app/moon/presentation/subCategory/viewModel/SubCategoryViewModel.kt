@@ -17,6 +17,7 @@ import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.models.Property
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -134,13 +135,13 @@ class SubCategoryViewModel @Inject constructor(
   }
 
   fun filter(v: View) {
-    when {
-      categoryId == -1 -> {
-        v.findNavController().navigate(
-          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterHomeFragment2()
-        )
-      }
-      else -> {
+//    when {
+//      categoryId == -1 -> {
+//        v.findNavController().navigate(
+//          SubCategoryFragmentDirections.actionNavCategoryListAdsToFilterHomeFragment2()
+//        )
+//      }
+//      else -> {
         toFilter(
           v,
           categoryId,
@@ -149,8 +150,8 @@ class SubCategoryViewModel @Inject constructor(
           subCategoryName,
           allow_change_category = false
         )
-      }
-    }
+//      }
+//    }
   }
 
   fun filterSort(v: View) {
@@ -164,11 +165,20 @@ class SubCategoryViewModel @Inject constructor(
 
   fun map(v: View) {
     this.subCategoryResponse.get()?.let {
+      val response = subCategoryResponse.get()
+      val sub = SubCategoryResponse()
+      sub.properties.addAll(subCategoryResponse.get()!!.properties)
       val action =
-        SubCategoryFragmentDirections.actionNavCategoryListAdsToMapnavCategoryListAds(it)
-      subCategoryId?.let {
-        action.subCategory = it
+        SubCategoryFragmentDirections.actionNavCategoryListAdsToMapFragment2(sub)
+      action.type = Constants.ADVERTISEMENT_TEXT
+      categoryId?.let {
+        action.categoryId = it.toString()
       }
+      subCategoryId?.let {
+        action.subCategoryId = it.toString()
+      }
+      if(properties.size > 0)
+        action.propertyId = properties[0].id.toString()
       v.findNavController().navigate(action)
     }
   }

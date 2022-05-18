@@ -1,5 +1,6 @@
 package grand.app.moon.helpers.map.cluster
 
+import android.util.Log
 import android.widget.Checkable
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
@@ -50,6 +51,7 @@ class ClusterCustomItem(story: Store, posArray: Int) : ClusterItem,
 
   init {
     position = LatLng(story.latitude, story.longitude)
+    Log.d(TAG, "cluster: ${story.name} , ${story.nickname}")
     title = if (story.name != "") story.name else story.nickname
     snippet = story.nickname
     this.store = story

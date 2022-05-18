@@ -11,7 +11,18 @@ import javax.inject.Inject
 class MapRepositoryImpl @Inject constructor(
   private val remoteDataSource: MapRemoteDataSource
 ) : MapRepository {
-  override suspend fun mapStore(type : String): Resource<BaseResponse<List<Store>>> = remoteDataSource.mapStore(type)
-  override suspend fun mapAds(type : String,property_id: String?,subCategoryId: String?,categoryId: String?): Resource<BaseResponse<List<Advertisement>>> = remoteDataSource.mapAds(type,property_id,subCategoryId,categoryId)
+  override suspend fun mapStore(
+    type: String, category_id: Int?,
+    sub_category_id: Int?,
+    property_id: Int?,
+  ): Resource<BaseResponse<List<Store>>> = remoteDataSource.mapStore(type,category_id,sub_category_id,property_id)
+
+  override suspend fun mapAds(
+    type: String,
+    property_id: String?,
+    subCategoryId: String?,
+    categoryId: String?
+  ): Resource<BaseResponse<List<Advertisement>>> =
+    remoteDataSource.mapAds(type, property_id, subCategoryId, categoryId)
 
 }

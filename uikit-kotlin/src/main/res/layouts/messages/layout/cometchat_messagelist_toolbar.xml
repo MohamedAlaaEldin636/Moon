@@ -6,6 +6,7 @@
 
   <RelativeLayout
     android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -14,7 +15,7 @@
       android:layout_height="wrap_content"
       android:layout_centerVertical="true"
       android:src="@drawable/ic_close_24dp"
-      android:tint="@color/colorPrimary"
+      android:tint="@color/textColorWhite"
       android:visibility="gone"
       tools:visibility="visible" />
 
@@ -26,7 +27,7 @@
       android:layout_marginTop="8dp"
       android:layout_marginBottom="8dp"
       android:src="@drawable/ic_back"
-      android:tint="@color/colorPrimary" />
+      android:tint="@color/textColorWhite" />
 
     <com.cometchat.pro.uikit.ui_components.shared.cometchatAvatar.CometChatAvatar
       android:id="@+id/iv_chat_avatar"
@@ -36,6 +37,7 @@
       android:layout_marginTop="8dp"
       android:layout_marginEnd="10dp"
       android:layout_marginBottom="8dp"
+      android:layout_marginStart="10dp"
       android:layout_toEndOf="@+id/iv_back_arrow"
       android:src="@drawable/ic_account"
       android:visibility="visible" />
@@ -56,7 +58,7 @@
         android:ellipsize="marquee"
         android:maxWidth="150dp"
         android:singleLine="true"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="@color/textColorWhite"
         android:textSize="16sp"
         tools:text="@tools:sample/full_names" />
 
@@ -76,7 +78,7 @@
         android:ellipsize="end"
         android:maxWidth="200dp"
         android:maxLines="1"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/textColorWhite"
         android:textSize="12sp"
         tools:text="online" />
     </RelativeLayout>
@@ -101,7 +103,7 @@
         android:foreground="?attr/selectableItemBackground"
         android:padding="8dp"
         android:src="@drawable/ic_video_call"
-        android:tint="@color/colorPrimary" />
+        android:tint="@color/textColorWhite" />
 
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_audio_call_btn"
@@ -112,7 +114,7 @@
         android:foreground="?attr/selectableItemBackground"
         android:padding="8dp"
         android:src="@drawable/ic_audio_call"
-        android:tint="@color/colorPrimary" />
+        android:tint="@color/textColorWhite" />
 
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_user_info"
@@ -123,7 +125,7 @@
         android:layout_toEndOf="@+id/tv_name"
         android:padding="8dp"
         android:src="@drawable/ic_info"
-        android:tint="@color/colorPrimary" />
+        android:tint="@color/textColorWhite" />
     </LinearLayout>
 
   </RelativeLayout>

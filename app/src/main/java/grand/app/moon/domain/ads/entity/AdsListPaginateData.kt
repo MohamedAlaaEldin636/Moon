@@ -5,6 +5,7 @@ import com.structure.base_mvvm.domain.general.paginate.Links
 import grand.app.moon.domain.general.paginate.Meta
 import grand.app.moon.domain.general.paginate.Paginate
 import grand.app.moon.domain.home.models.Advertisement
+import java.io.Serializable
 
 class AdsListPaginateData(
     @SerializedName("data")
@@ -12,4 +13,4 @@ class AdsListPaginateData(
 
     @SerializedName("total")
     val total: Int = 0,
-) : Paginate(meta, links)
+) : Paginate(meta, links) , Serializable

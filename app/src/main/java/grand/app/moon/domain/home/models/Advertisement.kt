@@ -44,6 +44,8 @@ data class Advertisement(
   val longitude: Double = 0.0,
   @SerializedName("category_id")
   val categoryId: Int = 0,
+  @SerializedName("sub_category_id")
+  val subCategoryId: Int = 0,
   @SerializedName("title")
   val title: String = "",
   @SerializedName("views_count")

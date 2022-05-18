@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.map.viewModel
 
+import androidx.annotation.NonNull
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -11,6 +12,7 @@ import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.map.use_case.MapUseCase
+import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.helpers.map.MapConfig
@@ -48,6 +50,7 @@ class MapViewModel @Inject constructor(
 
   var categoriesAdapter = MapCategoriesAdapter()
   val responseStores = MutableStateFlow<Resource<BaseResponse<List<Store>>>>(Resource.Default)
+  val responseAds = MutableStateFlow<Resource<BaseResponse<List<Advertisement>>>>(Resource.Default)
   val categoryItem =
     CategoryItem(-1, name = "", subCategories = arrayListOf(), image = "", total = 0)
 
@@ -67,16 +70,61 @@ class MapViewModel @Inject constructor(
     stores.addAll(data)
   }
 
-  private  val TAG = "MapViewModel"
-  fun callService() {
-    mapUseCase.mapStore(type)
-      .onEach { result ->
-        responseStores.value = result
-      }
-      .launchIn(viewModelScope)
+  fun setAdsData(data: List<Advertisement>) {
+    data.forEach {
+      backUp.add(
+        Store(
+          id = it.id,
+          latitude = it.latitude,
+          longitude = it.longitude,
+          nickname = it.price.toString() + it.country.currency,
+          subCategoryId = it.subCategoryId
+        )
+      )
+      stores.add(
+        Store(
+          id = it.id,
+          latitude = it.latitude,
+          longitude = it.longitude,
+          nickname = it.price.toString()+"\n" + it.country.currency,
+          subCategoryId = it.subCategoryId
+        )
+      )
+    }
   }
+
+  private val TAG = "MapViewModel"
+  fun callService() {
+    if (categoryId != null || subCategoryId != null || propertyId != null) {
+      mapUseCase.mapAds(type, categoryId, subCategoryId, propertyId)
+        .onEach { result ->
+          responseAds.value = result
+        }
+        .launchIn(viewModelScope)
+    } else {
+      mapUseCase.mapStore(type, null, null, null)
+        .onEach { result ->
+          responseStores.value = result
+        }
+        .launchIn(viewModelScope)
+    }
+  }
+
   override fun onCleared() {
     job.cancel()
     super.onCleared()
   }
+
+  fun setSubCategories(subCategory: SubCategoryResponse) {
+    val categoryItems = ArrayList<CategoryItem>()
+    subCategory.properties.forEach {
+      categoryItems.add(CategoryItem(id = it.id,name = it.name, subCategories = arrayListOf(), image = "", total = 0))
+    }
+    categoryItems.add(0, categoryItem)
+    categoriesAdapter.selected = 0
+    categoriesAdapter.differ.submitList(categoryItems)
+    notifyPropertyChanged(BR.categoriesAdapter)
+  }
+
+
 }

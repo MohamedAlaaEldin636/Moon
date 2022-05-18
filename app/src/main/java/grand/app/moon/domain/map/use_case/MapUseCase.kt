@@ -23,19 +23,22 @@ class MapUseCase @Inject constructor(
 ) {
 
   fun mapStore(
-    type: String
+    type: String,
+    category_id: Int?,
+    sub_category_id: Int?,
+    property_id: Int?,
   ): Flow<Resource<BaseResponse<List<Store>>>> = flow {
     emit(Resource.Loading)
-    val result = repository.mapStore(type)
+    val result = repository.mapStore(type,category_id,sub_category_id,property_id)
     emit(result)
   }.flowOn(Dispatchers.IO)
 
 
   fun mapAds(
     type: String,
-    property_id: String? = null,
-    sub_category_id: String?  = null,
-    category_id: String?  = null
+    category_id: String?,
+    sub_category_id: String?,
+    property_id: String?
   ): Flow<Resource<BaseResponse<List<Advertisement>>>> = flow {
     emit(Resource.Loading)
     val result = repository.mapAds(type,property_id,sub_category_id,category_id)

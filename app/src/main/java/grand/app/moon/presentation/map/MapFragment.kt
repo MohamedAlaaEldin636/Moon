@@ -3,7 +3,6 @@ package grand.app.moon.presentation.map
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -27,6 +26,7 @@ import java.lang.Exception
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
   private val viewModel: MapViewModel by viewModels()
   var map : SupportMapFragment? = null
+//  val args: MapFragmentArgs by navArgs()
 
   override
   fun getLayoutId() = R.layout.fragment_map
@@ -35,11 +35,18 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
   fun setBindingVariables() {
     viewModel.categoryItem.name = resources.getString(R.string.all)
     binding.viewModel = viewModel
-
 //    if(arguments!= null && requireArguments().containsKey(Constants.TYPE))
 //      viewModel.type = requireArguments().getString(Constants.TYPE).toString()
-    viewModel.type = Constants.STORE
-    viewModel.getCategories() // store
+    if(arguments != null) {
+      // it means ads
+      val args: MapFragmentArgs by navArgs()
+      viewModel.type = args.type
+      viewModel.categoryId = args.categoryId
+      viewModel.subCategoryId = args.subCategoryId
+      viewModel.propertyId = args.propertyId
+      viewModel.setSubCategories(args.subCategory)
+    }else
+      viewModel.getCategories() // store
 
   }
 
@@ -57,12 +64,24 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         viewModel.stores.addAll(viewModel.backUp)
       }else {
         viewModel.backUp.forEach { store ->
-          store.category.forEach { categoryItem ->
-            if (categoryItem.id == category.id)
-              viewModel.stores.add(store)
+          when(viewModel.type){
+            Constants.ADVERTISEMENT_TEXT -> {
+              Log.d(TAG, "setupObservers SubCategory: ${store.subCategoryId}")
+              Log.d(TAG, "setupObservers CategoryId: ${category.id}")
+              if(store.subCategoryId == category.id)
+                viewModel.stores.add(store)
+            }
+            else -> {
+              store.category.forEach { categoryItem ->
+                if (categoryItem.id == category.id)
+                  viewModel.stores.add(store)
+              }
+            }
           }
+
         }
       }
+      Log.d(TAG, "setupObservers: ${viewModel.stores.size}")
       loadMarkers()
     })
 
@@ -77,6 +96,27 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
           is Resource.Success -> {
             hideLoading()
             viewModel.setData(it.value.data)
+            loadMarkers()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
+
+    lifecycleScope.launchWhenResumed {
+      viewModel.responseAds.collect {
+        Log.d(TAG, "setupObservers: HERE")
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            viewModel.setAdsData(it.value.data)
             loadMarkers()
           }
           is Resource.Failure -> {
