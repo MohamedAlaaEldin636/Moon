@@ -60,27 +60,36 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     viewModel.categoriesAdapter.clickEvent.observe(this, { category ->
       viewModel.stores.clear()
-      if(category.id == -1){
-        viewModel.stores.addAll(viewModel.backUp)
-      }else {
-        viewModel.backUp.forEach { store ->
-          when(viewModel.type){
-            Constants.ADVERTISEMENT_TEXT -> {
-              Log.d(TAG, "setupObservers SubCategory: ${store.subCategoryId}")
-              Log.d(TAG, "setupObservers CategoryId: ${category.id}")
-              if(store.subCategoryId == category.id)
-                viewModel.stores.add(store)
-            }
-            else -> {
-              store.category.forEach { categoryItem ->
-                if (categoryItem.id == category.id)
-                  viewModel.stores.add(store)
-              }
-            }
-          }
-
+      when(viewModel.type){
+        Constants.ADVERTISEMENT_TEXT -> {
+          viewModel.propertyId = category.id.toString()
+        }
+        else ->{
+          viewModel.categoryId = category.id.toString()
         }
       }
+      viewModel.callService()
+//      if(category.id == -1){
+//        viewModel.stores.addAll(viewModel.backUp)
+//      }else {
+//        viewModel.backUp.forEach { store ->
+//          when(viewModel.type){
+//            Constants.ADVERTISEMENT_TEXT -> {
+//              Log.d(TAG, "setupObservers SubCategory: ${store.subCategoryId}")
+//              Log.d(TAG, "setupObservers CategoryId: ${category.id}")
+//              if(store.subCategoryId == category.id)
+//                viewModel.stores.add(store)
+//            }
+//            else -> {
+//              store.category.forEach { categoryItem ->
+//                if (categoryItem.id == category.id)
+//                  viewModel.stores.add(store)
+//              }
+//            }
+//          }
+//
+//        }
+//      }
       Log.d(TAG, "setupObservers: ${viewModel.stores.size}")
       loadMarkers()
     })

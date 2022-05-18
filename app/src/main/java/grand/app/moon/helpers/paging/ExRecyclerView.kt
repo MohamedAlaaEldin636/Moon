@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 @BindingAdapter("rv_adapterPagination")
-fun loadPaginationRecyclerView(recyclerView: RecyclerView, adapter: PagingDataAdapter<*, *>?) {
+fun loadPaginationRecyclerView(recyclerView: RecyclerView,
+                               adapter: PagingDataAdapter<*, *>?) {
   var currentlyRefreshing = false
   recyclerView.layoutManager = LinearLayoutManager(
     recyclerView.context,
@@ -24,7 +25,8 @@ fun loadPaginationRecyclerView(recyclerView: RecyclerView, adapter: PagingDataAd
   )
   recyclerView.adapter = adapter
   adapter?.addLoadStateListener { loadStates ->
-    if (loadStates.refresh == LoadState.Loading || loadStates.append == LoadState.Loading) {
+    if (loadStates.refresh == LoadState.Loading ||
+      loadStates.append == LoadState.Loading) {
       currentlyRefreshing = true
     } else if (currentlyRefreshing) {
       currentlyRefreshing = false

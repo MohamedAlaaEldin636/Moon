@@ -9,7 +9,7 @@ class MapRemoteDataSource @Inject constructor(private val apiService: MapService
 
   private  val TAG = "MapRemoteDataSource"
 
-  suspend fun mapStore(type: String,    category_id: Int?,
+  suspend fun mapStore(type: String,    category_id: String?,
                        sub_category_id: Int?,
                        property_id: Int?,) = safeApiCall {
     Log.d(TAG, "map: MapRemoteDataSource")

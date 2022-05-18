@@ -69,6 +69,7 @@ class FilterViewModel @Inject constructor(
   fun filterSubmit(v: View) {
     if (rateAdapter.lastSelected != -1) {
       request.min_rate = rateAdapter.lastSelected
+      request.max_rate = 5
     }
     prepareRequest()
     Log.d(TAG, "filterSubmit: ${request.min_price}")

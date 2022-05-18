@@ -1,7 +1,10 @@
 package grand.app.moon.presentation.home
 
+import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.rizlee.rangeseekbar.RangeSeekBar
@@ -16,6 +19,7 @@ import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
@@ -32,6 +36,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
     binding.viewModel = viewModel
     viewModel.initAllServices()
   }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+      if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+        Log.d(TAG, "onCreate: FAVOURITE")
+        viewModel.adsHomeAdapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
+      }
+    }
+  }
+
 
   private val TAG = "HomeFragment"
 

@@ -38,9 +38,11 @@ import coil.size.Scale
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -225,16 +227,26 @@ fun View.showSnackBar(
   snackBar.show()
 }
 
+
+
 @BindingAdapter(
   value = ["app:loadImage", "app:progressBar", "app:defaultImage"],
   requireAll = false
 )
+
+
 fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultImage: Any?) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
     if (URLUtil.isValidUrl(imageUrl)) {
+
       Glide
         .with(context)
         .load(imageUrl)
+        .apply(RequestOptions()
+          .centerCrop()
+          .error(R.drawable.bg_no_image)
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
+          .priority(Priority.HIGH))
 //        .diskCacheStrategy(DiskCacheStrategy.DATA)
         .into(this);
 //      val request = ImageRequest.Builder(context)

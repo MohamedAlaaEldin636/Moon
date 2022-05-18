@@ -378,6 +378,8 @@
     <string name="camera_permission_denied">Please allow access to camera to use camera feature</string>
     <string name="allow">Allow</string>
     <string name="setting">Setting</string>
+  <string name="recording_permission">Recording Permission</string>
+  <string name="please_enable_recording_permission_to_record_your_message">please enable recording permission to record your message</string>
 
-    <!--    ______________-->
+  <!--    ______________-->
 </resources>

@@ -11,7 +11,8 @@ import grand.app.moon.presentation.base.BaseViewModel
 class ItemAdsViewModel(
   var advertisement: Advertisement,
   var percentageAds: Int,
-  adsRepository: AdsRepository
+  adsRepository: AdsRepository,
+  val showFavourite: Boolean = false
 ) : BaseViewModel() {
   val adapter = AdsAdapter(adsRepository)
 

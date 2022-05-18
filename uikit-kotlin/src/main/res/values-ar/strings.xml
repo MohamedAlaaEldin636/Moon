@@ -373,4 +373,6 @@
     <string name="transfer">نقل»</string>
     <string name="leave_group_message">هل أنت متأكد أنك تريد مغادرة هذه المجموعة؟»</string>
     <string name="transfer_ownership_message">أنت مالك المجموعة، يرجى نقل الملكية إلى عضو قبل مغادرة المجموعة.</string>
+  <string name="recording_permission">إذن التسجيل</string>
+  <string name="please_enable_recording_permission_to_record_your_message">يرجى تمكين إذن التسجيل لتسجيل رسالتك</string>
 </resources>

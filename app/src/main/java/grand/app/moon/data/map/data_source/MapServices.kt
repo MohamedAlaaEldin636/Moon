@@ -10,7 +10,7 @@ interface MapServices {
   @GET("v1/map")
   suspend fun mapStore(
     @Query("type") type: String,
-    @Query("category_id") categoryId: Int?,
+    @Query("category_id") categoryId: String?,
     @Query("sub_category_id") subCategoryId: Int?,
     @Query("property_id") propertyId: Int?
   ): BaseResponse<List<Store>>

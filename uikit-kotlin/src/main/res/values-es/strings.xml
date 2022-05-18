@@ -380,4 +380,6 @@
     <string name="transfer">transferencia»</string>
     <string name="leave_group_message">¿Estás seguro de que quieres dejar este grupo?»</string>
     <string name="transfer_ownership_message">Eres el propietario del grupo. Transfiere la propiedad a un miembro antes de abandonar el grupo.</string>
+    <string name="recording_permission">Recording Permission</string>
+  <string name="please_enable_recording_permission_to_record_your_message">please enable recording permission to record your message</string>
 </resources>

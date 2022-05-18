@@ -377,4 +377,6 @@
     <string name="transfer">трансфер»</string>
     <string name="leave_group_message">Вы уверены, что хотите покинуть эту группу?»</string>
     <string name="transfer_ownership_message">Вы являетесь владельцем группы. Прежде чем покинуть группу, передайте право собственности члену.</string>
+    <string name="recording_permission">Recording Permission</string>
+  <string name="please_enable_recording_permission_to_record_your_message">please enable recording permission to record your message</string>
 </resources>

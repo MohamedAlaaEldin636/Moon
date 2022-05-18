@@ -81,6 +81,7 @@ class SubCategoryViewModel @Inject constructor(
 
   init {
     adapter.percentageAds = 100
+    adapter.showFavourite = true
   }
 
   fun callService() {
@@ -142,14 +143,14 @@ class SubCategoryViewModel @Inject constructor(
 //        )
 //      }
 //      else -> {
-        toFilter(
-          v,
-          categoryId,
-          categoryName,
-          subCategoryId,
-          subCategoryName,
-          allow_change_category = false
-        )
+    toFilter(
+      v,
+      categoryId,
+      categoryName,
+      subCategoryId,
+      subCategoryName,
+      allow_change_category = false
+    )
 //      }
 //    }
   }
@@ -177,7 +178,7 @@ class SubCategoryViewModel @Inject constructor(
       subCategoryId?.let {
         action.subCategoryId = it.toString()
       }
-      if(properties.size > 0)
+      if (properties.size > 0)
         action.propertyId = properties[0].id.toString()
       v.findNavController().navigate(action)
     }
@@ -212,6 +213,10 @@ class SubCategoryViewModel @Inject constructor(
           propertiesAdapter.selected = 0
           propertiesAdapter.differ.submitList(it.properties)
           notifyPropertyChanged(BR.propertiesAdapter)
+          if (it.properties.isNotEmpty())
+            properties.add(
+              Property(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id)
+            )
         }
         adapter.differ.submitList(null)
         adapter.differ.submitList(it.advertisements.list)

@@ -82,6 +82,7 @@ class SearchViewModel @Inject constructor(
     }
     Log.d(TAG, ": ${listSearches.size}")
     adapter.percentageAds = 100
+    adapter.showFavourite = true
     adapter.type = 5
   }
 

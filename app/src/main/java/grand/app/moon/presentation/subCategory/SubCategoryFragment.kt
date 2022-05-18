@@ -43,6 +43,12 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
         viewModel.reset()
         viewModel.callService()
       }
+      setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+        if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+          Log.d(TAG, "onCreate: FAVOURITE")
+          viewModel.adapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
+        }
+      }
     }
   }
 

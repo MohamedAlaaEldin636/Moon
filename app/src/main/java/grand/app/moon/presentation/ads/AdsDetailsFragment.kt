@@ -3,6 +3,7 @@ package grand.app.moon.presentation.ads
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -89,5 +90,18 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
   override fun onStart() {
     super.onStart()
 //    Toast.makeText(context, "onStart", Toast.LENGTH_SHORT).show()
+  }
+
+  override fun onDestroy() {
+    viewModel.advertisement.get()?.let {
+      Log.d(TAG, "onDestroy: ADVERTISEMENT")
+      val bundle = Bundle()
+      bundle.putInt(Constants.ID,it.id)
+      bundle.putBoolean(Constants.FAVOURITE,it.isFavorite)
+      Log.d(TAG, "onDestroy: ADVERTISEMENT ahere")
+
+      setFragmentResult(Constants.BUNDLE, bundle)
+    }
+    super.onDestroy()
   }
 }

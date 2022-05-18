@@ -12,7 +12,7 @@ class MapRepositoryImpl @Inject constructor(
   private val remoteDataSource: MapRemoteDataSource
 ) : MapRepository {
   override suspend fun mapStore(
-    type: String, category_id: Int?,
+    type: String, category_id: String?,
     sub_category_id: Int?,
     property_id: Int?,
   ): Resource<BaseResponse<List<Store>>> = remoteDataSource.mapStore(type,category_id,sub_category_id,property_id)

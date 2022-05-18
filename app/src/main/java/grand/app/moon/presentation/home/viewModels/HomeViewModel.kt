@@ -74,6 +74,7 @@ class HomeViewModel @Inject constructor(
     storeAdapter.isLogin = isLoggin
     storeAdapter.useCase = storeUseCase
     categoriesAdapter.percentage = 33
+
     getCategories()
     homeApi()
     getStories()

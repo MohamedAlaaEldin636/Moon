@@ -21,6 +21,7 @@ class ItemAdsHomeViewModel(val category: CategoryAdvertisement, adsRepository: A
   private val TAG = "ItemAdsHomeViewModel"
 
   init {
+    adapter.showFavourite = true
     Log.d(TAG, ": ADAPTER " + category.advertisements.size)
     adapter.differ.submitList(category.advertisements)
   }

@@ -224,6 +224,7 @@ open class FilterBaseViewModel @Inject constructor(
 
   fun changeRate(stars: Int) {
     request.min_rate = stars
+    request.max_rate = 5
   }
 
   protected fun resetSelected() {
@@ -296,8 +297,8 @@ open class FilterBaseViewModel @Inject constructor(
     addAnotherOptions {
       adapterAdsType.differ.submitList(it.children)
     }
-    rateAdapter.lastPosition = 0
-    rateAdapter.lastSelected = 1
+//    rateAdapter.lastPosition = 0
+//    rateAdapter.lastSelected = 1
     addRates {
       rateAdapter.differ.submitList(it.children)
     }

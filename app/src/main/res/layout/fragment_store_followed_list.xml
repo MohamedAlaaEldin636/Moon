@@ -29,7 +29,7 @@
       android:orientation="vertical"
       android:background="@color/colorFBFBFB"
       android:scrollbars="none"
-      android:visibility="@{viewModel.page == 1 &amp;&amp; viewModel.list.list.size() > 0 ? View.VISIBLE : View.GONE , default = gone }"
+      android:visibility="@{viewModel.page > 1 ||  viewModel.list.list.size() > 0 ? View.VISIBLE : View.GONE , default = gone }"
 
       app:adapter="@{viewModel.adapter}"
       app:orientation="@{`1`}"

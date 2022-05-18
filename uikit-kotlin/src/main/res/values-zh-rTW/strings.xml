@@ -377,4 +377,6 @@
     <string name="transfer">轉移」</string>
     <string name="leave_group_message">您確定要離開這個群組嗎？」</string>
     <string name="transfer_ownership_message">您是群組擁有者，請在離開群組前將所有權轉移給會員。</string>
+    <string name="recording_permission">Recording Permission</string>
+  <string name="please_enable_recording_permission_to_record_your_message">please enable recording permission to record your message</string>
 </resources>

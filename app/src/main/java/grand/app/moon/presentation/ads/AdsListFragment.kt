@@ -2,6 +2,7 @@ package grand.app.moon.presentation.ads
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
@@ -36,11 +37,30 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
+    if (arguments?.containsKey(Constants.TYPE) == true && arguments?.getInt(Constants.TYPE) != -1) {
+      viewModel.type = requireArguments().getInt(Constants.TYPE)
+    }
+    if (arguments?.containsKey(Constants.CATEGORY_ID) == true && arguments?.getInt(Constants.CATEGORY_ID) != -1)
+      viewModel.categoryId = arguments?.getInt(Constants.CATEGORY_ID)
+    if (arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true && arguments?.getInt(Constants.SUB_CATEGORY_ID) != -1)
+      viewModel.subCateoryId = arguments?.getInt(Constants.SUB_CATEGORY_ID)
+    if (viewModel.type != -1)
+      viewModel.callService()
   }
 
   override
   fun setUpViews() {
     setRecyclerViewScrollListener()
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+      if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+        Log.d(TAG, "onCreate: FAVOURITE")
+        viewModel.adapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
+      }
+    }
   }
 
 
@@ -85,14 +105,6 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
 
   override fun onResume() {
     super.onResume()
-    if (arguments?.containsKey(Constants.TYPE) == true && arguments?.getInt(Constants.TYPE) != -1) {
-      viewModel.type = requireArguments().getInt(Constants.TYPE)
-    }
-    if (arguments?.containsKey(Constants.CATEGORY_ID) == true && arguments?.getInt(Constants.CATEGORY_ID) != -1)
-      viewModel.categoryId = arguments?.getInt(Constants.CATEGORY_ID)
-    if (arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true && arguments?.getInt(Constants.SUB_CATEGORY_ID) != -1)
-      viewModel.subCateoryId = arguments?.getInt(Constants.SUB_CATEGORY_ID)
-    if (viewModel.type != -1)
-      viewModel.callService()
+
   }
 }

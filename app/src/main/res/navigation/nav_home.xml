@@ -171,6 +171,9 @@
     <action
       android:id="@+id/action_notificationFragment_to_filterSortDialog"
       app:destination="@id/filterSortDialog" />
+
+
+
   </fragment>
   <action
     android:id="@+id/moveToNotification"
@@ -329,6 +332,7 @@
     app:destination="@id/nav_filter" />
 
   <include app:graph="@navigation/nav_filter" />
+
   <fragment
     android:id="@+id/storiesListFragment"
     android:name="grand.app.moon.presentation.story.view.StoriesListFragment"

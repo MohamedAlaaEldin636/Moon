@@ -51,13 +51,13 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/ivArrow"
-        android:layout_width="wrap_content"
-        android:padding="8dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_add_circle_filled"
-        android:layout_height="wrap_content"/>
+  <ImageView
+    android:id="@+id/ivArrow"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:padding="8dp"
+    android:src="@drawable/ic_add_circle_filled" />
 
     <RelativeLayout
         android:id="@+id/flBox"

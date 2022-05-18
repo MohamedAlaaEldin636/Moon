@@ -36,7 +36,8 @@ class MapViewModel @Inject constructor(
 ) : BaseViewModel() {
   var mapConfig: MapConfig? = null
   val clusterCustomItems = arrayListOf<ClusterCustomItem>()
-  var backUp = arrayListOf<Store>()
+
+  //  var backUp = arrayListOf<Store>()
   var stores = arrayListOf<Store>()
   var latLngs = ArrayList<LatLng>()
   var markerRender: MarkerRender? = null
@@ -66,27 +67,27 @@ class MapViewModel @Inject constructor(
   }
 
   fun setData(data: List<Store>) {
-    backUp.addAll(data)
+//    backUp.addAll(data)
     stores.addAll(data)
   }
 
   fun setAdsData(data: List<Advertisement>) {
     data.forEach {
-      backUp.add(
-        Store(
-          id = it.id,
-          latitude = it.latitude,
-          longitude = it.longitude,
-          nickname = it.price.toString() + it.country.currency,
-          subCategoryId = it.subCategoryId
-        )
-      )
+//      backUp.add(
+//        Store(
+//          id = it.id,
+//          latitude = it.latitude,
+//          longitude = it.longitude,
+//          nickname = it.price.toString() + it.country.currency,
+//          subCategoryId = it.subCategoryId
+//        )
+//      )
       stores.add(
         Store(
           id = it.id,
           latitude = it.latitude,
           longitude = it.longitude,
-          nickname = it.price.toString()+"\n" + it.country.currency,
+          nickname = it.price.toString() + "\n" + it.country.currency,
           subCategoryId = it.subCategoryId
         )
       )
@@ -95,18 +96,39 @@ class MapViewModel @Inject constructor(
 
   private val TAG = "MapViewModel"
   fun callService() {
-    if (categoryId != null || subCategoryId != null || propertyId != null) {
-      mapUseCase.mapAds(type, categoryId, subCategoryId, propertyId)
-        .onEach { result ->
-          responseAds.value = result
+    when (type) {
+      Constants.ADVERTISEMENT_TEXT -> {
+        if (categoriesAdapter.differ.currentList.isNotEmpty()) {
+          val tmp = categoriesAdapter.differ.currentList[categoriesAdapter.selected].id
+          propertyId =
+            when (tmp) {
+              -1 -> null
+              else -> tmp.toString()
+            }
+          categoriesAdapter.differ.currentList[categoriesAdapter.selected].id.toString()
         }
-        .launchIn(viewModelScope)
-    } else {
-      mapUseCase.mapStore(type, null, null, null)
-        .onEach { result ->
-          responseStores.value = result
+        mapUseCase.mapAds(type, categoryId, subCategoryId, propertyId)
+          .onEach { result ->
+            responseAds.value = result
+          }
+          .launchIn(viewModelScope)
+      }
+      else -> {
+        if (categoriesAdapter.differ.currentList.isNotEmpty()) {
+          val tmp = categoriesAdapter.differ.currentList[categoriesAdapter.selected].id
+          categoryId =
+            when (tmp) {
+              -1 -> null
+              else -> tmp.toString()
+            }
+          categoriesAdapter.differ.currentList[categoriesAdapter.selected].id.toString()
         }
-        .launchIn(viewModelScope)
+        mapUseCase.mapStore(type, categoryId, null, null)
+          .onEach { result ->
+            responseStores.value = result
+          }
+          .launchIn(viewModelScope)
+      }
     }
   }
 
@@ -118,7 +140,15 @@ class MapViewModel @Inject constructor(
   fun setSubCategories(subCategory: SubCategoryResponse) {
     val categoryItems = ArrayList<CategoryItem>()
     subCategory.properties.forEach {
-      categoryItems.add(CategoryItem(id = it.id,name = it.name, subCategories = arrayListOf(), image = "", total = 0))
+      categoryItems.add(
+        CategoryItem(
+          id = it.id,
+          name = it.name,
+          subCategories = arrayListOf(),
+          image = "",
+          total = 0
+        )
+      )
     }
     categoryItems.add(0, categoryItem)
     categoriesAdapter.selected = 0

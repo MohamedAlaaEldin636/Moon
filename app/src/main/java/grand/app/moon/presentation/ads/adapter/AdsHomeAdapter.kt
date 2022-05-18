@@ -16,7 +16,8 @@ import grand.app.moon.presentation.ads.viewModels.ItemAdsHomeViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import javax.inject.Inject
 
-class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepository) : RecyclerView.Adapter<AdsHomeAdapter.ViewHolder>() {
+class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepository) :
+  RecyclerView.Adapter<AdsHomeAdapter.ViewHolder>() {
   lateinit var context: Context
   var clickEvent: SingleLiveEvent<CategoryAdvertisement> = SingleLiveEvent()
 
@@ -43,10 +44,10 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
     return ViewHolder(view)
   }
 
-  private  val TAG = "MoreAdapter"
+  private val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemAdsHomeViewModel(data,adsRepository)
+    val itemViewModel = ItemAdsHomeViewModel(data, adsRepository)
     holder.itemLayoutBinding.rvAds.isNestedScrollingEnabled = false;
 
     holder.setViewModel(itemViewModel)
@@ -65,6 +66,17 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
   override fun onViewDetachedFromWindow(holder: ViewHolder) {
     super.onViewDetachedFromWindow(holder)
     holder.unBind()
+  }
+
+  fun updateFavourite(id: Int, boolean: Boolean) {
+    differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
+      categoryAds.advertisements.forEachIndexed { indexAds, ads ->
+        if (ads.id == id && ads.isFavorite != boolean) {
+          differ.currentList[indexCategoryAds].advertisements[indexAds].isFavorite = boolean
+          notifyItemChanged(indexCategoryAds)
+        }
+      }
+    }
   }
 
   inner class ViewHolder(itemView: View) :

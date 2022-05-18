@@ -6,5 +6,6 @@ data class NotificationData(
   val id: Int,
   val logo: String,
   val image: String,
-  val notify_type: String
+  val notify_type: Int,
+  val action_by_id: Int
 )

@@ -29,6 +29,7 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   var clickEvent: SingleLiveEvent<Advertisement> = SingleLiveEvent()
   var percentageAds = 90
   var grid = Constants.GRID_1
+  var showFavourite = false
 
 
   override fun getItemViewType(position: Int): Int {
@@ -75,7 +76,7 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   private val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemAdsViewModel(data, percentageAds, adsRepository)
+    val itemViewModel = ItemAdsViewModel(data, percentageAds, adsRepository,showFavourite)
     holder.setViewModel(itemViewModel)
 
     when (grid) {
@@ -129,6 +130,17 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
     array.addAll(insertList)
     differ.submitList(array)
     notifyDataSetChanged()
+  }
+
+  fun updateFavourite(id: Int, boolean: Boolean) {
+    differ.currentList.forEachIndexed{index , advertisement ->
+      if(advertisement.id == id){
+        if(advertisement.isFavorite != boolean) {
+          advertisement.isFavorite = boolean
+          notifyItemChanged(index)
+        }
+      }
+    }
   }
 
 

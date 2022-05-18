@@ -26,9 +26,9 @@ class FilterResultRequest(
   @SerializedName("max_price")
   var max_price: String? = "",
   @SerializedName("min_rate")
-  var min_rate: Int? = 1,
+  var min_rate: Int? = null,
   @SerializedName("max_rate")
-  var max_rate: Int? = 5,
+  var max_rate: Int? = null,
   @SerializedName("properties")
   var properties: ArrayList<FilterProperty>? = arrayListOf(),
   @SerializedName("city_ids")

@@ -375,4 +375,6 @@
 
     <string name="send_message_privately">Nachricht privat senden</string>
     <string name="view_profile">Profil ansehen</string>
+    <string name="recording_permission">Recording Permission</string>
+  <string name="please_enable_recording_permission_to_record_your_message">please enable recording permission to record your message</string>
 </resources>

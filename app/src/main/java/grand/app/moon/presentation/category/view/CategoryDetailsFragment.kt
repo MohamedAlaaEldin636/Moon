@@ -1,5 +1,9 @@
 package grand.app.moon.presentation.category.view
 
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -13,6 +17,7 @@ import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.viewModels.CategoryDetailsViewModel
 import kotlinx.coroutines.flow.collect
 
@@ -32,6 +37,17 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
     viewModel.title.set(args.tabBarText + " "+resources.getString(R.string.stores))
     viewModel.initAllServices()
   }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+      if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+        Log.d(TAG, "onCreate: FAVOURITE")
+        viewModel.adsHomeAdapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
+      }
+    }
+  }
+
 
   private val TAG = "DepartmentDetailsFragment"
 

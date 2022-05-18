@@ -24,7 +24,7 @@ class MapUseCase @Inject constructor(
 
   fun mapStore(
     type: String,
-    category_id: Int?,
+    category_id: String?,
     sub_category_id: Int?,
     property_id: Int?,
   ): Flow<Resource<BaseResponse<List<Store>>>> = flow {

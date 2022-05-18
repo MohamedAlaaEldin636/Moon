@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.search.views
 
+import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.view.KeyEvent
@@ -8,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +34,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
   fun getLayoutId() = R.layout.fragment_search
 
   private val TAG = "SearchFragment"
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+      if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+        Log.d(TAG, "onCreate: FAVOURITE")
+        viewModel.adapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
+      }
+    }
+  }
+
 
   override
   fun setBindingVariables() {

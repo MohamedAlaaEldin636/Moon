@@ -16,6 +16,7 @@
   <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_marginStart="@dimen/dimen10"
+    android:onClick="@{ (v) -> viewModel.submit(v) }"
     android:layout_marginEnd="@dimen/dimen10"
     android:layout_marginTop="@dimen/dimen20"
     android:elevation="5dp"
