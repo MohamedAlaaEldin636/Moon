@@ -41,6 +41,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     binding.viewModel = viewModel
   }
 
+
   override
   fun setUpViews() {
     setRecyclerViewScrollListener()
@@ -94,7 +95,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     viewModel.adapter.clickEvent.observe(this,{
       if(it != -1) {
         val list = ArrayList(viewModel.adapter.differ.currentList)
+        viewModel.adapter.swapPosition = it
         viewModel.lastData.list.clear()
+        viewModel.adapter.tmpList.clear()
+        viewModel.adapter.tmpList.addAll(list)
         viewModel.lastData.list.addAll(list)
         Collections.swap(viewModel.lastData.list, 0, it);
         findNavController().navigate(

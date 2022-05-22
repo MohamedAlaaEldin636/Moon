@@ -1,5 +1,7 @@
 <resources>
   <!-- General Strings -->
+  <string name="app_name_debug">Moon|موون</string>
+  <string name="app_name">Moon|موون</string>
   <string name="discover">إكتشف</string>
   <string name="confirm_resend">أعد إرسال الرمز</string>
   <string name="confirm_header_text">رقم رمز التفعيل</string>

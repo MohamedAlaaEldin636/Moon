@@ -14,13 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemAdsBinding
 import grand.app.moon.databinding.ItemAdsGridBinding
-import grand.app.moon.databinding.ItemStoreLinearBinding
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.presentation.ads.viewModels.ItemAdsViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
-import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
 import javax.inject.Inject
 
 class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
@@ -76,22 +74,24 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   private val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemAdsViewModel(data, percentageAds, adsRepository,showFavourite)
+    val itemViewModel = ItemAdsViewModel(data, percentageAds, adsRepository,showFavourite,type)
     holder.setViewModel(itemViewModel)
 
     when (grid) {
       Constants.GRID_1 -> {
-        holder.itemLayoutBinding.itemAdsContainer.setOnClickListener {
-          holder.itemLayoutBinding.root.findNavController().navigate(
-            R.id.nav_ads, bundleOf(
-              "id" to data.id,
-              "type" to type
-            )
-          )
-        }
+//        holder.itemLayoutBinding.itemAdsContainer.setOnClickListener {
+//          Log.d(TAG, "onBindViewHolder: HERER CLICK")
+//          holder.itemLayoutBinding.root.findNavController().navigate(
+//            R.id.nav_ads, bundleOf(
+//              "id" to data.id,
+//              "type" to type
+//            )
+//          )
+//        }
       }
       Constants.GRID_2 -> {
         holder.itemLayoutGridBinding.itemAdsContainer.setOnClickListener {
+          Log.d(TAG, "onBindViewHolder: THERE CLICK")
           holder.itemLayoutGridBinding.root.findNavController().navigate(
             R.id.nav_ads, bundleOf(
               "id" to data.id,
@@ -143,8 +143,31 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
     }
   }
 
+  fun removeStoreAds(storeId: Int) {
+    val array = ArrayList(differ.currentList)
+    array.forEachIndexed{index , advertisement ->
+      if(advertisement.store?.id == storeId){
+        array.removeAt(index)
+      }
+    }
+    if(array.size != differ.currentList.size){
+//      differ.submitList(null)
+      differ.submitList(array)
+    }
+  }
 
-  inner class ViewHolder(itemView: View) :
+    fun setBlockStore(storeId: Int) {
+      val list = ArrayList(differ.currentList)
+      differ.currentList.forEachIndexed{index , ads ->
+        if(ads.store?.id == storeId) {
+          Log.d(TAG, "setBlockStore: HERE")
+//          list.removeAt(index)
+        }
+      }
+    }
+
+
+    inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemAdsBinding
     lateinit var itemLayoutGridBinding: ItemAdsGridBinding

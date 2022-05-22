@@ -1,10 +1,15 @@
 package grand.app.moon.presentation.home
 
 import android.content.Intent
+import android.content.pm.verify.domain.DomainVerificationManager
+import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
@@ -21,6 +26,9 @@ import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import grand.app.moon.presentation.notfication.viewmodel.NotificationListViewModel
 import com.google.android.material.navigation.NavigationBarView
 import com.zeugmasolutions.localehelper.LocaleHelper
+import grand.app.moon.appMoonHelper.FilterDialog
+import grand.app.moon.presentation.notfication.NotificationFragmentDirections
+import java.lang.Exception
 import java.util.*
 
 
@@ -36,6 +44,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   override
   fun setUpBottomNavigation() {
     setUpBottomNavigationWithGraphs()
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    nav.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(Constants.BUNDLE)?.observe(this) {result ->
+      // Do something with the result.
+      Log.d(TAG, "onCreate: DONE HERE")
+    }
+//    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+//      if(bundle.containsKey(Constants.SORT_BY)) {
+//        when(bundle.getInt(Constants.SORT_BY)){
+//          1 -> activityViewModel.toChatList(binding.root)
+//          else -> activityViewModel.toWhatsappList(binding.root)
+//        }
+//      }
+//    }
   }
 
   override fun setUpViews() {
@@ -67,7 +91,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       when (it) {
         Constants.LOGIN_REQUIRED -> startActivity(Intent(this, AuthActivity::class.java))
         Constants.DEPARTMENTS -> nav.navigate(NavHomeDirections.actionHomeFragmentToDepartmentListFragment())
-        Constants.CHAT_LIST -> nav.navigate(NavHomeDirections.actionHomeFragmentToChatFragment())
+        Constants.CHAT_LIST -> {
+          Log.d(TAG, "setUpBottomNavigationWithGraphs: HERE")
+          nav.navigate(HomeFragmentDirections.toFilterSortDialog(-1,FilterDialog.CHAT))
+//          nav.navigate(HomeFragmentDirections.actionHomeFragmentToCommetChatFragment())
+        }
         Constants.NOTIFICATION -> {
           if (viewModel.isLoggin)
             nav.navigate(NavHomeDirections.moveToNotification())
@@ -161,7 +189,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 //      }
 //      true
 //    }
+//    checkDeepLink()
   }
+
 
   private
   val TAG = "HomeActivity"

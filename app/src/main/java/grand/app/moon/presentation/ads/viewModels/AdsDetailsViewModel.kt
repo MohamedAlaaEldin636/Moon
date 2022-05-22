@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import androidx.core.content.ContextCompat.startActivity
+import grand.app.moon.presentation.ads.adapter.SwitchAdapter
 import java.util.*
 
 
@@ -49,6 +50,10 @@ class AdsDetailsViewModel @Inject constructor(
   @Bindable
   var propertiesAdapter = PropertyAdapter()
 
+
+  @Bindable
+  var switchAdapter = SwitchAdapter()
+
   @Bindable
   var reviewsAdapter = ReviewsAdapter()
 
@@ -56,6 +61,7 @@ class AdsDetailsViewModel @Inject constructor(
   @Bindable
   lateinit var  adsAdapter : AdsAdapter
 
+  var blockStore = false
 
   val followStoreRequest = FollowStoreRequest()
   val addFavouriteAdsRequest = AddFavouriteAdsRequest()
@@ -70,6 +76,7 @@ class AdsDetailsViewModel @Inject constructor(
 
 
   fun getDetails(id: Int, type: Int) {
+    Log.d(TAG, "getDetails: ")
     this.id = id
     this.type = type
     useCase.getDetails(id, type)
@@ -99,16 +106,17 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun share(v: AppCompatImageView) {
-    advertisement.get()?.title?.let {
-      advertisement.get()?.description?.let { it1 ->
-        share(
-          v.context,
-          it,
-          it1,
-          v
-        )
-      }
-    }
+//    advertisement.get()?.title?.let {
+//      advertisement.get()?.description?.let { it1 ->
+//        share(
+//          v.context,
+//          it,
+//          it1,
+//          v
+//        )
+//      }
+//    }
+    advertisement.get()?.description?.let { advertisement.get()?.share?.let { it1 -> share(v.context, it, it1) } }
   }
 
   fun whatsapp(v: View) {
@@ -166,6 +174,8 @@ class AdsDetailsViewModel @Inject constructor(
     propertiesAdapter.differ.submitList(advertisement.get()?.properties)
     reviewsAdapter.differ.submitList(advertisement.get()?.reviews)
     adsAdapter.differ.submitList(advertisement.get()?.similarAds)
+    switchAdapter.differ.submitList(advertisement.get()?.switches)
+    notifyPropertyChanged(BR.switchAdapter)
     show.set(true)
   }
 

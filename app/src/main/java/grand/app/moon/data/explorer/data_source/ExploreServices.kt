@@ -29,6 +29,12 @@ interface ExploreServices {
   suspend fun deleteComment(@Path("id") id: Int): BaseResponse<*>
 
 
+
+  @GET("v1/explores/{id}/comments")
+  suspend fun CommentListPaginateData(@Path("id") id : Int,@Query("page") page : Int): BaseResponse<CommentListPaginateData>
+
+
+
   @GET("v1/users/{id}") //<--need api here osama
   suspend fun getUsers(@Path("id") id : Int,@Query("page") page : Int): BaseResponse<UserListPaginateData>
 

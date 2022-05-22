@@ -12,6 +12,8 @@ import java.io.Serializable
 
 @Keep
 data class Store(
+  @SerializedName("share_link")
+  var share: String = "",
   @SerializedName("advertisements_count")
   val advertisementsCount: String = "0",
   @SerializedName("average_rate")

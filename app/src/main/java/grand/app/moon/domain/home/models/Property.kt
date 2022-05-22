@@ -16,7 +16,7 @@ data class Property(
   @SerializedName("name")
   val name: String = "",
   @SerializedName("parent")
-  val parent: Parent = Parent(),
+  val parent: Parent?,
   @SerializedName("text")
   val text: String = "",
 ) : Serializable

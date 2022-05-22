@@ -22,6 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardUseCompatPadding="true"
+    android:onClick="@{ (v) -> viewModel.details(v) }"
     app:width="@{viewModel.percentageAds}"
     app:cardCornerRadius="@dimen/dimen6"
     app:cardElevation="@dimen/dimen1"

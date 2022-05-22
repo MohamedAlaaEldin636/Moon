@@ -23,6 +23,8 @@ class ExploreRepositoryImpl @Inject constructor(
   override suspend fun setComment(page: ExploreAction): Resource<BaseResponse<Comment>> = remoteDataSource.setComment(page)
   override suspend fun deleteComment(page: Int): Resource<BaseResponse<*>> = remoteDataSource.deleteComment(page)
   override fun getComments(id:Int): Flow<PagingData<Comment>> = remoteDataSource.getComments(id)
+
+  override suspend fun CommentListPaginateData(id:Int , page: Int): Resource<BaseResponse<CommentListPaginateData>> = remoteDataSource.CommentListPaginateData(id,page)
   override suspend fun getUsers(id:Int , page: Int): Resource<BaseResponse<UserListPaginateData>> = remoteDataSource.getUsers(id,page)
 
 

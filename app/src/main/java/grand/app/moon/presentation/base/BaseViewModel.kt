@@ -30,6 +30,10 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.lang.Exception
 import java.net.URLEncoder
+import androidx.core.content.ContextCompat.startActivity
+
+
+
 
 open class BaseViewModel : ViewModel(), Observable {
   private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
@@ -154,36 +158,53 @@ open class BaseViewModel : ViewModel(), Observable {
   }
 
   open fun share(context: Context, title: String, message: String) {
-    val imagePath = File(getCacheDir(), "images")
-    val newFile = File(imagePath, "image.png")
-    val contentUri = FileProvider.getUriForFile(
-      context,
-      BuildConfig.APPLICATION_ID + ".fileprovider",
-      newFile
+//    val imagePath = File(getCacheDir(), "images")
+//    val newFile = File(imagePath, "image.png")
+//    val contentUri = FileProvider.getUriForFile(
+//      context,
+//      BuildConfig.APPLICATION_ID + ".fileprovider",
+//      newFile
+//    )
+//    //
+//    if (contentUri != null) {
+//      val shareIntent = Intent()
+//      shareIntent.action = Intent.ACTION_SEND
+//      shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // temp permission for receiving app to read this file
+//      shareIntent.setDataAndType(contentUri, context.contentResolver.getType(contentUri))
+//      shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+//      shareIntent.type = "*/*"
+//      shareIntent.putExtra(Intent.EXTRA_SUBJECT, context.resources.getString(R.string.app_name))
+//      shareIntent.putExtra(
+//        Intent.EXTRA_TEXT, """
+//   $title
+//   $message
+//   """.trimIndent()
+//      )
+//      context.startActivity(
+//        Intent.createChooser(
+//          shareIntent,
+//          context.resources.getString(R.string.share)
+//        )
+//      )
+//    }
+
+    val intent = Intent(Intent.ACTION_SEND)
+    /*This will be the actual content you wish you share.*/
+    /*This will be the actual content you wish you share.*/
+//    val shareBody = message
+    /*The type of the content is text, obviously.*/
+    /*The type of the content is text, obviously.*/intent.type = "text/plain"
+    /*Applying information Subject and Body.*/
+    /*Applying information Subject and Body.*/intent.putExtra(
+      Intent.EXTRA_SUBJECT,
+      context.getString(R.string.app_name)
     )
-    //
-    if (contentUri != null) {
-      val shareIntent = Intent()
-      shareIntent.action = Intent.ACTION_SEND
-      shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // temp permission for receiving app to read this file
-      shareIntent.setDataAndType(contentUri, context.contentResolver.getType(contentUri))
-      shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-      shareIntent.type = "*/*"
-      shareIntent.putExtra(Intent.EXTRA_SUBJECT, context.resources.getString(R.string.app_name))
-      shareIntent.putExtra(
-        Intent.EXTRA_TEXT, """
-   $title
-   $message
-   """.trimIndent()
-      )
-      context.startActivity(
-        Intent.createChooser(
-          shareIntent,
-          context.resources.getString(R.string.share)
-        )
-      )
-    }
+    intent.putExtra(Intent.EXTRA_TEXT, title+"\n"+message)
+    /*Fire!*/
+    context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)))
   }
+
+
 
   fun toFilter(
     v: View, category_id: Int? = -1, category_name: String? = null, sub_category_id: Int? = -1,

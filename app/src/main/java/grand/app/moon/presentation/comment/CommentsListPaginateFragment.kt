@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
+class CommentsListPaginateFragment : BaseFragment<FragmentCommentsBinding>() {
 
   private val exploreListFragmentArgs: CommentsListPaginateFragmentArgs by navArgs()
   val viewModel: CommentListViewModel by viewModels()
@@ -48,6 +48,13 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
     viewModel.exploreId = exploreListFragmentArgs.exploreId
     viewModel.total.set(exploreListFragmentArgs.totalComments.toString())
     viewModel.callService()
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//          viewModel.response?.collectLatest {
+//            viewModel.adapter.submitData(it)
+//          }
+      }
+    }
   }
 
   override
@@ -66,27 +73,6 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
 
   override fun setupObservers() {
     lifecycleScope.launchWhenResumed {
-      viewModel._responseService.collect {
-        when (it) {
-          Resource.Loading -> {
-            hideKeyboard()
-            showLoading()
-          }
-          is Resource.Success -> {
-            hideLoading()
-            viewModel.adapter.insertData(it.value.data.list)
-            viewModel.total.set(it.value.data.meta.total.toString())
-            viewModel.clearModel()
-
-          }
-          is Resource.Failure -> {
-            hideLoading()
-            handleApiError(it)
-          }
-        }
-      }
-    }
-    lifecycleScope.launchWhenResumed {
       viewModel._responseSend.collect {
         when (it) {
           Resource.Loading -> {
@@ -95,7 +81,7 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            viewModel.adapter.insertData(it.value.data)
+//            viewModel.adapter.refresh()
             viewModel.total.set(viewModel.total.get()?.toInt()?.plus(1).toString())
             viewModel.clearModel()
 
@@ -117,7 +103,7 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
           is Resource.Success -> {
             hideLoading()
             viewModel.total.set(viewModel.total.get()?.toInt()?.minus(1).toString())
-            viewModel.adapter.deleteItem()
+//            viewModel.adapter.refresh()
           }
           is Resource.Failure -> {
             hideLoading()

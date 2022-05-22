@@ -8,11 +8,11 @@ import java.io.Serializable
 
 @Keep
 data class Explore(
-  val id: Int = 0,
+  var id: Int = 0,
   @SerializedName("created_at")
   val createdAt: String = "",
   @SerializedName("file")
-  val file: String = "",
+  var file: String = "",
   @SerializedName("mime_type")
   val mimeType: String = "",
   @SerializedName("likes_count")

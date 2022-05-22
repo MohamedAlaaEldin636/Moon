@@ -7,17 +7,16 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.comment.entity.Comment
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.comment.CommentsListFragment
-import javax.inject.Inject
+import grand.app.moon.presentation.comment.CommentsListPaginateFragment
 
-class ItemCommentViewModel(val model: Comment,val userLocalUseCase: UserLocalUseCase) : BaseViewModel(){
+class ItemCommentViewModel(val model: Comment,val position:Int ,val userLocalUseCase: UserLocalUseCase) : BaseViewModel(){
 //
 //  @Inject
 //  lateinit var userLocalUseCase: UserLocalUseCase
 
   private  val TAG = "ItemCommentViewModel"
   fun delete(v: View){
-    Log.d(TAG, "delete: ${model.id}")
-    v.findFragment<CommentsListFragment>().viewModel.deleteComment(model.id)
+    v.findFragment<CommentsListFragment>().viewModel.deleteComment(position,model.id)
   }
 
 

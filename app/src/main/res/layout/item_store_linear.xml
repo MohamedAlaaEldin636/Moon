@@ -23,7 +23,6 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dimen10"
     android:layout_marginTop="@dimen/dimen6"
-
     app:cardElevation="1dp"
     app:cardCornerRadius="@dimen/dimen16"
     android:layout_marginEnd="@dimen/dimen10"

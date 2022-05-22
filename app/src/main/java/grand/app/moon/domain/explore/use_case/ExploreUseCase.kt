@@ -34,6 +34,11 @@ class ExploreUseCase @Inject constructor(
 
 
   fun getComments(id: Int): Flow<PagingData<Comment>> = repository.getComments(id)
+  fun commentListPaginateData(id: Int,page: Int): Flow<Resource<BaseResponse<CommentListPaginateData>>> = flow {
+    emit(Resource.Loading)
+    val result = repository.CommentListPaginateData(id,page)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
 
   fun setComment(exploreAction: ExploreAction,withLoader : Boolean = false): Flow<Resource<BaseResponse<Comment>>> = flow {
     if(withLoader) emit(Resource.Loading)

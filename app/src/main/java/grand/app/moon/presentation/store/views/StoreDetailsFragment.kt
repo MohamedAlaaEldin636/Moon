@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -39,7 +40,7 @@ import kotlinx.coroutines.launch
 class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapReadyCallback {
 
   private val adsDetailsFragmentArgs: StoreDetailsFragmentArgs by navArgs()
-  var map : SupportMapFragment? = null
+  var map: SupportMapFragment? = null
   val viewModel: StoreDetailsViewModel by viewModels()
 
   override
@@ -51,6 +52,10 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
       if (bundle.containsKey(Constants.SORT_BY)) {
         viewModel.setSortAds(bundle.getInt(Constants.SORT_BY))
       }
+//      if (bundle.containsKey(Constants.STORES_BLOCKED)) {
+//        viewModel.blockStore = true
+//        backToPreviousScreen()
+//      }
     }
   }
 
@@ -96,7 +101,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
           is Resource.Success -> {
             hideLoading()
             updateMap()
-            it.value.data.category.add(Property(0, name = resources.getString(R.string.show_all)))
+            it.value.data.category.add(Property(0, name = resources.getString(R.string.show_all),parent = null))
             viewModel.update(
               resources.getString(R.string.google_direction_api),
               it.value.data,
@@ -154,7 +159,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 
   private fun updateMap() {
     map = childFragmentManager.findFragmentById(R.id.mapView) as? SupportMapFragment
-    
+
     map?.getMapAsync(this)
   }
 
@@ -252,7 +257,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     map?.onStop()
 
   }
-  
+
 
   override fun onLowMemory() {
     super.onLowMemory()
@@ -260,6 +265,11 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   }
 
   override fun onDestroy() {
+//    val bundle = Bundle()
+//    viewModel.store.get()?.id?.let { bundle.putInt(Constants.STORES_ID, it) }
+//    viewModel.store.get()?.isFollowing?.let { bundle.putBoolean(Constants.FOLLOW, it) }
+//    bundle.putBoolean(Constants.STORES_BLOCKED,viewModel.blockStore)
+//    setFragmentResult(Constants.BUNDLE, bundle)
     super.onDestroy()
     viewModel.mapConfig?.getGoogleMap()?.clear()
   }

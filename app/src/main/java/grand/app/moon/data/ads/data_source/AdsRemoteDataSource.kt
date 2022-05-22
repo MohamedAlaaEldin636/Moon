@@ -6,6 +6,7 @@ import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.auth.entity.request.*
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
+import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import javax.inject.Inject
@@ -74,6 +75,10 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 
   suspend fun addReview(request: ReviewRequest) = safeApiCall {
     apiService.addReview(getParameters(request))
+  }
+
+  suspend fun setInteraction(request: InteractionRequest) = safeApiCall {
+    apiService.setInteraction(request)
   }
 
   suspend fun filterDetails(categoryId: Int, subCategoryId: Int?) = safeApiCall {

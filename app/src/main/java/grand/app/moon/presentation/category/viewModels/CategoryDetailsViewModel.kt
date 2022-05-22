@@ -65,12 +65,12 @@ class CategoryDetailsViewModel @Inject constructor(
   var isLoggin = userLocalUseCase.isLoggin()
 
   init {
+    storeAdapter.percentage = 48
     storeAdapter.useCase = storeUseCase
     storeAdapter.isLogin = isLoggin
   }
 
   fun initAllServices() {
-    storeAdapter.percentage = 48
     categoriesAdapter.percentage = 33
     getCategoryDetails()
     getStories()

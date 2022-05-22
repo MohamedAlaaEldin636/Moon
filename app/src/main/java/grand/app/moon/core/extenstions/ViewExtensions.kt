@@ -89,9 +89,9 @@ private val TAG = "ViewExtensions"
 
 @BindingAdapter("width")
 fun viewWidth(view: View, widthPercent: Int) {
-  Log.d(TAG, "viewWidth: HEY")
+//  Log.d(TAG, "viewWidth: HEY")
   if (widthPercent < 100) {
-    Log.d(TAG, "viewWidth: ${widthPercent}")
+//    Log.d(TAG, "viewWidth: ${widthPercent}")
     val total = Resources.getSystem().displayMetrics.widthPixels
     view.layoutParams.width = (total * widthPercent) / 100
   }
@@ -99,7 +99,7 @@ fun viewWidth(view: View, widthPercent: Int) {
 
 @BindingAdapter("widthSquare")
 fun widthSquare(view: View, count: Int) {
-  Log.d(TAG, "viewWidth: HEY")
+//  Log.d(TAG, "viewWidth: HEY")
   val width = Resources.getSystem().displayMetrics.widthPixels / count
   view.layoutParams.width = width
   view.layoutParams.height = width
@@ -107,9 +107,9 @@ fun widthSquare(view: View, count: Int) {
 
 @BindingAdapter("range")
 fun valuesFromTo(range: RangeSeekBar?, model: FilterProperty) {
-  Log.d(TAG, "viewWidth: HEY")
-  Log.d(TAG, "valuesFromMin: ${model.min}")
-  Log.d(TAG, "valuesFromTax: ${model.max}")
+//  Log.d(TAG, "viewWidth: HEY")
+//  Log.d(TAG, "valuesFromMin: ${model.min}")
+//  Log.d(TAG, "valuesFromTax: ${model.max}")
 //  view?.valueFrom = model.min!!
 //  view?.valueTo = model.max!!
 

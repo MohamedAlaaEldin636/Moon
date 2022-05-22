@@ -6,6 +6,7 @@ import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.home.models.review.Reviews
@@ -24,6 +25,7 @@ interface AdsRepository {
                                 , properties: ArrayList<Property>?, page: Int?): Resource<BaseResponse<SubCategoryResponse>>
 //  suspend fun getAdsSubCategory(url : String): Resource<BaseResponse<SubCategoryResponse>>
   suspend fun getReviews(page:Int,store : String?,advertisement:String?): Resource<BaseResponse<ReviewsPaginateData>>
+  suspend fun setInteraction(url : InteractionRequest): Resource<BaseResponse<*>>
   suspend fun addReview(url : ReviewRequest): Resource<BaseResponse<*>>
   suspend fun filterDetails(categoryId: Int , subCategoryId: Int?): Resource<BaseResponse<FilterDetails>>
   suspend fun filterResults(url : FilterResultRequest): Resource<BaseResponse<AdsListPaginateData>>

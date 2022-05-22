@@ -190,7 +190,7 @@ class SubCategoryViewModel @Inject constructor(
     propertiesAdapter.submitSelect()
     properties.clear()
     properties.add(
-      Property(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id)
+      Property(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id,parent = null)
     )
     reset()
     callService()
@@ -215,7 +215,7 @@ class SubCategoryViewModel @Inject constructor(
           notifyPropertyChanged(BR.propertiesAdapter)
           if (it.properties.isNotEmpty())
             properties.add(
-              Property(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id)
+              Property(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id,parent = null)
             )
         }
         adapter.differ.submitList(null)

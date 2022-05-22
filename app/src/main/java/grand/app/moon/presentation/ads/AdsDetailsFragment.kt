@@ -30,11 +30,25 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
-      // We use a String here, but any type that can be put in a Bundle is supported
-//      val result = bundle.getSerializable(Constants.REVIEWS_RESPONSE) as ReviewsPaginateData
-//      viewModel.updateReviews(result)
-//      viewModel.advertisement.get()!!.averageRate = bundle.getString(Constants.RATE).toString()
-      // Do something with the result
+//      // We use a String here, but any type that can be put in a Bundle is supported
+////      val result = bundle.getSerializable(Constants.REVIEWS_RESPONSE) as ReviewsPaginateData
+////      viewModel.updateReviews(result)
+////      viewModel.advertisement.get()!!.averageRate = bundle.getString(Constants.RATE).toString()
+//      // Do something with the result
+//
+//      Log.d(TAG, "onCreate: HERE")
+//      if (bundle.containsKey(Constants.STORES_ID) && (bundle.containsKey(Constants.STORES_FOLLOWED) || bundle.containsKey(
+//          Constants.STORES_BLOCKED
+//        ))
+//      ) {
+//        Log.d(TAG, "onCreate: FAVOURITE")
+//        if (bundle.containsKey(Constants.STORES_FOLLOWED))
+//          viewModel.advertisement.get()?.store?.isFollowing = bundle.getBoolean(Constants.STORES_FOLLOWED)
+//        if (bundle.containsKey(Constants.STORES_BLOCKED)){
+//          viewModel.blockStore = true
+//          backToPreviousScreen()
+//        }
+//      }
     }
   }
 
@@ -46,6 +60,7 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
   fun setBindingVariables() {
     binding.viewModel = viewModel
     viewModel.getDetails(adsDetailsFragmentArgs.id,adsDetailsFragmentArgs.type)
+
   }
 
   override
@@ -80,11 +95,11 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
   private  val TAG = "AdsDetailsFragment"
   override fun onResume() {
     super.onResume()
-    Log.d(TAG, "token: ${viewModel.userLocalUseCase.getKey(Constants.TOKEN)}")
-    if(!viewModel.isLoggin) {
-      val isAuthorize = viewModel.userLocalUseCase.isLoggin()
-      viewModel.recallApi(isAuthorize)
-    }
+//    Log.d(TAG, "token: ${viewModel.userLocalUseCase.getKey(Constants.TOKEN)}")
+//    if(!viewModel.isLoggin) {
+//      val isAuthorize = viewModel.userLocalUseCase.isLoggin()
+//      viewModel.recallApi(isAuthorize)
+//    }else
   }
 
   override fun onStart() {
@@ -98,10 +113,12 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
       val bundle = Bundle()
       bundle.putInt(Constants.ID,it.id)
       bundle.putBoolean(Constants.FAVOURITE,it.isFavorite)
-      Log.d(TAG, "onDestroy: ADVERTISEMENT ahere")
-
+      it.store?.id?.let { it1 -> bundle.putInt(Constants.STORES_ID, it1) }
+      it.store?.isFollowing?.let { it1 -> bundle.putBoolean(Constants.STORES_FOLLOWED, it1) }
+      bundle.putBoolean(Constants.STORES_BLOCKED,viewModel.blockStore)
       setFragmentResult(Constants.BUNDLE, bundle)
     }
     super.onDestroy()
   }
+
 }

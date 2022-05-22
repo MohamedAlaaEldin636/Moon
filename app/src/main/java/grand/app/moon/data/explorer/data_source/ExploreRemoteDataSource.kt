@@ -36,6 +36,11 @@ class ExploreRemoteDataSource @Inject constructor(private val apiService: Explor
     }
   }
 
+
+
+  suspend fun CommentListPaginateData(id: Int, page: Int) = safeApiCall {
+    apiService.CommentListPaginateData(id, page)
+  }
   suspend fun getUsers(id: Int, page: Int) = safeApiCall {
     apiService.getUsers(id, page)
   }

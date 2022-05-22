@@ -61,7 +61,11 @@ open class BaseRemoteDataSource @Inject constructor() {
     println(apiCall)
     try {
       val apiResponse = apiCall.invoke()
-      println(apiResponse)
+      val gson = Gson()
+      val json = gson.toJson(apiResponse)
+      Log.d(TAG, "safeApiCall: $json")
+
+//      println(json)
       when ((apiResponse as BaseResponse<*>).code) {
         403 -> {
           return Resource.Failure(FailureStatus.TOKEN_EXPIRED)

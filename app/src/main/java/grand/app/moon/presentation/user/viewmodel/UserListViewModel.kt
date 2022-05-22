@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.user.viewmodel
 
+import android.util.Log
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -48,6 +49,7 @@ class UserListViewModel @Inject constructor(
 
   fun callService(){
     if (!callingService && !isLast) {
+      Log.d(TAG, "callService WORKING: ${page}")
       callingService = true
       notifyPropertyChanged(BR.callingService)
       page++

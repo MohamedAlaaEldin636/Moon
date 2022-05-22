@@ -10,6 +10,8 @@ import java.io.Serializable
 data class Advertisement(
   @SerializedName("average_rate")
   var averageRate: String = "0",
+  @SerializedName("share_link")
+  var share: String = "",
   @SerializedName("city")
   val city: Country = Country(),
   @SerializedName("country")
@@ -54,6 +56,8 @@ data class Advertisement(
   val shareCount: Int = 0,
   @SerializedName("is_favorite")
   var isFavorite: Boolean = false,
+  @SerializedName("switches")
+  var switches: ArrayList<SwitchModel> = arrayListOf(),
 
   @SerializedName("reviews")
   var reviews: ArrayList<Reviews> = arrayListOf(),

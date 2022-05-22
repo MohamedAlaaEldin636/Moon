@@ -51,6 +51,7 @@ class FilterResultsViewModel @Inject constructor(
 
   init {
     adapter.percentageAds = 100
+    adapter.showFavourite = true
   }
 
   fun callService() {

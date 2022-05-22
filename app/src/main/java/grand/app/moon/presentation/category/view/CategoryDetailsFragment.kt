@@ -17,6 +17,7 @@ import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.viewModels.CategoryDetailsViewModel
 import kotlinx.coroutines.flow.collect
@@ -45,8 +46,16 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
         Log.d(TAG, "onCreate: FAVOURITE")
         viewModel.adsHomeAdapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
       }
+      if(bundle.containsKey(Constants.STORES_ID) && (bundle.containsKey(Constants.STORES_FOLLOWED) || bundle.containsKey(Constants.STORES_BLOCKED) )) {
+        Log.d(TAG, "onCreate: FAVOURITE")
+        if(bundle.containsKey(Constants.STORES_FOLLOWED))
+          viewModel.storeAdapter.setFollowing(bundle.getInt(Constants.STORES_ID),bundle.getBoolean(Constants.STORES_FOLLOWED))
+        if(bundle.containsKey(Constants.STORES_BLOCKED))
+          viewModel.storeAdapter.setBlocked(bundle.getInt(Constants.STORES_ID))
+      }
     }
   }
+
 
 
   private val TAG = "DepartmentDetailsFragment"

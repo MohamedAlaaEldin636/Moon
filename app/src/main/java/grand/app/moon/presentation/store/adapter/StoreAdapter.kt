@@ -119,6 +119,26 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
     notifyDataSetChanged()
   }
 
+  fun setFollowing(storeId: Int, boolean: Boolean) {
+    differ.currentList.forEachIndexed{ index, store ->
+      if(differ.currentList[index].id == storeId && differ.currentList[index].isFollowing != boolean){
+        differ.currentList[index].isFollowing = boolean
+        notifyItemChanged(index)
+      }
+    }
+  }
+
+  fun setBlocked(storeId: Int) {
+    differ.currentList.forEachIndexed{ index, store ->
+      if(differ.currentList[index].id == storeId){
+        val array = ArrayList(differ.currentList)
+        array.removeAt(index)
+        differ.submitList(array)
+        notifyItemRemoved(index)
+      }
+    }
+  }
+
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemStoreBinding

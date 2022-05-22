@@ -5,6 +5,7 @@ import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.home.models.review.Reviews
@@ -24,6 +25,10 @@ interface AdsServices {
 
   @POST("v1/favorite")
   suspend fun favourite(@Body addFavouriteAdsRequest: AddFavouriteAdsRequest): BaseResponse<*>
+
+
+  @POST("v1/interactions")
+  suspend fun setInteraction(@Body addFavouriteAdsRequest: InteractionRequest): BaseResponse<*>
 
   @GET("v1/profile/advertisements")
   suspend fun getProfileAdsList(
@@ -72,6 +77,7 @@ interface AdsServices {
   suspend fun addReview(
     @FieldMap map : Map<String, String>
   ): BaseResponse<*>
+
 
   @GET("v1/filter/details")
   suspend fun filterDetails(

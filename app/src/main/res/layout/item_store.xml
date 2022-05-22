@@ -20,7 +20,6 @@
   <androidx.cardview.widget.CardView
     android:id="@+id/item_store_container"
     android:layout_width="match_parent"
-
     android:onClick="@{ (v) -> itemViewModels.storeDetails(v) }"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dimen10"

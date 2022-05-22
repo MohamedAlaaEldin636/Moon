@@ -7,6 +7,7 @@ import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.home.models.review.Reviews
@@ -41,11 +42,11 @@ class AdsUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
-//  fun getAdsList(url : String): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
-//    emit(Resource.Loading)
-//    val result = repo.getAdsList(url)
-//    emit(result)
-//  }.flowOn(Dispatchers.IO)
+  fun setInteraction(request: InteractionRequest): Flow<Resource<BaseResponse<*>>> = flow {
+    emit(Resource.Loading)
+    val result = repo.setInteraction(request)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
 
   fun getAdsList(type:Int? , categoryId: Int?,subCategoryId: Int?,orderBy: Int?,storeId: Int? ,search:String = "", page: Int?): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
     emit(Resource.Loading)

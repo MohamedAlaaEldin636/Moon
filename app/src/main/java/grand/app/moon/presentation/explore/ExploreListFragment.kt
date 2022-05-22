@@ -35,6 +35,9 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
   fun setBindingVariables() {
     binding.viewModel = viewModel
     viewModel.page = exploreListFragmentArgs.page
+    exploreListFragmentArgs.data.list.forEachIndexed{ index , item ->
+      Log.d(TAG, "onStart: $index , ${item.id} , ${item.likes}")
+    }
     viewModel.setData(exploreListFragmentArgs.data)
   }
 
@@ -105,7 +108,11 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
     Log.d(TAG, "onDestroy: EXPLORE LIST")
     val bundle = Bundle()
     val paginateData = ExploreListPaginateData()
-    paginateData.list.addAll(viewModel.adapter.differ.currentList)
+    val list = ArrayList(viewModel.adapter.differ.currentList)
+    list.forEachIndexed{ index , item ->
+      Log.d(TAG, "onDestroy: $index , ${item.id} , ${item.likes}")
+    }
+    paginateData.list.addAll(list)
     bundle.putSerializable(Constants.EXPLORES,paginateData)
     setFragmentResult(Constants.BUNDLE, bundle)
     super.onDestroy()

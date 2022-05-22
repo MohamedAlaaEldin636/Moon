@@ -9,29 +9,32 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
-import grand.app.moon.databinding.ItemAdsHomeBinding
-import grand.app.moon.domain.ads.repository.AdsRepository
-import grand.app.moon.domain.home.models.CategoryAdvertisement
-import grand.app.moon.presentation.ads.viewModels.ItemAdsHomeViewModel
+import grand.app.moon.databinding.ItemAdsBinding
+import grand.app.moon.databinding.ItemPropertyBinding
+import grand.app.moon.databinding.ItemSwitchBinding
+import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.home.models.Property
+import grand.app.moon.domain.home.models.SwitchModel
+import grand.app.moon.presentation.ads.viewModels.ItemAdsViewModel
+import grand.app.moon.presentation.ads.viewModels.ItemPropertyViewModel
+import grand.app.moon.presentation.ads.viewModels.ItemSwitchViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
-import javax.inject.Inject
 
-class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepository) :
-  RecyclerView.Adapter<AdsHomeAdapter.ViewHolder>() {
+class SwitchAdapter : RecyclerView.Adapter<SwitchAdapter.ViewHolder>() {
   lateinit var context: Context
-  var clickEvent: SingleLiveEvent<CategoryAdvertisement> = SingleLiveEvent()
+  var clickEvent: SingleLiveEvent<SwitchModel> = SingleLiveEvent()
 
-  private val differCallback = object : DiffUtil.ItemCallback<CategoryAdvertisement>() {
+  private val differCallback = object : DiffUtil.ItemCallback<SwitchModel>() {
     override fun areItemsTheSame(
-      oldItem: CategoryAdvertisement,
-      newItem: CategoryAdvertisement
+      oldItem: SwitchModel,
+      newItem: SwitchModel
     ): Boolean {
       return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-      oldItem: CategoryAdvertisement,
-      newItem: CategoryAdvertisement
+      oldItem: SwitchModel,
+      newItem: SwitchModel
     ): Boolean {
       return oldItem == newItem
     }
@@ -39,19 +42,16 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
   val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view = LayoutInflater.from(parent.context)
-      .inflate(R.layout.item_ads_home, parent, false)
+      .inflate(R.layout.item_switch, parent, false)
     context = parent.context
     return ViewHolder(view)
   }
 
-  private val TAG = "MoreAdapter"
+  private  val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemAdsHomeViewModel(data, adsRepository)
-    holder.itemLayoutBinding.rvAds.isNestedScrollingEnabled = false;
-
+    val itemViewModel = ItemSwitchViewModel(data)
     holder.setViewModel(itemViewModel)
-
 
   }
 
@@ -69,20 +69,9 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
     holder.unBind()
   }
 
-  fun updateFavourite(id: Int, boolean: Boolean) {
-    differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
-      categoryAds.advertisements.forEachIndexed { indexAds, ads ->
-        if (ads.id == id && ads.isFavorite != boolean) {
-          differ.currentList[indexCategoryAds].advertisements[indexAds].isFavorite = boolean
-          notifyItemChanged(indexCategoryAds)
-        }
-      }
-    }
-  }
-
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-    lateinit var itemLayoutBinding: ItemAdsHomeBinding
+    lateinit var itemLayoutBinding: ItemSwitchBinding
 
     init {
       bind()
@@ -96,7 +85,7 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
       itemLayoutBinding.unbind()
     }
 
-    fun setViewModel(itemViewModel: ItemAdsHomeViewModel) {
+    fun setViewModel(itemViewModel: ItemSwitchViewModel) {
       itemLayoutBinding.viewModel = itemViewModel
     }
   }

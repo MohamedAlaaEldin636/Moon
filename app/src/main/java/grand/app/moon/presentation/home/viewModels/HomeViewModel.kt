@@ -1,11 +1,15 @@
 package grand.app.moon.presentation.home.viewModels
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.databinding.Bindable
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.utils.BaseResponse
@@ -13,6 +17,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.NavHomeDirections
 import grand.app.moon.R
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
@@ -21,14 +26,17 @@ import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
+import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter
+import grand.app.moon.presentation.home.HomeFragment
 import grand.app.moon.presentation.home.HomeFragmentDirections
 import grand.app.moon.presentation.story.adapter.StoriesAdapter
 import grand.app.moon.presentation.store.adapter.StoreAdapter
 import grand.app.moon.presentation.story.adapter.StoriesAllAdapter
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,6 +47,42 @@ class HomeViewModel @Inject constructor(
   val accountRepository: AccountRepository,
   private val homeUseCase: HomeUseCase
 ) : BaseViewModel() {
+
+  fun checkDeepLink(intent: Intent,v: View) {
+    Log.d(TAG, "checkDeepLink: ")
+    val action = intent.action
+    val data = intent.data
+    try {
+      if (action != null && data != null) {
+        Log.d(TAG, "checkDeepLink: ACTIOM")
+        val link = data.toString()
+        val parameters = link.split("/").toTypedArray()
+        Log.d(TAG, "initDynamicLinkSetDefaultCountry: ${parameters[4]}")
+        val id = parameters[5]
+        when(parameters[4]){
+          "advertisement" -> {
+            Log.d(TAG, "initDynamicLinkSetDefaultCountry: done")
+            v.findNavController().navigate(
+              R.id.nav_ads, bundleOf(
+                "id" to id.toInt(),
+                "type" to 2
+              )
+            )
+          }
+          "shop" -> {
+            v.findNavController().navigate(
+              R.id.nav_store,
+              bundleOf(
+                "id" to id.toInt(),
+                "type" to 3
+              ),Constants.NAVIGATION_OPTIONS)
+          }
+        }
+      }
+    } catch (exception: Exception) {
+      exception.printStackTrace()
+    }
+  }
 
   private val _homeResponse =
     MutableStateFlow<Resource<BaseResponse<HomeResponse>>>(Resource.Default)
@@ -76,6 +120,10 @@ class HomeViewModel @Inject constructor(
     categoriesAdapter.percentage = 33
 
     getCategories()
+    callService()
+  }
+
+  fun callService(){
     homeApi()
     getStories()
   }
@@ -158,4 +206,5 @@ class HomeViewModel @Inject constructor(
     notifyPropertyChanged(BR.adsHomeAdapter)
     show.set(true)
   }
+
 }

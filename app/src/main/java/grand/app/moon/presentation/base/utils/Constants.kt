@@ -51,6 +51,7 @@ object Constants {
 
 
 
+
   const val CHAT_APP_ID = "2093943501fa6b66"
   const val CHAT_REGION: String = "eu"
   const val CHAT_AUTH_KEY: String = "83d95ac0cb93239d1e08ba375efe7ab73e541dbd"
@@ -80,6 +81,8 @@ object Constants {
   const val LOGOUT: String = "logout"
   const val PROFILE: String = "profile"
   const val LAST_ADS: String = "last_ads"
+//  const val STORE_ID: String = "store_id"
+  const val STORES_ID: String = "stores_id"
   const val STORES_FOLLOWED: String = "stores_followed"
   const val LAST_SEARCH: String = "last_search"
   const val FAVOURITE: String = "favourite"

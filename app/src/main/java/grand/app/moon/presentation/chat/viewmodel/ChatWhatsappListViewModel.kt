@@ -1,25 +1,23 @@
-package grand.app.moon.presentation.chat
+package grand.app.moon.presentation.chat.viewmodel
 
 import androidx.databinding.Bindable
+import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import grand.app.moon.presentation.notfication.adapter.NotificationAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
-import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.settings.entity.NotificationPaginateData
 import grand.app.moon.domain.settings.models.NotificationData
 import grand.app.moon.domain.settings.use_case.SettingsUseCase
 import grand.app.moon.domain.store.entity.FollowStoreRequest
-import grand.app.moon.domain.store.entity.StoreListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
-import grand.app.moon.presentation.store.adapter.StoreFollowingAdapter
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class ChatViewModel @Inject constructor(
+class ChatWhatsappListViewModel @Inject constructor(
   private val useCase: SettingsUseCase,
 ) : BaseViewModel() {
   @Bindable
@@ -37,6 +35,7 @@ class ChatViewModel @Inject constructor(
 
   val followStoreRequest = FollowStoreRequest()
 
+  val list = ObservableField(NotificationPaginateData())
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<NotificationPaginateData>>>(Resource.Default)
 
@@ -48,9 +47,7 @@ class ChatViewModel @Inject constructor(
       callingService = true
       notifyPropertyChanged(BR.callingService)
       page++
-      if (page > 1) {
-        notifyPropertyChanged(BR.page)
-      }
+      notifyPropertyChanged(BR.page)
       job = useCase.notifications(type)
         .onEach {
           response.value = it
@@ -63,6 +60,7 @@ class ChatViewModel @Inject constructor(
 
   fun setData(data: NotificationPaginateData) {
     data.let {
+      list.set(data)
       println("size:" + data.list.size)
       isLast = data.links.next == null
       if (page == 1) {

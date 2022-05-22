@@ -11,7 +11,7 @@
 
     <variable
       name="viewModel"
-      type="grand.app.moon.presentation.chat.ChatViewModel" />
+      type="grand.app.moon.presentation.chat.viewmodel.ChatViewModel" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout

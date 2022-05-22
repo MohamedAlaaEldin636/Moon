@@ -2,6 +2,7 @@ package grand.app.moon.presentation.filter.result
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
@@ -29,10 +30,33 @@ class FilterResultsFragment : BaseFragment<FragmentFilterResultsBinding>() {
   val args: FilterResultsFragmentArgs by navArgs()
   private val viewModel: FilterResultsViewModel by viewModels()
 
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+      if (bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+        Log.d(TAG, "onCreate: FAVOURITE")
+        viewModel.adapter.updateFavourite(
+          bundle.getInt(Constants.ID),
+          bundle.getBoolean(Constants.FAVOURITE)
+        )
+      }
+      if (bundle.containsKey(Constants.STORES_ID) && (bundle.containsKey(Constants.STORES_FOLLOWED) || bundle.containsKey(
+          Constants.STORES_BLOCKED
+        ))
+      ) {
+        Log.d(TAG, "onCreate: FAVOURITE")
+//        if(bundle.containsKey(Constants.STORES_FOLLOWED))
+//          viewModel.storeAdapter.setFollowing(bundle.getInt(Constants.STORES_ID),bundle.getBoolean(Constants.STORES_FOLLOWED))
+        if(bundle.containsKey(Constants.STORES_BLOCKED))
+          viewModel.adapter.setBlockStore(bundle.getInt(Constants.STORES_ID))
+      }
+    }
+  }
+
   override
   fun getLayoutId() = R.layout.fragment_filter_results
 
-  private  val TAG = "FilterResultsFragment"
+  private val TAG = "FilterResultsFragment"
 
   override
   fun setBindingVariables() {
@@ -79,7 +103,7 @@ class FilterResultsFragment : BaseFragment<FragmentFilterResultsBinding>() {
     binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
       override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)
-        if (!recyclerView.canScrollVertically(1)){
+        if (!recyclerView.canScrollVertically(1)) {
           viewModel.callService()
         }
       }

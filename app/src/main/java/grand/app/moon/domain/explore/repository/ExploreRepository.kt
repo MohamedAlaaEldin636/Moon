@@ -17,5 +17,7 @@ interface ExploreRepository {
   suspend fun setComment(page:ExploreAction): Resource<BaseResponse<Comment>>
   suspend fun deleteComment(page:Int): Resource<BaseResponse<*>>
   fun getComments(id: Int ): Flow<PagingData<Comment>>
+
+  suspend fun CommentListPaginateData(id: Int , page: Int): Resource<BaseResponse<CommentListPaginateData>>
   suspend fun getUsers(id: Int , page: Int): Resource<BaseResponse<UserListPaginateData>>
 }

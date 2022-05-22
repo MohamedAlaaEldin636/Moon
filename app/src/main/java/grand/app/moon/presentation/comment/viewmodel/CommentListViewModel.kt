@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.comment.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
@@ -18,7 +19,8 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.comment.adapter.CommentListUpdateAdapter
+import grand.app.moon.presentation.comment.adapter.CommentListAdapter
+import grand.app.moon.presentation.comment.adapter.CommentListPaginateAdapter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -27,9 +29,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommentListViewModel @Inject constructor(
-  val userLocalUseCase: UserLocalUseCase,
-  private val useCase: ExploreUseCase,
-  private val storeUseCase: StoreUseCase
+  public val userLocalUseCase: UserLocalUseCase,
+  private val useCase: ExploreUseCase
 ) : BaseViewModel() {
   @Bindable
   var page: Int = 0
@@ -48,12 +49,12 @@ class CommentListViewModel @Inject constructor(
   var isLoggin = userLocalUseCase.isLoggin()
   var user = userLocalUseCase.invoke()
 
-  @Inject
-  lateinit var adapter: CommentListUpdateAdapter
+  @Bindable
+  var adapter: CommentListAdapter = CommentListAdapter(userLocalUseCase)
 
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<CommentListPaginateData>>>(Resource.Default)
-  lateinit var response: Flow<PagingData<Comment>>
+//  var response: Flow<PagingData<Comment>>? = null
   val _responseSend =
     MutableStateFlow<Resource<BaseResponse<Comment>>>(Resource.Default)
 
@@ -66,21 +67,22 @@ class CommentListViewModel @Inject constructor(
   }
 
   fun callService() {
-    response = useCase.getComments(exploreId)
+    Log.d(TAG, "callService: $exploreId")
+//    response = useCase.getComments(exploreId)
 
-//    if (!callingService && !isLast) {
-//      callingService = true
-//      notifyPropertyChanged(BR.callingService)
-//      page++
-//      if(page > 1){
-//        notifyPropertyChanged(BR.page)
-//      }
-//      job = useCase.getComments(exploreId)
-//        .onEach {
-//          response.value = it
-//        }
-//        .launchIn(viewModelScope)
-//    }
+    if (!callingService && !isLast) {
+      callingService = true
+      notifyPropertyChanged(BR.callingService)
+      page++
+      if(page > 1){
+        notifyPropertyChanged(BR.page)
+      }
+      job = useCase.commentListPaginateData(exploreId,page)
+        .onEach {
+          _responseService.value = it
+        }
+        .launchIn(viewModelScope)
+    }
   }
 
   private val TAG = "PackagesViewModel"
@@ -116,7 +118,8 @@ class CommentListViewModel @Inject constructor(
     super.onCleared()
   }
 
-  fun deleteComment(id: Int) {
+  fun deleteComment(position:Int , id: Int) {
+    adapter.position = position
     useCase.deleteComment(id).onEach {
       _responseDelete.value = it
     }.launchIn(viewModelScope)

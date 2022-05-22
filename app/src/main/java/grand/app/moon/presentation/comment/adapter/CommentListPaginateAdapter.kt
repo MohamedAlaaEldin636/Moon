@@ -13,9 +13,8 @@ import grand.app.moon.databinding.ItemCommentBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.comment.entity.Comment
 import grand.app.moon.presentation.comment.viewmodel.ItemCommentViewModel
-import javax.inject.Inject
 
-class CommentListUpdateAdapter @Inject constructor(val userLocalUseCase: UserLocalUseCase) : PagingDataAdapter<Comment, CommentListUpdateAdapter.ViewHolder>(COMPARATOR) {
+class CommentListPaginateAdapter constructor(public val userLocalUseCase: UserLocalUseCase) : PagingDataAdapter<Comment, CommentListPaginateAdapter.ViewHolder>(COMPARATOR) {
 
   companion object {
 
@@ -46,7 +45,7 @@ class CommentListUpdateAdapter @Inject constructor(val userLocalUseCase: UserLoc
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = getItem(position)
     Log.d(TAG, "onBindViewHolder: HERE ${data?.comment}")
-    val itemViewModel = data?.let { ItemCommentViewModel(it,userLocalUseCase) }
+    val itemViewModel = data?.let { ItemCommentViewModel(it,position,userLocalUseCase) }
     holder.itemLayoutBinding.appCompatImageView.setOnClickListener {
 //      clickEvent.value = Constants.DELETE
 

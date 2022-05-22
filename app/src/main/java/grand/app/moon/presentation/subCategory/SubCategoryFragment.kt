@@ -21,6 +21,7 @@ import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentSubCategoryBinding
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
+import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.map.MapCategoriesAdapter
 import grand.app.moon.presentation.subCategory.viewModel.SubCategoryViewModel
@@ -43,13 +44,17 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
         viewModel.reset()
         viewModel.callService()
       }
-      setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
-        if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
-          Log.d(TAG, "onCreate: FAVOURITE")
-          viewModel.adapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
-        }
-      }
+//      setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+//        if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+//          Log.d(TAG, "onCreate: FAVOURITE")
+//          viewModel.adapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
+//        }
+//      }
     }
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
   }
 
   override
@@ -60,7 +65,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
     viewModel.type = args.type
     viewModel.isSub.set(args.isSub)
     viewModel.setCategoryId()
-    viewModel.callService()
+//    viewModel.callService()
   }
 
   private val TAG = "SubCategoryFragment"
@@ -148,5 +153,11 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
 
   }
 
+  override fun onResume() {
+    super.onResume()
+//    viewModel.reset()
+    viewModel.reset()
+    viewModel.callService()
+  }
 
 }

@@ -353,7 +353,6 @@
           <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="@dimen/dimen10"
             app:cardElevation="@dimen/dimen1"
             card_view:cardUseCompatPadding="true">
@@ -370,6 +369,30 @@
               app:orientation="@{`1`}"
               app:span="@{`1`}"
               tools:listitem="@layout/item_property" />
+
+          </com.google.android.material.card.MaterialCardView>
+
+
+          <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen10"
+            app:cardElevation="@dimen/dimen1"
+            android:visibility="@{viewModel.switchAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+            card_view:cardUseCompatPadding="true">
+
+            <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/rv_switches"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dimen5"
+              android:orientation="horizontal"
+              app:adapter="@{viewModel.switchAdapter}"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+              app:orientation="@{`1`}"
+              app:span="@{`3`}"
+              tools:listitem="@layout/item_switch" />
 
           </com.google.android.material.card.MaterialCardView>
 

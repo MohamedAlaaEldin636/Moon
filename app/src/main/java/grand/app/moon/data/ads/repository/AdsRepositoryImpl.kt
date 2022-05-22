@@ -5,6 +5,7 @@ import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
+import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.utils.BaseResponse
@@ -57,6 +58,10 @@ class AdsRepositoryImpl @Inject constructor(
 
   override
   suspend fun addReview(url: ReviewRequest) = remoteDataSource.addReview(url)
+
+
+  override
+  suspend fun setInteraction(url: InteractionRequest) = remoteDataSource.setInteraction(url)
 
   override
   suspend fun filterDetails(categoryId: Int, subCategoryId: Int?) =

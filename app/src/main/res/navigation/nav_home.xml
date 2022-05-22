@@ -68,8 +68,16 @@
 
 
   <action
-    android:id="@+id/action_home_fragment_to_chatFragment"
-    app:destination="@id/chatFragment"
+    android:id="@+id/action_home_fragment_to_commetChatFragment"
+    app:destination="@id/commetChatFragment"
+    app:enterAnim="@anim/anim_slide_in_right"
+    app:exitAnim="@anim/anim_slide_out_left"
+    app:popEnterAnim="@anim/anim_slide_in_left"
+    app:popExitAnim="@anim/anim_slide_out_right" />
+
+  <action
+    android:id="@+id/action_home_fragment_to_whatsappChatFragment"
+    app:destination="@id/commetChatFragment"
     app:enterAnim="@anim/anim_slide_in_right"
     app:exitAnim="@anim/anim_slide_out_left"
     app:popEnterAnim="@anim/anim_slide_in_left"
@@ -175,6 +183,11 @@
 
 
   </fragment>
+
+  <action
+    android:id="@+id/to_filterSortDialog"
+    app:destination="@id/filterSortDialog" />
+
   <action
     android:id="@+id/moveToNotification"
     app:destination="@id/notificationFragment"
@@ -266,9 +279,11 @@
 <!--  </fragment>-->
 
   <fragment
-    android:id="@+id/chatFragment"
-    android:name="grand.app.moon.presentation.chat.ChatListFragment"
+    android:id="@+id/commetChatFragment"
+    android:name="grand.app.moon.presentation.chat.CommetChatListFragment"
     android:label="@string/chats" />
+
+
   <include app:graph="@navigation/nav_ad_list" />
 
   <!--  <fragment-->

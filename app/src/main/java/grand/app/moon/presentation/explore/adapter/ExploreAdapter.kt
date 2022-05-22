@@ -24,6 +24,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
+  val tmpList= ArrayList<Explore>()
+
+  var swapPosition: Int = -1
   var clickEvent: MutableLiveData<Int> = MutableLiveData()
   val user = grand.app.moon.domain.auth.entity.model.User()
   private val differCallback = object : DiffUtil.ItemCallback<Explore>() {
@@ -97,8 +100,52 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
     holder.unBind()
   }
 
+  var changed = false
   fun updateExplores(result: ExploreListPaginateData) {
+//    val list = ArrayList(differ.currentList)
+    if(swapPosition != -1) {
+//      Log.d(TAG, "updateExplores: swap ${swapPosition} id Before ${result.list[0].id} with likes ${result.list[0].likes} , ${differ.currentList[0].id}")
+//      Log.d(TAG, "updateExplores: list ${result.list.size}")
+//      Log.d(TAG, "updateExplores: list before ${differ.currentList.size}")
+//      Log.d(TAG, "updateExplores: prev id ${result.list[0].id}")
+//      Collections.swap(result.list, 0, swapPosition)
+//      Log.d(TAG, "updateExplores: After id ${result.list[0].id}")
+//      Log.d(TAG, "updateExplores: id After ${result.list[0].id} , ${differ.currentList[0].id}")
+
+
+
+//      result.list.forEachIndexed { index, explore ->
+//        Log.d(TAG, "updateExplores: ${differ.currentList[index].id} , ${explore.id}")
+//      }
+    }
+
+//    tmpList.forEachIndexed{ index,explore ->
+//      if(differ.currentList[index].id != explore.id || differ.currentList[index].likes != explore.likes || differ.currentList[index].comments != explore.comments ){
+//        Log.d(TAG, "updateExplores: DONE")
+////        differ.currentList[index].id = explore.id
+////        differ.currentList[index].file = explore.file
+//        notifyItemChanged(index)
+//      }
+//    }
     notifyDataSetChanged()
+//    result.list.forEachIndexed{ index, explore ->
+//      changed = false
+//      Log.d(TAG, "updateExplores: Starigng => ${differ.currentList[index].id} => ${differ.currentList[index].likes} , ${explore.id} ${explore.likes} =>Tmp ${tmpList[index].id} ${tmpList[index].likes}")
+//      if(differ.currentList[index].comments != result.list[index].comments && index < result.list.size){
+//        differ.currentList[index].comments = result.list[index].comments
+////        Log.d(TAG, "updateExplores: WORKED")
+//        changed = true
+//      }
+//      if(differ.currentList[index].likes != explore.likes && index < result.list.size){
+//        Log.d(TAG, "updateExplores: WORKED Like")
+//        differ.currentList[index].likes = explore.likes
+//        changed = true
+//      }
+//      if(changed) {
+//        Log.d(TAG, "updateExplores: notified ${index} with likes ${differ.currentList[index].likes}")
+//        notifyItemChanged(index)
+//      }
+//    }
 //    Log.d(TAG, "updateExplores: ${result.list.size}")
 //    var changed: Boolean
 //    differ.currentList.forEachIndexed{ index, explore ->

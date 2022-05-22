@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.rizlee.rangeseekbar.RangeSeekBar
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
@@ -15,10 +16,13 @@ import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.databinding.FragmentHomeBinding
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.NavHomeDirections
+import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.collect
 
@@ -40,13 +44,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
-      if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
-        Log.d(TAG, "onCreate: FAVOURITE")
-        viewModel.adsHomeAdapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
+      if(bundle.containsKey(Constants.SORT_BY) && bundle.containsKey(Constants.TYPE) && bundle.getString(Constants.TYPE) == FilterDialog.CHAT.toString()) {
+        Log.d(TAG, "CHAT: WORKING")
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCommetChatFragment())
+//        findNavController().navigate(NavHomeDirections.actionHomeFragmentToCommetChatFragment())
+//        activityViewModel.chatSelectedResult(bundle.getInt(Constants.SORT_BY))
       }
     }
   }
-
 
   private val TAG = "HomeFragment"
 
@@ -61,6 +66,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
           }
           is Resource.Success -> {
             hideLoading()
+
             val hr = it.value.data.copy(
               categoryAds = ArrayList(it.value.data.categoryAds.map { ca ->
                 ca.copy(name = "${resources.getString(R.string.advertisements)} ${ca.name}")
@@ -72,6 +78,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 
             updateList(hr)
             viewModel.updateList(hr)
+            activity?.intent?.let { it1 -> viewModel.checkDeepLink(it1,binding.root) }
           }
           is Resource.Failure -> {
             hideLoading()
@@ -139,6 +146,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 
   override fun onValuesChanged(minValue: Int, maxValue: Int) {
     Log.d(TAG, "onValuesChanged: HERE $minValue , $maxValue")
+  }
+
+  override fun onResume() {
+    super.onResume()
   }
 
 }

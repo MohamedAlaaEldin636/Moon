@@ -71,8 +71,8 @@
       app:destination="@id/zoomFragment" />
   </fragment>
   <fragment
-    android:id="@+id/commentsListFragment"
-    android:name="grand.app.moon.presentation.comment.CommentsListFragment"
+    android:id="@+id/commentsListPaginateFragment"
+    android:name="grand.app.moon.presentation.comment.CommentsListPaginateFragment"
     android:label="@string/comments">
     <argument
       android:name="explore_id"
@@ -127,5 +127,21 @@
     <argument
       android:name="video"
       app:argType="string" />
+  </fragment>
+  <fragment
+    android:id="@+id/commentsListFragment"
+    android:name="grand.app.moon.presentation.comment.CommentsListFragment"
+    android:label="@string/comments" >
+    <argument
+      android:name="explore_id"
+      app:argType="integer" />
+
+    <argument
+      android:name="total_comments"
+      app:argType="integer" />
+
+    <argument
+      android:name="position"
+      app:argType="integer" />
   </fragment>
 </navigation>

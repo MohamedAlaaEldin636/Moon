@@ -86,6 +86,7 @@ class StoreDetailsViewModel @Inject constructor(
   val youtube = ObservableBoolean(true)
   val twitter = ObservableBoolean(true)
 
+  var blockStore = false
 
   init {
     adsAdapter.percentageAds = 100
@@ -120,16 +121,16 @@ class StoreDetailsViewModel @Inject constructor(
 //    val name  = (store.get()?.name != null? "" : "")
     storeUseCase.share(ShareRequest(store.get()?.id))
 
-    var name = ""
-    store.get()?.name?.let {
-      name = it
-    }
-    var description = ""
-    store.get()?.description?.let {
-      description = it
-    }
+//    var name = ""
+//    store.get()?.name?.let {
+//      name = it
+//    }
+//    var description = ""
+//    store.get()?.description?.let {
+//      description = it
+//    }
 //    val name = if(store.get()?.name == null) "" else store.get()?.name
-    share(v.context, name, description, v)
+    store.get()?.share?.let { share(v.context, store.get()?.name+store.get()?.description, it) }
   }
 
   fun zoomImage(v: View) {
@@ -308,6 +309,10 @@ class StoreDetailsViewModel @Inject constructor(
       isLoggin = isAuthorize
       getDetails(id, type)
     }
+  }
+
+  fun storeDetails(v: View){
+
   }
 
   fun filter(v: View) {

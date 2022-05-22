@@ -60,6 +60,11 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
         Log.d(TAG, "onCreate: FAVOURITE")
         viewModel.adapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
       }
+      if(bundle.containsKey(Constants.STORES_ID) && bundle.containsKey(Constants.STORES_BLOCKED) ) {
+        Log.d(TAG, "onCreate: BLOCK")
+        if(bundle.containsKey(Constants.STORES_BLOCKED))
+          viewModel.adapter.removeStoreAds(bundle.getInt(Constants.STORES_ID))
+      }
     }
   }
 

@@ -135,7 +135,7 @@
   <dialog
     android:id="@+id/reviewDialog"
     android:name="grand.app.moon.presentation.reviews.ReviewDialog"
-    android:label="ReviewDialog" >
+    android:label="@string/add_review" >
     <argument
       android:name="advertisement_id"
       app:argType="integer"

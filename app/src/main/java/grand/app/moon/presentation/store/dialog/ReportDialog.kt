@@ -19,6 +19,7 @@ import grand.app.moon.databinding.WorkingHoursDialogBinding
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.extensions.handleApiError
 import grand.app.moon.presentation.base.extensions.hideKeyboard
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.store.viewModels.ReportViewModel
 import grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel
 import grand.app.moon.presentation.store.viewModels.WorkingHoursViewModel
@@ -88,6 +89,11 @@ class ReportDialog : BottomSheetDialogFragment() {
           }
           is Resource.Success -> {
             viewModel.progress.set(false)
+            if(viewModel.request.type == 8){
+              val bundle = Bundle()
+              bundle.putBoolean(Constants.STORES_BLOCKED,true)
+              setFragmentResult(Constants.BUNDLE, bundle)
+            }
             dismiss()
           }
           is Resource.Failure -> {
@@ -97,6 +103,10 @@ class ReportDialog : BottomSheetDialogFragment() {
         }
       }
     }
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
   }
 
   override fun getTheme(): Int {
