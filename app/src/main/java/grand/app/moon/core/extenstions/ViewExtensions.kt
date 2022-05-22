@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.base.extensions
 
+import android.animation.Animator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
@@ -394,26 +395,55 @@ fun PlayerView.loadVideo(videoUrl: String?, progressBar: ProgressBar?) {
 fun AppCompatTextView.move(dimentions: Float) {
   Log.d(TAG, "moveAnimation: ")
 //  startAnimation(AnimationUtils.loadAnimation(context, R.anim.move));
-  val bounds = Rect()
+  /*val bounds = Rect()
   val textPaint: Paint = paint
   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
     textPaint.getTextBounds(text, 0, text.length, bounds)
   }
-  val width: Int = bounds.width()
+  val width: Int = bounds.width()*/
 
 //  if (width > dimentions) {
-    val animator: ValueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f)
-    animator.repeatCount = ValueAnimator.INFINITE
-    animator.interpolator = LinearInterpolator()
-    animator.duration = 7000L
-    animator.addUpdateListener { animation ->
-      val progress = animation.animatedValue as Float
-      val width: Int = width
-      val translationX = width * progress
-      setTranslationX(translationX)
+    post {
+      val animator: ValueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f)
+      animator.repeatCount = ValueAnimator.REVERSE
+      animator.interpolator = LinearInterpolator()
+      animator.duration = 3000L
 
+      animator.addUpdateListener { animation ->
+        val progress = animation.animatedValue as Float
+        val width2 = width.toFloat()
+        val translationX = width2 * progress
+        setTranslationX(translationX)
+      }
+      animator.addListener(object : Animator.AnimatorListener{
+        override fun onAnimationStart(p0: Animator?) {
+        }
+
+        override fun onAnimationEnd(p0: Animator?) {
+          val anim1 = ValueAnimator.ofFloat(-1f, 0f)
+          animator.repeatCount = ValueAnimator.RESTART
+          anim1.interpolator = LinearInterpolator()
+          anim1.duration = 3000L
+          anim1.addUpdateListener { animation ->
+            val progress = animation.animatedValue as Float
+            val width2 = width.toFloat()
+            val translationX = width2 * progress
+            setTranslationX(translationX)
+          }
+
+
+
+          anim1.start()
+        }
+
+        override fun onAnimationCancel(p0: Animator?) {
+        }
+
+        override fun onAnimationRepeat(p0: Animator?) {
+        }
+      })
+      animator.start()
     }
-    animator.start()
 //  }
 
 }

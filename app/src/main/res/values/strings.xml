@@ -142,7 +142,7 @@
   <string name="lowest_price">lowest price</string>
   <string name="sort_by">sort by</string>
   <string name="filter">filter</string>
-  <string name="filter_sort">filter sort</string>
+  <string name="filter_sort">Sort</string>
   <string name="notification_removed_successfully">notification removed successfully</string>
   <string name="notification_type">notification type</string>
   <string name="moon_notifications">moon notifications</string>
