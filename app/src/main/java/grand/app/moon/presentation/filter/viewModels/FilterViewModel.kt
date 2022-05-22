@@ -102,6 +102,7 @@ class FilterViewModel @Inject constructor(
 
   var sizeBefore = 0
   fun setData(response: FilterDetails) {
+
     response.filterProperties.forEach {
       when (it.type) {
         3 -> it.filterType = FILTER_TYPE.PRICE

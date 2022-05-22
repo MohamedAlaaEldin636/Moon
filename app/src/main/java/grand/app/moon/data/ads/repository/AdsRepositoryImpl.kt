@@ -24,7 +24,7 @@ class AdsRepositoryImpl @Inject constructor(
     remoteDataSource.favourite(addFavouriteAdsRequest)
 
   override
-  suspend fun getProfileAdsList(page: Int, type: Int) =
+  suspend fun getProfileAdsList(page: Int, type: Int?) =
     remoteDataSource.getProfileAdsList(page, type)
 
   override suspend fun getAdsList(

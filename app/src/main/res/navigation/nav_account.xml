@@ -49,6 +49,11 @@
     <argument
       android:name="tabBarText"
       app:argType="string" />
+    <argument
+      android:name="is_profile"
+      app:argType="boolean"
+      android:defaultValue="true"
+      />
   </fragment>
   <fragment
     android:id="@+id/profileFragment"

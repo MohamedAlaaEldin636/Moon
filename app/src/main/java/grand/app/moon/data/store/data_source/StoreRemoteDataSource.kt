@@ -42,6 +42,10 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
     apiService.getBlockedStores(page)
   }
 
+  suspend fun getWhatsappStores(page: Int) = safeApiCall {
+    apiService.getWhatsappStores(page)
+  }
+
 
   suspend fun report(page: ReportStoreRequest) = safeApiCall {
     apiService.report(page)

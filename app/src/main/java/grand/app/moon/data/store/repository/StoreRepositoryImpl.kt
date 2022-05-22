@@ -36,6 +36,9 @@ class StoreRepositoryImpl @Inject constructor(
   suspend fun getBlockedStores(page: Int) = remoteDataSource.getBlockedStores(page)
 
   override
+  suspend fun getWhatsappStores(page: Int) = remoteDataSource.getWhatsappStores(page)
+
+  override
   suspend fun report(page: ReportStoreRequest) = remoteDataSource.report(page)
 
   override

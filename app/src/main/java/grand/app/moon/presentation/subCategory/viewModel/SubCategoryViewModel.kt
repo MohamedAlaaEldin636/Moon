@@ -196,7 +196,7 @@ class SubCategoryViewModel @Inject constructor(
     callService()
   }
 
-  private val TAG = "PackagesViewModel"
+  private val TAG = "SubCategoryViewModel"
 
   fun setData(data: SubCategoryResponse) {
     this.subCategoryResponse.set(data)

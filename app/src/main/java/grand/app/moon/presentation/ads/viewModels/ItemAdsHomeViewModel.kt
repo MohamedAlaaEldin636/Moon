@@ -28,15 +28,16 @@ class ItemAdsHomeViewModel(val category: CategoryAdvertisement, adsRepository: A
 
   fun showAll(v: View) {
     val builder = NavCategoryListAdsArgs.Builder()
-    builder.categoryId = category.id
     builder.tabBarText = category.name
     if(category.type != -1) {
       builder.isSub = false
       builder.type = category.type
+    }else{
+      builder.categoryId = category.id
     }
     v.findNavController()
       .navigate(
-        R.id.nav_category_list_ads, builder.build().toBundle(),
+        R.id.nav_ad_list, builder.build().toBundle(),
         Constants.NAVIGATION_OPTIONS
       )
 

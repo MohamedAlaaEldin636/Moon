@@ -1,11 +1,14 @@
 package grand.app.moon.presentation.more
 
+import android.content.Intent
 import android.util.Log
 import androidx.fragment.app.viewModels
+import com.maproductions.mohamedalaa.shared.core.extensions.rateApp
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentSettingsBinding
 import grand.app.moon.presentation.base.utils.Constants
 import java.util.ArrayList
@@ -27,7 +30,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.about_moon),
           getMyDrawable(R.drawable.ic_about_moon_settings),
-          "https://google.com"
+          "https://moontest.my-staff.net/${viewModel.lang}/about"
         )
       )
       list.add(
@@ -41,14 +44,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.terms),
           getMyDrawable(R.drawable.ic_terms_settings),
-          "https://google.com"
+          "https://moontest.my-staff.net/${viewModel.lang}/terms"
         )
       )
       list.add(
         MoreItem(
           getString(R.string.help),
           getMyDrawable(R.drawable.ic_help_settings),
-          "https://google.com"
+          "https://moontest.my-staff.net/${viewModel.lang}/faq/help"
         )
       )
       list.add(
@@ -69,14 +72,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.social_media),
           getMyDrawable(R.drawable.ic_social_settings),
-          "https://google.com"
+          Constants.SOCIAL
         )
       )
       list.add(
         MoreItem(
           getString(R.string.register_as_provider),
           getMyDrawable(R.drawable.ic_register_as_store),
-          "https://google.com"
+          "https://moontest.my-staff.net/store/register"
         )
       )
 
@@ -84,8 +87,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.share_app),
           getMyDrawable(R.drawable.ic_share_settings),
-          "https://google.com"
-        )
+          Constants.SHARE,
+          )
       )
 
 
@@ -93,7 +96,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.rate_app),
           getMyDrawable(R.drawable.ic_rate_app),
-          "https://google.com"
+          Constants.GOOGLE_PLAY,
+          "https://play.google.com/store/apps/details?id=${activity?.applicationContext?.packageName}"
         )
       )
     }
@@ -102,8 +106,27 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     viewModel.moreAdapter.clickEvent.observe(this,{
       Log.d(TAG, "setBindingVariables: here")
       if(it.id is String){
+        when(it.id){
+          Constants.GOOGLE_PLAY -> rateApp()
+          Constants.SHARE -> {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+
+            val messageDisplay =
+              "https://play.google.com/store/apps/details?id=${activity?.applicationContext?.packageName}"
+            intent.putExtra(Intent.EXTRA_SUBJECT, resources.getString(R.string.app_name))
+            intent.putExtra(Intent.EXTRA_TEXT, messageDisplay)
+            context?.startActivity(
+              Intent.createChooser(
+                intent,
+                resources.getString(R.string.share)
+              )
+            )
+          }
+          else -> {
+            navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToWebFragment(it.title!!, it.id.toString())) }
+        }
         Log.d(TAG, "setBindingVariables: ")
-        navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToWebFragment(it.title!!, it.id.toString()))
 //        openUrl(it.id.toString())
       }else {
         if(it.id != -1) {
@@ -124,6 +147,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 SettingsFragmentDirections.actionMoreFragmentToCountriesFragment3(
                   Constants.MORE
                 )
+              )
+            }
+            Constants.SOCIAL -> {
+              navigateSafe(
+                SettingsFragmentDirections.actionSettingsFragmentToSocialFragment()
               )
             }
             else -> {

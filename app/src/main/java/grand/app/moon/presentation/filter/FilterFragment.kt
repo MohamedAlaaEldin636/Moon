@@ -13,6 +13,8 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentFilterHomeBinding
+import grand.app.moon.domain.filter.entitiy.Children
+import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.utils.Constants
@@ -109,6 +111,7 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
           }
           is Resource.Success -> {
             hideLoading()
+            addAdditionalFeatures(it.value.data)
             viewModel.setData(it.value.data)
           }
           is Resource.Failure -> {
@@ -118,6 +121,21 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
         }
       }
     }
+  }
+
+  private fun addAdditionalFeatures(data: FilterDetails) {
+    val filterProperty = FilterProperty()
+    filterProperty.filterType = FILTER_TYPE.MULTI_SELECT
+    filterProperty.name = getString(R.string.additional_features)
+    data.filterProperties.forEach {
+      if(it.type == 2){
+        filterProperty.children.add(
+          Children(it.id,name = it.name)
+        )
+      }
+    }
+    if(filterProperty.children.isNotEmpty())
+      data.filterProperties.add(filterProperty)
   }
 
 

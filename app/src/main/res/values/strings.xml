@@ -175,4 +175,5 @@
   <string name="no_data_found">No Data Found</string>
   <string name="total_ads_count">Total Advertisements %s advertisement</string>
   <string name="advertisements_had_been_viewd">%s advertisements had been viewed</string>
+    <string name="additional_features">Additional Features</string>
 </resources>

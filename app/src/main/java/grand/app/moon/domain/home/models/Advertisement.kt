@@ -34,6 +34,8 @@ data class Advertisement(
   val isNegotiable: Int = 0,
   @SerializedName("premium")
   val premium: Int = 0,
+  @SerializedName("date")
+  val date: Double = 0.0,
   @SerializedName("price")
   val price: Int = 0,
   @SerializedName("phone")

@@ -39,14 +39,14 @@ class ItemAdsViewModel(
     viewModelScope.launch(Dispatchers.IO) {
       adsRepository.setInteraction(InteractionRequest(advertisement.id,7))
     }
-    shareWhatsapp(v, advertisement.title, advertisement.description, advertisement.phone)
+    shareWhatsapp(v, advertisement.title, advertisement.description, advertisement.country.country_code+advertisement.phone)
   }
 
   fun phone(v: View) {
     viewModelScope.launch(Dispatchers.IO) {
       adsRepository.setInteraction(InteractionRequest(advertisement.id,6))
     }
-    callPhone(v.context, advertisement.phone)
+    callPhone(v.context, advertisement.country.country_code+advertisement.phone)
   }
 
   //take-care

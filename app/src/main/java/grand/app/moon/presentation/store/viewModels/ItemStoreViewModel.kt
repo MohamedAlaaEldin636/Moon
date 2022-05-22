@@ -58,4 +58,8 @@ class ItemStoreViewModel(val store: Store,val type: Int,var percentage: Int,var 
     fragment.viewModel.adapter.position = position
     fragment.viewModel.unBlock()
   }
+
+  fun callPhone(v: View){
+    callPhone(v.context,store.country.country_code+store.phone)
+  }
 }

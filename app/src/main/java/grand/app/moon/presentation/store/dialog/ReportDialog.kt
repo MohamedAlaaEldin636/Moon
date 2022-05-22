@@ -39,10 +39,15 @@ class ReportDialog : BottomSheetDialogFragment() {
   ): View {
     binding = DataBindingUtil.inflate(inflater, R.layout.report_dialog, container, false)
     binding.viewModel = viewModel
-    if(reportArgs.storeId == -1)
-      viewModel.request.storeId = null
-    if(reportArgs.advertisementId == -1)
-      viewModel.request.advertisementId = null
+    viewModel.request.storeId = when(reportArgs.storeId){
+      -1 -> null
+      else -> reportArgs.storeId
+    }
+    viewModel.request.advertisementId = when(reportArgs.advertisementId){
+      -1 -> null
+      else -> reportArgs.advertisementId
+    }
+
     viewModel.type = reportArgs.type
 
     viewModel.request.type = when (reportArgs.type) {

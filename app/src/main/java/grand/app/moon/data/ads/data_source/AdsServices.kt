@@ -33,13 +33,13 @@ interface AdsServices {
   @GET("v1/profile/advertisements")
   suspend fun getProfileAdsList(
     @Query("page") page: Int,
-    @Query("type") type: Int
+    @Query("type") type: Int?
   ): BaseResponse<AdsListPaginateData>
 
   @GET
   suspend fun getAdsList(@Url url: String): BaseResponse<AdsListPaginateData>
 
-  @GET("v1/profile/advertisements")
+  @GET("v1/advertisements")
   suspend fun getAds(
     @Query("type") type: Int?,
     @Query("category_id") categoryId: Int?,

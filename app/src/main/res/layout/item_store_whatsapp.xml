@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <import type="grand.app.moon.presentation.base.utils.Constants" />
+
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.store.viewModels.ItemStoreViewModel" />
+  </data>
+
+  <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:elevation="5dp"
+    android:layout_margin="@dimen/dimen10"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_store_followed"
+        android:layout_width="@dimen/dimen120"
+        android:layout_height="@dimen/dimen120"
+        android:onClick="@{ (v) -> viewModel.storeDetails(v)}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:loadImage="@{viewModel.store.image}" />
+
+      <LinearLayout
+        android:id="@+id/item_store_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_store_followed"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_store_details"
+          style="@style/boldFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen10"
+          android:layout_marginTop="@dimen/dimen5"
+          android:layout_marginEnd="@dimen/dimen10"
+          android:gravity="start"
+          android:lines="2"
+          android:maxLines="2"
+          android:text="@{viewModel.store.name}"
+          android:textAlignment="viewStart"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/text_size14"
+          app:layout_constraintEnd_toStartOf="@+id/btn_follow_store"
+          app:layout_constraintStart_toEndOf="@+id/img_store"
+          app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen10"
+          android:layout_marginTop="@dimen/dimen3"
+          android:orientation="horizontal">
+
+
+          <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rate"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/colorAccent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toEndOf="@+id/img_store"
+            app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname"
+            app:rate="@{viewModel.store.averageRate}" />
+
+          <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_store_rate"
+            style="@style/regularFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen8"
+            android:gravity="center"
+            android:text="@{`( `+viewModel.store.averageRate+` )`}"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size12"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/rate"
+            app:layout_constraintStart_toEndOf="@+id/rate"
+            app:layout_constraintTop_toTopOf="@+id/rate" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/ll_item_explore_texts"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen10"
+          android:layout_marginTop="@dimen/dimen3"
+          android:layout_marginEnd="@dimen/dimen10"
+          android:orientation="horizontal"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/ll_item_explore_icons">
+
+          <androidx.appcompat.widget.AppCompatTextView
+            style="@style/mediumFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/ic_eye"
+            android:drawableTint="@color/greyText"
+            android:gravity="center"
+            android:text="@{viewModel.store.viewsCount}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size14" />
+
+          <androidx.appcompat.widget.AppCompatTextView
+            style="@style/mediumFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dimen10"
+            android:drawableStart="@drawable/ic_ads"
+            android:drawableTint="@color/greyText"
+            android:gravity="center"
+            android:text="@{viewModel.store.advertisementsCount}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size14" />
+
+
+        </LinearLayout>
+      </LinearLayout>
+
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/barrier9"
+        android:weightSum="2">
+
+        <com.google.android.material.button.MaterialButton
+          android:layout_width="0dp"
+          android:background="@color/color55CD6C"
+          style="@style/Widget.MaterialComponents.Button"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:onClick="@{ (v) -> viewModel.shareWhatsapp(v,viewModel.store.name,viewModel.store.description,viewModel.store.country.country_code+viewModel.store.phone)}"
+          android:text="@string/whatsapp"
+          android:textSize="@dimen/text_size12"
+          app:backgroundTint="@color/color55CD6C"
+          app:icon="@drawable/ic_whatsapp"
+          app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
+          android:layout_width="0dp"
+          android:background="@color/colorPrimary"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:onClick="@{ (v) -> viewModel.callPhone(v) }"
+          android:text="@string/call"
+          android:textSize="@dimen/text_size12"
+          app:backgroundTint="@color/colorPrimary"
+          app:icon="@drawable/ic_phone"
+          app:iconGravity="textStart" />
+
+
+      </LinearLayout>
+
+      <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="img_store_followed,item_store_content"
+        tools:layout_editor_absoluteY="120dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.cardview.widget.CardView>
+</layout>
+

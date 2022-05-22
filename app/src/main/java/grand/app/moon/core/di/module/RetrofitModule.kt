@@ -70,18 +70,15 @@ object RetrofitModule {
 
     Interceptor { chain ->
 //      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken :,token:$token2:  $countryId")
-      chain.proceed(
-        chain.request().newBuilder()
-//          .addHeader("Authorization", "Bearer $userToken")
-//          .addHeader(
-//            "countryId", countryId
-//          )
-//          .addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
-//          .addHeader("platform", "1")
-//          .addHeader("Accept", "application/json")
-//          .addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
-          .build()
-      )
+      val request = chain.request().newBuilder()
+      if (appPreferences.getIsLoggedIn())
+        request.addHeader("Authorization", "Bearer ${appPreferences.getLocal(Constants.TOKEN)}")
+      request.addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
+      request.addHeader("platform", "1")
+      request.addHeader("Accept", "application/json")
+      request.addHeader("countryId", appPreferences.getLocal(Constants.COUNTRY_ID))
+
+      chain.proceed(request.build())
     }
   }
 
@@ -93,38 +90,40 @@ object RetrofitModule {
     return logging
   }
 
-  @Provides
-  fun provideRequestInterceptor(prefs: AppPreferences) : RequestInterceptor {
-    return RequestInterceptor(prefs)
-  }
-
-
-  class RequestInterceptor constructor(private val pref: AppPreferences) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-      var userToken = pref.getLocal(Constants.TOKEN)
-      val token = pref.getUser().token
-      var countryId = pref.getLocal(Constants.COUNTRY_ID)
-      if(countryId.isEmpty()) countryId = "1"
-
-      Log.d(TAG, "intercept-userToken: $userToken")
-      Log.d(TAG, "intercept-token: $token")
-      val newRequest = chain.request().newBuilder()
-        .addHeader("Authorization", "Bearer $userToken")
-        .addHeader("countryId", countryId)
-        .addHeader("platform", "1")
-        .addHeader("language", pref.getLocal(Constants.LANGUAGE))
-
-      .build()
-      return chain.proceed(newRequest)
-    }
-  }
+//  @Provides
+//  fun provideRequestInterceptor(prefs: AppPreferences) : RequestInterceptor {
+//    return RequestInterceptor(prefs)
+//  }
+//
+//
+//
+//  class RequestInterceptor constructor(private val pref: AppPreferences) : Interceptor {
+//    override fun intercept(chain: Interceptor.Chain): Response {
+//      var userToken = pref.getLocal(Constants.TOKEN)
+//      val token = pref.getUser().token
+//      var countryId = pref.getLocal(Constants.COUNTRY_ID)
+//      if(countryId.isEmpty()) countryId = "1"
+//
+//      Log.d(TAG, "intercept-userToken: $userToken")
+//      Log.d(TAG, "intercept-token: $token")
+//      Log.d(TAG, "intercept-token-language: ${pref.getLocal(Constants.LANGUAGE)}")
+//      val newRequest = chain.request().newBuilder()
+//        .addHeader("Authorization", "Bearer $userToken")
+//        .addHeader("countryId", countryId)
+//        .addHeader("platform", "1")
+//        .addHeader("language", pref.getLocal(Constants.LANGUAGE))
+//
+//      .build()
+//      return chain.proceed(newRequest)
+//    }
+//  }
 
   @Provides
   @Singleton
   fun provideOkHttpClient(
     headersInterceptor: Interceptor,
     logging: HttpLoggingInterceptor,
-    requestInterceptor: RequestInterceptor,
+//    requestInterceptor: RequestInterceptor,
     @ApplicationContext context: Context
   ): OkHttpClient {
     return if (BuildConfig.DEBUG) {
@@ -134,14 +133,14 @@ object RetrofitModule {
         .addInterceptor(headersInterceptor)
         .addNetworkInterceptor(logging)
         .addInterceptor(ChuckInterceptor(context))
-        .addInterceptor(requestInterceptor)
+//        .addInterceptor(requestInterceptor)
         .build()
     } else {
       OkHttpClient.Builder()
         .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .addInterceptor(headersInterceptor)
-        .addInterceptor(requestInterceptor)
+//        .addInterceptor(requestInterceptor)
         .build()
     }
   }

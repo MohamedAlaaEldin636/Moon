@@ -48,6 +48,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    val lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
+    if (lang.isEmpty()) {
+      LocaleHelper.setLocale(this, Locale(lang))
+    }
     nav.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(Constants.BUNDLE)?.observe(this) {result ->
       // Do something with the result.
       Log.d(TAG, "onCreate: DONE HERE")
@@ -64,10 +68,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   override fun setUpViews() {
     super.setUpViews()
-    val lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
-    if (lang.isEmpty()) {
-      LocaleHelper.setLocale(this, Locale(lang))
-    }
+
   }
 
   private fun setUpBottomNavigationWithGraphs() {

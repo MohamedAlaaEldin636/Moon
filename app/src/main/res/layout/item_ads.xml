@@ -265,7 +265,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/dimen10"
             android:layout_marginBottom="@dimen/dimen10"
-            android:drawableStart="@drawable/ic_whatsapp"
+            android:drawableStart="@drawable/ic_whatsapp_fill"
             android:drawablePadding="@dimen/dimen6"
             android:text="@string/whatsapp"
             android:gravity="center"

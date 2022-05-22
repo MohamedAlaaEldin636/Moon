@@ -13,6 +13,9 @@ class InteractionRequest(
   @SerializedName("type")
   @Expose
   var type: Int? = null,
+  @SerializedName("store_id")
+  @Expose
+  var store_id: Int? = null,
 )
 
 //@Keep

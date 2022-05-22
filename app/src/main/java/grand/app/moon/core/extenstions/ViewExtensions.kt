@@ -401,7 +401,7 @@ fun AppCompatTextView.move(dimentions: Float) {
   }
   val width: Int = bounds.width()
 
-  if (width > dimentions) {
+//  if (width > dimentions) {
     val animator: ValueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f)
     animator.repeatCount = ValueAnimator.INFINITE
     animator.interpolator = LinearInterpolator()
@@ -414,7 +414,7 @@ fun AppCompatTextView.move(dimentions: Float) {
 
     }
     animator.start()
-  }
+//  }
 
 }
 

@@ -10,15 +10,18 @@ import grand.app.moon.domain.settings.entity.NotificationPaginateData
 import grand.app.moon.domain.settings.models.NotificationData
 import grand.app.moon.domain.settings.use_case.SettingsUseCase
 import grand.app.moon.domain.store.entity.FollowStoreRequest
+import grand.app.moon.domain.store.entity.StoreListPaginateData
+import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
+import grand.app.moon.presentation.store.adapter.StoreWhatsappAdapter
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class ChatWhatsappListViewModel @Inject constructor(
-  private val useCase: SettingsUseCase,
+  private val useCase: StoreUseCase,
 ) : BaseViewModel() {
   @Bindable
   var page: Int = 0
@@ -29,15 +32,15 @@ class ChatWhatsappListViewModel @Inject constructor(
   var isLast = false
 
   @Bindable
-  var adapter = NotificationAdapter()
+  var adapter = StoreWhatsappAdapter()
 
   var type = 3
 
   val followStoreRequest = FollowStoreRequest()
 
-  val list = ObservableField(NotificationPaginateData())
+  val list = ObservableField(StoreListPaginateData())
   val _responseService =
-    MutableStateFlow<Resource<BaseResponse<NotificationPaginateData>>>(Resource.Default)
+    MutableStateFlow<Resource<BaseResponse<StoreListPaginateData>>>(Resource.Default)
 
   val response = _responseService
 
@@ -48,7 +51,7 @@ class ChatWhatsappListViewModel @Inject constructor(
       notifyPropertyChanged(BR.callingService)
       page++
       notifyPropertyChanged(BR.page)
-      job = useCase.notifications(type)
+      job = useCase.getWhatsappStores(page)
         .onEach {
           response.value = it
         }
@@ -58,7 +61,7 @@ class ChatWhatsappListViewModel @Inject constructor(
 
   private val TAG = "PackagesViewModel"
 
-  fun setData(data: NotificationPaginateData) {
+  fun setData(data: StoreListPaginateData) {
     data.let {
       list.set(data)
       println("size:" + data.list.size)
@@ -86,13 +89,6 @@ class ChatWhatsappListViewModel @Inject constructor(
     page = 0
     isLast = false
     callingService = false
-  }
-
-  fun remove(notificationData: NotificationData) {
-    job = useCase.delete(notificationData.id)
-      .onEach {
-      }
-      .launchIn(viewModelScope)
   }
 
 }

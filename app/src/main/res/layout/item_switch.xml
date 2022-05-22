@@ -41,6 +41,8 @@
       android:layout_marginStart="@dimen/dimen10"
       android:textColor="@color/black"
       android:textSize="@dimen/text_size14"
+      android:lines="1"
+      app:move="@{@dimen/dimen90}"
       android:text="@{viewModel.property.name}"
       app:layout_constraintStart_toEndOf="@+id/item_image"
       app:layout_constraintTop_toTopOf="@+id/item_image"

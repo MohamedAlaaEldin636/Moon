@@ -3,8 +3,11 @@ package grand.app.moon.presentation.map
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.*
 import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
@@ -25,7 +28,7 @@ import java.lang.Exception
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
   private val viewModel: MapViewModel by viewModels()
-  var map : SupportMapFragment? = null
+  var map: SupportMapFragment? = null
 //  val args: MapFragmentArgs by navArgs()
 
   override
@@ -37,7 +40,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     binding.viewModel = viewModel
 //    if(arguments!= null && requireArguments().containsKey(Constants.TYPE))
 //      viewModel.type = requireArguments().getString(Constants.TYPE).toString()
-    if(arguments != null) {
+    if (arguments != null) {
       // it means ads
       val args: MapFragmentArgs by navArgs()
       viewModel.type = args.type
@@ -45,7 +48,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
       viewModel.subCategoryId = args.subCategoryId
       viewModel.propertyId = args.propertyId
       viewModel.setSubCategories(args.subCategory)
-    }else
+    } else
       viewModel.getCategories() // store
 
   }
@@ -60,11 +63,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     viewModel.categoriesAdapter.clickEvent.observe(this, { category ->
       viewModel.stores.clear()
-      when(viewModel.type){
+      when (viewModel.type) {
         Constants.ADVERTISEMENT_TEXT -> {
           viewModel.propertyId = category.id.toString()
         }
-        else ->{
+        else -> {
           viewModel.categoryId = category.id.toString()
         }
       }
@@ -150,7 +153,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     }
 
 
-    viewModel.markerRender = viewModel.mapConfig?.let { MarkerRender(it, viewModel.clusterCustomItems) }
+    viewModel.markerRender =
+      viewModel.mapConfig?.let { MarkerRender(it, viewModel.clusterCustomItems) }
     viewModel.mapConfig?.clusterManager?.renderer = viewModel.markerRender
 ////                                viewModel.mapConfig.clusterManager?.setOnClusterClickListener(this);
 ////                                viewModel.mapConfig.clusterManager?.setOnClusterItemClickListener(this);
@@ -169,10 +173,33 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
           Log.d(TAG, "loadMarkers: ${marker.id}")
           Log.d(TAG, "loadMarkers: ${marker.tag}")
 //          Toast.makeText(context, "HERE", Toast.LENGTH_SHORT).show()
+          if (marker.tag != null) {
+            try {
+              when (viewModel.type) {
+                Constants.ADVERTISEMENT_TEXT -> {
+                  viewModel.findAds(marker.tag.toString()?.toInt())
+                }
+                else -> {
+                  findNavController().navigate(
+                    R.id.nav_store,
+                    bundleOf(
+                      "id" to marker.tag.toString()?.toInt(),
+                      "type" to 3
+                    ), Constants.NAVIGATION_OPTIONS
+                  )
+                }
+
+              }
+            }   catch(e: Exception) {
+              e.printStackTrace()
+            }
+          }
           marker.showInfoWindow()
           true
         })
-      it.setOnMapClickListener { latLng -> }
+      it.setOnMapClickListener { latLng ->
+        viewModel.showAdvertisement.set(false)
+      }
       viewModel.mapConfig?.clusterManager?.setOnClusterItemClickListener(
         OnClusterItemClickListener<ClusterCustomItem?> {
           try {
@@ -190,14 +217,18 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     }
   }
 
+  var isLoaded = false
   private val TAG = "MapFragment"
   override fun onMapReady(p0: GoogleMap) {
     Log.d(TAG, "onMapReady: ")
-    viewModel.mapConfig = MapConfig(requireContext(), p0)
-    viewModel.mapConfig!!.setMapStyle() //set style google map
+    if (!isLoaded) {
+      viewModel.mapConfig = MapConfig(requireContext(), p0)
+      viewModel.mapConfig!!.setMapStyle() //set style google map
 //    //cluster manager
-    viewModel.mapConfig!!.setUpCluster()
-    viewModel.callService()
+      viewModel.mapConfig!!.setUpCluster()
+      viewModel.callService()
+      isLoaded = true
+    }
 
   }
 

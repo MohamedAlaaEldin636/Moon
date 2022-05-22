@@ -26,6 +26,11 @@ interface StoreServices {
   @GET("v1/profile/blocked")
   suspend fun getBlockedStores(@Query("page") page: Int): BaseResponse<StoreListPaginateData>
 
+
+  @GET("v1/profile/whatsapp")
+  suspend fun getWhatsappStores(@Query("page") page: Int): BaseResponse<StoreListPaginateData>
+
+
   @POST("v1/store/report_block")
   suspend fun report(@Body page: ReportStoreRequest): BaseResponse<*>
 

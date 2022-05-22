@@ -23,6 +23,7 @@ import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.ShareRequest
@@ -35,9 +36,11 @@ import grand.app.moon.presentation.explore.adapter.ExploreGridEqualAdapter
 import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 import grand.app.moon.presentation.subCategory.PropertiesAdapter
 import grand.app.moon.presentation.subCategory.SubCategoryFragmentDirections
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.net.URLEncoder
 import javax.inject.Inject
@@ -176,7 +179,10 @@ class StoreDetailsViewModel @Inject constructor(
 
 
   fun whatsapp(v: View) {
-    var url = "https://api.whatsapp.com/send?phone=${store.get()?.phone}"
+    viewModelScope.launch(Dispatchers.IO) {
+      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id,type = 7))
+    }
+    var url = "https://api.whatsapp.com/send?phone=${store.get()?.country?.country_code+store.get()?.phone}"
     val i = Intent(Intent.ACTION_VIEW)
     url += "&text=" + URLEncoder.encode(
       store.get()?.name,
@@ -214,14 +220,16 @@ class StoreDetailsViewModel @Inject constructor(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_report_reason),
           7,
-          -1,
-          store.get()!!.id
+          store.get()!!.id,-1
         )
       )
     }
   }
 
   fun phone(v: View) {
+    viewModelScope.launch(Dispatchers.IO) {
+      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id,type = 6))
+    }
     store.get()?.phone?.let { callPhone(v.context, it) }
   }
 
@@ -231,14 +239,16 @@ class StoreDetailsViewModel @Inject constructor(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_block_reason),
           8,
-          -1,
-          store.get()!!.id
+          store.get()!!.id,-1
         )
       )
     }
   }
 
   fun chat(v: View) {
+    viewModelScope.launch(Dispatchers.IO) {
+      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id,type = 8))
+    }
     if (v.context.isLoginWithOpenAuth()) {
       store.get()?.let {
         v.context.openChatStore(v, it.id, it.name, it.image)
@@ -346,12 +356,12 @@ class StoreDetailsViewModel @Inject constructor(
     val list = ArrayList(adsAdapter.differ.currentList)
     when (sortBy) {
       1 -> { // الاحدث
-        val sortedList = list.sortedWith(compareBy { it.createdAt }).reversed()
+        val sortedList = list.sortedWith(compareBy { it.date }).reversed()
         adsAdapter.differ.submitList(null)
         adsAdapter.differ.submitList(sortedList)
       }
       2 -> { // الاقدم
-        val sortedList = list.sortedWith(compareBy { it.createdAt })
+        val sortedList = list.sortedWith(compareBy { it.date })
         adsAdapter.differ.submitList(null)
         adsAdapter.differ.submitList(sortedList)
       }

@@ -14,5 +14,8 @@ data class Country(
     @SerializedName("image")
     val image: String = "",
     @SerializedName("name")
-    val name: String = ""
+    val name: String = "",
+    @SerializedName("country_code")
+    val country_code: String = ""
+
 ) : Serializable

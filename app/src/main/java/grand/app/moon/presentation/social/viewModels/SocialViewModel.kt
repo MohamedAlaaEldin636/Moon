@@ -10,6 +10,8 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.BR
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import grand.app.moon.presentation.notfication.adapter.NotificationAdapter
+import grand.app.moon.presentation.social.SocialAdapter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -23,22 +25,26 @@ class SocialViewModel @Inject constructor(
 //  val adapter: SocialAdapter = SocialAdapter()
   private val _socialResponse =
     MutableStateFlow<Resource<BaseResponse<List<SettingsData>>>>(Resource.Default)
-  val socialResponse = _socialResponse
+  val response = _socialResponse
+
+  @Bindable
+  var adapter = SocialAdapter()
 
   init {
     getSocial()
   }
 
   private fun getSocial() {
-    settingsUseCase.settings(Constants.SOCIAL_TYPE)
+    settingsUseCase.settings("3")
       .onEach { result ->
-        _socialResponse.value = result
+        response.value = result
       }
       .launchIn(viewModelScope)
   }
 
-  fun updateSocial(socialList: List<SettingsData>) {
-//    adapter.differ.submitList(socialList)
+
+  fun setData(data: List<SettingsData>) {
+    adapter.insertData(data)
     notifyPropertyChanged(BR.adapter)
   }
 }

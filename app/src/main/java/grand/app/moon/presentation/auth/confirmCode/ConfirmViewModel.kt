@@ -91,10 +91,10 @@ class ConfirmViewModel @Inject constructor(
   private val TAG = "ConfirmViewModel"
   private fun startTimer() {
     Log.d(TAG, "startTimer: ")
-    countDownTimer = object : CountDownTimer(10000, 1000) {
+    countDownTimer = object : CountDownTimer(60000, 1000) {
       override fun onTick(millisUntilFinished: Long) {
         timerText = when {
-          (millisUntilFinished / 60000) < 10 -> "0" + (millisUntilFinished / 1000)
+          (millisUntilFinished / 1000) < 10 -> "0" + (millisUntilFinished / 1000)
           else -> (millisUntilFinished / 1000)
         }.toString().plus(" : 00")
         notifyChange()

@@ -7,4 +7,5 @@ data class MoreItem(
   var title: String? = "",
   var icon: Drawable?,
   var id: Any,
+  var type: String = ""
 )

@@ -55,6 +55,12 @@ class StoreUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
+  fun getWhatsappStores(id: Int): Flow<Resource<BaseResponse<StoreListPaginateData>>> = flow {
+    emit(Resource.Loading)
+    val result = repository.getWhatsappStores(id)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
 
   fun report(id: ReportStoreRequest): Flow<Resource<BaseResponse<*>>> = flow {
     emit(Resource.Loading)

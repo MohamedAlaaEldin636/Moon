@@ -41,6 +41,7 @@ object Constants {
   const val FACEBOOK: Int = 30
   const val EXIT: Int = 31
   const val STORE_DETAILS: Int = 32
+  const val SOCIAL: Int = 33
 
 
 
@@ -65,11 +66,14 @@ object Constants {
   const val INTRO: String = "INTRO"
   const val TOTAL: String = "TOTAL"
   const val POSITION: String = "POSITION"
+  const val IS_PROFILE: String = "is_profile"
+  const val GOOGLE_PLAY: String = "google_play"
+  const val SOCIAL_TYPE: String = "social_type"
+
 
   const val TOKEN = "TOKEN"
   const val SPLASH: String = "splash"
   const val TYPE: String = "type"
-  const val SOCIAL_TYPE: String = "social_media"
   const val PICKER_IMAGE: String = "PICKER_IMAGE"
   const val STORIES: String = "stories"
   const val MORE: String = "more"
@@ -112,6 +116,7 @@ object Constants {
   const val FOLLOWERS: String = "followers"
   const val VIEWS: String = "views"
   const val EXPLORES: String = "explores"
+
 
 
 

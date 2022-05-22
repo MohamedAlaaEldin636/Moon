@@ -12,45 +12,34 @@
       type="grand.app.moon.presentation.social.viewModels.SocialViewModel" />
   </data>
 
-  <androidx.core.widget.NestedScrollView
+  <LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--      android:layout_width="match_parent"-->
-<!--      android:layout_height="match_parent">-->
+    <include
+      android:id="@+id/curve"
+      layout="@layout/layout_curve_top" />
 
-<!--      <androidx.appcompat.widget.AppCompatImageView-->
-<!--        android:id="@+id/ic_about"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/dimen250"-->
-<!--        android:scaleType="fitXY"-->
-<!--        android:src="@drawable/ic_curve"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:scrollbars="none"
+      app:adapter="@{viewModel.adapter}"
+      app:orientation="@{`1`}"
+      app:span="@{`1`}"
+      app:layout_constraintTop_toBottomOf="@+id/curve"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/rl_service_shop_progress"
+      tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      tools:listitem="@layout/item_social"
+      tools:orientation="vertical" />
 
-<!--      <androidx.appcompat.widget.AppCompatImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/logo_white"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/ic_about"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/includedToolbar" />-->
 
-<!--      <include-->
-<!--        android:id="@+id/includedToolbar"-->
-<!--        layout="@layout/toolbar_transparent" />-->
+    </LinearLayout>
 
-<!--      <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="@dimen/dimen10"-->
-<!--        app:adapter="@{viewModel.adapter}"-->
-<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/ic_about"-->
-<!--        app:orientation="@{`1`}"-->
-<!--        app:span="@{`1`}"-->
-<!--        tools:listitem="@layout/item_social" />-->
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-  </androidx.core.widget.NestedScrollView>
+
 </layout>

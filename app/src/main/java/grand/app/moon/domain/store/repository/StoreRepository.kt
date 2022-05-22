@@ -11,6 +11,7 @@ interface StoreRepository {
   suspend fun storeDetails(id: Int,type: Int): Resource<BaseResponse<Store>>
   suspend fun getFavouriteStores(page: Int): Resource<BaseResponse<StoreListPaginateData>>
   suspend fun getBlockedStores(page: Int): Resource<BaseResponse<StoreListPaginateData>>
+  suspend fun getWhatsappStores(page: Int): Resource<BaseResponse<StoreListPaginateData>>
 
   suspend fun report(page: ReportStoreRequest): Resource<BaseResponse<*>>
   suspend fun getStores(request: StoreFilterRequest): Resource<BaseResponse<StoreListPaginateData>>

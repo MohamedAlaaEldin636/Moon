@@ -2,6 +2,7 @@ package grand.app.moon.presentation.base
 
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.facebook.FacebookSdk.setApplicationId
 import com.facebook.FacebookSdk.setAutoInitEnabled
 import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
 import com.google.firebase.auth.FirebaseAuth
+import com.maproductions.mohamedalaa.shared.core.extensions.getLanguage
 import com.zeugmasolutions.localehelper.LocaleHelper
 import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegate
 import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegateImpl
@@ -50,11 +52,24 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
     localeDelegate.onPaused()
   }
 
+  fun setLocal(){
+    val locale = Locale(getLanguage())
+    Locale.setDefault(locale)
+    val resources: Resources = getResources()
+    val config: Configuration = resources.getConfiguration()
+    config.setLocale(locale)
+    resources.updateConfiguration(config, resources.getDisplayMetrics())
+  }
+
+
+
   override
   fun onCreate(savedInstanceState: Bundle?) {
 //    LocaleHelper.setLocale(this, Locale("ar"))
     super.onCreate(savedInstanceState)
     initViewBinding()
+    setLocal()
+//    Locale.setDefault(Locale.FRANCE);
     setContentView(binding.root)
 
     if (savedInstanceState == null) {
@@ -69,7 +84,7 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
     if (!isInitialized()) {
       setApplicationId("716648052821423")
       sdkInitialize(applicationContext)
-      setAutoLogAppEventsEnabled(true)
+//      setAutoLogAppEventsEnabled(true)
       fullyInitialize()
       setAutoInitEnabled(true)
       setAdvertiserIDCollectionEnabled(true)

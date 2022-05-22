@@ -11,6 +11,9 @@ import grand.app.moon.BuildConfig
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
+import grand.app.moon.domain.categories.entity.CategoryDetails
+import grand.app.moon.domain.home.use_case.HomeUseCase
+import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
@@ -25,6 +28,7 @@ import javax.inject.Inject
 class AdsListViewModel @Inject constructor(
   val adsRepository: AdsRepository,
   private val useCase: AdsUseCase,
+  private val adsUseCase: AdsUseCase
 ) : BaseViewModel() {
   @Bindable
   var page: Int = 0
@@ -32,8 +36,9 @@ class AdsListViewModel @Inject constructor(
   @Bindable
   var callingService = false
 
-  var type: Int = 3
+  var type: Int? = null
 
+  var callProfilePage = false
   var isLast = false
 
   @Bindable
@@ -45,11 +50,14 @@ class AdsListViewModel @Inject constructor(
 
   var ADS_LIST_URL = BuildConfig.API_BASE_URL + "v1/advertisements?"
 
-  var categoryId : Int? = null
-  var subCateoryId : Int? = null
-  var orderBy : Int = 1
-  var storeId : Int? = null
+  var categoryId: Int? = null
+  var subCateoryId: Int? = null
+  var orderBy: Int = 1
+  var storeId: Int? = null
 
+
+  val response_sub_category =
+    MutableStateFlow<Resource<BaseResponse<SubCategoryResponse>>>(Resource.Default)
 
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<AdsListPaginateData>>>(Resource.Default)
@@ -68,8 +76,9 @@ class AdsListViewModel @Inject constructor(
       page++
       notifyPropertyChanged(BR.page)
 
-      if(categoryId == null && subCateoryId == null) getAdsProfile()
-      else{
+      Log.d(TAG, "callService: $type")
+      if (callProfilePage) getAdsProfile()
+      else {
         getAdsList()
       }
     }
@@ -77,7 +86,7 @@ class AdsListViewModel @Inject constructor(
 
   private fun getAdsProfile() {
     Log.d(TAG, "getAdsProfile: ${page} , $type")
-    if(type == 2) isProfile.set(true)
+    if (type == 2) isProfile.set(true)
     job = useCase.getProfileAdsList(page, type)
       .onEach {
         response.value = it
@@ -86,11 +95,19 @@ class AdsListViewModel @Inject constructor(
   }
 
   private fun getAdsList() {
-    job = useCase.getAdsList(type,categoryId,subCateoryId,orderBy,storeId ,"",page)
-      .onEach {
-        response.value = it
-      }
-      .launchIn(viewModelScope)
+    if (type != null) {
+      job = useCase.getAdsList(type, categoryId, subCateoryId, orderBy, storeId, "", page)
+        .onEach {
+          response.value = it
+        }
+        .launchIn(viewModelScope)
+    }else if(categoryId != null){
+      job = adsUseCase.getAdsSubCategory(null, categoryId, null, 1, null, "", arrayListOf(), page)
+        .onEach {
+          response_sub_category.value = it
+        }
+        .launchIn(viewModelScope)
+    }
   }
 
   private val TAG = "PackagesViewModel"
