@@ -2,7 +2,7 @@ package grand.app.moon.presentation.base
 
 import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -16,12 +16,13 @@ import com.facebook.FacebookSdk.sdkInitialize
 import com.facebook.FacebookSdk.setAdvertiserIDCollectionEnabled
 import com.facebook.FacebookSdk.setApplicationId
 import com.facebook.FacebookSdk.setAutoInitEnabled
-import com.facebook.FacebookSdk.setAutoLogAppEventsEnabled
-import com.google.firebase.auth.FirebaseAuth
-import com.maproductions.mohamedalaa.shared.core.extensions.getLanguage
+//import com.maproductions.mohamedalaa.shared.core.extensions.getLanguage
 import com.zeugmasolutions.localehelper.LocaleHelper
 import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegate
 import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegateImpl
+import grand.app.moon.appMoonHelper.language.LanguagesHelper
+import grand.app.moon.appMoonHelper.language.MyContextWrapper
+import grand.app.moon.core.MyApplication
 import java.util.Locale
 
 abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
@@ -52,13 +53,20 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
     localeDelegate.onPaused()
   }
 
-  fun setLocal(){
-    val locale = Locale(getLanguage())
-    Locale.setDefault(locale)
-    val resources: Resources = getResources()
-    val config: Configuration = resources.getConfiguration()
-    config.setLocale(locale)
-    resources.updateConfiguration(config, resources.getDisplayMetrics())
+  override fun attachBaseContext(newBase: Context?) {
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1 && newBase != null) {
+      super.attachBaseContext(MyContextWrapper.wrap(newBase, LanguagesHelper.getCurrentLanguage()))
+    }else {
+      super.attachBaseContext(newBase)
+    }
+  }
+
+  fun changeLanguage(context: Context,language: String) {
+
+//    conf.setLocale(Locale(getLanguage())
+
+    LanguagesHelper.changeLanguage(context,language)
+
   }
 
 
@@ -67,8 +75,8 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
   fun onCreate(savedInstanceState: Bundle?) {
 //    LocaleHelper.setLocale(this, Locale("ar"))
     super.onCreate(savedInstanceState)
+
     initViewBinding()
-    setLocal()
 //    Locale.setDefault(Locale.FRANCE);
     setContentView(binding.root)
 
@@ -100,6 +108,10 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
   }
 
   private fun initViewBinding() {
+    LanguagesHelper.changeLanguage(MyApplication.instance, LanguagesHelper.getCurrentLanguage())
+    LanguagesHelper.changeLanguage(this, LanguagesHelper.getCurrentLanguage())
+    LanguagesHelper.changeLanguage(applicationContext, LanguagesHelper.getCurrentLanguage())
+
     _binding = DataBindingUtil.setContentView(this, getLayoutId())
     binding.lifecycleOwner = this
     binding.executePendingBindings()

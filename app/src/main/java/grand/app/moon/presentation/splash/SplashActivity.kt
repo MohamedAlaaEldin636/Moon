@@ -8,6 +8,8 @@ import com.cometchat.pro.core.CometChat
 import com.zeugmasolutions.localehelper.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.core.MyApplication
+import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.databinding.ActivitySplashBinding
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseActivity
@@ -33,11 +35,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
   fun setUpViews() {
     viewModel.lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
     if (viewModel.lang.isEmpty()) {
-      viewModel.lang = "ar"
-      LocaleHelper.setLocale(this, Locale(viewModel.lang))
-
+      viewModel.lang = Constants.DEFAULT_LANGUAGE
+      viewModel.accountRepository.saveKeyToLocal(Constants.LANGUAGE, viewModel.lang)
+//      LocaleHelper.setLocale(this, Locale(viewModel.lang))
+//      changeLanguage(this,viewModel.lang)
+//      changeLanguage(MyApplication.instance,viewModel.lang)
     }
-    viewModel.accountRepository.saveKeyToLocal(Constants.LANGUAGE, viewModel.lang)
+    Log.d(TAG, "setUpViews: ${viewModel.lang}")
     binding.viewModel = viewModel
     viewModel.home()
     decideNavigationLogic()

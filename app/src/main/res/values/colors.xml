@@ -38,6 +38,7 @@
   <color name="colorA9A9A9">#A9A9A9</color>
   <color name="colorF2F2F2">#F2F2F2</color>
   <color name="colorF7E6D1">#F7E6D1</color>
+  <color name="color0000000F">#0000000F</color>
   <color name="color00000">@color/blackOpacity3</color>
   <!--- NOT USE -->
   <color name="colorAccentDark">#024302</color>

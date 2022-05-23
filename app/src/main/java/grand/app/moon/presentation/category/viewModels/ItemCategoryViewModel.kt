@@ -25,6 +25,7 @@ class ItemCategoryViewModel constructor(val category: CategoryItem, var percenta
   fun submit(v: View) {
     if (category.total == null) {
       if (category.subCategories != null) {
+        Log.d(TAG, "submit: category id")
         v.findNavController().navigate(
           R.id.categoryDetailsFragment,
           bundleOf(
@@ -33,6 +34,7 @@ class ItemCategoryViewModel constructor(val category: CategoryItem, var percenta
           ), Constants.NAVIGATION_OPTIONS
         )
       } else {
+        Log.d(TAG, "submit: sub_category id")
         v.findNavController().navigate(
           R.id.nav_category_list_ads,
           bundleOf(

@@ -1,15 +1,11 @@
 package grand.app.moon.presentation.home
 
 import android.content.Intent
-import android.content.pm.verify.domain.DomainVerificationManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
@@ -23,12 +19,9 @@ import grand.app.moon.presentation.base.extensions.hide
 import grand.app.moon.presentation.base.extensions.show
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
-import grand.app.moon.presentation.notfication.viewmodel.NotificationListViewModel
-import com.google.android.material.navigation.NavigationBarView
 import com.zeugmasolutions.localehelper.LocaleHelper
 import grand.app.moon.appMoonHelper.FilterDialog
-import grand.app.moon.presentation.notfication.NotificationFragmentDirections
-import java.lang.Exception
+import grand.app.moon.core.MyApplication
 import java.util.*
 
 
@@ -48,10 +41,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
-    if (lang.isEmpty()) {
-      LocaleHelper.setLocale(this, Locale(lang))
-    }
+//    val lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
+//    if (lang.isEmpty()) {
+//      LocaleHelper.setLocale(this, Locale(lang))
+//    }
+
     nav.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(Constants.BUNDLE)?.observe(this) {result ->
       // Do something with the result.
       Log.d(TAG, "onCreate: DONE HERE")

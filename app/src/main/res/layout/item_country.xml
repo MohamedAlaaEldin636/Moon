@@ -32,11 +32,10 @@
         android:layout_height="@dimen/dimen30"
         android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/dimen4"
-
         android:layout_marginTop="@dimen/dimen4"
         android:layout_marginEnd="@dimen/dimen4"
         android:layout_marginBottom="@dimen/dimen4"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:visibility="@{countryItemViewModels.country.image != null  &amp;&amp; !countryItemViewModels.country.image.empty ? View.VISIBLE : View.GONE}"
         app:loadImage="@{countryItemViewModels.country.image}"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
@@ -69,12 +68,13 @@
         android:checked="@{countryItemViewModels.country.active==0?false:true}"
         android:minWidth="0dp"
         android:minHeight="0dp"
+        android:buttonTint="@color/colorAccent"
         android:onClick="@{()-> countryItemViewModels.clickEvent(Constants.CLICK_EVENT)}"
-        app:buttonTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/textView14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView14" />
     </RelativeLayout>
+<!--    app:buttonTint="@{ countryItemViewModels.country.active==0 ? @color/colorPrimary : @color/colorAccent }"-->
 
     <View
       android:layout_width="match_parent"

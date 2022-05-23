@@ -127,7 +127,7 @@ class MapViewModel @Inject constructor(
   fun whatsapp(v: View) {
     advertisement.get()?.let {
       viewModelScope.launch(Dispatchers.IO) {
-        adsRepository.setInteraction(InteractionRequest(it.id, 7))
+        adsRepository.setInteraction(InteractionRequest(it.id.toString(), 7))
       }
       shareWhatsapp(v, it.title, it.description, it.country.country_code + it.phone)
     }
@@ -136,7 +136,7 @@ class MapViewModel @Inject constructor(
   fun phone(v: View) {
     advertisement.get()?.let {
       viewModelScope.launch(Dispatchers.IO) {
-        adsRepository.setInteraction(InteractionRequest(it.id, 6))
+        adsRepository.setInteraction(InteractionRequest(it.id.toString(), 6))
       }
       advertisement.get()?.let {
         callPhone(v.context, it.country.country_code + it.phone)
@@ -150,7 +150,7 @@ class MapViewModel @Inject constructor(
     advertisement.get()?.let {
       if (v.context.isLoginWithOpenAuth()) {
         viewModelScope.launch(Dispatchers.IO) {
-          adsRepository.setInteraction(InteractionRequest(it.id, 8))
+          adsRepository.setInteraction(InteractionRequest(it.id.toString(), 8))
         }
         it.store?.let { store ->
           v.context.openChatStore(v, store.id, store.name, store.image)

@@ -74,6 +74,8 @@ class FilterViewModel @Inject constructor(
     prepareRequest()
     Log.d(TAG, "filterSubmit: ${request.min_price}")
     Log.d(TAG, "filterSubmit: ${request.max_price}")
+    Log.d(TAG, "filterSubmit: ${request.properties?.size}")
+    Log.d(TAG, "filterSubmit: ${request.properties?.toString()}")
     toFilterResult(v,request)
   }
 

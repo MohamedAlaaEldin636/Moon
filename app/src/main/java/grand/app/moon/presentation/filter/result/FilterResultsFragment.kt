@@ -61,7 +61,7 @@ class FilterResultsFragment : BaseFragment<FragmentFilterResultsBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.request = args.filterRequest
+    viewModel.prepareRequest(args.filterRequest)
     viewModel.callService()
   }
 

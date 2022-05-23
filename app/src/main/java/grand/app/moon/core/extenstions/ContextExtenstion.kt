@@ -43,11 +43,11 @@ fun Context.inflateLayout(
   return layoutInflater.inflate(layoutRes, parent, attachToRoot)
 }
 
-fun Context.getLanguage(): String {
-  val appPreferences =  MyApplication.instance.getSharedPreferences(
-    AppPreferences.APP_PREFERENCES_NAME,
-    Context.MODE_PRIVATE
-  )
-  return appPreferences.getString(Constants.LANGUAGE,"ar").toString()
-}
+//fun Context.getLanguage(): String {
+//  val appPreferences =  MyApplication.instance.getSharedPreferences(
+//    AppPreferences.APP_PREFERENCES_NAME,
+//    Context.MODE_PRIVATE
+//  )
+//  return appPreferences.getString(Constants.LANGUAGE,"ar").toString()
+//}
 

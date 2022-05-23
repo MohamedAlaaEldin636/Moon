@@ -111,7 +111,9 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
           }
           is Resource.Success -> {
             hideLoading()
+            Log.d(TAG, "setupObservers_before: ${it.value.data.filterProperties.size}")
             addAdditionalFeatures(it.value.data)
+            Log.d(TAG, "setupObservers_after: ${it.value.data.filterProperties.size}")
             viewModel.setData(it.value.data)
           }
           is Resource.Failure -> {
@@ -124,6 +126,7 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
   }
 
   private fun addAdditionalFeatures(data: FilterDetails) {
+    val list = ArrayList<FilterProperty>()
     val filterProperty = FilterProperty()
     filterProperty.filterType = FILTER_TYPE.MULTI_SELECT
     filterProperty.name = getString(R.string.additional_features)
@@ -132,10 +135,13 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
         filterProperty.children.add(
           Children(it.id,name = it.name)
         )
-      }
+      }else
+        list.add(it)
     }
     if(filterProperty.children.isNotEmpty())
-      data.filterProperties.add(filterProperty)
+      list.add(filterProperty)
+    data.filterProperties.clear()
+    data.filterProperties.addAll(list)
   }
 
 

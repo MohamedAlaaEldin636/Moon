@@ -8,10 +8,8 @@ import com.google.gson.annotations.SerializedName
 @Keep
 class InteractionRequest(
   @SerializedName("advertisement_id")
-  @Expose
-  var advertisement_id: Int? = null,
+  var advertisement_id: String? = null,
   @SerializedName("type")
-  @Expose
   var type: Int? = null,
   @SerializedName("store_id")
   @Expose

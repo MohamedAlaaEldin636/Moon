@@ -96,6 +96,7 @@ class AppPreferences @Inject constructor(private val context: Context) {
     val USER_ID = intPreferencesKey("USER_ID")
     val USER_PHONE = stringPreferencesKey("USER_PHONE")
     val ACCOUNT_TYPE = stringPreferencesKey("ACCOUNT_TYPE")
+    var LANGUAGE = ""
     val FIRST_TIME = booleanPreferencesKey("FIRST_TIME")
     val IS_LOGGED_IN = booleanPreferencesKey("isLoggedIn")
     const val APP_PREFERENCES_NAME = "APP-NAME-Cache"
@@ -147,6 +148,9 @@ class AppPreferences @Inject constructor(private val context: Context) {
   }
 
   fun setLocal(key: String, value: String) {
+    if(key == Constants.LANGUAGE)
+      LANGUAGE = value
+    Log.d(TAG, "$key setLocal: $LANGUAGE")
     appPreferences.edit {
       it.putString(key, value)
     }

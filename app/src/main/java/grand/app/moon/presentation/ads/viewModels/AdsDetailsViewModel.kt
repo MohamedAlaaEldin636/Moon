@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import androidx.core.content.ContextCompat.startActivity
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.presentation.ads.adapter.SwitchAdapter
 import java.util.*
 
@@ -165,6 +166,7 @@ class AdsDetailsViewModel @Inject constructor(
         true -> advertisement.get()?.favoriteCount?.plus(1)
         else -> advertisement.get()?.favoriteCount?.minus(1)
       }
+      ListHelper.addOrUpdate(advertisement.get()!!.id,advertisement.get()!!.isFavorite)
       notifyChange()
     }
   }

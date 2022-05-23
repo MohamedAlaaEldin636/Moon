@@ -65,9 +65,13 @@ object RetrofitModule {
 //    }
 
 
-    Log.d(TAG, "provideHeadersInterceptor-language: ${appPreferences.getLocal(Constants.LANGUAGE)}")
+    Log.d(TAG, "provideHeadersInterceptor-language: ${AppPreferences.LANGUAGE}")
     Log.d(TAG, "intercept-userToken-here: ${appPreferences.getUserToken()}")
-
+//    var lang = AppPreferences.LANGUAGE
+    if(appPreferences.getLocal(Constants.LANGUAGE).isEmpty())
+      appPreferences.setLocal(Constants.LANGUAGE,Constants.DEFAULT_LANGUAGE)
+//    Log.d(TAG, "provideHeadersInterceptor: $lang")
+//    Log.d(TAG, "provideHeadersInterceptor: ${appPreferences.getLocal(Constants.LANGUAGE)}")
     Interceptor { chain ->
 //      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken :,token:$token2:  $countryId")
       val request = chain.request().newBuilder()

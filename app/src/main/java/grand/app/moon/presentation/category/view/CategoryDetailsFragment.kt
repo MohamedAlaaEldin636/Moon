@@ -44,7 +44,7 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
     setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
       if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
         Log.d(TAG, "onCreate: FAVOURITE")
-        viewModel.adsHomeAdapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
+        viewModel.adsHomeAdapter.updateFavourite()
       }
       if(bundle.containsKey(Constants.STORES_ID) && (bundle.containsKey(Constants.STORES_FOLLOWED) || bundle.containsKey(Constants.STORES_BLOCKED) )) {
         Log.d(TAG, "onCreate: FAVOURITE")

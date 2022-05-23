@@ -13,6 +13,7 @@ import grand.app.moon.presentation.auth.countries.viewModels.CountriesViewModel
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.databinding.FragmentCountriesBinding
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentLanguageBinding
 import grand.app.moon.presentation.auth.language.viewModels.LanguagesViewModel
 import grand.app.moon.presentation.base.BaseActivity
@@ -42,6 +43,12 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>() {
     viewModel.adapter.changeEvent.observe(this, { language ->
       if(viewModel.lang != language.lang){
         viewModel.updateLanguage(language.lang)
+        context?.let { (activity as BaseActivity<*>).changeLanguage(it,viewModel.lang) }
+        (activity as BaseActivity<*>).changeLanguage(MyApplication.instance,viewModel.lang)
+
+        context?.let { (activity as BaseActivity<*>).changeLanguage(it,viewModel.lang) }
+        (activity as BaseActivity<*>).changeLanguage(MyApplication.instance,viewModel.lang)
+
         openActivityAndClearStack(SplashActivity::class.java)
       }
     })

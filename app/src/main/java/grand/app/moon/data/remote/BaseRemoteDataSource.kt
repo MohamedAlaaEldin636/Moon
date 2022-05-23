@@ -3,6 +3,7 @@ package grand.app.moon.data.remote
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
 import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
 import grand.app.moon.domain.utils.BaseResponse
@@ -22,6 +23,9 @@ import java.net.UnknownHostException
 import java.util.HashMap
 import javax.inject.Inject
 
+
+
+
 open class BaseRemoteDataSource @Inject constructor() {
   var gson: Gson = Gson()
   private val TAG = "BaseRemoteDataSource"
@@ -29,20 +33,66 @@ open class BaseRemoteDataSource @Inject constructor() {
     val params: MutableMap<String, String> = HashMap()
     try {
       val jsonObject = JSONObject(gson.toJson(requestData))
+      Log.d(TAG, "getParameters: $jsonObject")
+
       for (i in 0 until jsonObject.names().length()) {
         if (jsonObject[jsonObject.names().getString(i)] is JSONArray) {
-          val jsonArray = jsonObject[jsonObject.names().getString(i)] as JSONArray
-          for (j in 0 until jsonArray.length()) {
-            val name = "${jsonObject.names().getString(i)}[$j]"
-            if(jsonArray[j] is JSONObject){
-              val jsonObjectParameter = JSONObject(gson.toJson(jsonArray[j]))
-              for (k in 0 until jsonObjectParameter.names().length()) {
-                params[jsonObjectParameter.names().getString(k)] =
-                  jsonObject[jsonObjectParameter.names().getString(k)].toString()
-              }
-            }else
-              params[name] = jsonArray[j].toString()
-          }
+//          Log.d(TAG, "getParameters: YES")
+//          val propertyName = jsonObject.names()[i]
+//          Log.d(TAG, "getParameters: $propertyName")
+////          val name = params[jsonObject.names()[i]]
+////          Log.d(TAG, "getParameters NAME: ${jsonObject.names()[i]}")
+////          Log.d(TAG, "getParameters NAME: ${jsonObject.names().getString(i)}")
+//          val list = jsonObject[jsonObject.names().getString(i)] as JSONArray
+//          for (j in 0 until list.length()) {
+//            val resultChild: MutableMap<String, String> = HashMap()
+////            if(list[j] is JSONObject){
+////              val child = JSONObject(gson.toJson(list[j]))
+////              for(k in 0 until child.names().length()){
+////                Log.d(TAG, "getParameters: ${child.names()[k]}")
+////                resultChild[child.names().getString(k)] = child[child.names().getString(k).toString()].toString()
+////              }
+////            }
+////            Log.d(TAG, "getParameters CHILD: ${resultChild}")
+////            params[propertyName.toString()] = "[$resultChild]"
+//          }
+//          Log.d(TAG, "getParameters: size ${jsonArr.length()}")
+//          for (i in 0 until jsonArr.length()) {
+//            val j: JSONObject = jsonArr.optJSONObject(i)
+//            Log.d(TAG, "getParameters: ${j}")
+//          }
+//          val jsonArray = jsonObject[jsonObject.names().getString(i)] as JSONArray
+//          for (j in 0 until jsonArray.length()) {
+//            val name = "${jsonObject.names().getString(i)}[$j]"
+//            if(jsonArray[j] is JSONObject){
+//              val jsonObjectParameter = JSONObject(gson.toJson(jsonArray[j]))
+//
+//              val temp: Iterator<String> = jsonObjectParameter.keys()
+//              while (temp.hasNext()) {
+//                val key = temp.next()
+//                Log.d(TAG, "getParameters KEYS: $key")
+//                val value: Any = jsonObjectParameter.get(key)
+////                Log.d(TAG, "getParameters: $key with value $value")
+//                if(jsonObjectParameter.get(key) is JSONObject){
+//                  val jsonObjectFather = JSONObject(jsonObjectParameter.get(key).toString())
+////                  Log.d(TAG, "getParameters: YES OBJECTTTTTTTTTTTTTTTTTTTT ${jsonObjectFather.names()}")
+//                }
+//              }
+//              Log.d(TAG, "getParameters: ==============================")
+////              Log.d(TAG, "getParameters: JSON OBJECT $jsonObjectParameter")
+//              for (k in 0 until jsonObjectParameter.names().length()) {
+////                Log.d(TAG, "getParameters: JSON OBJECT =>>>>>>>>>>> ${jsonObjectParameter.names()[0]} , with length ${jsonObjectParameter.names().length()}")
+////                Log.d(TAG, "getParameters: JSON OBJECT =>||>>>>>>>> $k")
+//                if(jsonObjectParameter.names()[0] is JSONObject)
+////                  Log.d(TAG, "getParameters: JSON OBJECT =>>>>>>>>>>> YEP JSON OBJECT")
+////                Log.d(TAG, "getParameters: JSON OBJECT =>>>>>>>>>>> ${jsonObjectParameter.names().getString(1)}")
+////                Log.d(TAG, "getParameters: JSON OBJECT =>>>>>>>>>>> ${jsonObjectParameter.names().getString(2)}")
+//                params[jsonObjectParameter.names().getString(k)] =
+//                  jsonObject[jsonObjectParameter.names().getString(k)].toString()
+//              }
+//            }else
+//              params[name] = jsonArray[j].toString()
+//          }
         } else {
           if(jsonObject[jsonObject.names().getString(i)] != null && jsonObject.names().getString(i) != null) {
             params[jsonObject.names().getString(i)] =
@@ -54,6 +104,7 @@ open class BaseRemoteDataSource @Inject constructor() {
       Log.d(TAG, "getParameters: EXCE")
       e.stackTrace
     }
+    Log.d(TAG, "getParameters: ${params}")
     return params
   }
 
@@ -93,6 +144,23 @@ open class BaseRemoteDataSource @Inject constructor() {
       }
     } catch (throwable: Throwable) {
       println(throwable)
+      when(throwable){
+        is HttpException -> {
+          when(throwable.code()){
+            401 -> {
+              val errorResponse = Gson().fromJson(
+                throwable.response()?.errorBody()!!.charStream().readText(),
+                ErrorResponse::class.java
+              )
+              return Resource.Failure(
+                FailureStatus.TOKEN_EXPIRED,
+                throwable.code(),
+                errorResponse.detail
+              )
+            }
+          }
+        }
+      }
       return Resource.Failure(FailureStatus.API_FAIL, 404, "please try again")
 //      when (throwable) {
 //        is HttpException -> {

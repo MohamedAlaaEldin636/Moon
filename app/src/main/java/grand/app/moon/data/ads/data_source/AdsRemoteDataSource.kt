@@ -62,10 +62,19 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
   ) = safeApiCall {
     var propery: Int? = null
     properties?.let {
-      if(it.isNotEmpty()) propery = it[0].id
+      if (it.isNotEmpty()) propery = it[0].id
     }
     Log.d(TAG, "getAdsSubCategory: $propery")
-    apiService.getAdsSubCategory(type, categoryId, subCategoryId, orderBy, storeId, search,propery, page)
+    apiService.getAdsSubCategory(
+      type,
+      categoryId,
+      subCategoryId,
+      orderBy,
+      storeId,
+      search,
+      propery,
+      page
+    )
   }
 
 
@@ -88,7 +97,36 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
   }
 
   suspend fun filterResults(request: FilterResultRequest) = safeApiCall {
-    apiService.filterResults(getParameters(request))
+    val map = getParameters(request).toMutableMap()
+//    if(map.containsKey("properties"))
+//      Log.d(TAG, "filterResults: HAVE")
+//    else
+//      Log.d(TAG, "filterResults: NOT HAVE")
+
+    var counter = 0
+    Log.d(TAG, "filterResults: $map")
+    for ((index, item) in request.properties.orEmpty().withIndex()) {
+      if (item.selectedList.isNotEmpty()) {
+        item.selectedList.forEachIndexed { indexProp, propSelect ->
+          map["properties[$counter][id]"] = propSelect.toString()
+          counter++
+        }
+      } else {
+        if (item.from != null && item.from!!.isNotEmpty() && item.to != null && item.to!!.isNotEmpty() && item.selectedList.isEmpty()) {
+          map["properties[$counter][id]"] = item.id.toString()
+          item.from?.let {
+            map["properties[$counter][from]"] = it
+          }
+          item.to?.let {
+            map["properties[$counter][to]"] = it
+          }
+          counter++
+        }
+      }
+    }
+    Log.d(TAG, "filterResults: ===========================")
+    Log.d(TAG, "filterResults: $map")
+    apiService.filterResults(map)
   }
 
 

@@ -19,7 +19,7 @@ fun Context.isLogin() : Boolean {
 fun Context.isEnglish() : Boolean {
   val appPreferences: SharedPreferences =
     getSharedPreferences(AppPreferences.APP_PREFERENCES_NAME, AppPreferences.MODE)
-  return appPreferences.getString(Constants.LANGUAGE,"").toString() == "en"
+  return appPreferences.getString(Constants.LANGUAGE,"").toString() == Constants.DEFAULT_LANGUAGE
 }
 
 fun Context.isLoginWithOpenAuth() : Boolean {

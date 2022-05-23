@@ -61,6 +61,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
   fun setBindingVariables() {
     binding.viewModel = viewModel
     if(args.subCategory != -1) viewModel.subCategoryId = args.subCategory
+    if(args.categoryId != -1)
     viewModel.categoryId = args.categoryId
     viewModel.type = args.type
     viewModel.isSub.set(args.isSub)

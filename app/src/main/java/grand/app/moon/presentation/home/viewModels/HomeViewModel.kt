@@ -19,6 +19,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.NavHomeDirections
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.home.models.CategoryAdvertisement
@@ -201,7 +202,9 @@ class HomeViewModel @Inject constructor(
     data.categoryAds.forEach {
      if(it.advertisements.size > 0) homeList.add(it)
     }
-    Log.d(TAG, "updateList: " + data.categoryAds.size)
+    homeList.forEach {
+      ListHelper.addAllAds(it.advertisements)
+    }
     adsHomeAdapter.differ.submitList(homeList)
     notifyPropertyChanged(BR.adsHomeAdapter)
     show.set(true)

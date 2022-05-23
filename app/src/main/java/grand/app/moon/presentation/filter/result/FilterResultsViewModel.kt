@@ -10,6 +10,8 @@ import grand.app.moon.BuildConfig
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
+import grand.app.moon.domain.filter.entitiy.Children
+import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -62,6 +64,7 @@ class FilterResultsViewModel @Inject constructor(
       if (page > 1) {
         notifyPropertyChanged(BR.page)
       }
+      Log.d(TAG, "callService: ${request.properties.toString()}")
       job = useCase.filterResults(request)
         .onEach {
           response.value = it
@@ -99,5 +102,18 @@ class FilterResultsViewModel @Inject constructor(
   override fun onCleared() {
     job.cancel()
     super.onCleared()
+  }
+
+  fun prepareRequest(filterRequest: FilterResultRequest) {
+//    val properties = ArrayList<FilterProperty>()
+//    filterRequest.properties?.forEach {
+//      if(it.children.size > 0) {
+//        it.children.forEach { children ->
+//          properties.add(FilterProperty(id = children.id))
+//        }
+//      }
+//    }
+    this.request = filterRequest
+//    this.request.properties = properties
   }
 }

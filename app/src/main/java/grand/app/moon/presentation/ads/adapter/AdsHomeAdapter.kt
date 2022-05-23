@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.ItemAdsHomeBinding
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.CategoryAdvertisement
@@ -69,10 +70,11 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
     holder.unBind()
   }
 
-  fun updateFavourite(id: Int, boolean: Boolean) {
+  fun updateFavourite() {
     differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
       categoryAds.advertisements.forEachIndexed { indexAds, ads ->
-        if (ads.id == id && ads.isFavorite != boolean) {
+        if(ListHelper.isExist(ads.id) && ads.isFavorite != ListHelper.getFavourite(ads.id)) {
+          val boolean = ListHelper.getFavourite(ads.id)
           differ.currentList[indexCategoryAds].advertisements[indexAds].isFavorite = boolean
           notifyItemChanged(indexCategoryAds)
         }

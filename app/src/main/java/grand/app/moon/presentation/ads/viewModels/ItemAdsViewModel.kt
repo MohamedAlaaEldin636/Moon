@@ -37,14 +37,14 @@ class ItemAdsViewModel(
 
   fun whatsapp(v: View) {
     viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(advertisement.id,7))
+      adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(),7))
     }
     shareWhatsapp(v, advertisement.title, advertisement.description, advertisement.country.country_code+advertisement.phone)
   }
 
   fun phone(v: View) {
     viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(advertisement.id,6))
+      adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(),6))
     }
     callPhone(v.context, advertisement.country.country_code+advertisement.phone)
   }
@@ -53,7 +53,7 @@ class ItemAdsViewModel(
   fun chat(v: View) {
     if (v.context.isLoginWithOpenAuth()) {
       viewModelScope.launch(Dispatchers.IO) {
-        adsRepository.setInteraction(InteractionRequest(advertisement.id,8))
+        adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(),8))
       }
       advertisement.store?.let {
         v.context.openChatStore(v, it.id, it.name, it.image)

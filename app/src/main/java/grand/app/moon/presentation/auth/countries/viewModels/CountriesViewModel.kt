@@ -62,6 +62,10 @@ class CountriesViewModel @Inject constructor(
       .launchIn(viewModelScope)
   }
 
+  fun back(v: View){
+    v.findNavController().navigateUp()
+  }
+
   fun updateAdapter(countriesResponse:BaseResponse<List<Country>>) {
     viewModelScope.launch {
       accountRepository.saveCountries(countriesResponse)

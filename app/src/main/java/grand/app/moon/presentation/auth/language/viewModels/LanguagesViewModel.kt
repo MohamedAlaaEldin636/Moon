@@ -31,12 +31,15 @@ class LanguagesViewModel @Inject constructor(
   val adapter: CountriesAdapter = CountriesAdapter()
   @Bindable
   var lang : String = accountRepository.getKeyFromLocal(Constants.LANGUAGE)
+
   var languageNavArgs: LanguageFragmentArgs? = null
   private  val TAG = "LanguagesViewModel"
   init {
+    Log.d(TAG, "language Before : $lang")
+    if(lang.isEmpty()) lang = Constants.DEFAULT_LANGUAGE
     Log.d(TAG, "language $lang ")
-    languages.add(Country(name = "عربى" ,lang = "ar",active = if(lang == "ar") 1 else 0))
     languages.add(Country(name = "English" ,lang = "en",active = if(lang == "en" ) 1 else 0))
+    languages.add(Country(name = "عربى" ,lang = "ar",active = if(lang == "ar") 1 else 0))
     Log.d(TAG, "language: "+languages[0].active)
     Log.d(TAG, "language: "+languages[1].active)
     updateAdapter(languages)

@@ -82,6 +82,7 @@ class AdsUseCase @Inject constructor(
   private val TAG = "AdsUseCase"
   fun filterResults(resultRequest : FilterResultRequest): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
     emit(Resource.Loading)
+    Log.d(TAG, "filterResults: ${resultRequest.properties?.size}")
     if(resultRequest.properties?.isEmpty() == true) resultRequest.properties = null
     if(resultRequest.cityIds?.isEmpty() == true) resultRequest.cityIds = null
     Log.d(TAG, "filterResults: ${resultRequest.properties}")

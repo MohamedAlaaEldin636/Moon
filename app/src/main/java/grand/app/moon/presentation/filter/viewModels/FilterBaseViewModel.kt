@@ -2,6 +2,8 @@ package grand.app.moon.presentation.filter.viewModels
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.zeugmasolutions.localehelper.LocaleHelper
+import com.zeugmasolutions.localehelper.currentLocale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
@@ -22,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 open class FilterBaseViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
+  
 ) : BaseViewModel() {
   private val TAG = "FilterBaseViewModel"
   val request = FilterResultRequest()
@@ -72,8 +75,10 @@ open class FilterBaseViewModel @Inject constructor(
   fun addPriceText(callBack: (result: FilterProperty) -> Unit) {
     val property = FilterProperty()
     property.type = 1
+    
+    Log.d(TAG, "addPriceText: ${MyApplication.instance.currentLocale.language}")
     property.filterType = FILTER_TYPE.PRICE_TEXT
-    property.name = MyApplication.instance.resources.getString(R.string.filter_by_price)
+    property.name = MyApplication.instance.getString(R.string.filter_by_price)
     property.selectedList.add(1)
     property.selectedText = MyApplication.instance.resources.getString(R.string.most_compatible)
 
@@ -146,7 +151,7 @@ open class FilterBaseViewModel @Inject constructor(
     val property = FilterProperty()
     property.type = 1
     property.filterType = FILTER_TYPE.OTHER_OPTIONS
-    property.name = MyApplication.instance.resources.getString(R.string.other_options)
+    property.name = MyApplication.instance.getString(R.string.other_options)
     property.selectedList.add(1)
     property.selectedText = MyApplication.instance.resources.getString(R.string.all_ads)
 
@@ -154,19 +159,19 @@ open class FilterBaseViewModel @Inject constructor(
     property.children.add(
       Children(
         id = 1,
-        name = MyApplication.instance.resources.getString(R.string.all_ads)
+        name = MyApplication.instance.getString(R.string.all_ads)
       )
     )
     property.children.add(
       Children(
         id = 2,
-        name = MyApplication.instance.resources.getString(R.string.premium_ads)
+        name = MyApplication.instance.getString(R.string.premium_ads)
       )
     )
     property.children.add(
       Children(
         id = 3,
-        name = MyApplication.instance.resources.getString(R.string.free_ads)
+        name = MyApplication.instance.getString(R.string.free_ads)
       )
     )
     callBack(property)

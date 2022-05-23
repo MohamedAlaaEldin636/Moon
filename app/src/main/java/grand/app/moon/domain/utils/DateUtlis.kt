@@ -1,5 +1,8 @@
 package grand.app.moon.domain.utils
 
+import android.content.Context
+import grand.app.moon.core.MyApplication
+import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.utils.DateUtils.Companion.API_DATE_FORMAT
 import grand.app.moon.domain.utils.DateUtils.Companion.DAY_NAME
 import grand.app.moon.domain.utils.DateUtils.Companion.TIME_12_FORMAT
@@ -60,6 +63,11 @@ fun String.time(parsedTime: String): String {
 }
 
 fun getLocale(): Locale? {
+//  MyApplication.instance.getSharedPreferences(
+//      AppPreferences.APP_PREFERENCES_NAME,
+//      Context.MODE_PRIVATE
+//    )
+//  return MyApplication.instance.
   return when (Locale.getDefault().language) {
     "en" -> {
       Locale.ENGLISH
