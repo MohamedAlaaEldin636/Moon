@@ -31,6 +31,7 @@ class StoryDisplayViewModel @Inject constructor(
   var image = ObservableField<String>("")
   var isLoaded = false
   val store = ObservableField<Store> ()
+  var isFinish = false
 //  val listStories = arrayListOf()
 
   val storyRequest = StoryRequest()
@@ -80,13 +81,4 @@ class StoryDisplayViewModel @Inject constructor(
     return false
   }
 
-  fun isFinish(): Boolean {
-    if(pos == stories.size - 1) return true
-    pos++
-    store.set(stories[pos])
-//    listStories.clear()
-
-
-    return false
-  }
 }

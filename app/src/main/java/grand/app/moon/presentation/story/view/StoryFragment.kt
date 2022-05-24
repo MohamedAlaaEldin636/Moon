@@ -141,6 +141,7 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   }
 
   override fun onFinished() {
+    viewModel.isFinish = true
     (requireActivity() as StoryDisplayActivity).nextStory()
   }
 
@@ -160,7 +161,12 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 
   override fun onResume() {
     super.onResume()
-    resume()
+    if(!viewModel.isFinish)
+      resume()
+    else {
+      binding.progress.reset()
+      viewModel.isFinish = false
+    }
   }
 
 //  Log.d(TAG, "onProgressStepChange: $newStep")
