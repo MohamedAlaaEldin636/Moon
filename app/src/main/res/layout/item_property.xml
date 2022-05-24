@@ -16,44 +16,65 @@
   </data>
 
 
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_marginStart="@dimen/dimen14"
-    android:layout_marginEnd="@dimen/dimen14"
-    android:layout_marginTop="@dimen/dimen5"
+  <RelativeLayout
+    android:layout_marginTop="@dimen/dimen10"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
 
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/item_property_parent_name"
-      android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen10"
-      android:layout_marginBottom="@dimen/dimen6"
-      android:drawablePadding="@dimen/dimen10"
-      android:text="@{viewModel.property.parent.name != null ?  viewModel.property.parent.name : viewModel.property.name}"
-      android:textColor="@color/black"
-      android:textSize="@dimen/text_size14"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/item_property_value"
-      app:layout_constraintStart_toStartOf="parent" />
+      android:layout_marginStart="@dimen/dimen14"
+      android:layout_marginEnd="@dimen/dimen14"
+      android:padding="@dimen/dimen6">
 
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/item_property_value"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen10"
-      android:layout_marginBottom="@dimen/dimen6"
-      android:drawablePadding="@dimen/dimen10"
-      android:layout_marginEnd="@dimen/dimen12"
-      android:text="@{viewModel.property.parent.name != null ? viewModel.property.name : viewModel.property.text }"
-      android:textColor="@color/black"
-      android:textSize="@dimen/text_size14"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_property_parent_name"
+        style="@style/mediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginBottom="@dimen/dimen6"
+        android:drawablePadding="@dimen/dimen10"
+        android:text="@{viewModel.property.parent.name != null ?  viewModel.property.parent.name : viewModel.property.name}"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size14"
+        android:textAlignment="viewStart"
+        android:gravity="start"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_property_value"
+        style="@style/mediumFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen12"
+        android:layout_marginBottom="@dimen/dimen6"
+        android:drawablePadding="@dimen/dimen10"
+        android:text="@{viewModel.property.parent.name != null ? viewModel.property.name : viewModel.property.text }"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size14"
+        android:gravity="start"
+        android:textAlignment="viewStart"
+        tools:text="asdasdsaads ds a"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </RelativeLayout>
 
 
 </layout>

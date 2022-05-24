@@ -59,7 +59,7 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.getDetails(adsDetailsFragmentArgs.id,adsDetailsFragmentArgs.type)
+    viewModel.getDetails(adsDetailsFragmentArgs.id,adsDetailsFragmentArgs.type,adsDetailsFragmentArgs.fromStore)
 
   }
 

@@ -24,6 +24,7 @@ import javax.inject.Inject
 
 class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   RecyclerView.Adapter<AdsAdapter.ViewHolder>() {
+  var fromStore: Boolean = false
   lateinit var context: Context
   var clickEvent: SingleLiveEvent<Advertisement> = SingleLiveEvent()
   var percentageAds = 90
@@ -75,7 +76,7 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   private val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemAdsViewModel(data, percentageAds, adsRepository,showFavourite,type)
+    val itemViewModel = ItemAdsViewModel(data, percentageAds, adsRepository, showFavourite, type,fromStore)
     holder.setViewModel(itemViewModel)
 
     when (grid) {
@@ -134,22 +135,23 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   }
 
   fun updateFavourite(id: Int, boolean: Boolean) {
-    differ.currentList.forEachIndexed{index , advertisement ->
-      if(advertisement.id == id){
-        if(advertisement.isFavorite != boolean) {
+    differ.currentList.forEachIndexed { index, advertisement ->
+      if (advertisement.id == id) {
+        if (advertisement.isFavorite != boolean) {
           advertisement.isFavorite = boolean
-          advertisement.favoriteCount = if(advertisement.isFavorite) advertisement.favoriteCount++ else advertisement.favoriteCount--
+          advertisement.favoriteCount =
+            if (advertisement.isFavorite) advertisement.favoriteCount++ else advertisement.favoriteCount--
           notifyItemChanged(index)
         }
       }
     }
   }
 
-  fun updateFavourite(){
-    differ.currentList.forEachIndexed { index , it ->
-      if(ListHelper.isExist(it.id) && it.isFavorite != ListHelper.getFavourite(it.id)){
+  fun updateFavourite() {
+    differ.currentList.forEachIndexed { index, it ->
+      if (ListHelper.isExist(it.id) && it.isFavorite != ListHelper.getFavourite(it.id)) {
         it.isFavorite = ListHelper.getFavourite(it.id)
-        it.favoriteCount = if(it.isFavorite) it.favoriteCount++ else it.favoriteCount--
+        it.favoriteCount = if (it.isFavorite) it.favoriteCount++ else it.favoriteCount--
         notifyItemChanged(index)
       }
     }
@@ -157,29 +159,29 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
 
   fun removeStoreAds(storeId: Int) {
     val array = ArrayList(differ.currentList)
-    array.forEachIndexed{index , advertisement ->
-      if(advertisement.store?.id == storeId){
+    array.forEachIndexed { index, advertisement ->
+      if (advertisement.store?.id == storeId) {
         array.removeAt(index)
       }
     }
-    if(array.size != differ.currentList.size){
+    if (array.size != differ.currentList.size) {
 //      differ.submitList(null)
       differ.submitList(array)
     }
   }
 
-    fun setBlockStore(storeId: Int) {
-      val list = ArrayList(differ.currentList)
-      differ.currentList.forEachIndexed{index , ads ->
-        if(ads.store?.id == storeId) {
-          Log.d(TAG, "setBlockStore: HERE")
+  fun setBlockStore(storeId: Int) {
+    val list = ArrayList(differ.currentList)
+    differ.currentList.forEachIndexed { index, ads ->
+      if (ads.store?.id == storeId) {
+        Log.d(TAG, "setBlockStore: HERE")
 //          list.removeAt(index)
-        }
       }
     }
+  }
 
 
-    inner class ViewHolder(itemView: View) :
+  inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemAdsBinding
     lateinit var itemLayoutGridBinding: ItemAdsGridBinding

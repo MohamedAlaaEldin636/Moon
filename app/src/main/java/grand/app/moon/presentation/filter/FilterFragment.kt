@@ -16,6 +16,7 @@ import grand.app.moon.databinding.FragmentFilterHomeBinding
 import grand.app.moon.domain.filter.entitiy.Children
 import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterProperty
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.filter.viewModels.FilterViewModel
@@ -58,6 +59,8 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
       if(!bundle.getBoolean("allow_change_category")){
         viewModel.allowChangeCategory(false)
       }
+      if(bundle.containsKey(Constants.STORE))
+        viewModel.setStore(bundle.getSerializable(Constants.STORE) as Store)
     }
   }
 

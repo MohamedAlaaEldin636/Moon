@@ -68,7 +68,7 @@
   <string name="suggestions_ads_for_you">إعلانات مقترحة لك</string>
   <string name="most_popular_ads">أكثر الإعلانات شيوعاً</string>
   <string name="advertisements">إعلانات</string>
-  <string name="premium">مميز</string>
+  <string name="premium">ممـيز</string>
   <string name="has_negatiable">قابل للتفاوض</string>
   <string name="description_on_ads">وصف عن الاعلان</string>
   <string name="ads_owner">مالك الاعلان</string>
@@ -170,4 +170,5 @@
 
   <string name="advertisements_had_been_viewd">%s إعلان قمت بمشاهدتهم</string>
     <string name="additional_features">ميزات إضافية</string>
+  <string name="user">مستخدم</string>
 </resources>

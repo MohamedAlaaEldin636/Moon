@@ -37,7 +37,7 @@ data class Advertisement(
   @SerializedName("date")
   val date: Double = 0.0,
   @SerializedName("price")
-  val price: Int = 0,
+  val price: Double = 0.0,
   @SerializedName("phone")
   val phone: String = "",
   @SerializedName("store")

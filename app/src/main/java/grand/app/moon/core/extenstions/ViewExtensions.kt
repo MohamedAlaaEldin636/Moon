@@ -38,6 +38,8 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -63,6 +65,7 @@ import com.google.android.material.slider.RangeSlider
 import com.rizlee.rangeseekbar.RangeSeekBar
 import grand.app.moon.core.extenstions.isEnglish
 import grand.app.moon.domain.filter.entitiy.FilterProperty
+import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.domain.utils.SpannedGridLayoutManager
 import grand.app.moon.presentation.media.image.utils.ImageMatrixTouchHandler
 import kotlinx.android.synthetic.main.pausable_progress.view.*
@@ -610,6 +613,18 @@ fun loadPremium(imageView: ImageView,isPremium : Int) {
 @BindingAdapter("load_drawable")
 fun loadDrawable(imageView: ImageView, drawable: Drawable?) {
   imageView.setImageDrawable(drawable)
+}
+
+@BindingAdapter("lottie_file")
+fun loadLottie(imageView: LottieAnimationView, drawable: String?) {
+  if(drawable?.isNotEmpty() == true) {
+    imageView.cancelAnimation()
+    imageView.setAnimationFromUrl(drawable)
+    imageView.repeatCount = ValueAnimator.RESTART
+    imageView.repeatMode = LottieDrawable.RESTART
+
+    imageView.playAnimation()
+  }
 }
 
 

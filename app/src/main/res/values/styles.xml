@@ -75,6 +75,7 @@
     <item name="android:textColorSecondary">@color/white</item>
     <item name="actionMenuTextColor">@android:color/white</item>
     <item name="colorControlNormal">@color/colorWhite</item>
+    <item name="android:fontFamily">@font/medium</item>
   </style>
 
   <style name="TextBoldFont">

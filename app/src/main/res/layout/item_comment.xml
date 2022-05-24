@@ -12,15 +12,18 @@
       type="grand.app.moon.presentation.comment.viewmodel.ItemCommentViewModel" />
   </data>
 
-  <com.google.android.material.card.MaterialCardView
+<!--  <com.google.android.material.card.MaterialCardView-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_margin="@dimen/dimen2"-->
+<!--    app:cardCornerRadius="@dimen/dimen6"-->
+<!--    app:cardElevation="2dp"-->
+<!--    card_view:cardUseCompatPadding="true"-->
+<!--    >-->
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dimen2"
-    app:cardCornerRadius="@dimen/dimen6"
-    app:cardElevation="2dp"
-    card_view:cardUseCompatPadding="true"
-    >
-
+    android:orientation="vertical">
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -43,14 +46,15 @@
 
       <LinearLayout
         android:id="@+id/ll_user_info"
-        app:layout_constraintStart_toEndOf="@id/img"
-        app:layout_constraintTop_toTopOf="@+id/img"
-        app:layout_constraintBottom_toBottomOf="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen5"
         android:layout_marginTop="@dimen/dimen2"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/img"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@+id/img">
+
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/tv_name"
           style="@style/mediumFont"
@@ -58,14 +62,15 @@
           android:layout_height="wrap_content"
           android:ellipsize="end"
           android:maxLines="1"
-          android:textSize="12sp"
-          android:text="@{viewModel.model.user.name}"
+          android:text="@{viewModel.model.user.name.equals(``) ? @string/user : viewModel.model.user.name}"
           android:textAlignment="viewStart"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           android:textColor="@color/color9F9F9F"
+          android:textSize="12sp"
           app:layout_constraintBottom_toTopOf="@+id/tv_time"
-          tools:text="asdasd"
-          app:layout_constraintTop_toTopOf="parent" />
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="asdasd" />
+
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/tv_time"
           style="@style/mediumFont"
@@ -75,13 +80,13 @@
           android:layout_marginTop="@dimen/dimen2"
           android:ellipsize="end"
           android:maxLines="1"
-          android:textSize="8sp"
-
-          tools:text="asdasdasd asd sada sasd "
           android:text="@{viewModel.model.user.name}"
+
           android:textAlignment="viewStart"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-          android:textColor="@color/color9F9F9F" />
+          android:textColor="@color/color9F9F9F"
+          android:textSize="8sp"
+          tools:text="asdasdasd asd sada sasd " />
       </LinearLayout>
 
 
@@ -92,19 +97,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen8"
         android:layout_marginEnd="@dimen/dimen8"
-        android:maxLines="2"
         android:ellipsize="end"
-        android:lines="2"
-        tools:text="asdasdasd asd sada sasd "
-        android:text="@{viewModel.model.comment}"
         android:gravity="center|start"
+        android:lines="2"
+        android:maxLines="2"
+        android:text="@{viewModel.model.comment}"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/darkGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
         app:layout_constraintStart_toEndOf="@+id/ll_user_info"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="asdasdasd asd sada sasd " />
 
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView"
@@ -113,15 +118,29 @@
         android:layout_marginEnd="@dimen/dimen6"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="@{ viewModel.isOwnComment ? View.VISIBLE : View.GONE , default = gone }"
         android:onClick="@{ (v) -> viewModel.delete(v) }"
-        android:src="@drawable/ic_delete_24dp"
+        android:src="@drawable/ic_delete_comment"
+        android:visibility="@{ viewModel.isOwnComment ? View.VISIBLE : View.GONE , default = gone }"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
+
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-  </com.google.android.material.card.MaterialCardView>
+    <View
+      app:layout_constraintTop_toBottomOf="@+id/barrier10"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dimen1"
+      android:layout_marginTop="@dimen/dimen8"
+      android:layout_marginBottom="@dimen/dimen8"
+      android:background="@color/color707070" />
+  </LinearLayout>
+
+
+<!--  </com.google.android.material.card.MaterialCardView>-->
 </layout>

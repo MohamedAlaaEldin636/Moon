@@ -24,8 +24,8 @@
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:fillViewport="true"
       android:background="@color/colorFBFBFB"
+      android:fillViewport="true"
       app:layout_constraintBottom_toTopOf="@+id/linearLayout"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -33,8 +33,8 @@
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/colorFBFBFB"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorFBFBFB">
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -65,7 +65,8 @@
           android:id="@+id/view_background"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dimen60"
-          android:background="@drawable/corner_ads_gradient"
+          android:alpha="0.5"
+          android:background="@drawable/ic_bottom_shadow"
           app:layout_constraintBottom_toBottomOf="@+id/image_slider"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent" />
@@ -77,31 +78,31 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen10"
-          android:layout_marginBottom="@dimen/dimen6"
+          android:layout_marginBottom="@dimen/dimen18"
           android:drawableStart="@drawable/ic_star"
           android:drawablePadding="@dimen/dimen5"
           android:gravity="center"
-          tools:text="(10)"
           android:text="@{`(`+viewModel.advertisement.averageRate+`)`}"
           android:textColor="@color/white"
-          android:textSize="8sp"
+          android:textSize="10sp"
           app:layout_constraintBottom_toBottomOf="@+id/image_slider"
-          app:layout_constraintStart_toStartOf="parent" />
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/item_ads_premium"
+          tools:text="(10)" />
 
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/item_ads_fav"
+          style="@style/mediumFont"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen10"
-          android:layout_marginBottom="@dimen/dimen6"
-          style="@style/mediumFont"
 
           android:drawableStart="@drawable/ic_favourite"
           android:drawablePadding="@dimen/dimen5"
           android:text="@{`(`+viewModel.advertisement.favoriteCount+`)`}"
           android:textColor="@color/white"
-          android:textSize="8sp"
-          app:layout_constraintBottom_toBottomOf="@+id/image_slider"
+          android:textSize="10sp"
+          app:layout_constraintBottom_toBottomOf="@+id/item_ads_rate"
           app:layout_constraintStart_toEndOf="@+id/item_ads_rate"
           app:layout_constraintTop_toTopOf="@+id/item_ads_rate" />
 
@@ -111,13 +112,12 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen10"
-          android:layout_marginBottom="@dimen/dimen6"
           android:drawableStart="@drawable/ic_view_ads"
           android:drawablePadding="@dimen/dimen5"
           android:text="@{`(`+viewModel.advertisement.viewsCount+`)`}"
           android:textColor="@color/white"
-          android:textSize="8sp"
-          app:layout_constraintBottom_toBottomOf="@+id/image_slider"
+          android:textSize="10sp"
+          app:layout_constraintBottom_toBottomOf="@+id/item_ads_rate"
           app:layout_constraintStart_toEndOf="@+id/item_ads_fav"
           app:layout_constraintTop_toTopOf="@+id/item_ads_rate" />
 
@@ -128,32 +128,34 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen10"
-          android:layout_marginBottom="@dimen/dimen6"
           android:drawableStart="@drawable/ic_share"
           android:drawablePadding="@dimen/dimen5"
           android:text="@{`(`+viewModel.advertisement.shareCount+`)`}"
           android:textColor="@color/white"
-          android:textSize="8sp"
-          app:layout_constraintBottom_toBottomOf="@+id/image_slider"
+          android:textSize="10sp"
+          app:layout_constraintBottom_toBottomOf="@+id/item_ads_rate"
           app:layout_constraintStart_toEndOf="@+id/item_ads_views"
           app:layout_constraintTop_toTopOf="@+id/item_ads_rate" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/item_ads_premium"
           style="@style/mediumFont"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen10"
           android:layout_marginEnd="@dimen/dimen10"
           android:layout_marginBottom="@dimen/dimen6"
           android:background="@drawable/corner_accent_40"
+          android:paddingStart="@dimen/dimen18"
+          android:paddingTop="@dimen/dimen6"
+          android:paddingEnd="@dimen/dimen18"
+          android:paddingBottom="@dimen/dimen6"
           android:text="@string/premium"
           android:textColor="@color/white"
-          android:textSize="@dimen/text_size16"
-          android:textStyle="bold"
-          android:visibility="@{viewModel.advertisement.premium == 1 ? View.VISIBLE : View.GONE , default = gone}"
+          android:textSize="@dimen/text_size13"
           app:layout_constraintBottom_toBottomOf="@+id/image_slider"
-          app:layout_constraintEnd_toEndOf="parent" />
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/view_background" />
+        <!--        android:visibility="@{viewModel.advertisement.premium == 1 ? View.VISIBLE : View.GONE , default = gone}"-->
 
         <androidx.appcompat.widget.AppCompatImageView
           android:id="@+id/ic_fav"
@@ -180,8 +182,8 @@
           android:layout_width="@dimen/dimen40"
           android:layout_height="@dimen/dimen40"
           android:layout_margin="@dimen/dimen20"
-          android:rotation="180"
           android:onClick="@{ (v) -> viewModel.back(v)}"
+          android:rotation="180"
           android:src="@drawable/ic_back"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
@@ -193,33 +195,32 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen10"
-          android:layout_marginTop="@dimen/dimen10"
           android:drawableStart="@drawable/ic_time"
           android:drawablePadding="@dimen/dimen10"
           android:gravity="center"
           android:text="@{viewModel.advertisement.createdAt}"
           android:textColor="@color/colorBlack"
-          android:textSize="@dimen/text_size18"
+          android:textSize="@dimen/text_size14"
+          app:layout_constraintBottom_toBottomOf="@+id/item_ads_details_price"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/image_slider" />
+          app:layout_constraintTop_toTopOf="@+id/item_ads_details_price" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/item_ads_negotiable"
-          style="@style/mediumFont"
+          style="@style/regularFont"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen5"
-          android:layout_marginTop="@dimen/dimen10"
-          android:layout_marginEnd="@dimen/dimen5"
+          android:layout_marginEnd="@dimen/dimen10"
           android:gravity="center"
           android:text="@string/has_negatiable"
           android:textColor="@color/colorB7B7B7"
-          android:textSize="@dimen/text_size16"
+          android:textSize="@dimen/text_size14"
           android:visibility="@{viewModel.advertisement.isNegotiable() == 1 ? View.VISIBLE : View.GONE , default = gone}"
+          app:layout_constraintBottom_toBottomOf="@+id/item_ads_details_price"
           app:layout_constraintEnd_toStartOf="@+id/item_ads_details_price"
-          app:layout_constraintStart_toEndOf="@+id/item_ads_time"
-          app:layout_constraintTop_toBottomOf="@+id/image_slider" />
+          app:layout_constraintTop_toTopOf="@+id/item_ads_details_price" />
 
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/item_ads_details_price"
@@ -228,46 +229,28 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen5"
           android:layout_marginTop="@dimen/dimen10"
-          android:layout_marginEnd="@dimen/dimen5"
-          android:text="@{viewModel.advertisement.price + ` `}"
+          android:layout_marginEnd="@dimen/dimen20"
+          android:text="@{viewModel.advertisement.price +` `+ viewModel.advertisement.country.currency}"
           android:textColor="@color/colorAccent"
-          android:textSize="@dimen/text_size16"
+          android:textSize="@dimen/text_size20"
           android:textStyle="bold"
-          app:layout_constraintEnd_toStartOf="@+id/item_ads_details_currency"
+          app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/image_slider"
 
           />
 
-        <androidx.appcompat.widget.AppCompatTextView
-          android:id="@+id/item_ads_details_currency"
-          style="@style/boldFont"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen5"
-          android:layout_marginTop="@dimen/dimen10"
-          android:layout_marginEnd="@dimen/dimen5"
-          android:text="@{viewModel.advertisement.country.currency}"
-          android:textColor="@color/colorAccent"
-          android:textSize="@dimen/text_size12"
-          android:textStyle="bold"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/image_slider" />
 
         <androidx.constraintlayout.widget.Barrier
           android:id="@+id/barrier3"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           app:barrierDirection="bottom"
-          app:constraint_referenced_ids="item_ads_details_currency,item_ads_time,item_ads_details_price"
+          app:constraint_referenced_ids="item_ads_time,item_ads_details_price"
           tools:layout_editor_absoluteY="731dp" />
 
         <LinearLayout
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dimen5"
-          android:layout_marginStart="@dimen/dimen20"
-          android:layout_marginEnd="@dimen/dimen20"
-          android:layout_marginBottom="@dimen/dimen5"
           android:orientation="vertical"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
@@ -277,7 +260,9 @@
             style="@style/boldFont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen10"
             android:layout_marginTop="@dimen/dimen10"
+            android:layout_marginEnd="@dimen/dimen10"
             android:text="@{viewModel.advertisement.title}"
             android:textAlignment="viewStart"
             android:textColor="@color/colorPrimary"
@@ -287,128 +272,102 @@
             app:layout_constraintTop_toBottomOf="@+id/image_slider" />
 
 
-          <com.google.android.material.card.MaterialCardView
+          <androidx.appcompat.widget.AppCompatTextView
+            style="@style/regularFont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen10"
             android:layout_marginTop="@dimen/dimen10"
+            android:layout_marginEnd="@dimen/dimen10"
+            android:drawableEnd="@drawable/ic_map"
             android:onClick="@{ (v) -> viewModel.location(v) }"
-            app:cardCornerRadius="@dimen/dimen6"
-            app:cardElevation="@dimen/dimen1"
-            card_view:cardUseCompatPadding="true">
+            android:text="@{viewModel.advertisement.country.name + ',' + viewModel.advertisement.city.name}"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_slider" />
+
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen10"
+            android:layout_marginTop="@dimen/dimen10"
+            android:layout_marginEnd="@dimen/dimen10"
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
               style="@style/boldFont"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_margin="@dimen/dimen5"
-              android:drawableEnd="@drawable/ic_map"
-              android:text="@{viewModel.advertisement.country.name + '/' + viewModel.advertisement.city.name}"
+              android:text="@string/description_on_ads"
               android:textColor="@color/colorBlack"
-              android:textSize="@dimen/text_size16"
-              android:textStyle="bold"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintTop_toBottomOf="@+id/image_slider" />
-
-          </com.google.android.material.card.MaterialCardView>
+              android:textSize="@dimen/text_size18"
+              android:textStyle="bold" />
 
 
-          <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen10"
-            app:cardCornerRadius="@dimen/dimen6"
-            app:cardElevation="@dimen/dimen1"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
-
-              <androidx.appcompat.widget.AppCompatTextView
-                style="@style/boldFont"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen5"
-                android:text="@string/description_on_ads"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size18"
-                android:textStyle="bold" />
-
-
-              <androidx.appcompat.widget.AppCompatTextView
-                style="@style/regularFont"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen5"
-                android:text="@{viewModel.advertisement.description}"
-                android:textAlignment="viewStart"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size14"
-                android:textStyle="bold" />
-
-            </LinearLayout>
-          </com.google.android.material.card.MaterialCardView>
-
-
-          <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen10"
-            app:cardElevation="@dimen/dimen1"
-            card_view:cardUseCompatPadding="true">
-
-            <androidx.recyclerview.widget.RecyclerView
-              android:id="@+id/rv_stores"
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/regularFont"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_margin="@dimen/dimen5"
-              android:orientation="horizontal"
-              app:adapter="@{viewModel.propertiesAdapter}"
-              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-              app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
-              app:orientation="@{`1`}"
-              app:span="@{`1`}"
-              tools:listitem="@layout/item_property" />
+              android:lineSpacingExtra="4sp"
+              android:text="@{viewModel.advertisement.description}"
+              android:textAlignment="viewStart"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size12"
+              tools:text="asdasdsaasdasd sad dsa sda sda dsa dsa asdasdsaasdasd sad dsa sda sda dsa dsa " />
 
-          </com.google.android.material.card.MaterialCardView>
+          </LinearLayout>
 
 
-          <com.google.android.material.card.MaterialCardView
+          <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_stores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen10"
+            android:orientation="horizontal"
+            app:adapter="@{viewModel.propertiesAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+            app:orientation="@{`1`}"
+            app:span="@{`1`}"
+            tools:listitem="@layout/item_property" />
+
+          <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen10"
-            app:cardElevation="@dimen/dimen1"
-            android:visibility="@{viewModel.switchAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
-            card_view:cardUseCompatPadding="true">
+            android:background="@color/colorWhite"
+            android:visibility="@{viewModel.switchAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }">
 
             <androidx.recyclerview.widget.RecyclerView
               android:id="@+id/rv_switches"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="@dimen/dimen5"
+              android:layout_marginStart="@dimen/dimen10"
+              android:layout_marginEnd="@dimen/dimen10"
               android:orientation="horizontal"
               app:adapter="@{viewModel.switchAdapter}"
               app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-              app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
               app:orientation="@{`1`}"
               app:span="@{`3`}"
               tools:listitem="@layout/item_switch" />
 
-          </com.google.android.material.card.MaterialCardView>
+          </RelativeLayout>
 
 
-          <com.google.android.material.card.MaterialCardView
+          <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen20"
-            app:cardCornerRadius="@dimen/dimen6"
-            app:cardElevation="@dimen/dimen1"
-            card_view:cardUseCompatPadding="true">
+            android:background="@color/colorWhite">
 
             <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dimen10">
 
 
               <androidx.appcompat.widget.AppCompatTextView
@@ -509,154 +468,143 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-          </com.google.android.material.card.MaterialCardView>
+          </RelativeLayout>
 
-          <com.google.android.material.card.MaterialCardView
+
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen20"
-            app:cardCornerRadius="@dimen/dimen6"
-            app:cardElevation="@dimen/dimen1"
-            card_view:cardUseCompatPadding="true">
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen10">
 
-            <LinearLayout
-              android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/boldFont"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:layout_margin="@dimen/dimen5"
+              android:text="@string/advices_for_safe"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size18"
+              android:textStyle="bold" />
 
-              <androidx.appcompat.widget.AppCompatTextView
-                style="@style/boldFont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen5"
-                android:text="@string/advices_for_safe"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size18"
-                android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/mediumFont"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dimen5"
+              android:drawableStart="@drawable/dot"
+              android:drawablePadding="@dimen/dimen12"
+              android:text="@string/check_purchasing_before_buying"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size16" />
 
-              <androidx.appcompat.widget.AppCompatTextView
-                style="@style/mediumFont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen5"
-                android:drawableStart="@drawable/dot"
-                android:drawablePadding="@dimen/dimen12"
-                android:text="@string/check_purchasing_before_buying"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size16" />
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/mediumFont"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dimen5"
+              android:drawableStart="@drawable/dot"
+              android:drawablePadding="@dimen/dimen12"
+              android:text="@string/pay_only_after_collect_item"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size16" />
 
-              <androidx.appcompat.widget.AppCompatTextView
-                style="@style/mediumFont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen5"
-                android:drawableStart="@drawable/dot"
-                android:drawablePadding="@dimen/dimen12"
-                android:text="@string/pay_only_after_collect_item"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size16" />
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/mediumFont"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dimen5"
+              android:drawableStart="@drawable/dot"
+              android:drawablePadding="@dimen/dimen12"
+              android:text="@string/beware_of_unrealistic_offers"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size16" />
 
-              <androidx.appcompat.widget.AppCompatTextView
-                style="@style/mediumFont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen5"
-                android:drawableStart="@drawable/dot"
-                android:drawablePadding="@dimen/dimen12"
-                android:text="@string/beware_of_unrealistic_offers"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size16" />
+            <androidx.appcompat.widget.AppCompatTextView
+              style="@style/mediumFont"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dimen5"
+              android:drawableStart="@drawable/dot"
+              android:drawablePadding="@dimen/dimen12"
+              android:text="@string/meet_seller_in_safe_place"
+              android:textColor="@color/colorBlack"
+              android:textSize="@dimen/text_size16" />
+          </LinearLayout>
 
-              <androidx.appcompat.widget.AppCompatTextView
-                style="@style/mediumFont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen5"
-                android:drawableStart="@drawable/dot"
-                android:drawablePadding="@dimen/dimen12"
-                android:text="@string/meet_seller_in_safe_place"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size16" />
-            </LinearLayout>
-          </com.google.android.material.card.MaterialCardView>
 
-          <com.google.android.material.card.MaterialCardView
+          <LinearLayout
+            android:background="@color/colorWhite"
+            android:layout_marginTop="@dimen/dimen20"
+            android:padding="@dimen/dimen20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen20"
-            app:cardCornerRadius="@dimen/dimen6"
-            app:cardElevation="@dimen/dimen1"
-            card_view:cardUseCompatPadding="true">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
-
-              <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen10">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                  android:id="@+id/tv_top_stores"
-                  style="@style/TextBoldFont"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="@dimen/dimen10"
-                  android:layout_marginTop="@dimen/dimen16"
-                  android:layout_marginBottom="@dimen/dimen16"
-                  android:text="@string/some_customers_reviews"
-                  android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                  android:textColor="@color/colorPrimary"
-                  android:textStyle="bold"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                  android:id="@+id/tv_top_stores_all"
-                  style="@style/mediumFont"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginEnd="@dimen/dimen10"
-                  android:drawableEnd="@drawable/ic_more_sec"
-                  android:drawableTint="@color/colorAccent"
-                  android:gravity="center"
-                  android:onClick="@{ (v) -> viewModel.showAllReviews(v)}"
-                  android:text="@{viewModel.advertisement.reviews.size() > 0 ? @string/show_all : @string/add_review}"
-                  android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                  android:textColor="@color/colorPrimary"
-                  app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintTop_toTopOf="@+id/tv_top_stores" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                  android:id="@+id/rv_ads"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="@dimen/dimen5"
-                  android:orientation="horizontal"
-                  app:adapter="@{viewModel.reviewsAdapter}"
-                  app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                  app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
-                  app:orientation="@{`1`}"
-                  app:span="@{`1`}"
-                  tools:listitem="@layout/item_review" />
-
-              </androidx.constraintlayout.widget.ConstraintLayout>
+              android:layout_marginTop="@dimen/dimen10">
 
               <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_top_stores"
+                style="@style/TextBoldFont"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen10"
-                android:layout_marginTop="@dimen/dimen8"
+                android:layout_marginTop="@dimen/dimen16"
+                android:layout_marginBottom="@dimen/dimen16"
+                android:text="@string/some_customers_reviews"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+              <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_top_stores_all"
+                style="@style/mediumFont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dimen10"
-                android:text="@string/there_are_no_customers_reviews"
-                android:visibility="@{viewModel.advertisement.reviews.size() == 0 ? View.VISIBLE : View.GONE}" />
+                android:drawableEnd="@drawable/ic_more_sec"
+                android:drawableTint="@color/colorAccent"
+                android:gravity="center"
+                android:onClick="@{ (v) -> viewModel.showAllReviews(v)}"
+                android:text="@{viewModel.advertisement.reviews.size() > 0 ? @string/show_all : @string/add_review}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_top_stores" />
 
-            </LinearLayout>
+              <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen5"
+                android:orientation="horizontal"
+                app:adapter="@{viewModel.reviewsAdapter}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+                app:orientation="@{`1`}"
+                app:span="@{`1`}"
+                tools:listitem="@layout/item_review" />
 
-          </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/dimen10"
+              android:layout_marginTop="@dimen/dimen8"
+              android:layout_marginEnd="@dimen/dimen10"
+              android:text="@string/there_are_no_customers_reviews"
+              android:visibility="@{viewModel.advertisement.reviews.size() == 0 ? View.VISIBLE : View.GONE}" />
+
+          </LinearLayout>
 
 
           <androidx.appcompat.widget.AppCompatTextView
@@ -664,16 +612,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dimen10"
             android:background="@drawable/corner_silver_strock"
             android:drawableEnd="@drawable/ic_more_sec"
             android:drawableTint="@color/gray"
             android:gravity="start"
+            android:textSize="@dimen/text_size16"
+            android:layout_margin="@dimen/dimen20"
             android:onClick="@{ (v) -> viewModel.reportAds(v) }"
             android:padding="@dimen/dimen6"
             android:text="@string/report_on_issue"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorBlack" />
 
 
           <androidx.appcompat.widget.AppCompatTextView
@@ -683,7 +632,7 @@
             android:layout_marginTop="@dimen/dimen10"
             android:text="@string/similar_ads"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorBlack"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -719,43 +668,50 @@
       app:layout_constraintStart_toStartOf="parent">
 
       <com.google.android.material.button.MaterialButton
+        style="@style/mediumFont"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dimen60"
+        android:layout_height="@dimen/dimen40"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen8"
-        android:gravity="center"
         android:layout_weight="1"
+        android:background="@color/color55CD6C"
+        android:gravity="center"
         android:onClick="@{(v) -> viewModel.whatsapp(v)}"
         android:text="@string/whatsapp"
-        android:textSize="@dimen/text_size14"
+        android:textSize="@dimen/text_size12"
         app:backgroundTint="@color/color55CD6C"
         app:icon="@drawable/ic_whatsapp"
         app:iconGravity="textStart" />
 
       <com.google.android.material.button.MaterialButton
+        style="@style/mediumFont"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dimen60"
+        android:layout_height="@dimen/dimen40"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen8"
         android:layout_weight="1"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:onClick="@{(v) -> viewModel.phone(v)}"
         android:text="@string/call"
-        android:textSize="@dimen/text_size14"
+        android:textSize="@dimen/text_size12"
         app:backgroundTint="@color/colorPrimary"
         app:icon="@drawable/ic_phone"
         app:iconGravity="textStart" />
 
-      <com.google.android.material.button.MaterialButton
+      <Button
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dimen60"
+        android:layout_height="@dimen/dimen40"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen8"
         android:layout_weight="1"
-        android:onClick="@{(v) -> viewModel.chat(v)}"
-        android:text="@string/chat"
+        android:background="@color/colorAccent"
         android:gravity="center"
-        android:textSize="@dimen/text_size14"
+        android:onClick="@{(v) -> viewModel.chat(v)}"
+        android:padding="0dp"
+        android:text="@string/chat"
+        android:textSize="@dimen/text_size12"
         app:backgroundTint="@color/colorAccent"
         app:icon="@drawable/ic_chat_conversation"
         app:iconGravity="textStart" />

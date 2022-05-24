@@ -91,7 +91,7 @@ class CountriesViewModel @Inject constructor(
   fun next(v: View) {
     countriesFragmentArgs?.from?.let {
       if (it == Constants.SPLASH)
-        v.findNavController().navigate(CountriesFragmentDirections.actionCountriesFragment2ToIntroFragment(null,-1))
+        v.findNavController().navigate(CountriesFragmentDirections.actionCountriesFragment2ToTutorialFragment())
       else
         clickEvent.value = Constants.BACK
     }

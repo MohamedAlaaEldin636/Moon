@@ -37,9 +37,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     if (viewModel.lang.isEmpty()) {
       viewModel.lang = Constants.DEFAULT_LANGUAGE
       viewModel.accountRepository.saveKeyToLocal(Constants.LANGUAGE, viewModel.lang)
-//      LocaleHelper.setLocale(this, Locale(viewModel.lang))
-//      changeLanguage(this,viewModel.lang)
-//      changeLanguage(MyApplication.instance,viewModel.lang)
     }
     Log.d(TAG, "setUpViews: ${viewModel.lang}")
     binding.viewModel = viewModel

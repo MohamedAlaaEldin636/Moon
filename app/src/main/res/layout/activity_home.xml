@@ -22,6 +22,7 @@
       app:titleTextColor="@color/colorWhite"
       app:titleCentered="true"
       android:gravity="center"
+      android:textSize="@dimen/text_size16"
       app:menu="@menu/menu_navigation_view"
       android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
       app:layout_constraintStart_toStartOf="parent"
@@ -99,6 +100,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <androidx.appcompat.widget.AppCompatTextView
+        style="@style/mediumFont"
         android:id="@+id/tv_home_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

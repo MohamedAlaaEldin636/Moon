@@ -101,15 +101,15 @@ class CommentListViewModel @Inject constructor(
   fun comment(v: View) {
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
-      if (user.name.isEmpty() || user.email.isEmpty() || user.image.isEmpty()) {
-        showInfo(v.context, v.resources.getString(R.string.please_complete_your_profile))
-      } else {
+//      if (user.name.isEmpty() || user.email.isEmpty() || user.image.isEmpty()) {
+//        showInfo(v.context, v.resources.getString(R.string.please_complete_your_profile))
+//      } else {
         exploreAction.get()!!.type = null
         exploreAction.get()!!.exploreId = exploreId
         useCase.setComment(exploreAction.get()!!, true).onEach {
           _responseSend.value = it
         }.launchIn(viewModelScope)
-      }
+//      }
     }
   }
 

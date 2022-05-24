@@ -92,7 +92,7 @@ class StoreDetailsViewModel @Inject constructor(
   var blockStore = false
 
   init {
-    adsAdapter.percentageAds = 100
+    adsAdapter.fromStore = true
 
   }
 
@@ -326,7 +326,7 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun filter(v: View) {
-    store.get()?.id?.let { toFilter(v,store_id = it) }
+    store.get()?.id?.let { toFilter(v,store_id = it,store = store.get()!!) }
   }
 
 
@@ -393,7 +393,10 @@ class StoreDetailsViewModel @Inject constructor(
     } else {
       val id = propertiesAdapter.differ.currentList[propertiesAdapter.position].id
       val list = ArrayList<Advertisement>()
+      Log.d(TAG, "propertySelect: ${id}")
       store.get()?.advertisements?.forEach {
+        Log.d(TAG, "propertySelect: ${it.id}")
+        Log.d(TAG, "propertySelect_category: ${it.categoryId}")
         if (it.categoryId == id)
           list.add(it)
       }

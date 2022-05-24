@@ -75,8 +75,10 @@ class AdsDetailsViewModel @Inject constructor(
   val advertisement = ObservableField<Advertisement>()
   var isLoggin = userLocalUseCase.isLoggin()
 
+  var fromStore = false
 
-  fun getDetails(id: Int, type: Int) {
+  fun getDetails(id: Int, type: Int,fromStore: Boolean) {
+    this.fromStore = fromStore
     Log.d(TAG, "getDetails: ")
     this.id = id
     this.type = type
@@ -97,9 +99,11 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun storeDetails(v: View) {
-    v.findNavController().navigate(
-      AdsDetailsFragmentDirections.actionAdsDetailsFragmentToStoreDetailsFragment3(advertisement.get()?.store!!.id)
-    )
+    if(!fromStore) {
+      v.findNavController().navigate(
+        AdsDetailsFragmentDirections.actionAdsDetailsFragmentToStoreDetailsFragment3(advertisement.get()?.store!!.id)
+      )
+    }else v.findNavController().navigateUp()
   }
 
   fun back(v: View) {
@@ -198,7 +202,7 @@ class AdsDetailsViewModel @Inject constructor(
     if (!isLoggin && isAuthorize) {
       Log.d(TAG, "recallApi: DONER")
       isLoggin = isAuthorize
-      getDetails(id, type)
+      getDetails(id, type,fromStore)
     }
   }
 

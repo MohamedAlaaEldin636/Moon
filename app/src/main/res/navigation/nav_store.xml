@@ -63,6 +63,10 @@
     <action
       android:id="@+id/action_storeDetailsFragment_to_filterSortDialog2"
       app:destination="@id/filterSortDialog2" />
+    <argument
+      android:name="from_store"
+      app:argType="boolean"
+      android:defaultValue="false" />
 
 
   </fragment>

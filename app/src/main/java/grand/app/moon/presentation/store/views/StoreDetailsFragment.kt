@@ -101,7 +101,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
           is Resource.Success -> {
             hideLoading()
             updateMap()
-            it.value.data.category.add(Property(0, name = resources.getString(R.string.show_all),parent = null))
+            it.value.data.category.add(0,Property(0, name = resources.getString(R.string.show_all),parent = null))
             viewModel.update(
               resources.getString(R.string.google_direction_api),
               it.value.data,

@@ -9,6 +9,7 @@ import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
+import grand.app.moon.presentation.filter.FILTER_TYPE
 import javax.inject.Inject
 
 class AdsRemoteDataSource @Inject constructor(private val apiService: AdsServices) :
@@ -106,21 +107,23 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     var counter = 0
     Log.d(TAG, "filterResults: $map")
     for ((index, item) in request.properties.orEmpty().withIndex()) {
-      if (item.selectedList.isNotEmpty()) {
-        item.selectedList.forEachIndexed { indexProp, propSelect ->
-          map["properties[$counter][id]"] = propSelect.toString()
-          counter++
-        }
-      } else {
-        if (item.from != null && item.from!!.isNotEmpty() && item.to != null && item.to!!.isNotEmpty() && item.selectedList.isEmpty()) {
-          map["properties[$counter][id]"] = item.id.toString()
-          item.from?.let {
-            map["properties[$counter][from]"] = it
+      if(item.filterType != FILTER_TYPE.CATEGORY && item.filterType != FILTER_TYPE.SUB_CATEGORY) {
+        if (item.selectedList.isNotEmpty()) {
+          item.selectedList.forEachIndexed { indexProp, propSelect ->
+            map["properties[$counter][id]"] = propSelect.toString()
+            counter++
           }
-          item.to?.let {
-            map["properties[$counter][to]"] = it
+        } else {
+          if (item.from != null && item.from!!.isNotEmpty() && item.to != null && item.to!!.isNotEmpty() && item.selectedList.isEmpty()) {
+            map["properties[$counter][id]"] = item.id.toString()
+            item.from?.let {
+              map["properties[$counter][from]"] = it
+            }
+            item.to?.let {
+              map["properties[$counter][to]"] = it
+            }
+            counter++
           }
-          counter++
         }
       }
     }

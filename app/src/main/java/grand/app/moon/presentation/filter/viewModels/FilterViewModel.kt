@@ -2,18 +2,15 @@ package grand.app.moon.presentation.filter.viewModels
 
 import android.util.Log
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
-import grand.app.moon.R
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterProperty
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
-import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.filter.FILTER_TYPE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -139,6 +136,14 @@ class FilterViewModel @Inject constructor(
   }
   fun allowChangeCategory(check: Boolean){
     adapter.allowClickable(0,check)
+  }
+
+  fun setStore(store: Store) {
+    Log.d(TAG, "setStore: ${store.category.size}")
+    addCategoriesByStore(store.category) {
+      Log.d(TAG, "setStore_children: ${it.children.size}")
+      adapter.update(0,it)
+    }
   }
 
 

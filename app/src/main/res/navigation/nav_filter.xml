@@ -55,6 +55,9 @@
     <action
       android:id="@+id/action_filterFragment_to_filterMultiSelectDialog"
       app:destination="@id/filterMultiSelectDialog" />
+    <argument
+      android:name="store"
+      app:argType="grand.app.moon.domain.home.models.Store" />
 
 
   </fragment>

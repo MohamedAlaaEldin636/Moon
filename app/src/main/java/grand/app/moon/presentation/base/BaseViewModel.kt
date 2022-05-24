@@ -31,8 +31,7 @@ import java.io.IOException
 import java.lang.Exception
 import java.net.URLEncoder
 import androidx.core.content.ContextCompat.startActivity
-
-
+import grand.app.moon.domain.home.models.Store
 
 
 open class BaseViewModel : ViewModel(), Observable {
@@ -208,7 +207,8 @@ open class BaseViewModel : ViewModel(), Observable {
 
   fun toFilter(
     v: View, category_id: Int? = -1, category_name: String? = null, sub_category_id: Int? = -1,
-    sub_category_name: String? = null,allow_change_category : Boolean = true, store_id: Int = -1
+    sub_category_name: String? = null,allow_change_category : Boolean = true, store_id: Int = -1,
+    store:Store? = Store()
   ) {
     val bundle = Bundle()
 
@@ -225,6 +225,10 @@ open class BaseViewModel : ViewModel(), Observable {
 
     sub_category_name?.let {
       bundle.putString("sub_category_name", it)
+    }
+
+    store?.let {
+      bundle.putSerializable("store", it)
     }
 
 

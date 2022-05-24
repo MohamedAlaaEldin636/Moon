@@ -23,7 +23,8 @@ class ItemAdsViewModel(
   var percentageAds: Int,
   val adsRepository: AdsRepository,
   val showFavourite: Boolean = false,
-  val type: Int
+  val type: Int,
+  val fromStore: Boolean = false
 ) : BaseViewModel() {
 //  val adapter = AdsAdapter(adsRepository)
 
@@ -33,7 +34,8 @@ class ItemAdsViewModel(
     v.findNavController().navigate(
       R.id.nav_ads, bundleOf(
         "id" to advertisement.id,
-        "type" to type
+        "type" to type,
+        "from_store" to fromStore
       )
     )
   }

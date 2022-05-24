@@ -22,6 +22,7 @@ import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
@@ -132,7 +133,14 @@ class HomeViewModel @Inject constructor(
   private fun getCategories() {
     viewModelScope.launch {
       accountRepository.getCategories().collect {
-        categoriesAdapter.differ.submitList(it.data)
+        val list = ArrayList<CategoryItem>()
+        it.data.forEach {
+          it.subCategories?.let { subCategory ->
+            if(subCategory.size > 0)
+              list.add(it)
+          }
+        }
+        categoriesAdapter.differ.submitList(list)
         notifyPropertyChanged(BR.categoriesAdapter)
       }
     }

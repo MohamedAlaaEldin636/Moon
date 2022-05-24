@@ -11,6 +11,7 @@ import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.filter.entitiy.Children
 import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
+import grand.app.moon.domain.home.models.Property
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.filter.FILTER_TYPE
@@ -186,16 +187,37 @@ open class FilterBaseViewModel @Inject constructor(
     viewModelScope.launch {
       accountRepository.getCategories().collect {
         it.data.forEach { category ->
-          property.children.add(
-            Children(
-              id = category.id!!,
-              name = category.name
+          if(category.subCategories!!.size > 0) {
+            property.children.add(
+              Children(
+                id = category.id!!,
+                name = category.name
+              )
             )
-          )
+          }
         }
         callBack(property)
       }
     }
+  }
+
+  fun addCategoriesByStore(list : ArrayList<Property>, callBack: (result: FilterProperty) -> Unit) {
+    val property = FilterProperty()
+    property.type = 1
+    property.filterType = FILTER_TYPE.CATEGORY
+    property.name = MyApplication.instance.resources.getString(R.string.main_section)
+
+    list.forEach {
+      if(it.id != 0 && it.name != MyApplication.instance.getString(R.string.show_all)) {
+        property.children.add(
+          Children(
+            id = it.id,
+            name = it.name
+          )
+        )
+      }
+    }
+    callBack(property)
   }
 
   fun addSubCategories(categoryId: Int? = 0, callBack: (result: FilterProperty) -> Unit) {

@@ -35,6 +35,13 @@
       app:popEnterAnim="@anim/anim_slide_in_bottom"
       app:popExitAnim="@anim/anim_slide_out_top"
       app:destination="@id/intro_fragment" />
+    <action
+      android:id="@+id/action_countriesFragment2_to_tutorialFragment"
+      app:enterAnim="@anim/anim_slide_in_top"
+      app:exitAnim="@anim/anim_slide_out_bottom"
+      app:popEnterAnim="@anim/anim_slide_in_bottom"
+      app:popExitAnim="@anim/anim_slide_out_top"
+      app:destination="@id/tutorialFragment" />
   </fragment>
   <fragment
     android:id="@+id/languageFragment"
@@ -52,5 +59,9 @@
       app:popEnterAnim="@anim/anim_slide_in_bottom"
       app:popExitAnim="@anim/anim_slide_out_top"/>
   </fragment>
+  <fragment
+    android:id="@+id/tutorialFragment"
+    android:name="grand.app.moon.presentation.intro.tutorial.TutorialFragment"
+    android:label="" />
 
 </navigation>

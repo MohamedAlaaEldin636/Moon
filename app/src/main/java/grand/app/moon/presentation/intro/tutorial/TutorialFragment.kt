@@ -1,7 +1,13 @@
 package grand.app.moon.presentation.intro.tutorial
 
+import android.animation.ValueAnimator
+import android.util.Log
+import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.appTutorial.AppTutorialHelper
 import grand.app.moon.domain.utils.Resource
@@ -28,6 +34,8 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
+    viewModel.accountRepository.saveKeyToLocal(Constants.INTRO,"true")
+
   }
 
   private fun setUpAppTutorial(tutorialData: List<AppTutorial> = ArrayList()) {
@@ -61,8 +69,8 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            setUpAppTutorial(it.value.data)
-//            viewModel.setData(it.value.data)
+//            setUpAppTutorial(it.value.data)
+            viewModel.setData(it.value.data)
           }
           is Resource.Failure -> {
             hideLoading()
@@ -77,7 +85,31 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
       if (it == Constants.SKIP) {
         homePage()
       }
+      if (it == Constants.NEXT) {
+        addLottie()
+      }
     }
+  }
+
+  private  val TAG = "TutorialFragment"
+  fun addLottie(){
+    binding.animationView.removeAllViews()
+    val lottieFile = LottieAnimationView(requireContext())
+    lottieFile.setLayoutParams(
+      FrameLayout.LayoutParams(
+        FrameLayout.LayoutParams.MATCH_PARENT,
+        FrameLayout.LayoutParams.MATCH_PARENT
+      )
+    )
+
+    Log.d(TAG, "addLottie: ${viewModel.tutorial.get()?.image}")
+    lottieFile.setAnimationFromUrl(viewModel.tutorial.get()?.image)
+    lottieFile.repeatMode = LottieDrawable.RESTART
+    lottieFile.repeatCount = ValueAnimator.RESTART
+    lottieFile.setScale(0.1f);
+    lottieFile.scaleType = ImageView.ScaleType.CENTER_CROP
+    lottieFile.playAnimation()
+    binding.animationView.addView(lottieFile)
   }
 
   private fun homePage() {
