@@ -61,6 +61,7 @@ class FilterResultsViewModel @Inject constructor(
       callingService = true
       notifyPropertyChanged(BR.callingService)
       page++
+      request.page = page
       if (page > 1) {
         notifyPropertyChanged(BR.page)
       }

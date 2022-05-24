@@ -66,7 +66,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
     viewModel.type = args.type
     viewModel.isSub.set(args.isSub)
     viewModel.setCategoryId()
-//    viewModel.callService()
+    viewModel.callService()
   }
 
   private val TAG = "SubCategoryFragment"
@@ -156,9 +156,10 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
 
   override fun onResume() {
     super.onResume()
+    viewModel.adapter.updateFavourite()
 //    viewModel.reset()
-    viewModel.reset()
-    viewModel.callService()
+//    viewModel.reset()
+//    viewModel.callService()
   }
 
 }

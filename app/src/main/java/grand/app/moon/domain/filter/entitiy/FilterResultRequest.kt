@@ -9,6 +9,8 @@ class FilterResultRequest(
   var search: String = "",
   @SerializedName("category_id")
   var categoryId: Int? = null,
+  @SerializedName("page")
+  var page: Int = 0,
   @Transient
   var categoryName: String? = null,
   @SerializedName("sub_category_id")

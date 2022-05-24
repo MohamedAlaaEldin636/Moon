@@ -37,25 +37,25 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
-      if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
-        Log.d(TAG, "onCreate: FAVOURITE")
-        viewModel.adapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
-      }
-    }
+//    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+//      if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+//        Log.d(TAG, "onCreate: FAVOURITE")
+//        viewModel.adapter.updateFavourite(bundle.getInt(Constants.ID),bundle.getBoolean(Constants.FAVOURITE))
+//      }
+//    }
   }
 
 
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    arguments?.let {
-      viewModel.type = it.getInt("type")
-    }
+//    arguments?.let {
+//      viewModel.type = it.getInt("type")
+//    }
     if (arguments?.containsKey(Constants.CATEGORY_ID) == true && arguments?.getInt(Constants.CATEGORY_ID) != -1)
-      viewModel.categoryId = arguments?.getInt(Constants.CATEGORY_ID)
+      viewModel.filterRequest.categoryId = arguments?.getInt(Constants.CATEGORY_ID)
     if (arguments?.containsKey(Constants.SUB_CATEGORY_ID) == true && arguments?.getInt(Constants.SUB_CATEGORY_ID) != -1)
-      viewModel.subCategoryId = arguments?.getInt(Constants.SUB_CATEGORY_ID)
+      viewModel.filterRequest.sub_category_id = arguments?.getInt(Constants.SUB_CATEGORY_ID)
 
     val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
       requireContext(),
@@ -130,5 +130,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
       }
     })
+  }
+
+  override fun onResume() {
+    super.onResume()
+    viewModel.adapter.updateFavourite()
   }
 }

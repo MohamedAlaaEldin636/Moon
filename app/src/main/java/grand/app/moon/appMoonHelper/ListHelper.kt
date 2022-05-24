@@ -4,6 +4,7 @@ import grand.app.moon.domain.home.models.Advertisement
 
 object ListHelper {
   val adsList = mutableMapOf<Int,Boolean>()
+  val blockStores = mutableListOf<Int>()
 
   fun addAllAds(list : ArrayList<Advertisement>){
     list.forEach {

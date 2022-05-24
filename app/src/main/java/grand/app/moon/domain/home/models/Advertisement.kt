@@ -21,7 +21,7 @@ data class Advertisement(
   @SerializedName("description")
   val description: String = "",
   @SerializedName("favorite_count")
-  val favoriteCount: Int = 0,
+  var favoriteCount: Int = 0,
   @SerializedName("id")
   val id: Int = 0,
   @SerializedName("image")

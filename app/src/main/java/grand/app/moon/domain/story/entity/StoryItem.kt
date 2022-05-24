@@ -21,5 +21,5 @@ data class StoryItem(
     val isSeen: Boolean = false,
     @SerializedName("name")
     val name: String = "",
-    val isFirst: Boolean = false
+    var isFirst: Boolean = false
 ) : Serializable

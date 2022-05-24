@@ -42,10 +42,10 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
-      if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
-        Log.d(TAG, "onCreate: FAVOURITE")
-        viewModel.adsHomeAdapter.updateFavourite()
-      }
+//      if(bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+//        Log.d(TAG, "onCreate: FAVOURITE")
+//        viewModel.adsHomeAdapter.updateFavourite()
+//      }
       if(bundle.containsKey(Constants.STORES_ID) && (bundle.containsKey(Constants.STORES_FOLLOWED) || bundle.containsKey(Constants.STORES_BLOCKED) )) {
         Log.d(TAG, "onCreate: FAVOURITE")
         if(bundle.containsKey(Constants.STORES_FOLLOWED))
@@ -126,6 +126,11 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
       it.name = "${resources.getString(R.string.advertisements)} ${it.name}"
     }
     //hey I'm HERE
+  }
+
+  override fun onResume() {
+    super.onResume()
+    viewModel.adsHomeAdapter.updateFavourite()
   }
 
 }

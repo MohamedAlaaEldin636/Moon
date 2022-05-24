@@ -1,8 +1,10 @@
 package grand.app.moon.presentation.story.viewModels
 
+import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import com.bolaware.viewstimerstory.MomentzView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
@@ -22,9 +24,14 @@ import javax.inject.Inject
 class StoryDisplayViewModel @Inject constructor(
   val storeUseCase: StoreUseCase
 ) : BaseViewModel() {
+  var index: Int = 0
+  var pos: Int = 0
+  var stories: ArrayList<Store> = arrayListOf()
   var progress = ObservableField(true)
   var image = ObservableField<String>("")
   val store = ObservableField<Store> ()
+  val listStories = arrayListOf<MomentzView>()
+
   val storyRequest = StoryRequest()
   //1 View, 2 Like, 3 Share
   override fun onCleared() {
@@ -59,5 +66,26 @@ class StoryDisplayViewModel @Inject constructor(
       .onEach {
 
       }.launchIn(viewModelScope)
+  }
+
+  private val TAG = "StoryDisplayViewModel"
+  fun havePrevStory() : Boolean{
+    Log.d(TAG, "havePrevStory: $pos")
+    if(pos > 0){
+      pos--
+      store.set(stories[pos])
+      return true
+    }
+    return false
+  }
+
+  fun isFinish(): Boolean {
+    if(pos == stories.size - 1) return true
+    pos++
+    store.set(stories[pos])
+    listStories.clear()
+
+
+    return false
   }
 }

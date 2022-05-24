@@ -75,6 +75,7 @@ object Constants {
   const val SPLASH: String = "splash"
   const val TYPE: String = "type"
   const val PICKER_IMAGE: String = "PICKER_IMAGE"
+  const val STORY: String = "story"
   const val STORIES: String = "stories"
   const val MORE: String = "more"
   const val NEXT: String = "next"

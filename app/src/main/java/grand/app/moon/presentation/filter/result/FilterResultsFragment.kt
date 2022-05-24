@@ -33,23 +33,23 @@ class FilterResultsFragment : BaseFragment<FragmentFilterResultsBinding>() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
-      if (bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
-        Log.d(TAG, "onCreate: FAVOURITE")
-        viewModel.adapter.updateFavourite(
-          bundle.getInt(Constants.ID),
-          bundle.getBoolean(Constants.FAVOURITE)
-        )
-      }
-      if (bundle.containsKey(Constants.STORES_ID) && (bundle.containsKey(Constants.STORES_FOLLOWED) || bundle.containsKey(
-          Constants.STORES_BLOCKED
-        ))
-      ) {
-        Log.d(TAG, "onCreate: FAVOURITE")
-//        if(bundle.containsKey(Constants.STORES_FOLLOWED))
-//          viewModel.storeAdapter.setFollowing(bundle.getInt(Constants.STORES_ID),bundle.getBoolean(Constants.STORES_FOLLOWED))
-        if(bundle.containsKey(Constants.STORES_BLOCKED))
-          viewModel.adapter.setBlockStore(bundle.getInt(Constants.STORES_ID))
-      }
+//      if (bundle.containsKey(Constants.ID) && bundle.containsKey(Constants.FAVOURITE)) {
+//        Log.d(TAG, "onCreate: FAVOURITE")
+//        viewModel.adapter.updateFavourite(
+//          bundle.getInt(Constants.ID),
+//          bundle.getBoolean(Constants.FAVOURITE)
+//        )
+//      }
+//      if (bundle.containsKey(Constants.STORES_ID) && (bundle.containsKey(Constants.STORES_FOLLOWED) || bundle.containsKey(
+//          Constants.STORES_BLOCKED
+//        ))
+//      ) {
+//        Log.d(TAG, "onCreate: FAVOURITE")
+////        if(bundle.containsKey(Constants.STORES_FOLLOWED))
+////          viewModel.storeAdapter.setFollowing(bundle.getInt(Constants.STORES_ID),bundle.getBoolean(Constants.STORES_FOLLOWED))
+//        if(bundle.containsKey(Constants.STORES_BLOCKED))
+//          viewModel.adapter.setBlockStore(bundle.getInt(Constants.STORES_ID))
+//      }
     }
   }
 
@@ -108,5 +108,10 @@ class FilterResultsFragment : BaseFragment<FragmentFilterResultsBinding>() {
         }
       }
     })
+  }
+
+  override fun onResume() {
+    super.onResume()
+    viewModel.adapter.updateFavourite()
   }
 }

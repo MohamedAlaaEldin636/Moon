@@ -95,6 +95,7 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
   private  val TAG = "AdsDetailsFragment"
   override fun onResume() {
     super.onResume()
+    viewModel.adsAdapter.updateFavourite()
 //    Log.d(TAG, "token: ${viewModel.userLocalUseCase.getKey(Constants.TOKEN)}")
 //    if(!viewModel.isLoggin) {
 //      val isAuthorize = viewModel.userLocalUseCase.isLoggin()

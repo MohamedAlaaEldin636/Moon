@@ -171,6 +171,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
       val isAuthorize = viewModel.userLocalUseCase.isLoggin()
       viewModel.recallApi(isAuthorize)
     }
+    viewModel.adsAdapter.updateFavourite()
   }
 
 

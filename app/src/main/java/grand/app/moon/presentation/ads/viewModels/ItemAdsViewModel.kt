@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.ads.viewModels
 
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.viewModelScope
@@ -24,9 +25,11 @@ class ItemAdsViewModel(
   val showFavourite: Boolean = false,
   val type: Int
 ) : BaseViewModel() {
-  val adapter = AdsAdapter(adsRepository)
+//  val adapter = AdsAdapter(adsRepository)
 
+  private val TAG = "ItemAdsViewModel"
   fun details(v: View){
+    Log.d(TAG, "details: $type")
     v.findNavController().navigate(
       R.id.nav_ads, bundleOf(
         "id" to advertisement.id,

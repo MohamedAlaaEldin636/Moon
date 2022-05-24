@@ -13,6 +13,7 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
+import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
@@ -38,7 +39,7 @@ class SearchViewModel @Inject constructor(
   @Bindable
   var callingService = false
 
-  var type: Int = -1
+//  var type: Int = 5
 
   var isLast = false
 
@@ -47,6 +48,7 @@ class SearchViewModel @Inject constructor(
   var categoryId : Int? = null
   var subCategoryId : Int? = null
   var search = ""
+  val filterRequest = FilterResultRequest()
 
 
   var ADS_API = BuildConfig.API_BASE_URL + "v1/advertisements?"
@@ -88,7 +90,7 @@ class SearchViewModel @Inject constructor(
 
   fun callService() {
     isStart.set(false)
-    if (search.trim().isNotEmpty() == true && !localSearchArrayList.contains(search)) {
+    if (search.trim().isNotEmpty() && !localSearchArrayList.contains(search)) {
       if (localSearches.isEmpty() )
         accountRepository.saveKeyToLocal(Constants.SEARCH, search)
       else
@@ -102,6 +104,7 @@ class SearchViewModel @Inject constructor(
       callingService = true
       notifyPropertyChanged(BR.callingService)
       page++
+      filterRequest.page = page
       if (page > 1) {
         notifyPropertyChanged(BR.page)
       }
@@ -111,12 +114,15 @@ class SearchViewModel @Inject constructor(
 
 
   private fun getAdsList() {
-    if(ADS_LIST_URL.isNotEmpty()){
-      if(ADS_LIST_URL.substring(ADS_LIST_URL.length - 1) == "&"){
-        ADS_LIST_URL = ADS_LIST_URL.substring(0,ADS_LIST_URL.length - 1)
-      }
-    }
-    job = useCase.getAdsList(4,categoryId,subCategoryId,null,null,search,page)
+//    if(ADS_LIST_URL.isNotEmpty()){
+//      if(ADS_LIST_URL.substring(ADS_LIST_URL.length - 1) == "&"){
+//        ADS_LIST_URL = ADS_LIST_URL.substring(0,ADS_LIST_URL.length - 1)
+//      }
+//    }
+//    filterRequest.categoryId = categoryId
+//    filterRequest.sub_category_id = subCategoryId
+    filterRequest.search = search
+    job = useCase.filterResults(filterRequest)
       .onEach {
         response.value = it
       }
