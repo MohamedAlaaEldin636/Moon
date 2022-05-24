@@ -184,10 +184,7 @@ dependencies {
   annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
 
 //  //stories
-  implementation("com.github.bolaware:momentz:v2.0")
-
-  //
-  implementation ("com.github.shts:StoriesProgressView:3.0.0")
+  implementation ("com.github.TOrnelas:SegmentedProgressBar:0.0.3")
 
 
   //social-login

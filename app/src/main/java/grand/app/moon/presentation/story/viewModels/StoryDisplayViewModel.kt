@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.bolaware.viewstimerstory.MomentzView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
@@ -24,13 +23,15 @@ import javax.inject.Inject
 class StoryDisplayViewModel @Inject constructor(
   val storeUseCase: StoreUseCase
 ) : BaseViewModel() {
-  var index: Int = 0
-  var pos: Int = 0
+  var dataList: ArrayList<Store>? = null
+  var positionStoryAdapter: Int = 0
+  var pos: Int = -1
   var stories: ArrayList<Store> = arrayListOf()
   var progress = ObservableField(true)
   var image = ObservableField<String>("")
+  var isLoaded = false
   val store = ObservableField<Store> ()
-  val listStories = arrayListOf<MomentzView>()
+//  val listStories = arrayListOf()
 
   val storyRequest = StoryRequest()
   //1 View, 2 Like, 3 Share
@@ -83,7 +84,7 @@ class StoryDisplayViewModel @Inject constructor(
     if(pos == stories.size - 1) return true
     pos++
     store.set(stories[pos])
-    listStories.clear()
+//    listStories.clear()
 
 
     return false

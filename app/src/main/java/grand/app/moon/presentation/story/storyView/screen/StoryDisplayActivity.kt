@@ -9,9 +9,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatImageView
-import com.bolaware.viewstimerstory.Momentz
-import com.bolaware.viewstimerstory.MomentzCallback
-import com.bolaware.viewstimerstory.MomentzView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -61,49 +58,16 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(){
     })
   }
 
-  private  val TAG = "StoryDisplayActivity"
-  fun loadImage(view: AppCompatImageView?, momentz: Momentz?,index: Int) {
-    if (index >= 0 && index < viewModel.store.get()!!.stories.size) {
-      momentz?.pause(false)
-      viewModel.startLoading()
-      viewModel.image.set(viewModel.store.get()!!.stories[index].file)
-      view?.let {
-        Glide.with(applicationContext)
-          .load(viewModel.store.get()!!.stories[index].file)
-          .listener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(
-              e: GlideException?,
-              model: Any?,
-              target: Target<Drawable>?,
-              isFirstResource: Boolean
-            ): Boolean {
-              momentz?.resume()
-              viewModel.stopLoading()
-              return false
-            }
-
-            override fun onResourceReady(
-              resource: Drawable?,
-              model: Any?,
-              target: Target<Drawable>?,
-              dataSource: com.bumptech.glide.load.DataSource?,
-              isFirstResource: Boolean
-            ): Boolean {
-              viewModel.stopLoading()
-              momentz?.resume()
-              return false
-            }
-
-          })
-          .into(it)
-      }
-
-    } else finish()
-  }
-
   override fun onDestroy() {
     // Very important !
     super.onDestroy()
+  }
+
+  fun nextStory() {
+    if(binding.pager.currentItem < viewModel.stories.size - 1)
+      binding.pager.currentItem = binding.pager.currentItem + 1
+    else
+      finish()
   }
 
 //  override fun done() {
