@@ -31,6 +31,7 @@ import java.io.IOException
 import java.lang.Exception
 import java.net.URLEncoder
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.os.bundleOf
 import grand.app.moon.domain.home.models.Store
 
 
@@ -244,6 +245,43 @@ open class BaseViewModel : ViewModel(), Observable {
 
   }
 
+
   private val TAG = "BaseViewModel"
+
+  fun checkDeepLink(intent: Intent,v: View) {
+    Log.d(TAG, "checkDeepLink: ")
+    val action = intent.action
+    val data = intent.data
+    try {
+      if (action != null && data != null) {
+        Log.d(TAG, "checkDeepLink: ACTIOM")
+        val link = data.toString()
+        val parameters = link.split("/").toTypedArray()
+        Log.d(TAG, "initDynamicLinkSetDefaultCountry: ${parameters[4]}")
+        val id = parameters[5]
+        when(parameters[4]){
+          "advertisement" -> {
+            Log.d(TAG, "initDynamicLinkSetDefaultCountry: done")
+            v.findNavController().navigate(
+              R.id.nav_ads, bundleOf(
+                "id" to id.toInt(),
+                "type" to 2
+              )
+            )
+          }
+          "shop" -> {
+            v.findNavController().navigate(
+              R.id.nav_store,
+              bundleOf(
+                "id" to id.toInt(),
+                "type" to 3
+              ),Constants.NAVIGATION_OPTIONS)
+          }
+        }
+      }
+    } catch (exception: Exception) {
+      exception.printStackTrace()
+    }
+  }
 
 }

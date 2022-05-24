@@ -186,6 +186,10 @@ dependencies {
 //  //stories
   implementation("com.github.bolaware:momentz:v2.0")
 
+  //
+  implementation ("com.github.shts:StoriesProgressView:3.0.0")
+
+
   //social-login
   /* Google sign in */
   implementation("com.google.android.gms:play-services-auth:20.1.0")

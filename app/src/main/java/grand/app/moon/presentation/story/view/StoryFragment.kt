@@ -58,7 +58,7 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
     viewModel.store.set(dataList[viewModel.pos])
     prepareStories()
 //    }
-    startStory()
+//    startStory()
   }
 
 
@@ -71,7 +71,10 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   }
 
   fun startStory() {
-    if (this::momentz.isInitialized) momentz.removeAllViews()
+    if (this::momentz.isInitialized) {
+      momentz.removeAllViews()
+      binding.container.removeAllViews()
+    }
     momentz = Momentz(requireContext(), viewModel.listStories, binding.container, this)
     momentz.start()
   }
@@ -96,7 +99,11 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
               target: Target<Drawable>?,
               isFirstResource: Boolean
             ): Boolean {
-              momentz?.resume()
+              try {
+                momentz?.resume()
+              }catch (e: Exception){
+                e.printStackTrace()
+              }
               viewModel.stopLoading()
               return false
             }
@@ -109,7 +116,11 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
               isFirstResource: Boolean
             ): Boolean {
               viewModel.stopLoading()
-              momentz?.resume()
+              try {
+                momentz?.resume()
+              }catch (e: Exception){
+                e.printStackTrace()
+              }
               return false
             }
 
@@ -166,6 +177,10 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 
   override fun onPause() {
     super.onPause()
-    Log.d(TAG, "onPause: ${viewModel.pos}")
+  }
+
+  override fun onResume() {
+    super.onResume()
+    startStory()
   }
 }

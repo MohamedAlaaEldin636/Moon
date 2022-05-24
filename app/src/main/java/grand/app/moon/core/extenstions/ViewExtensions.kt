@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.media.AudioRecord.MetricsConstants.SOURCE
 import android.media.MediaPlayer
 import android.media.browse.MediaBrowser
 
@@ -47,6 +48,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.util.LruCache
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
@@ -450,7 +452,6 @@ fun AppCompatTextView.move(dimentions: Float) {
 //  }
 
 }
-
 @BindingAdapter(
   value = ["app:loadImageExplore", "app:progressBar", "app:defaultImage", "app:exploreHeight"],
   requireAll = false

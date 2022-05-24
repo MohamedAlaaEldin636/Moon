@@ -167,7 +167,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       }
     }
     binding.imgHomeBottomBar.setOnClickListener {
-      nav.navigate(NavHomeDirections.moveToHome())
+//      nav.navigate(NavHomeDirections.moveToHome())
+      binding.bottomNavigationView.selectedItemId = R.id.home_fragment;
+
     }
 
     binding.bottomNavigationView.setupWithNavController(nav)
