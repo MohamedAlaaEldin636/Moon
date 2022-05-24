@@ -49,4 +49,8 @@ class TutorialViewModel @Inject constructor(
   fun skip(){
     submitEvent.value = Constants.SKIP
   }
+
+  fun setData(data: List<AppTutorial>) {
+
+  }
 }

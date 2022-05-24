@@ -2,6 +2,7 @@ package grand.app.moon.presentation.story.view
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
@@ -37,38 +38,40 @@ import grand.app.moon.presentation.story.viewModels.StoryDisplayViewModel
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class StoryFragment : BaseFragment<FragmentStoryBinding>() ,
+class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   MomentzCallback {
-  lateinit var momentz:Momentz
+  lateinit var momentz: Momentz
   private val viewModel: StoryDisplayViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_story
 
+  private  val TAG = "StoryFragment"
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
 
 //    if(viewModel.stories.isNotEmpty()) {
-      viewModel.pos = arguments?.getInt(Constants.POSITION)!!
-      viewModel.store.set(arguments?.getSerializable(Constants.STORY) as Store)
-      prepareStories()
+    var dataList = ArrayList<Store>(arguments?.get(Constants.STORIES) as ArrayList<Store>)
+
+    viewModel.pos = arguments?.getInt(Constants.POSITION)!!
+    viewModel.store.set(dataList[viewModel.pos])
+    prepareStories()
 //    }
     startStory()
   }
-
 
 
   private fun prepareStories() {
     viewModel.store.get()!!.stories.forEach { story ->
       val locallyLoadedImageView = AppCompatImageView(requireContext())
       locallyLoadedImageView.scaleType = ImageView.ScaleType.FIT_CENTER
-      viewModel.listStories.add(MomentzView(locallyLoadedImageView,5))
+      viewModel.listStories.add(MomentzView(locallyLoadedImageView, 5))
     }
   }
 
-  fun startStory(){
-    if(this::momentz.isInitialized) momentz.removeAllViews()
+  fun startStory() {
+    if (this::momentz.isInitialized) momentz.removeAllViews()
     momentz = Momentz(requireContext(), viewModel.listStories, binding.container, this)
     momentz.start()
   }
@@ -78,7 +81,7 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>() ,
     super.onViewCreated(view, savedInstanceState)
   }
 
-  fun loadImage(view: AppCompatImageView?, momentz: Momentz?,index: Int) {
+  fun loadImage(view: AppCompatImageView?, momentz: Momentz?, index: Int) {
     if (index >= 0 && index < viewModel.store.get()!!.stories.size) {
       momentz?.pause(false)
       viewModel.startLoading()
@@ -120,19 +123,18 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>() ,
   }
 
 
-
   override
   fun setUpViews() {
   }
 
 
   override fun setupObservers() {
-    viewModel.clickEvent.observe(this,{
-      when(it){
+    viewModel.clickEvent.observe(this, {
+      when (it) {
         Constants.SHARE_IMAGE -> {
           viewModel.storyRequest.type = 3
           viewModel.callService()
-          viewModel.share(requireContext(),viewModel.store.get()!!.name,"", binding.imgShare)
+          viewModel.share(requireContext(), viewModel.store.get()!!.name, "", binding.imgShare)
         }
 //        Constants.EXIT -> finish()
         Constants.STORE_DETAILS -> {
@@ -159,6 +161,11 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>() ,
     viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[index].id
     viewModel.storyRequest.type = 1
     viewModel.callService()
-    loadImage(view as AppCompatImageView,momentz,index)
+    loadImage(view as AppCompatImageView, momentz, index)
+  }
+
+  override fun onPause() {
+    super.onPause()
+    Log.d(TAG, "onPause: ${viewModel.pos}")
   }
 }

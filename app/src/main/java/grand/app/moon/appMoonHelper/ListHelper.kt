@@ -25,4 +25,14 @@ object ListHelper {
       return adsList[adsId]!!
     return false
   }
+
+  fun addToBlock(storeId: Int){
+    blockStores.add(storeId)
+  }
+
+  fun removeFromBlock(storeId: Int){
+    blockStores.forEachIndexed { index , store ->
+      blockStores.add(storeId)
+    }
+  }
 }

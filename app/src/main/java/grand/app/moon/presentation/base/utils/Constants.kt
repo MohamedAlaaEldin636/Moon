@@ -66,6 +66,7 @@ object Constants {
   const val INTRO: String = "INTRO"
   const val TOTAL: String = "TOTAL"
   const val POSITION: String = "POSITION"
+  const val POSITION_SELECT: String = "POSITION_SELECT"
   const val IS_PROFILE: String = "is_profile"
   const val GOOGLE_PLAY: String = "google_play"
   const val SOCIAL_TYPE: String = "social_type"

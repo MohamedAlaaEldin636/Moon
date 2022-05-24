@@ -62,6 +62,7 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
           is Resource.Success -> {
             hideLoading()
             setUpAppTutorial(it.value.data)
+//            viewModel.setData(it.value.data)
           }
           is Resource.Failure -> {
             hideLoading()

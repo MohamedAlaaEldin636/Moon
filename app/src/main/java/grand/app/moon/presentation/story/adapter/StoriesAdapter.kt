@@ -73,7 +73,7 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
             Intent(holder.itemLayoutBinding.root.context, StoryDisplayActivity::class.java)
           val bundle = Bundle()
           bundle.putSerializable(Constants.STORIES, differ.currentList as Serializable)
-          bundle.putInt(Constants.POSITION,position)
+          bundle.putInt(Constants.POSITION_SELECT,position)
           intent.putExtra(Constants.BUNDLE,bundle)
           holder.itemLayoutBinding.root.context.startActivity(intent)
         }

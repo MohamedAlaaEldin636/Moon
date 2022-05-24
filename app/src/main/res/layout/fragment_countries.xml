@@ -31,6 +31,18 @@
       android:src="@drawable/logo_header"
       android:layout_height="wrap_content"/>
 
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/ic_back"
+      android:layout_width="@dimen/dimen36"
+      android:layout_height="@dimen/dimen36"
+      android:layout_marginStart="@dimen/dimen60"
+      android:layout_marginTop="@dimen/dimen30"
+      android:rotation="180"
+      android:onClick="@{ (v) -> viewModel.back(v)}"
+      android:src="@drawable/ic_back_primary_square"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.card.MaterialCardView
       android:id="@+id/card_country"
       android:layout_width="match_parent"

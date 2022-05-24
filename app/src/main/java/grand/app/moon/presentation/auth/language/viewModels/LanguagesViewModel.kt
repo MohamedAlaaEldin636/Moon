@@ -65,4 +65,7 @@ class LanguagesViewModel @Inject constructor(
         clickEvent.value = Constants.BACK
     }
   }
+  fun back(v: View){
+    v.findNavController().popBackStack()
+  }
 }

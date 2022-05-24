@@ -14,6 +14,7 @@ class ViewPagerAdapter(fragment: FragmentActivity, val size : Int, val bundle: B
   override fun createFragment(position: Int): Fragment {
     // Return a NEW fragment instance in createFragment(int)
     val fragment = StoryFragment()
+    bundle.putInt(Constants.POSITION,position)
     fragment.arguments = bundle
     return fragment
   }
