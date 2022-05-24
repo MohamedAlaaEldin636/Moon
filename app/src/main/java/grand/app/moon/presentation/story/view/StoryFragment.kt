@@ -49,11 +49,11 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>() ,
   fun setBindingVariables() {
     binding.viewModel = viewModel
 
-    if(viewModel.stories.isNotEmpty()) {
+//    if(viewModel.stories.isNotEmpty()) {
       viewModel.pos = arguments?.getInt(Constants.POSITION)!!
-      viewModel.store.set(viewModel.stories[viewModel.pos])
+      viewModel.store.set(arguments?.getSerializable(Constants.STORY) as Store)
       prepareStories()
-    }
+//    }
     startStory()
   }
 

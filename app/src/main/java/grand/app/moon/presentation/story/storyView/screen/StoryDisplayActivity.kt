@@ -25,55 +25,38 @@ import grand.app.moon.databinding.ActivityStoryDisplayBinding
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.generated.callback.OnClickListener
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.story.view.ViewPagerAdapter
 import grand.app.moon.presentation.story.viewModels.StoryDisplayViewModel
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 @AndroidEntryPoint
-class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(),
-  MomentzCallback{
+class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(){
   override
   fun getLayoutId() = R.layout.activity_story_display
   private val viewModel: StoryDisplayViewModel by viewModels()
-  lateinit var momentz:Momentz
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding.viewModel = viewModel
     observe()
-    viewModel.stories.addAll(intent.getBundleExtra(Constants.BUNDLE)?.get(Constants.STORIES) as ArrayList<Store>)
-    if(viewModel.stories.isNotEmpty()) {
-      viewModel.pos = intent.getBundleExtra(Constants.BUNDLE)?.getInt(Constants.POSITION)!!
-      viewModel.store.set(viewModel.stories[viewModel.pos])
-      prepareStories()
-    }
-    startStory()
+    val bundle = intent.getBundleExtra(Constants.BUNDLE)
+    viewModel.stories.addAll(bundle?.get(Constants.STORIES) as ArrayList<Store>)
+    val position = bundle.getInt(Constants.POSITION)
+    if(position < viewModel.stories.size)
+    bundle.putSerializable(Constants.STORY,viewModel.stories[position])
+//    if(viewModel.stories.isNotEmpty()) {
+//      viewModel.pos = intent.getBundleExtra(Constants.BUNDLE)?.getInt(Constants.POSITION)!!
+//      viewModel.store.set(viewModel.stories[viewModel.pos])
+//    }
+
+    binding.pager.adapter  = ViewPagerAdapter(this,viewModel.stories.size,bundle)
+
   }
 
-  private fun prepareStories() {
-    viewModel.store.get()!!.stories.forEach { story ->
-      val locallyLoadedImageView = AppCompatImageView(this)
-      locallyLoadedImageView.scaleType = ImageView.ScaleType.FIT_CENTER
-      viewModel.listStories.add(MomentzView(locallyLoadedImageView,5))
-    }
-  }
-
-  fun startStory(){
-    if(this::momentz.isInitialized) momentz.removeAllViews()
-    momentz = Momentz(this, viewModel.listStories, binding.container, this)
-    momentz.start()
-  }
 
   private fun observe() {
     viewModel.clickEvent.observe(this,{
       when(it){
-        Constants.SHARE_IMAGE -> {
-          viewModel.storyRequest.type = 3
-          viewModel.callService()
-          viewModel.share(this,viewModel.store.get()!!.name,"", binding.imgShare)
-        }
         Constants.EXIT -> finish()
-        Constants.STORE_DETAILS -> {
-
-        }
       }
     })
   }
@@ -123,23 +106,23 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(),
     super.onDestroy()
   }
 
-  override fun done() {
-    when(viewModel.isFinish()){
-      true -> finish()
-      else -> {
-        prepareStories()
-        startStory()
-      }
-    }
-  }
-
-
-  override fun onNextCalled(view: View, momentz: Momentz, index: Int) {
-    viewModel.index = index
-    viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[index].id
-    viewModel.storyRequest.type = 1
-    viewModel.callService()
-    loadImage(view as AppCompatImageView,momentz,index)
-  }
+//  override fun done() {
+//    when(viewModel.isFinish()){
+//      true -> finish()
+//      else -> {
+//        prepareStories()
+//        startStory()
+//      }
+//    }
+//  }
+//
+//
+//  override fun onNextCalled(view: View, momentz: Momentz, index: Int) {
+//    viewModel.index = index
+//    viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[index].id
+//    viewModel.storyRequest.type = 1
+//    viewModel.callService()
+//    loadImage(view as AppCompatImageView,momentz,index)
+//  }
 
 }
