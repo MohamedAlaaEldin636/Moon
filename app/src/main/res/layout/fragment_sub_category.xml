@@ -85,7 +85,7 @@
               android:layout_marginStart="@dimen/dimen20"
               android:layout_marginTop="@dimen/dimen10"
               android:layout_marginEnd="@dimen/dimen20"
-              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 &amp;&amp; viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
+              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 || viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
               app:layout_constraintBottom_toBottomOf="@+id/grid"
               app:layout_constraintEnd_toStartOf="@+id/grid"
               app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +116,7 @@
               android:layout_margin="@dimen/dimen10"
               android:background="@drawable/corner_white_10"
               android:onClick="@{ () -> viewModel.changeGrid()}"
-              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 &amp;&amp; viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
+              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 || viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintTop_toBottomOf="@+id/image_slider">
 
@@ -152,7 +152,7 @@
           android:layout_marginTop="@dimen/dimen6"
           android:background="@color/silver"
           android:orientation="horizontal"
-          android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 &amp;&amp; viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
+          android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 || viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
           android:weightSum="3"
           app:layout_behavior="@string/appbar_scrolling_view_behavior"
           app:layout_constraintEnd_toEndOf="parent"
@@ -234,7 +234,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen12"
-          android:text="@{@string/total_ads_count(viewModel.totalAds)}"
+          android:text="@{@string/total_ads_count(viewModel.subCategoryResponse.advertisements.meta.total)}"
           android:textColor="@color/colorPrimary"
           android:textSize="@dimen/text_size14"
           android:textStyle="bold" />
