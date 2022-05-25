@@ -45,6 +45,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
   }
 
 
+
   private fun decideNavigationLogic() {
     viewModel.clickEvent.observe(this, {
       Log.d(TAG, "decideNavigationLogic: ")

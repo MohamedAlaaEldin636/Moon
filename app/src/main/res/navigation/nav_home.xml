@@ -358,7 +358,7 @@
   <fragment
     android:id="@+id/storiesListFragment"
     android:name="grand.app.moon.presentation.story.view.StoriesListFragment"
-    android:label="" >
+    android:label="@string/show_more" >
     <argument
       android:name="stories"
       app:argType="grand.app.moon.domain.store.entity.StoreListPaginateData" />

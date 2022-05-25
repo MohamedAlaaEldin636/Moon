@@ -326,7 +326,7 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
 
     FeatureRestriction.isVoiceNotesEnabled(object : FeatureRestriction.OnSuccessListener {
       override fun onSuccess(p0: Boolean) {
-        if (p0 && type == null) ivMic!!.visibility = VISIBLE else ivMic!!.visibility = GONE
+//        if (p0 && type == null) ivMic!!.visibility = VISIBLE else ivMic!!.visibility = GONE
       }
 
     })
@@ -392,7 +392,7 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
       voiceMessageLayout?.visibility = View.GONE
       etComposeBox?.visibility = View.VISIBLE
       ivArrow?.visibility = View.VISIBLE
-      ivMic?.visibility = View.VISIBLE
+//      ivMic?.visibility = View.VISIBLE
       ivMic?.setImageDrawable(resources.getDrawable(R.drawable.ic_microphone_circle))
       isPlaying = false
       isRecording = false
@@ -417,7 +417,7 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
         ivDelete!!.visibility = GONE
         ivSend!!.visibility = View.GONE
         ivArrow!!.visibility = View.VISIBLE
-        ivMic!!.visibility = View.VISIBLE
+//        ivMic!!.visibility = View.VISIBLE
         isRecording = false
         isPlaying = false
         voiceMessage = false

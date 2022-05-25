@@ -178,5 +178,6 @@
     <string name="additional_features">Additional Features</string>
   <string name="user">User</string>
   <string name="member_of">Member of</string>
+  <string name="new_notification">New notice from Moon</string>
 
 </resources>

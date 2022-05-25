@@ -110,6 +110,8 @@ import kotlin.math.min
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
 
+      private  val TAG = "MediaUtils"
+
         fun openCamera(context: Context): Intent? {
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
             val imageFileName = "$timeStamp.jpg"
@@ -120,12 +122,14 @@ import kotlin.math.min
             var outputFileUri: Uri?
             var app: ApplicationInfo? = null
             var provider: String? = null
+          //app.grand.moon -> context.packageName
             try {
                 app = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
                 val bundle = app.metaData
                 provider = bundle.getString(BuildConfig.LIBRARY_PACKAGE_NAME)
                 Log.d("openCamera", "openCamera:  $provider")
             } catch (e: PackageManager.NameNotFoundException) {
+              Log.d(TAG, "openCamera: ${e.message}")
                 e.printStackTrace()
             }
             outputFileUri = FileProvider.getUriForFile(context, "$provider.provider", file)

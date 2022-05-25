@@ -81,7 +81,7 @@ class CometChatComposeBoxActions : BottomSheetDialogFragment() {
 
 
         if (isGalleryVisible) galleryMessage.visibility = View.VISIBLE else galleryMessage.visibility = View.GONE
-        if (isCameraVisible) cameraMessage.visibility = View.VISIBLE else cameraMessage.visibility = View.GONE
+//        if (isCameraVisible) cameraMessage.visibility = View.VISIBLE else cameraMessage.visibility = View.GONE
         if (isFileVisible) fileMessage.visibility = View.VISIBLE else fileMessage.visibility = View.GONE
         if (isAudioVisible) audioMessage.visibility = View.VISIBLE else audioMessage.visibility = View.GONE
         if (isLocationVisible) locationMessage.visibility = View.VISIBLE else locationMessage.visibility = View.GONE

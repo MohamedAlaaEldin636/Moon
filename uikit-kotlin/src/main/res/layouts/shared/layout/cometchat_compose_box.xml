@@ -144,6 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+          android:visibility="gone"
             android:foreground="?selectableItemBackground"
             android:padding="8dp"
             android:src="@drawable/ic_microphone_circle"

@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@{viewModel.titleToolbar}"
+        android:text="welcome"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/text_size16"
         app:layout_constraintBottom_toBottomOf="parent"
