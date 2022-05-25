@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.findFragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -17,11 +18,17 @@ import grand.app.moon.R
 import grand.app.moon.databinding.ItemStoryAllBinding
 import grand.app.moon.databinding.ItemStoryBinding
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.domain.home.models.StoreModel
 import grand.app.moon.domain.store.entity.StoreListPaginateData
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
+import grand.app.moon.presentation.home.HomeFragment
+import grand.app.moon.presentation.home.HomeFragmentDirections
 import grand.app.moon.presentation.story.storyView.screen.StoryDisplayActivity
+import grand.app.moon.presentation.story.view.StoriesListFragment
+import grand.app.moon.presentation.story.view.StoriesListFragmentDirections
 import grand.app.moon.presentation.story.viewModels.ItemStoryViewModel
 import java.io.Serializable
 
@@ -61,13 +68,19 @@ class StoriesAllAdapter : RecyclerView.Adapter<StoriesAllAdapter.ViewHolder>() {
 //      Log.d(TAG, "onBindViewHolder: ")
 //      clickEvent.value = data
 
-      val intent =
-        Intent(holder.itemLayoutBinding.root.context, StoryDisplayActivity::class.java)
-      val bundle = Bundle()
-      bundle.putSerializable(Constants.STORIES, differ.currentList as Serializable)
-      bundle.putInt(Constants.POSITION_SELECT,position)
-      intent.putExtra(Constants.BUNDLE,bundle)
-      holder.itemLayoutBinding.root.context.startActivity(intent)
+//      val intent =
+//        Intent(holder.itemLayoutBinding.root.context, StoryDisplayActivity::class.java)
+//      val bundle = Bundle()
+//      bundle.putSerializable(Constants.STORIES, differ.currentList as Serializable)
+//      bundle.putInt(Constants.POSITION_SELECT,position)
+//      intent.putExtra(Constants.BUNDLE,bundle)
+//      holder.itemLayoutBinding.root.context.startActivity(intent)
+      val storyModel = StoreModel()
+      storyModel.list.addAll(differ.currentList)
+      storyModel.position = position
+      holder.itemLayoutBinding.itemMore.findFragment<StoriesListFragment>()
+        .navigateSafe(StoriesListFragmentDirections.actionStoriesListFragmentToStoryFragment(storyModel))
+
 
     }
     holder.setViewModel(itemViewModel)

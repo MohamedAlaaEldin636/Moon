@@ -100,7 +100,7 @@
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:progressTint="@color/colorAccent"
+            android:progressTint="@color/colorF7AB00"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toEndOf="@+id/img_store"
             app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname"

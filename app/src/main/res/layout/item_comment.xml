@@ -7,23 +7,25 @@
   <data>
 
     <import type="android.view.View" />
+
     <variable
       name="viewModel"
       type="grand.app.moon.presentation.comment.viewmodel.ItemCommentViewModel" />
   </data>
 
-<!--  <com.google.android.material.card.MaterialCardView-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:layout_margin="@dimen/dimen2"-->
-<!--    app:cardCornerRadius="@dimen/dimen6"-->
-<!--    app:cardElevation="2dp"-->
-<!--    card_view:cardUseCompatPadding="true"-->
-<!--    >-->
+  <!--  <com.google.android.material.card.MaterialCardView-->
+  <!--    android:layout_width="match_parent"-->
+  <!--    android:layout_height="wrap_content"-->
+  <!--    android:layout_margin="@dimen/dimen2"-->
+  <!--    app:cardCornerRadius="@dimen/dimen6"-->
+  <!--    app:cardElevation="2dp"-->
+  <!--    card_view:cardUseCompatPadding="true"-->
+  <!--    >-->
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -80,7 +82,7 @@
           android:layout_marginTop="@dimen/dimen2"
           android:ellipsize="end"
           android:maxLines="1"
-          android:text="@{viewModel.model.user.name}"
+          android:text="@{viewModel.model.createdAt}"
 
           android:textAlignment="viewStart"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -126,21 +128,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
-      app:layout_constraintTop_toBottomOf="@+id/barrier10"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dimen1"
       android:layout_marginTop="@dimen/dimen8"
       android:layout_marginBottom="@dimen/dimen8"
-      android:background="@color/color707070" />
+      android:background="@color/color707070"
+      app:layout_constraintTop_toBottomOf="@+id/barrier10" />
   </LinearLayout>
 
 
-<!--  </com.google.android.material.card.MaterialCardView>-->
+  <!--  </com.google.android.material.card.MaterialCardView>-->
 </layout>

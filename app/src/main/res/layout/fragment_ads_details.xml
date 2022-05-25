@@ -450,7 +450,7 @@
                 android:id="@+id/appCompatButtonNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen12"
+                android:layout_marginStart="@dimen/dimen8"
                 android:layout_marginEnd="@dimen/dimen12"
                 android:background="@drawable/corner_primary"
                 android:drawableStart="@{viewModel.advertisement.store.following ? @drawable/ic_close_single : @drawable/ic_plus }"
@@ -545,8 +545,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dimen10">
+              android:layout_height="wrap_content">
 
               <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_top_stores"
@@ -630,6 +629,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen10"
+            android:layout_marginStart="@dimen/dimen10"
             android:text="@string/similar_ads"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorBlack"

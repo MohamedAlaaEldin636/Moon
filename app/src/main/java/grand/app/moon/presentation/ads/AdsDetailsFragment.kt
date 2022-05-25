@@ -8,6 +8,8 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -51,7 +53,6 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
 //      }
     }
   }
-
 
   override
   fun getLayoutId() = R.layout.fragment_ads_details

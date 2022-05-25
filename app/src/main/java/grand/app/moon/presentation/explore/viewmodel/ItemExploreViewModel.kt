@@ -73,13 +73,13 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
   }
 
   fun allComments(v: View) {
-    if (user.id == 0) v.context.startActivity(Intent(v.context, AuthActivity::class.java))
+//    if (user.id == 0) v.context.startActivity(Intent(v.context, AuthActivity::class.java))
 //    else if (user.image.isEmpty() || user.name.isEmpty()) {
 //      showInfo(v.context, v.context.resources.getString(R.string.please_complete_your_profile))
 //      v.findNavController()
 //        .navigate(ExploreListFragmentDirections.actionExploreListFragmentToProfileFragment2())
-    else {
-      submitEventEvent.value = Constants.COMMENTS
+//    else {
+//      submitEventEvent.value = Constants.COMMENTS
       v.findNavController().navigate(
         ExploreListFragmentDirections.actionExploreListFragmentToCommentsListFragment(
           model.id,
@@ -87,7 +87,7 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
           position
         )
       )
-    }
+//    }
   }
 
   fun click(v: View) {

@@ -93,7 +93,8 @@ class StoreDetailsViewModel @Inject constructor(
 
   init {
     adsAdapter.fromStore = true
-
+    adsAdapter.percentageAds = 100
+    adsAdapter.showFavourite = true
   }
 
   fun getDetails(id: Int, type: Int) {

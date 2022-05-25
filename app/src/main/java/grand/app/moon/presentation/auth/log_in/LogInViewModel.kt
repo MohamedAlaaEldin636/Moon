@@ -27,6 +27,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.showError
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import grand.app.moon.helpers.login.SocialRequest
@@ -68,6 +69,12 @@ class LogInViewModel @Inject constructor(
       showError(v.context, v.context.getString(R.string.please_enter_your_phone));
       return
     }
+    Log.d(TAG, "onLogInClicked: ${request.country_code}")
+    Log.d(TAG, "onLogInClicked: ${request.phone}")
+    if(request.country_code == "+20" && request.phone.startsWith("0") ){
+      request.phone = request.phone.substring(1)
+    }
+    Log.d(TAG, "onLogInClicked after: ${request.phone}")
     typeRequest = Constants.LOGIN
     logInUseCase(request)
       .onEach { result ->
@@ -78,43 +85,43 @@ class LogInViewModel @Inject constructor(
   }
 
   fun facebook(view: View){
-//    LoginManager.getInstance().logOut()
-///*val accessToken = AccessToken.getCurrentAccessToken()
-//		val isLoggedIn = accessToken != null && !accessToken.isExpired
-//		Timber.e("dewjodj isLoggedIn $isLoggedIn")
-//
-//		if (isLoggedIn) {
-//			// so actual log in -> LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-//			return
-//		}
-//		*/
-//    // todo keeps getting error of not being published to live on facebook console which requires app review,
-//    //  and if need in debug mode u need to add a tester in Roles in console dunno why isa ?!
-//    val callbackManager = CallbackManager.Factory.create()
-//
-//    val loginManager = LoginManager.getInstance()
-//
-//    loginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK)
-//    loginManager.logIn(
-//      view.findFragment<LoginFragment>().requireActivity(),
-//      callbackManager,
-//      listOf("email", "public_profile"/*, "user_friends"*/),
-//    )
-//
-//    loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-//      override fun onSuccess(result: LoginResult) {
-//        Toast.makeText(view.context, "HERE", Toast.LENGTH_SHORT).show()
-//      }
-//
-//      override fun onError(error: FacebookException) {
-//        Log.d(TAG, "onError: ${error.message}")
-//        view.context.showErrorToast(view.context.getString(R.string.something_went_wrong_please_try_again))
-//      }
-//
-//      override fun onCancel() {
-//        view.context.showErrorToast(view.context.getString(R.string.something_went_wrong_please_try_again))
-//      }
-//    })
+    LoginManager.getInstance().logOut()
+/*val accessToken = AccessToken.getCurrentAccessToken()
+		val isLoggedIn = accessToken != null && !accessToken.isExpired
+		Timber.e("dewjodj isLoggedIn $isLoggedIn")
+
+		if (isLoggedIn) {
+			// so actual log in -> LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+			return
+		}
+		*/
+    // todo keeps getting error of not being published to live on facebook console which requires app review,
+    //  and if need in debug mode u need to add a tester in Roles in console dunno why isa ?!
+    val callbackManager = CallbackManager.Factory.create()
+
+    val loginManager = LoginManager.getInstance()
+
+    loginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK)
+    loginManager.logIn(
+      view.findFragment<LogInFragment>().requireActivity(),
+      callbackManager,
+      listOf("email", "public_profile"/*, "user_friends"*/),
+    )
+
+    loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+      override fun onSuccess(result: LoginResult) {
+        Toast.makeText(view.context, "HERE", Toast.LENGTH_SHORT).show()
+      }
+
+      override fun onError(error: FacebookException) {
+        Log.d(TAG, "onError: ${error.message}")
+        view.context.showError(view.context.getString(R.string.something_went_wrong_please_try_again))
+      }
+
+      override fun onCancel() {
+        view.context.showError(view.context.getString(R.string.something_went_wrong_please_try_again))
+      }
+    })
   }
 
   fun twitter(v: View) {

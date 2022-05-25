@@ -2,6 +2,7 @@ package grand.app.moon.presentation.ads.viewModels
 
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.databinding.Bindable
 import androidx.navigation.findNavController
 import grand.app.moon.NavCategoryListAdsArgs
@@ -27,19 +28,44 @@ class ItemAdsHomeViewModel(val category: CategoryAdvertisement, adsRepository: A
   }
 
   fun showAll(v: View) {
-    val builder = NavCategoryListAdsArgs.Builder()
-    builder.tabBarText = category.name
+//    val builder = NavCategoryListAdsArgs.Builder()
+//    builder.tabBarText = category.name
     if(category.type != -1) {
-      builder.isSub = false
-      builder.type = category.type
-    }else{
-      builder.categoryId = category.id
-    }
-    v.findNavController()
-      .navigate(
-        R.id.nav_ad_list, builder.build().toBundle(),
-        Constants.NAVIGATION_OPTIONS
+//      builder.isSub = false
+//      builder.type = category.type
+//      v.findNavController()
+//        .navigate(
+//          R.id.nav_ad_list, builder.build().toBundle(),
+//          Constants.NAVIGATION_OPTIONS
+//        )
+      v.findNavController().navigate(
+        R.id.nav_category_list_ads,
+        bundleOf(
+          "category_id" to -1,
+          "tabBarText" to category.name,
+          "type" to category.type
+        ), Constants.NAVIGATION_OPTIONS
       )
+    }else{
+//      builder.categoryId = category.id
+      v.findNavController().navigate(
+        R.id.nav_category_list_ads,
+        bundleOf(
+          "category_id" to category.id,
+          "tabBarText" to category.name
+        ), Constants.NAVIGATION_OPTIONS
+      )
+    }
 
+
+  }
+
+  fun title() : String{
+    var text= category.name
+    if(category.adsCount != -1)
+      text += " (${category.adsCount})"
+    else
+      text += " (${category.advertisements.size})"
+    return text
   }
 }

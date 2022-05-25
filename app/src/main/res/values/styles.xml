@@ -21,6 +21,16 @@
     <item name="android:windowActionBarOverlay">true</item>
   </style>
 
+  <style name="buttonText" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    <item name="android:textColor">@color/mtrl_text_btn_text_color_selector</item>
+    <item name="android:paddingLeft">@dimen/mtrl_btn_text_btn_padding_left</item>
+    <item name="android:paddingRight">@dimen/mtrl_btn_text_btn_padding_right</item>
+    <item name="iconTint">@color/mtrl_text_btn_text_color_selector</item>
+    <item name="iconPadding">@dimen/mtrl_btn_text_btn_icon_padding</item>
+    <item name="backgroundTint">@color/mtrl_btn_text_btn_bg_color_selector</item>
+    <item name="rippleColor">@color/mtrl_btn_text_btn_ripple_color</item>
+    <item name="font">@style/regularFont</item>
+  </style>
   <style name="TabLayoutTextStyle">
     <item name="android:textSize">16sp</item>
     <item name="android:textStyle">bold</item>

@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen8"
         android:layout_marginEnd="@dimen/dimen8"
-        android:progressTint="@color/colorPrimary"
+        android:progressTint="@color/colorF7AB00"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname"
         app:layout_constraintStart_toStartOf="parent"

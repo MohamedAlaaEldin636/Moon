@@ -23,6 +23,10 @@ import com.zeugmasolutions.localehelper.LocaleHelper
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.core.MyApplication
 import java.util.*
+import com.onesignal.OSNotificationOpenedResult
+
+import com.onesignal.OneSignal
+import com.onesignal.OneSignal.OSNotificationOpenedHandler
 
 
 @AndroidEntryPoint
@@ -63,6 +67,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   override fun setUpViews() {
     super.setUpViews()
 
+    OneSignal.setNotificationOpenedHandler { result ->
+      val actionId = result.action.actionId
+      Log.d(TAG, "setUpViews: $actionId")
+    }
   }
 
   private fun setUpBottomNavigationWithGraphs() {
@@ -72,6 +80,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     nav = navHostFragment.findNavController()
     appBarConfiguration = AppBarConfiguration(
       setOf(
+        R.id.storyFragment,
         R.id.home_fragment,
         R.id.settings_fragment,
         R.id.myAccountFragment,
@@ -92,10 +101,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 //          nav.navigate(HomeFragmentDirections.actionHomeFragmentToCommetChatFragment())
         }
         Constants.NOTIFICATION -> {
-          if (viewModel.isLoggin)
+//          if (viewModel.isLoggin)
             nav.navigate(NavHomeDirections.moveToNotification())
-          else
-            startActivity(Intent(this, AuthActivity::class.java))
+//          else
+//            startActivity(Intent(this, AuthActivity::class.java))
         }
       }
     })
@@ -107,6 +116,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       resetTexts()
       binding.icNotificationFilter.hide()
       when (destination.id) {
+        R.id.storyFragment->{
+          hideTopBarControls()
+          supportActionBar?.hide()
+        }
         R.id.home_fragment -> {
           binding.bottomNavigationView.show()
           showTopBarControls()

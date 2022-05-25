@@ -12,6 +12,8 @@ data class Comment(
   @Expose val id: Int = -1,
     @SerializedName("comment")
     @Expose val comment: String = "",
+  @SerializedName("created_at")
+  @Expose val createdAt: String = "",
     @SerializedName("user")
     @Expose val user: User = User()
 ) {

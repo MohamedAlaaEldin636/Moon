@@ -29,7 +29,7 @@
       android:layout_marginStart="@dimen/dimen10"
       android:layout_marginTop="@dimen/dimen16"
       android:layout_marginBottom="@dimen/dimen16"
-      android:text="@{viewModel.category.name}"
+      android:text="@{viewModel.title()}"
       android:textAppearance="@style/TextAppearance.AppCompat.Medium"
       android:textColor="@color/colorPrimary"
       android:textStyle="bold"

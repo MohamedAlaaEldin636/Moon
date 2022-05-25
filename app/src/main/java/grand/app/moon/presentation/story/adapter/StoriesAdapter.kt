@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.findFragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -16,10 +17,14 @@ import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemStoryBinding
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.domain.home.models.StoreModel
 import grand.app.moon.domain.store.entity.StoreListPaginateData
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
+import grand.app.moon.presentation.home.HomeFragment
+import grand.app.moon.presentation.home.HomeFragmentDirections
 import grand.app.moon.presentation.story.storyView.screen.StoryDisplayActivity
 import grand.app.moon.presentation.story.viewModels.ItemStoryViewModel
 import java.io.Serializable
@@ -69,15 +74,13 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
           )
         }
         else -> {
-          val intent =
-            Intent(holder.itemLayoutBinding.root.context, StoryDisplayActivity::class.java)
-          val bundle = Bundle()
           val list = ArrayList(differ.currentList)
           list.removeAt(0)
-          bundle.putSerializable(Constants.STORIES, list as Serializable)
-          bundle.putInt(Constants.POSITION_SELECT,position)
-          intent.putExtra(Constants.BUNDLE,bundle)
-          holder.itemLayoutBinding.root.context.startActivity(intent)
+          val storyModel = StoreModel()
+          storyModel.list.addAll(list)
+          storyModel.position = position - 1
+          holder.itemLayoutBinding.shapeableImageView.findFragment<HomeFragment>()
+            .navigateSafe(HomeFragmentDirections.actionHomeFragmentToStoryFragment(storyModel))
         }
       }
     }

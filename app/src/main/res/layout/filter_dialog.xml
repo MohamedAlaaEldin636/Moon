@@ -51,6 +51,8 @@
 
     <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_click"
+      style="@style/mediumFont"
+      android:padding="@dimen/dimen12"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center"

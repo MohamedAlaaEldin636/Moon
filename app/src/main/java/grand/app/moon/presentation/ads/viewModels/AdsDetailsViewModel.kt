@@ -34,6 +34,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.presentation.ads.adapter.SwitchAdapter
 import java.util.*
@@ -100,9 +102,17 @@ class AdsDetailsViewModel @Inject constructor(
 
   fun storeDetails(v: View) {
     if(!fromStore) {
+//      v.findNavController().navigate(
+//        AdsDetailsFragmentDirections.actionAdsDetailsFragmentToStoreDetailsFragment3(advertisement.get()?.store!!.id)
+//      )
       v.findNavController().navigate(
-        AdsDetailsFragmentDirections.actionAdsDetailsFragmentToStoreDetailsFragment3(advertisement.get()?.store!!.id)
+        R.id.nav_store,
+        bundleOf(
+          "id" to advertisement.get()?.store?.id,
+          "type" to 3
+        ), Constants.NAVIGATION_OPTIONS
       )
+
     }else v.findNavController().navigateUp()
   }
 

@@ -48,7 +48,14 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/nav_category_list_ads" />
-<!--    <action-->
+    <action
+      android:id="@+id/action_home_fragment_to_storyFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/storyFragment" />
+    <!--    <action-->
 <!--      android:id="@+id/action_home_fragment_to_storiesListFragment"-->
 <!--      app:enterAnim="@anim/anim_slide_in_right"-->
 <!--      app:exitAnim="@anim/anim_slide_out_left"-->
@@ -355,6 +362,13 @@
     <argument
       android:name="stories"
       app:argType="grand.app.moon.domain.store.entity.StoreListPaginateData" />
+    <action
+      android:id="@+id/action_storiesListFragment_to_storyFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/storyFragment" />
   </fragment>
 
   <action
@@ -372,4 +386,13 @@
     android:id="@+id/WhatsappChatListFragment"
     android:name="grand.app.moon.presentation.chat.WhatsappChatListFragment"
     android:label="@string/whatsapp" />
+  <fragment
+    android:id="@+id/storyFragment"
+    android:name="grand.app.moon.presentation.story.view.StoryFragment"
+    android:label="@string/show_all" >
+
+    <argument
+      android:name="stories"
+      app:argType="grand.app.moon.domain.home.models.StoreModel" />
+  </fragment>
 </navigation>

@@ -10,7 +10,10 @@
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.Manifest.permission.RECORD_AUDIO"/>
   <uses-permission android:name="android.Manifest.permission.READ_EXTERNAL_STORAGE" />
-
+  <queries>
+    <provider android:authorities="com.facebook.katana.provider.PlatformProvider" /> <!-- allows app to access Facebook app features -->
+    <provider android:authorities="com.facebook.orca.provider.PlatformProvider" /> <!-- allows sharing to Messenger app -->
+  </queries>
   <application
     android:name="grand.app.moon.core.MyApplication"
     android:allowBackup="false"

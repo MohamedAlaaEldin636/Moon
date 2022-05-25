@@ -23,7 +23,6 @@ import javax.inject.Inject
 class StoryDisplayViewModel @Inject constructor(
   val storeUseCase: StoreUseCase
 ) : BaseViewModel() {
-  var dataList: ArrayList<Store>? = null
   var positionStoryAdapter: Int = 0
   var pos: Int = -1
   var stories: ArrayList<Store> = arrayListOf()
@@ -76,6 +75,32 @@ class StoryDisplayViewModel @Inject constructor(
     if(pos > 0){
       pos--
       store.set(stories[pos])
+      return true
+    }
+    return false
+  }
+
+  fun allowNext(): Boolean {
+    return pos < store.get()!!.stories.size - 1
+  }
+
+  fun allowPrev(): Boolean {
+    return pos > 0
+  }
+
+  fun prevStory() : Boolean{
+    if(positionStoryAdapter > 0) {
+      positionStoryAdapter--
+      store.set(stories[positionStoryAdapter])
+      return true
+    }
+    return false
+  }
+
+  fun nextStory() : Boolean {
+    if(positionStoryAdapter < stories.size - 1) {
+      positionStoryAdapter++
+      store.set(stories[positionStoryAdapter])
       return true
     }
     return false

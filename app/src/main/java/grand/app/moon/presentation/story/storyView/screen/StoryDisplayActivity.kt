@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -25,9 +27,12 @@ import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.story.view.ViewPagerAdapter
 import grand.app.moon.presentation.story.viewModels.StoryDisplayViewModel
 import kotlinx.android.synthetic.main.fragment_search.view.*
+import pt.tornelas.segmentedprogressbar.SegmentedProgressBarListener
 
 @AndroidEntryPoint
-class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(){
+class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>() ,
+  SegmentedProgressBarListener {
+  private val TAG = "StoryDisplayActivity"
   override
   fun getLayoutId() = R.layout.activity_story_display
   private val viewModel: StoryDisplayViewModel by viewModels()
@@ -40,13 +45,8 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(){
     val position = bundle.getInt(Constants.POSITION)
     if(position < viewModel.stories.size)
     bundle.putSerializable(Constants.STORY,viewModel.stories[position])
-//    if(viewModel.stories.isNotEmpty()) {
-//      viewModel.pos = intent.getBundleExtra(Constants.BUNDLE)?.getInt(Constants.POSITION)!!
-//      viewModel.store.set(viewModel.stories[viewModel.pos])
-//    }
-
-    binding.pager.adapter  = ViewPagerAdapter(this,viewModel.stories.size,bundle)
-
+    viewModel.store.set(viewModel.stories[viewModel.positionStoryAdapter])
+    init()
   }
 
 
@@ -54,6 +54,7 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(){
     viewModel.clickEvent.observe(this,{
       when(it){
         Constants.EXIT -> finish()
+
       }
     })
   }
@@ -63,30 +64,131 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>(){
     super.onDestroy()
   }
 
-  fun nextStory() {
-    if(binding.pager.currentItem < viewModel.stories.size - 1)
-      binding.pager.currentItem = binding.pager.currentItem + 1
-    else
-      finish()
+  fun pause() {
+    viewModel.progress.set(true)
+    binding.progress.pause()
   }
 
-//  override fun done() {
-//    when(viewModel.isFinish()){
-//      true -> finish()
-//      else -> {
-//        prepareStories()
-//        startStory()
-//      }
-//    }
-//  }
-//
-//
-//  override fun onNextCalled(view: View, momentz: Momentz, index: Int) {
-//    viewModel.index = index
-//    viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[index].id
-//    viewModel.storyRequest.type = 1
-//    viewModel.callService()
-//    loadImage(view as AppCompatImageView,momentz,index)
-//  }
+  fun resume() {
+    Log.d(TAG, "resume: ${viewModel.isLoaded}")
+    if(viewModel.isLoaded) {
+      Log.d(TAG, "resume")
+      viewModel.progress.set(false)
+      binding.progress.start()
+    }
+  }
+
+  fun init() {
+    binding.progress.segmentCount = viewModel.store.get()!!.stories.size
+    binding.progress.listener = this
+    binding.progress.start()
+    binding.skip.setOnClickListener {
+      Log.d(TAG, "init: YES")
+      if(viewModel.allowNext())
+        binding.progress.next()
+    }
+    binding.reverse.setOnClickListener {
+      Log.d(TAG, "init: HEREEEEE")
+      if(viewModel.allowPrev())
+        binding.progress.previous()
+    }
+
+    binding.image.setOnTouchListener(object : View.OnTouchListener{
+      override fun onTouch(p0: View?, event: MotionEvent?): Boolean {
+
+        when(event?.action){
+          MotionEvent.ACTION_DOWN -> pause()
+          MotionEvent.ACTION_UP -> resume()
+        }
+        return true
+      }
+
+    })
+
+    viewModel.clickEvent.observe(this,{
+      when(it){
+        Constants.EXIT ->  finish()
+      }
+    })
+  }
+  fun loadImage() {
+    Log.d(TAG, "loadImage: here")
+
+//    Log.d(TAG, "loadImage: ${viewModel.store.get()!!.stories[viewModel.pos].file}")
+    viewModel.isLoaded = false
+    pause()
+    viewModel.image.set(viewModel.store.get()!!.stories[viewModel.pos].file)
+    Glide.with(this)
+      .load(viewModel.store.get()!!.stories[viewModel.pos].file)
+      .listener(object : RequestListener<Drawable> {
+        override fun onLoadFailed(
+          e: GlideException?,
+          model: Any?,
+          target: Target<Drawable>?,
+          isFirstResource: Boolean
+        ): Boolean {
+          Log.d(TAG, "onLoadFailed: ")
+          viewModel.isLoaded = true
+          resume()
+          return false
+        }
+
+        override fun onResourceReady(
+          resource: Drawable?,
+          model: Any?,
+          target: Target<Drawable>?,
+          dataSource: com.bumptech.glide.load.DataSource?,
+          isFirstResource: Boolean
+        ): Boolean {
+          Log.d(TAG, "onResourceReady: READY")
+          viewModel.isLoaded = true
+          resume()
+          return false
+        }
+
+      })
+      .into(binding.image)
+
+  }
+
+  override fun onFinished() {
+    viewModel.isFinish = true
+    if(viewModel.nextStory()){
+      reset()
+    }else
+      finish()
+
+  }
+
+  override fun onPage(oldPageIndex: Int, newPageIndex: Int) {
+    Log.d(TAG, "onPage: $oldPageIndex , withNew $newPageIndex")
+    viewModel.pos = newPageIndex
+    viewModel.storyRequest.story_id = viewModel.store.get()!!.id
+    viewModel.storyRequest.type = 1
+    viewModel.callService()
+    loadImage()
+  }
+
+  override fun onPause() {
+    super.onPause()
+    pause()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    if(!viewModel.isFinish)
+      resume()
+    else {
+      reset()
+    }
+  }
+
+  fun reset(){
+    binding.progress.reset()
+    viewModel.pos = 0
+    viewModel.isFinish = false
+    binding.progress.segmentCount = viewModel.store.get()!!.stories.size
+    resume()
+  }
 
 }
