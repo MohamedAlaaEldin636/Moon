@@ -50,10 +50,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 //      LocaleHelper.setLocale(this, Locale(lang))
 //    }
 
-//    nav.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(Constants.BUNDLE)?.observe(this) {result ->
-//      // Do something with the result.
-//      Log.d(TAG, "onCreate: DONE HERE")
-//    }
+    if(this::nav.isInitialized) {
+      nav.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(Constants.BUNDLE)
+        ?.observe(this) { result ->
+          // Do something with the result.
+          Log.d(TAG, "onCreate: DONE HERE")
+        }
+    }
 //    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
 //      if(bundle.containsKey(Constants.SORT_BY)) {
 //        when(bundle.getInt(Constants.SORT_BY)){

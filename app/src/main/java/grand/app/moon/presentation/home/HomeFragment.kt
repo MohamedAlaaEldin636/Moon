@@ -151,6 +151,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
   override fun onResume() {
     super.onResume()
     viewModel.adsHomeAdapter.updateFavourite()
+    viewModel.adsHomeAdapter.checkBlockStore()
+
   }
 
 }

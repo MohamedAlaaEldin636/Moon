@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.store.dialog
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,6 +66,7 @@ class ReportDialog : BottomSheetDialogFragment() {
     return binding.root
   }
 
+  private  val TAG = "ReportDialog"
   fun setupObserver() {
     lifecycleScope.launchWhenResumed {
       viewModel.response.collect {
@@ -94,7 +96,8 @@ class ReportDialog : BottomSheetDialogFragment() {
           }
           is Resource.Success -> {
             viewModel.progress.set(false)
-            if(viewModel.request.type == 8){
+            Log.d(TAG, "setupObserver: ${viewModel.request.type}")
+            if(viewModel.request.type == 2){//store 1 => report , 2 block
               val bundle = Bundle()
               bundle.putBoolean(Constants.STORES_BLOCKED,true)
               setFragmentResult(Constants.BUNDLE, bundle)

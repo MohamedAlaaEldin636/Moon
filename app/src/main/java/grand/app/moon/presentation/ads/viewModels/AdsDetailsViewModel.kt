@@ -33,9 +33,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.presentation.ads.adapter.SwitchAdapter
 import java.util.*
@@ -234,5 +232,13 @@ class AdsDetailsViewModel @Inject constructor(
       )
     } else
       clickEvent.value = Constants.LOGIN_REQUIRED
+  }
+
+  fun checkBlockStore(): Boolean {
+    if(advertisement.get()?.id != 0 ) {
+      if (advertisement.get()?.store?.id?.let { ListHelper.checkBlockStore(it) } == true)
+        return true
+    }
+    return false
   }
 }

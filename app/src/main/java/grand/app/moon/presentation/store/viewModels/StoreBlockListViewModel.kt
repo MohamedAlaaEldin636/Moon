@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
@@ -98,7 +99,7 @@ class StoreBlockListViewModel @Inject constructor(
     followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
     storeUseCase.unBlock(followStoreRequest).launchIn(viewModelScope)
     adapter.removeItem()
-
+    ListHelper.removeStoreBlock(followStoreRequest.storeId!!)
   }
 
 

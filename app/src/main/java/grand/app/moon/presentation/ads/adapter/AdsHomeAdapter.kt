@@ -82,7 +82,18 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
     }
   }
 
-  inner class ViewHolder(itemView: View) :
+    fun checkBlockStore() {
+      differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
+        categoryAds.advertisements.forEachIndexed { indexAds, ads ->
+          if(ListHelper.checkBlockStore(ads.store!!.id) ) {
+            differ.currentList[indexCategoryAds].advertisements[indexAds]
+            notifyItemChanged(indexCategoryAds)
+          }
+        }
+      }
+    }
+
+    inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemAdsHomeBinding
 

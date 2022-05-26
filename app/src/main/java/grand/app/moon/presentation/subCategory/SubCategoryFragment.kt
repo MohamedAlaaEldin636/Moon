@@ -157,6 +157,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
   override fun onResume() {
     super.onResume()
     viewModel.adapter.updateFavourite()
+    viewModel.adapter.checkBlockStore()
 //    viewModel.reset()
 //    viewModel.reset()
 //    viewModel.callService()

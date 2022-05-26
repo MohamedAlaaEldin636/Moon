@@ -135,5 +135,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
   override fun onResume() {
     super.onResume()
     viewModel.adapter.updateFavourite()
+    viewModel.adapter.checkBlockStore()
   }
 }

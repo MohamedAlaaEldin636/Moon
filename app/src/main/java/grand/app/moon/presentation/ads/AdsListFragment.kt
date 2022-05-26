@@ -139,5 +139,6 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
   override fun onResume() {
     super.onResume()
     viewModel.adapter.updateFavourite()
+    viewModel.adapter.checkBlockStore()
   }
 }

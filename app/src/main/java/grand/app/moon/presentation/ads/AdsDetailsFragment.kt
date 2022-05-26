@@ -7,6 +7,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -97,11 +98,9 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
   override fun onResume() {
     super.onResume()
     viewModel.adsAdapter.updateFavourite()
-//    Log.d(TAG, "token: ${viewModel.userLocalUseCase.getKey(Constants.TOKEN)}")
-//    if(!viewModel.isLoggin) {
-//      val isAuthorize = viewModel.userLocalUseCase.isLoggin()
-//      viewModel.recallApi(isAuthorize)
-//    }else
+    if(viewModel.checkBlockStore()){
+      backToPreviousScreen()
+    }
   }
 
   override fun onStart() {
@@ -109,17 +108,8 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
 //    Toast.makeText(context, "onStart", Toast.LENGTH_SHORT).show()
   }
 
+
   override fun onDestroy() {
-    viewModel.advertisement.get()?.let {
-      Log.d(TAG, "onDestroy: ADVERTISEMENT")
-      val bundle = Bundle()
-      bundle.putInt(Constants.ID,it.id)
-      bundle.putBoolean(Constants.FAVOURITE,it.isFavorite)
-      it.store?.id?.let { it1 -> bundle.putInt(Constants.STORES_ID, it1) }
-      it.store?.isFollowing?.let { it1 -> bundle.putBoolean(Constants.STORES_FOLLOWED, it1) }
-      bundle.putBoolean(Constants.STORES_BLOCKED,viewModel.blockStore)
-      setFragmentResult(Constants.BUNDLE, bundle)
-    }
     super.onDestroy()
   }
 

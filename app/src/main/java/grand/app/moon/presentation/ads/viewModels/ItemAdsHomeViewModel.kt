@@ -64,8 +64,6 @@ class ItemAdsHomeViewModel(val category: CategoryAdvertisement, adsRepository: A
     var text= category.name
     if(category.adsCount != -1)
       text += " (${category.adsCount})"
-    else
-      text += " (${category.advertisements.size})"
     return text
   }
 }

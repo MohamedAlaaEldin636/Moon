@@ -12,6 +12,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.facebook.FacebookSdk.getApplicationContext
@@ -26,6 +27,7 @@ import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.FragmentStoreDetailsBinding
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.helpers.map.MapConfig
@@ -52,10 +54,15 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
       if (bundle.containsKey(Constants.SORT_BY)) {
         viewModel.setSortAds(bundle.getInt(Constants.SORT_BY))
       }
-//      if (bundle.containsKey(Constants.STORES_BLOCKED)) {
-//        viewModel.blockStore = true
-//        backToPreviousScreen()
-//      }
+      if (bundle.containsKey(Constants.STORES_BLOCKED)) {
+        Log.d(TAG, "onViewCreated: BLOCK STORE")
+        viewModel.blockStore = true
+        viewModel.store.get()?.id?.let { ListHelper.blockStores.add(it) }
+        Log.d(TAG, "onViewCreated: ${ListHelper.blockStores.size}")
+        lifecycleScope.launchWhenResumed {
+          findNavController().popBackStack()
+        }
+      }
     }
   }
 
@@ -163,7 +170,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     map?.getMapAsync(this)
   }
 
-  private val TAG = "AdsDetailsFragment"
+  private val TAG = "StoreDetailsFragment"
   override fun onResume() {
     super.onResume()
     Log.d(TAG, "token: ${viewModel.userLocalUseCase.getKey(Constants.TOKEN)}")

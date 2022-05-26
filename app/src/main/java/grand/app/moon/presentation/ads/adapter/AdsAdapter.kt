@@ -76,7 +76,8 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   private val TAG = "MoreAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemAdsViewModel(data, percentageAds, adsRepository, showFavourite, type,fromStore)
+    val itemViewModel =
+      ItemAdsViewModel(data, percentageAds, adsRepository, showFavourite, type, fromStore)
     holder.setViewModel(itemViewModel)
 
     when (grid) {
@@ -177,6 +178,20 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
         Log.d(TAG, "setBlockStore: HERE")
 //          list.removeAt(index)
       }
+    }
+  }
+
+
+  fun checkBlockStore() {
+    val list = ArrayList(differ.currentList)
+    differ.currentList.forEachIndexed { index, ads ->
+      if (ListHelper.checkBlockStore(ads.store!!.id)) {
+        list.removeAt(index)
+      }
+    }
+    if(list.size < differ.currentList.size){
+      differ.submitList(list)
+      notifyDataSetChanged()
     }
   }
 

@@ -35,4 +35,13 @@ object ListHelper {
       blockStores.add(storeId)
     }
   }
+
+  fun checkBlockStore(id: Int) : Boolean {
+    return blockStores.contains(id)
+  }
+
+  fun removeStoreBlock(storeId: Int) {
+    val pos = blockStores.indexOf(storeId)
+    if(pos != -1) blockStores.removeAt(pos)
+  }
 }
