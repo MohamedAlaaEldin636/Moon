@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.ads.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,14 +84,26 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
   }
 
     fun checkBlockStore() {
-      differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
+      ListHelper.blockStores.forEach {
+        Log.d(TAG, "checkBlockStore: BLOCKED $it")
+      }
+      val list = ArrayList<CategoryAdvertisement>(differ.currentList)
+      var isBlocked = false
+      list.forEachIndexed { indexCategoryAds, categoryAds ->
         categoryAds.advertisements.forEachIndexed { indexAds, ads ->
-          if(ListHelper.checkBlockStore(ads.store!!.id) ) {
-            differ.currentList[indexCategoryAds].advertisements[indexAds]
-            notifyItemChanged(indexCategoryAds)
+          Log.d(TAG, "checkBlockStore: ${ads.store?.id}")
+          if(ads.store?.id?.let { ListHelper.checkBlockStore(it) } == true) {
+            Log.d(TAG, "checkBlockStore: YES")
+            isBlocked = true
+            list[indexCategoryAds].advertisements.removeAt(indexAds)
+          }
+          if(list[indexCategoryAds].advertisements.size != differ.currentList[indexCategoryAds].advertisements.size){
+            Log.d(TAG, "checkBlockStore: remove")
+            notifyItemRemoved(indexCategoryAds)
           }
         }
       }
+      if(isBlocked) differ.submitList(list)
     }
 
     inner class ViewHolder(itemView: View) :

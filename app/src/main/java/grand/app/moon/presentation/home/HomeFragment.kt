@@ -152,6 +152,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
     super.onResume()
     viewModel.adsHomeAdapter.updateFavourite()
     viewModel.adsHomeAdapter.checkBlockStore()
+    viewModel.storeAdapter.checkBlockStore()
+    viewModel.storiesAdapter.checkBlockStore()
 
   }
 

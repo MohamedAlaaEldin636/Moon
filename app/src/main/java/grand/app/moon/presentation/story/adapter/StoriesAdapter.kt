@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.ItemStoryBinding
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.home.models.StoreModel
@@ -102,7 +103,18 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
     holder.unBind()
   }
 
-  inner class ViewHolder(itemView: View) :
+    fun checkBlockStore() {
+      val array = ArrayList(differ.currentList)
+      differ.currentList.forEachIndexed{ index, store ->
+        if(ListHelper.checkBlockStore(differ.currentList[index].id)){
+          array.removeAt(index)
+          notifyItemRemoved(index)
+        }
+        if(array.size != differ.currentList.size) differ.submitList(array)
+      }
+    }
+
+    inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemStoryBinding
 

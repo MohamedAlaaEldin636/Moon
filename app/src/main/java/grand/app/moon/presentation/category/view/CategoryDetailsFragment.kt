@@ -46,13 +46,13 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
 //        Log.d(TAG, "onCreate: FAVOURITE")
 //        viewModel.adsHomeAdapter.updateFavourite()
 //      }
-      if(bundle.containsKey(Constants.STORES_ID) && (bundle.containsKey(Constants.STORES_FOLLOWED) || bundle.containsKey(Constants.STORES_BLOCKED) )) {
-        Log.d(TAG, "onCreate: FAVOURITE")
-        if(bundle.containsKey(Constants.STORES_FOLLOWED))
-          viewModel.storeAdapter.setFollowing(bundle.getInt(Constants.STORES_ID),bundle.getBoolean(Constants.STORES_FOLLOWED))
-        if(bundle.containsKey(Constants.STORES_BLOCKED))
-          viewModel.storeAdapter.setBlocked(bundle.getInt(Constants.STORES_ID))
-      }
+//      if(bundle.containsKey(Constants.STORES_ID) && (bundle.containsKey(Constants.STORES_FOLLOWED) || bundle.containsKey(Constants.STORES_BLOCKED) )) {
+//        Log.d(TAG, "onCreate: FAVOURITE")
+//        if(bundle.containsKey(Constants.STORES_FOLLOWED))
+//          viewModel.storeAdapter.setFollowing(bundle.getInt(Constants.STORES_ID),bundle.getBoolean(Constants.STORES_FOLLOWED))
+//        if(bundle.containsKey(Constants.STORES_BLOCKED))
+//          viewModel.storeAdapter.setBlocked(bundle.getInt(Constants.STORES_ID))
+//      }
     }
   }
 

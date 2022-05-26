@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -98,11 +99,18 @@ class ReportDialog : BottomSheetDialogFragment() {
             viewModel.progress.set(false)
             Log.d(TAG, "setupObserver: ${viewModel.request.type}")
             if(viewModel.request.type == 2){//store 1 => report , 2 block
-              val bundle = Bundle()
+       /*       val bundle = Bundle()
               bundle.putBoolean(Constants.STORES_BLOCKED,true)
-              setFragmentResult(Constants.BUNDLE, bundle)
+              setFragmentResult(Constants.BUNDLE, bundle)*/
+
+              val n = findNavController()
+              n.navigateUp()
+              n.currentBackStackEntry?.savedStateHandle?.set(
+                Constants.STORES_BLOCKED,
+                true
+              )
             }
-            dismiss()
+            //dismiss()
           }
           is Resource.Failure -> {
             viewModel.progress.set(false)

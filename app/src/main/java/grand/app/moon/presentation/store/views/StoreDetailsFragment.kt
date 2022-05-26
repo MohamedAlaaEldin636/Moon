@@ -22,6 +22,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.tabs.TabLayout
+import com.maproductions.mohamedalaa.shared.core.extensions.actOnGetIfNotInitialValueOrGetLiveData
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -54,7 +55,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
       if (bundle.containsKey(Constants.SORT_BY)) {
         viewModel.setSortAds(bundle.getInt(Constants.SORT_BY))
       }
-      if (bundle.containsKey(Constants.STORES_BLOCKED)) {
+     /* if (bundle.containsKey(Constants.STORES_BLOCKED)) {
         Log.d(TAG, "onViewCreated: BLOCK STORE")
         viewModel.blockStore = true
         viewModel.store.get()?.id?.let { ListHelper.blockStores.add(it) }
@@ -62,8 +63,38 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
         lifecycleScope.launchWhenResumed {
           findNavController().popBackStack()
         }
-      }
+      }*/
     }
+
+    actOnGetIfNotInitialValueOrGetLiveData(
+      Constants.STORES_BLOCKED,
+      false,
+      viewLifecycleOwner,
+      { it == true }
+    ) {
+      viewModel.blockStore = true
+      viewModel.store.get()?.id?.let { ListHelper.blockStores.add(it) }
+      Log.d(TAG, "onViewCreated: BEFORE NAVIGATE ")
+      findNavController().navigateUp()
+    }
+
+//    findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
+//      Constants.STORES_BLOCKED,
+//      false
+//    )?.observe(viewLifecycleOwner) {
+//      Log.d(TAG, "onViewCreated: welcome")
+//      if (it == true) {
+//        Log.d(TAG, "onViewCreated: DONE")
+//        findNavController().currentBackStackEntry?.savedStateHandle?.set(
+//          Constants.STORES_BLOCKED,
+//          false
+//        )
+//        viewModel.blockStore = true
+//        viewModel.store.get()?.id?.let { ListHelper.blockStores.add(it) }
+//        Log.d(TAG, "onViewCreated: BEFORE NAVIGATE ")
+//        findNavController().navigateUp()
+//      }
+//    }
   }
 
   override

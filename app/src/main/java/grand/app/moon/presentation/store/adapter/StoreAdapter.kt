@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.ItemStoreBinding
 import grand.app.moon.databinding.ItemStoreLinearBinding
 import grand.app.moon.domain.home.models.Advertisement
@@ -116,7 +117,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
     val size = array.size
     array.addAll(list)
     differ.submitList(array)
-    notifyDataSetChanged()
+//    notifyDataSetChanged()
   }
 
   fun setFollowing(storeId: Int, boolean: Boolean) {
@@ -128,18 +129,18 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
     }
   }
 
-  fun setBlocked(storeId: Int) {
+  fun checkBlockStore() {
+    val array = ArrayList(differ.currentList)
     differ.currentList.forEachIndexed{ index, store ->
-      if(differ.currentList[index].id == storeId){
-        val array = ArrayList(differ.currentList)
+      if(ListHelper.checkBlockStore(differ.currentList[index].id)){
         array.removeAt(index)
-        differ.submitList(array)
         notifyItemRemoved(index)
       }
+      if(array.size != differ.currentList.size) differ.submitList(array)
     }
   }
 
-  inner class ViewHolder(itemView: View) :
+    inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemStoreBinding
     lateinit var itemLayoutLinearBinding: ItemStoreLinearBinding
