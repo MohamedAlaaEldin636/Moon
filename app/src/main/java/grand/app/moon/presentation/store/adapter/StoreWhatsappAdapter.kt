@@ -57,8 +57,9 @@ class StoreWhatsappAdapter : RecyclerView.Adapter<StoreWhatsappAdapter.ViewHolde
 //    Log.d(TAG, "removeItem: $position")
     val list = ArrayList(differ.currentList)
     list.removeAt(position)
+    differ.submitList(null)
     differ.submitList(list)
-    notifyItemRemoved(position)
+//    notifyItemRemoved(position)
   }
 
   override fun getItemCount(): Int {

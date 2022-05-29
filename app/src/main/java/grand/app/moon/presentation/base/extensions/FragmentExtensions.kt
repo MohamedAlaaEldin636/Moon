@@ -40,6 +40,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.facebook.FacebookSdk.getCacheDir
+import com.maproductions.mohamedalaa.shared.core.extensions.logout
 import com.onesignal.OneSignal
 import grand.app.moon.appMoonHelper.ThirdPartyHelper
 import grand.app.moon.core.MyApplication
@@ -80,9 +81,7 @@ fun Fragment.handleApiError(
   }
 }
 fun Fragment.logout(){
-  OneSignal.removeExternalUserId();
-  ThirdPartyHelper.clearOpenSignal()
-  requireContext().logoutCometChat()
+  MyApplication.instance.logout()
 }
 
 /*

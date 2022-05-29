@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.collect
 class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
 
   private val args : CategoryDetailsFragmentArgs by navArgs()
-  private val viewModel: CategoryDetailsViewModel by viewModels()
+  val viewModel: CategoryDetailsViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_category_details
@@ -131,6 +131,8 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
   override fun onResume() {
     super.onResume()
     viewModel.adsHomeAdapter.updateFavourite()
+    viewModel.storeAdapter.checkBlockStore()
+    viewModel.storiesAdapter.checkBlockStore()
   }
 
 }

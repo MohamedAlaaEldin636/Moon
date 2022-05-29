@@ -18,6 +18,8 @@ import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.category.view.CategoryDetailsFragment
+import grand.app.moon.presentation.home.HomeFragment
 import grand.app.moon.presentation.store.views.StoreBlockListFragment
 import grand.app.moon.presentation.store.views.StoreFollowedListFragment
 import grand.app.moon.presentation.store.views.StoreListFragment
@@ -47,6 +49,16 @@ class ItemStoreViewModel(val store: Store,val type: Int,var percentage: Int,var 
         R.id.storeListFragment -> {
           val fragment = v.findFragment<StoreListFragment>()
           fragment.viewModel.adapter.position = position
+          fragment.viewModel.follow()
+        }
+        R.id.home_fragment -> {
+          val fragment = v.findFragment<HomeFragment>()
+          fragment.viewModel.storeAdapter.position = position
+          fragment.viewModel.follow()
+        }
+        R.id.categoryDetailsFragment -> {
+          val fragment = v.findFragment<CategoryDetailsFragment>()
+          fragment.viewModel.storeAdapter.position = position
           fragment.viewModel.follow()
         }
       }

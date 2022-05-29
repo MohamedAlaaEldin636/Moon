@@ -55,15 +55,15 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
       if (bundle.containsKey(Constants.SORT_BY)) {
         viewModel.setSortAds(bundle.getInt(Constants.SORT_BY))
       }
-     /* if (bundle.containsKey(Constants.STORES_BLOCKED)) {
-        Log.d(TAG, "onViewCreated: BLOCK STORE")
-        viewModel.blockStore = true
-        viewModel.store.get()?.id?.let { ListHelper.blockStores.add(it) }
-        Log.d(TAG, "onViewCreated: ${ListHelper.blockStores.size}")
-        lifecycleScope.launchWhenResumed {
-          findNavController().popBackStack()
-        }
-      }*/
+      /* if (bundle.containsKey(Constants.STORES_BLOCKED)) {
+         Log.d(TAG, "onViewCreated: BLOCK STORE")
+         viewModel.blockStore = true
+         viewModel.store.get()?.id?.let { ListHelper.blockStores.add(it) }
+         Log.d(TAG, "onViewCreated: ${ListHelper.blockStores.size}")
+         lifecycleScope.launchWhenResumed {
+           findNavController().popBackStack()
+         }
+       }*/
     }
 
     actOnGetIfNotInitialValueOrGetLiveData(
@@ -139,12 +139,16 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
           is Resource.Success -> {
             hideLoading()
             updateMap()
-            it.value.data.category.add(0,Property(0, name = resources.getString(R.string.show_all),parent = null))
+            it.value.data.category.add(
+              0,
+              Property(0, name = resources.getString(R.string.show_all), parent = null)
+            )
             viewModel.update(
               resources.getString(R.string.google_direction_api),
               it.value.data,
               days
             )
+            setLocation()
           }
           is Resource.Failure -> {
             hideLoading()
@@ -153,18 +157,18 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
         }
       }
     }
-    val gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-      override fun getSpanSize(position: Int): Int {
-        return when (viewModel.adsAdapter.grid) {
-          Constants.GRID_1 -> 2
-          else -> 1
-        }
-      }
-    }
-
-    binding.rvAds.layoutManager = gridLayoutManager
-    binding.rvAds.adapter = viewModel.adsAdapter
+//    val gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+//    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//      override fun getSpanSize(position: Int): Int {
+//        return when (viewModel.adsAdapter.grid) {
+//          Constants.GRID_1 -> 2
+//          else -> 1
+//        }
+//      }
+//    }
+//
+//    binding.rvAds.layoutManager = gridLayoutManager
+//    binding.rvAds.adapter = viewModel.adsAdapter
 
   }
 
@@ -215,32 +219,39 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 
   override fun onMapReady(p0: GoogleMap) {
     lifecycleScope.launch(Dispatchers.Main) {
-      delay(400)
+//      delay(400)
       viewModel.mapConfig = MapConfig(requireContext(), p0)
-//      viewModel.mapConfig.setMapStyle() //set style google map
+      viewModel.mapConfig!!.setMapStyle() //set style google map
       viewModel.mapConfig!!.getGoogleMap()?.setMapStyle(context?.let {
         MapStyleOptions.loadRawResourceStyle(
           it, R.raw.map_style
         )
       })
+      setLocation()
 //      setMapStyle(context?.let { MapStyleOptions.loadRawResourceStyle(it, R.raw.map) })
-      val location = LatLng(viewModel.store.get()!!.latitude, viewModel.store.get()!!.longitude)
-      viewModel.mapConfig!!.getGoogleMap()?.addMarker(
-        MarkerOptions().position(location)
-          .title(viewModel.store.get()!!.name) // below line is use to add custom marker on our map.
-          .icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_location))
-      )
 
-//      p0.addMarker(
-//        MarkerOptions().title(viewModel.store.get()!!.name).position(
-//          LatLng(
-//            viewModel.store.get()!!.latitude,
-//            viewModel.store.get()!!.longitude
-//          )
-//        )
-//      )
-      viewModel.mapConfig!!.getGoogleMap()?.moveCamera(CameraUpdateFactory.newLatLng(location))
+    }
+  }
 
+  fun setLocation() {
+    if (viewModel.mapConfig != null) {
+      viewModel.store.get().let {
+//        it.get().let {
+        if (it?.latitude != 0.0) {
+          Log.d(TAG, "setLocation: ${it?.latitude}")
+          val location = it?.latitude?.let { it1 -> LatLng(it1, it.longitude) }
+          location?.let { it1 ->
+            MarkerOptions().position(it1)
+              .title(it.name) // below line is use to add custom marker on our map.
+              .icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_location))
+          }?.let { it2 ->
+            viewModel.mapConfig!!.getGoogleMap()?.addMarker(
+              it2
+            )
+          }
+          viewModel.mapConfig!!.moveCamera(location)
+        }
+      }
     }
   }
 

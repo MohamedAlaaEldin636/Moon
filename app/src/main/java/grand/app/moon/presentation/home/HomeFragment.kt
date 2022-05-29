@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSeekBarPostListener {
 
-  private val viewModel: HomeViewModel by viewModels()
+  val viewModel: HomeViewModel by viewModels()
   private val activityViewModel: HomeViewModel by activityViewModels()
 
   override

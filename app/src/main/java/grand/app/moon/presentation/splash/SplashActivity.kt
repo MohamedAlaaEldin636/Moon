@@ -48,7 +48,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
   private fun decideNavigationLogic() {
     viewModel.clickEvent.observe(this, {
-      Log.d(TAG, "decideNavigationLogic: ")
+      Log.d(TAG, "decideNavigationLogic: $it")
       val targetActivity = when (it) {
         Constants.FIRST_TIME -> {
           Log.d(TAG, "FIRST_TIME: ")
@@ -65,8 +65,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     lifecycleScope.launchWhenResumed {
       viewModel.categoryItemResponse.collect {
+        Log.d(TAG, "decideNavigationLogic: ")
         when (it) {
-
           is Resource.Success -> {
             viewModel.saveCategories(it.value)
             viewModel.redirect()

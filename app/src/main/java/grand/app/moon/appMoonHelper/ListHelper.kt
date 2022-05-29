@@ -1,6 +1,8 @@
 package grand.app.moon.appMoonHelper
 
+import android.util.Log
 import grand.app.moon.domain.home.models.Advertisement
+import kotlin.math.log
 
 object ListHelper {
   val adsList = mutableMapOf<Int,Boolean>()
@@ -27,7 +29,7 @@ object ListHelper {
   }
 
   fun addToBlock(storeId: Int){
-    blockStores.add(storeId)
+    if(!checkBlockStore(storeId)) blockStores.add(storeId)
   }
 
   fun removeFromBlock(storeId: Int){
@@ -35,8 +37,13 @@ object ListHelper {
       blockStores.add(storeId)
     }
   }
+   val TAG = "ListHelper"
 
   fun checkBlockStore(id: Int) : Boolean {
+    blockStores.forEach {
+      Log.d(TAG, "checkBlockStore: $it")
+    }
+    Log.d(TAG, "checkBlockStore: $id")
     return blockStores.contains(id)
   }
 

@@ -1,11 +1,18 @@
 package grand.app.moon.data.remote
 
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
 import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
+import com.maproductions.mohamedalaa.shared.core.extensions.loginPage
+import com.maproductions.mohamedalaa.shared.core.extensions.logout
+import com.onesignal.OneSignal
+import grand.app.moon.appMoonHelper.ThirdPartyHelper
+import grand.app.moon.core.MyApplication
+import grand.app.moon.core.extenstions.logoutCometChat
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.ErrorResponse
 import grand.app.moon.domain.utils.FailureStatus
@@ -146,17 +153,21 @@ open class BaseRemoteDataSource @Inject constructor() {
       println(throwable)
       when(throwable){
         is HttpException -> {
+          Log.d(TAG, "http_code: ${throwable.code()}")
           when(throwable.code()){
             401 -> {
               val errorResponse = Gson().fromJson(
                 throwable.response()?.errorBody()!!.charStream().readText(),
                 ErrorResponse::class.java
               )
-              return Resource.Failure(
-                FailureStatus.TOKEN_EXPIRED,
-                throwable.code(),
-                errorResponse.detail
-              )
+
+              MyApplication.instance.logout()
+              MyApplication.instance.loginPage()
+//              return Resource.Failure(
+//                FailureStatus.TOKEN_EXPIRED,
+//                throwable.code(),
+//                errorResponse.detail
+//              )
             }
           }
         }

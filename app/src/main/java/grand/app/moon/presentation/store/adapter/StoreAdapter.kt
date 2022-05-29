@@ -132,11 +132,16 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   fun checkBlockStore() {
     val array = ArrayList(differ.currentList)
     differ.currentList.forEachIndexed{ index, store ->
+      Log.d(TAG, "checkBlockStore: ${store.id} ")
       if(ListHelper.checkBlockStore(differ.currentList[index].id)){
         array.removeAt(index)
-        notifyItemRemoved(index)
+//        notifyItemRemoved(index)
       }
-      if(array.size != differ.currentList.size) differ.submitList(array)
+    }
+    if(array.size != differ.currentList.size) {
+      differ.submitList(null)
+      differ.submitList(array)
+//      notifyItemRangeChanged(0,differ.currentList.size)
     }
   }
 

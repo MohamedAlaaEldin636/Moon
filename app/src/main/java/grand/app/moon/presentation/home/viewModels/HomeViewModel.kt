@@ -26,6 +26,7 @@ import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.extensions.navigateSafe
@@ -50,6 +51,7 @@ class HomeViewModel @Inject constructor(
   private val homeUseCase: HomeUseCase
 ) : BaseViewModel() {
 
+  val followStoreRequest = FollowStoreRequest()
 
   private val _homeResponse =
     MutableStateFlow<Resource<BaseResponse<HomeResponse>>>(Resource.Default)
@@ -181,6 +183,12 @@ class HomeViewModel @Inject constructor(
     adsHomeAdapter.differ.submitList(homeList)
     notifyPropertyChanged(BR.adsHomeAdapter)
     show.set(true)
+  }
+
+  fun follow() {
+    followStoreRequest.storeId = storeAdapter.differ.currentList[storeAdapter.position].id
+    storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
+    storeAdapter.changeFollowingText()
   }
 
 }

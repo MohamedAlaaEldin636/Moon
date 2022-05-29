@@ -53,11 +53,19 @@ class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
   }
 
   fun removeItem(){
-//    Log.d(TAG, "removeItem: $position")
+    Log.d(TAG, "removeItem: $position")
+    Log.d(TAG, "removeItem_size_total: ${differ.currentList.size}")
     val list = ArrayList(differ.currentList)
     list.removeAt(position)
+    Log.d(TAG, "removeItem_tmp: ${list.size}")
+//    notifyItemRemoved(position)
+    differ.submitList(null)
     differ.submitList(list)
-    notifyItemRemoved(position)
+//    notifyDataSetChanged()
+    Log.d(TAG, "removeItem_size_after: ${differ.currentList.size}")
+//    Log.d(TAG, "removeItem: $position")
+//    differ.currentList.removeAt(position)
+//    notifyItemRemoved(position)
   }
 
   override fun getItemCount(): Int {

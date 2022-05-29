@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.store.viewModels
 
+import android.util.Log
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -96,6 +97,7 @@ class StoreBlockListViewModel @Inject constructor(
   }
 
   fun unBlock() {
+    Log.d(TAG, "unBlock: ${adapter.position}")
     followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
     storeUseCase.unBlock(followStoreRequest).launchIn(viewModelScope)
     adapter.removeItem()

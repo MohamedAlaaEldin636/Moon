@@ -11,8 +11,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.onesignal.OneSignal
+import grand.app.moon.appMoonHelper.ThirdPartyHelper
 import grand.app.moon.core.MyApplication
+import grand.app.moon.core.extenstions.isLoginWithOpenAuth
+import grand.app.moon.core.extenstions.logoutCometChat
 import grand.app.moon.data.local.preferences.AppPreferences
+import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.Constants
 
 fun Context.dpToPx(value: Float): Float {
@@ -43,11 +48,13 @@ fun Context.inflateLayout(
   return layoutInflater.inflate(layoutRes, parent, attachToRoot)
 }
 
-//fun Context.getLanguage(): String {
-//  val appPreferences =  MyApplication.instance.getSharedPreferences(
-//    AppPreferences.APP_PREFERENCES_NAME,
-//    Context.MODE_PRIVATE
-//  )
-//  return appPreferences.getString(Constants.LANGUAGE,"ar").toString()
-//}
+fun Context.logout(){
+  OneSignal.removeExternalUserId();
+  ThirdPartyHelper.clearOpenSignal()
+  MyApplication.instance.logoutCometChat()
+  AppPreferences(MyApplication.instance).clearUser()
+}
 
+fun Context.loginPage(){
+  startActivity(Intent(MyApplication.instance, AuthActivity::class.java))
+}

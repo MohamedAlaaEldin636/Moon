@@ -166,7 +166,7 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
       }
     }
     if (array.size != differ.currentList.size) {
-//      differ.submitList(null)
+      differ.submitList(null)
       differ.submitList(array)
     }
   }
@@ -190,8 +190,8 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
       }
     }
     if(list.size < differ.currentList.size){
+      differ.submitList(null)
       differ.submitList(list)
-      notifyDataSetChanged()
     }
   }
 

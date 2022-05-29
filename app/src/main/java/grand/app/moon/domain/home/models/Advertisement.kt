@@ -41,7 +41,7 @@ data class Advertisement(
   @SerializedName("phone")
   val phone: String = "",
   @SerializedName("store")
-  val store: Store? = Store(),
+  val store: Store = Store(),
   @SerializedName("latitude")
   val latitude: Double = 0.0,
   @SerializedName("longitude")

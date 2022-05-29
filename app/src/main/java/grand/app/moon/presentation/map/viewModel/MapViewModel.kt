@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.map.viewModel
 
+import android.util.Log
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.core.os.bundleOf
@@ -82,12 +83,14 @@ class MapViewModel @Inject constructor(
   }
 
   fun details(v: View) {
-    v.findNavController().navigate(
-      R.id.nav_ads, bundleOf(
-        "id" to advertisement.get()?.id,
-        "type" to type
-      )
-    )
+    Log.d(TAG, "details_id: ${advertisement.get()?.id}")
+    Log.d(TAG, "details_type: $type")
+//    v.findNavController().navigate(
+//      R.id.nav_ads, bundleOf(
+//        "id" to advertisement.get()?.id,
+//        "type" to type
+//      )
+//    )
   }
 
 

@@ -76,7 +76,7 @@ class StoreDetailsViewModel @Inject constructor(
   val storeDetailsResponse = _storeDetailsResponse
 
   @Bindable
-  val store = ObservableField<Store>()
+  val store = ObservableField(Store())
   var isLoggin = userLocalUseCase.isLoggin()
   val image = ObservableField<String>("")
 

@@ -93,8 +93,9 @@ class CommentListAdapter(val userLocalUseCase: UserLocalUseCase) : RecyclerView.
     if(position != -1 && position < differ.currentList.size){
       val array = ArrayList<Comment>(differ.currentList)
       array.removeAt(position)
+      differ.submitList(null)
       differ.submitList(array)
-      notifyItemRemoved(position)
+//      notifyItemRemoved(position)
     }
   }
 

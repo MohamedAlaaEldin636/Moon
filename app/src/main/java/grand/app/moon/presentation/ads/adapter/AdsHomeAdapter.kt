@@ -46,7 +46,7 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
     return ViewHolder(view)
   }
 
-  private val TAG = "MoreAdapter"
+  private val TAG = "AdsHomeAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemAdsHomeViewModel(data, adsRepository)
@@ -84,26 +84,54 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
   }
 
     fun checkBlockStore() {
-      ListHelper.blockStores.forEach {
-        Log.d(TAG, "checkBlockStore: BLOCKED $it")
-      }
-      val list = ArrayList<CategoryAdvertisement>(differ.currentList)
+//      ListHelper.blockStores.forEach {
+//        Log.d(TAG, "checkBlockStore: blockStores $it")
+//      }
+      val list = ArrayList<CategoryAdvertisement>()
       var isBlocked = false
-      list.forEachIndexed { indexCategoryAds, categoryAds ->
-        categoryAds.advertisements.forEachIndexed { indexAds, ads ->
-          Log.d(TAG, "checkBlockStore: ${ads.store?.id}")
-          if(ads.store?.id?.let { ListHelper.checkBlockStore(it) } == true) {
-            Log.d(TAG, "checkBlockStore: YES")
+
+      for((indexCategory , category) in differ.currentList.withIndex()){
+        val categoryAdded = category.copy()
+//        Log.d(TAG, "checkBlockStore_SIZE_CORE: ${category.advertisements.size}")
+//        Log.d(TAG, "checkBlockStore_SIZE_CLONE: ${categoryAdded.advertisements.size}")
+        categoryAdded.advertisements.clear()
+        Log.d(TAG, "checkBlockStore_SIZE_CORE: ${category.advertisements.size}")
+        Log.d(TAG, "checkBlockStore_SIZE_BEFORE: ${categoryAdded.advertisements.size}")
+        Log.d(TAG, "checkBlockStore_SIZE_DIFFER: ${differ.currentList[indexCategory].advertisements.size}")
+        for(advertisement in differ.currentList[indexCategory].advertisements){
+          Log.d(TAG, "checkBlockStore: FOUNDDDDDDD IN LOOP")
+          if(!ListHelper.checkBlockStore(advertisement.store.id)){
+            Log.d(TAG, "checkBlockStore_added: ADDEDD")
             isBlocked = true
-            list[indexCategoryAds].advertisements.removeAt(indexAds)
-          }
-          if(list[indexCategoryAds].advertisements.size != differ.currentList[indexCategoryAds].advertisements.size){
-            Log.d(TAG, "checkBlockStore: remove")
-            notifyItemRemoved(indexCategoryAds)
+            categoryAdded.advertisements.add(advertisement)
+//            list[indexCategory].advertisements.remove(advertisement)
           }
         }
+        Log.d(TAG, "checkBlockStore_SIZE_AFTER: ${categoryAdded.advertisements.size}")
+        list.add(categoryAdded)
       }
-      if(isBlocked) differ.submitList(list)
+//      differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
+//        Log.d(TAG, "checkBlockStore_ads_size: ${categoryAds.advertisements.size}")
+//        categoryAds.advertisements.forEachIndexed { indexAds, ads ->
+//          Log.d(TAG, "checkBlockStore=>>>>>>>>>>>>: ${ads.store.id}")
+//          if(ListHelper.checkBlockStore(ads.store.id) ) {
+//            Log.d(TAG, "checkBlockStore: YES")
+//            isBlocked = true
+//            Log.d(TAG, "checkBlockStore_advertisement: ${list[indexCategoryAds].advertisements.size}")
+//            Log.d(TAG, "checkBlockStore_advertisement: ${indexAds}")
+//            list[indexCategoryAds].advertisements.removeAt(indexAds)
+//          }
+//        }
+//        if(list[indexCategoryAds].advertisements.size != differ.currentList[indexCategoryAds].advertisements.size){
+//          Log.d(TAG, "checkBlockStore: remove")
+//          notifyItemRemoved(indexCategoryAds)
+//        }
+//      }
+      if(isBlocked){
+        Log.d(TAG, "checkBlockStore: FINISH")
+        differ.submitList(null)
+        differ.submitList(list)
+      }
     }
 
     inner class ViewHolder(itemView: View) :

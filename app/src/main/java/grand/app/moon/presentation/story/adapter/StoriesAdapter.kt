@@ -108,9 +108,12 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
       differ.currentList.forEachIndexed{ index, store ->
         if(ListHelper.checkBlockStore(differ.currentList[index].id)){
           array.removeAt(index)
-          notifyItemRemoved(index)
+//          notifyItemRemoved(index)
         }
-        if(array.size != differ.currentList.size) differ.submitList(array)
+      }
+      if(array.size != differ.currentList.size) {
+        differ.submitList(null)
+        differ.submitList(array)
       }
     }
 

@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.ReportDialogBinding
 import grand.app.moon.databinding.WorkingHoursDialogBinding
 import grand.app.moon.domain.utils.Resource
@@ -97,14 +98,14 @@ class ReportDialog : BottomSheetDialogFragment() {
           }
           is Resource.Success -> {
             viewModel.progress.set(false)
+            val n = findNavController()
+            n.navigateUp()
             Log.d(TAG, "setupObserver: ${viewModel.request.type}")
             if(viewModel.request.type == 2){//store 1 => report , 2 block
        /*       val bundle = Bundle()
               bundle.putBoolean(Constants.STORES_BLOCKED,true)
               setFragmentResult(Constants.BUNDLE, bundle)*/
-
-              val n = findNavController()
-              n.navigateUp()
+              viewModel.request.storeId?.let { it1 -> ListHelper.addToBlock(it1) }
               n.currentBackStackEntry?.savedStateHandle?.set(
                 Constants.STORES_BLOCKED,
                 true
