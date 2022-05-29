@@ -103,21 +103,33 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
     holder.unBind()
   }
 
-    fun checkBlockStore() {
-      val array = ArrayList(differ.currentList)
-      differ.currentList.forEachIndexed{ index, store ->
-        if(ListHelper.checkBlockStore(differ.currentList[index].id)){
-          array.removeAt(index)
+  fun checkBlockStore() {
+    val array = ArrayList(differ.currentList)
+    differ.currentList.forEachIndexed { index, store ->
+      if (ListHelper.checkBlockStore(differ.currentList[index].id)) {
+        array.removeAt(index)
 //          notifyItemRemoved(index)
-        }
-      }
-      if(array.size != differ.currentList.size) {
-        differ.submitList(null)
-        differ.submitList(array)
       }
     }
+    if (array.size != differ.currentList.size) {
+      differ.submitList(null)
+      differ.submitList(array)
+    }
+  }
 
-    inner class ViewHolder(itemView: View) :
+  fun viewedStores() {
+    val list = ArrayList(differ.currentList)
+    list.forEachIndexed{ index , it ->
+      if(ListHelper.isViewedStory(it.id)){
+        it.stories.forEach {
+          it.isSeen = true
+        }
+        notifyItemChanged(index)
+      }
+    }
+  }
+
+  inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemStoryBinding
 

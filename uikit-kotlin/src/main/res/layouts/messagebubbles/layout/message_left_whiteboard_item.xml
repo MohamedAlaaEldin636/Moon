@@ -87,8 +87,7 @@
                     android:text="@string/join"
                     android:textColor="@color/primaryTextColor"
                     app:backgroundTint="@color/textColorWhite"
-                    app:cornerRadius="8dp"
-                    android:textAllCaps="false"/>
+                    app:cornerRadius="8dp"/>
             </RelativeLayout>
 
             <HorizontalScrollView

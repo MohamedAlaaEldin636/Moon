@@ -600,6 +600,7 @@ fun ImageView.loadRoundImage(imageUrl: String?, progressBar: ProgressBar?) {
 
 @BindingAdapter("premium")
 fun loadPremium(imageView: ImageView,isPremium : Int) {
+  Log.d(TAG, "loadPremium: $isPremium")
   if(isPremium == 1){
     imageView.show()
     if (imageView.context.isEnglish()) {

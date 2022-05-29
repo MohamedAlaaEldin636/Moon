@@ -73,7 +73,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
       { it == true }
     ) {
       viewModel.blockStore = true
-      viewModel.store.get()?.id?.let { ListHelper.blockStores.add(it) }
+      viewModel.store.get()?.id?.let { ListHelper.addToBlock(it) }
       Log.d(TAG, "onViewCreated: BEFORE NAVIGATE ")
       findNavController().navigateUp()
     }

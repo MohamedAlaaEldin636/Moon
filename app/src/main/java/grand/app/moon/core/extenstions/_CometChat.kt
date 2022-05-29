@@ -11,8 +11,10 @@ import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.User
 import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMessageListActivity
 import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
+import com.cometchat.pro.uikit.ui_settings.UIKitSettings
 import com.onesignal.OneSignal
 import grand.app.moon.appMoonHelper.ThirdPartyHelper
+import grand.app.moon.appMoonHelper.language.LanguagesHelper
 import grand.app.moon.core.MyApplication
 import grand.app.moon.presentation.base.extensions.disable
 import grand.app.moon.presentation.base.extensions.enable
@@ -29,33 +31,39 @@ fun Context.startChatPage(v: View, user: User) {
   intent.putExtra(UIKitConstants.IntentStrings.NAME, user.name)
   intent.putExtra(UIKitConstants.IntentStrings.TYPE, CometChatConstants.RECEIVER_TYPE_USER)
   intent.putExtra(UIKitConstants.IntentStrings.LINK, user.link)
+  intent.putExtra(UIKitSettings.LANGUAGE_DATA, LanguagesHelper.getCurrentLanguage())
+
   v.context.startActivity(intent)
 }
 
-fun Context.openChatStore(v: View, uid: Int, name: String, image:String) {
+fun Context.openChatStore(v: View, uid: Int, name: String, image: String) {
   Log.d(TAG, "startChatConversation")
   v.disable()
   val user = User()
   user.uid = "store_$uid" // Replace with the UID for the user to be created
   user.avatar = image
   user.name = name
-  startChatPage(v,user)
+  startChatPage(v, user)
 }
 
-fun Context.loginCometChat(externalUserId: Int){
-  CometChat.login("user_$externalUserId", Constants.CHAT_AUTH_KEY, object : CometChat.CallbackListener<User>() {
-    override fun onSuccess(user: User?) {
-      user?.let {
-        Log.d(TAG, "onSuccess: ${it.uid}")
+fun Context.loginCometChat(externalUserId: Int) {
+  CometChat.login(
+    "user_$externalUserId",
+    Constants.CHAT_AUTH_KEY,
+    object : CometChat.CallbackListener<User>() {
+      override fun onSuccess(user: User?) {
+        user?.let {
+          Log.d(TAG, "onSuccess: ${it.uid}")
+        }
       }
-    }
-    override fun onError(p0: CometChatException?) {
-      Log.d(TAG, "failed: ")
-    }
-  })
+
+      override fun onError(p0: CometChatException?) {
+        Log.d(TAG, "failed: ")
+      }
+    })
 }
 
-fun Context.logoutCometChat(){
+fun Context.logoutCometChat() {
   CometChat.logout(object : CometChat.CallbackListener<String?>() {
     override fun onSuccess(p0: String?) {
       Log.d(TAG, "onSuccess: ")

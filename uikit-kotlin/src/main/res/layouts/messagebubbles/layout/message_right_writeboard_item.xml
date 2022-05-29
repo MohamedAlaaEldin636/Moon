@@ -60,8 +60,7 @@
                 app:backgroundTint="@color/textColorWhite"
                 app:cornerRadius="8dp"
                 android:id="@+id/join_writeboard"
-                android:layout_height="wrap_content"
-                android:textAllCaps="false"/>
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
         <TextView
             android:id="@+id/txt_time"

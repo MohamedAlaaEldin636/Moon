@@ -22,11 +22,11 @@
     android:layout_width="match_parent"
     android:onClick="@{ (v) -> itemViewModels.storeDetails(v) }"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimen10"
+    android:layout_marginStart="@dimen/dimen5"
     android:layout_marginTop="@dimen/dimen6"
     app:cardElevation="1dp"
     app:cardCornerRadius="@dimen/dimen16"
-    android:layout_marginEnd="@dimen/dimen10"
+    android:layout_marginEnd="@dimen/dimen5"
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -48,9 +48,11 @@
       app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
 
     <com.google.android.material.imageview.ShapeableImageView
-      android:layout_width="@dimen/dimen30"
-      android:layout_height="@dimen/dimen30"
+      android:layout_width="@dimen/dimen36"
+      android:layout_height="@dimen/dimen36"
       android:layout_margin="@dimen/dimen10"
+      app:strokeColor="@{itemViewModels.story.seen ? @color/blackOpacity2 : @color/colorAccent}"
+      app:strokeWidth="1dp"
       android:scaleType="fitXY"
       android:visibility="@{itemViewModels.story.isFirst == true ? View.GONE  : View.VISIBLE}"
       app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
@@ -103,6 +105,14 @@
       app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
       tools:text="@string/contact_us" />
 
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:premium="@{itemViewModels.store.premium}"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 
   </androidx.constraintlayout.widget.ConstraintLayout>

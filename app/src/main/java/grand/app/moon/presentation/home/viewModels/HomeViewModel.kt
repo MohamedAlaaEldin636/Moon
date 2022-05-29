@@ -83,7 +83,7 @@ class HomeViewModel @Inject constructor(
   var isLoggin = userLocalUseCase.isLoggin()
 
   fun initAllServices() {
-    storeAdapter.percentage = 48
+    storeAdapter.percentage = 51
     storeAdapter.isLogin = isLoggin
     storeAdapter.useCase = storeUseCase
     categoriesAdapter.percentage = 33
@@ -189,6 +189,11 @@ class HomeViewModel @Inject constructor(
     followStoreRequest.storeId = storeAdapter.differ.currentList[storeAdapter.position].id
     storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
     storeAdapter.changeFollowingText()
+  }
+
+  fun notifyAdapters() {
+    notifyPropertyChanged(BR.adsHomeAdapter)
+    notifyPropertyChanged(BR.storiesAdapter)
   }
 
 }

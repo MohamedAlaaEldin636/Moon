@@ -66,6 +66,8 @@ data class Store(
   val description: String = "",
   @SerializedName("created_at")
   val createdAt: String = "",
+  @SerializedName("premium")
+  val premium: Int = 0,
   @SerializedName("category")
   val category: ArrayList<Property> = arrayListOf(),
   @SerializedName("stories")

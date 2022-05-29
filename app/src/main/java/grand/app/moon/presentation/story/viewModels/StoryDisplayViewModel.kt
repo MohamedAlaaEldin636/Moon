@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.core.extenstions.startChatPage
@@ -99,6 +100,7 @@ class StoryDisplayViewModel @Inject constructor(
 
   fun nextStory() : Boolean {
     if(positionStoryAdapter < stories.size - 1) {
+      ListHelper.addViewStory(stories[positionStoryAdapter].id)
       positionStoryAdapter++
       store.set(stories[positionStoryAdapter])
       return true

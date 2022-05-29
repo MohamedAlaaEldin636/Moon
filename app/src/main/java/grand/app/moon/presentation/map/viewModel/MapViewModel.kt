@@ -63,6 +63,7 @@ class MapViewModel @Inject constructor(
   var categoriesAdapter = MapCategoriesAdapter()
   val responseStores = MutableStateFlow<Resource<BaseResponse<List<Store>>>>(Resource.Default)
   val responseAds = MutableStateFlow<Resource<BaseResponse<List<Advertisement>>>>(Resource.Default)
+  var type_ads = 2
   val categoryItem =
     CategoryItem(-1, name = "", subCategories = arrayListOf(), image = "", total = 0)
 
@@ -85,12 +86,12 @@ class MapViewModel @Inject constructor(
   fun details(v: View) {
     Log.d(TAG, "details_id: ${advertisement.get()?.id}")
     Log.d(TAG, "details_type: $type")
-//    v.findNavController().navigate(
-//      R.id.nav_ads, bundleOf(
-//        "id" to advertisement.get()?.id,
-//        "type" to type
-//      )
-//    )
+    v.findNavController().navigate(
+      R.id.nav_ads, bundleOf(
+        "id" to advertisement.get()?.id,
+        "type" to type_ads
+      )
+    )
   }
 
 

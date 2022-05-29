@@ -21,6 +21,7 @@ import com.cometchat.pro.uikit.ui_components.messages.message_actions.listener.M
 import com.cometchat.pro.uikit.ui_components.messages.message_actions.listener.OnMessageLongClick
 import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
 import com.cometchat.pro.uikit.ui_settings.UIKitSettings
+import com.cometchat.pro.uikit.ui_settings.UIKitSettings.Companion.LANGUAGE_DATA
 import java.util.*
 
 
@@ -67,6 +68,8 @@ class CometChatMessageListActivity : AppCompatActivity(),
   override fun onCreate(savedInstanceState: Bundle?) {
 
     super.onCreate(savedInstanceState)
+    if(intent != null && intent.hasExtra(LANGUAGE_DATA))
+      UIKitSettings.LANGUAGE = intent.getStringExtra(LANGUAGE_DATA).toString()
     changeLanguage(this)
     setContentView(R.layout.activity_cometchat_message_list)
 

@@ -7,7 +7,7 @@ import androidx.annotation.Keep
 @Keep
 data class CategoryAdvertisement(
   @SerializedName("advertisements")
-  val advertisements: ArrayList<Advertisement> = ArrayList(),
+  var advertisements: ArrayList<Advertisement> = ArrayList(),
   @SerializedName("id")
   var id: Int = -1,
   @SerializedName("ads_count")

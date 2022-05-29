@@ -40,6 +40,7 @@ import com.cometchat.pro.uikit.ui_resources.utils.custom_alertDialog.OnAlertDial
 import com.cometchat.pro.uikit.ui_resources.utils.item_clickListener.OnItemClickListener
 import com.cometchat.pro.uikit.ui_settings.FeatureRestriction
 import com.cometchat.pro.uikit.ui_settings.UIKitSettings
+import com.cometchat.pro.uikit.ui_settings.UIKitSettings.Companion.LANGUAGE_DATA
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
@@ -332,7 +333,7 @@ class CometChatUI : AppCompatActivity(), BottomNavigationView.OnNavigationItemSe
         intent.putExtra(UIKitConstants.IntentStrings.STATUS, user.status)
         intent.putExtra(UIKitConstants.IntentStrings.NAME, user.name)
         intent.putExtra(UIKitConstants.IntentStrings.TYPE, CometChatConstants.RECEIVER_TYPE_USER)
-        intent.putExtra(UIKitConstants.IntentStrings.LINK, user.link)
+      intent.putExtra(UIKitConstants.IntentStrings.LINK, user.link)
         startActivity(intent)
     }
 
