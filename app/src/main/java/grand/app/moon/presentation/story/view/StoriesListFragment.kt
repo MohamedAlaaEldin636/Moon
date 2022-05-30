@@ -56,4 +56,12 @@ class StoriesListFragment : BaseFragment<FragmentStoriesListBinding>() {
 
   private fun setRecyclerViewScrollListener() {
   }
+
+  override fun onResume() {
+    super.onResume()
+    viewModel.storiesAdapter.viewedStores()
+    viewModel.storiesAdapter.checkBlockStore()
+    viewModel.notifyAdapters()
+  }
+
 }

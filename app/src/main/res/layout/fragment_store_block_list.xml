@@ -20,22 +20,52 @@
       android:id="@+id/curve"
       layout="@layout/layout_curve_top" />
 
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recyclerView"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
       android:orientation="vertical"
-      android:scrollbars="none"
+      tools:visibility="visible"
       android:visibility="@{viewModel.page > 1 || viewModel.list.list.size() > 0 ? View.VISIBLE : View.GONE , default = gone }"
-      app:adapter="@{viewModel.adapter}"
-      app:orientation="@{`1`}"
-      app:span="@{`1`}"
       app:layout_constraintTop_toBottomOf="@+id/curve"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintBottom_toTopOf="@+id/rl_service_shop_progress"
-      tools:listitem="@layout/item_explore_list"
-      tools:orientation="vertical" />
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        app:adapter="@{viewModel.adapter}"
+        app:orientation="@{`1`}"
+        app:span="@{`1`}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_phone"
+        tools:listitem="@layout/item_store_blocked"
+        tools:orientation="vertical" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen30"
+        android:background="@color/colorPrimary"
+
+        android:onClick="@{(v)-> viewModel.submit(v)}"
+        android:text="@string/submit"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
       app:layout_constraintStart_toStartOf="parent"

@@ -29,6 +29,12 @@ class StoreUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
+  fun unBlock(followStoreRequest: ArrayList<Int>): Flow<Resource<BaseResponse<*>>> = flow {
+    emit(Resource.Loading)
+    val result = repository.unBlock(followStoreRequest)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
 
 
   fun storeDetails(id: Int, type: Int): Flow<Resource<BaseResponse<Store>>> = flow {

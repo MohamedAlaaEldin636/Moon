@@ -16,6 +16,9 @@ class StoreRepositoryImpl @Inject constructor(
   override
   suspend fun unBlock(storeRequest: FollowStoreRequest) = remoteDataSource.unBlock(storeRequest)
 
+  override
+  suspend fun unBlock(storeRequest: ArrayList<Int>) = remoteDataSource.unBlock(storeRequest)
+
 
   override
   suspend fun storeDetails(id: Int,type:Int ) = remoteDataSource.storeDetails(id,type)

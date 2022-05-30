@@ -143,6 +143,7 @@
             android:gravity="center"
             android:drawableStart="@drawable/ic_eye"
             android:drawableTint="@color/greyText"
+            android:drawablePadding="@dimen/dimen5"
             android:text="@{viewModel.store.viewsCount}"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size14" />
@@ -156,6 +157,7 @@
             android:layout_marginStart="@dimen/dimen10"
             android:drawableTint="@color/greyText"
             android:gravity="center"
+            android:drawablePadding="@dimen/dimen5"
             android:text="@{viewModel.store.advertisementsCount}"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size14" />

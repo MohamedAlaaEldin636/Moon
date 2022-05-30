@@ -9,11 +9,13 @@ import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.FragmentExploreListBinding
 import grand.app.moon.databinding.FragmentStoreBlockListBinding
 import grand.app.moon.databinding.FragmentStoreFollowedListBinding
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.explore.viewmodel.ExploreListViewModel
+import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.store.viewModels.StoreBlockListViewModel
 import grand.app.moon.presentation.store.viewModels.StoreFollowedListViewModel
 import kotlinx.coroutines.flow.collect
@@ -51,6 +53,25 @@ class StoreBlockListFragment : BaseFragment<FragmentStoreBlockListBinding>() {
             hideLoading()
             viewModel.setData(it.value.data)
 
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
+
+    lifecycleScope.launchWhenResumed {
+      viewModel.responseSubmit.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            openActivityAndClearStack(HomeActivity::class.java)
           }
           is Resource.Failure -> {
             hideLoading()

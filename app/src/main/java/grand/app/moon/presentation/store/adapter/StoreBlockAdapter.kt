@@ -17,6 +17,7 @@ import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
 
 class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
   var clickEvent: MutableLiveData<Int> = MutableLiveData()
+  val unBlocks = ArrayList<Int>()
   var position  = -1
   private val differCallback = object : DiffUtil.ItemCallback<Store>() {
     override fun areItemsTheSame(oldItem: Store, newItem: Store): Boolean {
@@ -82,7 +83,14 @@ class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
     holder.unBind()
   }
 
-  inner class ViewHolder(itemView: View) :
+    fun changeBlock(id: Int) {
+      if(!unBlocks.contains(id)) unBlocks.add(id)
+      else unBlocks.remove(id)
+      differ.currentList[position].isBlocked = !differ.currentList[position].isBlocked
+      notifyItemChanged(position)
+    }
+
+    inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemStoreBlockedBinding
 

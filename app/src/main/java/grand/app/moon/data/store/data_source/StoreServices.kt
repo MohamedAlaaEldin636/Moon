@@ -23,6 +23,12 @@ interface StoreServices {
   @POST("v1/store/unblock")
   suspend fun unBlock(@Body storeRequest: FollowStoreRequest): BaseResponse<*>
 
+
+  @FormUrlEncoded
+  @POST("v1/stores/unblock")
+  suspend fun unBlock(@Field("store_ids[]") storeRequest: ArrayList<Int>): BaseResponse<*>
+
+
   @GET("v1/profile/blocked")
   suspend fun getBlockedStores(@Query("page") page: Int): BaseResponse<StoreListPaginateData>
 

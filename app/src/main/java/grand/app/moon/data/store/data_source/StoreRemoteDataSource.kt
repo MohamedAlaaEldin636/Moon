@@ -15,6 +15,10 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
     apiService.unBlock(storeRequest)
   }
 
+  suspend fun unBlock(storeRequest: ArrayList<Int>) = safeApiCall {
+    apiService.unBlock(storeRequest)
+  }
+
 
 
   suspend fun storeDetails(id: Int,type: Int) = safeApiCall {

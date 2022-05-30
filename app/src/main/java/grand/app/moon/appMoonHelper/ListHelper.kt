@@ -72,4 +72,5 @@ object ListHelper {
       if(isSeen) viewedStories.add(it.id)
     }
   }
+
 }

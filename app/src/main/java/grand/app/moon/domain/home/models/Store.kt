@@ -72,7 +72,8 @@ data class Store(
   val category: ArrayList<Property> = arrayListOf(),
   @SerializedName("stories")
   val stories: ArrayList<StoryItem> = arrayListOf(),
-  var type:String = "Store"
+  var type:String = "Store",
+  var isBlocked:Boolean = true
 
 
   ) : Serializable

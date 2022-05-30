@@ -528,11 +528,11 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
           } else {
             composeBox?.ivSend?.visibility = View.GONE
             composeBox?.btnLiveReaction?.visibility = View.VISIBLE
-            composeBox?.ivMic?.visibility = View.VISIBLE
+//            composeBox?.ivMic?.visibility = View.VISIBLE //osama
             FeatureRestriction.isVoiceNotesEnabled(object : FeatureRestriction.OnSuccessListener {
               override fun onSuccess(p0: Boolean) {
                 if (p0) {
-                  composeBox!!.ivMic!!.visibility = View.VISIBLE
+//                  composeBox!!.ivMic!!.visibility = View.VISIBLE //osama
                 } else {
                   composeBox!!.ivMic!!.visibility = View.GONE
                   composeBox!!.ivSend!!.visibility = View.VISIBLE

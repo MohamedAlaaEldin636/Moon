@@ -1,27 +1,22 @@
 package grand.app.moon.presentation.store.viewModels
 
 import android.util.Log
+import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
-import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
-import grand.app.moon.domain.explore.entity.ExploreAction
-import grand.app.moon.domain.explore.entity.ExploreListPaginateData
-import grand.app.moon.domain.explore.use_case.ExploreUseCase
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.entity.StoreListPaginateData
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
-import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.store.adapter.StoreBlockAdapter
-import grand.app.moon.presentation.store.adapter.StoreFollowingAdapter
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -52,6 +47,11 @@ class StoreBlockListViewModel @Inject constructor(
     MutableStateFlow<Resource<BaseResponse<StoreListPaginateData>>>(Resource.Default)
 
   val response = _responseService
+
+  val responseSubmit =
+    MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
+
+//  val responseSubmit = _responseSubmit
 
   fun callService() {
     if (!callingService && !isLast) {
@@ -96,12 +96,30 @@ class StoreBlockListViewModel @Inject constructor(
     super.onCleared()
   }
 
+  val blocks = ArrayList<Int>()
+  fun submit(v: View){
+    Log.d(TAG, "unBlock: ${adapter.unBlocks.toString()}")
+    blocks.clear()
+    adapter.differ.currentList.forEach {
+      if(!adapter.unBlocks.contains(it.id))
+        blocks.add(it.id)
+    }
+    Log.d(TAG, "blocks: ${blocks.toString()}")
+//    storeUseCase.unBlock(blocks)
+//      .onEach {
+//        responseSubmit.value = it
+//      }
+//      .launchIn(viewModelScope)
+
+  }
+
   fun unBlock() {
     Log.d(TAG, "unBlock: ${adapter.position}")
-    followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
-    storeUseCase.unBlock(followStoreRequest).launchIn(viewModelScope)
-    adapter.removeItem()
-    ListHelper.removeStoreBlock(followStoreRequest.storeId!!)
+    adapter.changeBlock(adapter.differ.currentList[adapter.position].id)
+//    followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
+//    storeUseCase.unBlock(followStoreRequest).launchIn(viewModelScope)
+//    adapter.removeItem()
+//    ListHelper.removeStoreBlock(followStoreRequest.storeId!!)
   }
 
 
