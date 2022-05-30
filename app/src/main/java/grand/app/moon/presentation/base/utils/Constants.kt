@@ -42,6 +42,7 @@ object Constants {
   const val EXIT: Int = 31
   const val STORE_DETAILS: Int = 32
   const val SOCIAL: Int = 33
+  const val PERMISSION_GALLERY = 1000
 
 
 

@@ -22,6 +22,7 @@ import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.User
 import com.onesignal.OneSignal
 import grand.app.moon.presentation.auth.AuthActivity
+import grand.app.moon.presentation.base.extensions.checkGalleryPermissions
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
@@ -135,22 +136,8 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
 
   // check Permissions
   private fun checkGalleryPermissions(fragmentActivity: FragmentActivity): Boolean {
-    fragmentActivity.askForPermissions(
-      Permission.WRITE_EXTERNAL_STORAGE,
-      Permission.READ_EXTERNAL_STORAGE,
-      Permission.CAMERA
-    ) {}
-    return if (fragmentActivity.isAllGranted(
-        Permission.WRITE_EXTERNAL_STORAGE,
-        Permission.READ_EXTERNAL_STORAGE,
-        Permission.CAMERA
-      )
-    )
-      true
-    else {
-      fragmentActivity.showSystemAppDetailsPage()
-      false
-    }
+    return fragmentActivity.checkGalleryPermissions()
+
   }
 
   fun openLoginActivity(){
