@@ -106,11 +106,11 @@ class StoreBlockListViewModel @Inject constructor(
         blocks.add(it.id)
     }
     Log.d(TAG, "blocks: ${blocks.toString()}")
-//    storeUseCase.unBlock(blocks)
-//      .onEach {
-//        responseSubmit.value = it
-//      }
-//      .launchIn(viewModelScope)
+    storeUseCase.unBlock(blocks)
+      .onEach {
+        responseSubmit.value = it
+      }
+      .launchIn(viewModelScope)
 
   }
 
