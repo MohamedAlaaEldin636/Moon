@@ -11,6 +11,7 @@ import grand.app.moon.domain.base.FieldsValidation
 import grand.app.moon.domain.base.ValidationException
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.domain.settings.entity.NotificationPaginateData
+import grand.app.moon.domain.settings.models.AppInfoResponse
 import grand.app.moon.domain.settings.models.ContactAppValidationException
 import grand.app.moon.domain.settings.models.ContactUsRequest
 import grand.app.moon.domain.settings.models.SettingsData
@@ -31,11 +32,19 @@ class SettingsUseCase @Inject constructor(
 ) {
 
   fun settings(
-    type: String
+    type: String,
   ): Flow<Resource<BaseResponse<List<SettingsData>>>> =
     flow {
       emit(Resource.Loading)
       val result = settingsRepository.settings(type)
+      emit(result)
+    }.flowOn(Dispatchers.IO)
+
+  fun settingsAppInfo(
+    type: String,
+  ): Flow<Resource<BaseResponse<AppInfoResponse>>> =
+    flow {
+      val result = settingsRepository.settingsAppInfo(type)
       emit(result)
     }.flowOn(Dispatchers.IO)
 

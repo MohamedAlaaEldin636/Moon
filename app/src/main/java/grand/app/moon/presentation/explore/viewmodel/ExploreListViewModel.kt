@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.domain.explore.entity.ExploreAction
@@ -110,6 +111,8 @@ class ExploreListViewModel @Inject constructor(
       followStoreRequest.storeId = adapter.differ.currentList[adapter.position].store.id
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
       adapter.differ.currentList[adapter.position].store.isFollowing = !adapter.differ.currentList[adapter.position].store.isFollowing
+      adapter.changeFollowing(adapter.differ.currentList[adapter.position].store.id,adapter.differ.currentList[adapter.position].store.isFollowing)
+      ListHelper.addFollowStore(adapter.differ.currentList[adapter.position].store.id,adapter.differ.currentList[adapter.position].store.isFollowing)
       adapter.notifyItemChanged(adapter.position)
     }
   }

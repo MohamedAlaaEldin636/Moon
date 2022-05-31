@@ -72,47 +72,55 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
     holder.unBind()
   }
 
+  var check = false
   fun updateFavourite() {
     differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
       categoryAds.advertisements.forEachIndexed { indexAds, ads ->
-        if(ListHelper.isExist(ads.id) && ads.isFavorite != ListHelper.getFavourite(ads.id)) {
+        check = false
+        if (ListHelper.isExist(ads.id) && ads.isFavorite != ListHelper.getFavourite(ads.id)) {
+          check = true
           val boolean = ListHelper.getFavourite(ads.id)
           differ.currentList[indexCategoryAds].advertisements[indexAds].isFavorite = boolean
-          notifyItemChanged(indexCategoryAds)
         }
+        if(ads.store.isFollowing != ListHelper.getFollowStore(ads.store.id)){
+          check = true
+          ads.store.isFollowing = ListHelper.getFollowStore(ads.store.id)
+        }
+        if (check) notifyItemChanged(indexCategoryAds)
+
       }
     }
   }
 
-    fun checkBlockStore() {
-      ListHelper.blockStores.forEach {
-        Log.d(TAG, "blockStoreHERE: blockStores $it")
-      }
-      var isBlocked = false
-      val list = ArrayList<CategoryAdvertisement>(differ.currentList)
-      differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
-        val listAds = ArrayList<Advertisement>()
-        categoryAds.advertisements.forEachIndexed { indexAds, ads ->
-          if(!ListHelper.checkBlockStore(ads.store.id) ) {
-            isBlocked = true
-            Log.d(TAG, "checkBlockStore: ADDEDD to unBlock")
-            listAds.add(ads)
-          }
-        }
-
-        Log.d(TAG, "checkBlockStore=>>>>>>>>>>>>: ${list[indexCategoryAds].advertisements.size}")
-        list[indexCategoryAds].advertisements.clear()
-        list[indexCategoryAds].advertisements.addAll(listAds)
-        Log.d(TAG, "checkBlockStore=>>>>>>>>>>>>: ${list[indexCategoryAds].advertisements.size}")
-      }
-      if(isBlocked){
-        Log.d(TAG, "checkBlockStore: FINISH")
-        differ.submitList(null)
-        differ.submitList(list)
-      }
+  fun checkBlockStore() {
+    ListHelper.blockStores.forEach {
+      Log.d(TAG, "blockStoreHERE: blockStores $it")
     }
+    var isBlocked = false
+    val list = ArrayList<CategoryAdvertisement>(differ.currentList)
+    differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
+      val listAds = ArrayList<Advertisement>()
+      categoryAds.advertisements.forEachIndexed { indexAds, ads ->
+        if (!ListHelper.checkBlockStore(ads.store.id)) {
+          isBlocked = true
+          Log.d(TAG, "checkBlockStore: ADDEDD to unBlock")
+          listAds.add(ads)
+        }
+      }
 
-    inner class ViewHolder(itemView: View) :
+      Log.d(TAG, "checkBlockStore=>>>>>>>>>>>>: ${list[indexCategoryAds].advertisements.size}")
+      list[indexCategoryAds].advertisements.clear()
+      list[indexCategoryAds].advertisements.addAll(listAds)
+      Log.d(TAG, "checkBlockStore=>>>>>>>>>>>>: ${list[indexCategoryAds].advertisements.size}")
+    }
+    if (isBlocked) {
+      Log.d(TAG, "checkBlockStore: FINISH")
+      differ.submitList(null)
+      differ.submitList(list)
+    }
+  }
+
+  inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemAdsHomeBinding
 

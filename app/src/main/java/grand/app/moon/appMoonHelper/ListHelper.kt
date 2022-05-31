@@ -9,11 +9,27 @@ object ListHelper {
   val adsList = mutableMapOf<Int,Boolean>()
   val blockStores = mutableListOf<Int>()
   val viewedStories = mutableListOf<Int>()
+  val followStores = mutableMapOf<Int,Boolean>()
 
   fun addAllAds(list : ArrayList<Advertisement>){
     list.forEach {
       adsList[it.id] = it.isFavorite
+      addFollowStore(it.store.id,it.store.isFollowing)
     }
+  }
+
+  fun addFollowStore(list : List<Store>){
+    list.forEach {
+      followStores[it.id] = it.isFollowing
+    }
+  }
+
+  fun addFollowStore(storeId: Int,isFollowing: Boolean){
+    followStores[storeId] = isFollowing
+  }
+
+  fun getFollowStore(storeId: Int): Boolean {
+    return followStores[storeId] ?: false
   }
 
   fun addOrUpdate(adsId: Int , value: Boolean){

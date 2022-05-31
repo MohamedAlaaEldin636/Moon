@@ -180,5 +180,7 @@
   <string name="member_of">Member of</string>
   <string name="new_notification">New notice from Moon</string>
     <string name="submit">Submit</string>
+    <string name="camera">كاميرا</string>
+  <string name="gallery">معرض</string>
 
 </resources>

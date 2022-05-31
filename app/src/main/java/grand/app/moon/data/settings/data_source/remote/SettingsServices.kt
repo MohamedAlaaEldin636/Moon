@@ -2,6 +2,7 @@ package grand.app.moon.data.settings.data_source.remote
 
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.domain.settings.entity.NotificationPaginateData
+import grand.app.moon.domain.settings.models.AppInfoResponse
 import grand.app.moon.domain.settings.models.ContactUsRequest
 import grand.app.moon.domain.settings.models.SettingsData
 import grand.app.moon.domain.utils.BaseResponse
@@ -17,6 +18,11 @@ interface SettingsServices {
   suspend fun settings(
     @Query("type") type: String,
   ): BaseResponse<List<SettingsData>>
+
+  @GET("v1/settings")
+  suspend fun settingsAppInfo(
+    @Query("type") type: String,
+  ): BaseResponse<AppInfoResponse>
 
   @GET("v1/notifications")
   suspend fun notifications(@Query("notify_type") type: Int): BaseResponse<NotificationPaginateData>

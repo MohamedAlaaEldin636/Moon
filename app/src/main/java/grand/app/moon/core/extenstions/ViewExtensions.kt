@@ -18,6 +18,7 @@ import com.google.android.exoplayer2.MediaItem
 import android.os.Build
 import android.text.Html
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.webkit.URLUtil
@@ -25,6 +26,7 @@ import android.widget.*
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
@@ -610,6 +612,24 @@ fun loadPremium(imageView: ImageView,isPremium : Int) {
   }else
     imageView.hide()
 }
+
+fun View.showPopup(list: List<String>, context: Context = this.context, listener: (MenuItem) -> Unit) {
+  val popupMenu = PopupMenu(context, this)
+
+  popupMenu.inflate(R.menu.menu_empty)
+  for (item in list) {
+    popupMenu.menu.add(item)
+  }
+
+  popupMenu.setOnMenuItemClickListener {
+    listener(it)
+
+    false
+  }
+
+  popupMenu.show()
+}
+
 
 
 @BindingAdapter("load_drawable")

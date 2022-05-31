@@ -15,7 +15,11 @@ import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.dmoral.toasty.Toasty
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.callPhone
+import grand.app.moon.core.extenstions.navigateMap
+import grand.app.moon.core.extenstions.sendMail
 import grand.app.moon.domain.auth.entity.model.User
+import grand.app.moon.domain.settings.models.AppInfoResponse
 import grand.app.moon.domain.settings.models.SettingsData
 import grand.app.moon.domain.utils.isValidEmail
 import grand.app.moon.helpers.PopUpMenuHelper
@@ -36,6 +40,8 @@ class ContactUsViewModel @Inject constructor(
 //    MutableStateFlow<Resource<BaseResponse<ArrayList<SettingsData>>>>(Resource.Default)
 //  val settingsResponse = _settingsResponse
 
+  val appInfoResponse = ObservableField<AppInfoResponse>()
+
   var type = ObservableField("")
   val title = ObservableField("")
   val title1 = ObservableField("")
@@ -48,12 +54,22 @@ class ContactUsViewModel @Inject constructor(
   val _contactReasonResponse = MutableStateFlow<Resource<BaseResponse<List<SettingsData>>>>(Resource.Default)
   val contactReasonResponse = _contactReasonResponse
 
+  val _contactAppInfoResponse = MutableStateFlow<Resource<BaseResponse<AppInfoResponse>>>(Resource.Default)
+
   var validationException = SingleLiveEvent<Int>()
 
   init {
     //2=> get Contact Us
+    getContactUs()
+  }
+
+  private fun getContactUs() {
     settingsUseCase.settings("2").onEach { result ->
       contactReasonResponse.value = result
+    }.launchIn(viewModelScope)
+
+    settingsUseCase.settingsAppInfo("13").onEach { result ->
+      _contactAppInfoResponse.value = result
     }.launchIn(viewModelScope)
   }
 
@@ -89,12 +105,27 @@ class ContactUsViewModel @Inject constructor(
     when (type) {
       Constants.MAIL -> {
         setData(v.context.getString(R.string.send_mail), "", "", R.drawable.ic_email)
+        if(appInfoResponse.get()?.email?.isNotEmpty() == true){
+          this.title1.set(appInfoResponse.get()?.email!![0].content)
+          if(appInfoResponse.get()?.email?.size!! > 1)
+            this.title2.set(appInfoResponse.get()!!.email[1].content)
+        }
       }
       Constants.LOCATION -> {
         setData(v.context.getString(R.string.main_moon_location), "", "", R.drawable.ic_pin)
+        if(appInfoResponse.get()?.address?.isNotEmpty() == true){
+          this.title1.set(appInfoResponse.get()?.address!![0].content)
+          if(appInfoResponse.get()?.address?.size!! > 1)
+            this.title2.set(appInfoResponse.get()!!.address[1].content)
+        }
       }
       Constants.PHONE -> {
         setData(v.context.getString(R.string.call_for_phone_list), "", "", R.drawable.ic_phone)
+        if(appInfoResponse.get()?.phone?.isNotEmpty() == true){
+          this.title1.set(appInfoResponse.get()?.phone!![0].content)
+          if(appInfoResponse.get()?.phone?.size!! > 1)
+            this.title2.set(appInfoResponse.get()!!.phone[1].content)
+        }
       }
     }
   }
@@ -129,6 +160,21 @@ class ContactUsViewModel @Inject constructor(
       Log.d(TAG, "setData: ")
       items.add(it.content)
     }
+  }
+
+  fun clickTitle(position:Int , v: View){
+    when (this.type.get()) {
+      Constants.MAIL -> {
+        v.context.sendMail(appInfoResponse.get()!!.email[position].content,v.context.getString(R.string.app_name),"")
+      }
+      Constants.PHONE -> {
+        v.context.callPhone(appInfoResponse.get()!!.phone[position].content)
+      }
+    }
+  }
+
+  fun setData(appInfoResponse: AppInfoResponse) {
+    this.appInfoResponse.set(appInfoResponse)
   }
 
 

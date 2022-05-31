@@ -18,7 +18,7 @@ import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
 class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
   var clickEvent: MutableLiveData<Int> = MutableLiveData()
   val unBlocks = ArrayList<Int>()
-  var position  = -1
+  var position = -1
   private val differCallback = object : DiffUtil.ItemCallback<Store>() {
     override fun areItemsTheSame(oldItem: Store, newItem: Store): Boolean {
       return oldItem.id == newItem.id
@@ -31,14 +31,15 @@ class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
   }
   val differ = AsyncListDiffer(this, differCallback)
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_store_blocked, parent, false)
+    val view =
+      LayoutInflater.from(parent.context).inflate(R.layout.item_store_blocked, parent, false)
     return ViewHolder(view)
   }
 
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemStoreViewModel(data,3, 100,null,position)
+    val itemViewModel = ItemStoreViewModel(data, 3, 100, null, position)
     holder.setViewModel(itemViewModel)
   }
 
@@ -47,13 +48,13 @@ class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
     val array = ArrayList<Store>(differ.currentList)
     val size = array.size
     array.addAll(insertList)
-    Log.d(TAG, "insertData: "+size)
+    Log.d(TAG, "insertData: " + size)
 //    notifyItemRangeInserted(size,array.size)
     differ.submitList(array)
     notifyDataSetChanged()
   }
 
-  fun removeItem(){
+  fun removeItem() {
     Log.d(TAG, "removeItem: $position")
     Log.d(TAG, "removeItem_size_total: ${differ.currentList.size}")
     val list = ArrayList(differ.currentList)
@@ -83,14 +84,21 @@ class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
     holder.unBind()
   }
 
-    fun changeBlock(id: Int) {
-      if(!unBlocks.contains(id)) unBlocks.add(id)
-      else unBlocks.remove(id)
-      differ.currentList[position].isBlocked = !differ.currentList[position].isBlocked
-      notifyItemChanged(position)
-    }
+  fun changeBlock(id: Int) {
+    Log.d(TAG, "changeBlock: $id")
+    if (!unBlocks.contains(id)) unBlocks.add(id)
+    else unBlocks.remove(id)
+    differ.currentList[position].isBlocked = !differ.currentList[position].isBlocked
+    notifyItemChanged(position)
+  }
 
-    inner class ViewHolder(itemView: View) :
+  fun setAllBlocks(list: ArrayList<Store>){
+    list.forEach {
+      unBlocks.add(it.id)
+    }
+  }
+
+  inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     lateinit var itemLayoutBinding: ItemStoreBlockedBinding
 

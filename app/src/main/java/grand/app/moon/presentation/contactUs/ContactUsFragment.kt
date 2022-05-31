@@ -76,5 +76,28 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding>() {
         }
       }
     }
+
+    lifecycleScope.launchWhenResumed {
+      viewModel._contactAppInfoResponse.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            viewModel.setData(it.value.data)
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
+
+
   }
+
+
 }

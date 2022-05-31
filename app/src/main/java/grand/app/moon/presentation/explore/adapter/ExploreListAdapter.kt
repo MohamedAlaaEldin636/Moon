@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.ItemExploreListBinding
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.explore.entity.Explore
@@ -110,6 +111,39 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
       Log.d(TAG, "updateTotalComments: $position")
       differ.currentList[position].comments = total
       notifyItemChanged(position)
+    }
+  }
+
+  fun changeFollowing(id: Int, following: Boolean) {
+    differ.currentList.forEachIndexed{ index , explore ->
+      if(explore.store.id == id && explore.store.isFollowing != following){
+        explore.store.isFollowing = following
+        notifyItemChanged(index)
+      }
+    }
+  }
+
+  fun checkFollowingStore() {
+    differ.currentList.forEachIndexed{ index , explore ->
+      if (explore.store.isFollowing != ListHelper.getFollowStore(explore.store.id)) {
+        explore.store.isFollowing = ListHelper.getFollowStore(explore.store.id)
+        notifyItemChanged(index)
+      }
+    }
+  }
+
+  fun checkBlockStore() {
+    val array = ArrayList<Explore>()
+    differ.currentList.forEachIndexed{ index, explore ->
+      if(!ListHelper.checkBlockStore(differ.currentList[index].store.id)){
+        array.add(explore)
+//        notifyItemRemoved(index)
+      }
+    }
+    if(array.size != differ.currentList.size) {
+      differ.submitList(null)
+      differ.submitList(array)
+//      notifyItemRangeChanged(0,differ.currentList.size)
     }
   }
 

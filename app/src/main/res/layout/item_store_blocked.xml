@@ -32,7 +32,6 @@
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_store_followed"
         app:loadImage="@{viewModel.store.image}"
-        android:onClick="@{ (v) -> viewModel.storeDetails(v)}"
         android:layout_width="@dimen/dimen80"
         android:layout_height="@dimen/dimen80"
         app:layout_constraintStart_toStartOf="parent"

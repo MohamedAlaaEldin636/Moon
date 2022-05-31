@@ -70,6 +70,7 @@ object RetrofitModule {
 //    var lang = AppPreferences.LANGUAGE
     if(appPreferences.getLocal(Constants.LANGUAGE).isEmpty())
       appPreferences.setLocal(Constants.LANGUAGE,Constants.DEFAULT_LANGUAGE)
+
 //    Log.d(TAG, "provideHeadersInterceptor: $lang")
 //    Log.d(TAG, "provideHeadersInterceptor: ${appPreferences.getLocal(Constants.LANGUAGE)}")
     Interceptor { chain ->

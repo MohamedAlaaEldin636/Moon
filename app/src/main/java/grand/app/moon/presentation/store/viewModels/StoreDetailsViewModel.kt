@@ -16,6 +16,7 @@ import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.FilterDialog
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
@@ -111,6 +112,15 @@ class StoreDetailsViewModel @Inject constructor(
       followStoreRequest.storeId = store.get()?.id
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
       store.get()?.isFollowing = store.get()?.isFollowing != true
+      store.get()?.id?.let {
+        store.get()?.isFollowing?.let { it1 ->
+          ListHelper.addFollowStore(
+            it,
+            it1
+          )
+        }
+      }
+
       notifyChange()
     }
   }
@@ -134,7 +144,7 @@ class StoreDetailsViewModel @Inject constructor(
 //      description = it
 //    }
 //    val name = if(store.get()?.name == null) "" else store.get()?.name
-    store.get()?.share?.let { share(v.context, store.get()?.name+store.get()?.description, it) }
+    store.get()?.share?.let { share(v.context, store.get()?.name + store.get()?.description, it) }
   }
 
   fun zoomImage(v: View) {
@@ -181,9 +191,10 @@ class StoreDetailsViewModel @Inject constructor(
 
   fun whatsapp(v: View) {
     viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id,type = 7))
+      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 7))
     }
-    var url = "https://api.whatsapp.com/send?phone=${store.get()?.country?.country_code+store.get()?.phone}"
+    var url =
+      "https://api.whatsapp.com/send?phone=${store.get()?.country?.country_code + store.get()?.phone}"
     val i = Intent(Intent.ACTION_VIEW)
     url += "&text=" + URLEncoder.encode(
       store.get()?.name,
@@ -221,7 +232,7 @@ class StoreDetailsViewModel @Inject constructor(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_report_reason),
           7,
-          store.get()!!.id,-1
+          store.get()!!.id, -1
         )
       )
     }
@@ -229,7 +240,7 @@ class StoreDetailsViewModel @Inject constructor(
 
   fun phone(v: View) {
     viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id,type = 6))
+      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 6))
     }
     store.get()?.phone?.let { callPhone(v.context, it) }
   }
@@ -240,7 +251,7 @@ class StoreDetailsViewModel @Inject constructor(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_block_reason),
           8,
-          store.get()!!.id,-1
+          store.get()!!.id, -1
         )
       )
     }
@@ -248,7 +259,7 @@ class StoreDetailsViewModel @Inject constructor(
 
   fun chat(v: View) {
     viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id,type = 8))
+      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 8))
     }
     if (v.context.isLoginWithOpenAuth()) {
       store.get()?.let {
@@ -322,12 +333,12 @@ class StoreDetailsViewModel @Inject constructor(
     }
   }
 
-  fun storeDetails(v: View){
+  fun storeDetails(v: View) {
 
   }
 
   fun filter(v: View) {
-    store.get()?.id?.let { toFilter(v,store_id = it,store = store.get()!!) }
+    store.get()?.id?.let { toFilter(v, store_id = it, store = store.get()!!) }
   }
 
 

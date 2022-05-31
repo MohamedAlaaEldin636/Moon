@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
@@ -114,8 +115,8 @@ class StoreListViewModel @Inject constructor(
       if (page == 1) {
         Log.d(TAG, "setData: submitList")
 //        adapter = InvoicesAdapter()
+        adapter.differ.submitList(null)
         adapter.differ.submitList(it.list)
-        notifyPropertyChanged(BR.adapter)
       } else {
         Log.d(TAG, "setData: insertData")
         adapter.insertData(it.list)
@@ -124,6 +125,9 @@ class StoreListViewModel @Inject constructor(
       notifyPropertyChanged(BR.callingService)
       show.set(true)
     }
+    ListHelper.addFollowStore(data.list)
+    notifyPropertyChanged(BR.page)
+    notifyPropertyChanged(BR.adapter)
   }
 
   fun reset(){
@@ -143,6 +147,9 @@ class StoreListViewModel @Inject constructor(
     adapter.changeFollowingText()
   }
 
+  fun notifyAdapters() {
+    notifyPropertyChanged(BR.adapter)
+  }
 
 
 }

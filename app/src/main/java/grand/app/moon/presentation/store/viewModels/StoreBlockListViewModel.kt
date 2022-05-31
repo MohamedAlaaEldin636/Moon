@@ -75,6 +75,7 @@ class StoreBlockListViewModel @Inject constructor(
     list.set(data)
     data.let {
       println("size:" + data.list.size)
+      adapter.setAllBlocks(data.list)
       isLast = data.links.next == null
       if (page == 1) {
 //        adapter = InvoicesAdapter()

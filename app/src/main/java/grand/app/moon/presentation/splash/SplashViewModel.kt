@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.splash
 
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import grand.app.moon.domain.general.use_case.GeneralUseCases
@@ -42,6 +43,19 @@ class SplashViewModel @Inject constructor(
 
   }
 
+  fun checkDeepLink(intent: Intent) : Boolean{
+    val action = intent.action
+    val data = intent.data
+    try {
+      if (action != null && data != null) {
+        Log.d(TAG, "checkDeepLink: ")
+        return true
+      }
+    }catch (e: Exception){
+      e.printStackTrace()
+    }
+    return false
+  }
   fun saveCategories(data: BaseResponse<ArrayList<CategoryItem>>) {
     viewModelScope.launch {
       for (category in data.data)

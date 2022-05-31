@@ -103,7 +103,7 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
   var changed = false
   fun updateExplores(result: ExploreListPaginateData) {
 //    val list = ArrayList(differ.currentList)
-    if(swapPosition != -1) {
+//    if(swapPosition != -1) {
 //      Log.d(TAG, "updateExplores: swap ${swapPosition} id Before ${result.list[0].id} with likes ${result.list[0].likes} , ${differ.currentList[0].id}")
 //      Log.d(TAG, "updateExplores: list ${result.list.size}")
 //      Log.d(TAG, "updateExplores: list before ${differ.currentList.size}")
@@ -117,6 +117,10 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
 //      result.list.forEachIndexed { index, explore ->
 //        Log.d(TAG, "updateExplores: ${differ.currentList[index].id} , ${explore.id}")
 //      }
+//    }
+    if(differ.currentList.size != result.list.size){
+      differ.submitList(null)
+      differ.submitList(result.list)
     }
 
 //    tmpList.forEachIndexed{ index,explore ->
@@ -127,7 +131,7 @@ class ExploreAdapter: RecyclerView.Adapter<ExploreAdapter.ViewHolder>() {
 //        notifyItemChanged(index)
 //      }
 //    }
-    notifyDataSetChanged()
+//    notifyDataSetChanged()
 //    result.list.forEachIndexed{ index, explore ->
 //      changed = false
 //      Log.d(TAG, "updateExplores: Starigng => ${differ.currentList[index].id} => ${differ.currentList[index].likes} , ${explore.id} ${explore.likes} =>Tmp ${tmpList[index].id} ${tmpList[index].likes}")

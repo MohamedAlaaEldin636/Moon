@@ -100,6 +100,8 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
 
   override fun onResume() {
     super.onResume()
+    viewModel.adapter.checkFollowingStore()
+    viewModel.adapter.checkBlockStore()
     viewModel.adapter.user = viewModel.userLocalUseCase.invoke()
     viewModel.adapter.notifyDataSetChanged()
   }

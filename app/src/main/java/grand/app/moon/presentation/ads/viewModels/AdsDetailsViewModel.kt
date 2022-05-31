@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import androidx.core.os.bundleOf
 import grand.app.moon.appMoonHelper.ListHelper
+import grand.app.moon.core.extenstions.navigateMap
 import grand.app.moon.presentation.ads.adapter.SwitchAdapter
 import java.util.*
 
@@ -60,7 +61,7 @@ class AdsDetailsViewModel @Inject constructor(
 
   @Inject
   @Bindable
-  lateinit var  adsAdapter : AdsAdapter
+  lateinit var adsAdapter: AdsAdapter
 
   var blockStore = false
 
@@ -77,7 +78,7 @@ class AdsDetailsViewModel @Inject constructor(
 
   var fromStore = false
 
-  fun getDetails(id: Int, type: Int,fromStore: Boolean) {
+  fun getDetails(id: Int, type: Int, fromStore: Boolean) {
     this.fromStore = fromStore
     Log.d(TAG, "getDetails: ")
     this.id = id
@@ -94,12 +95,20 @@ class AdsDetailsViewModel @Inject constructor(
       followStoreRequest.storeId = advertisement.get()?.store?.id
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
       advertisement.get()?.store?.isFollowing = advertisement.get()?.store?.isFollowing != true
+      advertisement.get()?.store?.id?.let {
+        advertisement.get()?.store?.isFollowing?.let { it1 ->
+          ListHelper.addFollowStore(
+            it,
+            it1
+          )
+        }
+      }
       notifyChange()
     }
   }
 
   fun storeDetails(v: View) {
-    if(!fromStore) {
+    if (!fromStore) {
 //      v.findNavController().navigate(
 //        AdsDetailsFragmentDirections.actionAdsDetailsFragmentToStoreDetailsFragment3(advertisement.get()?.store!!.id)
 //      )
@@ -111,7 +120,7 @@ class AdsDetailsViewModel @Inject constructor(
         ), Constants.NAVIGATION_OPTIONS
       )
 
-    }else v.findNavController().navigateUp()
+    } else v.findNavController().navigateUp()
   }
 
   fun back(v: View) {
@@ -129,7 +138,15 @@ class AdsDetailsViewModel @Inject constructor(
 //        )
 //      }
 //    }
-    advertisement.get()?.description?.let { advertisement.get()?.share?.let { it1 -> share(v.context, it, it1) } }
+    advertisement.get()?.description?.let {
+      advertisement.get()?.share?.let { it1 ->
+        share(
+          v.context,
+          it,
+          it1
+        )
+      }
+    }
   }
 
   fun whatsapp(v: View) {
@@ -145,15 +162,14 @@ class AdsDetailsViewModel @Inject constructor(
     }
   }
 
-  fun location(v: View){
-    val uri: String = java.lang.String.format(
-      Locale.ENGLISH,
-      "http://maps.google.com/maps?q=loc:%f,%f",
-      advertisement.get()?.latitude,
-      advertisement.get()?.longitude
-    )
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-    v.context.startActivity(intent)
+  fun location(v: View) {
+    advertisement.get()?.longitude?.let {
+      advertisement.get()?.latitude?.let { it1 ->
+        v.context.navigateMap(
+          it1, it
+        )
+      }
+    }
   }
 
   fun phone(v: View) {
@@ -178,7 +194,7 @@ class AdsDetailsViewModel @Inject constructor(
         true -> advertisement.get()?.favoriteCount?.plus(1)
         else -> advertisement.get()?.favoriteCount?.minus(1)
       }
-      ListHelper.addOrUpdate(advertisement.get()!!.id,advertisement.get()!!.isFavorite)
+      ListHelper.addOrUpdate(advertisement.get()!!.id, advertisement.get()!!.isFavorite)
       notifyChange()
     }
   }
@@ -210,7 +226,7 @@ class AdsDetailsViewModel @Inject constructor(
     if (!isLoggin && isAuthorize) {
       Log.d(TAG, "recallApi: DONER")
       isLoggin = isAuthorize
-      getDetails(id, type,fromStore)
+      getDetails(id, type, fromStore)
     }
   }
 
@@ -235,7 +251,7 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun checkBlockStore(): Boolean {
-    if(advertisement.get()?.id != 0 ) {
+    if (advertisement.get()?.id != 0) {
       if (advertisement.get()?.store?.id?.let { ListHelper.checkBlockStore(it) } == true)
         return true
     }

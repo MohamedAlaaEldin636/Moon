@@ -90,6 +90,15 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
 //    }
   }
 
+  fun store(v: View){
+    v.findNavController().navigate(
+      R.id.nav_store,
+      bundleOf(
+        "id" to model.store.id,
+        "type" to 3
+      ),Constants.NAVIGATION_OPTIONS)
+  }
+
   fun click(v: View) {
     val f = v.findFragment<Fragment>()
     when (f) {

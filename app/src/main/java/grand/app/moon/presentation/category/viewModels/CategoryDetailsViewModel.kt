@@ -11,6 +11,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.CategoryDetails
@@ -127,6 +128,7 @@ class CategoryDetailsViewModel @Inject constructor(
   fun setData(data: CategoryDetails, categoryAdvertisement: CategoryAdvertisement) {
     getCategories()
     storeAdapter.differ.submitList(data.stores)
+    ListHelper.addFollowStore(data.stores)
     notifyPropertyChanged(BR.storeAdapter)
 
     val list = ArrayList<CategoryAdvertisement>()

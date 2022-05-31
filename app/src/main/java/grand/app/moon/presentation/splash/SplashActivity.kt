@@ -47,6 +47,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
 
   private fun decideNavigationLogic() {
+    val checkDeepLink = viewModel.checkDeepLink(intent)
     viewModel.clickEvent.observe(this, {
       Log.d(TAG, "decideNavigationLogic: $it")
       val targetActivity = when (it) {

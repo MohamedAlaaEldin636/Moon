@@ -135,26 +135,22 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
     notifyDataSetChanged()
   }
 
-  fun updateFavourite(id: Int, boolean: Boolean) {
-    differ.currentList.forEachIndexed { index, advertisement ->
-      if (advertisement.id == id) {
-        if (advertisement.isFavorite != boolean) {
-          advertisement.isFavorite = boolean
-          advertisement.favoriteCount =
-            if (advertisement.isFavorite) advertisement.favoriteCount++ else advertisement.favoriteCount--
-          notifyItemChanged(index)
-        }
-      }
-    }
-  }
 
+  var check = false
   fun updateFavourite() {
     differ.currentList.forEachIndexed { index, it ->
+      check = false
       if (ListHelper.isExist(it.id) && it.isFavorite != ListHelper.getFavourite(it.id)) {
         it.isFavorite = ListHelper.getFavourite(it.id)
         it.favoriteCount = if (it.isFavorite) it.favoriteCount++ else it.favoriteCount--
-        notifyItemChanged(index)
+        check = true
       }
+      if(it.store.isFollowing != ListHelper.getFollowStore(it.store.id)){
+        it.store.isFollowing = ListHelper.getFollowStore(it.store.id)
+        check = true
+      }
+      if(check)
+        notifyItemChanged(index)
     }
   }
 

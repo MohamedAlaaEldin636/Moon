@@ -174,4 +174,6 @@
   <string name="member_of">عضو من</string>
   <string name="new_notification">إشعار جديد من التطبيق</string>
     <string name="submit">تأكيد</string>
+    <string name="camera">كاميرا</string>
+  <string name="gallery">معرض</string>
 </resources>

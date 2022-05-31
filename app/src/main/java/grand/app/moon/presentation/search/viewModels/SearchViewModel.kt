@@ -136,6 +136,7 @@ class SearchViewModel @Inject constructor(
       isLast = data.links.next == null
       if (page == 1) {
 //        adapter = InvoicesAdapter()
+        adapter.differ.submitList(null)
         adapter.differ.submitList(it.list)
         show.set(true)
         notifyPropertyChanged(BR.adapter)

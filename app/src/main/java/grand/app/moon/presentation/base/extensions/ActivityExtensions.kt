@@ -11,10 +11,12 @@ import grand.app.moon.presentation.base.utils.Constants
 fun <A : Activity> Activity.openActivityAndClearStack(activity: Class<A>) {
   Intent(this, activity).apply {
     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    intent = intent
     startActivity(this)
     finishAffinity()
   }
 }
+
 
 fun Activity.checkGalleryPermissions(): Boolean {
   val array = arrayOf(

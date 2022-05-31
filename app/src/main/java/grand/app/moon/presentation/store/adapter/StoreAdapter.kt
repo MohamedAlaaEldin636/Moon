@@ -95,6 +95,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   fun changeFollowingText(){
     val list = ArrayList(differ.currentList)
     list[position].isFollowing = !list[position].isFollowing
+    ListHelper.addFollowStore(list[position].id,list[position].isFollowing)
     notifyItemChanged(position)
   }
 
@@ -132,7 +133,6 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   fun checkBlockStore() {
     val array = ArrayList(differ.currentList)
     differ.currentList.forEachIndexed{ index, store ->
-      Log.d(TAG, "checkBlockStore: ${store.id} ")
       if(ListHelper.checkBlockStore(differ.currentList[index].id)){
         array.removeAt(index)
 //        notifyItemRemoved(index)
@@ -142,6 +142,14 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
       differ.submitList(null)
       differ.submitList(array)
 //      notifyItemRangeChanged(0,differ.currentList.size)
+    }
+  }
+  fun checkFollowingStore(){
+    differ.currentList.forEachIndexed { index, store ->
+      if (store.isFollowing != ListHelper.getFollowStore(store.id)) {
+        store.isFollowing = ListHelper.getFollowStore(store.id)
+        notifyItemChanged(index)
+      }
     }
   }
 

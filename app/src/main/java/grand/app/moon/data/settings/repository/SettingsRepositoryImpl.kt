@@ -3,6 +3,7 @@ package grand.app.moon.data.settings.repository
 import grand.app.moon.data.settings.data_source.remote.SettingsRemoteDataSource
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.domain.settings.entity.NotificationPaginateData
+import grand.app.moon.domain.settings.models.AppInfoResponse
 import grand.app.moon.domain.settings.models.ContactUsRequest
 import grand.app.moon.domain.settings.models.SettingsData
 import grand.app.moon.domain.settings.repository.SettingsRepository
@@ -19,6 +20,12 @@ class SettingsRepositoryImpl @Inject constructor(private val remoteDataSource: S
   override suspend fun settings(
     type: String
   ): Resource<BaseResponse<List<SettingsData>>> = remoteDataSource.settings(type)
+
+  override suspend fun settingsAppInfo(
+    type: String
+  ): Resource<BaseResponse<AppInfoResponse>> = remoteDataSource.settingsAppInfo(type)
+
+
 
   override suspend fun notifications(type: Int): Resource<BaseResponse<NotificationPaginateData>> =
     remoteDataSource.notifications(type)

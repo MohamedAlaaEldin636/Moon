@@ -97,11 +97,19 @@ open class BaseViewModel : ViewModel(), Observable {
   }
 
 
-  fun shareWhatsapp(v: View, title: String, desc: String, phone: String) {
+  fun shareWhatsapp(v: View, title: String?,desc: String?, phone: String) {
+    val titleWhatsapp = when(title){
+      null -> ""
+      else -> title
+    }
+    val description = when(desc){
+      null -> ""
+      else -> desc
+    }
     var url = "https://api.whatsapp.com/send?phone=${phone}"
     val i = Intent(Intent.ACTION_VIEW)
     url += "&text=" + URLEncoder.encode(
-      title + "\n" + desc,
+      titleWhatsapp + "\n" + description,
       "UTF-8"
     )
     try {

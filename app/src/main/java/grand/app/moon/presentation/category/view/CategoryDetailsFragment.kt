@@ -131,6 +131,7 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
   override fun onResume() {
     super.onResume()
     viewModel.adsHomeAdapter.updateFavourite()
+    viewModel.storeAdapter.checkFollowingStore()
     viewModel.storeAdapter.checkBlockStore()
     viewModel.storiesAdapter.checkBlockStore()
   }

@@ -132,4 +132,12 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
   private fun setRecyclerViewScrollListener() {
     setSpan(2)
   }
+
+  override fun onResume() {
+    super.onResume()
+    viewModel.adapter.checkBlockStore()
+    viewModel.adapter.checkFollowingStore()
+    viewModel.notifyAdapters()
+  }
+
 }

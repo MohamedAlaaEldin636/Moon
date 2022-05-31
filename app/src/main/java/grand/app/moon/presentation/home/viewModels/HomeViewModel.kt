@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.home.viewModels
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +21,7 @@ import grand.app.moon.BR
 import grand.app.moon.NavHomeDirections
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
+import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.CategoryItem
@@ -87,7 +89,6 @@ class HomeViewModel @Inject constructor(
     storeAdapter.isLogin = isLoggin
     storeAdapter.useCase = storeUseCase
     categoriesAdapter.percentage = 33
-
     getCategories()
     callService()
   }
@@ -98,6 +99,7 @@ class HomeViewModel @Inject constructor(
   }
 
   private fun getCategories() {
+    accountRepository
     viewModelScope.launch {
       accountRepository.getCategories().collect {
         val list = ArrayList<CategoryItem>()
@@ -180,6 +182,10 @@ class HomeViewModel @Inject constructor(
     homeList.forEach {
       ListHelper.addAllAds(it.advertisements)
     }
+
+    ListHelper.addFollowStore(data.followingsStores)
+    ListHelper.addFollowStore(data.mostRatedStores)
+
     adsHomeAdapter.differ.submitList(homeList)
     notifyPropertyChanged(BR.adsHomeAdapter)
     show.set(true)

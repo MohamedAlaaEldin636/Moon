@@ -148,6 +148,11 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     })
   }
 
+  override fun onResume() {
+    super.onResume()
+
+  }
+
   override fun onStop() {
     super.onStop()
     viewModel.response.value = Resource.Default
