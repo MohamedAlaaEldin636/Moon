@@ -78,6 +78,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   private fun setUpBottomNavigationWithGraphs() {
     binding.viewModel = viewModel
+    Log.d(TAG, "setUpBottomNavigationWithGraphs: START")
+    if (intent.action != null && intent.data != null) {
+      Log.d(TAG, "setUpBottomNavigationWithGraphs: YES")
+    }
+
     val navHostFragment =
       supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
     nav = navHostFragment.findNavController()

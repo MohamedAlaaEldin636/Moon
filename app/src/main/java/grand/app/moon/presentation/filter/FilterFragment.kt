@@ -39,7 +39,6 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
         viewModel.submit(bundle.getSerializable(Constants.PROPERTY) as FilterProperty)
       }
     }
-
   }
 
   override
@@ -48,19 +47,25 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
     if(arguments != null){
       val bundle = arguments
       if(bundle?.getInt("category_id") != -1){
+        Log.d(TAG, "setBindingVariables: HERE Category")
         viewModel.setCategoryId(bundle!!.getInt("category_id"),bundle.getString("category_name")!!)
       }
       if(bundle.getInt("sub_category_id") != -1){
+        Log.d(TAG, "setBindingVariables: sub_category_id")
         viewModel.setSubCategoryId(bundle.getInt("sub_category_id"),bundle.getString("sub_category_name")!!)
       }
       if(bundle.getInt("store_id") != -1){
+        Log.d(TAG, "setBindingVariables: HERE Store")
         viewModel.setStoreId(bundle.getInt("store_id"))
       }
       if(!bundle.getBoolean("allow_change_category")){
+        Log.d(TAG, "setBindingVariables: allow_change_category")
         viewModel.allowChangeCategory(false)
       }
-      if(bundle.containsKey(Constants.STORE))
+      if(bundle.containsKey(Constants.STORE)) {
+        Log.d(TAG, "setBindingVariables: Storey")
         viewModel.setStore(bundle.getSerializable(Constants.STORE) as Store)
+      }
     }
   }
 

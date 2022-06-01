@@ -80,6 +80,8 @@
         android:cursorVisible="true"
         android:gravity="center_horizontal"
         android:inputType="number"
+        android:autofillHints="smsOTPCode"
+        android:importantForAutofill="yes"
         android:itemBackground="@drawable/corner_white"
         android:padding="8dp"
         android:textColor="@color/colorPrimary"

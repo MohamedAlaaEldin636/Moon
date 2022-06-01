@@ -30,6 +30,7 @@ class FilterChildrenDialogViewModel @Inject constructor(
   private  val TAG = "FilterChildrenDialogVie"
   fun setData(property : FilterProperty) {
     this.property = property
+    Log.d(TAG, "setData: ${property.children.size}")
     property.children.forEachIndexed { index, children ->
       list.add(AppTutorial(children.id,content = children.name))
       if(property.selectedList.isNotEmpty() && children.id == property.selectedList[0]){

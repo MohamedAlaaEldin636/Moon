@@ -286,30 +286,32 @@ open class FilterBaseViewModel @Inject constructor(
   }
 
   fun updateCallBack(filterProperty: FilterProperty) {
-    when (filterProperty.filterType) {
-      FILTER_TYPE.OTHER_OPTIONS -> request.other_options = filterProperty.selectedList[0]
-      FILTER_TYPE.SORT_BY -> request.order_by = filterProperty.selectedList[0]
+//    if(filterProperty.selectedList.size > 0) {
+      when (filterProperty.filterType) {
+        FILTER_TYPE.OTHER_OPTIONS -> request.other_options = filterProperty.selectedList[0]
+        FILTER_TYPE.SORT_BY -> request.order_by = filterProperty.selectedList[0]
 //      FILTER_TYPE.PRICE -> {
 //        if (filterProperty.from?.trim()?.isNotEmpty() == true) request.min_price =
 //          filterProperty.from else request.min_price = null
 //        if (filterProperty.to?.trim()?.isNotEmpty() == true) request.max_price =
 //          filterProperty.to else request.max_price = null
 //      }
-      FILTER_TYPE.CATEGORY -> {
-        request.categoryId = filterProperty.selectedList[0]
-        addSubCategories(request.categoryId) {
-          adapter.replaceSubCategories(it)
+        FILTER_TYPE.CATEGORY -> {
+          request.categoryId = filterProperty.selectedList[0]
+          addSubCategories(request.categoryId) {
+            adapter.replaceSubCategories(it)
+          }
+        }
+        FILTER_TYPE.SUB_CATEGORY -> {
+          request.sub_category_id = filterProperty.selectedList[0]
+        }
+        FILTER_TYPE.CITY -> {
+          request.cityIds = arrayListOf()
+          request.cityIds!!.addAll(filterProperty.selectedList)
         }
       }
-      FILTER_TYPE.SUB_CATEGORY -> {
-        request.sub_category_id = filterProperty.selectedList[0]
-      }
-      FILTER_TYPE.CITY -> {
-        request.cityIds = arrayListOf()
-        request.cityIds!!.addAll(filterProperty.selectedList)
-      }
-    }
-    adapter.updateFilterSelected(filterProperty)
+      adapter.updateFilterSelected(filterProperty)
+//    }
   }
 
   fun addStaticData() {

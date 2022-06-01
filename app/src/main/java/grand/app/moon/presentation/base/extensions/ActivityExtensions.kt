@@ -4,14 +4,21 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import grand.app.moon.presentation.base.utils.Constants
 
 fun <A : Activity> Activity.openActivityAndClearStack(activity: Class<A>) {
+  Log.d("WOW", "setUpBottomNavigationWithGraphs: START")
+  if (intent.action != null && intent.data != null) {
+    Log.d("WOW", "setUpBottomNavigationWithGraphs: YES")
+  }
+
   Intent(this, activity).apply {
     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-    intent = intent
+    this.action = intent.action
+    this.data = intent.data
     startActivity(this)
     finishAffinity()
   }

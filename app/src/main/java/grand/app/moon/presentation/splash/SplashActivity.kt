@@ -33,6 +33,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
   override
   fun setUpViews() {
+
     viewModel.lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
     if (viewModel.lang.isEmpty()) {
       viewModel.lang = Constants.DEFAULT_LANGUAGE
@@ -47,7 +48,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
 
   private fun decideNavigationLogic() {
-    val checkDeepLink = viewModel.checkDeepLink(intent)
     viewModel.clickEvent.observe(this, {
       Log.d(TAG, "decideNavigationLogic: $it")
       val targetActivity = when (it) {

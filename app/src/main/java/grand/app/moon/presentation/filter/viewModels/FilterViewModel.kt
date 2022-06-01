@@ -57,7 +57,7 @@ class FilterViewModel @Inject constructor(
 //      rates.add(it)
 //    }
     addStaticData()
-    Log.d(TAG, ": ${list.size}")
+    Log.d(TAG, ": ${list[0].children.size}")
     adapter.differ.submitList(list)
 //    rateAdapter.differ.submitList(rates[0].children)
   }
@@ -139,10 +139,11 @@ class FilterViewModel @Inject constructor(
   }
 
   fun setStore(store: Store) {
-    Log.d(TAG, "setStore: ${store.category.size}")
-    addCategoriesByStore(store.category) {
-      Log.d(TAG, "setStore_children: ${it.children.size}")
-      adapter.update(0,it)
+    if(store.category.size > 0) {
+      addCategoriesByStore(store.category) {
+        Log.d(TAG, "setStore_children: ${it.children.size}")
+        adapter.update(0, it)
+      }
     }
   }
 

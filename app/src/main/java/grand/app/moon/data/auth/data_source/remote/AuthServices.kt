@@ -17,6 +17,9 @@ interface AuthServices {
   @POST("v1/auth/social/login")
   suspend fun socialRegister(@Body request: SocialRequest): BaseResponse<User>
 
+//  @POST("v1/authentication")
+//  suspend fun logout(@Body request: LogInRequest): BaseResponse<User>
+
   @POST("v1/auth/verify_code")
   suspend fun verifyAccount(@Body request: VerifyAccountRequest): BaseResponse<User>
 
