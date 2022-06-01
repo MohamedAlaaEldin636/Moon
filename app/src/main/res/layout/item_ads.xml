@@ -57,6 +57,7 @@
         android:layout_width="@dimen/dimen40"
         android:layout_height="@dimen/dimen40"
         android:layout_margin="@dimen/dimen10"
+        android:onClick="@{ (v) -> viewModel.addFavourite(v) }"
         android:visibility="@{viewModel.showFavourite ? View.VISIBLE : View.GONE , default = gone}"
         android:src="@{viewModel.advertisement.favorite  ? @drawable/ic_fav_fill : @drawable/ic_fav_not_selected}"
         app:layout_constraintStart_toStartOf="parent"

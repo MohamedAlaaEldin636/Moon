@@ -20,6 +20,8 @@ data class StoryItem(
     val updatedAt: String = "",
     @SerializedName("is_seen")
     var isSeen: Boolean = false,
+    @SerializedName("is_liked")
+    var is_liked: Boolean = false,
     @SerializedName("name")
     val name: String = "",
     var isFirst: Boolean = false,

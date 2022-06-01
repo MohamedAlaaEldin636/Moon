@@ -9,6 +9,7 @@ object ListHelper {
   val adsList = mutableMapOf<Int,Boolean>()
   val blockStores = mutableListOf<Int>()
   val viewedStories = mutableListOf<Int>()
+  val likedStories = mutableMapOf<Int,Boolean>()
   val followStores = mutableMapOf<Int,Boolean>()
 
   fun addAllAds(list : ArrayList<Advertisement>){
@@ -83,10 +84,21 @@ object ListHelper {
     data.forEach {
       var isSeen = true
       it.stories.forEach { story ->
+        likedStories[story.id] = story.is_liked
         if(!story.isSeen) isSeen = false
       }
       if(isSeen) viewedStories.add(it.id)
     }
+  }
+
+  fun addLike(id:Int, isLike: Boolean){
+    likedStories[id] = isLike
+  }
+
+  fun isStoryLike(id: Int) : Boolean{
+    if(likedStories.containsKey(id))
+      return likedStories[id]!!
+    return false
   }
 
 }

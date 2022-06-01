@@ -14,6 +14,7 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.appMoonHelper.ListHelper
@@ -83,12 +84,12 @@ class StoreDetailsViewModel @Inject constructor(
 
 
   val showAds = ObservableBoolean(true)
-  val showGallery = ObservableBoolean(true)
+  val showGallery = ObservableBoolean(false)
 
-  val facebook = ObservableBoolean(true)
-  val instgram = ObservableBoolean(true)
-  val youtube = ObservableBoolean(true)
-  val twitter = ObservableBoolean(true)
+  val facebook = ObservableBoolean(false)
+  val instgram = ObservableBoolean(false)
+  val youtube = ObservableBoolean(false)
+  val twitter = ObservableBoolean(false)
 
   var blockStore = false
 
@@ -112,7 +113,9 @@ class StoreDetailsViewModel @Inject constructor(
       followStoreRequest.storeId = store.get()?.id
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
       store.get()?.isFollowing = store.get()?.isFollowing != true
-      store.get()?.id?.let {
+      var followers:Int = store.get()!!.followersCount.toInt()
+      store.get()?.followersCount = if(store.get()?.isFollowing == true) followers++.toString() else followers--.toString()
+        store.get()?.id?.let {
         store.get()?.isFollowing?.let { it1 ->
           ListHelper.addFollowStore(
             it,
@@ -242,7 +245,7 @@ class StoreDetailsViewModel @Inject constructor(
     viewModelScope.launch(Dispatchers.IO) {
       adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 6))
     }
-    store.get()?.phone?.let { callPhone(v.context, it) }
+    store.get()?.phone?.let { callPhone(v.context, store.get()?.country?.country_code+it) }
   }
 
   fun block(v: View) {
@@ -307,18 +310,17 @@ class StoreDetailsViewModel @Inject constructor(
 //    exploreAdapter.notifyDataSetChanged()
 
     store.get()?.socialMediaLinks?.forEach { socialLink ->
-      if (socialLink.link.isEmpty()) {
         if (socialLink.type == "facebook")
-          facebook.set(false)
+          facebook.set(true)
         if (socialLink.type == "twitter")
-          twitter.set(false)
+          twitter.set(true)
         if (socialLink.type == "youtube")
-          youtube.set(false)
+          youtube.set(true)
         if (socialLink.type == "instgram")
-          instgram.set(false)
-      }
+          instgram.set(true)
     }
 
+    notifyPropertyChanged(BR.adsAdapter)
 //    Log.d(TAG, "explore: ${exploreAdapter.list.size}")
     show.set(true)
   }

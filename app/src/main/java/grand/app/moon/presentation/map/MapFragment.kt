@@ -27,7 +27,7 @@ import java.lang.Exception
 
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
-  private val viewModel: MapViewModel by viewModels()
+  val viewModel: MapViewModel by viewModels()
   var map: SupportMapFragment? = null
 //  val args: MapFragmentArgs by navArgs()
 

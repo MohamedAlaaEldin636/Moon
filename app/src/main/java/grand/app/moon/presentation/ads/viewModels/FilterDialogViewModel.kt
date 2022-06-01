@@ -42,6 +42,7 @@ class FilterDialogViewModel @Inject constructor(
       if(data.id == idSelected){
         adapter.lastPosition = index
         adapter.lastSelected = idSelected
+        show.set(true)
       }
     }
     adapter.differ.submitList(list)

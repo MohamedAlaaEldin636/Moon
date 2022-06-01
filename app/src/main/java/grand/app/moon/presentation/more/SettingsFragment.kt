@@ -51,7 +51,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.help),
           getMyDrawable(R.drawable.ic_help_settings),
-          "https://moontest.my-staff.net/${viewModel.lang}/faq/help"
+          "https://moontest.my-staff.net/${viewModel.lang}/faq/questions/help"
         )
       )
       list.add(

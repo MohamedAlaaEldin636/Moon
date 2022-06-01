@@ -180,7 +180,9 @@
   <string name="member_of">Member of</string>
   <string name="new_notification">New notice from Moon</string>
     <string name="submit">Submit</string>
-    <string name="camera">كاميرا</string>
-  <string name="gallery">معرض</string>
+    <string name="camera">Camera</string>
+  <string name="gallery">Gallery</string>
+  <string name="please_choose_main_section">Please Choose Main Section</string>
+  <string name="you_didn_t_accept_permission">You Didnt Accept Permission</string>
 
 </resources>

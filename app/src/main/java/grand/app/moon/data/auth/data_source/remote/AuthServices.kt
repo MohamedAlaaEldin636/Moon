@@ -7,6 +7,7 @@ import grand.app.moon.domain.auth.entity.request.VerifyAccountRequest
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.login.SocialRequest
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface AuthServices {
@@ -17,8 +18,8 @@ interface AuthServices {
   @POST("v1/auth/social/login")
   suspend fun socialRegister(@Body request: SocialRequest): BaseResponse<User>
 
-//  @POST("v1/authentication")
-//  suspend fun logout(@Body request: LogInRequest): BaseResponse<User>
+  @POST("v1/auth/logout")
+  suspend fun logout(): BaseResponse<*>
 
   @POST("v1/auth/verify_code")
   suspend fun verifyAccount(@Body request: VerifyAccountRequest): BaseResponse<User>
@@ -39,7 +40,7 @@ interface AuthServices {
   @Multipart
   @POST("v1/profile")
   suspend fun updateProfile(
-    @QueryMap map: Map<String, String>,
+    @PartMap mapOfOtherParams: Map<String,@JvmSuppressWildcards RequestBody>,
     @Part image: MultipartBody.Part?
   ): BaseResponse<User>
 }

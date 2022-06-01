@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.collect
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
 
-  private val viewModel: SearchViewModel by viewModels()
+  val viewModel: SearchViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_search

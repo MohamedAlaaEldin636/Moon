@@ -161,9 +161,10 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>() ,
   }
 
   override fun onPage(oldPageIndex: Int, newPageIndex: Int) {
-    Log.d(TAG, "onPage: $oldPageIndex , withNew $newPageIndex")
+    Log.d(TAG, "onPageHere: $oldPageIndex , withNew $newPageIndex")
     viewModel.pos = newPageIndex
-    viewModel.storyRequest.story_id = viewModel.store.get()!!.id
+    viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[viewModel.pos].id
+    Log.d(TAG, "onPage: ${viewModel.storyRequest.story_id}")
     viewModel.storyRequest.type = 1
     viewModel.callService()
     loadImage()

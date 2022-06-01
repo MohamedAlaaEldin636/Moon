@@ -1,9 +1,14 @@
 package grand.app.moon.presentation.auth.confirmCode
 
+import android.content.IntentFilter
+import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -20,6 +25,43 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
   val args: ConfirmCodeFragmentArgs by navArgs()
 
   private val viewModel: ConfirmViewModel by viewModels()
+
+  lateinit var smsBroadcastReceiver: SMSBroadcastReceiver
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    smsBroadcastReceiver = SMSBroadcastReceiver()
+
+    val otpListener = object : SMSBroadcastReceiver.OTPListener {
+      override fun onOTPReceived(otp: String) {
+//        Toast.makeText(this@MainActivity, otp , Toast.LENGTH_LONG).show()
+      }
+
+      override fun onOTPTimeOut() {
+//        Toast.makeText(this@MainActivity,"TimeOut", Toast.LENGTH_SHORT).show()
+      }
+    }
+
+    smsBroadcastReceiver.injectOTPListener(otpListener)
+    requireActivity().registerReceiver(smsBroadcastReceiver,
+      IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+    )
+
+    startSMSListener()
+
+  }
+  private fun startSMSListener() {
+    Log.d("CodeVerification", "startSMSListener()")
+
+    val client = SmsRetriever.getClient(requireActivity())
+    val retriever = client.startSmsRetriever()
+    retriever.addOnSuccessListener {
+      showMessage("addOnSuccessListener")
+    }
+
+    retriever.addOnFailureListener {
+      showMessage("addOnFailureListener")
+    }
+  }
 
   override
   fun getLayoutId() = R.layout.fragment_confirm_code
@@ -70,8 +112,14 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
         }
       }
     }
+
   }
 
+
+  override fun onDestroy() {
+    super.onDestroy()
+    unRegisterListeners()
+  }
 
   override fun onStart() {
     super.onStart()

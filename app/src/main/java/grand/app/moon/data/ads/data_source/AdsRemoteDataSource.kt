@@ -107,7 +107,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     var counter = 0
     Log.d(TAG, "filterResults: $map")
     for ((index, item) in request.properties.orEmpty().withIndex()) {
-      if(item.filterType != FILTER_TYPE.CATEGORY && item.filterType != FILTER_TYPE.SUB_CATEGORY) {
+      if(item.filterType != FILTER_TYPE.CATEGORY && item.filterType != FILTER_TYPE.SUB_CATEGORY && item.filterType != FILTER_TYPE.CITY) {
         if (item.selectedList.isNotEmpty()) {
           item.selectedList.forEachIndexed { indexProp, propSelect ->
             map["properties[$counter][id]"] = propSelect.toString()

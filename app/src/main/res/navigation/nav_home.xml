@@ -242,6 +242,13 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/storeFilterFragment" />
+    <action
+      android:id="@+id/action_storeListFragment_to_webFragment2"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/webFragment2" />
 
 
   </fragment>
@@ -394,5 +401,16 @@
     <argument
       android:name="stories"
       app:argType="grand.app.moon.domain.home.models.StoreModel" />
+  </fragment>
+  <fragment
+    android:id="@+id/webFragment2"
+    android:name="grand.app.moon.presentation.more.WebFragment"
+    android:label="{tabBarText}" >
+    <argument
+      android:name="tabBarText"
+      app:argType="string" />
+    <argument
+      android:name="url"
+      app:argType="string" />
   </fragment>
 </navigation>

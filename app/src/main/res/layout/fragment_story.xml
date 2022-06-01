@@ -130,8 +130,8 @@
       android:layout_marginEnd="@dimen/dimen10"
       android:layout_marginBottom="@dimen/dimen10"
 
-      android:background="@drawable/like"
       android:elevation="10dp"
+      android:background="@{ viewModel.isLike ? @drawable/ic_like_fill : @drawable/like}"
 
       android:onClick="@{ (v) -> viewModel.like(v)}"
       app:layout_constraintBottom_toBottomOf="parent"

@@ -41,9 +41,9 @@ data class Store(
   @SerializedName("views_count")
   val viewsCount: String = "0",
   @SerializedName("rate_count")
-  val rateCount: String = "0",
+  var rateCount: String = "0",
   @SerializedName("followers_count")
-  val followersCount: String = "0",
+  var followersCount: String = "0",
   @SerializedName("latitude")
   var latitude: Double = 0.0,
   @SerializedName("longitude")
@@ -73,7 +73,8 @@ data class Store(
   @SerializedName("stories")
   val stories: ArrayList<StoryItem> = arrayListOf(),
   var type:String = "Store",
-  var isBlocked:Boolean = true
+  var isBlocked:Boolean = true,
+  var isLiked:Boolean = false //for stories not stores
 
 
   ) : Serializable

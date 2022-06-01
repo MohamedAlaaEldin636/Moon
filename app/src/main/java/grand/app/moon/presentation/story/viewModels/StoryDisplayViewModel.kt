@@ -2,6 +2,7 @@ package grand.app.moon.presentation.story.viewModels
 
 import android.util.Log
 import android.view.View
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,6 +13,7 @@ import grand.app.moon.core.extenstions.startChatPage
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.StoryRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
+import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.story.storyView.data.Story
@@ -31,6 +33,7 @@ class StoryDisplayViewModel @Inject constructor(
   var image = ObservableField<String>("")
   var isLoaded = false
   val store = ObservableField<Store> ()
+  val isLike= ObservableBoolean(false)
   var isFinish = false
 //  val listStories = arrayListOf()
 
@@ -58,6 +61,9 @@ class StoryDisplayViewModel @Inject constructor(
 
   fun like(v: View){
     if(v.context.isLoginWithOpenAuth()){
+      isLike.set(true)
+      store.get()!!.stories[pos].is_liked = true
+      ListHelper.addLike(store.get()!!.stories[pos].id,true)
       storyRequest.type = 2
       callService()
     }

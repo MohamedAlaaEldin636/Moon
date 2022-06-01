@@ -1,18 +1,22 @@
 package grand.app.moon.presentation.auth.profile
 
+import android.Manifest
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.hbb20.CountryCodePicker
+import com.maproductions.mohamedalaa.shared.core.extensions.checkSelfPermissionGranted
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentProfileBinding
@@ -45,19 +49,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     viewModel.submitEvent.observe(this) {
       when (it) {
         Constants.PICKER_IMAGE -> {
-//          val camera = getString(R.string.camera)
-//          val gallery = getString(R.string.gallery)
-//
-//          binding.imgProfile.showPopup(listOf(camera, gallery)) {
-//            if (it.title?.toString() == camera) {
-//              activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-//            }else {
-//              // From gallery
-//              activityResultImageGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
-//            }
-//          }
-
-          singleTedBottomPicker(requireActivity())
+          pickImageOrRequestPermissions()
+//          singleTedBottomPicker(requireActivity())
         }
       }
     }
@@ -67,6 +60,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         binding.imgProfile.setImageURI(result)
       }
     }
+
+
 
 
     lifecycleScope.launchWhenResumed {
@@ -90,20 +85,103 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
   }
 
+  fun pickImageOrRequestPermissions() {
+    when {
+      requireContext().checkSelfPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
+        && requireContext().checkSelfPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        && requireContext().checkSelfPermissionGranted(Manifest.permission.CAMERA) -> {
+        pickImageViaChooser()
+      }
+      requireContext().checkSelfPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
+        && requireContext().checkSelfPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE) -> {
+        pickImage(false)
+      }
+      requireContext().checkSelfPermissionGranted(Manifest.permission.CAMERA) -> {
+        pickImage(true)
+      }
+      else -> {
+        permissionLocationRequest.launch(arrayOf(
+          Manifest.permission.READ_EXTERNAL_STORAGE,
+          Manifest.permission.WRITE_EXTERNAL_STORAGE,
+          Manifest.permission.CAMERA,
+        ))
+      }
+    }
+  }
+
+  private val permissionLocationRequest = registerForActivityResult(
+    ActivityResultContracts.RequestMultiplePermissions()
+  ) { permissions ->
+    when {
+      permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true
+        && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true
+        && permissions[Manifest.permission.CAMERA] == true -> {
+        pickImageViaChooser()
+      }
+      permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true
+        && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true -> {
+        pickImage(false)
+      }
+      permissions[Manifest.permission.CAMERA] == true -> {
+        pickImage(true)
+      }
+      else -> {
+        showMessage(getString(R.string.you_didn_t_accept_permission))
+      }
+    }
+  }
+
+  private fun pickImageViaChooser() {
+    val camera = getString(R.string.camera)
+    val gallery = getString(R.string.gallery)
+
+    binding.imgProfile.showPopup(listOf(camera, gallery)) {
+      pickImage(it.title?.toString() == camera)
+    }
+
+
+  }
+
+  private fun pickImage(fromCamera: Boolean) {
+    if (fromCamera) {
+      activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+    }else {
+      // From gallery
+      activityResultImageGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+    }
+  }
+
   private val activityResultImageCamera = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
   ) {
     if (it.resultCode == Activity.RESULT_OK) {
       val bitmap = it.data?.extras?.get("data") as? Bitmap ?: return@registerForActivityResult
 
-      val uri = getUriFromBitmapRetrievedByCamera(bitmap)
+      viewModel.request.uri = getUriFromBitmapRetrievedByCamera(bitmap)
 
-//      viewModel.imageUri = uri
 //
-//      Glide.with(this)
-//        .load(uri)
-//        .apply(RequestOptions().centerCrop())
-//        .into(binding.imageView)
+      Log.d(TAG, ": DONE")
+
+      Glide.with(this)
+        .load(viewModel.request.uri)
+        .apply(RequestOptions().centerCrop())
+        .into(binding.imgProfile)
+    }
+  }
+
+  private val activityResultImageGallery = registerForActivityResult(
+    ActivityResultContracts.StartActivityForResult()
+  ) {
+    if (it.resultCode == Activity.RESULT_OK) {
+      val uri = it.data?.data ?: return@registerForActivityResult
+
+      viewModel.imageUri = uri
+
+      Log.d(TAG, ": DOE")
+      Glide.with(this)
+        .load(uri)
+        .apply(RequestOptions().centerCrop())
+        .into(binding.imgProfile)
     }
   }
 

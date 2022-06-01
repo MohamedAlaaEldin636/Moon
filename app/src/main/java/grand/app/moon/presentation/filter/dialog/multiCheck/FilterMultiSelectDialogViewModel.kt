@@ -27,10 +27,14 @@ class FilterMultiSelectDialogViewModel @Inject constructor(
 
   private  val TAG = "FilterChildrenDialogVie"
   fun setData(property : FilterProperty) {
+    Log.d(TAG, "setData: WORKED ${property.children.size}")
     this.property = property
+    Log.d(TAG, "setData: WORKED")
     property.children.forEach { children ->
       list.add(AppTutorial(children.id,content = children.name))
     }
+    Log.d(TAG, "setData: WORKED list ${list.size}")
+
     if(property.selectedList.isNotEmpty()){
       adapter.selected.clear()
       adapter.selected.addAll(property.selectedList)

@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.maproductions.mohamedalaa.shared.core.extensions.actOnGetIfNotInitialValueOrGetLiveData
 import grand.app.moon.presentation.reviews.viewModels.ReviewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.FragmentReviewsBinding
 import grand.app.moon.domain.home.models.review.Reviews
 import grand.app.moon.domain.home.models.review.ReviewsPaginateData
@@ -55,6 +57,15 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
       // We use a String here, but any type that can be put in a Bundle is supported
 //      viewModel.adapter.add(bundle.getSerializable(Constants.REVIEW) as Reviews)
       // Do something with the result
+    }
+
+    actOnGetIfNotInitialValueOrGetLiveData(
+      Constants.REVIEW,
+      false,
+      viewLifecycleOwner,
+      { it == true }
+    ) {
+
     }
   }
 

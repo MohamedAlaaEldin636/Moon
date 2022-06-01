@@ -17,11 +17,14 @@ import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import grand.app.moon.databinding.ItemCountryBinding
 import grand.app.moon.databinding.ItemFilterMultiSelectBinding
 import grand.app.moon.databinding.ItemReportBinding
+import grand.app.moon.domain.filter.entitiy.Children
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.presentation.store.viewModels.ItemReportViewModel
 
 class FilterMultiAdapter : RecyclerView.Adapter<FilterMultiAdapter.ViewHolder>() {
   val selected = ArrayList<Int>()
+  var changeEvent: SingleLiveEvent<Children> = SingleLiveEvent()
+
   private val differCallback = object : DiffUtil.ItemCallback<AppTutorial>() {
     override fun areItemsTheSame(oldItem: AppTutorial, newItem: AppTutorial): Boolean {
       return oldItem.id == newItem.id
@@ -49,6 +52,7 @@ class FilterMultiAdapter : RecyclerView.Adapter<FilterMultiAdapter.ViewHolder>()
       } else {
         selected.add(children.id)
       }
+      changeEvent.value = Children() // for listen on view
       notifyItemChanged(position)
     }
     holder.setViewModel(itemViewModel)

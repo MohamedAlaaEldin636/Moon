@@ -57,7 +57,6 @@ class FilterViewModel @Inject constructor(
 //      rates.add(it)
 //    }
     addStaticData()
-    Log.d(TAG, ": ${list[0].children.size}")
     adapter.differ.submitList(list)
 //    rateAdapter.differ.submitList(rates[0].children)
   }
@@ -69,10 +68,6 @@ class FilterViewModel @Inject constructor(
       request.max_rate = 5
     }
     prepareRequest()
-    Log.d(TAG, "filterSubmit: ${request.min_price}")
-    Log.d(TAG, "filterSubmit: ${request.max_price}")
-    Log.d(TAG, "filterSubmit: ${request.properties?.size}")
-    Log.d(TAG, "filterSubmit: ${request.properties?.toString()}")
     toFilterResult(v,request)
   }
 

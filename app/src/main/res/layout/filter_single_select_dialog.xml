@@ -5,6 +5,7 @@
 
   <data>
 
+    <import type="android.view.View" />
     <variable
       name="viewModel"
       type="grand.app.moon.presentation.filter.dialog.FilterChildrenDialogViewModel" />
@@ -56,14 +57,15 @@
       android:id="@+id/btn_click"
 
       style="@style/mediumFont"
-      android:padding="@dimen/dimen12"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
       android:layout_gravity="center"
-      android:gravity="center"
-      android:text="@string/confirm"
       android:background="@color/colorPrimary"
+      android:gravity="center"
+      android:visibility="@{ viewModel.show ? View.VISIBLE : View.GONE}"
+      android:padding="@dimen/dimen12"
+      android:text="@string/confirm"
       android:textColor="@color/colorWhite"
       android:textSize="@dimen/text_size16"
       app:backgroundTint="@color/colorPrimary" />

@@ -74,6 +74,9 @@ class FilterSortDialog : BottomSheetDialogFragment() {
       }
     }
     viewModel.setData(filter.selected)
+    viewModel.adapter.changeEvent.observe(this,{
+      viewModel.show.set(true)
+    })
     return binding.root
   }
 

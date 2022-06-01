@@ -30,8 +30,10 @@ import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.*
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.models.User
@@ -46,6 +48,7 @@ import grand.app.moon.appMoonHelper.ThirdPartyHelper
 import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.loginCometChat
 import grand.app.moon.core.extenstions.logoutCometChat
+import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.presentation.home.HomeActivity
 import java.io.File
@@ -232,7 +235,7 @@ fun setImages(sliderView: ImageSlider, images: ArrayList<String>?) {
 }
 
 @BindingAdapter("images")
-fun setImagesAppTutrial(sliderView: ImageSlider, images: ArrayList<AppTutorial>?) {
+fun setImagesAppTutrial(sliderView: ImageSlider, images: ArrayList<Advertisement>?) {
   images?.let {
     val list = ArrayList<SlideModel>()
     for (image in images) {
@@ -241,7 +244,12 @@ fun setImagesAppTutrial(sliderView: ImageSlider, images: ArrayList<AppTutorial>?
     sliderView.setImageList(list)
     sliderView.setItemClickListener(object : ItemClickListener {
       override fun onItemSelected(position: Int) {
-
+        sliderView.findNavController().navigate(
+          R.id.nav_ads, bundleOf(
+            "id" to images[position].id,
+            "type" to 2,
+          )
+        )
       }
     })
   }

@@ -5,6 +5,7 @@
 
   <data>
 
+    <import type="android.view.View" />
     <variable
       name="viewModel"
       type="grand.app.moon.presentation.ads.viewModels.FilterDialogViewModel" />
@@ -51,7 +52,7 @@
 
     <com.google.android.material.button.MaterialButton
       android:id="@+id/btn_click"
-
+      android:visibility="@{viewModel.show ? View.VISIBLE : View.GONE }"
       style="@style/mediumFont"
       android:padding="@dimen/dimen12"
       android:layout_width="match_parent"

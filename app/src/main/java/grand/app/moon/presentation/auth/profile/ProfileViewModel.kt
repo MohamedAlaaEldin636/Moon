@@ -1,11 +1,13 @@
 package grand.app.moon.presentation.auth.profile
 
-import android.util.Log
+import android.net.Uri
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.MyApplication
+import grand.app.moon.core.extenstions.createMultipartBodyPart
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
@@ -26,6 +28,8 @@ class ProfileViewModel @Inject constructor(val userUseCase: UserLocalUseCase,
 
   @Bindable
   val request = UpdateProfileRequest()
+  var imageUri: Uri? = null
+
   private val _response =
     MutableStateFlow<Resource<BaseResponse<User>>>(Resource.Default)
   val response = _response

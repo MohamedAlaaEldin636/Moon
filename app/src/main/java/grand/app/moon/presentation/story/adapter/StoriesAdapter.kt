@@ -117,17 +117,27 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
     }
   }
 
+  var checked = false
   fun viewedStores() {
     val list = ArrayList(differ.currentList)
-    list.forEachIndexed{ index , it ->
-      if(ListHelper.isViewedStory(it.id)){
+    list.forEachIndexed { index, it ->
+      checked = false
+      if (ListHelper.isViewedStory(it.id)) {
         it.stories.forEach {
           it.isSeen = true
         }
-        notifyItemChanged(index)
+        checked = true
       }
+      it.stories.forEachIndexed { index , story ->
+        if(story.is_liked !=  ListHelper.isStoryLike(story.id)) {
+          story.is_liked = ListHelper.isStoryLike(story.id)
+          checked = true
+        }
+      }
+      if (checked) notifyItemChanged(index)
     }
   }
+
 
   inner class ViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {

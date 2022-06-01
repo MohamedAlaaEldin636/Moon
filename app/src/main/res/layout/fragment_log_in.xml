@@ -128,12 +128,14 @@
 
         app:layout_constraintTop_toBottomOf="@+id/btn_phone" />
 
+
+<!--      android:visibility="@{viewModel.showSocial ? View.VISIBLE : View.GONE }"-->
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_facebook"
         android:layout_width="@dimen/dimen40"
         android:layout_height="@dimen/dimen40"
         android:padding="@dimen/dimen6"
-        android:visibility="@{viewModel.showSocial ? View.VISIBLE : View.GONE }"
+        android:visibility="gone"
         android:onClick="@{ (v) -> viewModel.facebook(v)}"
         android:background="@drawable/corner_white"
         android:src="@drawable/ic_facebook"
@@ -172,7 +174,7 @@
         android:src="@drawable/ic_twitter"
         android:padding="@dimen/dimen6"
         android:background="@drawable/corner_white"
-
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ic_google"

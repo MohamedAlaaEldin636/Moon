@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.domain.account.repository.AccountRepository
@@ -225,6 +226,21 @@ class MapViewModel @Inject constructor(
     categoriesAdapter.selected = 0
     categoriesAdapter.differ.submitList(categoryItems)
     notifyPropertyChanged(BR.categoriesAdapter)
+  }
+
+  fun updateFavourite() {
+    all_ads.forEachIndexed { index, it ->
+      if (ListHelper.isExist(it.id) && it.isFavorite != ListHelper.getFavourite(it.id)) {
+        it.isFavorite = ListHelper.getFavourite(it.id)
+        it.favoriteCount = if (it.isFavorite) it.favoriteCount++ else it.favoriteCount--
+        if(advertisement.get()?.id == it.id){
+          advertisement.get()?.isFavorite = it.isFavorite
+        }
+      }
+      if(it.store.isFollowing != ListHelper.getFollowStore(it.store.id)){
+        it.store.isFollowing = ListHelper.getFollowStore(it.store.id)
+      }
+    }
   }
 
 

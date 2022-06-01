@@ -18,7 +18,7 @@ data class SubCategoryResponse(
   @SerializedName("advertisements")
   @Expose var advertisements: AdsListPaginateData = AdsListPaginateData(),
   @SerializedName("slider")
-  @Expose var slider: ArrayList<AppTutorial> = arrayListOf(),
+  @Expose var slider: ArrayList<Advertisement> = arrayListOf(),
   @SerializedName("ads_count")
   @Expose val totalAds: String = "",
 

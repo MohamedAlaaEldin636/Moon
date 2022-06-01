@@ -176,4 +176,7 @@
     <string name="submit">تأكيد</string>
     <string name="camera">كاميرا</string>
   <string name="gallery">معرض</string>
+  <string name="please_choose_main_section">الرجاء اختيار القسم الرئيسي</string>
+  <string name="you_didn_t_accept_permission">عفوا لم يتم قبول الإذن</string>
+
 </resources>

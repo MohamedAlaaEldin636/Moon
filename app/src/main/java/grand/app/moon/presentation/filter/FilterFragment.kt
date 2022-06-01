@@ -83,14 +83,20 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
           )
         }
         FILTER_TYPE.SUB_CATEGORY -> {
-          viewModel.request.categoryId?.let { categoryId ->
-            findNavController().navigate(
-              FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
-                it,
-                it.name,
+          when{
+            viewModel.request.categoryId != null -> viewModel.request.categoryId?.let { categoryId ->
+              findNavController().navigate(
+                FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
+                  it,
+                  it.name,
+                )
               )
-            )
+            }
+            else -> {
+              showMessage(getString(R.string.please_choose_main_section))
+            }
           }
+
         }
         FILTER_TYPE.SINGLE_SELECT, FILTER_TYPE.SORT_BY, FILTER_TYPE.OTHER_OPTIONS ->
           findNavController().navigate(
@@ -100,12 +106,15 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
             it.name
           )
         )
-        FILTER_TYPE.CITY, FILTER_TYPE.MULTI_SELECT -> findNavController().navigate(
+        FILTER_TYPE.CITY, FILTER_TYPE.MULTI_SELECT -> {
+//          Log.d(TAG, "setupObservers: HERE ${it.name} , ${it.children.size}")
+          findNavController().navigate(
           FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
             it,
             it.name
           )
         )
+        }
       }
     })
 

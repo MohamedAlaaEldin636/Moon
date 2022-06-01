@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.collect
 class FilterResultsFragment : BaseFragment<FragmentFilterResultsBinding>() {
 
   val args: FilterResultsFragmentArgs by navArgs()
-  private val viewModel: FilterResultsViewModel by viewModels()
+  val viewModel: FilterResultsViewModel by viewModels()
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)

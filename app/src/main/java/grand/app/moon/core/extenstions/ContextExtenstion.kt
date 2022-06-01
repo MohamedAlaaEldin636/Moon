@@ -3,6 +3,7 @@ package com.maproductions.mohamedalaa.shared.core.extensions
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.onesignal.OneSignal
 import grand.app.moon.appMoonHelper.ThirdPartyHelper
@@ -57,4 +59,8 @@ fun Context.logout(){
 
 fun Context.loginPage(){
   startActivity(Intent(MyApplication.instance, AuthActivity::class.java))
+}
+
+fun Context.checkSelfPermissionGranted(permission: String): Boolean {
+  return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }

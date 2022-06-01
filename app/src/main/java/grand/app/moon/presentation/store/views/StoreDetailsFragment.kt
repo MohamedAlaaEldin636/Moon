@@ -78,6 +78,15 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
       findNavController().navigateUp()
     }
 
+    actOnGetIfNotInitialValueOrGetLiveData(
+      Constants.RATE,
+      -1,
+      viewLifecycleOwner,
+      { it != -1 }
+    ) {
+      viewModel.store.get()!!.rateCount = it.toString()
+    }
+
 //    findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
 //      Constants.STORES_BLOCKED,
 //      false
@@ -157,18 +166,18 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
         }
       }
     }
-//    val gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-//    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//      override fun getSpanSize(position: Int): Int {
-//        return when (viewModel.adsAdapter.grid) {
-//          Constants.GRID_1 -> 2
-//          else -> 1
-//        }
-//      }
-//    }
-//
-//    binding.rvAds.layoutManager = gridLayoutManager
-//    binding.rvAds.adapter = viewModel.adsAdapter
+    val gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+      override fun getSpanSize(position: Int): Int {
+        return when (viewModel.adsAdapter.grid) {
+          Constants.GRID_1 -> 2
+          else -> 1
+        }
+      }
+    }
+
+    binding.rvAds.layoutManager = gridLayoutManager
+    binding.rvAds.adapter = viewModel.adsAdapter
 
   }
 

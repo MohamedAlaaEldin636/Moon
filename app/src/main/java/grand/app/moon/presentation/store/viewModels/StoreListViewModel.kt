@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.explore.entity.ExploreAction
@@ -21,8 +22,10 @@ import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
+import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.openBrowser
+import grand.app.moon.presentation.more.SettingsFragmentDirections
 import grand.app.moon.presentation.store.adapter.StoreAdapter
 import grand.app.moon.presentation.store.adapter.StoreFollowingAdapter
 import grand.app.moon.presentation.store.views.StoreListFragmentDirections
@@ -83,11 +86,20 @@ class StoreListViewModel @Inject constructor(
   }
 
   fun addStoreNow(v: View) {
-    openBrowser(v.context, "https://moontest.my-staff.net/store/register")
+    v.findNavController().navigate(
+      StoreListFragmentDirections.actionStoreListFragmentToWebFragment2(
+        v.context.getString(
+          R.string.add_store_now
+        ),
+        "https://moontest.my-staff.net/store/register"
+      )
+    )
   }
 
+
   fun storeFilter(v: View) {
-    v.findNavController().navigate(StoreListFragmentDirections.actionStoreListFragmentToStoreFilterFragment(request))
+    v.findNavController()
+      .navigate(StoreListFragmentDirections.actionStoreListFragmentToStoreFilterFragment(request))
   }
 
   fun callService() {
@@ -130,7 +142,7 @@ class StoreListViewModel @Inject constructor(
     notifyPropertyChanged(BR.adapter)
   }
 
-  fun reset(){
+  fun reset() {
     page = 0
     isLast = false
     callingService = false
@@ -150,6 +162,5 @@ class StoreListViewModel @Inject constructor(
   fun notifyAdapters() {
     notifyPropertyChanged(BR.adapter)
   }
-
 
 }

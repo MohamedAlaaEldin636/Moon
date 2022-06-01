@@ -52,9 +52,9 @@ import pt.tornelas.segmentedprogressbar.SegmentedProgressBarListener
 class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   SegmentedProgressBarListener {
   private val viewModel: StoryDisplayViewModel by viewModels()
-  private val args : StoryFragmentArgs by navArgs()
+  private val args: StoryFragmentArgs by navArgs()
 
-  private  val TAG = "StoryFragment"
+  private val TAG = "StoryFragment"
 
   override
   fun getLayoutId() = R.layout.fragment_story
@@ -72,16 +72,17 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 
 
   private fun observe() {
-    viewModel.clickEvent.observe(this,{
-      when(it){
-        Constants.EXIT ->  findNavController().navigateUp()
+    viewModel.clickEvent.observe(this, {
+      when (it) {
+        Constants.EXIT -> findNavController().navigateUp()
         Constants.STORE_DETAILS -> {
           findNavController().navigate(
             R.id.nav_store,
             bundleOf(
               "id" to viewModel.store.get()!!.id,
               "type" to 3
-            ),Constants.NAVIGATION_OPTIONS)
+            ), Constants.NAVIGATION_OPTIONS
+          )
         }
       }
     })
@@ -94,7 +95,7 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 
   fun resume() {
     Log.d(TAG, "resume: ${viewModel.isLoaded}")
-    if(viewModel.isLoaded) {
+    if (viewModel.isLoaded) {
       Log.d(TAG, "resume")
       viewModel.progress.set(false)
       binding.progress.start()
@@ -106,26 +107,26 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
     binding.progress.listener = this
     binding.progress.start()
     binding.skip.setOnClickListener {
-      if(viewModel.allowNext())
+      if (viewModel.allowNext())
         binding.progress.next()
-      else if (viewModel.nextStory()){
+      else if (viewModel.nextStory()) {
         pause()
         reset()
       }
     }
     binding.reverse.setOnClickListener {
-      if(viewModel.allowPrev())
+      if (viewModel.allowPrev())
         binding.progress.previous()
-      else if (viewModel.prevStory()){
+      else if (viewModel.prevStory()) {
         pause()
         reset()
       }
     }
 
-    binding.image.setOnTouchListener(object : View.OnTouchListener{
+    binding.image.setOnTouchListener(object : View.OnTouchListener {
       override fun onTouch(p0: View?, event: MotionEvent?): Boolean {
 
-        when(event?.action){
+        when (event?.action) {
           MotionEvent.ACTION_DOWN -> pause()
           MotionEvent.ACTION_UP -> resume()
         }
@@ -179,16 +180,17 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 
   override fun onFinished() {
     viewModel.isFinish = true
-    if(viewModel.nextStory()){
+    if (viewModel.nextStory()) {
       reset()
-    }else
+    } else
       findNavController().navigateUp()
   }
 
   override fun onPage(oldPageIndex: Int, newPageIndex: Int) {
     Log.d(TAG, "onPage: $oldPageIndex , withNew $newPageIndex")
     viewModel.pos = newPageIndex
-    viewModel.storyRequest.story_id = viewModel.store.get()!!.id
+    viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[viewModel.pos].id
+    viewModel.isLike.set(viewModel.store.get()!!.stories[viewModel.pos].is_liked)
     viewModel.storyRequest.type = 1
     viewModel.callService()
     loadImage()
@@ -201,14 +203,14 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 
   override fun onResume() {
     super.onResume()
-    if(!viewModel.isFinish)
+    if (!viewModel.isFinish)
       resume()
     else {
       reset()
     }
   }
 
-  fun reset(){
+  fun reset() {
     binding.progress.reset()
     viewModel.pos = 0
     viewModel.isFinish = false

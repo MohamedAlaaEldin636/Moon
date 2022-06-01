@@ -150,6 +150,7 @@
           android:paddingEnd="@dimen/dimen18"
           android:paddingBottom="@dimen/dimen6"
           android:text="@string/premium"
+          android:visibility="@{viewModel.advertisement.premium == 1 ? View.VISIBLE : View.GONE }"
           android:textColor="@color/white"
           android:textSize="@dimen/text_size13"
           app:layout_constraintBottom_toBottomOf="@+id/image_slider"

@@ -2,6 +2,7 @@ package grand.app.moon.presentation.myAccount
 
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.cometchat.pro.core.CometChat.logout
 import grand.app.moon.R
@@ -9,10 +10,12 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentMyAccountBinding
+import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.more.MoreItem
 import grand.app.moon.presentation.more.SettingsFragmentDirections
+import kotlinx.coroutines.flow.collect
 import java.util.ArrayList
 
 @AndroidEntryPoint
@@ -69,12 +72,7 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
             findNavController().navigate(MyAccountFragmentDirections.actionMyAccountFragmentToStoreBlockListFragment())
           }
           Constants.LOGOUT -> {
-            logout()
-//            viewModel.logoutUser {
-            viewModel.userLocalUseCase.clearUser()
-            viewModel.isLogin = false
-            setList()
-//            }
+            viewModel.logout()
           }
         }
       }
@@ -155,8 +153,31 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
         Constants.LOGOUT
       )
     )
+  }
 
-
+  override fun setupObservers() {
+    super.setupObservers()
+    lifecycleScope.launchWhenResumed {
+      viewModel.logout.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            logout()
+            viewModel.userLocalUseCase.clearUser()
+            viewModel.isLogin = false
+            setList()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
   }
 
   override fun onStop() {
