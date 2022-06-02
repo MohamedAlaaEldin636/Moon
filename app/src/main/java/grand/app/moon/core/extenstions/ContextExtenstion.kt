@@ -58,7 +58,8 @@ fun Context.logout(){
 }
 
 fun Context.loginPage(){
-  startActivity(Intent(MyApplication.instance, AuthActivity::class.java))
+
+//  startActivity(Intent(MyApplication.instance, AuthActivity::class.java))
 }
 
 fun Context.checkSelfPermissionGranted(permission: String): Boolean {

@@ -162,7 +162,7 @@ open class BaseRemoteDataSource @Inject constructor() {
               )
 
               MyApplication.instance.logout()
-              MyApplication.instance.loginPage()
+//              MyApplication.instance.loginPage()
 //              return Resource.Failure(
 //                FailureStatus.TOKEN_EXPIRED,
 //                throwable.code(),
