@@ -55,6 +55,12 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
     apiService.report(page)
   }
 
+  suspend fun reportAds(page: ReportAdsRequest) = safeApiCall {
+    apiService.reportAds(page)
+  }
+
+
+
   suspend fun share(page: ShareRequest) = safeApiCall {
     apiService.share(page)
   }

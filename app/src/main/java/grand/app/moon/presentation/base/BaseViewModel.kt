@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -32,7 +33,27 @@ import java.lang.Exception
 import java.net.URLEncoder
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.os.bundleOf
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.transition.Transition
 import grand.app.moon.domain.home.models.Store
+import androidx.core.content.ContextCompat.startActivity
+
+import android.R.attr.resource
+import android.provider.MediaStore
+import androidx.core.content.ContextCompat.startActivity
+
+import android.R.attr.bitmap
+import android.app.Activity
+import android.os.Environment
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat.startActivity
+import com.squareup.picasso.Picasso
+import androidx.core.content.ContextCompat.startActivity
+
+import android.R.attr.bitmap
+import java.io.ByteArrayOutputStream
+import java.lang.Double.parseDouble
 
 
 open class BaseViewModel : ViewModel(), Observable {
@@ -97,12 +118,12 @@ open class BaseViewModel : ViewModel(), Observable {
   }
 
 
-  fun shareWhatsapp(v: View, title: String?,desc: String?, phone: String) {
-    val titleWhatsapp = when(title){
+  fun shareWhatsapp(v: View, title: String?, desc: String?, phone: String) {
+    val titleWhatsapp = when (title) {
       null -> ""
       else -> title
     }
-    val description = when(desc){
+    val description = when (desc) {
       null -> ""
       else -> desc
     }
@@ -127,6 +148,53 @@ open class BaseViewModel : ViewModel(), Observable {
     }
   }
 
+  open fun getLocalBitmapUri(context: Context,bmp: Bitmap): Uri? {
+    val bytes = ByteArrayOutputStream()
+    bmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+    val path: String =
+      MediaStore.Images.Media.insertImage(context.contentResolver, bmp, "Title", null)
+    return Uri.parse(path)
+  }
+
+
+
+
+  open fun shareTitleMessageImage(
+    context: Activity,
+    title: String,
+    message: String?,
+    url: String
+  ) {
+
+    Picasso.get().load(url).into(object : com.squareup.picasso.Target {
+      override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+        TODO("not implemented")
+      }
+
+      override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+        // loaded bitmap is here (bitmap)
+        val i = Intent(Intent.ACTION_SEND)
+        i.type = "*/*"
+        i.putExtra(
+          Intent.EXTRA_SUBJECT,
+          context.getString(R.string.app_name)
+        )
+        var messageContent = title
+        message.let {
+          messageContent += "\n" + it
+        }
+        i.putExtra(Intent.EXTRA_TEXT, messageContent )
+        i.putExtra(Intent.EXTRA_STREAM, bitmap?.let { getLocalBitmapUri(context,it) })
+        context.startActivity(Intent.createChooser(i, "Share Image"))
+      }
+
+      override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+        Log.d(TAG, "onPrepareLoad: ")
+      }
+      
+    })
+  }
+
 
   open fun share(
     context: Context,
@@ -135,6 +203,7 @@ open class BaseViewModel : ViewModel(), Observable {
     imageView: ImageView
   ) {
     try {
+      Log.d(TAG, "share: START")
       try {
         imageView.invalidate()
       } catch (exception: Exception) {
@@ -145,6 +214,7 @@ open class BaseViewModel : ViewModel(), Observable {
       var stream: FileOutputStream? = null
       if (imageView.drawable != null) {
         try {
+          Log.d(TAG, "share: HERE")
           bitmapDrawable = imageView.drawable as BitmapDrawable
           val cachePath = File(getCacheDir(), "images")
           if (!cachePath.exists()) cachePath.mkdirs() // don't forget to make the directory
@@ -155,6 +225,7 @@ open class BaseViewModel : ViewModel(), Observable {
         }
       }
       if (bitmapDrawable != null && bitmapDrawable.bitmap != null && stream != null) {
+        Log.d(TAG, "share: COMPRESS")
         bitmapDrawable.bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         stream.close()
         share(context, title, message)
@@ -207,17 +278,16 @@ open class BaseViewModel : ViewModel(), Observable {
       Intent.EXTRA_SUBJECT,
       context.getString(R.string.app_name)
     )
-    intent.putExtra(Intent.EXTRA_TEXT, title+"\n"+message)
+    intent.putExtra(Intent.EXTRA_TEXT, title + "\n" + message)
     /*Fire!*/
     context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)))
   }
 
 
-
   fun toFilter(
     v: View, category_id: Int? = -1, category_name: String? = null, sub_category_id: Int? = -1,
-    sub_category_name: String? = null,allow_change_category : Boolean = true, store_id: Int = -1,
-    store:Store? = Store()
+    sub_category_name: String? = null, allow_change_category: Boolean = true, store_id: Int = -1,
+    store: Store? = Store()
   ) {
     val bundle = Bundle()
 
@@ -226,7 +296,7 @@ open class BaseViewModel : ViewModel(), Observable {
       bundle.putInt("sub_category_id", sub_category_id)
     }
     bundle.putInt("store_id", store_id)
-    bundle.putBoolean("allow_change_category",allow_change_category)
+    bundle.putBoolean("allow_change_category", allow_change_category)
 
     category_name?.let {
       bundle.putString("category_name", it)
@@ -256,7 +326,7 @@ open class BaseViewModel : ViewModel(), Observable {
 
   private val TAG = "BaseViewModel"
 
-  fun checkDeepLink(intent: Intent,v: View) {
+  fun checkDeepLink(intent: Intent, v: View) {
     Log.d(TAG, "checkDeepLink: ")
     val action = intent.action
     val data = intent.data
@@ -266,24 +336,26 @@ open class BaseViewModel : ViewModel(), Observable {
         val link = data.toString()
         val parameters = link.split("/").toTypedArray()
         Log.d(TAG, "initDynamicLinkSetDefaultCountry: ${parameters[4]}")
-        val id = parameters[5]
-        when(parameters[4]){
-          "advertisement" -> {
-            Log.d(TAG, "initDynamicLinkSetDefaultCountry: done")
+        if(parameters[4] == "shop"){
+          val id = parameters[5]
+          v.findNavController().navigate(
+            R.id.nav_store,
+            bundleOf(
+              "id" to id.toInt(),
+              "type" to 3
+            ), Constants.NAVIGATION_OPTIONS
+          )
+        }else{
+          val id = parameters[4]
+          try {
+            val num = parseDouble(id)
             v.findNavController().navigate(
               R.id.nav_ads, bundleOf(
-                "id" to id.toInt(),
+                "id" to num.toInt(),
                 "type" to 2
               )
             )
-          }
-          "shop" -> {
-            v.findNavController().navigate(
-              R.id.nav_store,
-              bundleOf(
-                "id" to id.toInt(),
-                "type" to 3
-              ),Constants.NAVIGATION_OPTIONS)
+          } catch (e: NumberFormatException) {
           }
         }
       }

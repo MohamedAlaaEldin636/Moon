@@ -169,6 +169,7 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
         ): Boolean {
           Log.d(TAG, "onResourceReady: READY")
           viewModel.isLoaded = true
+
           resume()
           return false
         }

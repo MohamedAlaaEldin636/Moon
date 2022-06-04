@@ -96,6 +96,8 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
     viewModel.adapter.differ.currentList[viewModel.adapter.position].shares++
     viewModel.adapter.notifyItemChanged(viewModel.adapter.position)
     context?.let { it1 -> share(it1,resources.getString(R.string.app_name),resources.getString(R.string.moon_info)+"\n"+viewModel.adapter.differ.currentList[viewModel.adapter.position].file) }
+
+
   }
 
   override fun onResume() {

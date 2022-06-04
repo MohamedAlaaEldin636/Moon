@@ -128,16 +128,6 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun share(v: AppCompatImageView) {
-//    advertisement.get()?.title?.let {
-//      advertisement.get()?.description?.let { it1 ->
-//        share(
-//          v.context,
-//          it,
-//          it1,
-//          v
-//        )
-//      }
-//    }
     advertisement.get()?.description?.let {
       advertisement.get()?.share?.let { it1 ->
         share(

@@ -11,16 +11,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.onesignal.OneSignal
+import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ThirdPartyHelper
 import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.logoutCometChat
+import grand.app.moon.core.extenstions.showError
 import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.presentation.auth.AuthActivity
+import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.splash.SplashActivity
 
 fun Context.dpToPx(value: Float): Float {
   return TypedValue.applyDimension(
@@ -58,8 +63,11 @@ fun Context.logout(){
 }
 
 fun Context.loginPage(){
-
-//  startActivity(Intent(MyApplication.instance, AuthActivity::class.java))
+  showError(getString(R.string.please_login_agin))
+  Intent(this, SplashActivity::class.java).apply {
+    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    startActivity(this)
+  }
 }
 
 fun Context.checkSelfPermissionGranted(permission: String): Boolean {

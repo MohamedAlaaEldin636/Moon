@@ -133,6 +133,7 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
     viewModel.adsHomeAdapter.updateFavourite()
     viewModel.storeAdapter.checkFollowingStore()
     viewModel.storeAdapter.checkBlockStore()
+    viewModel.storiesAdapter.viewedStores()
     viewModel.storiesAdapter.checkBlockStore()
   }
 

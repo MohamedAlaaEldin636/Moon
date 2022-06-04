@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.domain.settings.use_case.SettingsUseCase
+import grand.app.moon.domain.store.entity.ReportAdsRequest
 import grand.app.moon.domain.store.entity.ReportStoreRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.utils.BaseResponse
@@ -28,8 +29,10 @@ class ReportViewModel @Inject constructor(
 
   var type: Int = -1
   val request = ReportStoreRequest()
+  val requestAds = ReportAdsRequest()
   val progress = ObservableBoolean(false)
   val title = ObservableField("")
+
   @Bindable
   val adapter = ReportAdapter()
 
@@ -42,7 +45,6 @@ class ReportViewModel @Inject constructor(
   val responseSubmit = _responseSubmit
 
 
-
   fun callService() {
     progress.set(true)
     useCase.onBoard(type.toString())
@@ -52,12 +54,21 @@ class ReportViewModel @Inject constructor(
   }
 
   fun report() {
-    if(adapter.lastPosition != -1) {
+    if (adapter.lastPosition != -1) {
       progress.set(true)
-      storeUseCase.report(request)
-        .onEach {
-          responseSubmit.value = it
-        }.launchIn(viewModelScope)
+      if (request.storeId != null) {
+        storeUseCase.report(request)
+          .onEach {
+            responseSubmit.value = it
+          }.launchIn(viewModelScope)
+      } else {
+        requestAds.advertisementId = request.advertisementId
+        requestAds.reasonId = request.reasonId
+        storeUseCase.reportAds(requestAds)
+          .onEach {
+            responseSubmit.value = it
+          }.launchIn(viewModelScope)
+      }
     }
   }
 

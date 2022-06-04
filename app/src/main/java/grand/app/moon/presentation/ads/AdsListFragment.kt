@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.collect
 class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
 
 
-  private val viewModel: AdsListViewModel by viewModels()
+  val viewModel: AdsListViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_ads_list

@@ -17,6 +17,7 @@ import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.presentation.ads.AdsDetailsFragment
+import grand.app.moon.presentation.ads.AdsListFragment
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.category.view.CategoryDetailsFragment
@@ -125,6 +126,10 @@ class ItemAdsViewModel(
           R.id.storeDetailsFragment -> {
             val fragment = v.findFragment<StoreDetailsFragment>()
             fragment.viewModel.adsAdapter.updateFavourite()
+          }
+          R.id.adsListFragment , R.id.advertisementListFragment -> {
+            val fragment = v.findFragment<AdsListFragment>()
+            fragment.viewModel.adapter.updateFavourite()
           }
           R.id.mapFragment -> {
             val fragment = v.findFragment<grand.app.moon.presentation.map.MapFragment>()

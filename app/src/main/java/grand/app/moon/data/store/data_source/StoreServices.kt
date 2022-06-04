@@ -40,6 +40,14 @@ interface StoreServices {
   @POST("v1/store/report_block")
   suspend fun report(@Body page: ReportStoreRequest): BaseResponse<*>
 
+
+
+  @POST("v1/report")
+  suspend fun reportAds(@Body page: ReportAdsRequest): BaseResponse<*>
+
+
+
+
   @POST("v1/stories")
   suspend fun storyAction(@Body storeRequest: StoryRequest): BaseResponse<*>
 

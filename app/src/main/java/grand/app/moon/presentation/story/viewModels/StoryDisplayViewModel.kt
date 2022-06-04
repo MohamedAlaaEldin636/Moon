@@ -2,8 +2,12 @@ package grand.app.moon.presentation.story.viewModels
 
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.appMoonHelper.ListHelper
@@ -32,12 +36,13 @@ class StoryDisplayViewModel @Inject constructor(
   var progress = ObservableField(true)
   var image = ObservableField<String>("")
   var isLoaded = false
-  val store = ObservableField<Store> ()
-  val isLike= ObservableBoolean(false)
+  val store = ObservableField<Store>()
+  val isLike = ObservableBoolean(false)
   var isFinish = false
 //  val listStories = arrayListOf()
 
   val storyRequest = StoryRequest()
+
   //1 View, 2 Like, 3 Share
   override fun onCleared() {
     job.cancel()
@@ -47,29 +52,30 @@ class StoryDisplayViewModel @Inject constructor(
   fun startLoading() {
     progress.set(true)
   }
+
   fun stopLoading() {
     progress.set(false)
   }
 
-  fun chat(v: View){
-    if(v.context.isLoginWithOpenAuth()){
+  fun chat(v: View) {
+    if (v.context.isLoginWithOpenAuth()) {
       store.get()?.let {
         v.context.openChatStore(v, it.id, it.name, it.image)
       }
     }
   }
 
-  fun like(v: View){
-    if(v.context.isLoginWithOpenAuth()){
+  fun like(v: View) {
+    if (v.context.isLoginWithOpenAuth()) {
       isLike.set(true)
       store.get()!!.stories[pos].is_liked = true
-      ListHelper.addLike(store.get()!!.stories[pos].id,true)
+      ListHelper.addLike(store.get()!!.stories[pos].id, true)
       storyRequest.type = 2
       callService()
     }
   }
 
-  fun callService(){
+  fun callService() {
     storeUseCase.storyAction(storyRequest)
       .onEach {
 
@@ -77,9 +83,9 @@ class StoryDisplayViewModel @Inject constructor(
   }
 
   private val TAG = "StoryDisplayViewModel"
-  fun havePrevStory() : Boolean{
+  fun havePrevStory(): Boolean {
     Log.d(TAG, "havePrevStory: $pos")
-    if(pos > 0){
+    if (pos > 0) {
       pos--
       store.set(stories[pos])
       return true
@@ -95,8 +101,8 @@ class StoryDisplayViewModel @Inject constructor(
     return pos > 0
   }
 
-  fun prevStory() : Boolean{
-    if(positionStoryAdapter > 0) {
+  fun prevStory(): Boolean {
+    if (positionStoryAdapter > 0) {
       positionStoryAdapter--
       store.set(stories[positionStoryAdapter])
       return true
@@ -104,8 +110,8 @@ class StoryDisplayViewModel @Inject constructor(
     return false
   }
 
-  fun nextStory() : Boolean {
-    if(positionStoryAdapter < stories.size - 1) {
+  fun nextStory(): Boolean {
+    if (positionStoryAdapter < stories.size - 1) {
       ListHelper.addViewStory(stories[positionStoryAdapter].id)
       positionStoryAdapter++
       store.set(stories[positionStoryAdapter])
@@ -114,4 +120,7 @@ class StoryDisplayViewModel @Inject constructor(
     return false
   }
 
+  fun share(v: View) {
+    shareTitleMessageImage(v.findFragment<Fragment>().requireActivity(), store.get()!!.name, store.get()!!.description, store.get()!!.stories[pos].file)
+  }
 }

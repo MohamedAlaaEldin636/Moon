@@ -44,6 +44,12 @@ class StoreRepositoryImpl @Inject constructor(
   override
   suspend fun report(page: ReportStoreRequest) = remoteDataSource.report(page)
 
+
+  override
+  suspend fun reportAds(page: ReportAdsRequest) = remoteDataSource.reportAds(page)
+
+
+
   override
   suspend fun share(page: ShareRequest) = remoteDataSource.share(page)
 

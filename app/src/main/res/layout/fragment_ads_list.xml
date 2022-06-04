@@ -31,7 +31,7 @@
       android:id="@+id/tv_total_ads"
       android:layout_marginTop="@dimen/dimen6"
       android:visibility="@{viewModel.isProfile ? View.VISIBLE : View.GONE , default = gone }"
-      android:text="@{@string/advertisements_had_been_viewd(viewModel.total)}"
+      android:text="@{@string/total_ads(viewModel.total)}"
       app:layout_constraintTop_toBottomOf="@+id/curve"
       app:layout_constraintStart_toStartOf="parent"
       android:layout_marginStart="@dimen/dimen20"

@@ -184,5 +184,7 @@
   <string name="gallery">Gallery</string>
   <string name="please_choose_main_section">Please Choose Main Section</string>
   <string name="you_didn_t_accept_permission">You Didnt Accept Permission</string>
+  <string name="total_ads">Total Summation (%s) Advertisement</string>
+  <string name="please_login_agin">من فضلك قم بتسجيل الدخول من جديد</string>
 
 </resources>

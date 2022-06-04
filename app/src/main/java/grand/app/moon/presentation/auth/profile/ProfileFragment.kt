@@ -175,7 +175,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     if (it.resultCode == Activity.RESULT_OK) {
       val uri = it.data?.data ?: return@registerForActivityResult
 
-      viewModel.imageUri = uri
+      viewModel.request.uri = uri
 
       Log.d(TAG, ": DOE")
       Glide.with(this)

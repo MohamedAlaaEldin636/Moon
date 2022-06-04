@@ -74,6 +74,12 @@ class StoreUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
+  fun reportAds(id: ReportAdsRequest): Flow<Resource<BaseResponse<*>>> = flow {
+    emit(Resource.Loading)
+    val result = repository.reportAds(id)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
   fun share(id: ShareRequest): Flow<Resource<BaseResponse<*>>> = flow {
     val result = repository.share(id)
     emit(result)

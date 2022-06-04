@@ -49,17 +49,34 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
     startSMSListener()
 
   }
+  private val TAG = "ConfirmCodeFragment"
   private fun startSMSListener() {
     Log.d("CodeVerification", "startSMSListener()")
 
     val client = SmsRetriever.getClient(requireActivity())
     val retriever = client.startSmsRetriever()
+//    retriever.addOnSuccessListener {
+//      val listener = object : SMSBroadcastReceiver.OTPListener {
+//        override fun onOTPReceived(otp: String) {
+//          TODO("Not yet implemented")
+//          Log.d(TAG, "onOTPReceived: $otp")
+//        }
+//
+//        override fun onOTPTimeOut() {
+//          TODO("Not yet implemented")
+//          Log.d(TAG, "onOTPTimeOut: TIMEOUT")
+//        }
+//      }
+//      smsBroadcastReceiver.injectOTPListener(listener)
+//      requireActivity().registerReceiver(smsBroadcastReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+//    }
     retriever.addOnSuccessListener {
-      showMessage("addOnSuccessListener")
+//      showMessage("addOnSuccessListener")
+      Log.d(TAG, "startSMSListener: ${retriever.result}")
     }
 
     retriever.addOnFailureListener {
-      showMessage("addOnFailureListener")
+//      showMessage("addOnFailureListener")
     }
   }
 

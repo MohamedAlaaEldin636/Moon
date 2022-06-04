@@ -69,7 +69,7 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
   fun share(v: View) {
     val fragment = v.findFragment<ExploreListFragment>()
     fragment.viewModel.adapter.position = position
-    fragment.share()
+    fragment.viewModel.share(v)
   }
 
   fun allComments(v: View) {

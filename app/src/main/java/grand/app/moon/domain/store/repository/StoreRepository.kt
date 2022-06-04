@@ -15,6 +15,8 @@ interface StoreRepository {
   suspend fun getWhatsappStores(page: Int): Resource<BaseResponse<StoreListPaginateData>>
 
   suspend fun report(page: ReportStoreRequest): Resource<BaseResponse<*>>
+  suspend fun reportAds(page: ReportAdsRequest): Resource<BaseResponse<*>>
+
   suspend fun getStores(request: StoreFilterRequest): Resource<BaseResponse<StoreListPaginateData>>
   suspend fun share(request: ShareRequest): Resource<BaseResponse<*>>
   suspend fun getUsersViewFollowing(id:Int , type: String): Resource<BaseResponse<UserListPaginateData>>

@@ -24,6 +24,8 @@ import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
+import grand.app.moon.presentation.category.view.CategoryDetailsFragment
+import grand.app.moon.presentation.category.view.CategoryDetailsFragmentDirections
 import grand.app.moon.presentation.home.HomeFragment
 import grand.app.moon.presentation.home.HomeFragmentDirections
 import grand.app.moon.presentation.story.storyView.screen.StoryDisplayActivity
@@ -80,8 +82,13 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
           val storyModel = StoreModel()
           storyModel.list.addAll(list)
           storyModel.position = position - 1
-          holder.itemLayoutBinding.shapeableImageView.findFragment<HomeFragment>()
-            .navigateSafe(HomeFragmentDirections.actionHomeFragmentToStoryFragment(storyModel))
+          when(holder.itemLayoutBinding.shapeableImageView.findNavController().currentDestination?.id){
+            R.id.home_fragment -> holder.itemLayoutBinding.shapeableImageView.findFragment<HomeFragment>()
+              .navigateSafe(HomeFragmentDirections.actionHomeFragmentToStoryFragment(storyModel))
+            R.id.categoryDetailsFragment -> holder.itemLayoutBinding.shapeableImageView.findFragment<CategoryDetailsFragment>()
+              .navigateSafe(CategoryDetailsFragmentDirections.actionCategoryDetailsFragmentToStoryFragment(storyModel))
+          }
+
         }
       }
     }

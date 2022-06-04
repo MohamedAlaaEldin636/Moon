@@ -1,7 +1,10 @@
 package grand.app.moon.presentation.explore.viewmodel
 
 import android.util.Log
+import android.view.View
 import androidx.databinding.Bindable
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.viewModelScope
 import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -137,7 +140,7 @@ class ExploreListViewModel @Inject constructor(
     }
   }
 
-  fun share(){
+  fun share(v: View){
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
       val explore = adapter.differ.currentList[adapter.position]
@@ -145,6 +148,7 @@ class ExploreListViewModel @Inject constructor(
       exploreAction.type = 3
       explore.shares++
       adapter.notifyItemChanged(adapter.position)
+      shareTitleMessageImage(v.findFragment<Fragment>().requireActivity(),explore.store.name,explore.store.description,explore.file)
     }
 
   }

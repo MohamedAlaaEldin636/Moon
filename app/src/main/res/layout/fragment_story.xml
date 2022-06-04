@@ -118,8 +118,7 @@
       android:layout_marginBottom="@dimen/dimen10"
       android:background="@drawable/background"
       android:elevation="10dp"
-
-      android:onClick="@{ (v) -> viewModel.clickEvent(Constants.SHARE_IMAGE)}"
+      android:onClick="@{ (v) -> viewModel.share(v)}"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
 
