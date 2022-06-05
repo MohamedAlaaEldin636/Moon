@@ -123,7 +123,8 @@ class FilterViewModel @Inject constructor(
   }
   fun setSubCategoryId(int: Int,name: String) {
     request.sub_category_id = int
-    request.subCategoryName = name
+    if(name.isNotEmpty())
+      request.subCategoryName = name
 
   }
   fun setStoreId(int: Int) {

@@ -226,8 +226,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
       viewModel.mapConfig!!.setMapStyle() //set style google map
 //    //cluster manager
       viewModel.mapConfig!!.setUpCluster()
-      viewModel.callService()
       isLoaded = true
+      onResume()
     }
 
   }
@@ -250,6 +250,12 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
   }
 
+  override fun onResume() {
+    super.onResume()
+    if(isLoaded){
+      viewModel.callService()
+    }
+  }
 
   override fun onLowMemory() {
     super.onLowMemory()

@@ -2,6 +2,7 @@ package grand.app.moon.presentation.reviews
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -47,26 +48,31 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
     viewModel.getReviews()
   }
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
-      if(bundle.containsKey(Constants.REVIEW)) {
-        backToPreviousScreen()
-        bundle.remove(Constants.BUNDLE)
-      }
-      // We use a String here, but any type that can be put in a Bundle is supported
-//      viewModel.adapter.add(bundle.getSerializable(Constants.REVIEW) as Reviews)
-      // Do something with the result
-    }
-
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     actOnGetIfNotInitialValueOrGetLiveData(
       Constants.REVIEW,
       false,
       viewLifecycleOwner,
       { it == true }
     ) {
-
+      backToPreviousScreen()
     }
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+//    setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+//      if(bundle.containsKey(Constants.REVIEW)) {
+//        backToPreviousScreen()
+//        bundle.remove(Constants.BUNDLE)
+//      }
+//      // We use a String here, but any type that can be put in a Bundle is supported
+////      viewModel.adapter.add(bundle.getSerializable(Constants.REVIEW) as Reviews)
+//      // Do something with the result
+//    }
+//
+
   }
 
 

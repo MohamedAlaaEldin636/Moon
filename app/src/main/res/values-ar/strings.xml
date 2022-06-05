@@ -180,5 +180,6 @@
   <string name="you_didn_t_accept_permission">عفوا لم يتم قبول الإذن</string>
   <string name="total_ads">المجموع الكلى (%s) اعلان</string>
   <string name="please_login_agin">من فضلك قم بتسجيل الدخول من جديد</string>
+  <string name="do_you_want_to_exit_from_app">هل تريد الخروج من التطبيق</string>
 
 </resources>

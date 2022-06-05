@@ -32,6 +32,8 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.appMoonHelper.FilterDialog
+import grand.app.moon.core.extenstions.isLogin
+import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.databinding.FragmentNotificationBinding
 import grand.app.moon.databinding.FragmentStoryBinding
 import grand.app.moon.domain.home.models.Store
@@ -193,7 +195,9 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
     viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[viewModel.pos].id
     viewModel.isLike.set(viewModel.store.get()!!.stories[viewModel.pos].is_liked)
     viewModel.storyRequest.type = 1
-    viewModel.callService()
+    if(binding.root.context.isLogin()){
+      viewModel.callService()
+    }
     loadImage()
   }
 

@@ -14,5 +14,7 @@ data class CategoryItem(
     var name: String = "",
     @SerializedName("sub-categories")
     val subCategories: ArrayList<CategoryItem>?,
+    @SerializedName("category_id")
+    var categoryId: Int? = 0,
     var total: Int?,
 )

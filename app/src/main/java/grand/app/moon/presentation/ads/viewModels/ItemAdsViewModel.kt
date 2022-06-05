@@ -56,8 +56,10 @@ class ItemAdsViewModel(
   }
 
   fun whatsapp(v: View) {
-    viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(), 7))
+    if(v.context.isLoginWithOpenAuth()) {
+      viewModelScope.launch(Dispatchers.IO) {
+        adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(), 7))
+      }
     }
     shareWhatsapp(
       v,
@@ -68,8 +70,10 @@ class ItemAdsViewModel(
   }
 
   fun phone(v: View) {
-    viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(), 6))
+    if(v.context.isLoginWithOpenAuth()) {
+      viewModelScope.launch(Dispatchers.IO) {
+        adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(), 6))
+      }
     }
     callPhone(v.context, advertisement.country.country_code + advertisement.phone)
   }
@@ -94,7 +98,12 @@ class ItemAdsViewModel(
 //    }
     if (v.context.isLoginWithOpenAuth()) {
       val fav = !advertisement.isFavorite
-      ListHelper.addOrUpdate(advertisement.id, fav)
+      if(fav){
+        advertisement.favoriteCount ++
+      }else advertisement.favoriteCount--
+
+      advertisement.isFavorite = fav
+      ListHelper.addOrUpdate(advertisement)
       viewModelScope.launch { adsRepository.favourite(AddFavouriteAdsRequest(advertisementId = advertisement.id)) }
       if (v.context.isLoginWithOpenAuth()) {
         val destination = v.findNavController().currentDestination

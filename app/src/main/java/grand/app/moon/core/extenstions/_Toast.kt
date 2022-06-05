@@ -6,7 +6,11 @@ import es.dmoral.toasty.Toasty
 import grand.app.moon.core.MyApplication
 
 fun Context.showError( message: String) {
-  Toasty.error(this, message, Toast.LENGTH_SHORT, true).show();
+  try{
+    Toasty.error(this, message, Toast.LENGTH_SHORT, true).show();
+  }catch (e: Exception){
+    Toasty.error(MyApplication.instance, message, Toast.LENGTH_SHORT, true).show();
+  }
 }
 
 fun Context.showInfo( message: String) {

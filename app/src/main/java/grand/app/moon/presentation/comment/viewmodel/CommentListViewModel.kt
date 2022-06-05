@@ -9,6 +9,7 @@ import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.comment.entity.Comment
 import grand.app.moon.domain.comment.entity.CommentListPaginateData
@@ -99,17 +100,12 @@ class CommentListViewModel @Inject constructor(
   }
 
   fun comment(v: View) {
-    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
-    else {
-//      if (user.name.isEmpty() || user.email.isEmpty() || user.image.isEmpty()) {
-//        showInfo(v.context, v.resources.getString(R.string.please_complete_your_profile))
-//      } else {
-        exploreAction.get()!!.type = null
-        exploreAction.get()!!.exploreId = exploreId
-        useCase.setComment(exploreAction.get()!!, true).onEach {
-          _responseSend.value = it
-        }.launchIn(viewModelScope)
-//      }
+    if(v.context.isLoginWithOpenAuth()){
+      exploreAction.get()!!.type = null
+      exploreAction.get()!!.exploreId = exploreId
+      useCase.setComment(exploreAction.get()!!, true).onEach {
+        _responseSend.value = it
+      }.launchIn(viewModelScope)
     }
   }
 

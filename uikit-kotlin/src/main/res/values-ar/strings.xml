@@ -76,7 +76,7 @@
     <string name="send_message">ارسل رسالة</string>
     <string name="add_in">إضافة في</string>
     <string name="unblock_user">إلغاء حظر المستخدم</string>
-    <string name="block_user">كتلة المستخدم</string>
+    <string name="block_user">حظر المستخدم</string>
     <string name="added_successfully">تمت إضافتها بنجاح</string>
     <string name="unblocked_successfully">تم إلغاء حظره بنجاح</string>
     <string name="blocked_successfully"> تم حظره بنجاح</string>
@@ -376,5 +376,8 @@
   <string name="recording_permission">إذن التسجيل</string>
   <string name="please_enable_recording_permission_to_record_your_message">يرجى تمكين إذن التسجيل لتسجيل رسالتك</string>
   <string name="share_location_alert">هل أنت متأكد أنك تريد مشاركة موقعك؟</string>
+  <string name="do_you_want_to_exit_from_app">هل تريد الخروج من التطبيق؟</string>
+  <string name="please_login_agin">الرجاد الدخول على الحساب من جديد</string>
+
 
 </resources>

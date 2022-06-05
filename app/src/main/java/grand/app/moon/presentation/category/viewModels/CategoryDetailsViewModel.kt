@@ -97,6 +97,9 @@ class CategoryDetailsViewModel @Inject constructor(
       accountRepository.getCategories().collect {
         it.data.forEach {
           if (it.id == categoryId) {
+            it.subCategories?.forEach {
+              it.categoryId = categoryId
+            }
             it.subCategories?.add(0, categoryItem)
             categoriesAdapter.differ.submitList(it.subCategories)
           }

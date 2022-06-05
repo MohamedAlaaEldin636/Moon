@@ -7,6 +7,7 @@ import kotlin.math.log
 
 object ListHelper {
   val adsList = mutableMapOf<Int,Boolean>()
+  val adsListAds = mutableMapOf<Int,Advertisement>()
   val blockStores = mutableListOf<Int>()
   val viewedStories = mutableListOf<Int>()
   val likedStories = mutableMapOf<Int,Boolean>()
@@ -14,6 +15,7 @@ object ListHelper {
 
   fun addAllAds(list : ArrayList<Advertisement>){
     list.forEach {
+      adsListAds[it.id] = it
       adsList[it.id] = it.isFavorite
       addFollowStore(it.store.id,it.store.isFollowing)
     }
@@ -35,6 +37,21 @@ object ListHelper {
 
   fun addOrUpdate(adsId: Int , value: Boolean){
     adsList[adsId] = value
+  }
+
+  fun addOrUpdate( value: Advertisement){
+    adsList[value.id] = value.isFavorite
+    adsListAds[value.id] = value
+  }
+
+  fun isExistAdvertisement( id: Int) : Boolean{
+    if(adsListAds.containsKey(id))
+      return true
+    return false
+  }
+
+  fun getAdvertisement( id: Int) : Advertisement{
+    return adsListAds[id] ?: Advertisement()
   }
 
   fun isExist(adsId : Int) : Boolean{

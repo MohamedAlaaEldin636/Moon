@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import grand.app.moon.presentation.reviews.viewModels.ReviewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -59,7 +60,13 @@ class ReviewDialog : BottomSheetDialogFragment() {
             binding.progress.visibility = View.GONE
             binding.btnRate.show()
             showMessage(it.value.message)
-            dismiss()
+//            dismiss()
+            val n = findNavController()
+            n.navigateUp()
+            n.currentBackStackEntry?.savedStateHandle?.set(
+              Constants.REVIEW,
+              true
+            )
           }
           is Resource.Failure -> {
             binding.progress.visibility = View.GONE

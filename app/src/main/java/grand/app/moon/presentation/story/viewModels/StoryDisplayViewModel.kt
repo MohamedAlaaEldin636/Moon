@@ -67,9 +67,9 @@ class StoryDisplayViewModel @Inject constructor(
 
   fun like(v: View) {
     if (v.context.isLoginWithOpenAuth()) {
-      isLike.set(true)
-      store.get()!!.stories[pos].is_liked = true
-      ListHelper.addLike(store.get()!!.stories[pos].id, true)
+      isLike.set(!isLike.get())
+      store.get()!!.stories[pos].is_liked = isLike.get()
+      ListHelper.addLike(store.get()!!.stories[pos].id, isLike.get())
       storyRequest.type = 2
       callService()
     }

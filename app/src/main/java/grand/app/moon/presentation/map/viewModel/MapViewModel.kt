@@ -81,6 +81,7 @@ class MapViewModel @Inject constructor(
 
   fun setData(data: List<Store>) {
 //    backUp.addAll(data)
+    stores.clear()
     stores.addAll(data)
   }
 
@@ -97,6 +98,8 @@ class MapViewModel @Inject constructor(
 
 
   fun setAdsData(data: List<Advertisement>) {
+    stores.clear()
+    all_ads.clear()
     all_ads.addAll(data)
     data.forEach {
 //      backUp.add(
@@ -230,18 +233,32 @@ class MapViewModel @Inject constructor(
 
   fun updateFavourite() {
     all_ads.forEachIndexed { index, it ->
-      if (ListHelper.isExist(it.id) && it.isFavorite != ListHelper.getFavourite(it.id)) {
-        it.isFavorite = ListHelper.getFavourite(it.id)
-        it.favoriteCount = if (it.isFavorite) it.favoriteCount++ else it.favoriteCount--
+//      if (ListHelper.isExist(it.id) && it.isFavorite != ListHelper.getFavourite(it.id)) {
+//        it.isFavorite = ListHelper.getFavourite(it.id)
+//        it.favoriteCount = if (it.isFavorite) it.favoriteCount++ else it.favoriteCount--
+//        if(advertisement.get()?.id == it.id){
+//          advertisement.get()?.isFavorite = it.isFavorite
+//        }
+//      }
+      if (ListHelper.isExistAdvertisement(it.id)) {
+        val advertisementLocal = ListHelper.getAdvertisement(it.id)
+        it.isFavorite = advertisementLocal.isFavorite
+        it.favoriteCount = advertisementLocal.favoriteCount
+        it.shareCount = advertisementLocal.shareCount
+        it.viewsCount = advertisementLocal.viewsCount
         if(advertisement.get()?.id == it.id){
-          advertisement.get()?.isFavorite = it.isFavorite
+          advertisement.get()?.isFavorite = advertisementLocal.isFavorite
+          advertisement.get()?.favoriteCount = advertisementLocal.favoriteCount
+          advertisement.get()?.shareCount = advertisementLocal.shareCount
+          advertisement.get()?.viewsCount = advertisementLocal.viewsCount
         }
       }
-      if(it.store.isFollowing != ListHelper.getFollowStore(it.store.id)){
+      if (it.store.isFollowing != ListHelper.getFollowStore(it.store.id)) {
         it.store.isFollowing = ListHelper.getFollowStore(it.store.id)
       }
     }
   }
+
 
 
 }

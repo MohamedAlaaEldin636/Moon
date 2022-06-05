@@ -140,9 +140,12 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   fun updateFavourite() {
     differ.currentList.forEachIndexed { index, it ->
       check = false
-      if (ListHelper.isExist(it.id) && it.isFavorite != ListHelper.getFavourite(it.id)) {
-        it.isFavorite = ListHelper.getFavourite(it.id)
-        it.favoriteCount = if (it.isFavorite) it.favoriteCount++ else it.favoriteCount--
+      if (ListHelper.isExistAdvertisement(it.id)) {
+        val advertisement = ListHelper.getAdvertisement(it.id)
+        it.shareCount = advertisement.shareCount
+        it.isFavorite = advertisement.isFavorite
+        it.favoriteCount = advertisement.favoriteCount
+        it.viewsCount = advertisement.viewsCount
         check = true
       }
       if(it.store.isFollowing != ListHelper.getFollowStore(it.store.id)){

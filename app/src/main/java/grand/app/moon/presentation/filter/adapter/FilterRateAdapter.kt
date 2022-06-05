@@ -40,23 +40,55 @@ class FilterRateAdapter : RecyclerView.Adapter<FilterRateAdapter.ViewHolder>() {
     return ViewHolder(view)
   }
 
-  private  val TAG = "CountriesAdapter"
+  private val TAG = "CountriesAdapter"
+
   @SuppressLint("RecyclerView")
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     Log.d(TAG, "onBindViewHolder: ${data.id}")
-    val itemViewModel = ItemFilterRateViewModel(data,position,position == lastPosition)
+    val itemViewModel = ItemFilterRateViewModel(data, position, lastSelected == data.id)
     itemViewModel.clickEvent.observeForever {
 //      Log.d(TAG, "onBindViewHolder: $lastPosition")
-      if(lastPosition != -1) {
-        lastSelected = lastPosition
-        lastPosition = -1
-        notifyItemChanged(lastSelected)
+
+//      selected.clear()
+      var tmpLastSelected = lastSelected
+      lastSelected = -1
+      if (lastPosition != -1) {
+        lastSelected = -1
+        notifyItemChanged(lastPosition)
       }
-      lastPosition = position
-      lastSelected = data.id
-      changeEvent.value = data // for listen on view
-      notifyItemChanged(position)
+      lastSelected = tmpLastSelected
+
+      Log.d(TAG, "onBindViewHolder: $lastSelected , ${data.id}")
+      if (lastSelected == data.id) {
+        Log.d(TAG, "onBindViewHolder: HERE SAME")
+        lastSelected = -1
+        notifyItemChanged(lastPosition)
+        lastPosition = -1
+        notifyItemChanged(position)
+      } else {
+        lastSelected = data.id
+        lastPosition = position
+        notifyItemChanged(position)
+      }
+
+//      selectedBefore = false
+//      if(lastPosition == lastSelected && lastPosition != -1){
+//        lastSelected = -1
+//        lastPosition = -1
+//        selectedBefore = true
+//        notifyItemChanged(lastPosition)
+//      }else if(lastPosition != -1) {
+//        lastSelected = lastPosition
+//        lastPosition = -1
+//        notifyItemChanged(lastSelected)
+//      }
+//      if(!selectedBefore) {
+//        lastPosition = position
+//        lastSelected = data.id
+//        changeEvent.value = data // for listen on view
+//        notifyItemChanged(position)
+//      }
     }
 //    holder.itemLayoutBinding.radio.isChecked = lastPosition == position
     holder.setViewModel(itemViewModel)

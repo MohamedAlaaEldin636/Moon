@@ -61,7 +61,6 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.getDetails(adsDetailsFragmentArgs.id,adsDetailsFragmentArgs.type,adsDetailsFragmentArgs.fromStore)
 
   }
 
@@ -100,7 +99,8 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
     viewModel.adsAdapter.updateFavourite()
     if(viewModel.checkBlockStore()){
       backToPreviousScreen()
-    }
+    }else
+      viewModel.getDetails(adsDetailsFragmentArgs.id,adsDetailsFragmentArgs.type,adsDetailsFragmentArgs.fromStore)
   }
 
   override fun onStart() {

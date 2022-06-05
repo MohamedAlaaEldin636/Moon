@@ -3,11 +3,13 @@ package grand.app.moon.presentation.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import codes.grand.pretty_pop_up.PrettyPopUpHelper
 import com.rizlee.rangeseekbar.RangeSeekBar
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
@@ -37,6 +39,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
   override
   fun getLayoutId() = R.layout.fragment_home
 
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+
+        PrettyPopUpHelper.Builder(childFragmentManager)
+          .setStyle(PrettyPopUpHelper.Style.STYLE_1_HORIZONTAL_BUTTONS)
+          .setTitle(getString(R.string.back))
+          .setTitleColor(getMyColor(R.color.colorPrimaryDark))
+          .setContent(getString(R.string.do_you_want_to_exit_from_app))
+          .setContentColor(getMyColor(R.color.gray))
+          .setPositiveButtonBackground(R.drawable.corner_accent)
+          .setPositiveButtonTextColor(getMyColor(R.color.colorWhite))
+          .setPositiveButton(getString(R.string.submit)) {
+            it.dismiss()
+            isEnabled = false
+            activity?.onBackPressed()
+          }
+//      .setNegativeButtonBackground(R.drawable.btn_gray)
+          .setNegativeButtonTextColor(getMyColor(R.color.white))
+          .setNegativeButton(getMyString(R.string.cancel)) {
+            it.dismiss()
+          }
+          .create()
+
+      }
+    })
+  }
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel

@@ -77,11 +77,19 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
     differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
       categoryAds.advertisements.forEachIndexed { indexAds, ads ->
         check = false
-        if (ListHelper.isExist(ads.id) && ads.isFavorite != ListHelper.getFavourite(ads.id)) {
+        if (ListHelper.isExistAdvertisement(ads.id)) {
           check = true
-          val boolean = ListHelper.getFavourite(ads.id)
-          differ.currentList[indexCategoryAds].advertisements[indexAds].isFavorite = boolean
+          val advertisement = ListHelper.getAdvertisement(ads.id)
+          differ.currentList[indexCategoryAds].advertisements[indexAds].shareCount = advertisement.shareCount
+          differ.currentList[indexCategoryAds].advertisements[indexAds].isFavorite = advertisement.isFavorite
+          differ.currentList[indexCategoryAds].advertisements[indexAds].favoriteCount = advertisement.favoriteCount
+          differ.currentList[indexCategoryAds].advertisements[indexAds].viewsCount = advertisement.viewsCount
         }
+//        if (ListHelper.isExist(ads.id) && ads.isFavorite != ListHelper.getFavourite(ads.id)) {
+//          check = true
+//          val boolean = ListHelper.getFavourite(ads.id)
+//          differ.currentList[indexCategoryAds].advertisements[indexAds].isFavorite = boolean
+//        }
         if(ads.store.isFollowing != ListHelper.getFollowStore(ads.store.id)){
           check = true
           ads.store.isFollowing = ListHelper.getFollowStore(ads.store.id)

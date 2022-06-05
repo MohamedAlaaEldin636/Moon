@@ -53,9 +53,9 @@ data class Advertisement(
   @SerializedName("title")
   val title: String = "",
   @SerializedName("views_count")
-  val viewsCount: Int = 0,
+  var viewsCount: Int = 0,
   @SerializedName("share_count")
-  val shareCount: Int = 0,
+  var shareCount: Int = 0,
   @SerializedName("is_favorite")
   var isFavorite: Boolean = false,
   @SerializedName("switches")

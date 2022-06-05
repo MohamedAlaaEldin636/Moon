@@ -157,7 +157,7 @@
   <string name="there_are_no_customers_reviews">"There are no customer reviews "</string>
   <string name="customers_reviews">customers reviews</string>
   <string name="add_description_for_rate">add description for rate</string>
-  <string name="add_rate">add_rate</string>
+  <string name="add_rate">Add Rate</string>
   <string name="add_review">Add Review</string>
   <string name="other_options">other options</string>
   <string name="all_ads">all ads</string>
@@ -185,6 +185,7 @@
   <string name="please_choose_main_section">Please Choose Main Section</string>
   <string name="you_didn_t_accept_permission">You Didnt Accept Permission</string>
   <string name="total_ads">Total Summation (%s) Advertisement</string>
-  <string name="please_login_agin">من فضلك قم بتسجيل الدخول من جديد</string>
+  <string name="please_login_agin">Please log in again</string>
+  <string name="do_you_want_to_exit_from_app">Do you want to exit the application?</string>
 
 </resources>

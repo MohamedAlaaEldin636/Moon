@@ -135,6 +135,8 @@ class AdsDetailsViewModel @Inject constructor(
           it,
           it1
         )
+        advertisement.get()!!.shareCount++
+        ListHelper.addOrUpdate(advertisement.get()!!)
       }
     }
   }
@@ -180,11 +182,12 @@ class AdsDetailsViewModel @Inject constructor(
       addFavouriteAdsRequest.advertisementId = advertisement.get()?.id
       useCase.favourite(addFavouriteAdsRequest).launchIn(viewModelScope)
       advertisement.get()?.isFavorite = advertisement.get()?.isFavorite != true
-      when (advertisement.get()?.isFavorite) {
-        true -> advertisement.get()?.favoriteCount?.plus(1)
-        else -> advertisement.get()?.favoriteCount?.minus(1)
+      when (advertisement.get()!!.isFavorite) {
+        true -> advertisement.get()!!.favoriteCount++
+        else -> advertisement.get()!!.favoriteCount--
       }
-      ListHelper.addOrUpdate(advertisement.get()!!.id, advertisement.get()!!.isFavorite)
+      Log.d(TAG, "favourite: ${advertisement.get()!!.favoriteCount}")
+      ListHelper.addOrUpdate(advertisement.get()!!)
       notifyChange()
     }
   }
