@@ -109,6 +109,7 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
         v.findNavController().navigate(action)
       }
       is StoreDetailsFragment -> {
+
         val action = if (model.mimeType.contains(Constants.VIDEO))
           StoreDetailsFragmentDirections.actionStoreDetailsFragmentToVideoFragment(model.file)
         else StoreDetailsFragmentDirections.actionStoreDetailsFragmentToZoomFragment2(model.file)

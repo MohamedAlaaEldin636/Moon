@@ -194,6 +194,7 @@ class AdsDetailsViewModel @Inject constructor(
 
   fun update(data: Advertisement) {
     advertisement.set(data)
+    ListHelper.addOrUpdate(advertisement.get()!!)
     propertiesAdapter.differ.submitList(advertisement.get()?.properties)
     reviewsAdapter.differ.submitList(advertisement.get()?.reviews)
     adsAdapter.differ.submitList(advertisement.get()?.similarAds)

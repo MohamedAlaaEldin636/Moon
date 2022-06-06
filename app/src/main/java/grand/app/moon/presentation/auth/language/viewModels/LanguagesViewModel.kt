@@ -23,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LanguagesViewModel @Inject constructor(
-  private val accountRepository: AccountRepository
+  val accountRepository: AccountRepository
+
 ) : BaseViewModel() {
 
   val languages = arrayListOf<Country>()

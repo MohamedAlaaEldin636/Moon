@@ -47,11 +47,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 
         PrettyPopUpHelper.Builder(childFragmentManager)
           .setStyle(PrettyPopUpHelper.Style.STYLE_1_HORIZONTAL_BUTTONS)
-          .setTitle(getString(R.string.back))
-          .setTitleColor(getMyColor(R.color.colorPrimaryDark))
+          .setTitle(getString(R.string.logout))
+          .setTitleColor(getMyColor(R.color.colorAccent))
           .setContent(getString(R.string.do_you_want_to_exit_from_app))
-          .setContentColor(getMyColor(R.color.gray))
+          .setContentColor(getMyColor(R.color.colorPrimaryDark))
           .setPositiveButtonBackground(R.drawable.corner_accent)
+          .setNegativeButtonBackground(R.drawable.corner_primary)
           .setPositiveButtonTextColor(getMyColor(R.color.colorWhite))
           .setPositiveButton(getString(R.string.submit)) {
             it.dismiss()

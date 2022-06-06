@@ -11,11 +11,14 @@ import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.BuildConfig
+import grand.app.moon.R
 import grand.app.moon.appMoonHelper.FilterDialog
+import grand.app.moon.core.MyApplication
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.ads.use_case.AdsUseCase
+import grand.app.moon.domain.home.models.Parent
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
@@ -122,7 +125,7 @@ class SubCategoryViewModel @Inject constructor(
         null,
         categoryId,
         subCategoryId,
-        1,
+        sortBy,
         null,
         search,
         properties,
@@ -189,9 +192,11 @@ class SubCategoryViewModel @Inject constructor(
     Log.d(TAG, "propertySelect: ")
     propertiesAdapter.submitSelect()
     properties.clear()
-    properties.add(
-      Property(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id,parent = null)
-    )
+    if(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id != 0) {
+      properties.add(
+        Property(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id, parent = null)
+      )
+    }
     reset()
     callService()
   }
@@ -211,12 +216,21 @@ class SubCategoryViewModel @Inject constructor(
 //        adapter = InvoicesAdapter()
         if (propertiesAdapter.differ.currentList.isEmpty()) {
           propertiesAdapter.selected = 0
+          if(it.properties.size > 0) {
+            it.properties.add(0,
+              Property(
+                0,
+                name = MyApplication.instance.getString(R.string.all),
+                parent = Parent()
+              )
+            )
+          }
           propertiesAdapter.differ.submitList(it.properties)
           notifyPropertyChanged(BR.propertiesAdapter)
-          if (it.properties.isNotEmpty())
-            properties.add(
-              Property(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id,parent = null)
-            )
+//          if (it.properties.isNotEmpty())
+//            properties.add(
+//              Property(propertiesAdapter.differ.currentList[propertiesAdapter.selected].id,parent = null)
+//            )
         }
         adapter.differ.submitList(null)
         adapter.differ.submitList(it.advertisements.list)

@@ -69,6 +69,7 @@ class StoreDetailsViewModel @Inject constructor(
 
   val propertiesAdapter = PropertiesAdapter()
 
+  @Bindable
   var exploreAdapter = ExploreGridEqualAdapter()
 
   val followStoreRequest = FollowStoreRequest()
@@ -306,7 +307,7 @@ class StoreDetailsViewModel @Inject constructor(
     propertiesAdapter.differ.submitList(data.category)
     exploreAdapter.differ.submitList(data.explore)
 //    store.get()?.explore?.let { exploreAdapter.differ.currentList.addAll(it) }
-//    notifyPropertyChanged(BR.exploreAdapter)
+    notifyPropertyChanged(BR.exploreAdapter)
 //    exploreAdapter.notifyDataSetChanged()
 
     store.get()?.socialMediaLinks?.forEach { socialLink ->

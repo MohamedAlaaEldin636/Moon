@@ -15,7 +15,7 @@ data class Comment(
   @SerializedName("created_at")
   @Expose val createdAt: String = "",
     @SerializedName("user")
-    @Expose val user: User = User()
+    @Expose val user: User? = User()
 ) {
 
 }

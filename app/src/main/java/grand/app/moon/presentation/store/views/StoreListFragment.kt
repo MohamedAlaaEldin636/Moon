@@ -48,8 +48,9 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
     super.onViewCreated(view, savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
       if(bundle.containsKey(Constants.STORE_FILTER)) {
-        viewModel.request = bundle.getSerializable(Constants.STORE_FILTER) as StoreFilterRequest
         viewModel.reset()
+        viewModel.request = bundle.getSerializable(Constants.STORE_FILTER) as StoreFilterRequest
+        Log.d(TAG, "onViewCreated: ${viewModel.request.city_ids.size}")
         viewModel.adapter.type = 4
         viewModel.callService()
       }

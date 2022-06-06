@@ -32,6 +32,10 @@
     <argument
       android:name="page"
       app:argType="integer" />
+    <argument
+      android:name="from_store"
+      app:argType="boolean"
+      android:defaultValue="false" />
     <action
       android:id="@+id/action_exploreListFragment_to_commentsListFragment"
       app:destination="@id/commentsListFragment"
@@ -69,6 +73,7 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/zoomFragment" />
+
   </fragment>
   <fragment
     android:id="@+id/commentsListPaginateFragment"

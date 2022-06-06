@@ -40,7 +40,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
   fun setBindingVariables() {
     binding.viewModel = viewModel
     viewModel.request.country_code
-//    binding.ccp.setCountryForPhoneCode(viewModel.request.country_code)
+    var countryCode = viewModel.request.country_code
+    if(countryCode.startsWith("+")) countryCode = countryCode.substring(1)
+    binding.ccp.setCountryForPhoneCode(countryCode.toInt())
   }
 
   private val TAG = "SignUpFragment"

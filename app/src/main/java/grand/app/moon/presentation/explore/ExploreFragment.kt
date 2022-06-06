@@ -56,14 +56,11 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
-      Log.d(TAG, "onCreate: WORKED HERE")
       // We use a String here, but any type that can be put in a Bundle is supported
       if(bundle.containsKey(Constants.EXPLORES)) {
-        Log.d(TAG, "onCreate: HWERE")
         val result = bundle.getSerializable(Constants.EXPLORES) as ExploreListPaginateData
         viewModel.adapter.updateExplores(result)
       }
-      // Do something with the result
     }
   }
 

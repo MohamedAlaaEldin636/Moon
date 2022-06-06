@@ -22,6 +22,7 @@ class ItemCommentViewModel(val model: Comment,val position:Int ,val userLocalUse
 
 
   fun isOwnComment(): Boolean{
+    if(model.user == null) return false
     return userLocalUseCase.invoke().id == model.user.id
 //    if(model.)
   }

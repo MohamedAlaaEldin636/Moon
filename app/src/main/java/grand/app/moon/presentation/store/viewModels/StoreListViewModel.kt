@@ -111,6 +111,7 @@ class StoreListViewModel @Inject constructor(
         notifyPropertyChanged(BR.page)
       }
       request.page = page
+      Log.d(TAG, "callService: ${request.city_ids.size}")
       job = storeUseCase.getStores(request)
         .onEach {
           response.value = it

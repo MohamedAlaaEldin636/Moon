@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation.findNavController
@@ -18,9 +19,11 @@ import grand.app.moon.databinding.ItemExploreBinding
 import grand.app.moon.databinding.ItemExploreGidEqualBinding
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.explore.ExploreFragmentDirections
 import grand.app.moon.presentation.explore.viewmodel.ExploreViewModel
 import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
+import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -49,20 +52,31 @@ class ExploreGridEqualAdapter: RecyclerView.Adapter<ExploreGridEqualAdapter.View
     val itemViewModel = ItemExploreViewModel(data,position,user)
     Log.d(TAG, "onBindViewHolder: "+data.file)
     holder.itemLayoutBinding.itemExplore.setOnClickListener {
-      Log.d(TAG, "onBindViewHolder: $position")
-      clickEvent.value = position
+//      val list = ExploreListPaginateData()
+//      list.list.addAll(differ.currentList)
+//      holder.itemLayoutBinding.itemExplore.findNavController()
+//        .navigate(R.id.exploreListFragment, bundleOf(
+//          "page" to 1,
+//          "data" to list,
+//          "from_store" to true
+//        ), Constants.NAVIGATION_OPTIONS)
 
-//      val list = ArrayList(differ.currentList)
-//      viewModel.lastData.list.clear()
-//      viewModel.lastData.list.addAll(list)
-//      Collections.swap(viewModel.lastData.list, 0, it);
-
-//      var lastData = ExploreListPaginateData()
-//      it!!.findNavController().navigate(ExploreFragmentDirections.actionExploreFragmentToNavExplore(lastData,1))
-
-
+//      holder.itemLayoutBinding.itemExplore.findNavController().navigate(
+//        StoreDetailsFragmentDirections.actionStoreDetailsFragmentToExploreListFragment2(
+//          list,
+//          1,
+//          true
+//        )
+//      )
     }
     holder.setViewModel(itemViewModel)
+  }
+
+  fun updateExplores(result: ExploreListPaginateData) {
+    if(differ.currentList.size != result.list.size){
+      differ.submitList(null)
+      differ.submitList(result.list)
+    }
   }
 
 

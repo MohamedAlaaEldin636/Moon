@@ -17,6 +17,7 @@ import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.intro.IntroActivity
+import kotlinx.android.synthetic.main.fragment_log_in.*
 import kotlinx.coroutines.flow.collect
 import java.util.*
 
@@ -70,9 +71,21 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         when (it) {
           is Resource.Success -> {
             viewModel.saveCategories(it.value)
+            viewModel.isCategories = true
             viewModel.redirect()
           }
+        }
+      }
+    }
 
+    lifecycleScope.launchWhenResumed {
+      viewModel._countriesResponse.collect {
+        when (it) {
+          is Resource.Success -> {
+            viewModel.saveCountries(it.value)
+            viewModel.isCountries = true
+            viewModel.redirect()
+          }
         }
       }
     }

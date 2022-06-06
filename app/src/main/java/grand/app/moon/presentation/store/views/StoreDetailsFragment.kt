@@ -30,14 +30,18 @@ import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.FragmentStoreDetailsBinding
+import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.explore.ExploreFragmentDirections
 import grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapReadyCallback {
@@ -55,15 +59,11 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
       if (bundle.containsKey(Constants.SORT_BY)) {
         viewModel.setSortAds(bundle.getInt(Constants.SORT_BY))
       }
-      /* if (bundle.containsKey(Constants.STORES_BLOCKED)) {
-         Log.d(TAG, "onViewCreated: BLOCK STORE")
-         viewModel.blockStore = true
-         viewModel.store.get()?.id?.let { ListHelper.blockStores.add(it) }
-         Log.d(TAG, "onViewCreated: ${ListHelper.blockStores.size}")
-         lifecycleScope.launchWhenResumed {
-           findNavController().popBackStack()
-         }
-       }*/
+      if(bundle.containsKey(Constants.EXPLORES)) {
+        Log.d(TAG, "onCreate: HWERE")
+        val result = bundle.getSerializable(Constants.EXPLORES) as ExploreListPaginateData
+        viewModel.exploreAdapter.updateExplores(result)
+      }
     }
 
     actOnGetIfNotInitialValueOrGetLiveData(
@@ -86,24 +86,6 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     ) {
       viewModel.store.get()!!.rateCount = it.toString()
     }
-
-//    findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
-//      Constants.STORES_BLOCKED,
-//      false
-//    )?.observe(viewLifecycleOwner) {
-//      Log.d(TAG, "onViewCreated: welcome")
-//      if (it == true) {
-//        Log.d(TAG, "onViewCreated: DONE")
-//        findNavController().currentBackStackEntry?.savedStateHandle?.set(
-//          Constants.STORES_BLOCKED,
-//          false
-//        )
-//        viewModel.blockStore = true
-//        viewModel.store.get()?.id?.let { ListHelper.blockStores.add(it) }
-//        Log.d(TAG, "onViewCreated: BEFORE NAVIGATE ")
-//        findNavController().navigateUp()
-//      }
-//    }
   }
 
   override
@@ -157,6 +139,8 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
               it.value.data,
               days
             )
+            if(it.value.data.explore.size == 0)
+              binding.tabLayout.visibility = View.GONE
             setLocation()
           }
           is Resource.Failure -> {
@@ -178,7 +162,6 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 
     binding.rvAds.layoutManager = gridLayoutManager
     binding.rvAds.adapter = viewModel.adsAdapter
-
   }
 
   fun scrollDown() {

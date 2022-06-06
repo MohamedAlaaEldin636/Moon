@@ -107,22 +107,30 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     var counter = 0
     Log.d(TAG, "filterResults: $map")
     for ((index, item) in request.properties.orEmpty().withIndex()) {
-      if(item.filterType != FILTER_TYPE.CATEGORY && item.filterType != FILTER_TYPE.SUB_CATEGORY && item.filterType != FILTER_TYPE.CITY) {
-        if (item.selectedList.isNotEmpty()) {
-          item.selectedList.forEachIndexed { indexProp, propSelect ->
-            map["properties[$counter][id]"] = propSelect.toString()
-            counter++
+      when {
+        item.filterType == FILTER_TYPE.CITY -> {
+          request.cityIds?.forEachIndexed { index, city ->
+            map["city_ids[$index]"] = city.toString()
           }
-        } else {
-          if (item.from != null && item.from!!.isNotEmpty() && item.to != null && item.to!!.isNotEmpty() && item.selectedList.isEmpty()) {
-            map["properties[$counter][id]"] = item.id.toString()
-            item.from?.let {
-              map["properties[$counter][from]"] = it
+        }
+        item.filterType != FILTER_TYPE.CATEGORY && item.filterType != FILTER_TYPE.SUB_CATEGORY
+          && item.filterType != FILTER_TYPE.CITY -> {
+          if (item.selectedList.isNotEmpty()) {
+            item.selectedList.forEachIndexed { indexProp, propSelect ->
+              map["properties[$counter][id]"] = propSelect.toString()
+              counter++
             }
-            item.to?.let {
-              map["properties[$counter][to]"] = it
+          } else {
+            if (item.from != null && item.from!!.isNotEmpty() && item.to != null && item.to!!.isNotEmpty() && item.selectedList.isEmpty()) {
+              map["properties[$counter][id]"] = item.id.toString()
+              item.from?.let {
+                map["properties[$counter][from]"] = it
+              }
+              item.to?.let {
+                map["properties[$counter][to]"] = it
+              }
+              counter++
             }
-            counter++
           }
         }
       }

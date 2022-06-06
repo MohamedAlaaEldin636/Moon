@@ -48,7 +48,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>() {
 
         context?.let { (activity as BaseActivity<*>).changeLanguage(it,viewModel.lang) }
         (activity as BaseActivity<*>).changeLanguage(MyApplication.instance,viewModel.lang)
-
+//        viewModel.accountRepository.saveKeyToLocal(Constants.INTRO,"false")
         openActivityAndClearStack(SplashActivity::class.java)
       }
     })

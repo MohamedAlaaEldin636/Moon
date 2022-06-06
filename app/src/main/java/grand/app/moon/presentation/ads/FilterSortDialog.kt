@@ -53,8 +53,8 @@ class FilterSortDialog : BottomSheetDialogFragment() {
         viewModel.title.set(resources.getString(R.string.sort_by))
         viewModel.list.add(AppTutorial(1, content = resources.getString(R.string.the_most_recent)))
         viewModel.list.add(AppTutorial(2, content = resources.getString(R.string.the_oldest)))
-        viewModel.list.add(AppTutorial(3, content = resources.getString(R.string.highest_price)))
-        viewModel.list.add(AppTutorial(4, content = resources.getString(R.string.lowest_price)))
+        viewModel.list.add(AppTutorial(3, content = resources.getString(R.string.lowest_price)))
+        viewModel.list.add(AppTutorial(4, content = resources.getString(R.string.highest_price)))
       }
       FilterDialog.NOTIFICATION -> {
         viewModel.title.set(resources.getString(R.string.notification_type))

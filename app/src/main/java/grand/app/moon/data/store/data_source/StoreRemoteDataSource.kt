@@ -11,6 +11,7 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
   suspend fun follow(storeRequest: FollowStoreRequest) = safeApiCall {
     apiService.follow(storeRequest)
   }
+
   suspend fun unBlock(storeRequest: FollowStoreRequest) = safeApiCall {
     apiService.unBlock(storeRequest)
   }
@@ -20,22 +21,27 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
   }
 
 
-
-  suspend fun storeDetails(id: Int,type: Int) = safeApiCall {
-    apiService.storeDetails(id,type)
+  suspend fun storeDetails(id: Int, type: Int) = safeApiCall {
+    apiService.storeDetails(id, type)
   }
 
   private val TAG = "StoreRemoteDataSource"
   suspend fun getStores(request: StoreFilterRequest) = safeApiCall {
     Log.d(TAG, "getStores: ")
-    apiService.getStores(getParameters(request))
+    val map = getParameters(request).toMutableMap()
+    request.city_ids.forEachIndexed { index, city ->
+      map["city_ids[$index]"] = city.toString()
+    }
+    request.category_ids.forEachIndexed { index, category ->
+      map["category_ids[$index]"] = category.toString()
+    }
+    apiService.getStores(map)
   }
 
   suspend fun storyAction(request: StoryRequest) = safeApiCall {
     Log.d(TAG, "getStores: ")
     apiService.storyAction(request)
   }
-
 
 
   suspend fun getFavouriteStores(page: Int) = safeApiCall {
@@ -60,15 +66,13 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
   }
 
 
-
   suspend fun share(page: ShareRequest) = safeApiCall {
     apiService.share(page)
   }
 
-  suspend fun getUsersViewFollowing(storeId: Int ,type: String) = safeApiCall {
-    apiService.getUsersViewFollowing(storeId,type)
+  suspend fun getUsersViewFollowing(storeId: Int, type: String) = safeApiCall {
+    apiService.getUsersViewFollowing(storeId, type)
   }
-
 
 
 }

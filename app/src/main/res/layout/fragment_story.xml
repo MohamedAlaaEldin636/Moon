@@ -116,7 +116,7 @@
       android:layout_height="@dimen/dimen60"
       android:layout_marginEnd="@dimen/dimen10"
       android:layout_marginBottom="@dimen/dimen10"
-      android:background="@drawable/background"
+      android:background="@drawable/ic_story_share"
       android:elevation="10dp"
       android:onClick="@{ (v) -> viewModel.share(v)}"
       app:layout_constraintBottom_toBottomOf="parent"
@@ -130,7 +130,7 @@
       android:layout_marginBottom="@dimen/dimen10"
 
       android:elevation="10dp"
-      android:background="@{ viewModel.isLike ? @drawable/ic_like_fill : @drawable/like}"
+      android:background="@{ viewModel.isLike ? @drawable/ic_like_fill : @drawable/ic_like}"
 
       android:onClick="@{ (v) -> viewModel.like(v)}"
       app:layout_constraintBottom_toBottomOf="parent"

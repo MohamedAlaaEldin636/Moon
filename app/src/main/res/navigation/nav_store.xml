@@ -67,6 +67,13 @@
       android:name="from_store"
       app:argType="boolean"
       android:defaultValue="false" />
+<!--    <action-->
+<!--      android:id="@+id/action_storeDetailsFragment_to_exploreListFragment2"-->
+<!--      app:enterAnim="@anim/anim_slide_in_right"-->
+<!--      app:exitAnim="@anim/anim_slide_out_left"-->
+<!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
+<!--      app:popExitAnim="@anim/anim_slide_out_right"-->
+<!--      app:destination="@id/exploreListFragment2" />-->
 
 
   </fragment>

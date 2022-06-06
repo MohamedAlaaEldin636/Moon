@@ -573,7 +573,7 @@
                 android:drawableTint="@color/colorAccent"
                 android:gravity="center"
                 android:onClick="@{ (v) -> viewModel.showAllReviews(v)}"
-                android:text="@{viewModel.advertisement.reviews.size() > 0 ? @string/show_all : @string/add_review}"
+                android:text="@string/add_review"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"
