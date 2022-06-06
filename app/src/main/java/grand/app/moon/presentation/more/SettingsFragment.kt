@@ -3,6 +3,7 @@ package grand.app.moon.presentation.more
 import android.content.Intent
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.maproductions.mohamedalaa.shared.core.extensions.rateApp
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -11,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentSettingsBinding
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.myAccount.MyAccountFragmentDirections
 import java.util.ArrayList
 
 @AndroidEntryPoint
@@ -102,6 +104,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
       )
     }
     viewModel.moreAdapter.differ.submitList(moreItems)
+    setData()
 
     viewModel.moreAdapter.clickEvent.observe(this,{
       Log.d(TAG, "setBindingVariables: here")
@@ -168,6 +171,126 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     super.onStop()
     viewModel.moreAdapter.clickEvent.value = MoreItem(icon = null,id = -1)
   }
+
+  val list = ArrayList<MoreItem>()
+  private fun setListProfile() {
+    list.clear()
+    list.also { list ->
+      when (viewModel.isLogin) {
+        true -> {
+          addMyAccountSettings()
+        }
+        else -> {
+          list.add(
+            MoreItem(
+              getString(R.string.log_in),
+              getMyDrawable(R.drawable.ic_login),
+              Constants.LOGIN
+            )
+          )
+        }
+      }
+    }
+    viewModel.accountAdapter.differ.submitList(list)
+    viewModel.accountAdapter.notifyDataSetChanged()
+
+  }
+
+  private fun addMyAccountSettings() {
+    list.add(
+      MoreItem(
+        getString(R.string.personal_info),
+        getMyDrawable(R.drawable.ic_profile),
+        Constants.PROFILE
+      )
+    )
+    list.add(
+      MoreItem(
+        getString(R.string.last_ads_seen),
+        getMyDrawable(R.drawable.ic_view),
+        Constants.LAST_ADS
+      )
+    )
+    list.add(
+      MoreItem(
+        getString(R.string.stores_had_been_followed),
+        getMyDrawable(R.drawable.ic_login),
+        Constants.STORES_FOLLOWED
+      )
+    )
+
+    list.add(
+      MoreItem(
+        getString(R.string.last_search),
+        getMyDrawable(R.drawable.ic_last_search),
+        Constants.LAST_SEARCH
+      )
+    )
+    list.add(
+      MoreItem(
+        getString(R.string.favourite),
+        getMyDrawable(R.drawable.ic_favourite_user),
+        Constants.FAVOURITE
+      )
+    )
+    list.add(
+      MoreItem(
+        getString(R.string.stores_had_been_blocked),
+        getMyDrawable(R.drawable.ic_stores_block),
+        Constants.STORES_BLOCKED
+      )
+    )
+    list.add(
+      MoreItem(
+        getString(R.string.logout),
+        getMyDrawable(R.drawable.ic_login),
+        Constants.LOGOUT
+      )
+    )
+  }
+
+  fun setData() {
+    setListProfile()
+    viewModel.accountAdapter.clickEvent.observe(this, {
+//      Log.d(TAG, "setBindingVariables: here $it")
+      if (it.id is String) {
+        when (it.id) {
+          Constants.PROFILE -> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToProfileFragment())
+          Constants.LOGIN -> openLoginActivity()
+          Constants.LAST_ADS -> navigateSafe(
+            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+              2,
+              resources.getString(R.string.last_ads_seen)
+            )
+          )
+          Constants.FAVOURITE -> navigateSafe(
+            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+              1,
+              resources.getString(R.string.favourite)
+            )
+          )
+          Constants.LAST_SEARCH -> navigateSafe(
+            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+              5,
+              resources.getString(R.string.last_search)
+            )
+          )
+          Constants.STORES_FOLLOWED -> {
+            navigateSafe(
+              MyAccountFragmentDirections.actionMyAccountFragmentToStoreFollowedListFragment()
+            )
+          }
+          Constants.STORES_BLOCKED -> {
+            findNavController().navigate(MyAccountFragmentDirections.actionMyAccountFragmentToStoreBlockListFragment())
+          }
+          Constants.LOGOUT -> {
+            viewModel.logout()
+          }
+        }
+      }
+    })
+  }
+
 
 
 }
