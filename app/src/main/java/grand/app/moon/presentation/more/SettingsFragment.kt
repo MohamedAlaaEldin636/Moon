@@ -12,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentSettingsBinding
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.myAccount.MyAccountFragmentDirections
 import java.util.ArrayList
 
 @AndroidEntryPoint
@@ -255,33 +254,33 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 //      Log.d(TAG, "setBindingVariables: here $it")
       if (it.id is String) {
         when (it.id) {
-          Constants.PROFILE -> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToProfileFragment())
+          Constants.PROFILE -> navigateSafe(SettingsFragmentDirections.actionMyAccountFragmentToProfileFragment())
           Constants.LOGIN -> openLoginActivity()
           Constants.LAST_ADS -> navigateSafe(
-            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+            SettingsFragmentDirections.actionMyAccountFragmentToAdsListFragment(
               2,
               resources.getString(R.string.last_ads_seen)
             )
           )
           Constants.FAVOURITE -> navigateSafe(
-            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+            SettingsFragmentDirections.actionMyAccountFragmentToAdsListFragment(
               1,
               resources.getString(R.string.favourite)
             )
           )
           Constants.LAST_SEARCH -> navigateSafe(
-            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+            SettingsFragmentDirections.actionMyAccountFragmentToAdsListFragment(
               5,
               resources.getString(R.string.last_search)
             )
           )
           Constants.STORES_FOLLOWED -> {
             navigateSafe(
-              MyAccountFragmentDirections.actionMyAccountFragmentToStoreFollowedListFragment()
+              SettingsFragmentDirections.actionMyAccountFragmentToStoreFollowedListFragment()
             )
           }
           Constants.STORES_BLOCKED -> {
-            findNavController().navigate(MyAccountFragmentDirections.actionMyAccountFragmentToStoreBlockListFragment())
+            findNavController().navigate(SettingsFragmentDirections.actionMyAccountFragmentToStoreBlockListFragment())
           }
           Constants.LOGOUT -> {
             viewModel.logout()

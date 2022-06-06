@@ -122,6 +122,21 @@
     app:popEnterAnim="@anim/anim_slide_in_left"
     app:popExitAnim="@anim/anim_slide_out_right" />
 
+  <action
+    android:id="@+id/moveToWeb"
+    app:destination="@id/webFragment2"
+    app:enterAnim="@anim/anim_slide_in_right"
+    app:exitAnim="@anim/anim_slide_out_left"
+    app:popEnterAnim="@anim/anim_slide_in_left"
+    app:popExitAnim="@anim/anim_slide_out_right" >
+    <argument
+      android:name="tabBarText"
+      app:argType="string" />
+    <argument
+      android:name="url"
+      app:argType="string" />
+  </action>
+
   <include app:graph="@navigation/nav_store" />
   <include app:graph="@navigation/nav_explore" />
 
@@ -257,6 +272,9 @@
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/webFragment2" />
 
+    <deepLink
+      android:id="@+id/reportDialogDeepLink"
+      app:uri="Moon://Sort/{title}/{type}/{advertisement_id}/{store_id}" />
 
   </fragment>
   <fragment

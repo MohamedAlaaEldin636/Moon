@@ -131,7 +131,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.home_fragment -> {
           binding.bottomNavigationView.show()
           showTopBarControls()
-          showImage()
+//          showImage()
         }
         R.id.notificationFragment -> {
           binding.toolbar.title =
@@ -144,7 +144,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           binding.icNotificationFilter.show()
         }
         R.id.myAccountFragment -> {
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
 //          if (!viewModel.userLocalUseCase.isLoggin()) startActivity(
 //            Intent(
@@ -158,13 +159,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.exploreFragment, R.id.mapFragment -> {
           Log.d(TAG, "setUpBottomNavigationWithGraphs: ")
           showTopBarControls()
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
           binding.tvHomeTitle.text = destination.label
           showText()
         }
         R.id.settings_fragment, R.id.discoverFragment -> {
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
           showTopBarControls()
           showText()
@@ -188,8 +191,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       }
     }
     binding.imgHomeBottomBar.setOnClickListener {
+      showImage()
 //      nav.navigate(NavHomeDirections.moveToHome())
-      binding.bottomNavigationView.selectedItemId = R.id.home_fragment;
+//      binding.bottomNavigationView.selectedItemId = R.id.home_fragment;
+      nav.navigate(NavHomeDirections.moveToWeb(getString(R.string.add_store_now),"https://moontest.my-staff.net/store/register"))
 
     }
 

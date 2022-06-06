@@ -25,7 +25,7 @@
       <androidx.appcompat.widget.AppCompatTextView
         style="@style/mediumFont"
         android:textStyle="bold"
-        android:textSize="@dimen/dimen18"
+        android:textSize="@dimen/text_size22"
         android:layout_marginStart="@dimen/dimen18"
         android:textColor="@color/colorAccent"
         android:text="@string/my_account"
@@ -35,7 +35,6 @@
       <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen8"
         app:adapter="@{viewModel.accountAdapter}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -46,7 +45,7 @@
 
       <View
         android:layout_width="match_parent"
-        android:background="@color/grey"
+        android:background="@color/colorPrimary"
         android:layout_marginBottom="@dimen/dimen8"
         android:layout_marginTop="@dimen/dimen8"
         android:layout_height="1dp"/>
@@ -54,7 +53,7 @@
       <androidx.appcompat.widget.AppCompatTextView
         style="@style/mediumFont"
         android:textStyle="bold"
-        android:textSize="@dimen/dimen18"
+        android:textSize="@dimen/text_size22"
         android:layout_marginStart="@dimen/dimen18"
         android:textColor="@color/colorAccent"
         android:text="@string/settings"
@@ -64,7 +63,6 @@
       <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dimen8"
         app:adapter="@{viewModel.moreAdapter}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"

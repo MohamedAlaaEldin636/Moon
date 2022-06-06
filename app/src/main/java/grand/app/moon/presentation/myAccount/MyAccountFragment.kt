@@ -41,41 +41,41 @@ class MyAccountFragment : BaseFragment<FragmentMyAccountBinding>() {
     setList()
     viewModel.moreAdapter.clickEvent.observe(this, {
 //      Log.d(TAG, "setBindingVariables: here $it")
-      if (it.id is String) {
-        when (it.id) {
-          Constants.PROFILE -> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToProfileFragment())
-          Constants.LOGIN -> openLoginActivity()
-          Constants.LAST_ADS -> navigateSafe(
-            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
-              2,
-              resources.getString(R.string.last_ads_seen)
-            )
-          )
-          Constants.FAVOURITE -> navigateSafe(
-            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
-              1,
-              resources.getString(R.string.favourite)
-            )
-          )
-          Constants.LAST_SEARCH -> navigateSafe(
-            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
-              5,
-              resources.getString(R.string.last_search)
-            )
-          )
-          Constants.STORES_FOLLOWED -> {
-            navigateSafe(
-              MyAccountFragmentDirections.actionMyAccountFragmentToStoreFollowedListFragment()
-            )
-          }
-          Constants.STORES_BLOCKED -> {
-            findNavController().navigate(MyAccountFragmentDirections.actionMyAccountFragmentToStoreBlockListFragment())
-          }
-          Constants.LOGOUT -> {
-            viewModel.logout()
-          }
-        }
-      }
+//      if (it.id is String) {
+//        when (it.id) {
+//          Constants.PROFILE -> navigateSafe(MyAccountFragmentDirections.actionMyAccountFragmentToProfileFragment())
+//          Constants.LOGIN -> openLoginActivity()
+//          Constants.LAST_ADS -> navigateSafe(
+//            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+//              2,
+//              resources.getString(R.string.last_ads_seen)
+//            )
+//          )
+//          Constants.FAVOURITE -> navigateSafe(
+//            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+//              1,
+//              resources.getString(R.string.favourite)
+//            )
+//          )
+//          Constants.LAST_SEARCH -> navigateSafe(
+//            MyAccountFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+//              5,
+//              resources.getString(R.string.last_search)
+//            )
+//          )
+//          Constants.STORES_FOLLOWED -> {
+//            navigateSafe(
+//              MyAccountFragmentDirections.actionMyAccountFragmentToStoreFollowedListFragment()
+//            )
+//          }
+//          Constants.STORES_BLOCKED -> {
+//            findNavController().navigate(MyAccountFragmentDirections.actionMyAccountFragmentToStoreBlockListFragment())
+//          }
+//          Constants.LOGOUT -> {
+//            viewModel.logout()
+//          }
+//        }
+//      }
     })
   }
 
