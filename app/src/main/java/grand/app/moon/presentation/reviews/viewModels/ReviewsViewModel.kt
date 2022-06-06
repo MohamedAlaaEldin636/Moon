@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.reviews.viewModels
 
+import android.view.View
 import android.widget.RatingBar
 import androidx.databinding.Bindable
 import androidx.lifecycle.SavedStateHandle
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import grand.app.moon.presentation.reviews.adapters.ReviewsAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.home.models.review.Reviews
@@ -68,13 +70,15 @@ class ReviewsViewModel @Inject constructor(
 
   }
 
-  fun sendRate() {
-    reviewsUseCase.addReview(request)
-      .onEach { result ->
-        println(result.toString())
-        _reviewDialogResponse.value = result
-      }
-      .launchIn(viewModelScope)
+  fun sendRate(v: View) {
+    if(v.context.isLoginWithOpenAuth()) {
+      reviewsUseCase.addReview(request)
+        .onEach { result ->
+          println(result.toString())
+          _reviewDialogResponse.value = result
+        }
+        .launchIn(viewModelScope)
+    }
   }
 
 

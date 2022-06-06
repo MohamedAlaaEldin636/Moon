@@ -56,7 +56,13 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
       viewLifecycleOwner,
       { it == true }
     ) {
-      backToPreviousScreen()
+//      backToPreviousScreen()
+      val n = findNavController()
+      n.navigateUp()
+      n.currentBackStackEntry?.savedStateHandle?.set(
+        Constants.REVIEW,
+        true
+      )
     }
   }
 

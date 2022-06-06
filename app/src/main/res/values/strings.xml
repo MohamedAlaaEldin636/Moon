@@ -22,7 +22,7 @@
   <string name="reason_for_contact">Reason for contact</string>
   <string name="content_of_the_message">Content of the message</string>
   <string name="send">Send</string>
-  <string name="log_in">Rogin</string>
+  <string name="log_in">Login</string>
   <string name="phone">Phone</string>
   <string name="choose_language">Choose Language</string>
   <string name="next">Next</string>
@@ -65,12 +65,12 @@
   <string name="please_enter_valid_email">Please enter valid email</string>
   <string name="please_enter_your_reason">Please enter your reason</string>
   <string name="personal_info">Personal info</string>
-  <string name="last_ads_seen">Rast ads seen</string>
+  <string name="last_ads_seen">Last ads seen</string>
   <string name="stores_had_been_followed">Stores had been followed</string>
-  <string name="last_search">Rast search</string>
+  <string name="last_search">Last search</string>
   <string name="favourite">Favourite</string>
   <string name="stores_had_been_blocked">Stores had been blocked</string>
-  <string name="logout">Rogout</string>
+  <string name="logout">Logout</string>
   <string name="please_enter_your_phone">Please enter your phone</string>
   <string name="whatsapp">Whatsapp</string>
   <string name="chat">Chat</string>
@@ -92,7 +92,7 @@
   <string name="report_on_issue">Report on issue</string>
   <string name="similar_ads">Similar ads</string>
   <string name="please_install_whatsapp_on_your_phone">Please install whatsapp on your phone</string>
-  <string name="loading_more">Roading more</string>
+  <string name="loading_more">Loading more</string>
   <string name="update">Update</string>
   <string name="show_number_hours">Show number hours</string>
   <string name="views">views</string>
@@ -122,8 +122,8 @@
   <string name="search_on_advertise">Search on advertise</string>
   <string name="subsections">Subsections</string>
   <string name="stores">Stores</string>
-  <string name="like">Rike</string>
-  <string name="likes">Rikes</string>
+  <string name="like">Like</string>
+  <string name="likes">Likes</string>
   <string name="share">Share</string>
   <string name="show_all_comments">Show all comments</string>
   <string name="add_your_comment">Add your comment</string>
@@ -139,7 +139,7 @@
   <string name="the_oldest">the oldest</string>
   <string name="the_most_recent">the most recent</string>
   <string name="highest_price">highest price</string>
-  <string name="lowest_price">Rowest price</string>
+  <string name="lowest_price">Lowest price</string>
   <string name="sort_by">Sort by</string>
   <string name="filter">Filter</string>
   <string name="filter_sort">Sort</string>
@@ -187,5 +187,6 @@
   <string name="total_ads">Total Summation (%s) Advertisement</string>
   <string name="please_login_agin">Please log in again</string>
   <string name="do_you_want_to_exit_from_app">Do you want to exit the application?</string>
+  <string name="show_mail">Show E-mail</string>
 
 </resources>

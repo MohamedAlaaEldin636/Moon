@@ -18,6 +18,7 @@ import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.appMoonHelper.ListHelper
+import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
@@ -107,6 +108,11 @@ class StoreDetailsViewModel @Inject constructor(
       .onEach {
         _storeDetailsResponse.value = it
       }.launchIn(viewModelScope)
+  }
+
+  val mail = ObservableField(MyApplication.instance.getString(R.string.show_mail))
+  fun showMail(v: View){
+    mail.set(store.get()?.email)
   }
 
   fun follow(v: View) {

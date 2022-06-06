@@ -255,7 +255,6 @@
                 android:textColor="@color/color888888"
                 android:textSize="@dimen/text_size12"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toEndOf="@+id/img_store"
                 app:layout_constraintTop_toBottomOf="@+id/tv_store_location" />
 
@@ -267,10 +266,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen8"
                 android:drawableStart="@drawable/ic_mail"
+                android:textColorLink="@color/colorBlue"
                 android:drawablePadding="@dimen/dimen8"
-                android:text="@{viewModel.store.email}"
+                android:text="@{viewModel.mail}"
+                android:onClick="@{ (v) -> viewModel.showMail(v) }"
                 android:textAlignment="viewStart"
-                android:textColor="@color/color888888"
+                android:textColor="@color/colorBlue"
                 android:textSize="@dimen/text_size12"
                 app:layout_constraintEnd_toEndOf="parent"
 

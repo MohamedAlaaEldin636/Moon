@@ -54,7 +54,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       android:paddingStart="@dimen/dimen50"
       android:paddingEnd="@dimen/dimen50"
-      android:onClick="@{()->viewModel.sendRate()}"
+      android:onClick="@{(v)->viewModel.sendRate(v)}"
       app:layout_constraintTop_toBottomOf="@+id/review_dialog_comment"
       android:text="@string/add_rate"
       android:textSize="@dimen/text_size16"

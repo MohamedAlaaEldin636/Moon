@@ -73,15 +73,21 @@ class StoreListViewModel @Inject constructor(
 
   }
 
-  fun changeGrid(isGrid2: Boolean) {
+  val gridOne = ObservableBoolean(false)
+
+  fun changeGrid() {
+
     Log.d(TAG, "changeGrid: ${isGrid2}")
-    this.isGrid2.set(isGrid2)
-    if (this.isGrid2.get()) {
+    if (gridOne.get()) {
       adapter.grid = Constants.GRID_2
       clickEvent.value = Constants.GRID_2
+//      this.isGrid2.set(true)
+      gridOne.set(false)
     } else {
       adapter.grid = Constants.GRID_1
       clickEvent.value = Constants.GRID_1
+//      this.isGrid2.set(false)
+      gridOne.set(true)
     }
   }
 
@@ -120,6 +126,13 @@ class StoreListViewModel @Inject constructor(
     }
   }
 
+  fun filterSort(v: View){
+
+  }
+
+  fun map(v: View){
+
+  }
 
   fun setData(data: StoreListPaginateData) {
     data.let {

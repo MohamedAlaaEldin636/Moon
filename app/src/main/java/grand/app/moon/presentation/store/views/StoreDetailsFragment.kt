@@ -79,12 +79,14 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     }
 
     actOnGetIfNotInitialValueOrGetLiveData(
-      Constants.RATE,
-      -1,
+      Constants.REVIEW,
+      false,
       viewLifecycleOwner,
-      { it != -1 }
+      { it == true }
     ) {
-      viewModel.store.get()!!.rateCount = it.toString()
+      Log.d(TAG, "onViewCreated: REVIEW")
+      viewModel.store.get()!!.rateCount = viewModel.store.get()!!.rateCount.toInt().plus(1).toString()
+      viewModel.notifyChange()
     }
   }
 
