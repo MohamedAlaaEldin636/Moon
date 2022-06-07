@@ -93,7 +93,41 @@
   <fragment
     android:id="@+id/mapFragment"
     android:name="grand.app.moon.presentation.map.MapFragment"
-    android:label="@string/map" />
+    android:label="@string/map" >
+
+    <argument android:name="type"
+      android:defaultValue="store"
+      app:argType="string" />
+    <argument
+      android:name="category_id"
+      app:argType="string"
+      android:defaultValue="@null"
+      app:nullable="true"/>
+    <argument
+      android:name="sub_category_id"
+      app:argType="string"
+      android:defaultValue="@null"
+      app:nullable="true"/>
+    <argument
+      android:name="property_id"
+      app:argType="string"
+      android:defaultValue="@null"
+      app:nullable="true"/>
+    <argument
+      android:name="subCategory"
+      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
+
+    <argument
+      android:name="order_by"
+      app:argType="integer"
+      android:defaultValue="0" />
+
+    <deepLink
+      android:id="@+id/mapFragment"
+      android:autoVerify="true"
+      app:uri="map://grand.app.moon.map/{order_by}" />
+
+  </fragment>
   <fragment
     android:id="@+id/discoverFragment"
     android:name="grand.app.moon.presentation.discover.DiscoverFragment"
@@ -271,10 +305,6 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/webFragment2" />
-
-    <deepLink
-      android:id="@+id/reportDialogDeepLink"
-      app:uri="Moon://Sort/{title}/{type}/{advertisement_id}/{store_id}" />
 
   </fragment>
   <fragment

@@ -1,20 +1,19 @@
 package grand.app.moon.presentation.store.viewModels
 
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
-import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
-import grand.app.moon.domain.explore.entity.ExploreAction
-import grand.app.moon.domain.explore.entity.ExploreListPaginateData
-import grand.app.moon.domain.explore.use_case.ExploreUseCase
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.entity.StoreFilterRequest
 import grand.app.moon.domain.store.entity.StoreListPaginateData
@@ -22,12 +21,8 @@ import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
-import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.base.utils.openBrowser
-import grand.app.moon.presentation.more.SettingsFragmentDirections
 import grand.app.moon.presentation.store.adapter.StoreAdapter
-import grand.app.moon.presentation.store.adapter.StoreFollowingAdapter
 import grand.app.moon.presentation.store.views.StoreListFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -66,6 +61,8 @@ class StoreListViewModel @Inject constructor(
     MutableStateFlow<Resource<BaseResponse<StoreListPaginateData>>>(Resource.Default)
 
   val response = _responseService
+
+  var orderBy = 1
 
   init {
     adapter.isLogin = isLoggin
@@ -126,12 +123,26 @@ class StoreListViewModel @Inject constructor(
     }
   }
 
+  //{title}/{type}/{advertisement_id}/{store_id}
   fun filterSort(v: View){
-
+    val uri = Uri.Builder()
+      .scheme("filter-sort-report")
+      .authority("grand.app.moon.filterSortDialog")
+      .appendPath(orderBy.toString())
+      .appendPath(FilterDialog.STORE.toString())
+      .build()
+    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+    v.findNavController().navigate(request)
   }
 
   fun map(v: View){
-
+    val uri = Uri.Builder()
+      .scheme("map")
+      .authority("grand.app.moon.map")
+      .appendPath(orderBy.toString())
+      .build()
+    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+    v.findNavController().navigate(request)
   }
 
   fun setData(data: StoreListPaginateData) {

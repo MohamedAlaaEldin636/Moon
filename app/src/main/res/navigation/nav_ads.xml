@@ -29,18 +29,17 @@
       app:destination="@id/storeDetailsFragment" />
     <argument
       android:name="from_store"
-      app:argType="boolean"
-      android:defaultValue="false" />
+      android:defaultValue="false"
+      app:argType="boolean" />
   </fragment>
 
   <fragment
     android:id="@+id/reviewsFragment"
     android:name="grand.app.moon.presentation.reviews.ReviewsFragment"
-    android:label="@string/customers_reviews" >
+    android:label="@string/customers_reviews">
     <argument
       android:name="advertisement_id"
-      app:argType="integer"
-      />
+      app:argType="integer" />
     <argument
       android:name="rate"
       app:argType="string" />
@@ -55,17 +54,15 @@
   <dialog
     android:id="@+id/reviewDialog"
     android:name="grand.app.moon.presentation.reviews.ReviewDialog"
-    android:label="@string/add_review" >
+    android:label="@string/add_review">
     <argument
       android:name="advertisement_id"
-      app:argType="integer"
       android:defaultValue="-1"
-      />
+      app:argType="integer" />
     <argument
       android:name="store_id"
-      app:argType="integer"
       android:defaultValue="-1"
-      />
+      app:argType="integer" />
     <argument
       android:name="rate"
       app:argType="string" />
@@ -83,23 +80,21 @@
       app:argType="integer" />
     <argument
       android:name="advertisement_id"
-      app:argType="integer"
-      />
+      app:argType="integer" />
     <argument
       android:name="store_id"
-      app:argType="integer"
-      />
+      app:argType="integer" />
+
   </dialog>
   <fragment
     android:id="@+id/storeDetailsFragment"
     android:name="grand.app.moon.presentation.store.views.StoreDetailsFragment"
-    android:label="" >
+    android:label="">
     <argument
       android:name="id"
       app:argType="integer" />
 
   </fragment>
-
 
 
 </navigation>

@@ -10,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
-import grand.app.moon.BuildConfig
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.core.MyApplication
@@ -172,18 +171,18 @@ class SubCategoryViewModel @Inject constructor(
       val response = subCategoryResponse.get()
       val sub = SubCategoryResponse()
       sub.properties.addAll(subCategoryResponse.get()!!.properties)
-      val action =
-        SubCategoryFragmentDirections.actionNavCategoryListAdsToMapFragment2(sub)
-      action.type = Constants.ADVERTISEMENT_TEXT
-      categoryId?.let {
-        action.categoryId = it.toString()
-      }
-      subCategoryId?.let {
-        action.subCategoryId = it.toString()
-      }
-      if (properties.size > 0)
-        action.propertyId = properties[0].id.toString()
-      v.findNavController().navigate(action)
+//      val action =
+//        SubCategoryFragmentDirections.actionNavCategoryListAdsToMapFragment2(sub)
+//      action.type = Constants.ADVERTISEMENT_TEXT
+//      categoryId?.let {
+//        action.categoryId = it.toString()
+//      }
+//      subCategoryId?.let {
+//        action.subCategoryId = it.toString()
+//      }
+//      if (properties.size > 0)
+//        action.propertyId = properties[0].id.toString()
+//      v.findNavController().navigate(action)
     }
   }
 

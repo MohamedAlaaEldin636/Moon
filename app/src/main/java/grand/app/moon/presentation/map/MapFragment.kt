@@ -40,16 +40,23 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     binding.viewModel = viewModel
 //    if(arguments!= null && requireArguments().containsKey(Constants.TYPE))
 //      viewModel.type = requireArguments().getString(Constants.TYPE).toString()
-    if (arguments != null) {
-      // it means ads
-      val args: MapFragmentArgs by navArgs()
-      viewModel.type = args.type
-      viewModel.categoryId = args.categoryId
-      viewModel.subCategoryId = args.subCategoryId
-      viewModel.propertyId = args.propertyId
-      viewModel.setSubCategories(args.subCategory)
-    } else
-      viewModel.getCategories() // store
+    when(arguments){
+      null -> {
+        viewModel.getCategories()
+      }
+      else -> {
+        if(requireArguments().containsKey("order_by")){
+          viewModel.getCategories()
+        }else if(requireArguments().containsKey("type")) {
+          val args: MapFragmentArgs by navArgs()
+          viewModel.type = args.type
+          viewModel.categoryId = args.categoryId
+          viewModel.subCategoryId = args.subCategoryId
+          viewModel.propertyId = args.propertyId
+          viewModel.setSubCategories(args.subCategory)
+        }
+      }
+    }
 
   }
 

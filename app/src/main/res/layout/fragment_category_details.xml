@@ -85,7 +85,7 @@
         android:layout_marginTop="@dimen/dimen10"
         app:layout_constraintTop_toBottomOf="@+id/tv_departments"
         app:orientation="@{`2`}"
-        app:span="@{`2`}"
+        app:span="@{`1`}"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
         tools:listitem="@layout/item_category" />

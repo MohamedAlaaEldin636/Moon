@@ -67,9 +67,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     lifecycleScope.launchWhenResumed {
       viewModel.categoryItemResponse.collect {
-        Log.d(TAG, "decideNavigationLogic: ")
+        Log.d(TAG, "decideNavigationLogic: Categories")
         when (it) {
           is Resource.Success -> {
+            Log.d(TAG, "decideNavigationLogic: SUCCESS")
             viewModel.saveCategories(it.value)
             viewModel.isCategories = true
             viewModel.redirect()
@@ -80,8 +81,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     lifecycleScope.launchWhenResumed {
       viewModel._countriesResponse.collect {
+        Log.d(TAG, "decideNavigationLogic: _countriesResponse")
+
         when (it) {
           is Resource.Success -> {
+            Log.d(TAG, "decideNavigationLogic: Country MOON")
             viewModel.saveCountries(it.value)
             viewModel.isCountries = true
             viewModel.redirect()

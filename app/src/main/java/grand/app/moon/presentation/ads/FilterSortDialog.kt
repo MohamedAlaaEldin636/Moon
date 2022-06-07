@@ -67,6 +67,11 @@ class FilterSortDialog : BottomSheetDialogFragment() {
         )
         viewModel.list.add(AppTutorial(2, content = resources.getString(R.string.moon_traders)))
       }
+      FilterDialog.STORE -> {
+        viewModel.title.set(resources.getString(R.string.sort_by))
+        viewModel.list.add(AppTutorial(1, content = resources.getString(R.string.the_most_recent)))
+        viewModel.list.add(AppTutorial(2, content = resources.getString(R.string.the_oldest)))
+      }
       FilterDialog.CHAT -> {
         viewModel.title.set(resources.getString(R.string.conversation))
         viewModel.list.add(AppTutorial(1, content = resources.getString(R.string.chat)))

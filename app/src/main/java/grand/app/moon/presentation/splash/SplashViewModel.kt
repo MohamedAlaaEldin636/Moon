@@ -65,7 +65,9 @@ class SplashViewModel @Inject constructor(
   private val TAG = "SplashViewModel"
 
   fun redirect() {
+    Log.d(TAG, "redirect: WORKED")
     if(isCategories && isCountries) {
+      Log.d(TAG, "redirect: HERE")
       clickEvent.value = when (accountRepository.getKeyFromLocal(Constants.INTRO)) {
         "true" -> Constants.HOME
         else -> {

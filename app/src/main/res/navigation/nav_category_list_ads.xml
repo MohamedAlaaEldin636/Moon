@@ -70,13 +70,13 @@
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/nav_ad_list" />
 
-    <action
-      android:id="@+id/action_navCategoryListAds_to_mapFragment2"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/mapFragment2" />
+<!--    <action-->
+<!--      android:id="@+id/action_navCategoryListAds_to_mapFragment2"-->
+<!--      app:enterAnim="@anim/anim_slide_in_right"-->
+<!--      app:exitAnim="@anim/anim_slide_out_left"-->
+<!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
+<!--      app:popExitAnim="@anim/anim_slide_out_right"-->
+<!--      app:destination="@id/mapFragment2" />-->
 
 
   </fragment>
@@ -152,6 +152,12 @@
     <argument
       android:name="kind"
       app:argType="grand.app.moon.appMoonHelper.FilterDialog" />
+
+    <deepLink
+      android:id="@+id/filterSortDialog"
+      android:autoVerify="true"
+      app:uri="filter-sort-report://grand.app.moon.filterSortDialog/{selected}/{kind}" />
+
   </dialog>
 
 
@@ -164,32 +170,32 @@
     app:destination="@id/nav_filter"  />
   <include app:graph="@navigation/nav_filter" />
 
-  <fragment
-    android:id="@+id/mapFragment2"
-    android:name="grand.app.moon.presentation.map.MapFragment"
-    android:label="@string/map" >
-    <argument android:name="type"
-      android:defaultValue="store"
-      app:argType="string" />
-    <argument
-      android:name="category_id"
-      app:argType="string"
-      android:defaultValue="@null"
-      app:nullable="true"/>
-    <argument
-      android:name="sub_category_id"
-      app:argType="string"
-      android:defaultValue="@null"
-      app:nullable="true"/>
-    <argument
-      android:name="property_id"
-      app:argType="string"
-      android:defaultValue="@null"
-      app:nullable="true"/>
-    <argument
-      android:name="subCategory"
-      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
+<!--  <fragment-->
+<!--    android:id="@+id/mapFragment2"-->
+<!--    android:name="grand.app.moon.presentation.map.MapFragment"-->
+<!--    android:label="@string/map" >-->
+<!--    <argument android:name="type"-->
+<!--      android:defaultValue="store"-->
+<!--      app:argType="string" />-->
+<!--    <argument-->
+<!--      android:name="category_id"-->
+<!--      app:argType="string"-->
+<!--      android:defaultValue="@null"-->
+<!--      app:nullable="true"/>-->
+<!--    <argument-->
+<!--      android:name="sub_category_id"-->
+<!--      app:argType="string"-->
+<!--      android:defaultValue="@null"-->
+<!--      app:nullable="true"/>-->
+<!--    <argument-->
+<!--      android:name="property_id"-->
+<!--      app:argType="string"-->
+<!--      android:defaultValue="@null"-->
+<!--      app:nullable="true"/>-->
+<!--    <argument-->
+<!--      android:name="subCategory"-->
+<!--      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />-->
 
-  </fragment>
+<!--  </fragment>-->
 
 </navigation>
