@@ -12,7 +12,9 @@ data class UpdateProfileRequest(
   var country_code: String = "",
   var imagePath: String = "",
   @Transient
-  var uri: Uri? = null
+  var uri: Uri? = null,
+  @Transient
+  var uriCrop: Uri? = null
 ) : BaseRequest() {
 
 }

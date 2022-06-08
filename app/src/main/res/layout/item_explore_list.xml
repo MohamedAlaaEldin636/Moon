@@ -83,7 +83,7 @@
       android:id="@+id/shapeableImageView"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dimen350"
-      android:scaleType="centerInside"
+      android:scaleType="centerCrop"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       android:layout_marginTop="@dimen/dimen10"

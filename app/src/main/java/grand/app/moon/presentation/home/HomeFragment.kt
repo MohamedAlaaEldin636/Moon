@@ -18,15 +18,12 @@ import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.databinding.FragmentHomeBinding
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.BR
-import grand.app.moon.NavHomeDirections
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
-import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.collect
 
@@ -187,8 +184,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
     super.onResume()
     viewModel.adsHomeAdapter.updateFavourite()
     viewModel.adsHomeAdapter.checkBlockStore()
+
     viewModel.storeAdapter.checkFollowingStore()
     viewModel.storeAdapter.checkBlockStore()
+
+    viewModel.followingsStoresAdapter.checkFollowingStore()
+    viewModel.followingsStoresAdapter.checkBlockStore()
+
     viewModel.storiesAdapter.viewedStores()
     viewModel.storiesAdapter.checkBlockStore()
     viewModel.notifyAdapters()

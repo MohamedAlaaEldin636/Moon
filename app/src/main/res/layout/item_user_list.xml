@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:loadImage="@{viewModel.model.image}"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize90Percent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
         app:strokeColor="@color/lightGray"
         app:strokeWidth="@dimen/dimen1" />
 
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@{viewModel.model.name}"
+        android:text="@{viewModel.name()}"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"

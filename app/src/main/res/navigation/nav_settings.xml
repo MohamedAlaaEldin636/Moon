@@ -136,7 +136,11 @@
   <fragment
     android:id="@+id/profileFragment"
     android:name="grand.app.moon.presentation.auth.profile.ProfileFragment"
-    android:label="@string/personal_info" />
+    android:label="@string/personal_info" >
+    <action
+      android:id="@+id/action_profileFragment_to_cropFragment"
+      app:destination="@id/cropFragment" />
+  </fragment>
   <fragment
     android:id="@+id/storeFollowedListFragment"
     android:name="grand.app.moon.presentation.store.views.StoreFollowedListFragment"
@@ -148,6 +152,12 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/storeDetailsFragment2" />
+
+    <deepLink
+      android:id="@+id/storeFollowedListFragment"
+      android:autoVerify="true"
+      app:uri="store://grand.app.moon.store.followed" />
+
   </fragment>
   <fragment
     android:id="@+id/storeDetailsFragment2"
@@ -156,7 +166,15 @@
   <fragment
     android:id="@+id/storeBlockListFragment"
     android:name="grand.app.moon.presentation.store.views.StoreBlockListFragment"
-    android:label="@string/block_store" />
+    android:label="@string/stores_had_been_blocked" />
+  <fragment
+    android:id="@+id/cropFragment"
+    android:name="grand.app.moon.presentation.auth.profile.CropFragment"
+    android:label="@string/crop_image" >
+    <argument
+      android:name="request"
+      app:argType="grand.app.moon.domain.auth.entity.request.UpdateProfileRequest" />
+  </fragment>
 
 
 </navigation>

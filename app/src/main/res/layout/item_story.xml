@@ -95,7 +95,7 @@
       android:textAlignment="center"
       android:gravity="center"
       android:textSize="10sp"
-      android:text="@{itemViewModels.story.isFirst == true ? @string/show_more  : itemViewModels.store.name }"
+      android:text="@{itemViewModels.story.isFirst == true ? @string/show_more  : itemViewModels.store.nickname }"
       android:textAppearance="@style/TextAppearance.AppCompat.Small"
       android:textColor="@color/white"
       android:textStyle="bold"

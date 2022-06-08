@@ -19,7 +19,12 @@ import grand.app.moon.presentation.explore.ExploreListFragmentDirections
 import grand.app.moon.presentation.store.views.StoreDetailsFragment
 import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 
-class ItemExploreViewModel constructor(val model: Explore, val position: Int, val user: User) :
+class ItemExploreViewModel constructor(
+  val model: Explore,
+  val position: Int,
+  val user: User,
+  val fromStore: Boolean
+) :
   BaseViewModel() {
 
   private val TAG = "ItemExploreViewModel"
@@ -80,23 +85,28 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
 //        .navigate(ExploreListFragmentDirections.actionExploreListFragmentToProfileFragment2())
 //    else {
 //      submitEventEvent.value = Constants.COMMENTS
-      v.findNavController().navigate(
-        ExploreListFragmentDirections.actionExploreListFragmentToCommentsListFragment(
-          model.id,
-          model.comments,
-          position
-        )
+    v.findNavController().navigate(
+      ExploreListFragmentDirections.actionExploreListFragmentToCommentsListFragment(
+        model.id,
+        model.comments,
+        position
       )
+    )
 //    }
   }
 
-  fun store(v: View){
-    v.findNavController().navigate(
-      R.id.nav_store,
-      bundleOf(
-        "id" to model.store.id,
-        "type" to 3
-      ),Constants.NAVIGATION_OPTIONS)
+  fun store(v: View) {
+    when (fromStore) {
+      true -> v.findNavController().navigateUp()
+      else -> v.findNavController().navigate(
+        R.id.nav_store,
+        bundleOf(
+          "id" to model.store.id,
+          "type" to 3
+        ), Constants.NAVIGATION_OPTIONS
+      )
+    }
+
   }
 
   fun click(v: View) {
@@ -109,11 +119,11 @@ class ItemExploreViewModel constructor(val model: Explore, val position: Int, va
         v.findNavController().navigate(action)
       }
       is StoreDetailsFragment -> {
-
-        val action = if (model.mimeType.contains(Constants.VIDEO))
-          StoreDetailsFragmentDirections.actionStoreDetailsFragmentToVideoFragment(model.file)
-        else StoreDetailsFragmentDirections.actionStoreDetailsFragmentToZoomFragment2(model.file)
-        v.findNavController().navigate(action)
+        v.findFragment<StoreDetailsFragment>().viewModel.exploreDetails(position, v)
+//        val action = if (model.mimeType.contains(Constants.VIDEO))
+//          StoreDetailsFragmentDirections.actionStoreDetailsFragmentToVideoFragment(model.file)
+//        else StoreDetailsFragmentDirections.actionStoreDetailsFragmentToZoomFragment2(model.file)
+//        v.findNavController().navigate(action)
       }
     }
   }

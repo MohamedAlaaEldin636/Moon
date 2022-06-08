@@ -44,7 +44,7 @@
           style="@style/mediumFont"
           android:layout_width="@dimen/dimen90"
           android:layout_height="@dimen/dimen90"
-          android:focusable="false"
+          android:scaleType="centerInside"
           app:loadImage="@{itemViewModels.category.image}"
           android:hint="@string/search"
           android:padding="@dimen/dimen4"

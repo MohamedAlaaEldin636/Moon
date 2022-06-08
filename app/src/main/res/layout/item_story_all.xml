@@ -67,6 +67,38 @@
       app:layout_constraintTop_toTopOf="parent" />
 
 
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/shadow"
+      android:layout_width="0dp"
+      android:layout_height="@dimen/dimen50"
+      android:scaleType="fitXY"
+      android:src="@drawable/ic_shadow_story"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
+      app:layout_constraintStart_toStartOf="@+id/shapeableImageView" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/tv_more_item"
+      style="@style/regularFont"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center|bottom"
+      android:layout_marginTop="@dimen/dimen10"
+      android:text="@{itemViewModels.store.nickname}"
+      android:textAlignment="center"
+      android:textAppearance="@style/TextAppearance.AppCompat.Small"
+      android:textColor="@color/white"
+      android:textSize="@dimen/text_size13"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
+      app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
+      app:layout_constraintTop_toTopOf="@+id/shadow"
+      tools:text="@string/contact_us" />
+
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

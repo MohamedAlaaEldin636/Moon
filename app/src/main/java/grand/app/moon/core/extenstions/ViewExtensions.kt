@@ -251,7 +251,6 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
         .with(context)
         .load(imageUrl)
         .apply(RequestOptions()
-          .centerCrop()
           .error(R.drawable.bg_no_image)
           .diskCacheStrategy(DiskCacheStrategy.ALL)
           .priority(Priority.HIGH))

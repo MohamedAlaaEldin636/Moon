@@ -22,6 +22,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
+      android:paddingBottom="@dimen/dimen10"
       android:layout_height="match_parent"
       android:background="@color/backgroundGray">
 
@@ -181,6 +182,54 @@
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_store" />
 
+
+      <!-- -->
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_followed_stores"
+        style="@style/TextBoldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen16"
+        android:layout_marginBottom="@dimen/dimen16"
+        android:textStyle="bold"
+        android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginStart="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/rv_stores"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/stores_had_been_followed" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_followed_stores_all"
+        style="@style/mediumFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+        android:onClick="@{ (v) -> viewModel.followedStores(v)}"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorPrimary"
+        android:drawableTint="@color/colorAccent"
+        android:drawableEnd="@drawable/ic_more_sec"
+        android:layout_marginEnd="@dimen/dimen10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_followed_stores"
+        app:layout_constraintTop_toTopOf="@+id/tv_followed_stores"
+        android:text="@string/show_all" />
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_followed_stores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        adapter_percentage="@{viewModel.followingsStoresAdapter}"
+        android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+        rv_ln="@{49}"
+        android:layout_marginTop="@dimen/dimen10"
+        app:layout_constraintTop_toBottomOf="@+id/tv_followed_stores_all"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_store" />
+      <!-- finish -->
       <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_ads_category"
         android:layout_width="match_parent"
@@ -189,7 +238,7 @@
         app:orientation="@{`1`}"
         app:span="@{`1`}"
         android:layout_marginTop="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/rv_stores"
+        app:layout_constraintTop_toBottomOf="@+id/rv_followed_stores"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
         tools:listitem="@layout/item_ads_home" />

@@ -5,9 +5,10 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.io.Serializable
 
 @Keep
-open class BaseRequest {
+open class BaseRequest : Serializable{
   @Transient
   var image: ArrayList<MultipartBody.Part> = arrayListOf()
   fun setImage(path: String, key: String){

@@ -45,7 +45,7 @@ object Config {
   object Environments {
     const val roomDb = "\"moon_db\""
     const val SERVER_CLIENT_ID = "\"AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM\""
-    const val debugBaseUrl = "\"https://moontest.my-staff.net/api/\""
-    const val releaseBaseUrl = "\"https://moontest.my-staff.net/api/\""
+    const val debugBaseUrl = "\"https://souqmoon.com/api/\""
+    const val releaseBaseUrl = "\"https://souqmoon.com/api/\""
   }
 }

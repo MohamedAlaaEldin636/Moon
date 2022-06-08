@@ -1,16 +1,11 @@
 package grand.app.moon.presentation.home.viewModels
 
-import android.content.Intent
-import android.content.SharedPreferences
-import android.os.Bundle
-import android.util.Log
+import android.net.Uri
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.databinding.Bindable
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.utils.BaseResponse
@@ -18,10 +13,8 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
-import grand.app.moon.NavHomeDirections
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
-import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.CategoryItem
@@ -31,17 +24,14 @@ import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
-import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter
-import grand.app.moon.presentation.home.HomeFragment
 import grand.app.moon.presentation.home.HomeFragmentDirections
 import grand.app.moon.presentation.story.adapter.StoriesAdapter
 import grand.app.moon.presentation.store.adapter.StoreAdapter
 import grand.app.moon.presentation.story.adapter.StoriesAllAdapter
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -78,9 +68,13 @@ class HomeViewModel @Inject constructor(
   @Bindable
   val storeAdapter = StoreAdapter()
 
+  @Bindable
+  val followingsStoresAdapter = StoreAdapter()
+
+
   @Inject
   @Bindable
-  lateinit var  adsHomeAdapter : AdsHomeAdapter
+  lateinit var adsHomeAdapter: AdsHomeAdapter
 
   var isLoggin = userLocalUseCase.isLoggin()
 
@@ -88,12 +82,19 @@ class HomeViewModel @Inject constructor(
     storeAdapter.percentage = 51
     storeAdapter.isLogin = isLoggin
     storeAdapter.useCase = storeUseCase
+
+    followingsStoresAdapter.percentage = 51
+    followingsStoresAdapter.isLogin = isLoggin
+    followingsStoresAdapter.useCase = storeUseCase
+    followingsStoresAdapter.adapterType = Constants.FOLLOWED_STORES
+
+
     categoriesAdapter.percentage = 33
     getCategories()
     callService()
   }
 
-  fun callService(){
+  fun callService() {
     homeApi()
     getStories()
   }
@@ -105,7 +106,7 @@ class HomeViewModel @Inject constructor(
         val list = ArrayList<CategoryItem>()
         it.data.forEach {
           it.subCategories?.let { subCategory ->
-            if(subCategory.size > 0)
+            if (subCategory.size > 0)
               list.add(it)
           }
         }
@@ -116,7 +117,17 @@ class HomeViewModel @Inject constructor(
   }
 
   fun stores(v: View) {
-    v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToStoreListFragment(v.resources.getString(R.string.top_stores_rated)))
+    v.findNavController().navigate(
+      HomeFragmentDirections.actionHomeFragmentToStoreListFragment(
+        v.resources.getString(R.string.top_stores_rated),
+        3
+      )
+    )
+  }
+
+  fun departments(v: View) {
+    v.findNavController()
+      .navigate(HomeFragmentDirections.actionHomeFragmentToDepartmentListFragment())
   }
 
   private fun homeApi() {
@@ -140,28 +151,30 @@ class HomeViewModel @Inject constructor(
     notifyPropertyChanged(BR.storiesAdapter)
   }
 
-  fun departments() {
-    clickEvent.value = Constants.DEPARTMENTS
+  fun followedStores(v: View){
+    val uri = Uri.Builder()
+      .scheme("store")
+      .authority("grand.app.moon.store.followed")
+      .build()
+    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+    v.findNavController().navigate(request)
   }
 
-  fun search(v: View){
+  fun search(v: View) {
     v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
   }
 
-  fun homeFilter(v: View){
+  fun homeFilter(v: View) {
     toFilter(v)
   }
 
-  fun departments(v: View) {
-    v.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDepartmentListFragment())
-  }
   fun notification(v: View) {
     clickEvent.value = Constants.NOTIFICATION
   }
+
   fun notificationFilter(v: View) {
     clickEvent.value = Constants.NOTIFICATION_FILTER
   }
-
 
   fun chatList(v: View) {
     if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
@@ -173,11 +186,13 @@ class HomeViewModel @Inject constructor(
   private val TAG = "HomeViewModel"
   fun updateList(data: HomeResponse) {
     storeAdapter.differ.submitList(data.mostRatedStores)
+    followingsStoresAdapter.differ.submitList(data.followingsStores)
+    notifyPropertyChanged(BR.followingsStoresAdapter)
     notifyPropertyChanged(BR.storeAdapter)
 
     val homeList = ArrayList<CategoryAdvertisement>()
     data.categoryAds.forEach {
-     if(it.advertisements.size > 0) homeList.add(it)
+      if (it.advertisements.size > 0) homeList.add(it)
     }
     homeList.forEach {
       ListHelper.addAllAds(it.advertisements)
@@ -195,7 +210,17 @@ class HomeViewModel @Inject constructor(
     followStoreRequest.storeId = storeAdapter.differ.currentList[storeAdapter.position].id
     storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
     storeAdapter.changeFollowingText()
+    followingsStoresAdapter.checkFollowingStore()
   }
+
+  fun followingsStores() {
+    followStoreRequest.storeId = followingsStoresAdapter.differ.currentList[followingsStoresAdapter.position].id
+    storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
+    followingsStoresAdapter.changeFollowingText()
+    storeAdapter.checkFollowingStore()
+  }
+
+
 
   fun notifyAdapters() {
     notifyPropertyChanged(BR.adsHomeAdapter)

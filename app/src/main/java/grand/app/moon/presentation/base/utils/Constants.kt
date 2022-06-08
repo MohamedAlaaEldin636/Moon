@@ -42,6 +42,9 @@ object Constants {
   const val EXIT: Int = 31
   const val STORE_DETAILS: Int = 32
   const val SOCIAL: Int = 33
+  const val STORES: Int = 34
+  const val FOLLOWED_STORES: Int = 35
+
   const val PERMISSION_GALLERY = 1000
 
 
@@ -67,7 +70,7 @@ object Constants {
   const val INTRO: String = "INTRO"
   const val TOTAL: String = "TOTAL"
   const val POSITION: String = "POSITION"
-  const val POSITION_SELECT: String = "POSITION_SELECT"
+  const val REQUEST: String = "request"
   const val IS_PROFILE: String = "is_profile"
   const val GOOGLE_PLAY: String = "google_play"
   const val SOCIAL_TYPE: String = "social_type"

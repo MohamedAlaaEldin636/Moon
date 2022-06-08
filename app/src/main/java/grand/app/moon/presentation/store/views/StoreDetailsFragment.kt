@@ -64,6 +64,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
         val result = bundle.getSerializable(Constants.EXPLORES) as ExploreListPaginateData
         viewModel.exploreAdapter.updateExplores(result)
       }
+
     }
 
     actOnGetIfNotInitialValueOrGetLiveData(
@@ -93,8 +94,8 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.getDetails(adsDetailsFragmentArgs.id, adsDetailsFragmentArgs.type)
   }
+
 
   val days = arrayListOf<String>()
 
@@ -167,7 +168,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   }
 
   fun scrollDown() {
-    binding.scrollStoreDetails.scrollTo(0, binding.tabLayout.y.toInt())
+    binding.scrollStoreDetails.scrollTo(0, binding.rvAds.y.toInt())
 //    binding.scrollStoreDetails.fullScroll(View.FOCUS_DOWN)
   }
 
@@ -206,7 +207,8 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     if (!viewModel.isLoggin) {
       val isAuthorize = viewModel.userLocalUseCase.isLoggin()
       viewModel.recallApi(isAuthorize)
-    }
+    }else
+      viewModel.getDetails(adsDetailsFragmentArgs.id, adsDetailsFragmentArgs.type)
     viewModel.adsAdapter.updateFavourite()
   }
 

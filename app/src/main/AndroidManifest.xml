@@ -103,7 +103,7 @@
         <data android:scheme="https" />
         <data android:scheme="http" />
 
-        <data android:host="moontest.my-staff.net" />
+        <data android:host="souqmoon.com" />
 
       </intent-filter>
     </activity>
@@ -139,7 +139,7 @@
 <!--        <data android:scheme="https" />-->
 <!--        <data android:scheme="http" />-->
 
-<!--        <data android:host="moontest.my-staff.net" />-->
+<!--        <data android:host="souqmoon.com" />-->
 
 <!--      </intent-filter>-->
     </activity>

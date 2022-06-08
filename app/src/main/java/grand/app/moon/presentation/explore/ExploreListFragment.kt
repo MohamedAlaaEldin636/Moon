@@ -11,13 +11,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.google.common.reflect.TypeToken
+import com.google.gson.GsonBuilder
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentExploreListBinding
+import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.explore.viewmodel.ExploreListViewModel
 import kotlinx.coroutines.flow.collect
@@ -25,7 +29,6 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
 
-  val exploreListFragmentArgs: ExploreListFragmentArgs by navArgs()
   val viewModel: ExploreListViewModel by viewModels()
 
   override
@@ -34,11 +37,22 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.page = exploreListFragmentArgs.page
-    exploreListFragmentArgs.data.list.forEachIndexed{ index , item ->
-      Log.d(TAG, "onStart: $index , ${item.id} , ${item.likes}")
+    if(arguments != null && arguments?.containsKey("list") == true && arguments?.getString("list")?.isNotEmpty() == true){
+      val exploreListPaginateData = ExploreListPaginateData()
+      val gson = GsonBuilder().create()
+      val list = gson.fromJson<ArrayList<Explore>>(requireArguments().getString("list"), object :
+        TypeToken<ArrayList<Explore>>() {}.type)
+      exploreListPaginateData.list.addAll(list)
+      viewModel.adapter.fromStore = true
+      viewModel.setData(exploreListPaginateData)
+    }else {
+      val exploreListFragmentArgs: ExploreListFragmentArgs by navArgs()
+      viewModel.page = exploreListFragmentArgs.page
+      exploreListFragmentArgs.data.list.forEachIndexed { index, item ->
+        Log.d(TAG, "onStart: $index , ${item.id} , ${item.likes}")
+      }
+      viewModel.setData(exploreListFragmentArgs.data)
     }
-    viewModel.setData(exploreListFragmentArgs.data)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {

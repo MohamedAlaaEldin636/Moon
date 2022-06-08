@@ -18,7 +18,7 @@
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@drawable/ic_curve"
+      android:background="@color/colorPrimary"
       app:titleTextColor="@color/colorWhite"
       app:titleCentered="true"
       android:gravity="center"
@@ -27,8 +27,7 @@
       android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-      app:theme="@style/ToolBarStyle"/>
+      app:popupTheme="@style/ToolBarStyle" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,7 +82,7 @@
         android:layout_height="@dimen/dimen30"
         android:layout_marginStart="@dimen/dimen10"
         android:src="@drawable/ic_menu"
-        android:onClick="@{ () -> viewModel.departments()}"
+        android:onClick="@{ (v) -> viewModel.stores(v)}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -91,8 +90,8 @@
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgMoonLogo"
         style="@style/mediumFont"
-        android:layout_width="@dimen/dimen120"
-        android:layout_height="@dimen/dimen80"
+        android:layout_width="@dimen/dimen100"
+        android:layout_height="@dimen/dimen70"
         android:src="@drawable/ic_home_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,7 +99,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <androidx.appcompat.widget.AppCompatTextView
-        style="@style/mediumFont"
+        style="@style/regularFont"
         android:id="@+id/tv_home_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -133,7 +132,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/guideline8"
-      app:layout_constraintGuide_percent="0.995"
+      app:layout_constraintGuide_percent="0.980"
       android:orientation="horizontal"/>
 
     <RelativeLayout
@@ -149,6 +148,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        app:itemTextAppearanceActive="@style/Widget.BottomNavigationView"
+        app:itemTextAppearanceInactive="@style/Widget.BottomNavigationView"
+        android:theme="@style/Widget.BottomNavigationView"
         app:itemIconTint="@drawable/bottom_navigation_color"
         app:itemTextColor="@drawable/bottom_navigation_color"
         app:labelVisibilityMode="labeled"
@@ -163,8 +165,7 @@
       android:layout_width="@dimen/dimen90"
       app:layout_constraintBottom_toTopOf="@+id/guideline8"
       android:layout_height="@dimen/dimen90"
-
-      android:src="@drawable/ic_home_circle_active"
+      android:src="@drawable/ic_home_circle_not_active"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
 

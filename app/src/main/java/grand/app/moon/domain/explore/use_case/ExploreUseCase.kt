@@ -21,7 +21,7 @@ class ExploreUseCase @Inject constructor(
 ) {
 
   fun explore(page: Int): Flow<Resource<BaseResponse<ExploreListPaginateData>>> = flow {
-//    emit(Resource.Loading)
+    emit(Resource.Loading)
     val result = repository.getExplores(page)
     emit(result)
   }.flowOn(Dispatchers.IO)

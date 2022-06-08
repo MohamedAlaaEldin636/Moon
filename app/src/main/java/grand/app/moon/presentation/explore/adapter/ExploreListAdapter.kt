@@ -26,6 +26,7 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
   var clickEvent: MutableLiveData<String> = MutableLiveData()
   var position = -1
   var user = User()
+  var fromStore = false
   lateinit var exploreUseCase: ExploreUseCase
   val exploreAction = ExploreAction()
 
@@ -49,7 +50,7 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
-    val itemViewModel = ItemExploreViewModel(data, position,user)
+    val itemViewModel = ItemExploreViewModel(data, position,user,fromStore)
     Log.d(TAG, "onBindViewHolder: " + data.file)
 //    holder.itemLayoutBinding.appCompatEditText.setOnEditorActionListener(TextView.OnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
 //      if (i == EditorInfo.IME_ACTION_SEND) {

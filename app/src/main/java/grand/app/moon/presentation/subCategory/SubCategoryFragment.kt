@@ -19,7 +19,10 @@ import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentSubCategoryBinding
+import grand.app.moon.domain.home.models.Parent
+import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.utils.Constants
@@ -30,7 +33,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
 
-  private val args : SubCategoryFragmentArgs by navArgs()
+  private val args: SubCategoryFragmentArgs by navArgs()
   val viewModel: SubCategoryViewModel by viewModels()
 
   override
@@ -38,8 +41,8 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
-      if(bundle.containsKey(Constants.SORT_BY)) {
+    setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+      if (bundle.containsKey(Constants.SORT_BY)) {
         viewModel.sortBy = bundle.getInt(Constants.SORT_BY)
         viewModel.reset()
         viewModel.callService()
@@ -60,8 +63,8 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    if(args.subCategory != -1) viewModel.subCategoryId = args.subCategory
-    if(args.categoryId != -1) viewModel.categoryId = args.categoryId
+    if (args.subCategory != -1) viewModel.subCategoryId = args.subCategory
+    if (args.categoryId != -1) viewModel.categoryId = args.categoryId
     viewModel.type = args.type
     viewModel.isSub.set(args.isSub)
     viewModel.setCategoryId()
@@ -84,7 +87,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
 
     viewModel.clickEvent.observe(this, {
       when (it) {
-        Constants.GRID_1 , Constants.GRID_2 -> {
+        Constants.GRID_1, Constants.GRID_2 -> {
           viewModel.adapter.notifyDataSetChanged()
         }
       }
@@ -99,6 +102,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
+            preparePropertios(it.value.data)
             viewModel.setData(it.value.data)
           }
           is Resource.Failure -> {
@@ -130,10 +134,10 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
       }
     }
 
-    val gridLayoutManager = GridLayoutManager(context,2, GridLayoutManager.VERTICAL,false)
+    val gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
     gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
       override fun getSpanSize(position: Int): Int {
-        return when(viewModel.adapter.grid){
+        return when (viewModel.adapter.grid) {
           Constants.GRID_1 -> 2
           else -> 1
         }
@@ -144,13 +148,25 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
     binding.rvAdsCategory.addOnScrollListener(object : RecyclerView.OnScrollListener() {
       override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)
-        if (!recyclerView.canScrollVertically(1)){
+        if (!recyclerView.canScrollVertically(1)) {
           viewModel.callService()
         }
       }
     })
     binding.rvAdsCategory.adapter = viewModel.adapter
 
+  }
+
+  private fun preparePropertios(data: SubCategoryResponse) {
+    if (data.properties.size > 0)
+      data.properties.add(
+        0,
+        Property(
+          0,
+          name = getString(R.string.all),
+          parent = Parent()
+        )
+      )
   }
 
   override fun onResume() {

@@ -25,13 +25,18 @@
     android:id="@+id/exploreListFragment"
     android:name="grand.app.moon.presentation.explore.ExploreListFragment"
     android:label="@string/discover">
-
+    <argument
+      android:name="list"
+      app:argType="string"
+      android:defaultValue="" />
     <argument
       android:name="data"
       app:argType="grand.app.moon.domain.explore.entity.ExploreListPaginateData" />
     <argument
       android:name="page"
-      app:argType="integer" />
+      app:argType="integer"
+      android:defaultValue="-1"
+      />
     <argument
       android:name="from_store"
       app:argType="boolean"
@@ -40,10 +45,10 @@
       android:id="@+id/action_exploreListFragment_to_commentsListFragment"
       app:destination="@id/commentsListFragment"
       app:enterAnim="@anim/anim_slide_in_right"
-
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right" />
+
     <action
       android:id="@+id/action_exploreListFragment_to_userListFragment"
       app:destination="@id/userListFragment"
@@ -73,6 +78,13 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/zoomFragment" />
+
+
+
+    <deepLink
+      android:id="@+id/navExploreList"
+      android:autoVerify="true"
+      app:uri="explore://grand.app.moon.explore.list/{list}" />
 
   </fragment>
   <fragment

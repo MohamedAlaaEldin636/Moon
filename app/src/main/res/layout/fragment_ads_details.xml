@@ -150,9 +150,9 @@
           android:paddingEnd="@dimen/dimen18"
           android:paddingBottom="@dimen/dimen6"
           android:text="@string/premium"
-          android:visibility="@{viewModel.advertisement.premium == 1 ? View.VISIBLE : View.GONE }"
           android:textColor="@color/white"
           android:textSize="@dimen/text_size13"
+          android:visibility="@{viewModel.advertisement.premium == 1 ? View.VISIBLE : View.GONE }"
           app:layout_constraintBottom_toBottomOf="@+id/image_slider"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toTopOf="@+id/view_background" />
@@ -164,7 +164,7 @@
           android:layout_height="@dimen/dimen40"
           android:layout_margin="@dimen/dimen20"
           android:onClick="@{ (v) -> viewModel.favourite(v)}"
-          android:src="@{viewModel.advertisement.favorite ? @drawable/ic_fav_fill : @drawable/ic_fav_not_selected}"
+          android:src="@{viewModel.advertisement.favorite ? @drawable/ic_fav_ads_fill : @drawable/ic_fav_not_selected}"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 
@@ -368,7 +368,10 @@
             <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_margin="@dimen/dimen10">
+              android:layout_marginStart="@dimen/dimen10"
+              android:layout_marginTop="@dimen/dimen10"
+              android:layout_marginEnd="@dimen/dimen10"
+              android:layout_marginBottom="@dimen/dimen10">
 
 
               <androidx.appcompat.widget.AppCompatTextView
@@ -410,6 +413,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginStart="@dimen/dimen5"
                   android:layout_marginTop="@dimen/dimen5"
+                  android:fontFamily="@font/regular"
                   android:layout_marginEnd="@dimen/dimen5"
                   android:layout_marginBottom="@dimen/dimen5"
                   android:text="@{viewModel.advertisement.store.name}"
@@ -537,12 +541,12 @@
 
 
           <LinearLayout
-            android:background="@color/colorWhite"
-            android:layout_marginTop="@dimen/dimen20"
-            android:padding="@dimen/dimen20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/dimen20"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen20">
 
             <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
@@ -612,25 +616,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="@dimen/dimen20"
             android:background="@drawable/corner_silver_strock"
             android:drawableEnd="@drawable/ic_more_sec"
             android:drawableTint="@color/gray"
             android:gravity="start"
-            android:textSize="@dimen/text_size16"
-            android:layout_margin="@dimen/dimen20"
             android:onClick="@{ (v) -> viewModel.reportAds(v) }"
             android:padding="@dimen/dimen6"
             android:text="@string/report_on_issue"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/colorBlack" />
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_size16" />
 
 
           <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextBoldFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen10"
             android:layout_marginStart="@dimen/dimen10"
+            android:layout_marginTop="@dimen/dimen10"
             android:text="@string/similar_ads"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorBlack"
@@ -669,13 +673,14 @@
       app:layout_constraintStart_toStartOf="parent">
 
       <com.google.android.material.button.MaterialButton
-        style="@style/mediumFont"
+        style="@style/regularFont"
         android:layout_width="0dp"
         android:layout_height="@dimen/dimen40"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen8"
         android:layout_weight="1"
         android:background="@color/color55CD6C"
+
         android:gravity="center"
         android:onClick="@{(v) -> viewModel.whatsapp(v)}"
         android:text="@string/whatsapp"
@@ -685,13 +690,15 @@
         app:iconGravity="textStart" />
 
       <com.google.android.material.button.MaterialButton
-        style="@style/mediumFont"
+        style="@style/regularFont"
         android:layout_width="0dp"
         android:layout_height="@dimen/dimen40"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen8"
         android:layout_weight="1"
         android:background="@color/colorPrimary"
+        android:fontFamily="@font/regular"
+
         android:gravity="center"
         android:onClick="@{(v) -> viewModel.phone(v)}"
         android:text="@string/call"
@@ -700,17 +707,36 @@
         app:icon="@drawable/ic_phone"
         app:iconGravity="textStart" />
 
-      <Button
-        style="?android:attr/borderlessButtonStyle"
+<!--      <Button-->
+<!--        style="@style/regularFont"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="@dimen/dimen40"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_margin="@dimen/dimen8"-->
+<!--        android:layout_weight="1"-->
+<!--        android:background="@color/colorAccent"-->
+<!--        android:fontFamily="@font/regular"-->
+<!--        android:gravity="center"-->
+<!--        android:onClick="@{(v) -> viewModel.chat(v)}"-->
+<!--        android:padding="0dp"-->
+<!--        android:text="@string/chat"-->
+<!--        android:textSize="@dimen/text_size12"-->
+<!--        app:backgroundTint="@color/colorAccent"-->
+<!--        app:icon="@drawable/ic_chat_conversation"-->
+<!--        app:iconGravity="textStart" />-->
+
+
+      <com.google.android.material.button.MaterialButton
+        style="@style/regularFont"
         android:layout_width="0dp"
         android:layout_height="@dimen/dimen40"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen8"
         android:layout_weight="1"
         android:background="@color/colorAccent"
+
         android:gravity="center"
         android:onClick="@{(v) -> viewModel.chat(v)}"
-        android:padding="0dp"
         android:text="@string/chat"
         android:textSize="@dimen/text_size12"
         app:backgroundTint="@color/colorAccent"

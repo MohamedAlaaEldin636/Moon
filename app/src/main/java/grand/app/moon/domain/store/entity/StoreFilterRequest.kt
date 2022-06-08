@@ -5,6 +5,8 @@ import java.io.Serializable
 
 data class StoreFilterRequest(@SerializedName("page")
                               var page: Int = 0,
+                              @SerializedName("order_by")
+                              var orderBy: Int = 0,
                               @SerializedName("search")
                               var search: String = "",
                               @SerializedName("category_ids")

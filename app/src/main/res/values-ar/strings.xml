@@ -182,5 +182,10 @@
   <string name="please_login_agin">من فضلك قم بتسجيل الدخول من جديد</string>
   <string name="do_you_want_to_exit_from_app">هل تريد الخروج من التطبيق</string>
   <string name="show_mail">إظهار الايميل</string>
-
+    <string name="crop_image">قص الصوره</string>
+  <string name="add_store">أضف متجرك</string>
+  <string name="show_stores">عرض المتاجر</string>
+  <string name="highest_rate">الاعلي تقييما</string>
+  <string name="connected_now">متصل</string>
+  <string name="offline_now">مغلق</string>
 </resources>

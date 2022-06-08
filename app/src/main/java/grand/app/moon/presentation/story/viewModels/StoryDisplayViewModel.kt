@@ -30,6 +30,7 @@ import javax.inject.Inject
 class StoryDisplayViewModel @Inject constructor(
   val storeUseCase: StoreUseCase
 ) : BaseViewModel() {
+  var fromStore: Boolean = false
   var positionStoryAdapter: Int = 0
   var pos: Int = -1
   var stories: ArrayList<Store> = arrayListOf()
@@ -122,5 +123,13 @@ class StoryDisplayViewModel @Inject constructor(
 
   fun share(v: View) {
     shareTitleMessageImage(v.findFragment<Fragment>().requireActivity(), store.get()!!.name, store.get()!!.description, store.get()!!.stories[pos].file)
+  }
+
+  fun checkBlockStore(): Boolean {
+    stories.forEach {
+      if(ListHelper.checkBlockStore(it.id))
+        return true
+    }
+    return false
   }
 }

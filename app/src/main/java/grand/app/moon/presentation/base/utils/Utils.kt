@@ -94,7 +94,7 @@ fun showLoadingDialog(activity: Activity?, hint: String?): Dialog? {
     tvHint.visibility = View.GONE
   }
 
-  progressDialog.setCancelable(false)
+  progressDialog.setCancelable(true)
   progressDialog.setCanceledOnTouchOutside(false)
   progressDialog.show()
 

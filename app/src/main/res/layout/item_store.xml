@@ -203,6 +203,7 @@
           android:drawablePadding="@dimen/dimen10"
           android:drawableTint="@color/colorWhite"
           android:gravity="center"
+          style="@style/regularFont"
           android:text="@{itemViewModels.store.following ? @string/un_follow : @string/follow }"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/white" />

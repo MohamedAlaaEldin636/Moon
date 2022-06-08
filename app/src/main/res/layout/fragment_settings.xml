@@ -20,6 +20,7 @@
       android:layout_margin="@dimen/dimen6"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:background="@color/backgroundGray"
       android:paddingBottom="@dimen/dimen20">
 
       <androidx.appcompat.widget.AppCompatTextView
@@ -27,8 +28,8 @@
         android:textStyle="bold"
         android:textSize="@dimen/text_size22"
         android:layout_marginStart="@dimen/dimen18"
-        android:textColor="@color/colorAccent"
-        android:text="@string/my_account"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/personal_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -43,19 +44,14 @@
         tools:listitem="@layout/item_more" />
 
 
-      <View
-        android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:layout_marginBottom="@dimen/dimen8"
-        android:layout_marginTop="@dimen/dimen8"
-        android:layout_height="1dp"/>
 
       <androidx.appcompat.widget.AppCompatTextView
         style="@style/mediumFont"
         android:textStyle="bold"
         android:textSize="@dimen/text_size22"
+        android:layout_marginTop="@dimen/dimen16"
         android:layout_marginStart="@dimen/dimen18"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:text="@string/settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

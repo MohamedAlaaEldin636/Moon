@@ -9,7 +9,12 @@ import androidx.databinding.Bindable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.cometchat.pro.core.CometChat
+import com.cometchat.pro.models.User
+import com.maproductions.mohamedalaa.shared.core.extensions.convertToString
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
@@ -25,9 +30,9 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.ads.use_case.AdsUseCase
+import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.InteractionRequest
-import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.ShareRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
@@ -35,10 +40,10 @@ import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.openBrowser
+import grand.app.moon.presentation.explore.ExploreFragmentDirections
 import grand.app.moon.presentation.explore.adapter.ExploreGridEqualAdapter
 import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 import grand.app.moon.presentation.subCategory.PropertiesAdapter
-import grand.app.moon.presentation.subCategory.SubCategoryFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -46,7 +51,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.net.URLEncoder
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 @HiltViewModel
@@ -83,7 +90,7 @@ class StoreDetailsViewModel @Inject constructor(
   val store = ObservableField(Store())
   var isLoggin = userLocalUseCase.isLoggin()
   val image = ObservableField<String>("")
-
+  val isOnline = ObservableBoolean(false)
 
   val showAds = ObservableBoolean(true)
   val showGallery = ObservableBoolean(false)
@@ -111,7 +118,7 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   val mail = ObservableField(MyApplication.instance.getString(R.string.show_mail))
-  fun showMail(v: View){
+  fun showMail(v: View) {
     mail.set(store.get()?.email)
   }
 
@@ -120,9 +127,10 @@ class StoreDetailsViewModel @Inject constructor(
       followStoreRequest.storeId = store.get()?.id
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
       store.get()?.isFollowing = store.get()?.isFollowing != true
-      var followers:Int = store.get()!!.followersCount.toInt()
-      store.get()?.followersCount = if(store.get()?.isFollowing == true) followers++.toString() else followers--.toString()
-        store.get()?.id?.let {
+      var followers: Int = store.get()!!.followersCount.toInt()
+      store.get()?.followersCount =
+        if (store.get()?.isFollowing == true) followers++.toString() else followers--.toString()
+      store.get()?.id?.let {
         store.get()?.isFollowing?.let { it1 ->
           ListHelper.addFollowStore(
             it,
@@ -141,20 +149,28 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun share(v: AppCompatImageView) {
-    Log.d(TAG, "share: ==========================")
-//    val name  = (store.get()?.name != null? "" : "")
     storeUseCase.share(ShareRequest(store.get()?.id))
-
-//    var name = ""
-//    store.get()?.name?.let {
-//      name = it
-//    }
-//    var description = ""
-//    store.get()?.description?.let {
-//      description = it
-//    }
-//    val name = if(store.get()?.name == null) "" else store.get()?.name
     store.get()?.share?.let { share(v.context, store.get()?.name + store.get()?.description, it) }
+  }
+
+  fun story(): String {
+    val textStory = if (store.get()!!.stories.size > 0) store.get()!!.stories[0].file else ""
+    Log.d(TAG, "story: ${textStory}")
+    return textStory
+  }
+
+  fun story(v: View) {
+    val text: String = v.context.convertToString(store.get()!!)
+    Log.d(TAG, "storyHERE: $text")
+    val uri = Uri.Builder()
+      .scheme("store")
+      .authority("grand.app.moon.story.List")
+      .appendPath(text)
+      .build()
+    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+    v.findNavController().navigate(request)
+
+
   }
 
   fun zoomImage(v: View) {
@@ -252,7 +268,7 @@ class StoreDetailsViewModel @Inject constructor(
     viewModelScope.launch(Dispatchers.IO) {
       adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 6))
     }
-    store.get()?.phone?.let { callPhone(v.context, store.get()?.country?.country_code+it) }
+    store.get()?.phone?.let { callPhone(v.context, store.get()?.country?.country_code + it) }
   }
 
   fun block(v: View) {
@@ -293,6 +309,24 @@ class StoreDetailsViewModel @Inject constructor(
     v.context.startActivity(intent)
   }
 
+  fun checkOnline() {
+    val listenerID = "store_${store.get()!!.id}";
+
+    CometChat.addUserListener(
+      listenerID, object : CometChat.UserListener() {
+        override fun onUserOnline(p0: User?) {
+          super.onUserOnline(p0)
+          isOnline.set(true)
+        }
+
+        override fun onUserOffline(p0: User?) {
+          super.onUserOffline(p0)
+          isOnline.set(false)
+        }
+      }
+    );
+  }
+
   fun update(keyMap: String, data: Store, days: ArrayList<String>) {
     data.workingHours?.forEachIndexed() { index, element ->
       data.workingHours?.get(index)?.day = days[index]
@@ -308,26 +342,37 @@ class StoreDetailsViewModel @Inject constructor(
 
 //    Log.d(TAG, "update: ${data.advertisements.size}")
     store.set(data)
+    checkOnline()
     adsAdapter.differ.submitList(data.advertisements)
     propertiesAdapter.selected = 0
     propertiesAdapter.differ.submitList(data.category)
+    val storeItem = Store()
+    data.explore.forEach { explore ->
+      storeItem.id = data.id
+      storeItem.image = data.image
+      storeItem.name = data.name
+      storeItem.nickname = data.nickname
+      explore.store = storeItem
+
+    }
     exploreAdapter.differ.submitList(data.explore)
 //    store.get()?.explore?.let { exploreAdapter.differ.currentList.addAll(it) }
     notifyPropertyChanged(BR.exploreAdapter)
 //    exploreAdapter.notifyDataSetChanged()
 
     store.get()?.socialMediaLinks?.forEach { socialLink ->
-        if (socialLink.type == "facebook")
-          facebook.set(true)
-        if (socialLink.type == "twitter")
-          twitter.set(true)
-        if (socialLink.type == "youtube")
-          youtube.set(true)
-        if (socialLink.type == "instgram")
-          instgram.set(true)
+      if (socialLink.type == "facebook")
+        facebook.set(true)
+      if (socialLink.type == "twitter")
+        twitter.set(true)
+      if (socialLink.type == "youtube")
+        youtube.set(true)
+      if (socialLink.type == "instgram")
+        instgram.set(true)
     }
 
     notifyPropertyChanged(BR.adsAdapter)
+    notifyChange()
 //    Log.d(TAG, "explore: ${exploreAdapter.list.size}")
     show.set(true)
   }
@@ -342,7 +387,24 @@ class StoreDetailsViewModel @Inject constructor(
     }
   }
 
-  fun storeDetails(v: View) {
+  val listExplores = ArrayList<Explore>()
+  fun exploreDetails(position: Int, v: View) {
+    val list = ArrayList(exploreAdapter.differ.currentList)
+    listExplores.clear()
+    listExplores.addAll(list)
+    Collections.swap(listExplores, 0, position);
+
+    val data = v.context.convertToString(listExplores)
+
+    Log.d(TAG, "exploreDetails : $position : $data")
+    val uri = Uri.Builder()
+      .scheme("explore")
+      .authority("grand.app.moon.explore.list")
+      .appendPath(data)
+      .build()
+    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+    v.findNavController().navigate(request)
+
 
   }
 

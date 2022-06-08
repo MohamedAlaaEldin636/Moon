@@ -59,7 +59,7 @@
         android:layout_margin="@dimen/dimen10"
         android:onClick="@{ (v) -> viewModel.addFavourite(v) }"
         android:visibility="@{viewModel.showFavourite ? View.VISIBLE : View.GONE , default = gone}"
-        android:src="@{viewModel.advertisement.favorite  ? @drawable/ic_fav_fill : @drawable/ic_fav_not_selected}"
+        android:src="@{viewModel.advertisement.favorite  ? @drawable/ic_fav_ads_fill : @drawable/ic_fav_not_selected}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -184,6 +184,7 @@
         android:layout_height="@dimen/dimen40"
         android:layout_marginStart="@dimen/dimen10"
         android:layout_marginTop="@dimen/dimen4"
+        android:onClick="@{ (v) -> viewModel.storeDetails(v) }"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_ads_time"
         app:loadImage="@{viewModel.advertisement.store.image}" />
@@ -215,7 +216,6 @@
         android:layout_width="wrap_content"
         android:textSize="@dimen/text_size16"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen10"
         android:layout_marginBottom="@dimen/dimen6"
         android:text="@{viewModel.advertisement.price + ` `}"
         android:textColor="@color/colorAccent"

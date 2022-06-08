@@ -122,13 +122,36 @@
 
               android:padding="@dimen/dimen6">
 
-              <androidx.appcompat.widget.AppCompatImageView
+              <RelativeLayout
                 android:id="@+id/img_store"
-                android:layout_width="@dimen/dimen60"
-                android:layout_height="@dimen/dimen60"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:loadImage="@{viewModel.store.image}" />
+                android:layout_width="@dimen/dimen60"
+                android:layout_height="@dimen/dimen60">
+                <com.google.android.material.imageview.ShapeableImageView
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_centerInParent="true"
+                  app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                  android:visibility="@{viewModel.store.stories.size() == 0 ? View.VISIBLE : View.GONE }"
+                  app:loadImage="@{viewModel.store.image}" />
+
+
+                <com.google.android.material.imageview.ShapeableImageView
+                  android:id="@+id/profile_picture"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:scaleType="centerCrop"
+                  app:strokeColor="@color/colorAccent"
+                  app:strokeWidth="2dp"
+                  android:layout_centerInParent="true"
+                  android:onClick="@{ (v) -> viewModel.story(v) }"
+                  android:visibility="@{viewModel.store.stories.size() > 0 ? View.VISIBLE : View.GONE}"
+                  app:loadImage="@{viewModel.story}"
+                  app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                  />
+              </RelativeLayout>
+
 
 
               <androidx.appcompat.widget.AppCompatTextView
@@ -140,9 +163,12 @@
                 android:layout_marginTop="@dimen/dimen5"
                 android:layout_marginEnd="@dimen/dimen10"
                 android:gravity="start"
+                app:autoSizeTextType="uniform"
+                android:maxLines="1"
                 android:text="@{viewModel.store.name}"
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorPrimary"
+
                 android:textSize="@dimen/text_size14"
                 app:layout_constraintEnd_toStartOf="@+id/barrier4"
                 app:layout_constraintStart_toEndOf="@+id/img_store"
@@ -160,10 +186,12 @@
                 android:text="@{`( `+viewModel.store.nickname+` )`}"
                 android:textAlignment="viewStart"
                 android:textColor="@color/greyText"
-                android:textSize="@dimen/text_size12"
+                tools:text="asdas sadasd sad as d asdasd sad as "
+                android:textSize="9sp"
                 app:layout_constraintEnd_toStartOf="@+id/barrier4"
                 app:layout_constraintStart_toEndOf="@+id/img_store"
                 app:layout_constraintTop_toBottomOf="@+id/tv_store_details" />
+
 
               <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_follow_store"
@@ -198,6 +226,44 @@
                 app:layout_constraintTop_toBottomOf="@+id/btn_follow_store" />
 
 
+              <LinearLayout
+                android:id="@+id/tv_isOnline"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/dimen8"
+                android:layout_marginTop="@dimen/dimen2"
+                android:layout_marginEnd="@dimen/dimen8"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toStartOf="@+id/barrier4"
+                app:layout_constraintStart_toEndOf="@+id/img_store"
+                app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                  android:src="@drawable/ic_online"
+                  android:layout_width="10dp"
+                  android:tint="@{viewModel.isOnline ?  @color/color55CD6C : @color/colorE50000 }"
+                  android:layout_gravity="center"
+                  android:layout_height="10dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                  style="@style/regularFont"
+                  android:layout_marginStart="@dimen/dimen5"
+                  android:text="@{viewModel.isOnline ? @string/connected_now : @string/offline_now }"
+                  app:layout_constraintEnd_toStartOf="@+id/barrier4"
+                  app:layout_constraintStart_toEndOf="@+id/img_store"
+                  android:layout_gravity="center"
+                  android:textSize="@dimen/text_size12"
+                  android:textColor="@color/greyText"
+                  android:gravity="start"
+                  android:textAlignment="viewStart"
+                  tools:text="worked"
+                  app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"/>
+
+              </LinearLayout>
+
+
               <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/rate"
                 style="@style/Widget.AppCompat.RatingBar.Small"
@@ -209,7 +275,7 @@
                 android:progressTint="@color/colorF7AB00"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintStart_toEndOf="@+id/img_store"
-                app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname"
+                app:layout_constraintTop_toBottomOf="@+id/tv_isOnline"
                 app:rate="@{viewModel.store.averageRate}" />
 
               <androidx.appcompat.widget.AppCompatTextView
@@ -801,6 +867,7 @@
         android:onClick="@{(v) -> viewModel.whatsapp(v)}"
         android:text="@string/whatsapp"
         android:textSize="@dimen/text_size12"
+        android:fontFamily="@font/regular"
         app:backgroundTint="@color/color55CD6C"
         app:icon="@drawable/ic_chat_conversation"
         app:iconGravity="textStart" />
@@ -813,7 +880,7 @@
         android:layout_weight="1"
         android:onClick="@{(v) -> viewModel.phone(v)}"
         android:text="@string/call"
-
+        android:fontFamily="@font/regular"
         android:textSize="@dimen/text_size12"
         app:backgroundTint="@color/colorPrimary"
         app:icon="@drawable/ic_phone"
@@ -827,7 +894,7 @@
         android:layout_weight="1"
         android:onClick="@{(v) -> viewModel.chat(v)}"
         android:text="@string/chat"
-
+        android:fontFamily="@font/regular"
         android:textSize="@dimen/text_size12"
         app:backgroundTint="@color/colorAccent"
         app:icon="@drawable/ic_chat_conversation"

@@ -1,9 +1,11 @@
 package grand.app.moon.presentation.category.viewModels
 
+import android.net.Uri
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.utils.BaseResponse
@@ -11,6 +13,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
@@ -70,7 +73,7 @@ class CategoryDetailsViewModel @Inject constructor(
   var isLoggin = userLocalUseCase.isLoggin()
 
   init {
-    storeAdapter.percentage = 48
+    storeAdapter.percentage = 51
     storeAdapter.useCase = storeUseCase
     storeAdapter.isLogin = isLoggin
   }
@@ -141,6 +144,18 @@ class CategoryDetailsViewModel @Inject constructor(
       adsHomeAdapter.differ.submitList(list)
       notifyPropertyChanged(BR.adsHomeAdapter)
     }
+  }
+
+  fun stores(v: View){
+    val uri = Uri.Builder()
+      .scheme("storeList")
+      .authority("grand.app.moon.store.List")
+      .appendPath(title.get())
+      .appendPath("1")//order_by
+      .appendPath(categoryId.toString())//category_id
+      .build()
+    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+    v.findNavController().navigate(request)
   }
 
   fun follow() {

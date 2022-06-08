@@ -26,9 +26,6 @@ import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.filter.FilterFragmentDirections
 import kotlinx.coroutines.Job
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import java.lang.Exception
 import java.net.URLEncoder
 import androidx.core.content.ContextCompat.startActivity
@@ -52,8 +49,10 @@ import com.squareup.picasso.Picasso
 import androidx.core.content.ContextCompat.startActivity
 
 import android.R.attr.bitmap
-import java.io.ByteArrayOutputStream
+import java.io.*
 import java.lang.Double.parseDouble
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 open class BaseViewModel : ViewModel(), Observable {
@@ -148,15 +147,40 @@ open class BaseViewModel : ViewModel(), Observable {
     }
   }
 
-  open fun getLocalBitmapUri(context: Context,bmp: Bitmap): Uri? {
+  open fun getLocalBitmapUri(context: Context, bmp: Bitmap): Uri? {
     val bytes = ByteArrayOutputStream()
     bmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-    val path: String =
-      MediaStore.Images.Media.insertImage(context.contentResolver, bmp, "Title", null)
-    return Uri.parse(path)
+
+    val formatter = SimpleDateFormat("yyyy_MM_dd_HHmm", Locale.UK)
+    val now = Date()
+    val fileName: String = formatter.format(now).toString() + ".png"
+    var path = ""
+    val f: File
+    try {
+      path = (Environment.getExternalStorageDirectory().toString()
+        + File.separator
+        + "Pictures"
+        + File.separator
+        + fileName)
+      f = File(path)
+      val out = FileOutputStream(f)
+      bmp.compress(Bitmap.CompressFormat.PNG, 90, out)
+      out.flush()
+      out.close()
+    } catch (e: FileNotFoundException) {
+      // TODO Auto-generated catch block
+      e.printStackTrace()
+    } catch (e: IOException) {
+      // TODO Auto-generated catch block
+      e.printStackTrace()
+    }
+
+//    val path: String =
+//      MediaStore.Images.Media.insertImage(context.contentResolver, bmp, "Title", null)
+    if (path.isNotEmpty())
+      return Uri.parse(path)
+    return null
   }
-
-
 
 
   open fun shareTitleMessageImage(
@@ -183,15 +207,18 @@ open class BaseViewModel : ViewModel(), Observable {
         message.let {
           messageContent += "\n" + it
         }
-        i.putExtra(Intent.EXTRA_TEXT, messageContent )
-        i.putExtra(Intent.EXTRA_STREAM, bitmap?.let { getLocalBitmapUri(context,it) })
+        i.putExtra(Intent.EXTRA_TEXT, messageContent)
+
+        val bit = bitmap?.let { getLocalBitmapUri(context, it) }
+        if (bit != null)
+          i.putExtra(Intent.EXTRA_STREAM, bit)
         context.startActivity(Intent.createChooser(i, "Share Image"))
       }
 
       override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
         Log.d(TAG, "onPrepareLoad: ")
       }
-      
+
     })
   }
 
@@ -336,7 +363,7 @@ open class BaseViewModel : ViewModel(), Observable {
         val link = data.toString()
         val parameters = link.split("/").toTypedArray()
         Log.d(TAG, "initDynamicLinkSetDefaultCountry: ${parameters[4]}")
-        if(parameters[4] == "shop"){
+        if (parameters[4] == "shop") {
           val id = parameters[5]
           v.findNavController().navigate(
             R.id.nav_store,
@@ -345,7 +372,7 @@ open class BaseViewModel : ViewModel(), Observable {
               "type" to 3
             ), Constants.NAVIGATION_OPTIONS
           )
-        }else{
+        } else {
           val id = parameters[4]
           try {
             val num = parseDouble(id)

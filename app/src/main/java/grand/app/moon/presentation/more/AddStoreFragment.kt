@@ -1,6 +1,5 @@
 package grand.app.moon.presentation.more
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -13,31 +12,28 @@ import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.databinding.FragmentAddStoreBinding
 import grand.app.moon.databinding.FragmentSettingsBinding
 import grand.app.moon.databinding.FragmentWebBinding
 import grand.app.moon.presentation.base.utils.Constants
 import java.util.ArrayList
 
 @AndroidEntryPoint
-class WebFragment : BaseFragment<FragmentWebBinding>() {
+class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
 
-  val args: WebFragmentArgs by navArgs()
 
   private val viewModel: SettingsViewModel by viewModels()
 
   override
-  fun getLayoutId() = R.layout.fragment_web
+  fun getLayoutId() = R.layout.fragment_add_store
 
-  //  @SuppressLint("SetJavaScriptEnabled")
-  @SuppressLint("SetJavaScriptEnabled")
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
     binding.webview.webViewClient = WebViewClient()
-    if (!args.url.contains("snapchat"))
-      binding.webview.settings.javaScriptEnabled = true
+    binding.webview.settings.javaScriptEnabled = true
     binding.webview.webViewClient = AppWebViewClients(binding.progress)
-    binding.webview.loadUrl(args.url)
+    binding.webview.loadUrl("https://souqmoon.com/store/register")
   }
 
   private val TAG = "WebFragment"

@@ -18,6 +18,7 @@ import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.entity.StoreFilterRequest
 import grand.app.moon.domain.store.entity.StoreListPaginateData
 import grand.app.moon.domain.store.use_case.StoreUseCase
+import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
@@ -62,7 +63,7 @@ class StoreListViewModel @Inject constructor(
 
   val response = _responseService
 
-  var orderBy = 1
+    //1 Newest, 2 Oldest, 3 Average rate
 
   init {
     adapter.isLogin = isLoggin
@@ -86,17 +87,6 @@ class StoreListViewModel @Inject constructor(
 //      this.isGrid2.set(false)
       gridOne.set(true)
     }
-  }
-
-  fun addStoreNow(v: View) {
-    v.findNavController().navigate(
-      StoreListFragmentDirections.actionStoreListFragmentToWebFragment2(
-        v.context.getString(
-          R.string.add_store_now
-        ),
-        "https://moontest.my-staff.net/store/register"
-      )
-    )
   }
 
 
@@ -128,7 +118,7 @@ class StoreListViewModel @Inject constructor(
     val uri = Uri.Builder()
       .scheme("filter-sort-report")
       .authority("grand.app.moon.filterSortDialog")
-      .appendPath(orderBy.toString())
+      .appendPath(request.orderBy.toString())
       .appendPath(FilterDialog.STORE.toString())
       .build()
     val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
@@ -136,13 +126,17 @@ class StoreListViewModel @Inject constructor(
   }
 
   fun map(v: View){
-    val uri = Uri.Builder()
-      .scheme("map")
-      .authority("grand.app.moon.map")
-      .appendPath(orderBy.toString())
-      .build()
-    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
-    v.findNavController().navigate(request)
+    val item = SubCategoryResponse()
+    val action = StoreListFragmentDirections.actionStoreListFragmentToMapFragment(item)
+    action.orderBy = request.orderBy
+    v.findNavController().navigate(action)
+//    val uri = Uri.Builder()
+//      .scheme("map")
+//      .authority("grand.app.moon.map")
+//      .appendPath(request.orderBy.toString())
+//      .build()
+//    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+//    v.findNavController().navigate(request)
   }
 
   fun setData(data: StoreListPaginateData) {

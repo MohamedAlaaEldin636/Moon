@@ -94,7 +94,7 @@
           android:layout_height="@dimen/dimen40"
           android:layout_margin="@dimen/dimen10"
           android:visibility="@{viewModel.advertisement.favorite ? View.VISIBLE : View.GONE , default = gone}"
-          android:src="@{viewModel.advertisement.favorite  ? @drawable/ic_fav_fill : @drawable/ic_fav_not_selected}"
+          android:src="@{viewModel.advertisement.favorite  ? @drawable/ic_fav_ads_fill : @drawable/ic_fav_not_selected}"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 

@@ -27,6 +27,7 @@ import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
 import kotlinx.coroutines.flow.collect
 
 class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
+  var adapterType: Int = -1
   lateinit var context: Context
   var isLogin = false
   lateinit var useCase : StoreUseCase
@@ -78,7 +79,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //    Log.d(TAG, "onBindViewHolder: $position")
     val data = differ.currentList[position]
-    val itemViewModel = ItemStoreViewModel(data,type, percentage,useCase,position)
+    val itemViewModel = ItemStoreViewModel(data,type, percentage,useCase,position,adapterType)
     holder.setViewModel(itemViewModel)
     itemViewModel.submitEvent.observeForever{
 //          Log.d(TAG, "onBindViewHolder: HAY THERE")

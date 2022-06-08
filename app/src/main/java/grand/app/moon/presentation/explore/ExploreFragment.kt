@@ -68,7 +68,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
   override fun setupObservers() {
 
     lifecycleScope.launchWhenCreated {
-      viewModel.callService()
       viewModel.response.collect {
         when (it) {
           Resource.Loading -> {
@@ -98,11 +97,12 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
         viewModel.adapter.tmpList.addAll(list)
         viewModel.lastData.list.addAll(list)
         Collections.swap(viewModel.lastData.list, 0, it);
+        val action = ExploreFragmentDirections.actionExploreFragmentToExploreListFragment(
+          viewModel.lastData,
+        )
+        action.page = viewModel.page
         findNavController().navigate(
-          ExploreFragmentDirections.actionExploreFragmentToExploreListFragment(
-            viewModel.lastData,
-            viewModel.page
-          )
+          action
         )
       }
     })
@@ -147,7 +147,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
 
   override fun onResume() {
     super.onResume()
-
+    viewModel.callService()
   }
 
   override fun onStop() {

@@ -47,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginStart="@dimen/dimen14"
+        android:textSize="@dimen/text_size12"
         android:layout_marginEnd="@dimen/dimen8"
         android:layout_toEndOf="@+id/img"
         android:layout_toStartOf="@+id/radio"

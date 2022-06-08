@@ -206,9 +206,9 @@
           android:drawableStart="@{itemViewModels.store.following ? @drawable/ic_close : @drawable/ic_plus }"
           android:drawablePadding="@dimen/dimen10"
           android:drawableTint="@color/colorWhite"
+          style="@style/regularFont"
           android:gravity="center"
           android:text="@{itemViewModels.store.following ? @string/un_follow : @string/follow }"
-          android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/white" />
 
       </RelativeLayout>

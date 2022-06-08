@@ -44,6 +44,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     binding.viewModel = viewModel
     viewModel.home()
     decideNavigationLogic()
+//    openActivityAndClearStack(HomeActivity::class.java)
+
   }
 
 

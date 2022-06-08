@@ -20,6 +20,7 @@ import grand.app.moon.presentation.ads.AdsDetailsFragment
 import grand.app.moon.presentation.ads.AdsListFragment
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.view.CategoryDetailsFragment
 import grand.app.moon.presentation.filter.result.FilterResultsFragment
 import grand.app.moon.presentation.home.HomeFragment
@@ -53,6 +54,16 @@ class ItemAdsViewModel(
         "from_store" to fromStore
       )
     )
+  }
+
+  fun storeDetails(v: View) {
+    Log.d(TAG, "details: $type")
+    v.findNavController().navigate(
+      R.id.nav_store,
+      bundleOf(
+        "id" to advertisement.store.id,
+        "type" to type
+      ), Constants.NAVIGATION_OPTIONS)
   }
 
   fun whatsapp(v: View) {

@@ -26,6 +26,8 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.common.reflect.TypeToken
+import com.google.gson.GsonBuilder
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -37,6 +39,7 @@ import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.databinding.FragmentNotificationBinding
 import grand.app.moon.databinding.FragmentStoryBinding
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SwipeToDeleteCallback
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
@@ -54,7 +57,6 @@ import pt.tornelas.segmentedprogressbar.SegmentedProgressBarListener
 class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   SegmentedProgressBarListener {
   private val viewModel: StoryDisplayViewModel by viewModels()
-  private val args: StoryFragmentArgs by navArgs()
 
   private val TAG = "StoryFragment"
 
@@ -65,8 +67,22 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   fun setBindingVariables() {
     binding.viewModel = viewModel
     observe()
-    viewModel.stories.addAll(args.stories.list)
-    viewModel.positionStoryAdapter = args.stories.position
+    if (arguments?.containsKey("store") == true && arguments?.getString("store")
+        ?.isNotEmpty() == true
+    ) {
+      val gson = GsonBuilder().create()
+      val store = gson.fromJson<Store>(requireArguments().getString("store"), object :
+        TypeToken<Store>() {}.type)
+      viewModel.stories.add(store)
+      viewModel.positionStoryAdapter = 0
+      viewModel.fromStore = true
+      Log.d(TAG, "setBindingVariables: YES NOT NULL")
+    } else {
+      val args: StoryFragmentArgs by navArgs()
+      Log.d(TAG, "setBindingVariables: YES  NULL")
+      viewModel.stories.addAll(args.stories.list)
+      viewModel.positionStoryAdapter = args.stories.position
+    }
     viewModel.store.set(viewModel.stories[viewModel.positionStoryAdapter])
     init()
 
@@ -78,13 +94,16 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
       when (it) {
         Constants.EXIT -> findNavController().navigateUp()
         Constants.STORE_DETAILS -> {
-          findNavController().navigate(
-            R.id.nav_store,
-            bundleOf(
-              "id" to viewModel.store.get()!!.id,
-              "type" to 3
-            ), Constants.NAVIGATION_OPTIONS
-          )
+          when (viewModel.fromStore) {
+            true -> findNavController().navigateUp()
+            else -> findNavController().navigate(
+              R.id.nav_store,
+              bundleOf(
+                "id" to viewModel.store.get()!!.id,
+                "type" to 3
+              ), Constants.NAVIGATION_OPTIONS
+            )
+          }
         }
       }
     })
@@ -195,7 +214,7 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
     viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[viewModel.pos].id
     viewModel.isLike.set(viewModel.store.get()!!.stories[viewModel.pos].is_liked)
     viewModel.storyRequest.type = 1
-    if(binding.root.context.isLogin()){
+    if (binding.root.context.isLogin()) {
       viewModel.callService()
     }
     loadImage()
@@ -208,9 +227,11 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 
   override fun onResume() {
     super.onResume()
-    if (!viewModel.isFinish)
-      resume()
-    else {
+    if (!viewModel.isFinish) {
+      if (viewModel.checkBlockStore())
+        backToPreviousScreen()
+      else resume()
+    } else {
       reset()
     }
   }

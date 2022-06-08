@@ -11,6 +11,15 @@
     android:label=""
     tools:layout="@layout/fragment_home">
     <action
+      android:id="@+id/action_home_fragment_to_departmentListFragment"
+      app:destination="@id/departmentListFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right" />
+
+
+    <action
       android:id="@+id/action_home_fragment_to_nav_ads"
       app:destination="@id/nav_ads"
       app:enterAnim="@anim/anim_slide_in_right"
@@ -65,13 +74,6 @@
 
   </fragment>
 
-  <action
-    android:id="@+id/action_home_fragment_to_departmentListFragment"
-    app:destination="@id/departmentListFragment"
-    app:enterAnim="@anim/anim_slide_in_right"
-    app:exitAnim="@anim/anim_slide_out_left"
-    app:popEnterAnim="@anim/anim_slide_in_left"
-    app:popExitAnim="@anim/anim_slide_out_right" />
 
 
   <action
@@ -109,13 +111,13 @@
       android:defaultValue="@null"
       app:nullable="true"/>
     <argument
+      android:name="subCategory"
+      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
+    <argument
       android:name="property_id"
       app:argType="string"
       android:defaultValue="@null"
       app:nullable="true"/>
-    <argument
-      android:name="subCategory"
-      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
 
     <argument
       android:name="order_by"
@@ -123,11 +125,48 @@
       android:defaultValue="0" />
 
     <deepLink
-      android:id="@+id/mapFragment"
+      android:id="@+id/mapFragmentStore"
       android:autoVerify="true"
       app:uri="map://grand.app.moon.map/{order_by}" />
 
+
   </fragment>
+
+  <fragment
+    android:id="@+id/mapFragment2"
+    android:name="grand.app.moon.presentation.map.MapFragment"
+    android:label="@string/map" >
+
+    <argument android:name="type"
+      android:defaultValue="store"
+      app:argType="string" />
+    <argument
+      android:name="category_id"
+      app:argType="string"
+      android:defaultValue="@null"
+      app:nullable="true"/>
+    <argument
+      android:name="sub_category_id"
+      app:argType="string"
+      android:defaultValue="@null"
+      app:nullable="true"/>
+    <argument
+      android:name="subCategory"
+      app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
+    <argument
+      android:name="property_id"
+      app:argType="string"
+      android:defaultValue="@null"
+      app:nullable="true"/>
+
+    <argument
+      android:name="order_by"
+      app:argType="integer"
+      android:defaultValue="0" />
+
+
+  </fragment>
+
   <fragment
     android:id="@+id/discoverFragment"
     android:name="grand.app.moon.presentation.discover.DiscoverFragment"
@@ -150,11 +189,12 @@
 
   <action
     android:id="@+id/moveToHome"
-    app:destination="@id/home_fragment"
+    app:destination="@id/addStoreFragment"
     app:enterAnim="@anim/anim_slide_in_right"
     app:exitAnim="@anim/anim_slide_out_left"
     app:popEnterAnim="@anim/anim_slide_in_left"
     app:popExitAnim="@anim/anim_slide_out_right" />
+
 
   <action
     android:id="@+id/moveToWeb"
@@ -288,9 +328,19 @@
     android:name="grand.app.moon.presentation.store.views.StoreListFragment"
     android:label="{title}">
 
+
     <argument
       android:name="title"
       app:argType="string" />
+    <argument
+      android:name="order_by"
+      app:argType="integer" />
+
+    <argument
+      android:name="category_id"
+      app:argType="integer"
+      android:defaultValue="-1" />
+
     <action
       android:id="@+id/action_storeListFragment_to_storeFilterFragment"
       app:enterAnim="@anim/anim_slide_in_right"
@@ -305,6 +355,20 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/webFragment2" />
+
+    <action
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      android:id="@+id/action_storeListFragment_to_mapFragment"
+      app:destination="@id/mapFragment2" />
+
+
+    <deepLink
+      android:id="@+id/storeList"
+      android:autoVerify="true"
+      app:uri="storeList://grand.app.moon.store.List/{title}/{order_by}/{category_id}" />
 
   </fragment>
   <fragment
@@ -424,6 +488,8 @@
     <argument
       android:name="stories"
       app:argType="grand.app.moon.domain.store.entity.StoreListPaginateData" />
+
+
     <action
       android:id="@+id/action_storiesListFragment_to_storyFragment"
       app:enterAnim="@anim/anim_slide_in_right"
@@ -456,6 +522,19 @@
     <argument
       android:name="stories"
       app:argType="grand.app.moon.domain.home.models.StoreModel" />
+
+    <argument
+      android:name="store"
+      app:argType="string"
+      android:defaultValue="" />
+
+
+    <deepLink
+      android:id="@+id/storyList"
+      android:autoVerify="true"
+      app:uri="store://grand.app.moon.story.List/{store}" />
+
+
   </fragment>
   <fragment
     android:id="@+id/webFragment2"
@@ -468,4 +547,8 @@
       android:name="url"
       app:argType="string" />
   </fragment>
+  <fragment
+    android:id="@+id/addStoreFragment"
+    android:name="grand.app.moon.presentation.more.AddStoreFragment"
+    android:label="@string/add_store_now" />
 </navigation>

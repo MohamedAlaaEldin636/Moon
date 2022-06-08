@@ -1,11 +1,14 @@
 package grand.app.moon.presentation.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
@@ -50,7 +53,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 //      LocaleHelper.setLocale(this, Locale(lang))
 //    }
 
-    if(this::nav.isInitialized) {
+    if (this::nav.isInitialized) {
       nav.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(Constants.BUNDLE)
         ?.observe(this) { result ->
           // Do something with the result.
@@ -89,6 +92,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     appBarConfiguration = AppBarConfiguration(
       setOf(
         R.id.storyFragment,
+        R.id.addStoreFragment,
         R.id.home_fragment,
         R.id.settings_fragment,
         R.id.myAccountFragment,
@@ -102,15 +106,25 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       Log.d(TAG, "setUpBottomNavigationWithGraphs: $it")
       when (it) {
         Constants.LOGIN_REQUIRED -> startActivity(Intent(this, AuthActivity::class.java))
-        Constants.DEPARTMENTS -> nav.navigate(NavHomeDirections.actionHomeFragmentToDepartmentListFragment())
+        Constants.STORES -> {
+          val uri = Uri.Builder()
+            .scheme("storeList")
+            .authority("grand.app.moon.store.List")
+            .appendPath(getString(R.string.show_stores))
+            .appendPath("1")
+            .appendPath("-1")
+            .build()
+          val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+          nav.navigate(request)
+        }
         Constants.CHAT_LIST -> {
           Log.d(TAG, "setUpBottomNavigationWithGraphs: HERE")
-          nav.navigate(HomeFragmentDirections.toFilterSortDialog(-1,FilterDialog.CHAT))
+          nav.navigate(HomeFragmentDirections.toFilterSortDialog(-1, FilterDialog.CHAT))
 //          nav.navigate(HomeFragmentDirections.actionHomeFragmentToCommetChatFragment())
         }
         Constants.NOTIFICATION -> {
 //          if (viewModel.isLoggin)
-            nav.navigate(NavHomeDirections.moveToNotification())
+          nav.navigate(NavHomeDirections.moveToNotification())
 //          else
 //            startActivity(Intent(this, AuthActivity::class.java))
         }
@@ -124,13 +138,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       resetTexts()
       binding.icNotificationFilter.hide()
       when (destination.id) {
-        R.id.storyFragment->{
+        R.id.storyFragment -> {
           hideTopBarControls()
           supportActionBar?.hide()
+        }
+        R.id.addStoreFragment -> {
+          binding.bottomNavigationView.show()
+          showTopBarControls()
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
         }
         R.id.home_fragment -> {
           binding.bottomNavigationView.show()
           showTopBarControls()
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
 //          showImage()
         }
         R.id.notificationFragment -> {
@@ -144,8 +164,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           binding.icNotificationFilter.show()
         }
         R.id.myAccountFragment -> {
-//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
 //          if (!viewModel.userLocalUseCase.isLoggin()) startActivity(
 //            Intent(
@@ -157,22 +177,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showText()
         }
         R.id.exploreFragment, R.id.mapFragment -> {
-          Log.d(TAG, "setUpBottomNavigationWithGraphs: ")
-          showTopBarControls()
-//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
-          binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            showTopBarControls()
+            binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
+            binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            binding.tvHomeTitle.text = destination.label
+            showText()
+        }
+        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings -> {
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
+          showTopBarControls()
           showText()
         }
-        R.id.settings_fragment, R.id.discoverFragment -> {
-//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
-          binding.tvHomeTitle.text = destination.label
-          showTopBarControls()
-          showText()
-        }
-        R.id.adsDetailsFragment, R.id.storeDetailsFragment -> {
+        R.id.adsDetailsFragment, R.id.storeDetailsFragment , R.id.countriesFragment3 -> {
           hideTopBarControls()
           hideAllToolbar()
         }
@@ -192,9 +211,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     }
     binding.imgHomeBottomBar.setOnClickListener {
       showImage()
+      binding.bottomNavigationView.selectedItemId = R.id.addStoreFragment
 //      nav.navigate(NavHomeDirections.moveToHome())
 //      binding.bottomNavigationView.selectedItemId = R.id.home_fragment;
-      nav.navigate(NavHomeDirections.moveToWeb(getString(R.string.add_store_now),"https://moontest.my-staff.net/store/register"))
+//      nav.navigate(NavHomeDirections.moveToWeb(getString(R.string.add_store_now),"https://souqmoon.com/store/register"))
 
     }
 
@@ -240,7 +260,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   private fun showTopBarControls() {
     binding.imgHomeBottomBar.show()
-    binding.toolbar.background = ContextCompat.getDrawable(this, R.drawable.ic_curve)
+//    binding.toolbar.background = ContextCompat.getDrawable(this, R.drawable.ic_curve)
+    binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
     binding.bottomNavigationView.show()
     binding.imgMoonLogo.show()
     binding.icNotification.show()

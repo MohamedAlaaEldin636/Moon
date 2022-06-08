@@ -6,11 +6,14 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -20,6 +23,8 @@ import com.maproductions.mohamedalaa.shared.core.extensions.checkSelfPermissionG
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentProfileBinding
+import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
+import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
@@ -33,6 +38,21 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
   private val viewModel: ProfileViewModel by viewModels()
 
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
+      if (bundle.containsKey(Constants.REQUEST)) {
+        val request = bundle.getSerializable(Constants.REQUEST) as UpdateProfileRequest
+        if(request.uriCrop != null){
+          request.uri = request.uriCrop
+          loadImageProfile()
+          request.uriCrop = null
+        }
+      }
+    }
+
+  }
+  
   override
   fun getLayoutId() = R.layout.fragment_profile
 
@@ -160,34 +180,32 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
   ) {
     if (it.resultCode == Activity.RESULT_OK) {
       val bitmap = it.data?.extras?.get("data") as? Bitmap ?: return@registerForActivityResult
-
       viewModel.request.uri = getUriFromBitmapRetrievedByCamera(bitmap)
-
-//
-      Log.d(TAG, ": DONE")
-
-      Glide.with(this)
-        .load(viewModel.request.uri)
-        .apply(RequestOptions().centerCrop())
-        .into(binding.imgProfile)
+      loadImageProfile()
+      navigateSafe(ProfileFragmentDirections.actionProfileFragmentToCropFragment(viewModel.request))
     }
   }
+
 
   private val activityResultImageGallery = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
   ) {
     if (it.resultCode == Activity.RESULT_OK) {
       val uri = it.data?.data ?: return@registerForActivityResult
-
       viewModel.request.uri = uri
-
-      Log.d(TAG, ": DOE")
-      Glide.with(this)
-        .load(uri)
-        .apply(RequestOptions().centerCrop())
-        .into(binding.imgProfile)
+      loadImageProfile()
+      navigateSafe(ProfileFragmentDirections.actionProfileFragmentToCropFragment(viewModel.request))
     }
   }
+
+
+  fun loadImageProfile(){
+    Glide.with(this)
+      .load(viewModel.request.uri)
+      .apply(RequestOptions().centerCrop())
+      .into(binding.imgProfile)
+  }
+
 
   private fun getUriFromBitmapRetrievedByCamera(bitmap: Bitmap): Uri {
     val stream = ByteArrayOutputStream()

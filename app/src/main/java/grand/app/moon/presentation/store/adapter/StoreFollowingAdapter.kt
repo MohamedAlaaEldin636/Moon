@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.ItemStoreFollowedBinding
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
@@ -59,6 +60,8 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
     val list = ArrayList(differ.currentList)
     list[position].isFollowing = !list[position].isFollowing
     notifyItemChanged(position)
+    ListHelper.addFollowStore(list[position].id,list[position].isFollowing)
+
 //    list.removeAt(position)
 //    differ.submitList(list)
 //    notifyItemRemoved(position)

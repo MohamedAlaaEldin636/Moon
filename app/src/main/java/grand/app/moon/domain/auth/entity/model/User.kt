@@ -7,9 +7,9 @@ import java.io.Serializable
 @Keep
 data class User(
   val id: Int = 0,
-  val name: String = "",
+  val name: String?= "",
   val email: String = "",
-  val image: String = "",
+  val image: String? = "",
   val phone: String = "",
   val token: String = "",
   val country_code: String = "",

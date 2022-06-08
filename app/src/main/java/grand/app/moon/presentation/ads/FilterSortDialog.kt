@@ -71,6 +71,7 @@ class FilterSortDialog : BottomSheetDialogFragment() {
         viewModel.title.set(resources.getString(R.string.sort_by))
         viewModel.list.add(AppTutorial(1, content = resources.getString(R.string.the_most_recent)))
         viewModel.list.add(AppTutorial(2, content = resources.getString(R.string.the_oldest)))
+        viewModel.list.add(AppTutorial(3, content = resources.getString(R.string.highest_rate)))
       }
       FilterDialog.CHAT -> {
         viewModel.title.set(resources.getString(R.string.conversation))

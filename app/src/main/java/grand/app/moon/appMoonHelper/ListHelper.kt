@@ -13,6 +13,7 @@ object ListHelper {
   val likedStories = mutableMapOf<Int,Boolean>()
   val followStores = mutableMapOf<Int,Boolean>()
 
+
   fun addAllAds(list : ArrayList<Advertisement>){
     list.forEach {
       adsListAds[it.id] = it

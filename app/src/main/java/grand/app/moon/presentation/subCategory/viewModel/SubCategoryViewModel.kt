@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.subCategory.viewModel
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -7,6 +8,7 @@ import androidx.databinding.Bindable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
@@ -168,21 +170,37 @@ class SubCategoryViewModel @Inject constructor(
 
   fun map(v: View) {
     this.subCategoryResponse.get()?.let {
-      val response = subCategoryResponse.get()
       val sub = SubCategoryResponse()
-      sub.properties.addAll(subCategoryResponse.get()!!.properties)
-//      val action =
-//        SubCategoryFragmentDirections.actionNavCategoryListAdsToMapFragment2(sub)
-//      action.type = Constants.ADVERTISEMENT_TEXT
-//      categoryId?.let {
-//        action.categoryId = it.toString()
-//      }
-//      subCategoryId?.let {
-//        action.subCategoryId = it.toString()
-//      }
+      sub.properties.addAll(subCategoryResponse.get()!!.properties.subList(1,subCategoryResponse.get()!!.properties.size))
+////      app:uri="mapAds://grand.app.moon.map.ads/{type}/{category_id}/{sub_category_id}/{property_id}/{sub}" />
+//
+//      val uriBuilder = Uri.Builder()
+//        .scheme("mapAds")
+//        .authority("grand.app.moon.map.ads")
+//        .appendPath(Constants.ADVERTISEMENT_TEXT)
+//        .appendPath(categoryId.toString())
+//        .appendPath(subCategoryId.toString())
+//        .appendPath(propertyId.toString())
+//        .appendPath(sub.toString())
+//
 //      if (properties.size > 0)
-//        action.propertyId = properties[0].id.toString()
-//      v.findNavController().navigate(action)
+//        uriBuilder.appendPath(properties[0].id.toString())
+//      val uri = uriBuilder.build()
+//      val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+//      v.findNavController().navigate(request)
+
+
+      val action =
+        SubCategoryFragmentDirections.actionNavCategoryListAdsToMapFragment3(sub)
+      action.type = Constants.ADVERTISEMENT_TEXT
+      categoryId?.let {
+        action.categoryId = it.toString()
+      }
+      subCategoryId?.let {
+        action.subCategoryId = it.toString()
+      }
+
+      v.findNavController().navigate(action)
     }
   }
 
@@ -215,15 +233,7 @@ class SubCategoryViewModel @Inject constructor(
 //        adapter = InvoicesAdapter()
         if (propertiesAdapter.differ.currentList.isEmpty()) {
           propertiesAdapter.selected = 0
-          if(it.properties.size > 0) {
-            it.properties.add(0,
-              Property(
-                0,
-                name = MyApplication.instance.getString(R.string.all),
-                parent = Parent()
-              )
-            )
-          }
+
           propertiesAdapter.differ.submitList(it.properties)
           notifyPropertyChanged(BR.propertiesAdapter)
 //          if (it.properties.isNotEmpty())
@@ -295,9 +305,11 @@ class SubCategoryViewModel @Inject constructor(
     if (adapter.grid == Constants.GRID_2) {
       adapter.grid = Constants.GRID_1
       clickEvent.value = Constants.GRID_1
+      gridOne.set(false)
     } else {
       adapter.grid = Constants.GRID_2
       clickEvent.value = Constants.GRID_2
+      gridOne.set(true)
     }
   }
 

@@ -185,6 +185,8 @@ dependencies {
 
   implementation("com.squareup.picasso:picasso:2.8")
 
+  //crop
+  implementation("com.github.akshaaatt:Cropper:1.00")
 
 //  //stories
   implementation ("com.github.TOrnelas:SegmentedProgressBar:0.0.3")
