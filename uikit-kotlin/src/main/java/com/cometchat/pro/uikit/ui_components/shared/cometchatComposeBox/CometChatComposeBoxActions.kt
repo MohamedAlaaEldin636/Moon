@@ -47,11 +47,12 @@ class CometChatComposeBoxActions : BottomSheetDialogFragment() {
         isFileVisible = arguments!!.getBoolean("isFileVisible")
         isAudioVisible = arguments!!.getBoolean("isAudioVisible")
         isLocationVisible = arguments!!.getBoolean("isLocationVisible")
-        isStickerVisible = arguments!!.getBoolean("isStickerVisible")
+//        isStickerVisible = arguments!!.getBoolean("isStickerVisible")
+      isStickerVisible = arguments!!.getBoolean("isStickerVisible")
         isWhiteBoardVisible = arguments!!.getBoolean("isWhiteBoardVisible")
         isWriteBoardVisible = arguments!!.getBoolean("isWriteBoardVisible")
 //        isStartVideoCall = arguments!!.getBoolean("isStartVideoCall")
-        isPollVisible = arguments!!.getBoolean("isPollVisible")
+      isPollVisible = arguments!!.getBoolean("isPollVisible")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

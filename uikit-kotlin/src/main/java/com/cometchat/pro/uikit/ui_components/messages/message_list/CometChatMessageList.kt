@@ -486,9 +486,9 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
     ivBackArrow?.setOnClickListener(this)
 
 
-    userAvatar = view?.findViewById(R.id.iv_chat_avatar)
-    toolbar = view?.findViewById(R.id.chatList_toolbar)
-    toolbar?.setOnClickListener(this)
+//    userAvatar = view?.findViewById(R.id.iv_chat_avatar)
+//    toolbar = view?.findViewById(R.id.chatList_toolbar)
+//    toolbar?.setOnClickListener(this)
     linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     tvName?.typeface = fontUtils?.getTypeFace(FontUtils.robotoMedium)
     tvName?.text = name

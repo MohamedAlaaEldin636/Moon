@@ -216,7 +216,9 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   override fun onMapReady(p0: GoogleMap) {
     lifecycleScope.launch(Dispatchers.Main) {
 //      delay(400)
+
       viewModel.mapConfig = MapConfig(requireContext(), p0)
+      p0.uiSettings.isScrollGesturesEnabled = false;
       viewModel.mapConfig!!.setMapStyle() //set style google map
       viewModel.mapConfig!!.getGoogleMap()?.setMapStyle(context?.let {
         MapStyleOptions.loadRawResourceStyle(

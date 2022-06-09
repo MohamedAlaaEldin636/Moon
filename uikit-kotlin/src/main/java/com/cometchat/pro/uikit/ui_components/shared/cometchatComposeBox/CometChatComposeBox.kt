@@ -51,6 +51,7 @@ import android.provider.Settings
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMessageListActivity
 import org.webrtc.ContextUtils.getApplicationContext
@@ -454,7 +455,7 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
     }
     if (view.id == R.id.ivMic) {
 
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      if (SDK_INT >= Build.VERSION_CODES.R) {
         Log.d(TAG, "onClick: ")
         if (checkRecordAudioPermissionAPI30(UIKitConstants.RequestCode.RECORD)) {
           Log.d(TAG, "onClick: asdsa")
@@ -557,6 +558,8 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
             )
           )
           startActivityForResult(context as Activity, intent, UIKitConstants.RequestCode.RECORD, null)
+
+
 //          ActivityCompat.requestPermissions(
 //            context as Activity, arrayOf(RECORD_AUDIO, WRITE_EXTERNAL_STORAGE),
 //            UIKitConstants.RequestCode.RECORD
