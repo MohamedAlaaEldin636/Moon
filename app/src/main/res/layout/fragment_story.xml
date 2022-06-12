@@ -128,10 +128,8 @@
       android:layout_height="@dimen/dimen60"
       android:layout_marginEnd="@dimen/dimen10"
       android:layout_marginBottom="@dimen/dimen10"
-
       android:elevation="10dp"
       android:background="@{ viewModel.isLike ? @drawable/ic_like_fill : @drawable/ic_like}"
-
       android:onClick="@{ (v) -> viewModel.like(v)}"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/img_story_share" />

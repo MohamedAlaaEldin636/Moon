@@ -70,8 +70,8 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
     apiService.share(page)
   }
 
-  suspend fun getUsersViewFollowing(storeId: Int, type: String) = safeApiCall {
-    apiService.getUsersViewFollowing(storeId, type)
+  suspend fun getUsersViewFollowing(storeId: Int, type: String,page: Int) = safeApiCall {
+    apiService.getUsersViewFollowing(storeId, type,page)
   }
 
 

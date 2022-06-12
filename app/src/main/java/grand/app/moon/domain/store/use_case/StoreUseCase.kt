@@ -85,9 +85,9 @@ class StoreUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
-  fun getUsersViewFollowing(id: Int, type: String): Flow<Resource<BaseResponse<UserListPaginateData>>> = flow {
+  fun getUsersViewFollowing(id: Int, type: String,page: Int): Flow<Resource<BaseResponse<UserListPaginateData>>> = flow {
     emit(Resource.Loading)
-    val result = repository.getUsersViewFollowing(id,type)
+    val result = repository.getUsersViewFollowing(id,type,page)
     emit(result)
   }.flowOn(Dispatchers.IO)
 

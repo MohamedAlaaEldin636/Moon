@@ -50,7 +50,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="@dimen/text_size14"
-        android:text="@{itemViewModels.reviews.user.name}"
+        android:text="@{itemViewModels.name()}"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"

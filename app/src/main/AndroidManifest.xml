@@ -144,6 +144,13 @@
 <!--        <data android:host="souqmoon.com" />-->
 
 <!--      </intent-filter>-->
+      <nav-graph android:value="@navigation/nav_category_list_ads" />
+      <nav-graph android:value="@navigation/nav_account" />
+      <nav-graph android:value="@navigation/nav_ad_list" />
+      <nav-graph android:value="@navigation/nav_ads" />
+      <nav-graph android:value="@navigation/nav_auth" />
+      <nav-graph android:value="@navigation/nav_home" />
+      <nav-graph android:value="@navigation/nav_settings" />
     </activity>
 
     <!-- Start Google Services -->

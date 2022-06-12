@@ -55,7 +55,7 @@ class StoreUsersViewModel @Inject constructor(
       if(page > 1){
         notifyPropertyChanged(BR.page)
       }
-      job = useCase.getUsersViewFollowing(storeId,type)
+      job = useCase.getUsersViewFollowing(storeId,type,page)
         .onEach {
           response.value = it
         }

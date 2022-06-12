@@ -44,6 +44,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
       if (bundle.containsKey(Constants.SORT_BY)) {
         viewModel.sortBy = bundle.getInt(Constants.SORT_BY)
+        Log.d(TAG, "onViewCreated: ${viewModel.sortBy}")
         viewModel.reset()
         viewModel.callService()
       }

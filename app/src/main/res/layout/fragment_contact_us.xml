@@ -63,8 +63,8 @@
           app:cardElevation="@dimen/dimen1">
 
           <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/dimen40"
-            android:layout_height="@dimen/dimen40"
+            android:layout_width="@dimen/dimen60"
+            android:layout_height="@dimen/dimen60"
             android:layout_gravity="center"
             android:background="@drawable/corner_silver"
             android:padding="@dimen/dimen10"
@@ -86,8 +86,8 @@
           app:cardElevation="@dimen/dimen1">
 
           <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/dimen40"
-            android:layout_height="@dimen/dimen40"
+            android:layout_width="@dimen/dimen60"
+            android:layout_height="@dimen/dimen60"
             android:layout_gravity="center"
             android:background="@drawable/corner_silver"
             android:padding="@dimen/dimen10"
@@ -109,8 +109,8 @@
           app:cardElevation="@dimen/dimen1">
 
           <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/dimen40"
-            android:layout_height="@dimen/dimen40"
+            android:layout_width="@dimen/dimen60"
+            android:layout_height="@dimen/dimen60"
             android:layout_gravity="center"
             android:background="@drawable/corner_silver"
             android:padding="@dimen/dimen10"

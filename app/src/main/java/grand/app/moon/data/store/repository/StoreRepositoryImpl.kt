@@ -54,7 +54,7 @@ class StoreRepositoryImpl @Inject constructor(
   suspend fun share(page: ShareRequest) = remoteDataSource.share(page)
 
   override
-  suspend fun getUsersViewFollowing(storeId: Int ,type: String) = remoteDataSource.getUsersViewFollowing(storeId,type)
+  suspend fun getUsersViewFollowing(storeId: Int ,type: String,page: Int) = remoteDataSource.getUsersViewFollowing(storeId,type,page)
 
 
 

@@ -115,7 +115,7 @@ class SubCategoryViewModel @Inject constructor(
 
     if (type != -1) {
 //      ADS_LIST_URL += "&type=$type"
-      job = useCase.getAdsList(type, categoryId, subCategoryId, 1, null, search, page)
+      job = useCase.getAdsList(type, categoryId, subCategoryId, sortBy, null, search, page)
         .onEach {
           _responseListAds.value = it
         }

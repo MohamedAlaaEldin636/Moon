@@ -125,6 +125,8 @@ class StoryDisplayViewModel @Inject constructor(
     shareTitleMessageImage(v.findFragment<Fragment>().requireActivity(), store.get()!!.name, store.get()!!.description, store.get()!!.stories[pos].file)
   }
 
+
+
   fun checkBlockStore(): Boolean {
     stories.forEach {
       if(ListHelper.checkBlockStore(it.id))

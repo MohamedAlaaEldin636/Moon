@@ -287,6 +287,7 @@
 
   </fragment>
 
+
   <action
     android:id="@+id/to_filterSortDialog"
     app:destination="@id/filterSortDialog" />
@@ -551,4 +552,12 @@
     android:id="@+id/addStoreFragment"
     android:name="grand.app.moon.presentation.more.AddStoreFragment"
     android:label="@string/add_store_now" />
+
+  <include app:graph="@navigation/nav_auth" >
+    <deepLink
+      android:id="@+id/confirmCode"
+      android:autoVerify="true"
+      app:uri="confirmCode://grand.app.moon.confirm.code/{country_code}/{phone}/{type}/{profile}" />
+  </include>
+
 </navigation>

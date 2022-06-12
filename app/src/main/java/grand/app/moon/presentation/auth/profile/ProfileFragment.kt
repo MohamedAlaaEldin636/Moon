@@ -16,16 +16,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.hbb20.CountryCodePicker
 import com.maproductions.mohamedalaa.shared.core.extensions.checkSelfPermissionGranted
+import com.maproductions.mohamedalaa.shared.core.extensions.convertToString
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentProfileBinding
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.presentation.auth.log_in.LogInFragmentDirections
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
@@ -107,6 +111,46 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
       }
     }
+
+    lifecycleScope.launchWhenResumed {
+      viewModel.loginResponse.collect {
+        Log.d(TAG, "setupObservers: ")
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+
+            Log.d(TAG, "setupObservers: WORKED HERE")
+
+            val gson = context?.convertToString(viewModel.request)
+            Log.d(TAG, "setupObservers: $gson")
+            val uri = Uri.Builder()
+              .scheme("confirmCode")
+              .authority("grand.app.moon.confirm.code")
+              .appendPath(gson.orEmpty())
+              .build()
+            val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+            findNavController().navigate(request)
+
+
+//            navigateSafe(
+//              LogInFragmentDirections.actionLogInFragmentToFragmentConfirmCode(
+//                viewModel.request.country_code,viewModel.request.phone, Constants.Verify
+//              )
+//            )
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+
+        }
+      }
+    }
+
   }
 
   fun pickImageOrRequestPermissions() {

@@ -19,6 +19,7 @@ import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.logoutCometChat
 import grand.app.moon.core.extenstions.showInfo
 import grand.app.moon.data.local.preferences.AppPreferences
+import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.presentation.splash.SplashActivity
@@ -61,6 +62,10 @@ fun Context.convertToString(model: ArrayList<Explore>) : String{
   return gson.toJson(model)
 }
 
+fun Context.convertToString(model: UpdateProfileRequest) : String{
+  val gson = Gson()
+  return gson.toJson(model)
+}
 
 
 fun Context.logout(){

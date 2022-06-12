@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.auth.profile
 
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,7 @@ import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.createMultipartBodyPart
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.entity.model.User
+import grand.app.moon.domain.auth.entity.request.LogInRequest
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.domain.utils.BaseResponse
@@ -22,9 +24,12 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(val userUseCase: UserLocalUseCase,
-    val useCase: LogInUseCase
-) : BaseViewModel() {
+class ProfileViewModel @Inject constructor(
+  val userUseCase: UserLocalUseCase,
+  val useCase: LogInUseCase,
+  private val logInUseCase: LogInUseCase,
+
+  ) : BaseViewModel() {
 
   @Bindable
   val request = UpdateProfileRequest()
@@ -33,17 +38,18 @@ class ProfileViewModel @Inject constructor(val userUseCase: UserLocalUseCase,
   private val _response =
     MutableStateFlow<Resource<BaseResponse<User>>>(Resource.Default)
   val response = _response
-
+  var loginResponse = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
   val user = userUseCase.invoke()
+
   init {
-    request.name = when(user.name) {
+    request.name = when (user.name) {
       null -> ""
       else -> user.name
     }
     request.phone = user.phone.toString()
     request.country_code = user.country_code
     request.email = user.email
-    request.imagePath = when(user.image) {
+    request.imagePath = when (user.image) {
       null -> ""
       else -> user.image
     }
@@ -60,11 +66,27 @@ class ProfileViewModel @Inject constructor(val userUseCase: UserLocalUseCase,
       }
 //      return
     }
+    if (request.country_code == "+20" && request.phone.startsWith("0")) {
+      request.phone = request.phone.substring(1)
+    }
 
-
-    useCase.updateProfile(request).onEach { result ->
-      response.value = result
-    }.launchIn(viewModelScope)
+    val phoneOld = user.country_code + user.phone
+    val phoneNew = request.country_code + request.phone
+    if (phoneNew != phoneOld) {
+      val loginRequest= LogInRequest()
+      loginRequest.country_code = request.country_code
+      loginRequest.phone = request.phone
+      logInUseCase(loginRequest)
+        .onEach { result ->
+          Log.d(TAG, "onLogInClicked: HEREREEREE")
+          loginResponse.value = result
+        }
+        .launchIn(viewModelScope)
+    } else {
+      useCase.updateProfile(request).onEach { result ->
+        response.value = result
+      }.launchIn(viewModelScope)
+    }
   }
 
 

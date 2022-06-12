@@ -82,7 +82,6 @@
         android:layout_height="@dimen/dimen30"
         android:layout_marginStart="@dimen/dimen10"
         android:src="@drawable/ic_menu"
-        android:onClick="@{ (v) -> viewModel.stores(v)}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

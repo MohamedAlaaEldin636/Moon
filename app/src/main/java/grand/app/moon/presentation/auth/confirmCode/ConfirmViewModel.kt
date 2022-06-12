@@ -20,6 +20,7 @@ import grand.app.moon.core.extenstions.showError
 import grand.app.moon.core.extenstions.verifyCode
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.entity.model.User
+import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.presentation.auth.log_in.LogInFragmentDirections
 import grand.app.moon.presentation.base.utils.Constants
@@ -30,7 +31,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConfirmViewModel @Inject constructor(
-  private val logInUseCase: LogInUseCase,
+  private val useCase: LogInUseCase,
   val userLocalUseCase: UserLocalUseCase,
   private val verifyAccountUseCase: VerifyAccountUseCase) :
   BaseViewModel() {
@@ -38,8 +39,11 @@ class ConfirmViewModel @Inject constructor(
   private val _verifyResponse = MutableStateFlow<Resource<BaseResponse<User>>>(Resource.Default)
   val verifyResponse = _verifyResponse
 
+  val profileResponse =
+    MutableStateFlow<Resource<BaseResponse<User>>>(Resource.Default)
+
+  var profileRequest = UpdateProfileRequest()
   val _sendCode = MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)
-  val sendCode = _sendCode
 
   init {
     verifyAccountUseCase.baseViewModel = this
@@ -51,15 +55,16 @@ class ConfirmViewModel @Inject constructor(
         _verifyResponse.value = result
       }
       .launchIn(viewModelScope)
-//    v.context.verifyCode(v,request.verificationId,request.code) {
-//      if (it) {
-//        logInUseCase(request)
-//          .onEach { result ->
-//            _verifyResponse.value = result
-//          }
-//          .launchIn(viewModelScope)
-//      }
-//    }
+  }
+
+  fun back(v: View){
+    v.findNavController().navigateUp()
+  }
+
+  fun updateProfile(){
+    useCase.updateProfile(profileRequest).onEach { result ->
+      profileResponse.value = result
+    }.launchIn(viewModelScope)
   }
 
   fun resendCode() {

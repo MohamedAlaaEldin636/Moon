@@ -191,7 +191,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showTopBarControls()
           showText()
         }
-        R.id.adsDetailsFragment, R.id.storeDetailsFragment , R.id.countriesFragment3 -> {
+        R.id.adsDetailsFragment, R.id.storeDetailsFragment , R.id.countriesFragment3 , R.id.fragment_confirm_code2
+        ,R.id.webFragment2 , R.id.webFragment-> {
           hideTopBarControls()
           hideAllToolbar()
         }
@@ -212,10 +213,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     binding.imgHomeBottomBar.setOnClickListener {
       showImage()
       binding.bottomNavigationView.selectedItemId = R.id.addStoreFragment
-//      nav.navigate(NavHomeDirections.moveToHome())
-//      binding.bottomNavigationView.selectedItemId = R.id.home_fragment;
-//      nav.navigate(NavHomeDirections.moveToWeb(getString(R.string.add_store_now),"https://souqmoon.com/store/register"))
-
+    }
+    binding.icMenu.setOnClickListener {
+      val uri = Uri.Builder()
+        .scheme("storeList")
+        .authority("grand.app.moon.store.List")
+        .appendPath(getString(R.string.top_stores_rated))
+        .appendPath(3.toString())
+        .appendPath("-1")
+        .build()
+      val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+      nav.navigate(request)
     }
 
     binding.bottomNavigationView.setupWithNavController(nav)

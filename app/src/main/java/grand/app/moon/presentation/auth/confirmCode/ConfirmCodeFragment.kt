@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.common.reflect.TypeToken
+import com.google.gson.GsonBuilder
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -17,12 +19,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.presentation.home.HomeActivity
 import kotlinx.coroutines.flow.collect
 import com.onesignal.OneSignal
+import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
+import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.presentation.base.extensions.*
 
 
 @AndroidEntryPoint
 class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
-  val args: ConfirmCodeFragmentArgs by navArgs()
 
   private val viewModel: ConfirmViewModel by viewModels()
 
@@ -86,9 +89,20 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
   override
   fun setBindingVariables() {
     binding.viewmodel = viewModel
-    viewModel.request.country_code = args.countryCode
-    viewModel.request.phone = args.phone
-    viewModel.request.type = args.type
+    if(arguments != null) {
+      if(requireArguments().containsKey("country_code")) {
+        val args: ConfirmCodeFragmentArgs by navArgs()
+        viewModel.request.country_code = args.countryCode
+        viewModel.request.phone = args.phone
+        viewModel.request.type = args.type
+      }else if(requireArguments().containsKey("profile")){
+        val gson = GsonBuilder().create()
+        viewModel.profileRequest = gson.fromJson<UpdateProfileRequest>(requireArguments().getString("profile"), object :
+          TypeToken<UpdateProfileRequest>() {}.type)
+        viewModel.request.country_code = viewModel.profileRequest.country_code
+        viewModel.request.phone = viewModel.profileRequest.phone
+      }
+    }
   }
 
   override
@@ -102,7 +116,12 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
+            if(viewModel.profileRequest.country_code.isEmpty())//usual login
+              makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
+            else{
+              //update profile
+              viewModel.updateProfile()
+            }
           }
           is Resource.Failure -> {
             hideLoading()
@@ -121,6 +140,25 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
+          }
+          is Resource.Failure -> {
+            hideLoading()
+            handleApiError(it)
+          }
+        }
+      }
+    }
+
+    lifecycleScope.launchWhenResumed {
+      viewModel.profileResponse.collect {
+        when (it) {
+          Resource.Loading -> {
+            hideKeyboard()
+            showLoading()
+          }
+          is Resource.Success -> {
+            hideLoading()
+            makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
           }
           is Resource.Failure -> {
             hideLoading()

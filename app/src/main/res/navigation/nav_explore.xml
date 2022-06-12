@@ -161,4 +161,5 @@
       android:name="position"
       app:argType="integer" />
   </fragment>
+  <include app:graph="@navigation/nav_auth" />
 </navigation>

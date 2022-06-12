@@ -26,6 +26,18 @@
 
 
       <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_back"
+        android:layout_width="@dimen/dimen36"
+        android:layout_height="@dimen/dimen36"
+        android:layout_marginStart="@dimen/dimen60"
+        android:layout_marginTop="@dimen/dimen30"
+        android:onClick="@{ (v) -> viewmodel.back(v)}"
+        android:rotation="180"
+        android:src="@drawable/ic_back_primary_square"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_login_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

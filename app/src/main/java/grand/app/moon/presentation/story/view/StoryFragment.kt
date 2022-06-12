@@ -166,37 +166,41 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
     viewModel.isLoaded = false
     pause()
     viewModel.image.set(viewModel.store.get()!!.stories[viewModel.pos].file)
-    Glide.with(requireContext())
-      .load(viewModel.store.get()!!.stories[viewModel.pos].file)
-      .listener(object : RequestListener<Drawable> {
-        override fun onLoadFailed(
-          e: GlideException?,
-          model: Any?,
-          target: Target<Drawable>?,
-          isFirstResource: Boolean
-        ): Boolean {
-          Log.d(TAG, "onLoadFailed: ")
-          viewModel.isLoaded = true
-          resume()
-          return false
-        }
+    try {
+      Glide.with(requireContext())
+        .load(viewModel.store.get()!!.stories[viewModel.pos].file)
+        .listener(object : RequestListener<Drawable> {
+          override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<Drawable>?,
+            isFirstResource: Boolean
+          ): Boolean {
+            Log.d(TAG, "onLoadFailed: ")
+            viewModel.isLoaded = true
+            resume()
+            return false
+          }
 
-        override fun onResourceReady(
-          resource: Drawable?,
-          model: Any?,
-          target: Target<Drawable>?,
-          dataSource: com.bumptech.glide.load.DataSource?,
-          isFirstResource: Boolean
-        ): Boolean {
-          Log.d(TAG, "onResourceReady: READY")
-          viewModel.isLoaded = true
+          override fun onResourceReady(
+            resource: Drawable?,
+            model: Any?,
+            target: Target<Drawable>?,
+            dataSource: com.bumptech.glide.load.DataSource?,
+            isFirstResource: Boolean
+          ): Boolean {
+            Log.d(TAG, "onResourceReady: READY")
+            viewModel.isLoaded = true
 
-          resume()
-          return false
-        }
+            resume()
+            return false
+          }
 
-      })
-      .into(binding.image)
+        })
+        .into(binding.image)
+    }catch (e:Exception){
+      e.printStackTrace()
+    }
 
   }
 

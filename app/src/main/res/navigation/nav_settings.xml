@@ -110,10 +110,6 @@
     android:label="@string/social_media" >
     <action
       android:id="@+id/action_socialFragment_to_webFragment"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/webFragment" />
   </fragment>
 
@@ -175,6 +171,34 @@
       android:name="request"
       app:argType="grand.app.moon.domain.auth.entity.request.UpdateProfileRequest" />
   </fragment>
+  <include app:graph="@navigation/nav_auth" />
 
+
+  <fragment
+    android:id="@+id/fragment_confirm_code2"
+    android:name="grand.app.moon.presentation.auth.confirmCode.ConfirmCodeFragment"
+    tools:layout="@layout/fragment_confirm_code" >
+    <argument
+      android:name="country_code"
+      app:argType="string" />
+    <argument
+      android:name="phone"
+      app:argType="string" />
+    <argument
+      android:name="type"
+      app:argType="string"
+      />
+    <argument
+      android:name="profile"
+      app:argType="string"
+      android:defaultValue=""
+      />
+
+    <deepLink
+      android:id="@+id/confirmCode"
+      android:autoVerify="true"
+      app:uri="confirmCode://grand.app.moon.confirm.code/{profile}" />
+
+  </fragment>
 
 </navigation>

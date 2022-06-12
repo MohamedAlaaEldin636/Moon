@@ -126,10 +126,14 @@ class StoreDetailsViewModel @Inject constructor(
     if (v.context.isLoginWithOpenAuth()) {
       followStoreRequest.storeId = store.get()?.id
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
+      Log.d(TAG, "follow: ${store.get()!!.followersCount}")
       store.get()?.isFollowing = store.get()?.isFollowing != true
       var followers: Int = store.get()!!.followersCount.toInt()
-      store.get()?.followersCount =
-        if (store.get()?.isFollowing == true) followers++.toString() else followers--.toString()
+      if(store.get()!!.isFollowing) followers++
+      else followers--
+      store.get()!!.followersCount = followers.toString()
+//      store.get()?.followersCount =
+//        if (store.get()?.isFollowing == true) followers++.toString() else followers--.toString()
       store.get()?.id?.let {
         store.get()?.isFollowing?.let { it1 ->
           ListHelper.addFollowStore(
@@ -138,8 +142,10 @@ class StoreDetailsViewModel @Inject constructor(
           )
         }
       }
+      Log.d(TAG, "follow:After ${store.get()!!.followersCount}")
 
-      notifyChange()
+      notifyPropertyChanged(BR.store)
+//      notifyChange()
     }
   }
 

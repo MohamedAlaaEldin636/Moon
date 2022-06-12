@@ -204,11 +204,13 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
   override fun onResume() {
     super.onResume()
     Log.d(TAG, "token: ${viewModel.userLocalUseCase.getKey(Constants.TOKEN)}")
-    if (!viewModel.isLoggin) {
-      val isAuthorize = viewModel.userLocalUseCase.isLoggin()
-      viewModel.recallApi(isAuthorize)
-    }else
-      viewModel.getDetails(adsDetailsFragmentArgs.id, adsDetailsFragmentArgs.type)
+    viewModel.getDetails(adsDetailsFragmentArgs.id, adsDetailsFragmentArgs.type)
+
+//    if (!viewModel.isLoggin) {
+//      val isAuthorize = viewModel.userLocalUseCase.isLoggin()
+//      viewModel.recallApi(isAuthorize)
+//    }else
+//      viewModel.getDetails(adsDetailsFragmentArgs.id, adsDetailsFragmentArgs.type)
     viewModel.adsAdapter.updateFavourite()
   }
 

@@ -55,6 +55,6 @@ interface StoreServices {
   suspend fun share(@Body page: ShareRequest): BaseResponse<*>
 
   @GET("v1/stores/{id}/{type}")
-  suspend fun getUsersViewFollowing( @Path("id") storeId: Int ,@Path("type") type: String ): BaseResponse<UserListPaginateData>
+  suspend fun getUsersViewFollowing( @Path("id") storeId: Int ,@Path("type") type: String ,@Query("page") page: Int): BaseResponse<UserListPaginateData>
 
 }

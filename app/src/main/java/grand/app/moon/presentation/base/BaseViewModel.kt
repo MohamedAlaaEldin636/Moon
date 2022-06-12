@@ -49,10 +49,18 @@ import com.squareup.picasso.Picasso
 import androidx.core.content.ContextCompat.startActivity
 
 import android.R.attr.bitmap
+import android.content.ComponentName
+import android.content.pm.ResolveInfo
+import android.os.Parcelable
+import grand.app.moon.core.MyApplication
 import java.io.*
 import java.lang.Double.parseDouble
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.content.ContextCompat.startActivity
+
+
+
 
 
 open class BaseViewModel : ViewModel(), Observable {
@@ -182,6 +190,10 @@ open class BaseViewModel : ViewModel(), Observable {
     return null
   }
 
+  fun stare(){
+
+  }
+
 
   open fun shareTitleMessageImage(
     context: Activity,
@@ -196,9 +208,11 @@ open class BaseViewModel : ViewModel(), Observable {
       }
 
       override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+
+
         // loaded bitmap is here (bitmap)
         val i = Intent(Intent.ACTION_SEND)
-        i.type = "*/*"
+        i.type = "image/*"
         i.putExtra(
           Intent.EXTRA_SUBJECT,
           context.getString(R.string.app_name)
@@ -212,7 +226,52 @@ open class BaseViewModel : ViewModel(), Observable {
         val bit = bitmap?.let { getLocalBitmapUri(context, it) }
         if (bit != null)
           i.putExtra(Intent.EXTRA_STREAM, bit)
-        context.startActivity(Intent.createChooser(i, "Share Image"))
+
+//        val shareIntentsLists: ArrayList<Intent> = ArrayList()
+        val excludedComponents = ArrayList<ComponentName>()
+
+        val resInfos: List<ResolveInfo> = MyApplication.instance.getPackageManager().queryIntentActivities(i, 0)
+
+        if (!resInfos.isEmpty()) {
+          for (resInfo in resInfos) {
+            val packageName = resInfo.activityInfo.packageName
+            Log.d(TAG, "onBitmapLoaded: ${packageName}")
+            if (!packageName.lowercase().contains("moon")
+
+              && !packageName.lowercase().contains("videoeditor")
+               && !packageName.lowercase().contains("cometchat")) {
+              val intent = Intent()
+              intent.component = ComponentName(packageName, resInfo.activityInfo.name)
+              intent.action = Intent.ACTION_SEND
+              intent.type = "image/*"
+              intent.setPackage(packageName)
+//              shareIntentsLists.add(intent)
+              excludedComponents.add(ComponentName(packageName,resInfo.activityInfo.name))
+            }
+          }
+        }
+        if (!excludedComponents.isEmpty()) {
+          Log.d(TAG, "onBitmapLoaded: ======================================")
+          excludedComponents.forEachIndexed { index, it ->
+//            Log.d(TAG, "onBitmapLoaded:$index ,  ${it.excludedComponents.toString()}")
+          }
+          Log.d(TAG, "onBitmapLoaded: ${excludedComponents.size}")
+//          shareIntentsLists.removeAt(0)
+//          shareIntentsLists.removeAt(0)
+//          shareIntentsLists.removeAt(0)
+//            val chooserIntent =
+//              Intent.createChooser(shareIntentsLists.remove(0), "Choose app to share")
+          i.putExtra(
+            Intent.EXTRA_EXCLUDE_COMPONENTS,
+            excludedComponents.toTypedArray()
+          )
+//            startActivity(chooserIntent)
+
+          context.startActivity(Intent.createChooser(i,"share"))
+
+        } else Log.e("Error", "No Apps can perform your task")
+
+
       }
 
       override fun onPrepareLoad(placeHolderDrawable: Drawable?) {

@@ -32,6 +32,7 @@
       android:layout_below="@+id/text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"/>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -85,7 +86,7 @@
               android:layout_marginStart="@dimen/dimen20"
               android:layout_marginTop="@dimen/dimen10"
               android:layout_marginEnd="@dimen/dimen20"
-              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 || viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
+              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() == 1 || viewModel.adapter.differ.currentList.size() > 0 || viewModel.search != `` ? View.VISIBLE : View.GONE}"
               app:layout_constraintBottom_toBottomOf="@+id/grid"
               app:layout_constraintEnd_toStartOf="@+id/grid"
               app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +117,7 @@
               android:layout_margin="@dimen/dimen10"
               android:background="@drawable/corner_white_10"
               android:onClick="@{ () -> viewModel.changeGrid()}"
-              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() > 0 || viewModel.adapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE}"
+              android:visibility="@{ viewModel.propertiesAdapter.differ.currentList.size() == 1 || viewModel.adapter.differ.currentList.size() > 0 || viewModel.search != `` ? View.VISIBLE : View.GONE}"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintTop_toBottomOf="@+id/image_slider">
 
@@ -143,7 +144,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:visibility="gone">
 
         <LinearLayout
           android:id="@+id/ll_sub_category_options"
@@ -254,7 +256,8 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:background="@color/white"
-          android:visibility="@{viewModel.subCategoryResponse.advertisements.list.size() == 0  ? View.VISIBLE : View.GONE}">
+          android:visibility="@{viewModel.subCategoryResponse.advertisements.list.size() == 0  ? View.VISIBLE : View.GONE}"
+          tools:visibility="visible">
 
 
           <LinearLayout
