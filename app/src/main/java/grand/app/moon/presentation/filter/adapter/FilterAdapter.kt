@@ -141,10 +141,12 @@ class FilterAdapter : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
     notifyItemChanged(position)
   }
 
-  fun replaceSubCategories(it: FilterProperty) {
+  fun replaceChildren(it: FilterProperty, filterType : FILTER_TYPE) {
     differ.currentList.forEachIndexed { index, filterProperty ->
       run {
-        if (filterProperty.filterType == FILTER_TYPE.SUB_CATEGORY) {
+        if (filterProperty.filterType == filterType) {
+          filterProperty.selectedText = MyApplication.instance.getString(R.string.all)
+
           filterProperty.children.clear()
           filterProperty.children.addAll(it.children)
           notifyItemChanged(index)

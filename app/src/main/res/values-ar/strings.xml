@@ -188,4 +188,6 @@
   <string name="highest_rate">الاعلي تقييما</string>
   <string name="connected_now">متصل</string>
   <string name="offline_now">غير متصل</string>
+    <string name="area">المنطقة</string>
+  <string name="please_choose_your_city">الرجاء اختيار مدينتك</string>
 </resources>

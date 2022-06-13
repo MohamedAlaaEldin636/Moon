@@ -107,7 +107,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     viewModel.moreAdapter.clickEvent.observe(this,{
       Log.d(TAG, "setBindingVariables: here")
-      if(it.id is String){
+      if(it?.id is String){
         when(it.id){
           Constants.GOOGLE_PLAY -> rateApp()
           Constants.SHARE -> {
@@ -131,9 +131,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         Log.d(TAG, "setBindingVariables: ")
 //        openUrl(it.id.toString())
       }else {
-        if(it.id != -1) {
-          Log.d(TAG, "setBindingVariables: ${it.id}")
-          when (it.id) {
+        if(it?.id != -1) {
+//          Log.d(TAG, "setBindingVariables: ${it.id}")
+          when (it?.id) {
             Constants.CONTACT -> {
               navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToContactUsFragment())
             }
@@ -252,7 +252,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     setListProfile()
     viewModel.accountAdapter.clickEvent.observe(this, {
 //      Log.d(TAG, "setBindingVariables: here $it")
-      if (it.id is String) {
+      if (it?.id is String) {
         when (it.id) {
           Constants.PROFILE -> navigateSafe(SettingsFragmentDirections.actionMyAccountFragmentToProfileFragment())
           Constants.LOGIN -> openLoginActivity()

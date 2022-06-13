@@ -91,6 +91,7 @@ class   CometChatConversationsAdapter(context: Context?) : RecyclerView.Adapter<
      *
      * @see Conversation
      */
+    private  val TAG = "CometChatConversationsA"
     override fun onBindViewHolder(conversationViewHolder: ConversationViewHolder, position: Int) {
         val conversation = filterConversationList!![position]
         var avatar: String? = null
@@ -138,6 +139,7 @@ class   CometChatConversationsAdapter(context: Context?) : RecyclerView.Adapter<
             avatar = (conversation.conversationWith as Group).icon
             conversationViewHolder.conversationListRowBinding.userStatus.visibility = View.GONE
         }
+      Log.d(TAG, "onBindViewHolder: $avatar")
         if (!unreadCountEnabled) {
             conversationViewHolder.conversationListRowBinding.messageCount.visibility = View.GONE
             conversationViewHolder.conversationListRowBinding.messageCount.setCount(0)

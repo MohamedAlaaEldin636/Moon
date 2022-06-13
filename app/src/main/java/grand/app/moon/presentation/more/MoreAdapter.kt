@@ -15,9 +15,9 @@ import grand.app.moon.R
 import grand.app.moon.databinding.ItemMoreBinding
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 
-class MoreAdapter : RecyclerView.Adapter<MoreAdapter.ViewHolder>() {
+class  MoreAdapter : RecyclerView.Adapter<MoreAdapter.ViewHolder>() {
   lateinit var context: Context
-  var clickEvent: MutableLiveData<MoreItem> = MutableLiveData()
+  var clickEvent: MutableLiveData<MoreItem?> = MutableLiveData()
 
   private val differCallback = object : DiffUtil.ItemCallback<MoreItem>() {
     override fun areItemsTheSame(
@@ -48,6 +48,7 @@ class MoreAdapter : RecyclerView.Adapter<MoreAdapter.ViewHolder>() {
     val itemViewModel = ItemMoreViewModel(data)
     holder.itemLayoutBinding.itemMore.setOnClickListener {
       clickEvent.value = data
+      clickEvent.postValue(null)
     }
     holder.setViewModel(itemViewModel)
 

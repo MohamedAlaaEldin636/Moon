@@ -23,7 +23,8 @@ import grand.app.moon.presentation.filter.viewModels.FilterViewModel
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.OnRangeSeekBarPostListener  {
+class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(),
+  RangeSeekBar.OnRangeSeekBarPostListener {
   private val viewModel: FilterViewModel by viewModels()
 
   private val TAG = "FilterHomeFragment"
@@ -44,25 +45,28 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    if(arguments != null){
+    if (arguments != null) {
       val bundle = arguments
-      if(bundle?.getInt("category_id") != -1){
+      if (bundle?.getInt("category_id") != -1) {
         Log.d(TAG, "setBindingVariables: HERE Category")
-        viewModel.setCategoryId(bundle!!.getInt("category_id"),bundle.getString("category_name")!!)
+        viewModel.setCategoryId(bundle!!.getInt("category_id"), bundle.getString("category_name")!!)
       }
-      if(bundle.getInt("sub_category_id") != -1){
+      if (bundle.getInt("sub_category_id") != -1) {
         Log.d(TAG, "setBindingVariables: sub_category_id")
-        viewModel.setSubCategoryId(bundle.getInt("sub_category_id"),bundle.getString("sub_category_name")!!)
+        viewModel.setSubCategoryId(
+          bundle.getInt("sub_category_id"),
+          bundle.getString("sub_category_name")!!
+        )
       }
-      if(bundle.getInt("store_id") != -1){
+      if (bundle.getInt("store_id") != -1) {
         Log.d(TAG, "setBindingVariables: HERE Store")
         viewModel.setStoreId(bundle.getInt("store_id"))
       }
-      if(!bundle.getBoolean("allow_change_category")){
+      if (!bundle.getBoolean("allow_change_category")) {
         Log.d(TAG, "setBindingVariables: allow_change_category")
         viewModel.allowChangeCategory(false)
       }
-      if(bundle.containsKey(Constants.STORE)) {
+      if (bundle.containsKey(Constants.STORE)) {
         Log.d(TAG, "setBindingVariables: Storey")
         viewModel.setStore(bundle.getSerializable(Constants.STORE) as Store)
       }
@@ -83,7 +87,7 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
           )
         }
         FILTER_TYPE.SUB_CATEGORY -> {
-          when{
+          when {
             viewModel.request.categoryId != null -> viewModel.request.categoryId?.let { categoryId ->
               findNavController().navigate(
                 FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
@@ -98,22 +102,37 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
           }
 
         }
-        FILTER_TYPE.SINGLE_SELECT, FILTER_TYPE.SORT_BY, FILTER_TYPE.OTHER_OPTIONS ->
+        FILTER_TYPE.SINGLE_SELECT, FILTER_TYPE.CITY, FILTER_TYPE.SORT_BY, FILTER_TYPE.OTHER_OPTIONS ->
           findNavController().navigate(
 
-          FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
-            it,
-            it.name
+            FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
+              it,
+              it.name
+            )
           )
-        )
-        FILTER_TYPE.CITY, FILTER_TYPE.MULTI_SELECT -> {
+        FILTER_TYPE.AREA -> {
+          when {
+            (viewModel.request.cityIds != null && viewModel.request.cityIds!!.isNotEmpty()) -> {
+              findNavController().navigate(
+                FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
+                  it,
+                  it.name
+                )
+              )
+            }
+            else -> {
+              showMessage(getString(R.string.please_choose_your_city))
+            }
+          }
+        }
+        FILTER_TYPE.MULTI_SELECT -> {
 //          Log.d(TAG, "setupObservers: HERE ${it.name} , ${it.children.size}")
           findNavController().navigate(
-          FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
-            it,
-            it.name
+            FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
+              it,
+              it.name
+            )
           )
-        )
         }
       }
     })
@@ -148,14 +167,14 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
     filterProperty.filterType = FILTER_TYPE.MULTI_SELECT
     filterProperty.name = getString(R.string.additional_features)
     data.filterProperties.forEach {
-      if(it.type == 2){
+      if (it.type == 2) {
         filterProperty.children.add(
-          Children(it.id,name = it.name)
+          Children(it.id, name = it.name)
         )
-      }else
+      } else
         list.add(it)
     }
-    if(filterProperty.children.isNotEmpty())
+    if (filterProperty.children.isNotEmpty())
       list.add(filterProperty)
     data.filterProperties.clear()
     data.filterProperties.addAll(list)
@@ -171,7 +190,8 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(), RangeSeekBar.O
   }
 
   override fun onValuesChanged(minValue: Int, maxValue: Int) {
-    Log.d(TAG, "onValuesChanged: asdasdassad")  }
+    Log.d(TAG, "onValuesChanged: asdasdassad")
+  }
 
 
 }

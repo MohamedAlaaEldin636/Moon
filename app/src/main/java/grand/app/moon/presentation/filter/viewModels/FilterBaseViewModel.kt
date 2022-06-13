@@ -2,7 +2,6 @@ package grand.app.moon.presentation.filter.viewModels
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.zeugmasolutions.localehelper.LocaleHelper
 import com.zeugmasolutions.localehelper.currentLocale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
@@ -49,6 +48,31 @@ open class FilterBaseViewModel @Inject constructor(
           if (country.id.toString() == countryId) {
             country.cities.forEach {
               property.children.add(Children(it.id, name = it.name, text = it.name))
+            }
+          }
+        }
+      }
+    }
+    callBack(property)
+  }
+
+  fun addAreas(cityId: Int , callBack: (result: FilterProperty) -> Unit) {
+    val property = FilterProperty()
+    viewModelScope.launch {
+      accountRepository.getCountries().collect {
+        property.type = 1
+        property.filterType = FILTER_TYPE.AREA
+        property.name = MyApplication.instance.resources.getString(R.string.area)
+
+        it.data.forEach { country ->
+          val countryId = accountRepository.getKeyFromLocal(Constants.COUNTRY_ID)
+          if (country.id.toString() == countryId) {
+            country.cities.forEach { city ->
+              if(city.id == cityId){
+                city.areas.forEach { area ->
+                  property.children.add(Children(area.id, name = area.name, text = area.name))
+                }
+              }
             }
           }
         }
@@ -299,15 +323,21 @@ open class FilterBaseViewModel @Inject constructor(
         FILTER_TYPE.CATEGORY -> {
           request.categoryId = filterProperty.selectedList[0]
           addSubCategories(request.categoryId) {
-            adapter.replaceSubCategories(it)
+            adapter.replaceChildren(it,FILTER_TYPE.SUB_CATEGORY)
           }
         }
+
         FILTER_TYPE.SUB_CATEGORY -> {
           request.sub_category_id = filterProperty.selectedList[0]
         }
         FILTER_TYPE.CITY -> {
           request.cityIds = arrayListOf()
+          request.areaIds?.clear()
           request.cityIds!!.addAll(filterProperty.selectedList)
+          Log.d(TAG, "updateCallBack: ${filterProperty.selectedList}")
+          addAreas(filterProperty.selectedList[0]){
+            adapter.replaceChildren(it,FILTER_TYPE.AREA)
+          }
         }
       }
       adapter.updateFilterSelected(filterProperty)

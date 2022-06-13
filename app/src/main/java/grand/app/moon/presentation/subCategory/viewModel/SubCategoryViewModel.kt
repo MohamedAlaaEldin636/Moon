@@ -171,7 +171,8 @@ class SubCategoryViewModel @Inject constructor(
   fun map(v: View) {
     this.subCategoryResponse.get()?.let {
       val sub = SubCategoryResponse()
-      sub.properties.addAll(subCategoryResponse.get()!!.properties.subList(1,subCategoryResponse.get()!!.properties.size))
+      if(subCategoryResponse.get()!!.properties.isNotEmpty())
+        sub.properties.addAll(subCategoryResponse.get()!!.properties.subList(1,subCategoryResponse.get()!!.properties.size))
 ////      app:uri="mapAds://grand.app.moon.map.ads/{type}/{category_id}/{sub_category_id}/{property_id}/{sub}" />
 //
 //      val uriBuilder = Uri.Builder()

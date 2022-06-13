@@ -62,6 +62,8 @@ class MapViewModel @Inject constructor(
   val showAdvertisement = ObservableBoolean(false)
   val all_ads = ArrayList<Advertisement>()
   var categoriesAdapter = MapCategoriesAdapter()
+  var subCategoriesAdapter = MapCategoriesAdapter()
+
   val responseStores = MutableStateFlow<Resource<BaseResponse<List<Store>>>>(Resource.Default)
   val responseAds = MutableStateFlow<Resource<BaseResponse<List<Advertisement>>>>(Resource.Default)
   var type_ads = 2
@@ -182,6 +184,9 @@ class MapViewModel @Inject constructor(
             }
           categoriesAdapter.differ.currentList[categoriesAdapter.selected].id.toString()
         }
+        Log.d(TAG, "callService_c: $categoryId")
+        Log.d(TAG, "callService_s: $subCategoryId")
+        Log.d(TAG, "callService_p: $propertyId")
         mapUseCase.mapAds(type, categoryId, subCategoryId, propertyId)
           .onEach { result ->
             responseAds.value = result
@@ -225,9 +230,41 @@ class MapViewModel @Inject constructor(
         )
       )
     }
-    categoryItems.add(0, categoryItem)
-    categoriesAdapter.selected = 0
-    categoriesAdapter.differ.submitList(categoryItems)
+    if(categoryItems.isNotEmpty()) {
+      categoryItems.add(0, categoryItem)
+      categoriesAdapter.selected = 0
+      categoriesAdapter.differ.submitList(categoryItems)
+    }
+
+    val subCategoryItems = ArrayList<CategoryItem>()
+    subCategoriesAdapter.selected = 0
+    viewModelScope.launch {
+      accountRepository.getCategories().collect {
+        it.data.forEach { category ->
+          if(category.id.toString() == categoryId){
+            category.subCategories?.forEachIndexed { index, subCategory ->
+              subCategoryItems.add(CategoryItem(
+                id = subCategory.id,
+                name = subCategory.name,
+                subCategories = arrayListOf(),
+                image = "",
+                total = 0
+              ))
+              subCategoryId?.let {
+                if(it == subCategory.id.toString())
+                  subCategoriesAdapter.selected = index + 1 // [all-sub_category1-sub_category2-....]
+              }
+            }// end for-each sub-categories
+            if(subCategoryItems.isNotEmpty()) {
+              subCategoryItems.add(0, categoryItem)
+              subCategoriesAdapter.differ.submitList(subCategoryItems)
+            }
+          }//end found category
+        }
+      }
+    }
+
+
     notifyPropertyChanged(BR.categoriesAdapter)
   }
 

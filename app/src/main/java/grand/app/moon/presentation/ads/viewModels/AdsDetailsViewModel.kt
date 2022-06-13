@@ -142,6 +142,9 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun whatsapp(v: View) {
+//    shareWhatsapp(
+//      v,advertisement.get()!!.share,null,advertisement.get()!!.phone
+//    )
     advertisement.get()?.title?.let {
       advertisement.get()?.description?.let { it1 ->
         advertisement.get()?.phone?.let { it2 ->

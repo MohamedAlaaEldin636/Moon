@@ -194,4 +194,6 @@
   <string name="highest_rate">Top Rated</string>
   <string name="connected_now">Connected</string>
   <string name="offline_now">Offline</string>
+    <string name="area">Area</string>
+  <string name="please_choose_your_city">Please Choose Your City</string>
 </resources>

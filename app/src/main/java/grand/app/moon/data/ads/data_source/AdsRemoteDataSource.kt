@@ -113,6 +113,11 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
             map["city_ids[$index]"] = city.toString()
           }
         }
+        item.filterType == FILTER_TYPE.AREA -> {
+          request.areaIds?.forEachIndexed { index, area ->
+            map["area_ids[$index]"] = area.toString()
+          }
+        }
         item.filterType != FILTER_TYPE.CATEGORY && item.filterType != FILTER_TYPE.SUB_CATEGORY
           && item.filterType != FILTER_TYPE.CITY -> {
           if (item.selectedList.isNotEmpty()) {

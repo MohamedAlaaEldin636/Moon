@@ -79,28 +79,27 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         }
       }
       viewModel.callService()
-//      if(category.id == -1){
-//        viewModel.stores.addAll(viewModel.backUp)
-//      }else {
-//        viewModel.backUp.forEach { store ->
-//          when(viewModel.type){
-//            Constants.ADVERTISEMENT_TEXT -> {
-//              Log.d(TAG, "setupObservers SubCategory: ${store.subCategoryId}")
-//              Log.d(TAG, "setupObservers CategoryId: ${category.id}")
-//              if(store.subCategoryId == category.id)
-//                viewModel.stores.add(store)
-//            }
-//            else -> {
-//              store.category.forEach { categoryItem ->
-//                if (categoryItem.id == category.id)
-//                  viewModel.stores.add(store)
-//              }
-//            }
-//          }
-//
-//        }
-//      }
       Log.d(TAG, "setupObservers: ${viewModel.stores.size}")
+      loadMarkers()
+    })
+    viewModel.subCategoriesAdapter.clickEvent.observe(this, { category ->
+      Log.d(TAG, "setupObservers: ${viewModel.subCategoriesAdapter.selected}")
+      viewModel.stores.clear()
+      Log.d(TAG, "setupObservers: ${viewModel.subCategoryId}")
+      when (viewModel.type) {
+        Constants.ADVERTISEMENT_TEXT -> {
+          viewModel.propertyId = category.id.toString()
+        }
+        else -> {
+          viewModel.subCategoryId = category.id.toString()
+        }
+      }
+      if(viewModel.subCategoriesAdapter.selected != 0)
+        viewModel.subCategoryId = viewModel.subCategoriesAdapter.differ.currentList[viewModel.subCategoriesAdapter.selected].id.toString()
+      else
+        viewModel.subCategoryId = null
+      viewModel.callService()
+//      Log.d(TAG, "setupObservers: ${viewModel.stores.size}")
       loadMarkers()
     })
 

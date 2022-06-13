@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.map
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,7 @@ class MapCategoriesAdapter : RecyclerView.Adapter<MapCategoriesAdapter.ViewHolde
     return ViewHolder(view)
   }
 
+  private  val TAG = "MapCategoriesAdapter"
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemCategoryTextViewModel(data, selected == position)
@@ -56,6 +58,7 @@ class MapCategoriesAdapter : RecyclerView.Adapter<MapCategoriesAdapter.ViewHolde
     holder.itemLayoutBinding.tvItemCategoryText.setOnClickListener {
       if(selected != -1) notifyItemChanged(selected)
       selected = position
+      Log.d(TAG, "onBindViewHolder: $selected")
       clickEvent.value = data
       notifyItemChanged(selected)
     }

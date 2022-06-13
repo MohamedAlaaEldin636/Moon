@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
   <data>
 
@@ -33,6 +34,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/dimen10"
         android:layout_marginStart="@dimen/dimen20"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardElevation="5dp"
         android:layout_marginEnd="@dimen/dimen20">
 
         <androidx.constraintlayout.widget.ConstraintLayout

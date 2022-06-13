@@ -44,6 +44,9 @@ class FilterViewModel @Inject constructor(
     addCities {
       list.add(it)
     }
+    addAreas(-1) {
+      list.add(it)
+    }
     addPriceText {
       list.add(it)
     }
@@ -109,7 +112,7 @@ class FilterViewModel @Inject constructor(
     if(request.subCategoryName != null){
       adapter.setName(1,request.subCategoryName!!)
     }
-    adapter.addAll(3, sizeBefore, response.filterProperties)
+    adapter.addAll(4, sizeBefore, response.filterProperties)
     sizeBefore = response.filterProperties.size
   }
 
@@ -117,7 +120,7 @@ class FilterViewModel @Inject constructor(
     request.categoryId = int
     request.categoryName = name
     addSubCategories(request.categoryId) {
-      adapter.replaceSubCategories(it)
+      adapter.replaceChildren(it,FILTER_TYPE.SUB_CATEGORY)
     }
     callService()
   }

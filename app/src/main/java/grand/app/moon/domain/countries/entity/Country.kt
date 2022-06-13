@@ -28,4 +28,7 @@ data class Country(
   @SerializedName("cities")
   @Expose
   val cities : List<Country> = arrayListOf(),
+  @SerializedName("areas")
+  @Expose
+  val areas : List<Country> = arrayListOf(),
 )

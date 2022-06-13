@@ -50,6 +50,20 @@
       app:span="@{`1`}"
       tools:listitem="@layout/item_category_text" />
 
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv_sub_categories"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:adapter="@{viewModel.subCategoriesAdapter}"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/rv_stories"
+      app:orientation="@{`2`}"
+      app:span="@{`1`}"
+      tools:listitem="@layout/item_category_text" />
+
 
     <com.google.android.material.card.MaterialCardView
       android:id="@+id/item_ads_container"

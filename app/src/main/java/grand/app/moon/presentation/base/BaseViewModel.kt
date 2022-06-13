@@ -60,9 +60,6 @@ import java.util.*
 import androidx.core.content.ContextCompat.startActivity
 
 
-
-
-
 open class BaseViewModel : ViewModel(), Observable {
   private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
   val show = ObservableBoolean(false)
@@ -190,7 +187,7 @@ open class BaseViewModel : ViewModel(), Observable {
     return null
   }
 
-  fun stare(){
+  fun stare() {
 
   }
 
@@ -230,7 +227,8 @@ open class BaseViewModel : ViewModel(), Observable {
 //        val shareIntentsLists: ArrayList<Intent> = ArrayList()
         val excludedComponents = ArrayList<ComponentName>()
 
-        val resInfos: List<ResolveInfo> = MyApplication.instance.getPackageManager().queryIntentActivities(i, 0)
+        val resInfos: List<ResolveInfo> =
+          MyApplication.instance.getPackageManager().queryIntentActivities(i, 0)
 
         if (!resInfos.isEmpty()) {
           for (resInfo in resInfos) {
@@ -239,14 +237,15 @@ open class BaseViewModel : ViewModel(), Observable {
             if (!packageName.lowercase().contains("moon")
 
               && !packageName.lowercase().contains("videoeditor")
-               && !packageName.lowercase().contains("cometchat")) {
+              && !packageName.lowercase().contains("cometchat")
+            ) {
               val intent = Intent()
               intent.component = ComponentName(packageName, resInfo.activityInfo.name)
               intent.action = Intent.ACTION_SEND
               intent.type = "image/*"
               intent.setPackage(packageName)
 //              shareIntentsLists.add(intent)
-              excludedComponents.add(ComponentName(packageName,resInfo.activityInfo.name))
+              excludedComponents.add(ComponentName(packageName, resInfo.activityInfo.name))
             }
           }
         }
@@ -267,7 +266,7 @@ open class BaseViewModel : ViewModel(), Observable {
           )
 //            startActivity(chooserIntent)
 
-          context.startActivity(Intent.createChooser(i,"share"))
+          context.startActivity(Intent.createChooser(i, "share"))
 
         } else Log.e("Error", "No Apps can perform your task")
 
@@ -412,6 +411,28 @@ open class BaseViewModel : ViewModel(), Observable {
 
   private val TAG = "BaseViewModel"
 
+  private fun isDeepLinkAds(url: String): Boolean {
+    return !isDeepLinkStore(url)
+  }
+
+  private fun getDeepLinkAdsId(url: String): Int {
+    val parameters = url.split("/").toTypedArray()
+    if (url.contains("/website-moon/")) {
+      return parameters[5].toInt()
+    } else return parameters[4].toInt()
+  }
+
+  private fun isDeepLinkStore(url: String): Boolean {
+    return url.contains("/shop/")
+  }
+
+  private fun getDeepLinkStoreId(url: String): Int {
+    val parameters = url.split("/").toTypedArray()
+    if (url.contains("/website-moon/")) {
+      return parameters[6].toInt()
+    } else return parameters[5].toInt()
+  }
+
   fun checkDeepLink(intent: Intent, v: View) {
     Log.d(TAG, "checkDeepLink: ")
     val action = intent.action
@@ -420,29 +441,23 @@ open class BaseViewModel : ViewModel(), Observable {
       if (action != null && data != null) {
         Log.d(TAG, "checkDeepLink: ACTIOM")
         val link = data.toString()
-        val parameters = link.split("/").toTypedArray()
-        Log.d(TAG, "initDynamicLinkSetDefaultCountry: ${parameters[4]}")
-        if (parameters[4] == "shop") {
-          val id = parameters[5]
+        if(isDeepLinkStore(link)){
+          val id = getDeepLinkStoreId(link)
           v.findNavController().navigate(
             R.id.nav_store,
             bundleOf(
-              "id" to id.toInt(),
+              "id" to id,
               "type" to 3
             ), Constants.NAVIGATION_OPTIONS
           )
-        } else {
-          val id = parameters[4]
-          try {
-            val num = parseDouble(id)
-            v.findNavController().navigate(
-              R.id.nav_ads, bundleOf(
-                "id" to num.toInt(),
-                "type" to 2
-              )
+        }else if(isDeepLinkAds(link)){
+          val id = getDeepLinkAdsId(link)
+          v.findNavController().navigate(
+            R.id.nav_ads, bundleOf(
+              "id" to id,
+              "type" to 2
             )
-          } catch (e: NumberFormatException) {
-          }
+          )
         }
       }
     } catch (exception: Exception) {
