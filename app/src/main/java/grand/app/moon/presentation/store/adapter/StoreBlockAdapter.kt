@@ -86,8 +86,11 @@ class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
 
   fun changeBlock(id: Int) {
     Log.d(TAG, "changeBlock: $id")
+    Log.d(TAG, "changeBlock: ${unBlocks}")
     if (!unBlocks.contains(id)) unBlocks.add(id)
     else unBlocks.remove(id)
+    Log.d(TAG, "changeBlock: ${unBlocks.size}")
+    Log.d(TAG, "changeBlock: ${unBlocks}")
     differ.currentList[position].isBlocked = !differ.currentList[position].isBlocked
     notifyItemChanged(position)
   }

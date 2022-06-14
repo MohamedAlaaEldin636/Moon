@@ -3,6 +3,7 @@ package grand.app.moon.presentation.store.viewModels
 import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,6 +47,7 @@ class StoreBlockListViewModel @Inject constructor(
   val _responseService =
     MutableStateFlow<Resource<BaseResponse<StoreListPaginateData>>>(Resource.Default)
 
+  val showSubmit = ObservableBoolean(false)
   val response = _responseService
 
   val responseSubmit =
@@ -117,6 +119,8 @@ class StoreBlockListViewModel @Inject constructor(
   fun unBlock() {
     Log.d(TAG, "unBlock: ${adapter.position}")
     adapter.changeBlock(adapter.differ.currentList[adapter.position].id)
+    Log.d(TAG, "unBlock: ${adapter.unBlocks.size}")
+    showSubmit.set(adapter.unBlocks.isNotEmpty())
 //    followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
 //    storeUseCase.unBlock(followStoreRequest).launchIn(viewModelScope)
 //    adapter.removeItem()

@@ -52,8 +52,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen30"
-        android:background="@color/colorPrimary"
-
+        app:backgroundTint="@color/colorAccent"
+        android:background="@color/colorAccent"
+        android:textStyle="bold"
+        android:visibility="@{viewModel.showSubmit ? View.VISIBLE : View.GONE }"
         android:onClick="@{(v)-> viewModel.submit(v)}"
         android:text="@string/submit"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

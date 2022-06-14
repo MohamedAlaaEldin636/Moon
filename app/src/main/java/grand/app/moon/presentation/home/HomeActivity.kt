@@ -184,7 +184,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             binding.tvHomeTitle.text = destination.label
             showText()
         }
-        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings -> {
+        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings , R.id.webFragment -> {
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
@@ -192,7 +192,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showText()
         }
         R.id.adsDetailsFragment, R.id.storeDetailsFragment , R.id.countriesFragment3 , R.id.fragment_confirm_code2
-        ,R.id.webFragment2 , R.id.webFragment-> {
+        ,R.id.webFragment2 -> {
           hideTopBarControls()
           hideAllToolbar()
         }
