@@ -20,7 +20,7 @@ interface AdsRepository {
   suspend fun getDetails(id: Int,type: Int): Resource<BaseResponse<Advertisement>>
   suspend fun favourite(addFavouriteAdsRequest: AddFavouriteAdsRequest): Resource<BaseResponse<*>>
   suspend fun getProfileAdsList(page: Int , type: Int?): Resource<BaseResponse<AdsListPaginateData>>
-  suspend fun getAdsList(type:Int? , categoryId: Int?,subCategoryId: Int?,orderBy: Int?,storeId: Int?,search:String = "" , page: Int?): Resource<BaseResponse<AdsListPaginateData>>
+  suspend fun getAdsList(type:Int? , categoryId: Int?,subCategoryId: Int?,orderBy: Int?,storeId: Int?,other_options:Int,search:String = "" , page: Int?): Resource<BaseResponse<AdsListPaginateData>>
   suspend fun getAdsSubCategory(type:Int?, categoryId: Int?, subCategoryId: Int?, orderBy: Int?, storeId: Int?, search:String = ""
                                 , properties: ArrayList<Property>?, page: Int?): Resource<BaseResponse<SubCategoryResponse>>
 //  suspend fun getAdsSubCategory(url : String): Resource<BaseResponse<SubCategoryResponse>>

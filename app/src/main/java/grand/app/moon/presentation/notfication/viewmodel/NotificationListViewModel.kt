@@ -51,7 +51,7 @@ class NotificationListViewModel @Inject constructor(
       notifyPropertyChanged(BR.callingService)
       page++
       notifyPropertyChanged(BR.page)
-      job = useCase.notifications(type)
+      job = useCase.notifications(type,page)
         .onEach {
           response.value = it
         }

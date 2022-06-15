@@ -93,7 +93,7 @@
   <fragment
     android:id="@+id/webFragment"
     android:name="grand.app.moon.presentation.more.WebFragment"
-    android:label="{tabBarText}" >
+    android:label="@string/more" >
     <argument
       android:name="tabBarText"
       app:argType="string" />

@@ -17,7 +17,6 @@
 
   <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_margin="@dimen/dimen7"
     android:fillViewport="true"
     android:layout_height="match_parent">
 
@@ -27,15 +26,22 @@
       android:layout_height="match_parent"
       android:background="@color/backgroundGray">
 
+      <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen30"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_curve_filter"
+        app:layout_constraintTop_toTopOf="parent" />
+
       <androidx.cardview.widget.CardView
         android:id="@+id/img_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen8"
         android:layout_marginStart="@dimen/dimen20"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="5dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="2dp"
         android:layout_marginEnd="@dimen/dimen20">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -33,9 +33,10 @@ class AdsRepositoryImpl @Inject constructor(
     subCategoryId: Int?,
     orderBy: Int?,
     storeId: Int?,
+    other_options:Int,
     search: String,
     page: Int?
-  ) = remoteDataSource.getAdsList(type, categoryId, subCategoryId, orderBy, storeId, search, page)
+  ) = remoteDataSource.getAdsList(type, categoryId, subCategoryId, orderBy, storeId,other_options, search, page)
 
 
 

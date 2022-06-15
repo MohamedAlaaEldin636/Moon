@@ -184,7 +184,7 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   fun checkBlockStore() {
     val list = ArrayList(differ.currentList)
     differ.currentList.forEachIndexed { index, ads ->
-      if (ListHelper.checkBlockStore(ads.store!!.id)) {
+      if (ListHelper.checkBlockStore(ads.store!!.id) && index < list.size) {
         list.removeAt(index)
       }
     }

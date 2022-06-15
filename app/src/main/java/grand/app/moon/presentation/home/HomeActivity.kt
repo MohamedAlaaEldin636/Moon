@@ -177,22 +177,30 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showText()
         }
         R.id.exploreFragment, R.id.mapFragment -> {
-            showTopBarControls()
-            binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          showTopBarControls()
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
-            binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-            binding.tvHomeTitle.text = destination.label
-            showText()
+          binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+          binding.tvHomeTitle.text = destination.label
+          showText()
         }
-        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings , R.id.webFragment -> {
+        R.id.webFragment -> {
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
           showTopBarControls()
           showText()
+          binding.toolbar.hide()
         }
-        R.id.adsDetailsFragment, R.id.storeDetailsFragment , R.id.countriesFragment3 , R.id.fragment_confirm_code2
-        ,R.id.webFragment2 -> {
+        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings, R.id.webFragment -> {
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
+          binding.tvHomeTitle.text = destination.label
+          showTopBarControls()
+          showText()
+
+        }
+        R.id.adsDetailsFragment, R.id.storeDetailsFragment, R.id.countriesFragment3, R.id.fragment_confirm_code2, R.id.webFragment2 -> {
           hideTopBarControls()
           hideAllToolbar()
         }

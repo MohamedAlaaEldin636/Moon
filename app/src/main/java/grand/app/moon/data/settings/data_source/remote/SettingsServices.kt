@@ -25,7 +25,7 @@ interface SettingsServices {
   ): BaseResponse<AppInfoResponse>
 
   @GET("v1/notifications")
-  suspend fun notifications(@Query("notify_type") type: Int): BaseResponse<NotificationPaginateData>
+  suspend fun notifications(@Query("notify_type") type: Int,@Query("page") page: Int): BaseResponse<NotificationPaginateData>
 
   @DELETE("v1/notifications/{id}")
   suspend fun deleteNotification(@Path("id") id: Int): BaseResponse<*>

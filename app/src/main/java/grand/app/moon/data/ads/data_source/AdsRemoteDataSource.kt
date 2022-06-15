@@ -44,10 +44,11 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     subCategoryId: Int?,
     orderBy: Int?,
     storeId: Int?,
+    other_options:Int,
     search: String = "",
     page: Int?
   ) = safeApiCall {
-    apiService.getAds(type, categoryId, subCategoryId, orderBy, storeId, search, page)
+    apiService.getAds(type, categoryId, subCategoryId, orderBy, storeId,other_options, search, page)
   }
 
 

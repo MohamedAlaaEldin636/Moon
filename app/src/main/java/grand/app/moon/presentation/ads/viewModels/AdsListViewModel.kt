@@ -96,7 +96,7 @@ class AdsListViewModel @Inject constructor(
 
   private fun getAdsList() {
     if (type != null) {
-      job = useCase.getAdsList(type, categoryId, subCateoryId, orderBy, storeId, "", page)
+      job = useCase.getAdsList(type, categoryId, subCateoryId, orderBy, storeId, 1,"", page)
         .onEach {
           response.value = it
         }
@@ -133,6 +133,11 @@ class AdsListViewModel @Inject constructor(
     }
   }
 
+  fun reset(){
+    page = 0
+    callingService = false
+    isLast = false
+  }
 
   override fun onCleared() {
     job.cancel()

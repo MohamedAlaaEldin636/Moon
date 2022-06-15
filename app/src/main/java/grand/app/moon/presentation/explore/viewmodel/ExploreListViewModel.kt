@@ -148,7 +148,8 @@ class ExploreListViewModel @Inject constructor(
       exploreAction.type = 3
       explore.shares++
       adapter.notifyItemChanged(adapter.position)
-      shareTitleMessageImage(v.findFragment<Fragment>().requireActivity(),explore.store.name,explore.store.description,explore.file)
+      share(v.findFragment<Fragment>().requireActivity(), explore.store.name, explore.file)
+//      shareTitleMessageImage(v.findFragment<Fragment>().requireActivity(),explore.store.name,explore.store.description,explore.file)
     }
 
   }

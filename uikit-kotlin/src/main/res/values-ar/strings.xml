@@ -118,7 +118,7 @@
     <string name="edit_message">تحرير الرسالة</string>
     <string name="delete_message">حذف الرسالة</string>
     <string name="reply_message">رسالة الرد</string>
-    <string name="forward_message">رسالة إلى الأمام</string>
+    <string name="forward_message">إرسال إلى</string>
     <string name="start_thread">بدء الموضوع</string>
     <string name="share_message">مشاركة الرسالة</string>
     <string name="message_information">معلومات الرسالة</string>

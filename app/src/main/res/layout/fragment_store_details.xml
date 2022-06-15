@@ -124,34 +124,33 @@
 
               <RelativeLayout
                 android:id="@+id/img_store"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="@dimen/dimen60"
-                android:layout_height="@dimen/dimen60">
+                android:layout_height="@dimen/dimen60"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
                 <com.google.android.material.imageview.ShapeableImageView
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:layout_centerInParent="true"
-                  app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
                   android:visibility="@{viewModel.store.stories.size() == 0 ? View.VISIBLE : View.GONE }"
-                  app:loadImage="@{viewModel.store.image}" />
+                  app:loadImage="@{viewModel.store.image}"
+                  app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
 
                 <com.google.android.material.imageview.ShapeableImageView
                   android:id="@+id/profile_picture"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  android:scaleType="centerCrop"
-                  app:strokeColor="@color/colorAccent"
-                  app:strokeWidth="2dp"
                   android:layout_centerInParent="true"
                   android:onClick="@{ (v) -> viewModel.story(v) }"
+                  android:scaleType="centerCrop"
                   android:visibility="@{viewModel.store.stories.size() > 0 ? View.VISIBLE : View.GONE}"
                   app:loadImage="@{viewModel.story}"
                   app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-                  />
+                  app:strokeColor="@color/colorAccent"
+                  app:strokeWidth="2dp" />
               </RelativeLayout>
-
 
 
               <androidx.appcompat.widget.AppCompatTextView
@@ -163,13 +162,13 @@
                 android:layout_marginTop="@dimen/dimen5"
                 android:layout_marginEnd="@dimen/dimen10"
                 android:gravity="start"
-                app:autoSizeTextType="uniform"
                 android:maxLines="1"
                 android:text="@{viewModel.store.name}"
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorPrimary"
-
                 android:textSize="@dimen/text_size14"
+
+                app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toStartOf="@+id/barrier4"
                 app:layout_constraintStart_toEndOf="@+id/img_store"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -186,21 +185,21 @@
                 android:text="@{`( `+viewModel.store.nickname+` )`}"
                 android:textAlignment="viewStart"
                 android:textColor="@color/greyText"
-                tools:text="asdas sadasd sad as d asdasd sad as "
                 android:textSize="9sp"
                 app:layout_constraintEnd_toStartOf="@+id/barrier4"
                 app:layout_constraintStart_toEndOf="@+id/img_store"
-                app:layout_constraintTop_toBottomOf="@+id/tv_store_details" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_store_details"
+                tools:text="asdas sadasd sad as d asdasd sad as " />
 
 
               <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_follow_store"
                 style="@style/mediumFont"
-                android:padding="@dimen/dimen12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:onClick="@{(v) -> viewModel.follow(v)}"
+                android:padding="@dimen/dimen12"
                 android:text="@{viewModel.store.following ? @string/un_follow : @string/follow }"
                 android:textSize="@dimen/text_size12"
                 app:backgroundTint="@color/colorPrimary"
@@ -229,37 +228,37 @@
               <LinearLayout
                 android:id="@+id/tv_isOnline"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen8"
                 android:layout_marginTop="@dimen/dimen2"
                 android:layout_marginEnd="@dimen/dimen8"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toStartOf="@+id/barrier4"
                 app:layout_constraintStart_toEndOf="@+id/img_store"
                 app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                  android:src="@drawable/ic_online"
                   android:layout_width="10dp"
-                  android:tint="@{viewModel.isOnline ?  @color/color55CD6C : @color/colorE50000 }"
+                  android:layout_height="10dp"
                   android:layout_gravity="center"
-                  android:layout_height="10dp"/>
+                  android:src="@drawable/ic_online"
+                  android:tint="@{viewModel.isOnline ?  @color/color55CD6C : @color/colorE50000 }" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                   style="@style/regularFont"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center"
                   android:layout_marginStart="@dimen/dimen5"
+                  android:gravity="start"
                   android:text="@{viewModel.isOnline ? @string/connected_now : @string/offline_now }"
+                  android:textAlignment="viewStart"
+                  android:textColor="@color/greyText"
+                  android:textSize="@dimen/text_size12"
                   app:layout_constraintEnd_toStartOf="@+id/barrier4"
                   app:layout_constraintStart_toEndOf="@+id/img_store"
-                  android:layout_gravity="center"
-                  android:textSize="@dimen/text_size12"
-                  android:textColor="@color/greyText"
-                  android:gravity="start"
-                  android:textAlignment="viewStart"
-                  tools:text="worked"
                   app:layout_constraintTop_toBottomOf="@+id/tv_store_nickname"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"/>
+                  tools:text="worked" />
 
               </LinearLayout>
 
@@ -332,12 +331,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen8"
                 android:drawableStart="@drawable/ic_mail"
-                android:textColorLink="@color/colorBlue"
                 android:drawablePadding="@dimen/dimen8"
-                android:text="@{viewModel.mail}"
                 android:onClick="@{ (v) -> viewModel.showMail(v) }"
+                android:text="@{viewModel.mail}"
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorBlue"
+                android:textColorLink="@color/colorBlue"
                 android:textSize="@dimen/text_size12"
                 app:layout_constraintEnd_toEndOf="parent"
 
@@ -511,7 +510,7 @@
             android:layout_width="@dimen/dimen50"
             android:layout_height="@dimen/dimen50"
             android:onClick="@{(v)->viewModel.submit(v,`facebook`)}"
-            android:src="@drawable/ic_facebook"
+            android:src="@drawable/ic_facebook_ads"
             android:visibility="@{viewModel.facebook ? View.VISIBLE : View.GONE}"
 
             app:layout_constraintEnd_toStartOf="@+id/img_instgram"
@@ -538,7 +537,7 @@
             android:layout_width="@dimen/dimen50"
             android:layout_height="@dimen/dimen50"
             android:onClick="@{(v)->viewModel.submit(v,`youtube`)}"
-            android:src="@drawable/ic_twitter"
+            android:src="@drawable/ic_twitter_ads"
             android:visibility="@{viewModel.twitter ? View.VISIBLE : View.GONE}"
 
             app:layout_constraintEnd_toStartOf="@+id/img_youtube"
@@ -662,10 +661,9 @@
             android:background="@drawable/corner_gray_strock"
             android:onClick="@{ (v) -> viewModel.report(v)}"
             android:text="@string/report_on_issue"
-            app:autoSizeTextType="uniform"
             android:maxLines="1"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size16"
+            android:textSize="@dimen/text_size12"
             android:textStyle="bold"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_flag"
@@ -677,14 +675,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/dimen5"
-            app:autoSizeTextType="uniform"
+
             android:maxLines="1"
             android:layout_weight="1"
+            android:drawablePadding="@dimen/dimen3"
             android:background="@drawable/corner_gray_strock"
             android:onClick="@{ (v) -> viewModel.block(v)}"
             android:text="@string/block_store"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/text_size16"
+            android:textSize="@dimen/text_size12"
             android:textStyle="bold"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_block"
@@ -867,9 +866,10 @@
         android:onClick="@{(v) -> viewModel.whatsapp(v)}"
         android:text="@string/whatsapp"
         android:textSize="@dimen/text_size12"
+        android:drawablePadding="@dimen/dimen5"
         android:fontFamily="@font/regular"
         app:backgroundTint="@color/color55CD6C"
-        app:icon="@drawable/ic_chat_conversation"
+        app:icon="@drawable/ic_whatsapp"
         app:iconGravity="textStart" />
 
       <com.google.android.material.button.MaterialButton
@@ -897,7 +897,7 @@
         android:fontFamily="@font/regular"
         android:textSize="@dimen/text_size12"
         app:backgroundTint="@color/colorAccent"
-        app:icon="@drawable/ic_chat_conversation"
+        app:icon="@drawable/ic_chat"
         app:iconGravity="textStart" />
 
 

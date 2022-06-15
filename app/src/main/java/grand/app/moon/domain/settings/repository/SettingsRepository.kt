@@ -10,7 +10,7 @@ import grand.app.moon.domain.utils.Resource
 
 interface SettingsRepository {
   suspend fun onBoard(type: String): Resource<BaseResponse<List<AppTutorial>>>
-  suspend fun notifications(type :Int): Resource<BaseResponse<NotificationPaginateData>>
+  suspend fun notifications(type :Int,page :Int): Resource<BaseResponse<NotificationPaginateData>>
   suspend fun deleteNotification(type :Int): Resource<BaseResponse<*>>
   suspend fun settings(type: String): Resource<BaseResponse<List<SettingsData>>>
   suspend fun settingsAppInfo(type: String): Resource<BaseResponse<AppInfoResponse>>

@@ -57,10 +57,10 @@ class SettingsUseCase @Inject constructor(
       emit(result)
     }.flowOn(Dispatchers.IO)
 
-  fun notifications(type: Int): Flow<Resource<BaseResponse<NotificationPaginateData>>> =
+  fun notifications(type: Int,page: Int): Flow<Resource<BaseResponse<NotificationPaginateData>>> =
     flow {
       emit(Resource.Loading)
-      val result = settingsRepository.notifications(type)
+      val result = settingsRepository.notifications(type,page)
       emit(result)
     }.flowOn(Dispatchers.IO)
 

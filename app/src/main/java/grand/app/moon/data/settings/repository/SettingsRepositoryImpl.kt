@@ -27,8 +27,8 @@ class SettingsRepositoryImpl @Inject constructor(private val remoteDataSource: S
 
 
 
-  override suspend fun notifications(type: Int): Resource<BaseResponse<NotificationPaginateData>> =
-    remoteDataSource.notifications(type)
+  override suspend fun notifications(type: Int,page: Int): Resource<BaseResponse<NotificationPaginateData>> =
+    remoteDataSource.notifications(type,page)
 
   override suspend fun deleteNotification(type: Int): Resource<BaseResponse<*>> =
     remoteDataSource.deleteNotification(type)

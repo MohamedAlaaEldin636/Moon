@@ -112,6 +112,9 @@ class FilterResultsFragment : BaseFragment<FragmentFilterResultsBinding>() {
 
   override fun onResume() {
     super.onResume()
-    viewModel.adapter.updateFavourite()
+//    viewModel.adapter.updateFavourite()
+//    viewModel.adapter.checkBlockStore()
+    viewModel.reset()
+    viewModel.callService()
   }
 }

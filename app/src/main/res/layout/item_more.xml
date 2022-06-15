@@ -13,15 +13,16 @@
 
   </data>
 
-  <com.google.android.material.card.MaterialCardView
+  <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/dimen16"
-    android:layout_marginTop="@dimen/dimen8"
+    android:layout_marginTop="@dimen/dimen5"
+    android:layout_marginBottom="@dimen/dimen5"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="3dp"
     android:layout_marginEnd="@dimen/dimen16"
-    android:onClick="@{()-> itemViewModels.clickEvent(Constants.ACTION)}"
-    app:cardCornerRadius="@dimen/dimen6"
-    app:cardElevation="@dimen/dimen1">
+    android:onClick="@{()-> itemViewModels.clickEvent(Constants.ACTION)}">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/item_more"
@@ -51,6 +52,7 @@
         android:textAlignment="viewEnd"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
+        android:textSize="@dimen/text_size15"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/ic_icon"
         app:layout_constraintTop_toTopOf="parent"
@@ -68,6 +70,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-  </com.google.android.material.card.MaterialCardView>
+  </androidx.cardview.widget.CardView>
 
 </layout>

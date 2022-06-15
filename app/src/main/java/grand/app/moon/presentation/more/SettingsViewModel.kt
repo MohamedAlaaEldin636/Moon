@@ -27,6 +27,7 @@ class SettingsViewModel @Inject constructor(
   @Bindable
   val accountAdapter = MoreAdapter()
   var isLogin = userLocalUseCase.isLoggin()
+  var isFirst = false
 
   val logout =
     MutableStateFlow<Resource<BaseResponse<*>>>(Resource.Default)

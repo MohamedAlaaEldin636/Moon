@@ -25,6 +25,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
   override
   fun setBindingVariables() {
+    Log.d(TAG, "setBindingVariables: HERE")
     binding.viewModel = viewModel
     val moreItems = ArrayList<MoreItem>().also { list ->
       list.add(
@@ -290,6 +291,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     })
   }
 
+  override fun onResume() {
+    super.onResume()
+    Log.d(TAG, "onResume: WORKED")
+  }
 
 
 }

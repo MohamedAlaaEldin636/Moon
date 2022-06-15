@@ -45,7 +45,8 @@
   <string name="follow">متابعة</string>
   <string name="top_stores_rated">أعلى المتاجر تقييما</string>
   <string name="home">الرئيسية</string>
-  <string name="choose_method_of_contact">اختر طريقة التواصل من هنا او قم بملأ البيانات بالاسفل</string>
+  <string name="choose_method_of_contact">اختر طريقة التواصل من هنا</string>
+  <string name="or_can_full_the_next_form_and_will_contact_you">او قم بملأ البيانات بالاسفل وسنتواصل معك</string>
   <string name="send_mail">ارسل ايميل</string>
   <string name="call_for_phone_list">اتصل علي الأرقام التالية</string>
   <string name="main_moon_location">مقر موون الرئيسي</string>
@@ -63,7 +64,7 @@
   <string name="logout">تسجيل الخروج</string>
   <string name="please_enter_your_phone">من فضلك قم بادخال هاتفك</string>
   <string name="whatsapp">واتس أب</string>
-  <string name="chat">محادثة</string>
+  <string name="chat">دردشة</string>
   <string name="call">إتصال</string>
   <string name="suggestions_ads_for_you">إعلانات مقترحة لك</string>
   <string name="most_popular_ads">أكثر الإعلانات شيوعاً</string>

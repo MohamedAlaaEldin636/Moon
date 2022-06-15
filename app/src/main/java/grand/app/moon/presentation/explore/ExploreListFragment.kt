@@ -37,6 +37,7 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
+
     if(arguments != null && arguments?.containsKey("list") == true && arguments?.getString("list")?.isNotEmpty() == true){
       val exploreListPaginateData = ExploreListPaginateData()
       val gson = GsonBuilder().create()

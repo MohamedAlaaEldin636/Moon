@@ -122,7 +122,7 @@ class StoryDisplayViewModel @Inject constructor(
   }
 
   fun share(v: View) {
-    shareTitleMessageImage(v.findFragment<Fragment>().requireActivity(), store.get()!!.name, store.get()!!.description, store.get()!!.stories[pos].file)
+    share(v.findFragment<Fragment>().requireActivity(), store.get()!!.name, store.get()!!.stories[pos].file)
   }
 
 

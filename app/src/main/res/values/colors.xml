@@ -41,6 +41,8 @@
   <color name="colorF7E6D1">#F7E6D1</color>
   <color name="color0000000F">#0000000F</color>
   <color name="color00000">@color/blackOpacity3</color>
+  <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
+
   <!--- NOT USE -->
   <color name="colorAccentDark">#024302</color>
   <color name="lightGray">#F3F3F3</color>

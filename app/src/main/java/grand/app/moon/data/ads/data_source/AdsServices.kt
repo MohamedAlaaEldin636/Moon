@@ -46,6 +46,7 @@ interface AdsServices {
     @Query("sub_category_id") subCategoryId: Int?,
     @Query("order_by") orderBy: Int? = 1,
     @Query("store_id") storeId: Int?,
+    @Query("other_options") other_options: Int?,
     @Query("search") search: String?,
     @Query("page") page: Int?,
     ): BaseResponse<AdsListPaginateData>

@@ -48,9 +48,9 @@ class AdsUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
-  fun getAdsList(type:Int? , categoryId: Int?,subCategoryId: Int?,orderBy: Int?,storeId: Int? ,search:String = "", page: Int?): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
+  fun getAdsList(type:Int? , categoryId: Int?,subCategoryId: Int?,orderBy: Int?,storeId: Int? ,other_options:Int,search:String = "", page: Int?): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
     emit(Resource.Loading)
-    val result = repo.getAdsList(type,categoryId,subCategoryId,orderBy,storeId,search,page)
+    val result = repo.getAdsList(type,categoryId,subCategoryId,orderBy,storeId,other_options,search,page)
     emit(result)
   }.flowOn(Dispatchers.IO)
 
@@ -80,8 +80,8 @@ class AdsUseCase @Inject constructor(
   }.flowOn(Dispatchers.IO)
 
   private val TAG = "AdsUseCase"
-  fun filterResults(resultRequest : FilterResultRequest): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
-    emit(Resource.Loading)
+  fun filterResults(resultRequest : FilterResultRequest,showProgress: Boolean = true): Flow<Resource<BaseResponse<AdsListPaginateData>>> = flow {
+    if(showProgress) emit(Resource.Loading)
     Log.d(TAG, "filterResults: ${resultRequest.properties?.size}")
     if(resultRequest.properties?.isEmpty() == true) resultRequest.properties = null
     if(resultRequest.cityIds?.isEmpty() == true) resultRequest.cityIds = null

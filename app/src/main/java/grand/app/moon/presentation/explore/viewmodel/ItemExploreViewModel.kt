@@ -9,6 +9,7 @@ import androidx.fragment.app.findFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.presentation.auth.AuthActivity
@@ -74,7 +75,9 @@ class ItemExploreViewModel constructor(
   fun share(v: View) {
     val fragment = v.findFragment<ExploreListFragment>()
     fragment.viewModel.adapter.position = position
-    fragment.viewModel.share(v)
+    if(v.context.isLoginWithOpenAuth()){
+      fragment.viewModel.share(v)
+    }
   }
 
   fun allComments(v: View) {

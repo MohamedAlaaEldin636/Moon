@@ -18,17 +18,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+      <LinearLayout
+        android:id="@+id/ll_forwad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="30dp"
+          android:src="@drawable/ic_back"
+          android:visibility="gone"
+          android:layout_height="30dp"/>
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/forward_toolbar"
-            android:layout_width="match_parent"
-            app:title="Forward Message"
-            app:navigationIcon="@drawable/ic_back"
-            android:layout_height="wrap_content"/>
+          android:id="@+id/forward_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          app:title="@string/forward_message" />
+      </LinearLayout>
+
 
         <!--Search_View - This layout is used to search conversations-->
         <RelativeLayout
             android:id="@+id/searchbar_view"
-            android:layout_below="@id/forward_toolbar"
+            android:layout_below="@id/ll_forwad"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"

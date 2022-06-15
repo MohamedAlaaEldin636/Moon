@@ -182,18 +182,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 
   override fun onResume() {
     super.onResume()
-    viewModel.adsHomeAdapter.updateFavourite()
-    viewModel.adsHomeAdapter.checkBlockStore()
-
-    viewModel.storeAdapter.checkFollowingStore()
-    viewModel.storeAdapter.checkBlockStore()
-
-    viewModel.followingsStoresAdapter.checkFollowingStore()
-    viewModel.followingsStoresAdapter.checkBlockStore()
-
-    viewModel.storiesAdapter.viewedStores()
-    viewModel.storiesAdapter.checkBlockStore()
-    viewModel.notifyAdapters()
+//    viewModel.adsHomeAdapter.updateFavourite()
+//    viewModel.adsHomeAdapter.checkBlockStore()
+//
+//    viewModel.storeAdapter.checkFollowingStore()
+//    viewModel.storeAdapter.checkBlockStore()
+//
+//    viewModel.followingsStoresAdapter.checkFollowingStore()
+//    viewModel.followingsStoresAdapter.checkBlockStore()
+//
+//    viewModel.storiesAdapter.viewedStores()
+//    viewModel.storiesAdapter.checkBlockStore()
+//    viewModel.notifyAdapters()
+    viewModel.callService()
   }
 
 }

@@ -89,6 +89,14 @@ class WebFragment : BottomSheetDialogFragment() {
     }
   }
 
+  override fun onResume() {
+    super.onResume()
+    if(viewModel.isFirst)
+      backToPreviousScreen()
+    else
+      viewModel.isFirst = true
+  }
+
   override fun getTheme(): Int {
     return R.style.CustomBottomSheetDialogTheme;
   }

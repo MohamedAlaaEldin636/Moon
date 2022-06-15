@@ -13,15 +13,14 @@
       type="grand.app.moon.presentation.notfication.viewmodel.ItemNotificationViewModel" />
   </data>
 
-  <androidx.cardview.widget.CardView
+  <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_marginStart="@dimen/dimen10"
-    android:onClick="@{ (v) -> viewModel.submit(v) }"
-    android:layout_marginEnd="@dimen/dimen10"
-    android:layout_marginTop="@dimen/dimen20"
-    android:elevation="5dp"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground">
+    android:background="@drawable/corner_white_10"
+    android:layout_marginStart="@dimen/dimen10"
+    android:layout_marginTop="@dimen/dimen20"
+    android:layout_marginEnd="@dimen/dimen10"
+    android:onClick="@{ (v) -> viewModel.submit(v) }">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -36,46 +35,53 @@
         android:layout_marginStart="@dimen/dimen3"
         android:layout_marginEnd="@dimen/dimen3"
         android:ellipsize="end"
-        android:textSize="@dimen/text_size12"
         android:lines="2"
         android:maxLines="2"
         android:text="@{viewModel.model.created_at}"
+        android:textColor="@color/colorBlack"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-      <androidx.appcompat.widget.AppCompatImageView
+      <RelativeLayout
         android:id="@+id/appCompatImageView2"
-        android:layout_width="@dimen/dimen60"
-        android:layout_height="@dimen/dimen60"
-        app:defaultImage="@{@drawable/ic_logo_notification}"
+        android:layout_width="@dimen/dimen80"
+        android:layout_height="@dimen/dimen80"
+        android:background="@drawable/corner_silver"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date"
-        app:loadImage="@{viewModel.model.logo}" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="@dimen/dimen2"
+          android:padding="@dimen/dimen6"
+          app:defaultImage="@{@drawable/ic_logo_notification}"
+          app:loadImage="@{viewModel.model.logo}" />
+      </RelativeLayout>
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/appCompatTextView"
-        style="@style/mediumFont"
+        style="@style/regularFont"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen3"
-        android:layout_marginTop="@dimen/dimen10"
-        android:layout_marginEnd="@dimen/dimen3"
-        android:ellipsize="end"
-        android:lines="2"
-        app:layout_constraintTop_toBottomOf="@+id/date"
-        android:maxLines="2"
-        android:textAlignment="viewStart"
+        android:layout_marginStart="@dimen/dimen8"
+        android:layout_marginTop="@dimen/dimen5"
+        android:layout_marginEnd="@dimen/dimen8"
         android:text="@{viewModel.model.text}"
-        app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        tools:text="asd asdsa sda dsa  sdasda dsa sad a sdsad sda as sd a dsasa dsa das das asd sad dsasdasad dsa dsa s das dsad  dsaaaaaaaaaaaaaaaaaaaaaaaaaa asa s asdas sad sad sad " />
 
       <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
         android:visibility="@{viewModel.model.image != null ? View.VISIBLE : View. GONE}"
+        app:barrierDirection="bottom"
         app:constraint_referenced_ids="appCompatTextView,appCompatImageView2"
         tools:layout_editor_absoluteY="60dp" />
 
@@ -83,18 +89,19 @@
         android:id="@+id/appCompatImageView3"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen150"
-        android:background="@color/lightGray"
-        android:visibility="@{viewModel.model.image != null ? View.VISIBLE : View. GONE}"
-        app:layout_constraintTop_toBottomOf="@+id/barrier7"
-        app:defaultImage="@{@drawable/ic_logo_notification}"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:src="@drawable/bg_no_image"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
+
+        android:background="@color/lightGray"
+        android:scaleType="centerCrop"
+        android:visibility="@{viewModel.model.image != null ? View.VISIBLE : View. GONE}"
+        app:defaultImage="@{@drawable/ic_logo_notification}"
         app:layout_constraintEnd_toEndOf="parent"
-        app:loadImage="@{viewModel.model.image}" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrier7"
+        app:loadImage="@{viewModel.model.image}"
+        tools:src="@drawable/bg_no_image" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-  </androidx.cardview.widget.CardView>
+  </RelativeLayout>
 </layout>

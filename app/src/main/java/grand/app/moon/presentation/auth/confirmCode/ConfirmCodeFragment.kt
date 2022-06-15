@@ -32,24 +32,24 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
   lateinit var smsBroadcastReceiver: SMSBroadcastReceiver
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    smsBroadcastReceiver = SMSBroadcastReceiver()
+//    smsBroadcastReceiver = SMSBroadcastReceiver()
+//
+//    val otpListener = object : SMSBroadcastReceiver.OTPListener {
+//      override fun onOTPReceived(otp: String) {
+////        Toast.makeText(this@MainActivity, otp , Toast.LENGTH_LONG).show()
+//      }
+//
+//      override fun onOTPTimeOut() {
+////        Toast.makeText(this@MainActivity,"TimeOut", Toast.LENGTH_SHORT).show()
+//      }
+//    }
 
-    val otpListener = object : SMSBroadcastReceiver.OTPListener {
-      override fun onOTPReceived(otp: String) {
-//        Toast.makeText(this@MainActivity, otp , Toast.LENGTH_LONG).show()
-      }
+//    smsBroadcastReceiver.injectOTPListener(otpListener)
+//    requireActivity().registerReceiver(smsBroadcastReceiver,
+//      IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+//    )
 
-      override fun onOTPTimeOut() {
-//        Toast.makeText(this@MainActivity,"TimeOut", Toast.LENGTH_SHORT).show()
-      }
-    }
-
-    smsBroadcastReceiver.injectOTPListener(otpListener)
-    requireActivity().registerReceiver(smsBroadcastReceiver,
-      IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-    )
-
-    startSMSListener()
+//    startSMSListener()
 
   }
   private val TAG = "ConfirmCodeFragment"

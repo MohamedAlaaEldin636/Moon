@@ -21,14 +21,21 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_margin="@dimen/dimen6">
+      android:background="@color/colorFBFBFB"
+      android:layout_height="match_parent">
+
+      <include
+        android:id="@+id/curve"
+        layout="@layout/layout_curve_top" />
+
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_contact_us_title"
         style="@style/boldFont"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen10"
         android:layout_marginTop="@dimen/dimen10"
         android:text="@string/choose_method_of_contact"
         android:textColor="@color/colorBlack"
@@ -36,19 +43,20 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/curve" />
 
       <LinearLayout
         android:id="@+id/ll_contact_us_social"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/colorWhite"
         android:weightSum="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_contact_us_title">
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
           android:layout_width="0dp"
           android:layout_height="@dimen/dimen70"
           android:layout_margin="@dimen/dimen10"
@@ -56,22 +64,20 @@
           android:layout_marginTop="@dimen/dimen8"
           android:layout_marginEnd="@dimen/dimen16"
           android:layout_weight="1"
-          card_view:cardUseCompatPadding="true"
           android:visibility="@{viewModel.type.equals(Constants.MAIL) ? View.INVISIBLE : View.VISIBLE}"
-          android:onClick="@{(v)-> viewModel.select(v,Constants.MAIL)}"
-          app:cardCornerRadius="@dimen/dimen6"
-          app:cardElevation="@dimen/dimen1">
+          android:onClick="@{(v)-> viewModel.select(v,Constants.MAIL)}">
 
           <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/dimen60"
-            android:layout_height="@dimen/dimen60"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen50"
             android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:background="@drawable/corner_silver"
             android:padding="@dimen/dimen10"
             android:src="@drawable/ic_email" />
-        </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
           android:layout_width="0dp"
           android:layout_height="@dimen/dimen70"
           android:layout_margin="@dimen/dimen10"
@@ -81,20 +87,19 @@
           card_view:cardUseCompatPadding="true"
           android:layout_weight="1"
           android:visibility="@{viewModel.type.equals(Constants.PHONE) ? View.INVISIBLE : View.VISIBLE}"
-          android:onClick="@{(v)-> viewModel.select(v,Constants.PHONE)}"
-          app:cardCornerRadius="@dimen/dimen6"
-          app:cardElevation="@dimen/dimen1">
+          android:onClick="@{(v)-> viewModel.select(v,Constants.PHONE)}">
 
           <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/dimen60"
-            android:layout_height="@dimen/dimen60"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen50"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:background="@drawable/corner_silver"
             android:padding="@dimen/dimen10"
             android:src="@drawable/ic_phone" />
-        </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
           android:layout_width="0dp"
           android:layout_height="@dimen/dimen70"
           android:layout_margin="@dimen/dimen10"
@@ -102,20 +107,19 @@
           android:layout_marginTop="@dimen/dimen8"
           android:layout_marginEnd="@dimen/dimen16"
           android:layout_weight="1"
-          card_view:cardUseCompatPadding="true"
           android:visibility="@{viewModel.type.equals(Constants.LOCATION) ? View.INVISIBLE : View.VISIBLE}"
-          android:onClick="@{(v)-> viewModel.select(v,Constants.LOCATION)}"
-          app:cardCornerRadius="@dimen/dimen6"
-          app:cardElevation="@dimen/dimen1">
+          android:onClick="@{(v)-> viewModel.select(v,Constants.LOCATION)}">
 
           <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/dimen60"
-            android:layout_height="@dimen/dimen60"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen50"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
+            android:layout_margin="@dimen/dimen10"
             android:background="@drawable/corner_silver"
             android:padding="@dimen/dimen10"
             android:src="@drawable/ic_pin" />
-        </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
 
 
       </LinearLayout>
@@ -234,6 +238,25 @@
 
       </com.google.android.material.card.MaterialCardView>
 
+
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_or_can_fill"
+        style="@style/boldFont"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen20"
+        android:text="@string/or_can_full_the_next_form_and_will_contact_you"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/text_size16"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/material_selected_contact"
+        android:textStyle="bold" />
+
+
       <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -243,11 +266,13 @@
         android:layout_marginTop="@dimen/dimen18"
         android:layout_marginEnd="@dimen/dimen14"
         android:hint="@string/name"
+        android:theme="@style/TextInputLayoutStyle"
         android:textColorHint="@color/darkGray"
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:boxBackgroundColor="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/material_selected_contact">
+        app:layout_constraintTop_toBottomOf="@+id/tv_or_can_fill">
         <!--        app:error="@{viewmodel.request.nameError}"-->
         <!--        android:text="@={viewmodel.request.name}"-->
 
@@ -271,6 +296,7 @@
         android:layout_marginTop="@dimen/dimen14"
         android:layout_marginEnd="@dimen/dimen14"
         android:hint="@string/reason_for_contact"
+        app:boxBackgroundColor="@color/colorWhite"
         android:textAlignment="viewEnd"
         android:textColorHint="@color/darkGray"
         app:helperTextTextColor="@color/black"
@@ -301,6 +327,7 @@
         android:layout_marginTop="@dimen/dimen14"
         android:layout_marginEnd="@dimen/dimen14"
         android:hint="@string/email"
+        app:boxBackgroundColor="@color/colorWhite"
         android:textColorHint="@color/darkGray"
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -328,6 +355,7 @@
         android:hint="@string/content_of_the_message"
         android:textAlignment="viewEnd"
         android:textColorHint="@color/darkGray"
+        app:boxBackgroundColor="@color/colorWhite"
         app:helperTextTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -346,11 +374,12 @@
 
       <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/appCompatButtonNext"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen12"
+        android:layout_marginStart="@dimen/dimen30"
+
         android:layout_marginTop="@dimen/dimen20"
-        android:layout_marginEnd="@dimen/dimen12"
+        android:layout_marginEnd="@dimen/dimen30"
         android:background="@drawable/corner_primary"
         android:onClick="@{(v)-> viewModel.onContactClicked(v)}"
         android:text="@string/send"

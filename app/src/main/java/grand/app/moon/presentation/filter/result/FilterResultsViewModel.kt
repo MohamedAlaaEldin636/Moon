@@ -66,12 +66,18 @@ class FilterResultsViewModel @Inject constructor(
         notifyPropertyChanged(BR.page)
       }
       Log.d(TAG, "callService: ${request.properties.toString()}")
-      job = useCase.filterResults(request)
+      job = useCase.filterResults(request,page == 1)
         .onEach {
           response.value = it
         }
         .launchIn(viewModelScope)
     }
+  }
+
+  fun reset(){
+    page = 0
+    callingService = false
+    isLast = false
   }
 
   fun setData(data: AdsListPaginateData?) {

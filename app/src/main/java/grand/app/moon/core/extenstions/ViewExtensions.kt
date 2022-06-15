@@ -236,12 +236,24 @@ fun View.showSnackBar(
 }
 
 
+@BindingAdapter("imageUrlUpload")
+fun loadImage(imageView: ImageView, image: String) {
+  Glide
+    .with(imageView.context)
+    .load(image)
+    .dontTransform() //                .centerCrop()
+    //                .thumbnail(0.05f)
+    //                .transition(DrawableTransitionOptions.withCrossFade())
+    .into(imageView)
+
+
+//        ImageLoaderHelper.ImageLoaderLoad(imageView.getContext(), image, imageView);
+}
 
 @BindingAdapter(
   value = ["app:loadImage", "app:progressBar", "app:defaultImage"],
   requireAll = false
 )
-
 
 fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultImage: Any?) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
