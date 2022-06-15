@@ -42,18 +42,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:loadImage="@{viewModel.model.user.image}"
+        app:defaultImage="@{@drawable/ic_default_user}"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         app:strokeColor="@color/lightGray"
         app:strokeWidth="@dimen/dimen1" />
 
       <LinearLayout
         android:id="@+id/ll_user_info"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen5"
         android:layout_marginTop="@dimen/dimen2"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/img"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/img"
         app:layout_constraintTop_toTopOf="@+id/img">
 
@@ -64,7 +66,8 @@
           android:layout_height="wrap_content"
           android:ellipsize="end"
           android:maxLines="1"
-          android:text="@{viewModel.model.user.name.equals(``) ? @string/user : viewModel.model.user.name}"
+          android:layout_marginEnd="@dimen/dimen8"
+          android:text="@{viewModel.model.user.name.equals(``) || viewModel.model.user.name == null ? @string/user : viewModel.model.user.name}"
           android:textAlignment="viewStart"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           android:textColor="@color/color9F9F9F"
@@ -74,44 +77,43 @@
           tools:text="asdasd" />
 
         <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_desc"
+          style="@style/regularFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dimen8"
+          android:ellipsize="end"
+          android:gravity="center|start"
+          android:text="@{viewModel.model.comment}"
+          android:textAlignment="viewStart"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/darkGray"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
+          app:layout_constraintStart_toEndOf="@+id/ll_user_info"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:text="asdasdasd asd sada sasd " />
+
+        <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/tv_time"
           style="@style/mediumFont"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen5"
+          android:layout_marginEnd="@dimen/dimen8"
           android:layout_marginTop="@dimen/dimen2"
           android:ellipsize="end"
           android:maxLines="1"
           android:text="@{viewModel.model.createdAt}"
-
           android:textAlignment="viewStart"
           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
           android:textColor="@color/color9F9F9F"
           android:textSize="8sp"
           tools:text="asdasdasd asd sada sasd " />
+
       </LinearLayout>
 
 
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_desc"
-        style="@style/regularFont"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen8"
-        android:layout_marginEnd="@dimen/dimen8"
-        android:ellipsize="end"
-        android:gravity="center|start"
-        android:lines="2"
-        android:maxLines="2"
-        android:text="@{viewModel.model.comment}"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/darkGray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
-        app:layout_constraintStart_toEndOf="@+id/ll_user_info"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="asdasdasd asd sada sasd " />
+
 
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView"

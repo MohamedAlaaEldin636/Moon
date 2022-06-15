@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.webkit.ValueCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
@@ -34,6 +35,7 @@ import com.onesignal.OneSignal.OSNotificationOpenedHandler
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
+  var filePath: ValueCallback<Array<Uri>>? = null
   private lateinit var appBarConfiguration: AppBarConfiguration
   lateinit var nav: NavController
   private val viewModel: HomeViewModel by viewModels()

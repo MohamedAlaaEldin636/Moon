@@ -298,7 +298,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen8"
-                android:drawableStart="@drawable/ic_pin"
+                android:drawableStart="@drawable/ic_location_ads"
                 android:drawablePadding="@dimen/dimen8"
                 android:text="@{viewModel.store.country.name + ` / ` + viewModel.store.city.name }"
                 android:textColor="@color/color888888"

@@ -22,13 +22,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:paddingBottom="@dimen/dimen10"
+      android:paddingBottom="@dimen/dimen18"
       android:layout_height="match_parent"
       android:background="@color/backgroundGray">
 
       <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen30"
+        android:layout_height="@dimen/dimen60"
         android:scaleType="fitXY"
         android:src="@drawable/ic_curve_filter"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,8 +40,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/dimen8"
         android:layout_marginStart="@dimen/dimen20"
-        card_view:cardCornerRadius="2dp"
-        card_view:cardElevation="2dp"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardElevation="3dp"
         android:layout_marginEnd="@dimen/dimen20">
 
         <androidx.constraintlayout.widget.ConstraintLayout

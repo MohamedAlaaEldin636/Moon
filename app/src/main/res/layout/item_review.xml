@@ -35,6 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:loadImage="@{itemViewModels.reviews.user.image}"
+        app:defaultImage="@{@drawable/ic_default_user}"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         app:strokeColor="@color/lightGray"
         app:strokeWidth="@dimen/dimen1" />
@@ -66,7 +67,7 @@
         android:layout_marginStart="@dimen/dimen8"
         android:layout_marginTop="@dimen/dimen2"
         android:layout_marginEnd="@dimen/dimen8"
-        android:progressTint="@color/colorPrimary"
+        android:progressTint="@color/colorAccent"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toEndOf="@id/img"
         app:layout_constraintTop_toBottomOf="@id/tv_name"

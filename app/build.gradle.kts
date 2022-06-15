@@ -191,6 +191,9 @@ dependencies {
 //  //stories
   implementation ("com.github.TOrnelas:SegmentedProgressBar:0.0.3")
 
+  //webView
+  implementation ("com.github.delight-im:Android-AdvancedWebView:v3.2.1")
+
 
   //social-login
   /* Google sign in */

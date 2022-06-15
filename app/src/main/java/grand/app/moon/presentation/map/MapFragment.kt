@@ -78,6 +78,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
           viewModel.categoryId = category.id.toString()
         }
       }
+      viewModel.showAdvertisement.set(false)
       viewModel.callService()
       Log.d(TAG, "setupObservers: ${viewModel.stores.size}")
       loadMarkers()
@@ -98,6 +99,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         viewModel.subCategoryId = viewModel.subCategoriesAdapter.differ.currentList[viewModel.subCategoriesAdapter.selected].id.toString()
       else
         viewModel.subCategoryId = null
+      viewModel.showAdvertisement.set(false)
       viewModel.callService()
 //      Log.d(TAG, "setupObservers: ${viewModel.stores.size}")
       loadMarkers()

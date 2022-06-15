@@ -21,24 +21,24 @@ class ItemNotificationViewModel constructor(val model: NotificationData) : BaseV
     ];
    */
   fun submit(v: View) {
-    when (model.notify_type) {
-      2 -> v.findNavController().navigate(
-        R.id.nav_store,
-        bundleOf(
-          "id" to model.action_by_id,
-          "type" to 3
-        ), Constants.NAVIGATION_OPTIONS
-      )
-
-      4 -> {
+//    when (model.notify_type) {
+//      2 -> v.findNavController().navigate(
+//        R.id.nav_store,
+//        bundleOf(
+//          "id" to model.action_by_id,
+//          "type" to 3
+//        ), Constants.NAVIGATION_OPTIONS
+//      )
+//      4 -> {
+    if(model.notify_type == 2)
         v.findNavController().navigate(
           R.id.nav_ads, bundleOf(
             "id" to model.action_by_id,
             "type" to 2
           )
         )
-      }
-    }
+//      }
+//    }
 
   }
 }

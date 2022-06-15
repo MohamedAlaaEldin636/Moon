@@ -256,7 +256,7 @@
           android:layout_margin="@dimen/dimen10"
           android:layout_weight="1"
           android:onClick="@{ (v) -> viewModel.whatsapp(v)}"
-          android:background="@drawable/corner_gray_strock"
+          android:background="@drawable/corner_silver_strock"
           android:gravity="center">
 
           <androidx.appcompat.widget.AppCompatTextView
@@ -268,10 +268,10 @@
             android:layout_marginBottom="@dimen/dimen10"
             android:drawableStart="@drawable/ic_whatsapp_fill"
             android:drawablePadding="@dimen/dimen6"
-            android:text="@string/whatsapp"
             android:gravity="center"
+            android:text="@string/whatsapp"
             android:textColor="@color/colorBlack"
-            android:textSize="9sp" />
+            android:textSize="12sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -281,7 +281,7 @@
           android:layout_margin="@dimen/dimen10"
           android:onClick="@{ (v) -> viewModel.phone(v)}"
           android:layout_weight="1"
-          android:background="@drawable/corner_gray_strock"
+          android:background="@drawable/corner_silver_strock"
           android:gravity="center">
 
           <androidx.appcompat.widget.AppCompatTextView
@@ -294,10 +294,10 @@
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="@dimen/dimen6"
             android:drawableTint="@color/colorPrimary"
-            android:text="@string/call"
             android:gravity="center"
+            android:text="@string/call"
             android:textColor="@color/colorBlack"
-            android:textSize="9sp" />
+            android:textSize="12sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -307,7 +307,7 @@
           android:layout_margin="@dimen/dimen10"
           android:layout_weight="1"
           android:onClick="@{ (v) -> viewModel.chat(v)}"
-          android:background="@drawable/corner_gray_strock"
+          android:background="@drawable/corner_silver_strock"
           android:gravity="center">
 
           <androidx.appcompat.widget.AppCompatTextView
@@ -322,7 +322,7 @@
             android:gravity="center"
             android:text="@string/chat"
             android:textColor="@color/colorBlack"
-            android:textSize="9sp" />
+            android:textSize="12sp" />
         </RelativeLayout>
 
 

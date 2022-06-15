@@ -126,6 +126,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
       ) {
       }
     })
+    binding.btnPhone.isEnabled = viewModel.request.phone.trim().isNotEmpty()
   }
 
   private fun openConfirm() {

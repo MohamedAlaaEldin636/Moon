@@ -36,12 +36,12 @@ fun Context.startChatPage(v: View, user: User) {
   v.context.startActivity(intent)
 }
 
-fun Context.openChatStore(v: View, uid: Int, name: String, image: String) {
+fun Context.openChatStore(v: View, uid: Int, name: String, image: String?) {
   Log.d(TAG, "startChatConversation $image")
   v.disable()
   val user = User()
   user.uid = "store_$uid" // Replace with the UID for the user to be created
-  user.avatar = image
+  if(image != null) user.avatar = image
   user.name = name
   startChatPage(v, user)
 }

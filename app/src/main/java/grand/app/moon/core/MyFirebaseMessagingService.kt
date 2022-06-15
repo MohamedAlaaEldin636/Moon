@@ -57,7 +57,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
       .setComponentName(HomeActivity::class.java)
       .setGraph(R.navigation.nav_home)
       .setDestination(R.id.notificationFragment)
-      .setArguments(bundleOf())
+      //.setArguments(bundleOf())
       .createPendingIntent()
 
 
