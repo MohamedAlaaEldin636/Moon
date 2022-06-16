@@ -147,10 +147,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:itemTextAppearanceActive="@style/Widget.BottomNavigationView"
-        app:itemTextAppearanceInactive="@style/Widget.BottomNavigationView"
         android:theme="@style/Widget.BottomNavigationView"
         app:itemIconTint="@drawable/bottom_navigation_color"
+        app:itemTextAppearanceActive="@style/Widget.BottomNavigationView"
+        app:itemTextAppearanceInactive="@style/Widget.BottomNavigationView"
         app:itemTextColor="@drawable/bottom_navigation_color"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_navigation_view" />

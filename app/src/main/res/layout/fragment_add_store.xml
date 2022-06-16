@@ -14,20 +14,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <im.delight.android.webview.AdvancedWebView
+    <WebView
       android:id="@+id/webview"
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 
 
 
-<!--    <ProgressBar-->
-<!--      android:id="@+id/progress"-->
-<!--      android:layout_width="@dimen/dimen60"-->
-<!--      android:layout_height="@dimen/dimen60"-->
-<!--      app:layout_constraintBottom_toBottomOf="@+id/webview"-->
-<!--      app:layout_constraintEnd_toEndOf="parent"-->
-<!--      app:layout_constraintStart_toStartOf="parent"-->
-<!--      app:layout_constraintTop_toTopOf="parent" />-->
+    <ProgressBar
+      android:id="@+id/progress"
+      android:layout_width="@dimen/dimen60"
+      android:layout_height="@dimen/dimen60"
+      app:layout_constraintBottom_toBottomOf="@+id/webview"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
