@@ -186,15 +186,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           binding.tvHomeTitle.text = destination.label
           showText()
         }
-        R.id.webFragment -> {
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
-//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
-          binding.tvHomeTitle.text = destination.label
-          showTopBarControls()
-          showText()
-          binding.toolbar.hide()
-        }
-        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings, R.id.webFragment -> {
+//        R.id.webFragment -> {
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+////          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
+//          binding.tvHomeTitle.text = destination.label
+//          showTopBarControls()
+//          showText()
+//          binding.toolbar.hide()
+//        }
+        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings -> {
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label

@@ -1,4 +1,4 @@
-package grand.app.moon.presentation.more
+package grand.app.moon.presentation.addStore
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -7,30 +7,21 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
-import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
 import android.webkit.*
-import android.widget.ProgressBar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
 import grand.app.moon.databinding.FragmentAddStoreBinding
-import grand.app.moon.databinding.FragmentSettingsBinding
-import grand.app.moon.databinding.FragmentWebBinding
-import grand.app.moon.presentation.base.utils.Constants
-import im.delight.android.webview.AdvancedWebView
-import androidx.core.app.ActivityCompat.startActivityForResult
-import com.cometchat.pro.uikit.ui_resources.utils.MediaUtils.Companion.openCamera
 import com.maproductions.mohamedalaa.shared.core.extensions.checkSelfPermissionGranted
-import grand.app.moon.presentation.auth.profile.ProfileFragmentDirections
 import grand.app.moon.presentation.home.HomeActivity
+import grand.app.moon.presentation.more.SettingsViewModel
+import grand.app.moon.presentation.splash.SplashActivity
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -39,32 +30,17 @@ import java.util.*
 class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   var filePath: ValueCallback<Array<Uri>>? = null;
   private var filePathCallback: ValueCallback<Array<Uri>>? = null
-
-
   private val viewModel: SettingsViewModel by viewModels()
-
-  private var mUploadMessage: ValueCallback<Uri>? = null
-  private val FILECHOOSER_RESULTCODE = 1
 
   override
   fun getLayoutId() = R.layout.fragment_add_store
 
   override
   fun setBindingVariables() {
+    Log.d(TAG, "setBindingVariables: HERERERERERERERREERERERERER")
     binding.viewModel = viewModel
-    Log.d(TAG, "setBindingVariables: YARRRRRRRRRRRRRRRRB")
-//    binding.webview.webViewClient = WebViewClient()
-//    binding.webview.settings.javaScriptEnabled = true
-//    binding.webview.settings.javaScriptCanOpenWindowsAutomatically=true
-
-//    binding.webview.webViewClient = AppWebViewClients(binding.progress)
     val map = mutableMapOf<String, String>()
     map["language"] = LanguagesHelper.getCurrentLanguage()
-
-//    binding.webview.setListener(requireActivity(), this);
-//    binding.webview.setMixedContentAllowed(false);
-//    binding.webview.setMixedContentAllowed(true);
-//    binding.webview.setDesktopMode(true);
     binding.webview.settings.setSupportZoom(false)
     binding.webview.settings.allowFileAccess = true;
     binding.webview.settings.allowContentAccess = true;
@@ -100,124 +76,7 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       }
 
     }
-
-
-//    binding.webview.webChromeClient = object: WebChromeClient() {
-//
-//
-//      override fun onReceivedIcon(view: WebView?, icon: Bitmap?) {
-//        super.onReceivedIcon(view, icon)
-//        Log.d(TAG, "onReceivedIcon: ")
-//      }
-//
-//      override fun onPermissionRequest(request: PermissionRequest?) {
-//        super.onPermissionRequest(request)
-//        Log.d(TAG, "onPermissionRequest: ")
-//      }
-//
-//      override fun onShowFileChooser(
-//        webView: WebView?,
-//        filePathCallback: ValueCallback<Array<Uri>>?,
-//        fileChooserParams: FileChooserParams?
-//      ): Boolean {
-//        Log.d(TAG, "onShowFileChooser: ")
-//        return super.onShowFileChooser(webView, filePathCallback, fileChooserParams)
-//      }
-//
-//      override fun onCloseWindow(window: WebView?) {
-//        super.onCloseWindow(window)
-//        Log.d(TAG, "onCloseWindow: ")
-//      }
-//
-//      override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
-//        return super.onConsoleMessage(consoleMessage)
-//        Log.d(TAG, "onConsoleMessage: ")
-//      }
-//
-//
-//
-//      override fun onCreateWindow(
-//        view: WebView?,
-//        isDialog: Boolean,
-//        isUserGesture: Boolean,
-//        resultMsg: Message?
-//      ): Boolean {
-//        Log.d(TAG, "onCreateWindow: JREGERERERER")
-//        return super.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
-//      }
-////      override fun onCreateWindow(
-////        view: WebView?,
-////        isDialog: Boolean,
-////        isUserGesture: Boolean,
-////        resultMsg: Message?
-////      ): Boolean {
-////        Log.d(TAG, "onCreateWindow: CREATE WINDOW")
-////
-////        val newWebView = AdvancedWebView(context)
-////        // myParentLayout.addView(newWebView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-////        // myParentLayout.addView(newWebView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-////        val transport = resultMsg!!.obj as WebView.WebViewTransport
-////        transport.webView = newWebView
-////        resultMsg.sendToTarget()
-////
-////        return true
-////      }
-////
-////      override fun onShowFileChooser(
-////        webView: WebView?,
-////        filePathCallback: ValueCallback<Array<Uri>>?,
-////        fileChooserParams: FileChooserParams?
-////      ): Boolean {
-////        Log.d(TAG, "onShowFileChooser: HERE")
-//////        (requireActivity() as HomeActivity).filePath = filePathCallback
-//////
-//////        val contentIntent = Intent(Intent.ACTION_GET_CONTENT)
-//////        contentIntent.type = "image/*"
-//////        contentIntent.addCategory(Intent.CATEGORY_OPENABLE)
-//////
-//////        requireActivity().startActivityForResult(contentIntent, 1)
-////
-//////        openFileChooser(fileChooserParams)
-////        return true
-////      }
-//
-//
-//      fun openFileChooser(uploadMsg: ValueCallback<Uri>) {
-//        mUploadMessage = uploadMsg
-//        val i = Intent(Intent.ACTION_GET_CONTENT)
-//        i.addCategory(Intent.CATEGORY_OPENABLE)
-//        i.type = "image/*"
-//        startActivityForResult(
-//          Intent.createChooser(i, "File Chooser"),
-//          FILECHOOSER_RESULTCODE
-//        )
-//      }
-//
-//      // For Android 3.0+
-//      fun openFileChooser(uploadMsg: ValueCallback<Uri>, acceptType: String?) {
-//        mUploadMessage = uploadMsg
-//        val i = Intent(Intent.ACTION_GET_CONTENT)
-//        i.addCategory(Intent.CATEGORY_OPENABLE)
-//        i.type = "*/*"
-//        activityResultImageGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
-//
-//      }
-//
-//      //For Android 4.1
-//      fun openFileChooser(uploadMsg: ValueCallback<Uri>, acceptType: String?, capture: String?) {
-//        mUploadMessage = uploadMsg
-//        val i = Intent(Intent.ACTION_GET_CONTENT)
-//        i.addCategory(Intent.CATEGORY_OPENABLE)
-//        i.type = "image/*"
-//        activityResultImageGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
-////        requireActivity().startActivityForResult(
-////          Intent.createChooser(i, "File Chooser"),
-////          FILECHOOSER_RESULTCODE
-////        )
-//      }
-//
-//    }
-    binding.webview.loadUrl("https://souqmoon.com/store/register", map);
+    binding.webview.loadUrl(viewModel.getUrl(), map);
 
   }
 
@@ -300,9 +159,20 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       request: WebResourceRequest?
     ): Boolean {
       request?.url?.toString()?.also { link ->
-//        if (link.isNotEmpty()) links += link
+        Log.d(TAG, "shouldOverrideUrlLoading: ${link}")
+        viewModel.saveUrl(link)
+        if(!viewModel.browserHelper.isUser() && activity is AddStoreActivity) {
+          Intent(activity,SplashActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(this)
+          }
+        }else if(viewModel.browserHelper.isUser() && activity is HomeActivity){
+          Intent(activity,AddStoreActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(this)
+          }
+        }
       }
-
       return false
     }
 
@@ -343,8 +213,6 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   }
 
   override fun onDestroy() {
-//    binding.webview.onDestroy()
-    // ...
     Log.d(TAG, "onDestroy: ")
     super.onDestroy()
   }

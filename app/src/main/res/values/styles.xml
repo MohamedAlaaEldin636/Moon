@@ -67,6 +67,10 @@
   <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
     <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
   </style>
+  <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+    <item name="android:background">@drawable/corner_white_top</item>
+  </style>
+
 
   <style name="CustomDialogFullScreen" parent="Theme.AppCompat.Light.Dialog">
     <item name="android:backgroundDimEnabled">false</item>
@@ -86,9 +90,6 @@
     <item name="android:windowCloseOnTouchOutside">false</item>
   </style>
 
-  <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-    <item name="android:background">@drawable/corner_white_top</item>
-  </style>
 
 
 

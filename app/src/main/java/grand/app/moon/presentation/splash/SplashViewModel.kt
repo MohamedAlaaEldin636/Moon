@@ -1,9 +1,7 @@
 package grand.app.moon.presentation.splash
 
-import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import grand.app.moon.domain.general.use_case.GeneralUseCases
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,9 +12,8 @@ import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
-import kotlinx.coroutines.delay
+import grand.app.moon.presentation.addStore.BrowserHelper
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -64,14 +61,23 @@ class SplashViewModel @Inject constructor(
 
   private val TAG = "SplashViewModel"
 
+  val browserHelper = BrowserHelper()
   fun redirect() {
     Log.d(TAG, "redirect: WORKED")
+    browserHelper.lastUrl = accountRepository.getKeyFromLocal(Constants.LAST_URL)
+    val isStore = browserHelper.isUser()
+    Log.d(TAG, "redirect: ${browserHelper.lastUrl}")
+    Log.d(TAG, "redirect: ${isStore}")
     if(isCategories && isCountries) {
       Log.d(TAG, "redirect: HERE")
-      clickEvent.value = when (accountRepository.getKeyFromLocal(Constants.INTRO)) {
-        "true" -> Constants.HOME
-        else -> {
-          Constants.FIRST_TIME
+      if(browserHelper.isUser())
+        clickEvent.value = Constants.STORE_BROWSER
+      else {
+        clickEvent.value = when (accountRepository.getKeyFromLocal(Constants.INTRO)) {
+          "true" -> Constants.HOME
+          else -> {
+            Constants.FIRST_TIME
+          }
         }
       }
     }

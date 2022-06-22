@@ -1,8 +1,8 @@
 <resources
   xmlns:tools="http://schemas.android.com/tools"
   tools:ignore="MissingTranslation">
-  <string name="app_name_debug">Moon|موون</string>
-  <string name="app_name">Moon|موون</string>
+  <string name="app_name_debug">SouqMoon | سوق موون</string>
+  <string name="app_name">SouqMoon | سوق موون</string>
   <string name="fb_login_protocol_scheme"  translatable="false">Fb802733460697057</string>
   <string name="facebook_app_id"  translatable="false">802733460697057</string>
   <string name="facebook_client_token">80b99f338097c575f40acb5b3a0be4a9</string>

@@ -550,7 +550,7 @@
   </fragment>
   <fragment
     android:id="@+id/addStoreFragment"
-    android:name="grand.app.moon.presentation.more.AddStoreFragment"
+    android:name="grand.app.moon.presentation.addStore.AddStoreFragment"
     android:label="@string/add_store_now" />
 
   <include app:graph="@navigation/nav_auth" >

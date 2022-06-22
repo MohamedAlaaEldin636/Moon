@@ -44,6 +44,8 @@ object Constants {
   const val SOCIAL: Int = 33
   const val STORES: Int = 34
   const val FOLLOWED_STORES: Int = 35
+  const val STORE_BROWSER: Int = 36
+
 
   const val PERMISSION_GALLERY = 1000
 
@@ -74,6 +76,7 @@ object Constants {
   const val IS_PROFILE: String = "is_profile"
   const val GOOGLE_PLAY: String = "google_play"
   const val SOCIAL_TYPE: String = "social_type"
+  const val LAST_URL: String = "last_url"
 
 
   const val TOKEN = "TOKEN"

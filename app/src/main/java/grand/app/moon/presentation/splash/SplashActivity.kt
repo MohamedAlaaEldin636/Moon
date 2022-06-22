@@ -12,6 +12,7 @@ import grand.app.moon.core.MyApplication
 import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.databinding.ActivitySplashBinding
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.presentation.addStore.AddStoreActivity
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.utils.Constants
@@ -57,6 +58,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         Constants.FIRST_TIME -> {
           Log.d(TAG, "FIRST_TIME: ")
           IntroActivity::class.java
+        }
+        Constants.STORE_BROWSER -> {
+          AddStoreActivity::class.java
         }
         else -> {
           Log.d(TAG, "HomeActivity: ")

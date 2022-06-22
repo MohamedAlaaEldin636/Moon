@@ -113,6 +113,11 @@
       android:exported="true"
       android:screenOrientation="portrait" />
 
+    <activity
+      android:name="grand.app.moon.presentation.addStore.AddStoreActivity"
+      android:exported="true"
+      android:screenOrientation="portrait" />
+
 
     <activity
       android:name=".presentation.story.storyView.screen.StoryDisplayActivity"
