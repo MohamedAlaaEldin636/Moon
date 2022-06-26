@@ -33,9 +33,10 @@ class SettingsUseCase @Inject constructor(
 
   fun settings(
     type: String,
+    showProgress: Boolean = true
   ): Flow<Resource<BaseResponse<List<SettingsData>>>> =
     flow {
-      emit(Resource.Loading)
+      if(showProgress) emit(Resource.Loading)
       val result = settingsRepository.settings(type)
       emit(result)
     }.flowOn(Dispatchers.IO)

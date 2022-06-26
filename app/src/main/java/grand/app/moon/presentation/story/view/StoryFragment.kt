@@ -53,6 +53,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collect
 import pt.tornelas.segmentedprogressbar.SegmentedProgressBarListener
 
+//myStoryHERE
 @AndroidEntryPoint
 class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   SegmentedProgressBarListener {

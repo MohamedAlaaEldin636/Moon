@@ -11,25 +11,12 @@
       type="grand.app.moon.presentation.social.viewModels.ItemSocialViewModel" />
   </data>
 
-  <com.google.android.material.card.MaterialCardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimen8"
-    android:layout_marginTop="@dimen/dimen10"
-    android:layout_marginEnd="@dimen/dimen8"
-    android:elevation="3dp"
-    app:cardCornerRadius="@dimen/dimen8"
-    app:cardElevation="@dimen/dimen10"
-    android:onClick="@{ (v) -> notifyItemViewModels.submit(v) }"
-    app:cardMaxElevation="8dp"
-    app:cardPreventCornerOverlap="true"
-    app:contentPadding="10dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layoutDirection="ltr"
+      android:onClick="@{ (v) -> notifyItemViewModels.submit(v) }"
       android:orientation="vertical">
       <!--    android:onClick="@{()->notifyItemViewModels.clickEvent(Constants.OPEN_BROWSER)}"-->
 
@@ -43,24 +30,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:loadImage="@{notifyItemViewModels.model.image}" />
 
-      <androidx.appcompat.widget.AppCompatTextView
-        style="@style/mediumFont"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen10"
-        android:layout_marginEnd="@dimen/dimen10"
-        android:layout_marginTop="@dimen/dimen10"
-        android:text="@{notifyItemViewModels.model.content}"
-        android:textAlignment="viewStart"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/ic_social_value"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ic_social_value"
-        />
     </androidx.constraintlayout.widget.ConstraintLayout>
-  </com.google.android.material.card.MaterialCardView>
 
 </layout>

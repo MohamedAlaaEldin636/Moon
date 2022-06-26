@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.home.viewModels
 
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
@@ -43,6 +44,7 @@ class HomeViewModel @Inject constructor(
   private val homeUseCase: HomeUseCase
 ) : BaseViewModel() {
 
+  var isRefresh = false
   val followStoreRequest = FollowStoreRequest()
 
   private val _homeResponse =
@@ -131,14 +133,15 @@ class HomeViewModel @Inject constructor(
   }
 
   private fun homeApi() {
-    homeUseCase.home()
+    homeUseCase.home(isRefresh)
       .onEach { result ->
         _homeResponse.value = result
       }
       .launchIn(viewModelScope)
   }
 
-  private fun getStories() {
+  fun getStories() {
+    Log.d(TAG, "getStories: WORKED")
     homeUseCase.getStories(null)
       .onEach { result ->
         storiesResponse.value = result
@@ -147,6 +150,7 @@ class HomeViewModel @Inject constructor(
   }
 
   fun updateStories(data: MutableList<Store>) {
+    storiesAdapter.differ.submitList(null)
     storiesAdapter.differ.submitList(data)
     notifyPropertyChanged(BR.storiesAdapter)
   }

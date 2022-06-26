@@ -363,4 +363,11 @@ open class FilterBaseViewModel @Inject constructor(
     }
   }
 
+  fun addStaticDataStore() {
+
+    addRates {
+      rateAdapter.differ.submitList(it.children)
+    }
+  }
+
 }

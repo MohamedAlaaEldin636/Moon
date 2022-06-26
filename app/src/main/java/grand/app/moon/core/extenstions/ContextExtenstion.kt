@@ -1,4 +1,4 @@
-package com.maproductions.mohamedalaa.shared.core.extensions
+package grand.app.moon.core.extenstions
 
 import android.content.Context
 import android.content.Intent
@@ -16,8 +16,6 @@ import com.onesignal.OneSignal
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ThirdPartyHelper
 import grand.app.moon.core.MyApplication
-import grand.app.moon.core.extenstions.logoutCometChat
-import grand.app.moon.core.extenstions.showInfo
 import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.explore.entity.Explore

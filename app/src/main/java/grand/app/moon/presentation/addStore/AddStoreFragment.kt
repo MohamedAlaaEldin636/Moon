@@ -7,8 +7,14 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
+import android.view.KeyEvent
+import android.view.MotionEvent
+import android.view.View
 import android.webkit.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -18,7 +24,7 @@ import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
 import grand.app.moon.databinding.FragmentAddStoreBinding
-import com.maproductions.mohamedalaa.shared.core.extensions.checkSelfPermissionGranted
+import grand.app.moon.core.extenstions.checkSelfPermissionGranted
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.more.SettingsViewModel
 import grand.app.moon.presentation.splash.SplashActivity
@@ -35,6 +41,15 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   override
   fun getLayoutId() = R.layout.fragment_add_store
 
+
+  private val handler: Handler = object : Handler(Looper.getMainLooper()) {
+    override fun handleMessage(msg: Message) {
+      super.handleMessage(msg)
+      when (msg.what) {
+        1 -> binding.webview.goBack()
+      }
+    }
+  }
   override
   fun setBindingVariables() {
     Log.d(TAG, "setBindingVariables: HERERERERERERERREERERERERER")
@@ -51,6 +66,22 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
     binding.webview.settings.pluginState = WebSettings.PluginState.ON;
     binding.webview.settings.setSupportMultipleWindows(true);
     binding.webview.webViewClient = MyWebViewClient()
+
+    binding.webview.setOnKeyListener(object : View.OnKeyListener {
+      override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+          && event?.action == MotionEvent.ACTION_UP
+          && binding.webview.canGoBack()) {
+          handler.sendEmptyMessage(1);
+          return true;
+        }
+
+        return false;
+      }
+
+    })
+
+
 //    binding.webview.webChromeClient = MyWebChromeClient()
     binding.webview.webChromeClient = object : WebChromeClient() {
       override fun onShowFileChooser(
@@ -68,14 +99,15 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
           pickImageViaChooser()
 //          activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
         } else {
-//          permissionLocationRequest.launch(Manifest.permission.CAMERA)
-          pickImageViaChooser()
+          permissionLocationRequest.launch(Manifest.permission.CAMERA)
+//          pickImageViaChooser()
         }
 
         return true
       }
 
     }
+    Log.d(TAG, "setBindingVariables: ${viewModel.getUrl()}")
     binding.webview.loadUrl(viewModel.getUrl(), map);
 
   }
@@ -161,17 +193,18 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       request?.url?.toString()?.also { link ->
         Log.d(TAG, "shouldOverrideUrlLoading: ${link}")
         viewModel.saveUrl(link)
-        if(!viewModel.browserHelper.isUser() && activity is AddStoreActivity) {
+        if((!viewModel.browserHelper.isUser() && activity is HomeActivity) || (viewModel.browserHelper.isUser() && activity is AddStoreActivity)) {
           Intent(activity,SplashActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(this)
           }
-        }else if(viewModel.browserHelper.isUser() && activity is HomeActivity){
-          Intent(activity,AddStoreActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(this)
-          }
         }
+//        else if(viewModel.browserHelper.isUser() && activity is AddStoreActivity){
+//          Intent(activity,AddStoreActivity::class.java).apply {
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(this)
+//          }
+//        }
       }
       return false
     }

@@ -33,8 +33,9 @@ class SettingsViewModel @Inject constructor(
   val lastUrlStorage = accountRepository.getKeyFromLocal(Constants.LAST_URL)
 
   init {
-    if (lastUrlStorage.isNotEmpty())
+    if (lastUrlStorage.isNotEmpty() && !browserHelper.isUser(lastUrlStorage))
       browserHelper.lastUrl = lastUrlStorage
+
   }
 
   val logout =

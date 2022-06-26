@@ -70,7 +70,7 @@ class SplashViewModel @Inject constructor(
     Log.d(TAG, "redirect: ${isStore}")
     if(isCategories && isCountries) {
       Log.d(TAG, "redirect: HERE")
-      if(browserHelper.isUser())
+      if(!browserHelper.isUser())
         clickEvent.value = Constants.STORE_BROWSER
       else {
         clickEvent.value = when (accountRepository.getKeyFromLocal(Constants.INTRO)) {

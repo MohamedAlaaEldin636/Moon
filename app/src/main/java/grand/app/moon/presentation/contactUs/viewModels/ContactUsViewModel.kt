@@ -3,6 +3,7 @@ package grand.app.moon.presentation.contactUs.viewModels
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.databinding.Bindable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,7 @@ import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.dmoral.toasty.Toasty
+import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.callPhone
 import grand.app.moon.core.extenstions.navigateMap
@@ -24,6 +26,7 @@ import grand.app.moon.domain.settings.models.SettingsData
 import grand.app.moon.domain.utils.isValidEmail
 import grand.app.moon.helpers.PopUpMenuHelper
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.social.SocialAdapter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
@@ -33,6 +36,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ContactUsViewModel @Inject constructor(
   private val settingsUseCase: SettingsUseCase,
+
   private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
@@ -54,9 +58,17 @@ class ContactUsViewModel @Inject constructor(
   val _contactReasonResponse = MutableStateFlow<Resource<BaseResponse<List<SettingsData>>>>(Resource.Default)
   val contactReasonResponse = _contactReasonResponse
 
+  val socialResponse =
+    MutableStateFlow<Resource<BaseResponse<List<SettingsData>>>>(Resource.Default)
+
   val _contactAppInfoResponse = MutableStateFlow<Resource<BaseResponse<AppInfoResponse>>>(Resource.Default)
 
   var validationException = SingleLiveEvent<Int>()
+
+
+  @Bindable
+  var socialAdapter = SocialAdapter()
+
 
   init {
     //2=> get Contact Us
@@ -71,6 +83,14 @@ class ContactUsViewModel @Inject constructor(
     settingsUseCase.settingsAppInfo("13").onEach { result ->
       _contactAppInfoResponse.value = result
     }.launchIn(viewModelScope)
+
+    settingsUseCase.settings("3",false)
+      .onEach { result ->
+        socialResponse.value = result
+      }
+      .launchIn(viewModelScope)
+
+
   }
 
   fun onContactClicked(v: View) {
@@ -171,6 +191,11 @@ class ContactUsViewModel @Inject constructor(
         v.context.callPhone(appInfoResponse.get()!!.phone[position].content)
       }
     }
+  }
+
+  fun setSocial(data: List<SettingsData>) {
+    socialAdapter.insertData(data)
+    notifyPropertyChanged(BR.adapter)
   }
 
   fun setData(appInfoResponse: AppInfoResponse) {

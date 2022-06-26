@@ -8,8 +8,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,16 +18,13 @@ import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.hbb20.CountryCodePicker
-import com.maproductions.mohamedalaa.shared.core.extensions.checkSelfPermissionGranted
-import com.maproductions.mohamedalaa.shared.core.extensions.convertToString
+import grand.app.moon.core.extenstions.checkSelfPermissionGranted
+import grand.app.moon.core.extenstions.convertToString
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentProfileBinding
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
-import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.utils.Resource
-import grand.app.moon.presentation.auth.log_in.LogInFragmentDirections
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
@@ -206,8 +201,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     binding.imgProfile.showPopup(listOf(camera, gallery)) {
       pickImage(it.title?.toString() == camera)
     }
-
-
   }
 
   private fun pickImage(fromCamera: Boolean) {

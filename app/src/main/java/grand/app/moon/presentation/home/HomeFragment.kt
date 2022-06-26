@@ -9,6 +9,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import codes.grand.pretty_pop_up.PrettyPopUpHelper
 import com.rizlee.rangeseekbar.RangeSeekBar
 import grand.app.moon.domain.utils.Resource
@@ -25,10 +26,12 @@ import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.story.storyView.data.Story
 import kotlinx.coroutines.flow.collect
+import java.lang.Exception
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSeekBarPostListener {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSeekBarPostListener , SwipeRefreshLayout.OnRefreshListener {
 
   val viewModel: HomeViewModel by viewModels()
   private val activityViewModel: HomeViewModel by activityViewModels()
@@ -88,6 +91,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 
   override
   fun setupObservers() {
+    binding.swipeRefresh.setOnRefreshListener {
+      viewModel.getStories()
+    }
     lifecycleScope.launchWhenResumed {
       viewModel.homeResponse.collect {
         when (it) {
@@ -122,7 +128,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
       viewModel.storiesResponse
         .collect {
           if (it is Resource.Success) {
+            binding.swipeRefresh.isRefreshing = false
             if(it.value.data.size > 0) {
+              Log.d(TAG, "setupObservers: HERE STOREIS")
+              val storeisSeen = ArrayList<Store>()
+              val storeisNotSeen = ArrayList<Store>()
+              var isSeen: Boolean
+              it.value.data.forEach {
+                isSeen = false
+                it.stories.forEach { storyItem ->
+                  if(storyItem.isSeen && !isSeen)
+                    isSeen = true
+                }
+                if(isSeen) storeisSeen.add(it)
+                else storeisNotSeen.add(it)
+              }
+              it.value.data.clear()
+              it.value.data.addAll(storeisNotSeen)
+              it.value.data.addAll(storeisSeen)
               viewModel.storiesAdapter.storiesPaginate.list.addAll(it.value.data)
               val store = Store()
               store.stories.add(StoryItem(name = getString(R.string.show_more), isFirst = true))
@@ -180,6 +203,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
     Log.d(TAG, "onValuesChanged: HERE $minValue , $maxValue")
   }
 
+  var firstLoad = true
   override fun onResume() {
     super.onResume()
 //    viewModel.adsHomeAdapter.updateFavourite()
@@ -194,7 +218,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 //    viewModel.storiesAdapter.viewedStores()
 //    viewModel.storiesAdapter.checkBlockStore()
 //    viewModel.notifyAdapters()
+    if(!firstLoad) binding.swipeRefresh.isRefreshing = true
+    else{
+      firstLoad = false
+      viewModel.isRefresh = true
+    }
     viewModel.callService()
+  }
+
+  override fun onRefresh() {
+    Log.d(TAG, "onRefresh: WORKED")
+//    firstLoad = false
+//    viewModel.isRefresh = true
+//    viewModel.getStories()
   }
 
 }

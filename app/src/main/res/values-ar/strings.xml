@@ -1,7 +1,7 @@
 <resources>
   <!-- General Strings -->
-  <string name="app_name_debug">SouqMoon | سوق موون</string>
-  <string name="app_name">SouqMoon | سوق موون</string>
+  <string name="app_name_debug">SouqMoon | سوق مون</string>
+  <string name="app_name">SouqMoon | سوق مون</string>
   <string name="discover">إكتشف</string>
   <string name="confirm_resend">أعد إرسال الرمز</string>
   <string name="confirm_header_text">رقم رمز التفعيل</string>

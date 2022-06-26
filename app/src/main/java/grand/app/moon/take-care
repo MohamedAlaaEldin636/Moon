@@ -1,15 +1,7 @@
-take-care
-remove condition countryId.isEmpty in RetrofitModule
-
-{{Base_URL}}/api/v1/map?type=store
-1- we need data for testing cluster
-2- categories
-
-
-//
-55f27035-75f2-45d8-a541-d0f92bbe2045
-1- notification One-signal
-2- make back button
-3- solve issue in design (Explore + Settings)
-4- share store
-5-
+1- social
+2- story
+3- grid stores
+4- filter stores
+5- webview (Done)
+6- stories
+7- whatsapp

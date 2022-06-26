@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  xmlns:card_view="http://schemas.android.com/apk/res-auto">
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -15,246 +15,252 @@
       type="grand.app.moon.presentation.home.viewModels.HomeViewModel" />
   </data>
 
-  <androidx.core.widget.NestedScrollView
+
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
-    android:fillViewport="true"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
-      android:paddingBottom="@dimen/dimen18"
       android:layout_height="match_parent"
-      android:background="@color/backgroundGray">
+      android:fillViewport="true">
 
-      <androidx.appcompat.widget.AppCompatImageView
+
+      <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen60"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_curve_filter"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/backgroundGray"
+        android:paddingBottom="@dimen/dimen18">
 
-      <androidx.cardview.widget.CardView
-        android:id="@+id/img_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/dimen8"
-        android:layout_marginStart="@dimen/dimen20"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="3dp"
-        android:layout_marginEnd="@dimen/dimen20">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-          android:orientation="horizontal"
+        <androidx.appcompat.widget.AppCompatImageView
           android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+          android:layout_height="@dimen/dimen60"
+          android:scaleType="fitXY"
+          android:src="@drawable/ic_curve_filter"
+          app:layout_constraintTop_toTopOf="parent" />
 
-          <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/appCompatEditText"
-            style="@style/mediumFont"
-            android:layout_width="0dp"
+        <androidx.cardview.widget.CardView
+          android:id="@+id/img_login"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen20"
+          android:layout_marginTop="@dimen/dimen8"
+          android:layout_marginEnd="@dimen/dimen20"
+          app:layout_constraintTop_toTopOf="parent"
+          card_view:cardCornerRadius="5dp"
+          card_view:cardElevation="3dp">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="@dimen/dimen12"
-            android:focusable="false"
-            android:hint="@string/search"
-            android:onClick="@{(v) -> viewModel.search(v)}"
-            android:padding="@dimen/dimen10"
-            android:textSize="@dimen/text_size16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/appCompatImageView4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
 
-          <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/appCompatImageView4"
-            android:layout_width="@dimen/dimen50"
-            android:layout_height="@dimen/dimen50"
-            android:layout_gravity="end"
-            android:onClick="@{(v) -> viewModel.homeFilter(v)}"
-            android:padding="@dimen/dimen10"
-            android:src="@drawable/ic_filter"
-            android:tint="@color/colorAccent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatEditText
+              android:id="@+id/appCompatEditText"
+              style="@style/mediumFont"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:background="@null"
+              android:drawableStart="@drawable/ic_search"
+              android:drawablePadding="@dimen/dimen12"
+              android:focusable="false"
+              android:hint="@string/search"
+              android:onClick="@{(v) -> viewModel.search(v)}"
+              android:padding="@dimen/dimen10"
+              android:textSize="@dimen/text_size16"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toStartOf="@+id/appCompatImageView4"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+              android:id="@+id/appCompatImageView4"
+              android:layout_width="@dimen/dimen50"
+              android:layout_height="@dimen/dimen50"
+              android:layout_gravity="end"
+              android:onClick="@{(v) -> viewModel.homeFilter(v)}"
+              android:padding="@dimen/dimen10"
+              android:src="@drawable/ic_filter"
+              android:tint="@color/colorAccent"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
 
-
-      </androidx.cardview.widget.CardView>
-
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_stories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:adapter="@{viewModel.storiesAdapter}"
-        android:visibility="@{viewModel.storiesAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
-        android:layout_marginTop="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/img_login"
-        app:orientation="@{`2`}"
-        app:span="@{`1`}"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="horizontal"
-        tools:listitem="@layout/item_story" />
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_departments"
-        style="@style/TextBoldFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen16"
-        android:layout_marginBottom="@dimen/dimen16"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginStart="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/rv_stories"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/departments" />
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_more_item"
-        style="@style/mediumFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/colorPrimary"
-        android:onClick="@{ (v) -> viewModel.departments(v)}"
-        android:drawableTint="@color/colorAccent"
-        android:drawableEnd="@drawable/ic_more_sec"
-        android:layout_marginEnd="@dimen/dimen10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_departments"
-        app:layout_constraintTop_toTopOf="@+id/tv_departments"
-        android:text="@string/show_all" />
-
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:adapter="@{viewModel.categoriesAdapter}"
-        android:layout_marginTop="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/tv_departments"
-        app:orientation="@{`2`}"
-        app:span="@{`1`}"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="horizontal"
-        tools:listitem="@layout/item_category" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_top_stores"
-        style="@style/TextBoldFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen16"
-        android:layout_marginBottom="@dimen/dimen16"
-        android:textStyle="bold"
-        android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginStart="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/rv_categories"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/top_stores_rated" />
+        </androidx.cardview.widget.CardView>
 
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_top_stores_all"
-        style="@style/mediumFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
-        android:onClick="@{ (v) -> viewModel.stores(v)}"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/colorPrimary"
-        android:drawableTint="@color/colorAccent"
-        android:drawableEnd="@drawable/ic_more_sec"
-        android:layout_marginEnd="@dimen/dimen10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"
-        app:layout_constraintTop_toTopOf="@+id/tv_top_stores"
-        android:text="@string/show_all" />
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rv_stories"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen10"
+          android:orientation="horizontal"
+          android:visibility="@{viewModel.storiesAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+          app:adapter="@{viewModel.storiesAdapter}"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintTop_toBottomOf="@+id/img_login"
+          app:orientation="@{`2`}"
+          app:span="@{`1`}"
+          tools:listitem="@layout/item_story" />
 
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_stores"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        adapter_percentage="@{viewModel.storeAdapter}"
-        android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
-        rv_ln="@{49}"
-        android:layout_marginTop="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_store" />
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_departments"
+          style="@style/TextBoldFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen10"
+          android:layout_marginTop="@dimen/dimen16"
+          android:layout_marginBottom="@dimen/dimen16"
+          android:text="@string/departments"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/colorPrimary"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/rv_stories" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_more_item"
+          style="@style/mediumFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dimen10"
+          android:drawableEnd="@drawable/ic_more_sec"
+          android:drawableTint="@color/colorAccent"
+          android:gravity="center"
+          android:onClick="@{ (v) -> viewModel.departments(v)}"
+          android:text="@string/show_all"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/colorPrimary"
+          app:layout_constraintBottom_toBottomOf="@+id/tv_departments"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/tv_departments" />
 
-      <!-- -->
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_followed_stores"
-        style="@style/TextBoldFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen16"
-        android:layout_marginBottom="@dimen/dimen16"
-        android:textStyle="bold"
-        android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginStart="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/rv_stores"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/stores_had_been_followed" />
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_followed_stores_all"
-        style="@style/mediumFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
-        android:onClick="@{ (v) -> viewModel.followedStores(v)}"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/colorPrimary"
-        android:drawableTint="@color/colorAccent"
-        android:drawableEnd="@drawable/ic_more_sec"
-        android:layout_marginEnd="@dimen/dimen10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_followed_stores"
-        app:layout_constraintTop_toTopOf="@+id/tv_followed_stores"
-        android:text="@string/show_all" />
-
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_followed_stores"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        adapter_percentage="@{viewModel.followingsStoresAdapter}"
-        android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
-        rv_ln="@{49}"
-        android:layout_marginTop="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/tv_followed_stores_all"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_store" />
-      <!-- finish -->
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_ads_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:adapter="@{viewModel.adsHomeAdapter}"
-        app:orientation="@{`1`}"
-        app:span="@{`1`}"
-        android:layout_marginTop="@dimen/dimen10"
-        app:layout_constraintTop_toBottomOf="@+id/rv_followed_stores"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="horizontal"
-        tools:listitem="@layout/item_ads_home" />
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rv_categories"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen10"
+          android:orientation="horizontal"
+          app:adapter="@{viewModel.categoriesAdapter}"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintTop_toBottomOf="@+id/tv_departments"
+          app:orientation="@{`2`}"
+          app:span="@{`1`}"
+          tools:listitem="@layout/item_category" />
 
 
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_top_stores"
+          style="@style/TextBoldFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen10"
+          android:layout_marginTop="@dimen/dimen16"
+          android:layout_marginBottom="@dimen/dimen16"
+          android:text="@string/top_stores_rated"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/colorPrimary"
+          android:textStyle="bold"
+          android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/rv_categories" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_top_stores_all"
+          style="@style/mediumFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dimen10"
+          android:drawableEnd="@drawable/ic_more_sec"
+          android:drawableTint="@color/colorAccent"
+          android:gravity="center"
+          android:onClick="@{ (v) -> viewModel.stores(v)}"
+          android:text="@string/show_all"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/colorPrimary"
+          android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+          app:layout_constraintBottom_toBottomOf="@+id/tv_top_stores"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/tv_top_stores" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rv_stores"
+          adapter_percentage="@{viewModel.storeAdapter}"
+          rv_ln="@{49}"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen10"
+          android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+          app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+          tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          tools:listitem="@layout/item_store" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-  </androidx.core.widget.NestedScrollView>
+        <!-- -->
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_followed_stores"
+          style="@style/TextBoldFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen10"
+          android:layout_marginTop="@dimen/dimen16"
+          android:layout_marginBottom="@dimen/dimen16"
+          android:text="@string/stores_had_been_followed"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/colorPrimary"
+          android:textStyle="bold"
+          android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/rv_stores" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_followed_stores_all"
+          style="@style/mediumFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dimen10"
+          android:drawableEnd="@drawable/ic_more_sec"
+          android:drawableTint="@color/colorAccent"
+          android:gravity="center"
+          android:onClick="@{ (v) -> viewModel.followedStores(v)}"
+          android:text="@string/show_all"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/colorPrimary"
+          android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+          app:layout_constraintBottom_toBottomOf="@+id/tv_followed_stores"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/tv_followed_stores" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rv_followed_stores"
+          adapter_percentage="@{viewModel.followingsStoresAdapter}"
+          rv_ln="@{49}"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen10"
+          android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+          app:layout_constraintTop_toBottomOf="@+id/tv_followed_stores_all"
+          tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          tools:listitem="@layout/item_store" />
+        <!-- finish -->
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rv_ads_category"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dimen10"
+          android:orientation="horizontal"
+          app:adapter="@{viewModel.adsHomeAdapter}"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_constraintTop_toBottomOf="@+id/rv_followed_stores"
+          app:orientation="@{`1`}"
+          app:span="@{`1`}"
+          tools:listitem="@layout/item_ads_home" />
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

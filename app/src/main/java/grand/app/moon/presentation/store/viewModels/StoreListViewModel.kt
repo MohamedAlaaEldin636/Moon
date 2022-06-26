@@ -68,7 +68,7 @@ class StoreListViewModel @Inject constructor(
   init {
     adapter.isLogin = isLoggin
     adapter.useCase = storeUseCase
-
+    adapter.grid = Constants.GRID_2
   }
 
   val gridOne = ObservableBoolean(false)
@@ -104,7 +104,7 @@ class StoreListViewModel @Inject constructor(
         notifyPropertyChanged(BR.page)
       }
       request.page = page
-      Log.d(TAG, "callService: ${request.city_ids.size}")
+//      Log.d(TAG, "callService: ${request.city_ids.size}")
       job = storeUseCase.getStores(request)
         .onEach {
           response.value = it
@@ -118,7 +118,7 @@ class StoreListViewModel @Inject constructor(
     val uri = Uri.Builder()
       .scheme("filter-sort-report")
       .authority("grand.app.moon.filterSortDialog")
-      .appendPath(request.orderBy.toString())
+      .appendPath(request.order_by.toString())
       .appendPath(FilterDialog.STORE.toString())
       .build()
     val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
@@ -128,7 +128,7 @@ class StoreListViewModel @Inject constructor(
   fun map(v: View){
     val item = SubCategoryResponse()
     val action = StoreListFragmentDirections.actionStoreListFragmentToMapFragment(item)
-    action.orderBy = request.orderBy
+    action.orderBy = request.order_by
     v.findNavController().navigate(action)
 //    val uri = Uri.Builder()
 //      .scheme("map")

@@ -5,7 +5,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
-import com.maproductions.mohamedalaa.shared.core.extensions.inflateLayout
+import grand.app.moon.core.extenstions.inflateLayout
 import grand.app.moon.R
 import grand.app.moon.databinding.ItemRetryAbleErrorBinding
 import grand.app.moon.databinding.ItemText2Binding

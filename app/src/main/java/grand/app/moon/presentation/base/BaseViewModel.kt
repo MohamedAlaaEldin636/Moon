@@ -460,6 +460,8 @@ open class BaseViewModel : ViewModel(), Observable {
           )
         }
       }
+      intent.data = null
+      intent.action = null
     } catch (exception: Exception) {
       exception.printStackTrace()
     }

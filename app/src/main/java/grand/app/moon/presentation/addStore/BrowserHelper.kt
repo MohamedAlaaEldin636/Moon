@@ -16,6 +16,13 @@ open class BrowserHelper {
     return false
   }
 
+  fun isUser(url: String): Boolean{
+    logoutUrls.forEach {
+      if (url.contains(it)) return true
+    }
+    return false
+  }
+
   fun lastUrl(): String {
     return this.lastUrl
   }

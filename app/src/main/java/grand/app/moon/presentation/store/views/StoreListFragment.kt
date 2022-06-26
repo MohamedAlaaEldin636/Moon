@@ -41,9 +41,9 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.request.orderBy = args.orderBy
+    viewModel.request.order_by = args.orderBy
     if(args.categoryId != -1)
-      viewModel.request.category_ids.add(args.categoryId)
+      viewModel.request.categoryId.add(args.categoryId)
     viewModel.callService()
   }
 
@@ -53,12 +53,11 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
       if(bundle.containsKey(Constants.STORE_FILTER)) {
         viewModel.reset()
         viewModel.request = bundle.getSerializable(Constants.STORE_FILTER) as StoreFilterRequest
-        Log.d(TAG, "onViewCreated: ${viewModel.request.city_ids.size}")
         viewModel.adapter.type = 4
         viewModel.callService()
       }
       if(bundle.containsKey(Constants.SORT_BY)) {
-        viewModel.request.orderBy = bundle.getInt(Constants.SORT_BY)
+        viewModel.request.order_by = bundle.getInt(Constants.SORT_BY)
         viewModel.reset()
         viewModel.callService()
       }

@@ -1,18 +1,11 @@
 package grand.app.moon.data.remote
 
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
-import com.google.gson.JsonSyntaxException
 import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
-import com.maproductions.mohamedalaa.shared.core.extensions.loginPage
-import com.maproductions.mohamedalaa.shared.core.extensions.logout
-import com.onesignal.OneSignal
-import grand.app.moon.appMoonHelper.ThirdPartyHelper
+import grand.app.moon.core.extenstions.loginPage
+import grand.app.moon.core.extenstions.logout
 import grand.app.moon.core.MyApplication
-import grand.app.moon.core.extenstions.logoutCometChat
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.ErrorResponse
 import grand.app.moon.domain.utils.FailureStatus

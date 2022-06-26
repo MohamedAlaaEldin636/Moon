@@ -70,13 +70,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
           Constants.COUNTRY
         )
       )
-      list.add(
-        MoreItem(
-          getString(R.string.social_media),
-          getMyDrawable(R.drawable.ic_social_settings),
-          Constants.SOCIAL
-        )
-      )
+//      list.add(
+//        MoreItem(
+//          getString(R.string.social_media),
+//          getMyDrawable(R.drawable.ic_social_settings),
+//          Constants.SOCIAL
+//        )
+//      )
       list.add(
         MoreItem(
           getString(R.string.register_as_provider),

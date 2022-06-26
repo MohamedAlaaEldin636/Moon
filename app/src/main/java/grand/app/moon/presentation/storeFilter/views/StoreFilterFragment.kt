@@ -35,7 +35,6 @@ class StoreFilterFragment : BaseFragment<FragmentStoreFilterBinding>() {
     Log.d(TAG, "setBindingVariables: ")
     viewModel.args = args
     binding.viewModel = viewModel
-    viewModel.init()
   }
 
   private  val TAG = "StoreFilterFragment"
@@ -49,9 +48,7 @@ class StoreFilterFragment : BaseFragment<FragmentStoreFilterBinding>() {
         viewModel.args?.let {
           Log.d(TAG, "setupObservers: LET")
           val bundle = Bundle()
-          it.storeFilter.city_ids = ArrayList(viewModel.cityAdapter.selected)
-          it.storeFilter.category_ids = ArrayList(viewModel.categoriesAdapter.selected)
-          bundle.putSerializable(Constants.STORE_FILTER,it.storeFilter)
+          bundle.putSerializable(Constants.STORE_FILTER,viewModel.request)
           setFragmentResult(Constants.BUNDLE, bundle)
         }
         backToPreviousScreen()

@@ -11,10 +11,9 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.models.User
-import com.maproductions.mohamedalaa.shared.core.extensions.convertToString
+import grand.app.moon.core.extenstions.convertToString
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
@@ -40,7 +39,6 @@ import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.openBrowser
-import grand.app.moon.presentation.explore.ExploreFragmentDirections
 import grand.app.moon.presentation.explore.adapter.ExploreGridEqualAdapter
 import grand.app.moon.presentation.store.views.StoreDetailsFragmentDirections
 import grand.app.moon.presentation.subCategory.PropertiesAdapter

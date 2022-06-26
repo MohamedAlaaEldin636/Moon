@@ -1,37 +1,19 @@
 package grand.app.moon.presentation.auth.profile
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.hbb20.CountryCodePicker
-import com.maproductions.mohamedalaa.shared.core.extensions.checkSelfPermissionGranted
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
-import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.FragmentCropBinding
-import grand.app.moon.databinding.FragmentProfileBinding
-import grand.app.moon.domain.explore.entity.ExploreListPaginateData
-import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
-import kotlinx.coroutines.flow.collect
 import java.io.ByteArrayOutputStream
 import java.util.*
 

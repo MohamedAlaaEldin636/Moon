@@ -16,8 +16,8 @@ class HomeUseCase @Inject constructor(
   private val homeRepository: HomeRepository,
 ) {
 
-  fun home(): Flow<Resource<BaseResponse<HomeResponse>>> = flow {
-    emit(Resource.Loading)
+  fun home(showProgress: Boolean = true): Flow<Resource<BaseResponse<HomeResponse>>> = flow {
+    if(showProgress) emit(Resource.Loading)
     val result = homeRepository.home()
     emit(result)
   }.flowOn(Dispatchers.IO)
