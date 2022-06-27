@@ -54,6 +54,7 @@ class SocialAdapter: RecyclerView.Adapter<SocialAdapter.ViewHolder>() {
     array.addAll(insertList)
     Log.d(TAG, "insertData: "+size)
 //    notifyItemRangeInserted(size,array.size)
+    differ.submitList(null)
     differ.submitList(array)
     notifyDataSetChanged()
   }

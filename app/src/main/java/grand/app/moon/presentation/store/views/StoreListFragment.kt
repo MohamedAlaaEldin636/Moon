@@ -9,18 +9,22 @@ import android.widget.TextView
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.maproductions.mohamedalaa.shared.core.extensions.actOnGetIfNotInitialValueOrGetLiveData
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.NavHomeDirections
+import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.FragmentExploreListBinding
 import grand.app.moon.databinding.FragmentStoreFollowedListBinding
 import grand.app.moon.databinding.FragmentStoreListBinding
+import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.store.entity.StoreFilterRequest
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.Constants
@@ -49,8 +53,11 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    Log.d(TAG, "onViewCreated: HERERE")
     setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
+      Log.d(TAG, "onViewCreated: HERE")
       if(bundle.containsKey(Constants.STORE_FILTER)) {
+        Log.d(TAG, "onViewCreated: THERE")
         viewModel.reset()
         viewModel.request = bundle.getSerializable(Constants.STORE_FILTER) as StoreFilterRequest
         viewModel.adapter.type = 4
@@ -62,6 +69,23 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
         viewModel.callService()
       }
     }
+
+
+    actOnGetIfNotInitialValueOrGetLiveData(
+      Constants.STORE_FILTER,
+      FilterResultRequest(),
+      viewLifecycleOwner,
+      { it != null }
+    ) {
+      it?.let { filterRequest ->
+//        viewModel.reset()
+//        viewModel.request = filterRequest
+//        viewModel.adapter.type = 4
+//        viewModel.callService()
+      }
+
+    }
+
   }
 
   override

@@ -91,8 +91,18 @@ class StoreListViewModel @Inject constructor(
 
 
   fun storeFilter(v: View) {
-    v.findNavController()
-      .navigate(StoreListFragmentDirections.actionStoreListFragmentToStoreFilterFragment(request))
+//    v.findNavController()
+//      .navigate(StoreListFragmentDirections.actionStoreListFragmentToStoreFilterFragment(request))
+
+    val uri = Uri.Builder()
+      .scheme("storeFilter")
+      .authority("grand.app.moon.store.filter")
+      .build()
+
+    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+    v.findNavController().navigate(request)
+
+
   }
 
   fun callService() {

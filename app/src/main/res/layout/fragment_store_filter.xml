@@ -80,93 +80,94 @@
           android:layout_height="match_parent"
           android:layout_marginTop="@dimen/dimen16"
           app:adapter="@{viewModel.adapter}"
+          tools:visibility="gone"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintTop_toTopOf="parent"
           app:orientation="@{`1`}"
           app:span="@{`1`}"
           tools:listitem="@layout/item_filter" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-          style="@style/boldFont"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen16"
-          android:layout_marginTop="@dimen/dimen25"
-          android:layout_marginEnd="@dimen/dimen16"
-          android:layout_marginBottom="@dimen/dimen4"
-          android:text="@string/sort_by"
-          android:textAlignment="viewEnd"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-          android:textColor="@color/black"
-          android:textSize="@dimen/text_size16"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          tools:text="@string/sort_by" />
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--          style="@style/boldFont"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:layout_marginStart="@dimen/dimen16"-->
+<!--          android:layout_marginTop="@dimen/dimen25"-->
+<!--          android:layout_marginEnd="@dimen/dimen16"-->
+<!--          android:layout_marginBottom="@dimen/dimen4"-->
+<!--          android:text="@string/sort_by"-->
+<!--          android:textAlignment="viewEnd"-->
+<!--          android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+<!--          android:textColor="@color/black"-->
+<!--          android:textSize="@dimen/text_size16"-->
+<!--          app:layout_constraintBottom_toBottomOf="parent"-->
+<!--          app:layout_constraintStart_toStartOf="parent"-->
+<!--          app:layout_constraintTop_toTopOf="parent"-->
+<!--          tools:text="@string/sort_by" />-->
 
-        <com.google.android.material.card.MaterialCardView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen16"
-          android:layout_marginEnd="@dimen/dimen16"
-          app:cardCornerRadius="@dimen/dimen6"
-          app:cardElevation="@dimen/dimen1"
-          card_view:cardUseCompatPadding="true">
-
-
-          <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dimen16"
-            app:adapter="@{viewModel.adapterSort}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:orientation="@{`1`}"
-            app:span="@{`1`}"
-            tools:listitem="@layout/item_report" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <androidx.appcompat.widget.AppCompatTextView
-          style="@style/boldFont"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen16"
-          android:layout_marginTop="@dimen/dimen25"
-          android:layout_marginEnd="@dimen/dimen16"
-          android:layout_marginBottom="@dimen/dimen4"
-          android:text="@string/other_options"
-          android:textAlignment="viewEnd"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-          android:textColor="@color/black"
-          android:textSize="@dimen/text_size16"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          tools:text="@string/contact_us" />
-
-        <com.google.android.material.card.MaterialCardView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/dimen16"
-          android:layout_marginEnd="@dimen/dimen16"
-          app:cardCornerRadius="@dimen/dimen6"
-          app:cardElevation="@dimen/dimen1"
-          card_view:cardUseCompatPadding="true">
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:layout_marginStart="@dimen/dimen16"-->
+<!--          android:layout_marginEnd="@dimen/dimen16"-->
+<!--          app:cardCornerRadius="@dimen/dimen6"-->
+<!--          app:cardElevation="@dimen/dimen1"-->
+<!--          card_view:cardUseCompatPadding="true">-->
 
 
-          <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dimen16"
-            app:adapter="@{viewModel.adapterAdsType}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:orientation="@{`1`}"
-            app:span="@{`1`}"
-            tools:listitem="@layout/item_filter" />
+<!--          <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="@dimen/dimen16"-->
+<!--            app:adapter="@{viewModel.adapterSort}"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:orientation="@{`1`}"-->
+<!--            app:span="@{`1`}"-->
+<!--            tools:listitem="@layout/item_report" />-->
 
-        </com.google.android.material.card.MaterialCardView>
+<!--        </com.google.android.material.card.MaterialCardView>-->
+
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--          style="@style/boldFont"-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:layout_marginStart="@dimen/dimen16"-->
+<!--          android:layout_marginTop="@dimen/dimen25"-->
+<!--          android:layout_marginEnd="@dimen/dimen16"-->
+<!--          android:layout_marginBottom="@dimen/dimen4"-->
+<!--          android:text="@string/other_options"-->
+<!--          android:textAlignment="viewEnd"-->
+<!--          android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+<!--          android:textColor="@color/black"-->
+<!--          android:textSize="@dimen/text_size16"-->
+<!--          app:layout_constraintBottom_toBottomOf="parent"-->
+<!--          app:layout_constraintStart_toStartOf="parent"-->
+<!--          app:layout_constraintTop_toTopOf="parent"-->
+<!--          tools:text="@string/contact_us" />-->
+
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--          android:layout_width="match_parent"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:layout_marginStart="@dimen/dimen16"-->
+<!--          android:layout_marginEnd="@dimen/dimen16"-->
+<!--          app:cardCornerRadius="@dimen/dimen6"-->
+<!--          app:cardElevation="@dimen/dimen1"-->
+<!--          card_view:cardUseCompatPadding="true">-->
+
+
+<!--          <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="@dimen/dimen16"-->
+<!--            app:adapter="@{viewModel.adapterAdsType}"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:orientation="@{`1`}"-->
+<!--            app:span="@{`1`}"-->
+<!--            tools:listitem="@layout/item_filter" />-->
+
+<!--        </com.google.android.material.card.MaterialCardView>-->
 
 
         <androidx.appcompat.widget.AppCompatTextView

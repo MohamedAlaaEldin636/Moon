@@ -342,13 +342,13 @@
       app:argType="integer"
       android:defaultValue="-1" />
 
-    <action
-      android:id="@+id/action_storeListFragment_to_storeFilterFragment"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/storeFilterFragment" />
+<!--    <action-->
+<!--      android:id="@+id/action_storeListFragment_to_storeFilterFragment"-->
+<!--      app:enterAnim="@anim/anim_slide_in_right"-->
+<!--      app:exitAnim="@anim/anim_slide_out_left"-->
+<!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
+<!--      app:popExitAnim="@anim/anim_slide_out_right"-->
+<!--      app:destination="@id/storeFilterFragment" />-->
     <action
       android:id="@+id/action_storeListFragment_to_webFragment2"
       app:enterAnim="@anim/anim_slide_in_right"
@@ -371,15 +371,17 @@
       android:autoVerify="true"
       app:uri="storeList://grand.app.moon.store.List/{title}/{order_by}/{category_id}" />
 
+
+
   </fragment>
-  <fragment
-    android:id="@+id/storeFilterFragment"
-    android:name="grand.app.moon.presentation.storeFilter.views.StoreFilterFragment"
-    android:label="@string/filter_search">
-    <argument
-      android:name="store_filter"
-      app:argType="grand.app.moon.domain.store.entity.StoreFilterRequest" />
-  </fragment>
+<!--  <fragment-->
+<!--    android:id="@+id/storeFilterFragment"-->
+<!--    android:name="grand.app.moon.presentation.storeFilter.views.StoreFilterFragment"-->
+<!--    android:label="@string/filter_search">-->
+<!--    <argument-->
+<!--      android:name="store_filter"-->
+<!--      app:argType="grand.app.moon.domain.store.entity.StoreFilterRequest" />-->
+<!--  </fragment>-->
 <!--  <dialog-->
 <!--    android:id="@+id/filterSingleSelectDialog"-->
 <!--    android:name="grand.app.moon.presentation.filter.dialog.FilterSingleSelectDialog"-->

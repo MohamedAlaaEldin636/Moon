@@ -28,7 +28,7 @@ import grand.app.moon.presentation.category.adapter.CategoriesAdapter
 import grand.app.moon.presentation.category.adapter.CategoriesFilterAdapter
 import grand.app.moon.presentation.filter.FILTER_TYPE
 import grand.app.moon.presentation.filter.viewModels.FilterBaseViewModel
-import grand.app.moon.presentation.storeFilter.views.StoreFilterFragmentArgs
+//import grand.app.moon.presentation.storeFilter.views.StoreFilterFragmentArgs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
@@ -45,13 +45,13 @@ class StoreFilterViewModel @Inject constructor(
   private val _countriesPasswordResponse =
     MutableStateFlow<Resource<BaseResponse<List<Country>>>>(Resource.Default)
   val countriesPasswordResponse = _countriesPasswordResponse
-  var args: StoreFilterFragmentArgs? = null
+//  var args: StoreFilterFragmentArgs? = null
 
-  @Bindable
-  val cityAdapter: CityAdapter = CityAdapter()
+//  @Bindable
+//  val cityAdapter: CityAdapter = CityAdapter()
 
-  @Bindable
-  val categoriesAdapter = CategoriesFilterAdapter()
+//  @Bindable
+//  val categoriesAdapter = CategoriesFilterAdapter()
 
   @Bindable
   var countryId = accountRepository.getKeyFromLocal(Constants.COUNTRY_ID)
@@ -86,9 +86,9 @@ class StoreFilterViewModel @Inject constructor(
 //    addPriceText {
 //      list.add(it)
 //    }
-//    addSortBy{
-//      list.add(it)
-//    }
+    addSortBy{
+      list.add(it)
+    }
 //    addAnotherOptions{
 //      list.add(it)
 //    }

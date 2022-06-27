@@ -98,5 +98,23 @@
       android:name="filterRequest"
       app:argType="grand.app.moon.domain.filter.entitiy.FilterResultRequest" />
   </fragment>
+  <fragment
+    android:id="@+id/storeFilterFragment"
+    android:name="grand.app.moon.presentation.storeFilter.views.StoreFilterFragment"
+    android:label="@string/filter" >
+    <action
+      android:id="@+id/action_storeFilterFragment_to_filterSingleSelectDialog"
+      app:destination="@id/filterSingleSelectDialog" />
+    <action
+      android:id="@+id/action_storeFilterFragment_to_filterMultiSelectDialog"
+      app:destination="@id/filterMultiSelectDialog" />
+
+    <deepLink
+      android:id="@+id/storeFilter"
+      android:autoVerify="true"
+      app:uri="storeFilter://grand.app.moon.store.filter" />
+
+
+  </fragment>
 
 </navigation>
