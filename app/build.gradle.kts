@@ -92,7 +92,8 @@ dependencies {
   //Room
   implementation(Libraries.roomVersion)
   implementation("com.google.firebase:firebase-auth-ktx:21.0.3")
-  kapt(Libraries.roomCompiler)
+    implementation("com.google.android.play:app-update-ktx:+")
+    kapt(Libraries.roomCompiler)
   implementation(Libraries.roomktx)
   implementation(Libraries.roomCommon)
 

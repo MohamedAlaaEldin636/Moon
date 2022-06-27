@@ -32,7 +32,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.about_moon),
           getMyDrawable(R.drawable.ic_about_moon_settings),
-          "https://souqmoon.com/${viewModel.lang}/about"
+          "https://${viewModel.countryIso}.souqmoon.com/${viewModel.lang}/about"
         )
       )
       list.add(
@@ -46,14 +46,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.terms),
           getMyDrawable(R.drawable.ic_terms_settings),
-          "https://souqmoon.com/${viewModel.lang}/terms"
+          "https://${viewModel.countryIso}.souqmoon.com/${viewModel.lang}/terms"
         )
       )
       list.add(
         MoreItem(
           getString(R.string.help),
           getMyDrawable(R.drawable.ic_help_settings),
-          "https://souqmoon.com/${viewModel.lang}/faq/questions/help"
+          "https://${viewModel.countryIso}.souqmoon.com/${viewModel.lang}/faq/questions/help"
         )
       )
       list.add(
@@ -90,7 +90,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
           getString(R.string.share_app),
           getMyDrawable(R.drawable.ic_share_settings),
           Constants.SHARE,
-          )
+        )
       )
 
 
@@ -103,13 +103,16 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         )
       )
     }
+    list.forEach {
+      Log.d(TAG, "setBindingVariables: ${it.id}")
+    }
     viewModel.moreAdapter.differ.submitList(moreItems)
     setData()
 
-    viewModel.moreAdapter.clickEvent.observe(this,{
+    viewModel.moreAdapter.clickEvent.observe(this, {
       Log.d(TAG, "setBindingVariables: here")
-      if(it?.id is String){
-        when(it.id){
+      if (it?.id is String) {
+        when (it.id) {
           Constants.GOOGLE_PLAY -> rateApp()
           Constants.SHARE -> {
             val intent = Intent(Intent.ACTION_SEND)
@@ -127,12 +130,19 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             )
           }
           else -> {
-            navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToWebFragment(it.title!!, it.id.toString())) }
+            Log.d(TAG, "setBindingVariables: ${it.id}")
+            navigateSafe(
+              SettingsFragmentDirections.actionSettingsFragmentToWebFragment(
+                it.title!!,
+                it.id.toString()
+              )
+            )
+          }
         }
         Log.d(TAG, "setBindingVariables: ")
 //        openUrl(it.id.toString())
-      }else {
-        if(it?.id != -1) {
+      } else {
+        if (it?.id != -1) {
 //          Log.d(TAG, "setBindingVariables: ${it.id}")
           when (it?.id) {
             Constants.CONTACT -> {
@@ -169,7 +179,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
   override fun onStop() {
     super.onStop()
-    viewModel.moreAdapter.clickEvent.value = MoreItem(icon = null,id = -1)
+    viewModel.moreAdapter.clickEvent.value = MoreItem(icon = null, id = -1)
   }
 
   val list = ArrayList<MoreItem>()

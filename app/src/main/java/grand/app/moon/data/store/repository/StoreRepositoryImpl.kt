@@ -1,6 +1,7 @@
 package grand.app.moon.data.store.repository
 
 import grand.app.moon.data.store.data_source.StoreRemoteDataSource
+import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.store.entity.*
 import grand.app.moon.domain.store.repository.StoreRepository
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class StoreRepositoryImpl @Inject constructor(
 
 
   override
-  suspend fun getStores(request: StoreFilterRequest) = remoteDataSource.getStores(request)
+  suspend fun getStores(request: FilterResultRequest) = remoteDataSource.getStores(request)
 
 
   override

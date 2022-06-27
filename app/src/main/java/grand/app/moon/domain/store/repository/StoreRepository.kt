@@ -1,4 +1,5 @@
 package grand.app.moon.domain.store.repository
+import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.*
 import grand.app.moon.domain.user.entity.UserListPaginateData
@@ -17,7 +18,7 @@ interface StoreRepository {
   suspend fun report(page: ReportStoreRequest): Resource<BaseResponse<*>>
   suspend fun reportAds(page: ReportAdsRequest): Resource<BaseResponse<*>>
 
-  suspend fun getStores(request: StoreFilterRequest): Resource<BaseResponse<StoreListPaginateData>>
+  suspend fun getStores(request: FilterResultRequest): Resource<BaseResponse<StoreListPaginateData>>
   suspend fun share(request: ShareRequest): Resource<BaseResponse<*>>
   suspend fun getUsersViewFollowing(id:Int , type: String,page: Int): Resource<BaseResponse<UserListPaginateData>>
   suspend fun storyAction(request: StoryRequest): Resource<BaseResponse<*>>

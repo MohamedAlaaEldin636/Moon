@@ -1,12 +1,12 @@
 package grand.app.moon.presentation.addStore
 
 open class BrowserHelper {
-  var lastUrl = "https://souqmoon.com/store/register"
+  var lastUrl = ""
   val logoutUrls = mutableListOf<String>().also {
-    it.add("https://souqmoon.com/store/login")
-    it.add("https://souqmoon.com/store/register")
-    it.add("https://souqmoon.com/store/logout")
-    it.add("https://souqmoon.com/store/forget_password")
+    it.add("souqmoon.com/store/login")
+    it.add("souqmoon.com/store/register")
+    it.add("souqmoon.com/store/logout")
+    it.add("souqmoon.com/store/forget_password")
   }
 
   fun isUser(): Boolean {

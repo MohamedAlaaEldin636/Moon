@@ -2,6 +2,7 @@ package grand.app.moon.data.store.data_source
 
 import android.util.Log
 import grand.app.moon.data.remote.BaseRemoteDataSource
+import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.store.entity.*
 import grand.app.moon.presentation.filter.FILTER_TYPE
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class StoreRemoteDataSource @Inject constructor(private val apiService: StoreSer
   }
 
   private val TAG = "StoreRemoteDataSource"
-  suspend fun getStores(request: StoreFilterRequest) = safeApiCall {
+  suspend fun getStores(request: FilterResultRequest) = safeApiCall {
     val map = getParameters(request).toMutableMap()
 //    if(map.containsKey("properties"))
 //      Log.d(TAG, "filterResults: HAVE")

@@ -9,7 +9,7 @@ import grand.app.moon.domain.settings.models.NotificationData
 import grand.app.moon.domain.settings.models.SettingsData
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.more.SocialFragmentDirections
+import grand.app.moon.presentation.contactUs.ContactUsFragmentDirections
 import grand.app.moon.presentation.notfication.NotificationFragment
 
 class ItemSocialViewModel constructor(val model: SettingsData) : BaseViewModel() {
@@ -23,6 +23,11 @@ class ItemSocialViewModel constructor(val model: SettingsData) : BaseViewModel()
     ];
    */
   fun submit(v: View) {
-    v.findNavController().navigate(SocialFragmentDirections.actionSocialFragmentToWebFragment(model.title,model.content))
+    v.findNavController().navigate(
+      ContactUsFragmentDirections.actionContactUsFragmentToWebFragment(
+        model.title,
+        model.content
+      )
+    )
   }
 }

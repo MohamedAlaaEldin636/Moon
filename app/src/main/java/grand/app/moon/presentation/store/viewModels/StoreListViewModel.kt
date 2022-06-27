@@ -14,6 +14,7 @@ import grand.app.moon.R
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.entity.StoreFilterRequest
 import grand.app.moon.domain.store.entity.StoreListPaginateData
@@ -51,7 +52,8 @@ class StoreListViewModel @Inject constructor(
   var isLast = false
   var isLoggin = userLocalUseCase.isLoggin()
 
-  var request = StoreFilterRequest()
+//  var request = StoreFilterRequest()
+  var request = FilterResultRequest()
 
   @Bindable
   var adapter = StoreAdapter()

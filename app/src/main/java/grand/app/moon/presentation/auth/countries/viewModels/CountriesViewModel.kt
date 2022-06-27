@@ -2,7 +2,6 @@ package grand.app.moon.presentation.auth.countries.viewModels
 
 import android.util.Log
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
@@ -14,15 +13,12 @@ import grand.app.moon.BR
 //import grand.app.moon.presentation.auth.countries.adapters.CountriesAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import grand.app.moon.R
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.presentation.auth.countries.CountriesFragmentArgs
 import grand.app.moon.presentation.auth.countries.CountriesFragmentDirections
 import grand.app.moon.presentation.auth.countries.adapters.CountriesAdapter
-import grand.app.moon.presentation.auth.language.LanguageFragmentArgs
-import grand.app.moon.presentation.auth.language.LanguageFragmentDirections
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -82,9 +78,11 @@ class CountriesViewModel @Inject constructor(
     notifyPropertyChanged(BR.adapter)
   }
 
-  fun updateCountry(countryId: String) {
-    accountRepository.saveKeyToLocal(Constants.COUNTRY_ID, countryId)
-    this.countryId = countryId
+  fun updateCountry(country: Country) {
+    accountRepository.saveKeyToLocal(Constants.COUNTRY_ID, country.id.toString())
+    accountRepository.saveKeyToLocal(Constants.COUNTRY_ISO, country.isoCode)
+    Log.d(TAG, "updateCountry: ${country.isoCode}")
+    this.countryId = country.id.toString()
     notifyPropertyChanged(BR.countryId)
   }
 

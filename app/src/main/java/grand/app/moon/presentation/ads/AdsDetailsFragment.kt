@@ -29,7 +29,6 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
 
   val viewModel: AdsDetailsViewModel by viewModels()
 
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->

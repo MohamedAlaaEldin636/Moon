@@ -45,6 +45,7 @@ class WebFragment : BottomSheetDialogFragment() {
     if (!args.url.contains("snapchat"))
       binding.webview.settings.javaScriptEnabled = true
     binding.webview.webViewClient = AppWebViewClients(binding.progress)
+    Log.d(TAG, "onCreateView: ${args.url}")
     binding.webview.loadUrl(args.url)
     return binding.root
   }

@@ -1,9 +1,11 @@
 package grand.app.moon.presentation.base
 
 import android.content.Context
+import android.content.IntentSender
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -16,6 +18,8 @@ import com.facebook.FacebookSdk.sdkInitialize
 import com.facebook.FacebookSdk.setAdvertiserIDCollectionEnabled
 import com.facebook.FacebookSdk.setApplicationId
 import com.facebook.FacebookSdk.setAutoInitEnabled
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 //import com.maproductions.mohamedalaa.shared.core.extensions.getLanguage
 import com.zeugmasolutions.localehelper.LocaleHelper
 import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegate
@@ -23,6 +27,7 @@ import com.zeugmasolutions.localehelper.LocaleHelperActivityDelegateImpl
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
 import grand.app.moon.appMoonHelper.language.MyContextWrapper
 import grand.app.moon.core.MyApplication
+import grand.app.moon.helpers.update.ImmediateUpdateActivity
 import java.util.Locale
 
 abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
@@ -67,6 +72,10 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
 
     LanguagesHelper.changeLanguage(context,language)
 
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    super.onCreate(savedInstanceState, persistentState)
   }
 
 
@@ -129,11 +138,25 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
     localeDelegate.setLocale(this, Locale(language))
   }
 
+
+
+  fun updateAuto(immediateUpdateActivity: ImmediateUpdateActivity){
+    immediateUpdateActivity.getAppUpdateManager()!!.appUpdateInfo.addOnSuccessListener { it ->
+      if (it.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+        try {
+          immediateUpdateActivity.getAppUpdateManager()!!
+            .startUpdateFlowForResult(it, AppUpdateType.IMMEDIATE, this, 381)
+        } catch (e: IntentSender.SendIntentException) {
+          e.printStackTrace()
+        }
+      }
+    }
+  }
+
   override
   fun onSupportNavigateUp(): Boolean {
     return navController.value?.navigateUp()!! || super.onSupportNavigateUp()
   }
-
   override
   fun getDelegate() = localeDelegate.getAppCompatDelegate(super.getDelegate())
 }

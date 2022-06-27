@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.more
 
+import android.util.Log
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import grand.app.moon.domain.utils.BaseResponse
@@ -20,7 +21,6 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
   var userLocalUseCase: UserLocalUseCase,
   private val loginUseCase: LogInUseCase,
-
   val accountRepository: AccountRepository
 ) : BaseViewModel() {
   @Bindable
@@ -31,8 +31,11 @@ class SettingsViewModel @Inject constructor(
 
   private val TAG = "SettingsViewModel"
   val lastUrlStorage = accountRepository.getKeyFromLocal(Constants.LAST_URL)
+  val countryIso = accountRepository.getKeyFromLocal(Constants.COUNTRY_ISO)
 
   init {
+    browserHelper.lastUrl = "https://${countryIso}.souqmoon.com/store/register"
+    Log.d(TAG, ": ${countryIso}")
     if (lastUrlStorage.isNotEmpty() && !browserHelper.isUser(lastUrlStorage))
       browserHelper.lastUrl = lastUrlStorage
 

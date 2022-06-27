@@ -2,9 +2,7 @@ package grand.app.moon.presentation.auth.countries
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
-import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.auth.countries.viewModels.CountriesViewModel
@@ -53,7 +51,7 @@ class CountriesFragment : BaseFragment<FragmentCountriesBinding>() {
     }
 
     viewModel.adapter.changeEvent.observe(viewLifecycleOwner, { country ->
-      viewModel.updateCountry(country.id.toString())
+      viewModel.updateCountry(country)
     })
 
 

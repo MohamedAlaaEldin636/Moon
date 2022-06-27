@@ -31,6 +31,7 @@ import com.onesignal.OSNotificationOpenedResult
 
 import com.onesignal.OneSignal
 import com.onesignal.OneSignal.OSNotificationOpenedHandler
+import grand.app.moon.helpers.update.ImmediateUpdateActivity
 
 
 @AndroidEntryPoint
@@ -47,9 +48,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   fun setUpBottomNavigation() {
     setUpBottomNavigationWithGraphs()
   }
+  var immediateUpdateActivity: ImmediateUpdateActivity? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    immediateUpdateActivity = ImmediateUpdateActivity(this)
 //    val lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
 //    if (lang.isEmpty()) {
 //      LocaleHelper.setLocale(this, Locale(lang))
@@ -310,6 +313,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
   override fun onSupportNavigateUp(): Boolean {
     return nav.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    updateAuto(immediateUpdateActivity!!)
   }
 
 }

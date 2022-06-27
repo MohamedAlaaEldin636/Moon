@@ -75,6 +75,18 @@
 
   </fragment>
   <fragment
+    android:id="@+id/contactUsFragment"
+    android:name="grand.app.moon.presentation.contactUs.ContactUsFragment"
+    android:label="@string/contact_us" >
+    <action
+      android:id="@+id/action_contactUsFragment_to_webFragment"
+      app:enterAnim="@anim/anim_slide_in_right"
+      app:exitAnim="@anim/anim_slide_out_left"
+      app:popEnterAnim="@anim/anim_slide_in_left"
+      app:popExitAnim="@anim/anim_slide_out_right"
+      app:destination="@id/webFragment" />
+  </fragment>
+  <fragment
     android:id="@+id/languageFragment2"
     android:name="grand.app.moon.presentation.auth.language.LanguageFragment"
     android:label="@string/choose_language" >
@@ -104,11 +116,7 @@
   <fragment
     android:id="@+id/socialFragment"
     android:name="grand.app.moon.presentation.more.SocialFragment"
-    android:label="@string/social_media" >
-    <action
-      android:id="@+id/action_socialFragment_to_webFragment"
-      app:destination="@id/webFragment" />
-  </fragment>
+    android:label="@string/social_media" />
 
   <fragment
     android:id="@+id/adsListFragment"

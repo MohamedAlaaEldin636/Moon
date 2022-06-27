@@ -1,6 +1,7 @@
 package grand.app.moon.domain.store.use_case
 
 import android.util.Log
+import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.*
 import grand.app.moon.domain.store.repository.StoreRepository
@@ -43,7 +44,7 @@ class StoreUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
-  fun getStores(request: StoreFilterRequest): Flow<Resource<BaseResponse<StoreListPaginateData>>> = flow {
+  fun getStores(request: FilterResultRequest): Flow<Resource<BaseResponse<StoreListPaginateData>>> = flow {
     emit(Resource.Loading)
     val result = repository.getStores(request)
     emit(result)

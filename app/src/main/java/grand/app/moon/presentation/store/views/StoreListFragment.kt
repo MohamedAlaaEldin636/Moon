@@ -47,7 +47,7 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
     binding.viewModel = viewModel
     viewModel.request.order_by = args.orderBy
     if(args.categoryId != -1)
-      viewModel.request.categoryId.add(args.categoryId)
+      viewModel.request.categoryId = args.categoryId
     viewModel.callService()
   }
 
@@ -56,13 +56,13 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
     Log.d(TAG, "onViewCreated: HERERE")
     setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
       Log.d(TAG, "onViewCreated: HERE")
-      if(bundle.containsKey(Constants.STORE_FILTER)) {
-        Log.d(TAG, "onViewCreated: THERE")
-        viewModel.reset()
-        viewModel.request = bundle.getSerializable(Constants.STORE_FILTER) as StoreFilterRequest
-        viewModel.adapter.type = 4
-        viewModel.callService()
-      }
+//      if(bundle.containsKey(Constants.STORE_FILTER)) {
+//        Log.d(TAG, "onViewCreated: THERE")
+//        viewModel.reset()
+//        viewModel.request = bundle.getSerializable(Constants.STORE_FILTER) as StoreFilterRequest
+//        viewModel.adapter.type = 4
+//        viewModel.callService()
+//      }
       if(bundle.containsKey(Constants.SORT_BY)) {
         viewModel.request.order_by = bundle.getInt(Constants.SORT_BY)
         viewModel.reset()
@@ -78,10 +78,10 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
       { it != null }
     ) {
       it?.let { filterRequest ->
-//        viewModel.reset()
-//        viewModel.request = filterRequest
-//        viewModel.adapter.type = 4
-//        viewModel.callService()
+        viewModel.reset()
+        viewModel.request = filterRequest
+        viewModel.adapter.type = 4
+        viewModel.callService()
       }
 
     }

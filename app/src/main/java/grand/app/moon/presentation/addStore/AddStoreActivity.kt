@@ -11,4 +11,8 @@ class AddStoreActivity : BaseActivity<ActivityIntroBinding>() {
   override
   fun getLayoutId() = R.layout.activity_add_store
 
+
+  override fun onResume() {
+    super.onResume()
+  }
 }

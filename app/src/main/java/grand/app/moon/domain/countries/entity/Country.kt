@@ -25,6 +25,9 @@ data class Country(
   @SerializedName("lang")
   @Expose
   val lang: String = "",
+  @SerializedName("iso_code")
+  @Expose
+  val isoCode: String = "",
   @SerializedName("cities")
   @Expose
   val cities : List<Country> = arrayListOf(),

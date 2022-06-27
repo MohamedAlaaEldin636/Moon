@@ -175,10 +175,7 @@
       android:id="@+id/action_discoverFragment_to_nav_explore"
       app:destination="@id/nav_explore" />
   </fragment>
-  <fragment
-    android:id="@+id/contactUsFragment"
-    android:name="grand.app.moon.presentation.contactUs.ContactUsFragment"
-    android:label="@string/contact_us" />
+
   <include app:graph="@navigation/nav_category_list_ads" />
 
   <include app:graph="@navigation/nav_settings" />
