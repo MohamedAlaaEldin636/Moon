@@ -70,7 +70,7 @@ class StoreFilterFragment : BaseFragment<FragmentStoreFilterBinding>() {
 //        setFragmentResult(Constants.BUNDLE, bundle)
 //        backToPreviousScreen()
 
-
+        viewModel.request.checked = true
         val n = findNavController()
         n.navigateUp()
         n.currentBackStackEntry?.savedStateHandle?.set(

@@ -12,6 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentSettingsBinding
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.home.HomeActivity
+import grand.app.moon.presentation.intro.IntroActivity
 import java.util.ArrayList
 
 @AndroidEntryPoint
@@ -264,7 +266,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     viewModel.accountAdapter.clickEvent.observe(this, {
 //      Log.d(TAG, "setBindingVariables: here $it")
       if (it?.id is String) {
+        Log.d(TAG, "setData: ASDASSADDSA")
         when (it.id) {
+          
           Constants.PROFILE -> navigateSafe(SettingsFragmentDirections.actionMyAccountFragmentToProfileFragment())
           Constants.LOGIN -> openLoginActivity()
           Constants.LAST_ADS -> navigateSafe(
@@ -295,6 +299,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
           }
           Constants.LOGOUT -> {
             viewModel.logout()
+            logout()
+            openActivityAndClearStack(HomeActivity::class.java)
           }
         }
       }

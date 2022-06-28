@@ -64,6 +64,7 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
 //        viewModel.callService()
 //      }
       if(bundle.containsKey(Constants.SORT_BY)) {
+        Log.d(TAG, "onViewCreated: ASDASD")
         viewModel.request.order_by = bundle.getInt(Constants.SORT_BY)
         viewModel.reset()
         viewModel.callService()
@@ -78,10 +79,14 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
       { it != null }
     ) {
       it?.let { filterRequest ->
-        viewModel.reset()
-        viewModel.request = filterRequest
-        viewModel.adapter.type = 4
-        viewModel.callService()
+        Log.d(TAG, "onViewCreated: ASDASDSA")
+        if(filterRequest.checked) {
+          Log.d(TAG, "onViewCreated: WA")
+          viewModel.reset()
+          viewModel.request = filterRequest
+          viewModel.adapter.type = 4
+          viewModel.callService()
+        }
       }
 
     }
@@ -93,6 +98,7 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
     setRecyclerViewScrollListener()
     binding.appCompatEditText.setOnEditorActionListener(TextView.OnEditorActionListener { textView, i, keyEvent ->
       if (i == EditorInfo.IME_ACTION_SEARCH && textView.text.trim().isNotEmpty()) {
+        Log.d(TAG, "setUpViews: HEREE SEARCH")
         viewModel.reset()
         viewModel.adapter.type = 4
         viewModel.request.search =  textView.text.toString()
@@ -154,6 +160,7 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
       override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)
         if (!recyclerView.canScrollVertically(1)){
+          Log.d(TAG, "onScrollStateChanged: RECY")
           viewModel.callService()
         }
       }

@@ -37,5 +37,6 @@ class FilterResultRequest(
   var cityIds: ArrayList<Int>? = arrayListOf(),
   @SerializedName("area_ids")
   var areaIds: ArrayList<Int>? = arrayListOf(),
+  var checked:Boolean = false
 ) : Serializable {
 }
