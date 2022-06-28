@@ -31,6 +31,7 @@ import com.onesignal.OSNotificationOpenedResult
 
 import com.onesignal.OneSignal
 import com.onesignal.OneSignal.OSNotificationOpenedHandler
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
 
 
@@ -166,7 +167,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           hideTopBarControls()
           showText()
           binding.tvHomeTitle.text = destination.label
-          binding.icNotificationFilter.show()
+          if(isLogin()) binding.icNotificationFilter.show()
         }
         R.id.myAccountFragment -> {
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)

@@ -61,15 +61,15 @@ class ItemExploreViewModel constructor(
 //      v.context.startActivity(Intent(v.context, AuthActivity::class.java))
 //      return
 //    }
-//    v.findNavController().navigate(
-//      R.id.userListFragment,
-//      bundleOf(
-//        "explore_id" to model.id,
-//        "title" to v.resources.getString(R.string.this_was_liked_by_users, model.likes),
-//        Constants.TabBarText to v.resources.getString(R.string.likes)
-//      ), Constants.NAVIGATION_OPTIONS
-//    )
-//    submitEventEvent.value = Constants.LIKES
+    v.findNavController().navigate(
+      R.id.userListFragment,
+      bundleOf(
+        "explore_id" to model.id,
+        "title" to v.resources.getString(R.string.this_was_liked_by_users, model.likes),
+        Constants.TabBarText to v.resources.getString(R.string.likes)
+      ), Constants.NAVIGATION_OPTIONS
+    )
+    submitEventEvent.value = Constants.LIKES
   }
 
   fun share(v: View) {
