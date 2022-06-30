@@ -190,18 +190,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           binding.tvHomeTitle.text = destination.label
           showText()
         }
-//        R.id.webFragment -> {
-//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
-////          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
-//          binding.tvHomeTitle.text = destination.label
-//          showTopBarControls()
-//          showText()
+        R.id.webFragment -> {
+          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
+          binding.tvHomeTitle.text = destination.label
+          hideTopBarControls()
+          binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+          binding.bottomNavigationView.show()
+          binding.imgHomeBottomBar.show()
+          binding.tvHomeTitle.text = arguments?.getString(Constants.TabBarText)
+          showText()
 //          binding.toolbar.hide()
-//        }
+        }
         R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings -> {
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
+
           showTopBarControls()
           showText()
 

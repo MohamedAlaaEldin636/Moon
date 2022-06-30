@@ -34,7 +34,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.about_moon),
           getMyDrawable(R.drawable.ic_about_moon_settings),
-          "https://${viewModel.countryIso}.souqmoon.com/${viewModel.lang}/about"
+          "https://${viewModel.countryIso}.souqmoon.com/${viewModel.lang}/mobile/about"
         )
       )
       list.add(
@@ -48,14 +48,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         MoreItem(
           getString(R.string.terms),
           getMyDrawable(R.drawable.ic_terms_settings),
-          "https://${viewModel.countryIso}.souqmoon.com/${viewModel.lang}/terms"
+          "https://${viewModel.countryIso}.souqmoon.com/${viewModel.lang}/mobile/terms"
         )
       )
       list.add(
         MoreItem(
           getString(R.string.help),
           getMyDrawable(R.drawable.ic_help_settings),
-          "https://${viewModel.countryIso}.souqmoon.com/${viewModel.lang}/faq/questions/help"
+          "https://${viewModel.countryIso}.souqmoon.com/${viewModel.lang}/mobile/help"
         )
       )
       list.add(

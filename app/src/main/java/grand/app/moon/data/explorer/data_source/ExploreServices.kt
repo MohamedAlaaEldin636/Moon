@@ -35,7 +35,7 @@ interface ExploreServices {
 
 
 
-  @GET("v1/users/{id}") //<--need api here osama
+  @GET("v1/explores/{id}/likes") //<--need api here osama
   suspend fun getUsers(@Path("id") id : Int,@Query("page") page : Int): BaseResponse<UserListPaginateData>
 
 }

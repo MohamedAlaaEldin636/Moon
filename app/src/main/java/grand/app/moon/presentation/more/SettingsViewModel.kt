@@ -34,7 +34,7 @@ class SettingsViewModel @Inject constructor(
   val countryIso = accountRepository.getKeyFromLocal(Constants.COUNTRY_ISO)
 
   init {
-    browserHelper.lastUrl = "https://${countryIso}.souqmoon.com/store/register"
+    browserHelper.lastUrl = "https://souqmoon.com/store/register"
     Log.d(TAG, ": ${countryIso}")
     if (lastUrlStorage.isNotEmpty() && !browserHelper.isUser(lastUrlStorage))
       browserHelper.lastUrl = lastUrlStorage

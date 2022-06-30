@@ -31,6 +31,7 @@ class ItemAdsHomeViewModel(val category: CategoryAdvertisement, adsRepository: A
 //    val builder = NavCategoryListAdsArgs.Builder()
 //    builder.tabBarText = category.name
     if(category.type != -1) {
+      Log.d(TAG, "showAll: HERERERERERER")
 //      builder.isSub = false
 //      builder.type = category.type
 //      v.findNavController()
