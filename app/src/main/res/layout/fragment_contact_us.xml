@@ -165,6 +165,7 @@
               android:layout_height="@dimen/dimen40"
               android:layout_centerInParent="true"
               android:layout_gravity="center"
+              android:onClick="@{ (v) -> viewModel.hide(v) }"
               android:background="@drawable/corner_silver"
               android:padding="@dimen/dimen10"
               app:defaultImage="@{viewModel.imageSelect}" />

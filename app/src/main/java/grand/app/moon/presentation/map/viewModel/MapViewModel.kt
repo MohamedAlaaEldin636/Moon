@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.domain.account.repository.AccountRepository
@@ -136,8 +137,10 @@ class MapViewModel @Inject constructor(
 
   fun whatsapp(v: View) {
     advertisement.get()?.let {
-      viewModelScope.launch(Dispatchers.IO) {
-        adsRepository.setInteraction(InteractionRequest(it.id.toString(), 7))
+      if(v.context.isLogin()) {
+        viewModelScope.launch(Dispatchers.IO) {
+          adsRepository.setInteraction(InteractionRequest(it.id.toString(), 7))
+        }
       }
       shareWhatsapp(v, it.title, it.description, it.country.country_code + it.phone)
     }
@@ -145,8 +148,10 @@ class MapViewModel @Inject constructor(
 
   fun phone(v: View) {
     advertisement.get()?.let {
-      viewModelScope.launch(Dispatchers.IO) {
-        adsRepository.setInteraction(InteractionRequest(it.id.toString(), 6))
+      if(v.context.isLogin()) {
+        viewModelScope.launch(Dispatchers.IO) {
+          adsRepository.setInteraction(InteractionRequest(it.id.toString(), 6))
+        }
       }
       advertisement.get()?.let {
         callPhone(v.context, it.country.country_code + it.phone)

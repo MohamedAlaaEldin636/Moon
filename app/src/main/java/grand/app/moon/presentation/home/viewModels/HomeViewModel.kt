@@ -24,6 +24,7 @@ import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
+import grand.app.moon.presentation.addStore.BrowserHelper
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter
@@ -56,6 +57,8 @@ class HomeViewModel @Inject constructor(
   val storiesResponse = _storiesResponse
 
 
+  val browserHelper = BrowserHelper()
+  
   var titleToolbar = MutableLiveData<String>("")
 
   @Bindable
@@ -79,6 +82,17 @@ class HomeViewModel @Inject constructor(
   lateinit var adsHomeAdapter: AdsHomeAdapter
 
   var isLoggin = userLocalUseCase.isLoggin()
+
+  init {
+    initIsStoreUser()
+  }
+
+  fun initIsStoreUser() {
+    val lastUrlStorage = accountRepository.getKeyFromLocal(Constants.LAST_URL)
+    browserHelper.lastUrl = "https://souqmoon.com/store/register"
+    if (lastUrlStorage.isNotEmpty() && !browserHelper.isUser(lastUrlStorage))
+      browserHelper.lastUrl = lastUrlStorage
+  }
 
   fun initAllServices() {
     storeAdapter.percentage = 51

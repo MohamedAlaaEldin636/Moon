@@ -173,7 +173,7 @@
           android:layout_width="@dimen/dimen40"
           android:layout_height="@dimen/dimen40"
           android:layout_margin="@dimen/dimen20"
-          android:onClick="@{ () -> viewModel.clickEvent(Constants.SHARE_IMAGE)}"
+          android:onClick="@{ (v) -> viewModel.share(v) }"
           android:src="@drawable/ic_share_primary"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/ic_fav" />
@@ -680,7 +680,6 @@
         android:layout_margin="@dimen/dimen5"
         android:layout_weight="1"
         android:background="@color/color55CD6C"
-
         android:gravity="center"
         android:onClick="@{(v) -> viewModel.whatsapp(v)}"
         android:text="@string/whatsapp"
@@ -698,7 +697,6 @@
         android:layout_weight="1"
         android:background="@color/colorPrimary"
         android:fontFamily="@font/regular"
-
         android:gravity="center"
         android:onClick="@{(v) -> viewModel.phone(v)}"
         android:text="@string/call"

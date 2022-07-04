@@ -34,9 +34,9 @@ import java.util.*
 
 @AndroidEntryPoint
 class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
-  var filePath: ValueCallback<Array<Uri>>? = null;
   private var filePathCallback: ValueCallback<Array<Uri>>? = null
   private val viewModel: SettingsViewModel by viewModels()
+
 
   override
   fun getLayoutId() = R.layout.fragment_add_store
@@ -193,8 +193,15 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       request?.url?.toString()?.also { link ->
         Log.d(TAG, "shouldOverrideUrlLoading: ${link}")
         viewModel.saveUrl(link)
-        if((!viewModel.browserHelper.isUser() && activity is HomeActivity) || (viewModel.browserHelper.isUser() && activity is AddStoreActivity)) {
-          Intent(activity,SplashActivity::class.java).apply {
+        if((!viewModel.browserHelper.isUser() && activity is HomeActivity)){
+          val homeActivity = activity as HomeActivity
+          homeActivity.goHomePage()
+          homeActivity.initStoreBtn()
+          openActivity(AddStoreActivity::class.java)
+        }
+        else if((viewModel.browserHelper.isUser() && activity is AddStoreActivity)) {
+          (activity as AddStoreActivity).finishAffinity()
+          Intent(activity,HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(this)
           }

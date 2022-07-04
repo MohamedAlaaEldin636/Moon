@@ -44,14 +44,12 @@
       app:cardCornerRadius="@dimen/dimen5"
       app:cardElevation="2dp"
       card_view:cardUseCompatPadding="true"
-
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/logo_header"
-      app:layout_constraintBottom_toTopOf="@id/btn_next">
+      app:layout_constraintTop_toBottomOf="@+id/logo_header">
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/tv_selected_country"
@@ -69,32 +67,37 @@
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/rc_countries"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="0dp"
           app:adapter="@{viewModel.adapter}"
+          android:layout_marginBottom="@dimen/dimen6"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           app:layout_constraintTop_toBottomOf="@+id/tv_selected_country"
           app:orientation="@{`1`}"
           app:span="@{`1`}"
+          app:layout_constraintBottom_toTopOf="@+id/btn_next"
           tools:listitem="@layout/item_country" />
+
+        <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/btn_next"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/dimen36"
+          android:layout_marginEnd="@dimen/dimen36"
+          android:layout_marginBottom="@dimen/dimen12"
+          android:background="@drawable/corner_primary"
+          android:onClick="@{ (v) -> viewModel.next(v)}"
+          android:visibility="@{viewModel.lang.empty ? View.GONE : View.VISIBLE}"
+          android:text="@string/save"
+          android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+          android:textColor="@color/white"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent" />
+
       </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <androidx.appcompat.widget.AppCompatButton
-      android:id="@+id/btn_next"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen36"
-      android:layout_marginEnd="@dimen/dimen36"
-      android:layout_marginBottom="@dimen/dimen12"
-      android:background="@drawable/corner_primary"
-      android:onClick="@{ (v) -> viewModel.next(v)}"
-      android:visibility="@{viewModel.lang.empty ? View.GONE : View.VISIBLE}"
-      android:text="@string/save"
-      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-      android:textColor="@color/white"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
+
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

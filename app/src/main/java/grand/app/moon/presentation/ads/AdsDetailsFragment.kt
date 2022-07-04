@@ -67,7 +67,7 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
   fun setupObservers() {
     viewModel.clickEvent.observe(viewLifecycleOwner,{
       if(it == Constants.LOGIN_REQUIRED) openLoginActivity()
-      if(it == Constants.SHARE_IMAGE) viewModel.share(binding.imgShare)
+//      if(it == Constants.SHARE_IMAGE) viewModel.share(binding.imgShare)
     })
     lifecycleScope.launchWhenResumed {
       viewModel.adsDetailsResponse.collect {

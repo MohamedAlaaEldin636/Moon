@@ -60,6 +60,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
       if(bundle.containsKey(Constants.EXPLORES)) {
         val result = bundle.getSerializable(Constants.EXPLORES) as ExploreListPaginateData
         viewModel.adapter.updateExplores(result)
+        if(viewModel.adapter.swapPosition < viewModel.adapter.differ.currentList.size && viewModel.adapter.differ.currentList.isNotEmpty()) {
+          viewModel.adapter.notifyItemChanged(0)
+          viewModel.adapter.notifyItemChanged(viewModel.adapter.swapPosition)
+        }
       }
     }
   }
@@ -92,11 +96,13 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
       if(it != -1) {
         val list = ArrayList(viewModel.adapter.differ.currentList)
         viewModel.adapter.swapPosition = it
+//        viewModel.lastData.list.clear()
+//        viewModel.adapter.tmpList.clear()
+//        viewModel.adapter.tmpList.addAll(list)
+//        viewModel.lastData.list.addAll(list)
         viewModel.lastData.list.clear()
-        viewModel.adapter.tmpList.clear()
-        viewModel.adapter.tmpList.addAll(list)
         viewModel.lastData.list.addAll(list)
-        Collections.swap(viewModel.lastData.list, 0, it);
+        Collections.swap(viewModel.lastData.list, 0, viewModel.adapter.swapPosition);
         val action = ExploreFragmentDirections.actionExploreFragmentToExploreListFragment(
           viewModel.lastData,
         )

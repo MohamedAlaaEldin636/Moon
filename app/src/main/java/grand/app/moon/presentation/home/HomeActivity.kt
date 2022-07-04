@@ -33,6 +33,9 @@ import com.onesignal.OneSignal
 import com.onesignal.OneSignal.OSNotificationOpenedHandler
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
+import grand.app.moon.presentation.addStore.AddStoreActivity
+import grand.app.moon.presentation.base.extensions.openActivity
+import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 
 
 @AndroidEntryPoint
@@ -49,6 +52,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   fun setUpBottomNavigation() {
     setUpBottomNavigationWithGraphs()
   }
+
   var immediateUpdateActivity: ImmediateUpdateActivity? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -167,7 +171,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           hideTopBarControls()
           showText()
           binding.tvHomeTitle.text = destination.label
-          if(isLogin()) binding.icNotificationFilter.show()
+          if (isLogin()) binding.icNotificationFilter.show()
         }
         R.id.myAccountFragment -> {
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
@@ -231,7 +235,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     }
     binding.imgHomeBottomBar.setOnClickListener {
       showImage()
-      binding.bottomNavigationView.selectedItemId = R.id.addStoreFragment
+      if (viewModel.browserHelper.isUser())
+        binding.bottomNavigationView.selectedItemId = R.id.addStoreFragment
+      else {
+        openActivity(AddStoreActivity::class.java)
+      }
     }
     binding.icMenu.setOnClickListener {
       val uri = Uri.Builder()
@@ -260,70 +268,98 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 //      true
 //    }
 //    checkDeepLink()
+    initStoreBtn()
   }
 
+  fun initStoreBtn() {
+    val menu = binding.bottomNavigationView.menu
+    viewModel.initIsStoreUser()
+    if (!viewModel.browserHelper.isUser()) {
+      menu.getItem(2).title = getString(R.string.my_store)
+      setStoreImage(false)
+    }
+  }
 
-  private
-  val TAG = "HomeActivity"
+  fun goHomePage(){
+    binding.bottomNavigationView.selectedItemId = R.id.home_fragment
+  }
+
+  private fun setStoreImage(isActive: Boolean) {
+    if (isActive) {
+      if (viewModel.browserHelper.isUser()) {
+        binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
+      } else {
+        binding.imgHomeBottomBar.setImageResource(R.drawable.ic_my_store)
+      }
+    } else {
+      if (viewModel.browserHelper.isUser()) {
+        binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+      } else {
+        binding.imgHomeBottomBar.setImageResource(R.drawable.ic_my_store)
+      }
+    }
+  }
+
+    val TAG = "HomeActivity"
 
 
-  private fun resetTexts() {
-    binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+    private fun resetTexts() {
+      binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 //    binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite))
-    binding.tvHomeTitle.text = ""
-    binding.toolbar.title = ""
-  }
+      binding.tvHomeTitle.text = ""
+      binding.toolbar.title = ""
+    }
 
-  private fun hideTopBarControls() {
-    binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-    binding.imgHomeBottomBar.hide()
-    binding.bottomNavigationView.hide()
-    binding.imgMoonLogo.hide()
-    binding.icNotification.hide()
-    binding.icChat.hide()
-    binding.icMenu.hide()
-    binding.toolbar.show()
-  }
+    private fun hideTopBarControls() {
+      binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+      binding.imgHomeBottomBar.hide()
+      binding.bottomNavigationView.hide()
+      binding.imgMoonLogo.hide()
+      binding.icNotification.hide()
+      binding.icChat.hide()
+      binding.icMenu.hide()
+      binding.toolbar.show()
+    }
 
-  private fun showTopBarControls() {
-    binding.imgHomeBottomBar.show()
+    private fun showTopBarControls() {
+      binding.imgHomeBottomBar.show()
 //    binding.toolbar.background = ContextCompat.getDrawable(this, R.drawable.ic_curve)
-    binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-    binding.bottomNavigationView.show()
-    binding.imgMoonLogo.show()
-    binding.icNotification.show()
-    binding.icChat.show()
-    binding.icMenu.show()
-    binding.toolbar.show()
-  }
+      binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+      binding.bottomNavigationView.show()
+      binding.imgMoonLogo.show()
+      binding.icNotification.show()
+      binding.icChat.show()
+      binding.icMenu.show()
+      binding.toolbar.show()
+    }
 
-  private fun showImage() {
-    binding.imgMoonLogo.show()
+    private fun showImage() {
+      binding.imgMoonLogo.show()
 //    binding.tvHomeTitle.hide()
-    binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
-    binding.toolbar.show()
+      setStoreImage(true)
+      binding.toolbar.show()
+    }
+
+    private fun showText() {
+      binding.imgMoonLogo.hide()
+      binding.tvHomeTitle.show()
+      binding.toolbar.show()
+    }
+
+    private fun hideAllToolbar() {
+      binding.imgMoonLogo.hide()
+      binding.tvHomeTitle.hide()
+      binding.toolbar.hide()
+    }
+
+
+    override fun onSupportNavigateUp(): Boolean {
+      return nav.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onResume() {
+      super.onResume()
+      updateAuto(immediateUpdateActivity!!)
+    }
+
   }
-
-  private fun showText() {
-    binding.imgMoonLogo.hide()
-    binding.tvHomeTitle.show()
-    binding.toolbar.show()
-  }
-
-  private fun hideAllToolbar() {
-    binding.imgMoonLogo.hide()
-    binding.tvHomeTitle.hide()
-    binding.toolbar.hide()
-  }
-
-
-  override fun onSupportNavigateUp(): Boolean {
-    return nav.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-  }
-
-  override fun onResume() {
-    super.onResume()
-    updateAuto(immediateUpdateActivity!!)
-  }
-
-}

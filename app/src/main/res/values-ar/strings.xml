@@ -191,4 +191,5 @@
   <string name="offline_now">غير متصل</string>
     <string name="area">المنطقة</string>
   <string name="please_choose_your_city">الرجاء اختيار مدينتك</string>
+  <string name="my_store">متجرى</string>
 </resources>

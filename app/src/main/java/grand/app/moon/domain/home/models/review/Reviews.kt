@@ -6,7 +6,7 @@ import java.io.Serializable
 
 @Keep
 data class Reviews(
-  var user: User = User(),
+  var user: User? = User(),
   var review: String = "",
   var date: String = "",
   var rate: String = "0"

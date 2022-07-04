@@ -93,6 +93,13 @@ class ContactUsViewModel @Inject constructor(
 
   }
 
+  fun hide(v: View){
+    type.set("")
+    title.set("")
+    title1.set("")
+    title2.set("")
+  }
+
   fun onContactClicked(v: View) {
     if (request.name.trim().isEmpty()) {
       showError(v.context, v.context.getString(R.string.please_enter_your_name));

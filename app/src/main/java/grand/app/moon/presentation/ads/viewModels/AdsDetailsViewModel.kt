@@ -35,7 +35,9 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import androidx.core.os.bundleOf
 import grand.app.moon.appMoonHelper.ListHelper
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.navigateMap
+import grand.app.moon.domain.store.entity.ShareRequest
 import grand.app.moon.presentation.ads.adapter.SwitchAdapter
 import java.util.*
 
@@ -127,7 +129,7 @@ class AdsDetailsViewModel @Inject constructor(
     v.findNavController().popBackStack()
   }
 
-  fun share(v: AppCompatImageView) {
+  fun share(v: View) {
     advertisement.get()?.description?.let {
       advertisement.get()?.share?.let { it1 ->
         share(
@@ -135,8 +137,14 @@ class AdsDetailsViewModel @Inject constructor(
           it,
           it1
         )
-        advertisement.get()!!.shareCount++
-        ListHelper.addOrUpdate(advertisement.get()!!)
+//        ListHelper.addOrUpdate(advertisement.get()!!)
+        if(v.context.isLogin()){
+          advertisement.get()!!.shareCount++
+          notifyPropertyChanged(BR.advertisement)
+//          storeUseCase.share()
+          storeUseCase.share(ShareRequest(advertisement.get()?.id)).onEach {
+          }.launchIn(viewModelScope)
+        }
       }
     }
   }
