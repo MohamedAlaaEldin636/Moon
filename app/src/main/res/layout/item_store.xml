@@ -173,7 +173,7 @@
           app:autoSizeTextType="uniform"
           android:maxLines="1"
           android:layout_gravity="start"
-          android:text="@{itemViewModels.store.advertisementsCount+` `+@string/advertisement}"
+          android:text="@{itemViewModels.store.advertisementsCount}"
           android:textColor="@color/greyText"
           android:textSize="@dimen/text_size13"
           app:layout_constraintStart_toStartOf="parent"

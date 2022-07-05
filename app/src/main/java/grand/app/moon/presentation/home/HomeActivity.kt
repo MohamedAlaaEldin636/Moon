@@ -160,7 +160,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.home_fragment -> {
           binding.bottomNavigationView.show()
           showTopBarControls()
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          setStoreImage(false)
 //          showImage()
         }
         R.id.notificationFragment -> {
@@ -174,7 +174,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           if (isLogin()) binding.icNotificationFilter.show()
         }
         R.id.myAccountFragment -> {
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          setStoreImage(false)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
 //          if (!viewModel.userLocalUseCase.isLoggin()) startActivity(
@@ -188,14 +188,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
         R.id.exploreFragment, R.id.mapFragment -> {
           showTopBarControls()
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          setStoreImage(false)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
           binding.tvHomeTitle.text = destination.label
           showText()
         }
         R.id.webFragment -> {
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          setStoreImage(false)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
           hideTopBarControls()
@@ -207,7 +207,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 //          binding.toolbar.hide()
         }
         R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings -> {
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+          setStoreImage(false)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label
 
