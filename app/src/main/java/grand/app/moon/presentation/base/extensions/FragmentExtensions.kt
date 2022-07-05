@@ -23,6 +23,8 @@ import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.*
 import androidx.core.os.bundleOf
 import androidx.databinding.BindingAdapter
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -32,6 +34,8 @@ import com.facebook.FacebookSdk.getCacheDir
 import grand.app.moon.core.extenstions.logout
 import com.onesignal.OneSignal
 import grand.app.moon.core.MyApplication
+import grand.app.moon.core.extenstions.convertToString
+import grand.app.moon.core.extenstions.convertToStringArray
 import grand.app.moon.core.extenstions.loginCometChat
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.presentation.home.HomeActivity
@@ -211,6 +215,16 @@ fun setImages(sliderView: ImageSlider, images: ArrayList<String>?) {
     sliderView.setImageList(list)
     sliderView.setItemClickListener(object : ItemClickListener {
       override fun onItemSelected(position: Int) {
+        val gson = sliderView.context?.convertToStringArray(images)
+
+        val uri = Uri.Builder()
+          .scheme("zoomImagesPager")
+          .authority("grand.app.images.pager")
+          .appendPath(gson.orEmpty())
+          .appendPath(position.toString())
+          .build()
+        val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+        findNavController(sliderView).navigate(request)
 
       }
     })

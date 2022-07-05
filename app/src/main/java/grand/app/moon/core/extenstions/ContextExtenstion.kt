@@ -60,6 +60,11 @@ fun Context.convertToString(model: ArrayList<Explore>) : String{
   return gson.toJson(model)
 }
 
+fun Context.convertToStringArray(model: ArrayList<String>) : String{
+  val gson = Gson()
+  return gson.toJson(model)
+}
+
 fun Context.convertToString(model: UpdateProfileRequest) : String{
   val gson = Gson()
   return gson.toJson(model)

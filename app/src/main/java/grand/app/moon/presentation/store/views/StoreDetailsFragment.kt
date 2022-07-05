@@ -205,6 +205,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
     super.onResume()
     Log.d(TAG, "token: ${viewModel.userLocalUseCase.getKey(Constants.TOKEN)}")
     viewModel.getDetails(adsDetailsFragmentArgs.id, adsDetailsFragmentArgs.type)
+//    viewModel.getDetails(adsDetailsFragmentArgs.id,3)
 
 //    if (!viewModel.isLoggin) {
 //      val isAuthorize = viewModel.userLocalUseCase.isLoggin()
