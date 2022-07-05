@@ -43,27 +43,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btn_phone"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_store_blocked"
         tools:orientation="vertical" />
 
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_phone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen30"
-        app:backgroundTint="@color/colorAccent"
-        android:background="@color/colorAccent"
-        android:textStyle="bold"
-        android:visibility="@{viewModel.showSubmit ? View.VISIBLE : View.GONE }"
-        android:onClick="@{(v)-> viewModel.submit(v)}"
-        android:text="@string/submit"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+<!--      <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/btn_phone"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/dimen30"-->
+<!--        app:backgroundTint="@color/colorAccent"-->
+<!--        android:background="@color/colorAccent"-->
+<!--        android:textStyle="bold"-->
+<!--        android:visibility="@{viewModel.showSubmit ? View.VISIBLE : View.GONE }"-->
+<!--        android:onClick="@{(v)-> viewModel.submit(v)}"-->
+<!--        android:text="@string/submit"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        />-->
 
 
 

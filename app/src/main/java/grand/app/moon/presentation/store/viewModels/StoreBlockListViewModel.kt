@@ -117,13 +117,13 @@ class StoreBlockListViewModel @Inject constructor(
   }
 
   fun unBlock() {
-    Log.d(TAG, "unBlock: ${adapter.position}")
-    adapter.changeBlock(adapter.differ.currentList[adapter.position].id)
-    Log.d(TAG, "unBlock: ${adapter.unBlocks.size}")
-    showSubmit.set(adapter.unBlocks.size != adapter.differ.currentList.size)
-//    followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
-//    storeUseCase.unBlock(followStoreRequest).launchIn(viewModelScope)
-//    adapter.removeItem()
+//    Log.d(TAG, "unBlock: ${adapter.position}")
+//    adapter.changeBlock(adapter.differ.currentList[adapter.position].id)
+//    Log.d(TAG, "unBlock: ${adapter.unBlocks.size}")
+//    showSubmit.set(adapter.unBlocks.size != adapter.differ.currentList.size)
+    followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
+    storeUseCase.unBlock(followStoreRequest).launchIn(viewModelScope)
+    adapter.removeItem()
 //    ListHelper.removeStoreBlock(followStoreRequest.storeId!!)
   }
 

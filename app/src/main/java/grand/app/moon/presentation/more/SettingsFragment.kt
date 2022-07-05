@@ -79,13 +79,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 //          Constants.SOCIAL
 //        )
 //      )
-      list.add(
-        MoreItem(
-          getString(R.string.register_as_provider),
-          getMyDrawable(R.drawable.ic_register_as_store),
-          "https://souqmoon.com/store/register"
-        )
-      )
 
       list.add(
         MoreItem(

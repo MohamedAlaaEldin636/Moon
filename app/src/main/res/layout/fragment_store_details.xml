@@ -68,8 +68,8 @@
 
           <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ic_share"
-            android:layout_width="@dimen/dimen30"
-            android:layout_height="@dimen/dimen30"
+            android:layout_width="@dimen/dimen40"
+            android:layout_height="@dimen/dimen40"
             android:layout_marginTop="@dimen/dimen16"
             android:layout_marginEnd="@dimen/dimen16"
             android:background="@drawable/corner_white"
@@ -82,8 +82,8 @@
 
 
           <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/dimen30"
-            android:layout_height="@dimen/dimen30"
+            android:layout_width="@dimen/dimen40"
+            android:layout_height="@dimen/dimen40"
             android:layout_marginStart="@dimen/dimen16"
             android:layout_marginTop="@dimen/dimen16"
             android:background="@drawable/corner_white"
@@ -858,13 +858,15 @@
 
       <com.google.android.material.button.MaterialButton
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen60"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen3"
         android:layout_weight="1"
         android:onClick="@{(v) -> viewModel.whatsapp(v)}"
         android:text="@string/whatsapp"
+        app:cornerRadius="@dimen/dimen10"
         android:textSize="10sp"
+        android:stateListAnimator="@null"
         android:fontFamily="@font/regular"
         app:backgroundTint="@color/color55CD6C"
         app:icon="@drawable/ic_whatsapp"
@@ -872,10 +874,12 @@
 
       <com.google.android.material.button.MaterialButton
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen60"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen3"
         android:layout_weight="1"
+        app:cornerRadius="@dimen/dimen10"
+        android:stateListAnimator="@null"
         android:onClick="@{(v) -> viewModel.phone(v)}"
         android:text="@string/call"
         android:fontFamily="@font/regular"
@@ -886,10 +890,12 @@
 
       <com.google.android.material.button.MaterialButton
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen60"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen3"
+        android:stateListAnimator="@null"
         android:layout_weight="1"
+        app:cornerRadius="@dimen/dimen10"
         android:onClick="@{(v) -> viewModel.chat(v)}"
         android:text="@string/chat"
         android:fontFamily="@font/regular"
