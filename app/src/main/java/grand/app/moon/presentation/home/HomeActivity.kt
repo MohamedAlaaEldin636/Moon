@@ -245,7 +245,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       val uri = Uri.Builder()
         .scheme("storeList")
         .authority("grand.app.moon.store.List")
-        .appendPath(getString(R.string.top_stores_rated))
+        .appendPath(getString(R.string.stores))
         .appendPath(3.toString())
         .appendPath("-1")
         .build()

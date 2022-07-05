@@ -18,6 +18,6 @@ data class CategoryAdvertisement(
   @SerializedName("name")
   var name: String = "",
   @SerializedName("image")
-  val image: String = "",
+  val image: String? = "",
   var showMore: CategoryShowMore = CategoryShowMore(),
 )

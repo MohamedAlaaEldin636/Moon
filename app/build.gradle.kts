@@ -32,6 +32,8 @@ android {
   }
 
   buildTypes {
+
+
     getByName("debug") {
       manifestPlaceholders["appName"] = "@string/ic_launcher"
       manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
@@ -65,6 +67,8 @@ android {
       buildConfigField("String", "ROOM_DB", Config.Environments.roomDb)
       buildConfigField("String", "SERVER_CLIENT_ID", Config.Environments.SERVER_CLIENT_ID)
     }
+
+
 
   }
 
