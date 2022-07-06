@@ -5,28 +5,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.denzcoskun.imageslider.interfaces.TouchListener
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.appMoonHelper.OnSwipeTouchListener
 import grand.app.moon.databinding.ActivityStoryDisplayBinding
 import grand.app.moon.domain.home.models.Store
-import grand.app.moon.generated.callback.OnClickListener
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.story.view.ViewPagerAdapter
 import grand.app.moon.presentation.story.viewModels.StoryDisplayViewModel
-import kotlinx.android.synthetic.main.fragment_search.view.*
 import pt.tornelas.segmentedprogressbar.SegmentedProgressBarListener
 
 @AndroidEntryPoint

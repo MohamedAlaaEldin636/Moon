@@ -146,13 +146,6 @@
     android:id="@+id/storeFollowedListFragment"
     android:name="grand.app.moon.presentation.store.views.StoreFollowedListFragment"
     android:label="@string/stores_had_been_followed" >
-    <action
-      android:id="@+id/action_storeFollowedListFragment_to_storeDetailsFragment2"
-      app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
-      app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/storeDetailsFragment2" />
 
     <deepLink
       android:id="@+id/storeFollowedListFragment"
@@ -160,10 +153,6 @@
       app:uri="store://grand.app.moon.store.followed" />
 
   </fragment>
-  <fragment
-    android:id="@+id/storeDetailsFragment2"
-    android:name="grand.app.moon.presentation.store.views.StoreDetailsFragment"
-    android:label="@string/store_details" />
   <fragment
     android:id="@+id/storeBlockListFragment"
     android:name="grand.app.moon.presentation.store.views.StoreBlockListFragment"

@@ -4,6 +4,14 @@
   android:id="@+id/nav_store"
   app:startDestination="@id/storeDetailsFragment">
 
+  <argument
+    android:name="id"
+    app:argType="integer" />
+  <argument
+    android:name="type"
+    app:argType="integer"
+    android:defaultValue="3" />
+
   <fragment
     android:id="@+id/storeDetailsFragment"
     android:name="grand.app.moon.presentation.store.views.StoreDetailsFragment"

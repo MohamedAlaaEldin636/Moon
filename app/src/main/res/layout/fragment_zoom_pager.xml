@@ -6,6 +6,8 @@
 
     <data>
 
+      <import type="com.denzcoskun.imageslider.constants.ScaleTypes"/>
+
         <variable
             name="viewModel"
           type="grand.app.moon.presentation.media.image.ZoomViewModel" />
@@ -13,14 +15,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+      android:background="@color/colorBlack"
         android:layout_height="match_parent">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignWithParentIfMissing="true"
-            android:scrollIndicators="none" />
+      <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     </FrameLayout>
 </layout>

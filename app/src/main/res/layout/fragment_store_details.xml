@@ -576,6 +576,7 @@
           android:background="@drawable/corner_white"
           android:drawableEnd="@drawable/ic_next"
           android:gravity="start|center"
+          android:visibility="@{viewModel.store.workingHours.size() > 0 ? View.VISIBLE : View.GONE }"
           android:onClick="@{ (v) -> viewModel.workingHours(v)}"
           android:padding="@dimen/dimen12"
           android:text="@string/show_number_hours"
@@ -595,6 +596,7 @@
           android:layout_marginEnd="@dimen/dimen10"
           android:text="@string/description_on_shop"
           android:textColor="@color/colorBlack"
+          android:visibility="@{viewModel.store.description.equals(``) ? View.GONE : View.VISIBLE }"
           android:textSize="@dimen/text_size16"
           android:textStyle="bold" />
 
@@ -607,6 +609,7 @@
           android:layout_marginTop="@dimen/dimen10"
           android:layout_marginEnd="@dimen/dimen10"
           android:lineSpacingExtra="4sp"
+          android:visibility="@{viewModel.store.description.equals(``) ? View.GONE : View.VISIBLE }"
           android:text="@{viewModel.store.description}"
           android:textAlignment="viewStart"
           android:textColor="@color/color888888"

@@ -320,29 +320,39 @@ fun ImageView.loadImage(imageUrl: String?, progressBar: ProgressBar?, defaultIma
 fun AppCompatImageView.imageZoom(imageUrl: String?, progressBar: ProgressBar?) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
     if (URLUtil.isValidUrl(imageUrl)) {
-      val request = ImageRequest.Builder(context)
-        .data(imageUrl)
-        .crossfade(true)
-        .crossfade(400)
-        .error(R.drawable.bg_no_image)
-        .target(
-          onStart = { placeholder ->
-            progressBar?.show()
-            setImageDrawable(placeholder)
-          },
-          onSuccess = { result ->
-            progressBar?.hide()
-            setImageDrawable(result)
-          }
-        )
-        .listener(onError = { request: ImageRequest, _: Throwable ->
-          progressBar?.hide()
-          setImageDrawable(request.error)
-        })
-        .build()
 
-      ImageLoader(context).enqueue(request)
-      setOnTouchListener(ImageMatrixTouchHandler(context))
+      progressBar?.show()
+      Glide.with(context)
+        .load(imageUrl)
+        .error(R.drawable.bg_no_image)
+        .listener(object : RequestListener<Drawable?> {
+          override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<Drawable?>?,
+            isFirstResource: Boolean
+          ): Boolean {
+            progressBar?.hide()
+            return false
+
+          }
+
+          override fun onResourceReady(
+            resource: Drawable?,
+            model: Any?,
+            target: Target<Drawable?>?,
+            dataSource: com.bumptech.glide.load.DataSource?,
+            isFirstResource: Boolean
+          ): Boolean {
+            progressBar?.hide()
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            return false
+          }
+
+        })
+        .into(this)
+
+//      setOnTouchListener(ImageMatrixTouchHandler(context))
 
     } else {
       load(File(imageUrl)) {

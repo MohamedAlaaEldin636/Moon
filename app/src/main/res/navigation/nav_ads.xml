@@ -24,9 +24,6 @@
     <action
       android:id="@+id/action_adsDetailsFragment_to_reportDialog"
       app:destination="@id/reportDialog" />
-    <action
-      android:id="@+id/action_adsDetailsFragment_to_storeDetailsFragment3"
-      app:destination="@id/storeDetailsFragment3" />
     <argument
       android:name="from_store"
       android:defaultValue="false"
@@ -87,32 +84,23 @@
 
   </dialog>
   <fragment
-    android:id="@+id/storeDetailsFragment3"
-    android:name="grand.app.moon.presentation.store.views.StoreDetailsFragment"
-    android:label="">
+    android:id="@+id/zoomPagerFragment"
+    android:name="grand.app.moon.presentation.media.image.pager.ZoomPagerFragment"
+    android:label="ZoomPagerFragment" >
     <argument
-      android:name="id"
+      android:name="images"
+      app:argType="string" />
+
+    <argument
+      android:name="position"
       app:argType="integer" />
 
+    <deepLink
+      android:id="@+id/zoomImagesPager"
+      android:autoVerify="true"
+      app:uri="zoomImagesPager://grand.app.images.pager/{images}/{position}" />
+
   </fragment>
-<!--  <fragment-->
-<!--    android:id="@+id/zoomPagerFragment"-->
-<!--    android:name="grand.app.moon.presentation.media.image.pager.ZoomPagerFragment"-->
-<!--    android:label="ZoomPagerFragment" >-->
-<!--    <argument-->
-<!--      android:name="images"-->
-<!--      app:argType="string" />-->
-
-<!--    <argument-->
-<!--      android:name="position"-->
-<!--      app:argType="integer" />-->
-
-<!--    <deepLink-->
-<!--      android:id="@+id/zoomImagesPager"-->
-<!--      android:autoVerify="true"-->
-<!--      app:uri="zoomImagesPager://grand.app.images.pager/{images}" />-->
-
-<!--  </fragment>-->
 
 
 </navigation>

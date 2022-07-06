@@ -16,9 +16,11 @@ object ListHelper {
 
   fun addAllAds(list : ArrayList<Advertisement>){
     list.forEach {
-      adsListAds[it.id] = it
-      adsList[it.id] = it.isFavorite
-      addFollowStore(it.store.id,it.store.isFollowing)
+      if(it.store.id != null && it.store.isFollowing != null) {
+        adsListAds[it.id] = it
+        adsList[it.id] = it.isFavorite
+        addFollowStore(it.store.id, it.store.isFollowing)
+      }
     }
   }
 

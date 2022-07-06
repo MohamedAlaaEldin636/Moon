@@ -18,10 +18,10 @@
 
     <androidx.appcompat.widget.AppCompatImageView
       android:id="@+id/imageView"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:transitionName="image"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
       app:imageZoom="@{viewModel.image}"
+      android:scaleType="fitCenter"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"

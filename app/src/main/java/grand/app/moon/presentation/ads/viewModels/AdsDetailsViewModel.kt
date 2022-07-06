@@ -92,8 +92,7 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun follow(v: View) {
-    if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
-    else {
+    if (v.context.isLoginWithOpenAuth()) {
       followStoreRequest.storeId = advertisement.get()?.store?.id
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
       advertisement.get()?.store?.isFollowing = advertisement.get()?.store?.isFollowing != true
@@ -111,9 +110,6 @@ class AdsDetailsViewModel @Inject constructor(
 
   fun storeDetails(v: View) {
     if (!fromStore) {
-//      v.findNavController().navigate(
-//        AdsDetailsFragmentDirections.actionAdsDetailsFragmentToStoreDetailsFragment3(advertisement.get()?.store!!.id)
-//      )
       v.findNavController().navigate(
         R.id.nav_store,
         bundleOf(
@@ -138,7 +134,7 @@ class AdsDetailsViewModel @Inject constructor(
           it1
         )
 //        ListHelper.addOrUpdate(advertisement.get()!!)
-        if(v.context.isLogin()){
+        if (v.context.isLogin()) {
           advertisement.get()!!.shareCount++
           notifyPropertyChanged(BR.advertisement)
 //          storeUseCase.share()

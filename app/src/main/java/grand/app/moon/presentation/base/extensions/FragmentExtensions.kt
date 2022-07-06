@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorRes
@@ -70,7 +71,8 @@ fun Fragment.handleApiError(
     else -> showNoApiErrorAlert(requireActivity(), getString(R.string.some_error))
   }
 }
-fun Fragment.logout(){
+
+fun Fragment.logout() {
   MyApplication.instance.logout()
 }
 
@@ -79,7 +81,7 @@ fun Fragment.logout(){
 1016171926
  */
 private const val TAG = "FragmentExtensions"
-fun Fragment.makeIntegrationWithRedirectHome(externalUserId: Int){
+fun Fragment.makeIntegrationWithRedirectHome(externalUserId: Int) {
   requireActivity().finishAffinity()
   OneSignal.setExternalUserId("user_$externalUserId")
   requireContext().loginCometChat(externalUserId)
@@ -205,12 +207,18 @@ fun Fragment.backToPreviousScreen() {
   findNavController().navigateUp()
 }
 
-@BindingAdapter("images")
-fun setImages(sliderView: ImageSlider, images: ArrayList<String>?) {
+@BindingAdapter(value = ["images", "scale"], requireAll = false)
+fun setImages(sliderView: ImageSlider, images: ArrayList<String>?, scaleTypes: ScaleTypes?) {
   images?.let {
     val list = ArrayList<SlideModel>()
     for (image in images) {
-      list.add(SlideModel(image, ScaleTypes.CENTER_CROP))
+      when (scaleTypes) {
+        null -> list.add(SlideModel(image, ScaleTypes.CENTER_CROP))
+        else -> {
+          list.add(SlideModel(image, scaleTypes))
+          Log.d(TAG, "setImages: ASDASDASDS")
+        }
+      }
     }
     sliderView.setImageList(list)
     sliderView.setItemClickListener(object : ItemClickListener {
@@ -224,7 +232,7 @@ fun setImages(sliderView: ImageSlider, images: ArrayList<String>?) {
           .appendPath(position.toString())
           .build()
         val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
-        findNavController(sliderView).navigate(request)
+        sliderView.findNavController().navigate(request)
 
       }
     })

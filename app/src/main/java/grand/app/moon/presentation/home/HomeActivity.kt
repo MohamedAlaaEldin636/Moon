@@ -215,7 +215,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showText()
 
         }
-        R.id.adsDetailsFragment, R.id.storeDetailsFragment, R.id.countriesFragment3, R.id.fragment_confirm_code2, R.id.webFragment2 -> {
+        R.id.adsDetailsFragment, R.id.storeDetailsFragment, R.id.countriesFragment3, R.id.fragment_confirm_code2, R.id.webFragment2, R.id.zoomPagerFragment-> {
           hideTopBarControls()
           hideAllToolbar()
         }

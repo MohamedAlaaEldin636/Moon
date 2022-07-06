@@ -89,7 +89,7 @@ class HomeViewModel @Inject constructor(
 
   fun initIsStoreUser() {
     val lastUrlStorage = accountRepository.getKeyFromLocal(Constants.LAST_URL)
-    browserHelper.lastUrl = "https://souqmoon.com/store/register"
+    browserHelper.lastUrl = "https://souqmoon.com/store/login"
     if (lastUrlStorage.isNotEmpty() && !browserHelper.isUser(lastUrlStorage))
       browserHelper.lastUrl = lastUrlStorage
   }
