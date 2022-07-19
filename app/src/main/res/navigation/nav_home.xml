@@ -368,6 +368,10 @@
       android:autoVerify="true"
       app:uri="storeList://grand.app.moon.store.List/{title}/{order_by}/{category_id}" />
 
+    <deepLink
+      android:id="@+id/storeListSearch"
+      android:autoVerify="true"
+      app:uri="storeList://grand.app.moon.store.search.List/{title}/{order_by}/{category_id}/{search}" />
 
 
   </fragment>

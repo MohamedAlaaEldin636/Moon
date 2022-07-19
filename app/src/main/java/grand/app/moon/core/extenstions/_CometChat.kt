@@ -58,7 +58,7 @@ fun Context.loginCometChat(externalUserId: Int) {
       }
 
       override fun onError(p0: CometChatException?) {
-        Log.d(TAG, "failed: ")
+        Log.d(TAG, "failed: ${p0?.message}")
       }
     })
 }

@@ -2,9 +2,42 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <FrameLayout
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary" />
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgMoonLogo"
+        style="@style/mediumFont"
+        android:layout_width="@dimen/dimen100"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_home_logo"
+        android:layout_centerInParent="true"/>
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_home"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_marginStart="@dimen/dimen10"
+        android:src="@drawable/ic_home"
+        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    </RelativeLayout>
 
     <androidx.fragment.app.FragmentContainerView
       android:id="@+id/fragmentContainerView"
@@ -12,6 +45,6 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 
-  </FrameLayout>
+  </LinearLayout>
 
 </layout>

@@ -16,17 +16,20 @@ object ListHelper {
 
   fun addAllAds(list : ArrayList<Advertisement>){
     list.forEach {
-      if(it.store.id != null && it.store.isFollowing != null) {
-        adsListAds[it.id] = it
-        adsList[it.id] = it.isFavorite
-        addFollowStore(it.store.id, it.store.isFollowing)
+      it.store?.let { store ->
+        if(store.id != null && store.isFollowing != null) {
+          adsListAds[it.id] = it
+          adsList[it.id] = it.isFavorite
+          addFollowStore(it.store.id!!, it.store.isFollowing!!)
+        }
       }
+
     }
   }
 
   fun addFollowStore(list : List<Store>){
     list.forEach {
-      followStores[it.id] = it.isFollowing
+      followStores[it.id!!] = it.isFollowing!!
     }
   }
 
@@ -107,7 +110,7 @@ object ListHelper {
         likedStories[story.id] = story.is_liked
         if(!story.isSeen) isSeen = false
       }
-      if(isSeen) viewedStories.add(it.id)
+      if(isSeen) viewedStories.add(it.id!!)
     }
   }
 

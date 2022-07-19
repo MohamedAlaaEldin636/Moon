@@ -11,6 +11,7 @@ import com.google.android.gms.maps.MapFragment
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
@@ -82,7 +83,7 @@ class ItemAdsViewModel(
   }
 
   fun phone(v: View) {
-    if(v.context.isLoginWithOpenAuth()) {
+    if(v.context.isLogin()) {
       viewModelScope.launch(Dispatchers.IO) {
         adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(), 6))
       }

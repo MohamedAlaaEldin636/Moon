@@ -6,8 +6,10 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -165,6 +167,31 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 
     binding.rvAds.layoutManager = gridLayoutManager
     binding.rvAds.adapter = viewModel.adsAdapter
+
+
+    binding.scrollStoreDetails.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+      if (v.getChildAt(v.childCount - 1) != null) {
+        if (scrollY >= v.getChildAt(v.childCount - 1)
+            .measuredHeight - v.measuredHeight &&
+          scrollY > oldScrollY
+        ) {
+          viewModel.addAdsToList()
+          //code to fetch more data for endless scrolling
+        }
+      }
+    } as NestedScrollView.OnScrollChangeListener)
+
+
+    binding.rate.setOnTouchListener(object: View.OnTouchListener{
+      override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        if (event?.getAction() == MotionEvent.ACTION_DOWN){
+          v?.let { viewModel.rates(it) }
+        }
+        return false
+      }
+
+    })
+
   }
 
   fun scrollDown() {

@@ -100,7 +100,10 @@ class StoreDetailsViewModel @Inject constructor(
 
   var blockStore = false
 
+  val limit = 20
+  var from = 20
   init {
+    adsAdapter.grid = Constants.GRID_2
     adsAdapter.fromStore = true
     adsAdapter.percentageAds = 100
     adsAdapter.showFavourite = true
@@ -332,6 +335,7 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun update(keyMap: String, data: Store, days: ArrayList<String>) {
+    store.set(data)
     data.workingHours?.forEachIndexed() { index, element ->
       data.workingHours?.get(index)?.day = days[index]
     }
@@ -345,9 +349,9 @@ class StoreDetailsViewModel @Inject constructor(
     }
 
 //    Log.d(TAG, "update: ${data.advertisements.size}")
-    store.set(data)
     checkOnline()
-    adsAdapter.differ.submitList(data.advertisements)
+    val list = ArrayList(data.advertisements.take(limit))
+    adsAdapter.differ.submitList(list)
     propertiesAdapter.selected = 0
     propertiesAdapter.differ.submitList(data.category)
     val storeItem = Store()
@@ -355,7 +359,7 @@ class StoreDetailsViewModel @Inject constructor(
       storeItem.id = data.id
       storeItem.image = data.image
       storeItem.name = data.name
-      storeItem.nickname = data.nickname
+      if(data.nickname != null) storeItem.nickname = data.nickname
       explore.store = storeItem
 
     }
@@ -499,6 +503,23 @@ class StoreDetailsViewModel @Inject constructor(
     } else {
       adsAdapter.grid = Constants.GRID_2
       clickEvent.value = Constants.GRID_2
+    }
+  }
+
+//  var to = 0
+  fun addAdsToList() {
+//    if(store.get()?.advertisements?.isNotEmpty() == true){
+//      if((from + limit) < store.get()?.advertisements?.size!! - 1)
+//        to = from+limit
+//      if((from + limit) < store.get()?.advertisements?.size!!)
+//        to = from+limit
+//    }
+  Log.d(TAG, "store: ${from+limit}")
+  Log.d(TAG, "storeTotal: ${store.get()?.advertisements?.size}")
+    if((from + limit) < store.get()?.advertisements?.size!!) {
+      val list = ArrayList(store.get()?.advertisements?.subList(from, from + limit))
+      from += this.limit
+      adsAdapter.insertData(list)
     }
   }
 }

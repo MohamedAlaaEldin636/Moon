@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -119,22 +120,41 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
 
   private fun setRecyclerViewScrollListener() {
-
+    Log.d(TAG, "setRecyclerViewScrollListener: HERER")
     val layoutManager = LinearLayoutManager(requireContext())
     binding.recyclerView.layoutManager = layoutManager
-    binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-        super.onScrollStateChanged(recyclerView, newState)
-        if (!recyclerView.canScrollVertically(1)) {
+//    binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//        super.onScrollStateChanged(recyclerView, newState)
+//        Log.d(TAG, "onScrollStateChanged: START")
+//        if (!recyclerView.canScrollVertically(1)) {
+//          Log.d(TAG, "onScrollStateChanged: CALLLLLLL")
+//          viewModel.callService()
+//        }
+//      }
+//    })
+
+    binding.nestedScrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+      if (v.getChildAt(v.childCount - 1) != null) {
+        if (scrollY >= v.getChildAt(v.childCount - 1)
+            .measuredHeight - v.measuredHeight &&
+          scrollY > oldScrollY
+        ) {
           viewModel.callService()
+          //code to fetch more data for endless scrolling
         }
       }
-    })
+    } as NestedScrollView.OnScrollChangeListener)
+    binding.recyclerView.adapter = viewModel.adapter
   }
 
   override fun onResume() {
     super.onResume()
     viewModel.adapter.updateFavourite()
     viewModel.adapter.checkBlockStore()
+
+    viewModel.storesAdapter.checkBlockStore()
+    viewModel.storesAdapter.checkFollowingStore()
+
   }
 }

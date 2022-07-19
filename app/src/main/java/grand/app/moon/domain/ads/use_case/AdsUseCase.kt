@@ -3,6 +3,7 @@ package grand.app.moon.domain.ads.use_case
 import android.util.Log
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
+import grand.app.moon.domain.ads.entity.SearchData
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
@@ -90,4 +91,11 @@ class AdsUseCase @Inject constructor(
     val result = repo.filterResults(resultRequest)
     emit(result)
   }.flowOn(Dispatchers.IO)
+
+  fun search(search: String?,page: Int,showProgress: Boolean): Flow<Resource<BaseResponse<SearchData>>> = flow {
+    if(showProgress)emit(Resource.Loading)
+    val result = repo.search(search,page)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
 }

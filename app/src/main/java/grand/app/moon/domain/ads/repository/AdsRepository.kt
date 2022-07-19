@@ -1,6 +1,7 @@
 package grand.app.moon.domain.ads.repository
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
+import grand.app.moon.domain.ads.entity.SearchData
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
@@ -29,5 +30,6 @@ interface AdsRepository {
   suspend fun addReview(url : ReviewRequest): Resource<BaseResponse<*>>
   suspend fun filterDetails(categoryId: Int , subCategoryId: Int?): Resource<BaseResponse<FilterDetails>>
   suspend fun filterResults(url : FilterResultRequest): Resource<BaseResponse<AdsListPaginateData>>
+  suspend fun search(url : String?,page: Int): Resource<BaseResponse<SearchData>>
 
 }

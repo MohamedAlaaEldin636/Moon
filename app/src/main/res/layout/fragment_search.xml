@@ -14,139 +14,237 @@
       type="grand.app.moon.presentation.search.viewModels.SearchViewModel" />
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/nested_scrollview"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <androidx.cardview.widget.CardView
-      android:id="@+id/img_login"
+    <LinearLayout
+      android:orientation="vertical"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/dimen20"
-      android:layout_marginTop="@dimen/dimen10"
-      android:layout_marginEnd="@dimen/dimen20"
-      app:layout_constraintTop_toTopOf="parent">
+      android:layout_height="wrap_content">
 
-      <androidx.constraintlayout.widget.ConstraintLayout
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/img_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginStart="@dimen/dimen20"
+        android:layout_marginTop="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen20"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatEditText
-          android:id="@+id/edt_search"
-          style="@style/mediumFont"
+        <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@null"
-          android:drawableStart="@drawable/ic_search"
-          android:drawablePadding="@dimen/dimen12"
-          android:hint="@string/search"
-          android:imeOptions="actionSearch"
-          android:inputType="text"
-          android:lines="1"
-          android:padding="@dimen/dimen10"
-          android:textSize="@dimen/text_size16"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+          android:orientation="horizontal">
 
-      </androidx.constraintlayout.widget.ConstraintLayout>
+          <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_search"
+            style="@style/mediumFont"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/dimen12"
+            android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:padding="@dimen/dimen10"
+            android:textSize="@dimen/text_size16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-
-    </androidx.cardview.widget.CardView>
-
-    <ListView
-      android:id="@+id/listView"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/dimen250"
-      android:divider="@color/grey"
-      android:dividerHeight="1dp"
-      android:visibility="@{viewModel.isStart ? View.VISIBLE : View.GONE}"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/img_login" />
-
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recyclerView"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:layout_marginTop="@dimen/dimen6"
-      android:orientation="vertical"
-      android:scrollbars="none"
-      android:visibility="@{viewModel.noData || viewModel.isStart ? View.GONE : View.VISIBLE}"
-      app:adapter="@{viewModel.adapter}"
-      app:layout_constraintBottom_toTopOf="@+id/rl_service_shop_progress"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/img_login"
-      app:orientation="@{`1`}"
-      app:span="@{`1`}"
-      tools:listitem="@layout/item_ads"
-      tools:orientation="vertical" />
-
-    <RelativeLayout
-      android:id="@+id/rl_service_shop_progress"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:visibility="@{viewModel.page > 1 &amp;&amp;  viewModel.callingService? View.VISIBLE : View.GONE}"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent">
-
-      <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="@dimen/dimen20"
-        android:layout_height="@dimen/dimen20"
-        android:theme="@style/progress" />
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="@dimen/dimen5"
-        android:layout_toEndOf="@+id/progress_bar"
-        android:text="@string/loading_more"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size12" />
-
-    </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:visibility="@{viewModel.noData ? View.VISIBLE : View.GONE}"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+      </androidx.cardview.widget.CardView>
 
-      <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/pb_base_loading_bar"
-        android:layout_width="@dimen/dimen250"
+      <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dimen250"
-        android:layout_gravity="center"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="no_data.json"
-        app:lottie_loop="true" />
+        android:divider="@color/grey"
+        android:dividerHeight="1dp"
+        android:visibility="@{viewModel.isStart ? View.VISIBLE : View.GONE}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_login" />
 
+      <RelativeLayout
+        android:visibility="@{viewModel.storesAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE , default = gone}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_item_category_text"
+          style="@style/boldFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen8"
+          android:textColor="@color/colorBlack"
+          android:textStyle="bold"
+          android:text="@string/stores"
+          android:layout_alignParentStart="true"
+          android:textSize="@dimen/text_size16"
+          android:layout_marginStart="@dimen/dimen10"
+          android:layout_marginEnd="@dimen/dimen10"
+          android:layout_marginTop="@dimen/dimen6"
+          android:layout_marginBottom="@dimen/dimen6"
+          android:paddingStart="@dimen/dimen10"
+          android:paddingEnd="@dimen/dimen10"
+          android:paddingTop="@dimen/dimen6"
+          android:paddingBottom="@dimen/dimen6"
+          android:layout_centerInParent="true"
+          app:iconGravity="textStart" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_top_stores_all"
+          style="@style/mediumFont"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:onClick="@{ (v) -> viewModel.allStores(v)}"
+          android:textAppearance="@style/TextAppearance.AppCompat.Small"
+          android:textColor="@color/colorPrimary"
+          android:drawableTint="@color/colorAccent"
+          android:drawableEnd="@drawable/ic_more_sec"
+          android:layout_marginEnd="@dimen/dimen10"
+          app:layout_constraintEnd_toEndOf="parent"
+          android:layout_alignParentEnd="true"
+          android:layout_centerInParent="true"
+          android:text="@string/show_all" />
+
+
+
+      </RelativeLayout>
+
+
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_stories"
+        adapter_percentage="@{viewModel.storesAdapter}"
+        rv_ln="@{49}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen10"
+        android:orientation="horizontal"
+        android:visibility="@{viewModel.storesAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_login"
+        tools:listitem="@layout/item_story" />
 
       <androidx.appcompat.widget.AppCompatTextView
         style="@style/boldFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen8"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        android:visibility="@{viewModel.noData || viewModel.isStart ? View.GONE : View.VISIBLE , default = gone}"
+        android:text="@string/advertisements"
+        android:textSize="@dimen/text_size16"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen6"
+        android:layout_marginBottom="@dimen/dimen6"
+        android:paddingStart="@dimen/dimen10"
+        android:paddingEnd="@dimen/dimen10"
+        android:paddingTop="@dimen/dimen6"
+        android:paddingBottom="@dimen/dimen6"
+        app:iconGravity="textStart" />
+
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dimen10"
-        android:gravity="center"
-        android:text="@string/there_are_no_result_please_try_again"
-        android:textSize="@dimen/text_size16" />
+        android:layout_marginTop="@dimen/dimen6"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        android:nestedScrollingEnabled="false"
+        android:visibility="@{viewModel.noData || viewModel.isStart ? View.GONE : View.VISIBLE}"
+        app:layout_constraintBottom_toTopOf="@+id/rl_service_shop_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_stories"
 
+        tools:listitem="@layout/item_ads"
+        tools:orientation="vertical" />
+
+<!--      app:adapter="@{viewModel.adapter}"-->
+<!--      app:orientation="@{`1`}"-->
+<!--      app:span="@{`1`}"-->
+
+      <RelativeLayout
+        android:id="@+id/rl_service_shop_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="@{viewModel.page > 1 &amp;&amp;  viewModel.callingService? View.VISIBLE : View.GONE}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ProgressBar
+          android:id="@+id/progress_bar"
+          android:layout_width="@dimen/dimen20"
+          android:layout_height="@dimen/dimen20"
+          android:theme="@style/progress" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:layout_marginStart="@dimen/dimen5"
+          android:layout_toEndOf="@+id/progress_bar"
+          android:text="@string/loading_more"
+          android:textColor="@color/colorPrimary"
+          android:textSize="@dimen/text_size12" />
+
+      </RelativeLayout>
+
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="@{viewModel.noData ? View.VISIBLE : View.GONE}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+          android:id="@+id/pb_base_loading_bar"
+          android:layout_width="@dimen/dimen250"
+          android:layout_height="@dimen/dimen250"
+          android:layout_gravity="center"
+          app:lottie_autoPlay="true"
+          app:lottie_fileName="no_data.json"
+          app:lottie_loop="true" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/boldFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginTop="@dimen/dimen10"
+          android:gravity="center"
+          android:text="@string/there_are_no_result_please_try_again"
+          android:textSize="@dimen/text_size16" />
+
+
+      </LinearLayout>
 
     </LinearLayout>
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
+  </androidx.core.widget.NestedScrollView>
 </layout>

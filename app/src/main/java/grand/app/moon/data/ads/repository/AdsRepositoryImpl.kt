@@ -3,6 +3,7 @@ package grand.app.moon.data.ads.repository
 import grand.app.moon.data.ads.data_source.AdsRemoteDataSource
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
+import grand.app.moon.domain.ads.entity.SearchData
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.InteractionRequest
@@ -70,6 +71,10 @@ class AdsRepositoryImpl @Inject constructor(
 
   override
   suspend fun filterResults(url: FilterResultRequest) = remoteDataSource.filterResults(url)
+
+
+  override
+  suspend fun search(url: String?,page:Int) = remoteDataSource.search(url,page)
 
 
 }

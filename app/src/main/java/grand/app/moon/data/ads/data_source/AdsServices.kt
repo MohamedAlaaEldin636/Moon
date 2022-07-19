@@ -2,6 +2,7 @@ package grand.app.moon.data.ads.data_source
 
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
+import grand.app.moon.domain.ads.entity.SearchData
 import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.Advertisement
@@ -85,6 +86,12 @@ interface AdsServices {
     @Query("category_id") category_id: Int,
     @Query("sub_category_id") sub_category_id: Int
   ): BaseResponse<FilterDetails>
+
+  @GET("v1/search")
+  suspend fun search(
+    @Query("search") search: String?,@Query("page")  page:Int
+  ): BaseResponse<SearchData>
+
 
 
   @GET
