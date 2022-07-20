@@ -17,12 +17,13 @@
   <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:fillViewport="true"
+    android:background="@color/colorFBFBFB"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/backgroundGray">
+      android:background="@color/colorFBFBFB">
       <androidx.cardview.widget.CardView
         android:id="@+id/img_login"
         android:layout_width="match_parent"

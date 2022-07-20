@@ -63,7 +63,7 @@ object Constants {
   const val CHAT_REGION: String = "eu"
   const val CHAT_AUTH_KEY: String = "83d95ac0cb93239d1e08ba375efe7ab73e541dbd"
 
-  val ONESIGNAL_APP_ID = "ea936a31-ed86-430a-b303-794f461dd317"
+  val ONESIGNAL_APP_ID = "fbc6acf6-debe-41f2-8161-b7c1457d5e54"
 
 
   const val Verify: String = "verify"
