@@ -339,6 +339,11 @@
       app:argType="integer"
       android:defaultValue="-1" />
 
+    <argument
+      android:name="search"
+      app:argType="string"
+      android:defaultValue="" />
+
 <!--    <action-->
 <!--      android:id="@+id/action_storeListFragment_to_storeFilterFragment"-->
 <!--      app:enterAnim="@anim/anim_slide_in_right"-->
@@ -371,7 +376,7 @@
     <deepLink
       android:id="@+id/storeListSearch"
       android:autoVerify="true"
-      app:uri="storeList://grand.app.moon.store.search.List/{title}/{order_by}/{category_id}/{search}" />
+      app:uri="storeListSearch://grand.app.moon.store.search.List/{title}/{order_by}/{category_id}/{search}" />
 
 
   </fragment>

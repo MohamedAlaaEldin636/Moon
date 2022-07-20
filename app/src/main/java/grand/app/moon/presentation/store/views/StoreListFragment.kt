@@ -45,7 +45,9 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
   override
   fun setBindingVariables() {
     binding.viewModel = viewModel
-    viewModel.request.order_by = args.orderBy
+    if(args.orderBy != -1) viewModel.request.order_by = args.orderBy
+    viewModel.request.search = args.search
+    binding.appCompatEditText.setText(args.search)
     if(args.categoryId != -1)
       viewModel.request.categoryId = args.categoryId
     viewModel.callService()

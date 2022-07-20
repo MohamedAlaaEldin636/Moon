@@ -69,9 +69,11 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
 
     binding.webview.setOnKeyListener(object : View.OnKeyListener {
       override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+        Log.d(TAG, "onKey: HERE")
         if (keyCode == KeyEvent.KEYCODE_BACK
           && event?.action == MotionEvent.ACTION_UP
           && binding.webview.canGoBack()) {
+          Log.d(TAG, "onKey: WOIR")
           handler.sendEmptyMessage(1);
           return true;
         }
@@ -82,7 +84,6 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
     })
 
 
-//    binding.webview.webChromeClient = MyWebChromeClient()
     binding.webview.webChromeClient = object : WebChromeClient() {
       override fun onShowFileChooser(
         webView: WebView?,
@@ -90,16 +91,28 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
         fileChooserParams: FileChooserParams?
       ): Boolean {
 
+        Log.d(TAG, "onShowFileChooser: YES")
+
         this@AddStoreFragment.filePathCallback = filePathCallback//?.onReceiveValue(null)
 
         if (requireActivity().checkSelfPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
           && requireContext().checkSelfPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
           && requireContext().checkSelfPermissionGranted(Manifest.permission.CAMERA)
         ) {
+          Log.d(TAG, "onShowFileChooser: WELL DONE")
           pickImageViaChooser()
 //          activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
         } else {
-          permissionLocationRequest.launch(Manifest.permission.CAMERA)
+          Log.d(TAG, "onShowFileChooser: WELL WORKING")
+//          permissionLocationRequest.launch(Manifest.permission.CAMERA)
+
+          permissionLocationRequest.launch(arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+          ))
+
+
 //          pickImageViaChooser()
         }
 
@@ -116,7 +129,7 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
     val camera = getString(R.string.camera)
     val gallery = getString(R.string.gallery)
 
-    binding.webview.showPopup(listOf(camera, gallery)) {
+    binding.viewPopUP.showPopup(listOf(camera, gallery)) {
       when (it.title?.toString()) {
         camera -> activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
         else -> activityResultImageGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
@@ -129,11 +142,18 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   ) {
 
     if (it.resultCode == Activity.RESULT_OK) {
+      Log.d(TAG, ": STARTO")
       val bitmap = it.data?.extras?.get("data") as? Bitmap ?: return@registerForActivityResult
 
       val uri = getUriFromBitmapRetrievedByCamera(bitmap)
 
-      filePathCallback?.onReceiveValue(arrayOf(uri))
+      kotlin.runCatching {
+        filePathCallback?.onReceiveValue(arrayOf(uri))
+      }.getOrElse {
+        Log.e(TAG, ": ${it.message}" )
+      }
+    }else {
+      filePathCallback?.onReceiveValue(arrayOf())
     }
   }
 
@@ -142,7 +162,13 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   ) {
     if (it.resultCode == Activity.RESULT_OK) {
       val uri = it.data?.data ?: return@registerForActivityResult
-      filePathCallback?.onReceiveValue(arrayOf(uri))
+      kotlin.runCatching {
+        filePathCallback?.onReceiveValue(arrayOf(uri))
+      }.getOrElse {
+        Log.e(TAG, ": ${it.message}" )
+      }
+    }else {
+      filePathCallback?.onReceiveValue(arrayOf())
     }
   }
 
@@ -163,14 +189,37 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   }
 
 
-  private val permissionLocationRequest = registerForActivityResult(
-    ActivityResultContracts.RequestPermission()
-  ) { isGranted ->
+//  private val permissionLocationRequest = registerForActivityResult(
+//    ActivityResultContracts.RequestPermission()
+//  ) { isGranted ->
+//
+//    if (isGranted == true) {
+//      activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+//    }
+//  }
 
-    if (isGranted == true) {
-      activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+  private val permissionLocationRequest = registerForActivityResult(
+    ActivityResultContracts.RequestMultiplePermissions()
+  ) { permissions ->
+    when {
+      permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true
+        && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true
+        && permissions[Manifest.permission.CAMERA] == true -> {
+        pickImageViaChooser()
+      }
+      permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true
+        && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true -> {
+        activityResultImageGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+        }
+      permissions[Manifest.permission.CAMERA] == true -> {
+        activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+      }
+      else -> {
+        showMessage(getString(R.string.you_didn_t_accept_permission))
+      }
     }
   }
+
 
 
   class MyWebChromeClient : WebChromeClient() {
@@ -179,7 +228,7 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   }
 
 
-  private val TAG = "WebFragment"
+  private val TAG = "AddStoreFragment"
 
   override fun onStop() {
     super.onStop()

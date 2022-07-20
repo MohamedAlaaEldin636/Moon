@@ -346,13 +346,13 @@ open class FilterBaseViewModel @Inject constructor(
 
   fun addStaticData() {
 
-    adapterSort.lastPosition = 0
-    adapterSort.lastSelected = 1
+    adapterSort.lastPosition = -1
+    adapterSort.lastSelected = -1
     addSortBy {
       adapterSort.differ.submitList(it.children)
     }
-    adapterAdsType.lastPosition = 0
-    adapterAdsType.lastSelected = 1
+    adapterAdsType.lastPosition = -1
+    adapterAdsType.lastSelected = -1
     addAnotherOptions {
       adapterAdsType.differ.submitList(it.children)
     }

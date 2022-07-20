@@ -69,7 +69,7 @@ class ItemAdsViewModel(
   }
 
   fun whatsapp(v: View) {
-    if(v.context.isLoginWithOpenAuth()) {
+    if(v.context.isLogin()) {
       viewModelScope.launch(Dispatchers.IO) {
         adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(), 7))
       }
@@ -91,7 +91,6 @@ class ItemAdsViewModel(
     callPhone(v.context, advertisement.country.country_code + advertisement.phone)
   }
 
-  //take-care
   fun chat(v: View) {
     if (v.context.isLoginWithOpenAuth()) {
       viewModelScope.launch(Dispatchers.IO) {

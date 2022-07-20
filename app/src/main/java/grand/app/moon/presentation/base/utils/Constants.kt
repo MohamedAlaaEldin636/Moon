@@ -128,7 +128,7 @@ object Constants {
   const val EXPLORES: String = "explores"
 
   const val LANGUAGE_DATA = "languageData"
-  const val DEFAULT_LANGUAGE = "en"
+  const val DEFAULT_LANGUAGE = "ar"
 
 
   const val SHARE: String = "share"

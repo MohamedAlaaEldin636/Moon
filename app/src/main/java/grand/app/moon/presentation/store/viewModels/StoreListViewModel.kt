@@ -127,10 +127,11 @@ class StoreListViewModel @Inject constructor(
 
   //{title}/{type}/{advertisement_id}/{store_id}
   fun filterSort(v: View){
+    val orderBy = if (request.order_by != null) request.order_by else -1
     val uri = Uri.Builder()
       .scheme("filter-sort-report")
       .authority("grand.app.moon.filterSortDialog")
-      .appendPath(request.order_by.toString())
+      .appendPath(orderBy.toString())
       .appendPath(FilterDialog.STORE.toString())
       .build()
     val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
@@ -140,7 +141,9 @@ class StoreListViewModel @Inject constructor(
   fun map(v: View){
     val item = SubCategoryResponse()
     val action = StoreListFragmentDirections.actionStoreListFragmentToMapFragment(item)
-    action.orderBy = request.order_by
+    request.order_by?.let {
+      action.orderBy = it
+    }
     v.findNavController().navigate(action)
 //    val uri = Uri.Builder()
 //      .scheme("map")

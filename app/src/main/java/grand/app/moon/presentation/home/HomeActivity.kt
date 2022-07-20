@@ -246,7 +246,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         .scheme("storeList")
         .authority("grand.app.moon.store.List")
         .appendPath(getString(R.string.stores))
-        .appendPath(3.toString())
+        .appendPath((-1).toString())
         .appendPath("-1")
         .build()
       val request = NavDeepLinkRequest.Builder.fromUri(uri).build()

@@ -148,7 +148,7 @@
         android:layout_margin="@dimen/dimen8"
         android:textColor="@color/colorBlack"
         android:textStyle="bold"
-        android:visibility="@{viewModel.noData || viewModel.isStart ? View.GONE : View.VISIBLE , default = gone}"
+        android:visibility="@{viewModel.adapter.differ.currentList.size == 0 ? View.GONE : View.VISIBLE , default = gone}"
         android:text="@string/advertisements"
         android:textSize="@dimen/text_size16"
         android:layout_marginStart="@dimen/dimen10"

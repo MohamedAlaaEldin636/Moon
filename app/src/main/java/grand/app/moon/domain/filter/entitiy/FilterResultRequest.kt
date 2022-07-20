@@ -22,7 +22,7 @@ class FilterResultRequest(
   @SerializedName("other_options")
   var other_options: Int = 1,
   @SerializedName("order_by")
-  var order_by: Int = 1,
+  var order_by: Int? = null,
   @SerializedName("min_price")
   var min_price: String? = "",
   @SerializedName("max_price")
