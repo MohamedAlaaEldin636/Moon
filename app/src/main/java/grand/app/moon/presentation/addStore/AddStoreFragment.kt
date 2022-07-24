@@ -6,7 +6,10 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -17,6 +20,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -29,14 +33,24 @@ import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.more.SettingsViewModel
 import grand.app.moon.presentation.splash.SplashActivity
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.util.*
+import android.R.attr.bitmap
+
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
+
+import android.R.attr.orientation
+
+
+
 
 
 @AndroidEntryPoint
 class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   private var filePathCallback: ValueCallback<Array<Uri>>? = null
   private val viewModel: SettingsViewModel by viewModels()
-
+  lateinit var imageUri: Uri
+  lateinit var fileCameraCapture: File
 
   override
   fun getLayoutId() = R.layout.fragment_add_store
@@ -50,8 +64,10 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       }
     }
   }
+
   override
   fun setBindingVariables() {
+    imageUri = createImageUri()!!
     Log.d(TAG, "setBindingVariables: HERERERERERERERREERERERERER")
     binding.viewModel = viewModel
     val map = mutableMapOf<String, String>()
@@ -72,7 +88,8 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
         Log.d(TAG, "onKey: HERE")
         if (keyCode == KeyEvent.KEYCODE_BACK
           && event?.action == MotionEvent.ACTION_UP
-          && binding.webview.canGoBack()) {
+          && binding.webview.canGoBack()
+        ) {
           Log.d(TAG, "onKey: WOIR")
           handler.sendEmptyMessage(1);
           return true;
@@ -101,16 +118,16 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
         ) {
           Log.d(TAG, "onShowFileChooser: WELL DONE")
           pickImageViaChooser()
-//          activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
         } else {
           Log.d(TAG, "onShowFileChooser: WELL WORKING")
-//          permissionLocationRequest.launch(Manifest.permission.CAMERA)
 
-          permissionLocationRequest.launch(arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA,
-          ))
+          permissionLocationRequest.launch(
+            arrayOf(
+              Manifest.permission.READ_EXTERNAL_STORAGE,
+              Manifest.permission.WRITE_EXTERNAL_STORAGE,
+              Manifest.permission.CAMERA,
+            )
+          )
 
 
 //          pickImageViaChooser()
@@ -131,8 +148,14 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
 
     binding.viewPopUP.showPopup(listOf(camera, gallery)) {
       when (it.title?.toString()) {
-        camera -> activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-        else -> activityResultImageGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+//        camera -> activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+        camera -> activityResultImageCameraFile.launch(imageUri)
+        else -> activityResultImageGallery.launch(
+          Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+          )
+        )
       }
     }
   }
@@ -150,12 +173,55 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       kotlin.runCatching {
         filePathCallback?.onReceiveValue(arrayOf(uri))
       }.getOrElse {
-        Log.e(TAG, ": ${it.message}" )
+        Log.e(TAG, ": ${it.message}")
       }
-    }else {
+    } else {
       filePathCallback?.onReceiveValue(arrayOf())
     }
   }
+
+  private fun rotateImage(source: Bitmap,angle: Float) : Bitmap{
+    val matrix = Matrix()
+    matrix.postRotate(angle)
+    return Bitmap.createBitmap(
+      source, 0, 0, source.width, source.height,
+      matrix, true
+    )
+  }
+
+  private fun handleCaptureImageRotation(): Bitmap{
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+      val ei = ExifInterface(fileCameraCapture.absoluteFile)
+      val bitmap =  BitmapFactory.decodeFile(fileCameraCapture.path)
+      val orientation: Int = ei.getAttributeInt(
+        ExifInterface.TAG_ORIENTATION,
+        ExifInterface.ORIENTATION_UNDEFINED
+      )
+      var rotatedBitmap: Bitmap? = null
+      when (orientation) {
+        ExifInterface.ORIENTATION_ROTATE_90 -> rotatedBitmap = rotateImage(bitmap, 90)
+        ExifInterface.ORIENTATION_ROTATE_180 -> rotatedBitmap = rotateImage(bitmap, 180)
+        ExifInterface.ORIENTATION_ROTATE_270 -> rotatedBitmap = rotateImage(bitmap, 270)
+        ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap = bitmap
+        else -> rotatedBitmap = bitmap
+      }
+      return rotatedBitmap
+    }
+    return null
+  }
+
+  private val activityResultImageCameraFile = registerForActivityResult(
+    ActivityResultContracts.TakePicture()
+  ) {
+    Log.d(TAG, "it: " + it)
+    Log.d(TAG, "imageUri: " + imageUri)
+    if (it != null && it && this::imageUri.isInitialized) {
+      filePathCallback?.onReceiveValue(arrayOf(imageUri))
+    } else
+      filePathCallback?.onReceiveValue(arrayOf())
+  }
+
 
   private val activityResultImageGallery = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
@@ -165,29 +231,39 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       kotlin.runCatching {
         filePathCallback?.onReceiveValue(arrayOf(uri))
       }.getOrElse {
-        Log.e(TAG, ": ${it.message}" )
+        Log.e(TAG, ": ${it.message}")
       }
-    }else {
+    } else {
       filePathCallback?.onReceiveValue(arrayOf())
     }
   }
 
 
   private fun getUriFromBitmapRetrievedByCamera(bitmap: Bitmap): Uri {
-    val stream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
-    val byteArray = stream.toByteArray()
-    val compressedBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+//    val stream = ByteArrayOutputStream()
+    val bitmapScaled = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, false)
+
+//    bitmap.compress(Bitmap.CompressFormat.JPEG, 0, stream)
+//    val byteArray = stream.toByteArray()
+//    val compressedBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
 
     val path = MediaStore.Images.Media.insertImage(
       requireContext().contentResolver,
-      compressedBitmap,
+      bitmapScaled,
       Date(System.currentTimeMillis()).toString() + "photo",
       null
     )
     return Uri.parse(path)
   }
 
+
+  fun createImageUri(): Uri? {
+    fileCameraCapture = File(activity?.applicationContext?.filesDir, "camera_photo.png")
+    activity?.applicationContext?.let {
+      return FileProvider.getUriForFile(it, "grand.app.moon.fileprovider", fileCameraCapture)
+    }
+    return null
+  }
 
 //  private val permissionLocationRequest = registerForActivityResult(
 //    ActivityResultContracts.RequestPermission()
@@ -209,17 +285,22 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       }
       permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true
         && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true -> {
-        activityResultImageGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
-        }
+        activityResultImageGallery.launch(
+          Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+          )
+        )
+      }
       permissions[Manifest.permission.CAMERA] == true -> {
-        activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+//        activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE)) //osama
+        activityResultImageCameraFile.launch(imageUri)
       }
       else -> {
         showMessage(getString(R.string.you_didn_t_accept_permission))
       }
     }
   }
-
 
 
   class MyWebChromeClient : WebChromeClient() {
@@ -242,15 +323,14 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       request?.url?.toString()?.also { link ->
         Log.d(TAG, "shouldOverrideUrlLoading: ${link}")
         viewModel.saveUrl(link)
-        if((!viewModel.browserHelper.isUser() && activity is HomeActivity)){
+        if ((!viewModel.browserHelper.isUser() && activity is HomeActivity)) {
           val homeActivity = activity as HomeActivity
           homeActivity.goHomePage()
           homeActivity.initStoreBtn()
           openActivity(AddStoreActivity::class.java)
-        }
-        else if((viewModel.browserHelper.isUser() && activity is AddStoreActivity)) {
+        } else if ((viewModel.browserHelper.isUser() && activity is AddStoreActivity)) {
           (activity as AddStoreActivity).finishAffinity()
-          Intent(activity,HomeActivity::class.java).apply {
+          Intent(activity, HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(this)
           }

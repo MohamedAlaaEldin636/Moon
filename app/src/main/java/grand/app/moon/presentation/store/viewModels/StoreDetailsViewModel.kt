@@ -23,6 +23,7 @@ import grand.app.moon.R
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.core.MyApplication
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
@@ -272,8 +273,10 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun phone(v: View) {
-    viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 6))
+    if(v.context.isLogin()) {
+      viewModelScope.launch(Dispatchers.IO) {
+        adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 6))
+      }
     }
     store.get()?.phone?.let { callPhone(v.context, store.get()?.country?.country_code + it) }
   }
@@ -291,10 +294,10 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun chat(v: View) {
-    viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 8))
-    }
     if (v.context.isLoginWithOpenAuth()) {
+      viewModelScope.launch(Dispatchers.IO) {
+        adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 8))
+      }
       store.get()?.let {
         v.context.openChatStore(v, it.id, it.name, it.image)
       }
