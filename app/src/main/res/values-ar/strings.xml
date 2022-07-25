@@ -27,7 +27,7 @@
   <string name="required">هذا هو الحقل المطلوب</string>
   <string name="skip">تخطى</string>
   <string name="settings">الأعدادات</string>
-  <string name="about_moon">عن سوق موون</string>
+  <string name="about_moon">عن سوق مون</string>
   <string name="contact_us">تواصل معنا</string>
   <string name="terms">الشروط والاحكام</string>
   <string name="help">المساعدة</string>
@@ -49,7 +49,7 @@
   <string name="or_can_full_the_next_form_and_will_contact_you">او قم بملأ البيانات بالاسفل وسنتواصل معك</string>
   <string name="send_mail">ارسل ايميل</string>
   <string name="call_for_phone_list">اتصل علي الأرقام التالية</string>
-  <string name="main_moon_location">مقر سوق موون الرئيسي</string>
+  <string name="main_moon_location">مقر سوق مون الرئيسي</string>
   <string name="please_enter_your_name">من فضلك قم بادخال الاسم</string>
   <string name="last_ads_seen">أخر الإعلانات مشاهدة</string>
   <string name="stores_had_been_blocked">المتاجر المحظورة</string>
@@ -139,7 +139,7 @@
 
   <string name="notification_removed_successfully">تم حذف الإشعار بنجاح</string>
     <string name="notification_type">نوع الاشعارات</string>
-  <string name="moon_notifications">اشعارات سوق موون</string>
+  <string name="moon_notifications">اشعارات سوق مون</string>
   <string name="moon_traders">اشعارات التجار</string>
   <string name="notifications">إشعارات</string>
   <string name="advertisement">إعلان</string>

@@ -6,11 +6,13 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -25,11 +27,15 @@ import grand.app.moon.R
 import grand.app.moon.databinding.FragmentProfileBinding
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.helpers.utils.getUriFromBitmapRetrievedByCamera
+import grand.app.moon.helpers.utils.handleCaptureImageRotation
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.collect
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
@@ -205,21 +211,41 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
   private fun pickImage(fromCamera: Boolean) {
     if (fromCamera) {
-      activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+      imageUri = createImageUri()!!
+      activityResultImageCameraFile.launch(imageUri)
     }else {
       // From gallery
       activityResultImageGallery.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
     }
   }
 
-  private val activityResultImageCamera = registerForActivityResult(
-    ActivityResultContracts.StartActivityForResult()
+  fun createImageUri(): Uri? {
+    fileCameraCapture = File(
+      activity?.applicationContext?.filesDir,
+      "camera_photo${SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.ENGLISH)}.png"
+    )
+    activity?.applicationContext?.let {
+      return FileProvider.getUriForFile(it, "grand.app.moon.fileprovider", fileCameraCapture!!)
+    }
+    return null
+  }
+
+  var imageUri: Uri? = null
+  var fileCameraCapture: File? = null
+  private val activityResultImageCameraFile = registerForActivityResult(
+    ActivityResultContracts.TakePicture()
   ) {
-    if (it.resultCode == Activity.RESULT_OK) {
-      val bitmap = it.data?.extras?.get("data") as? Bitmap ?: return@registerForActivityResult
-      viewModel.request.uri = getUriFromBitmapRetrievedByCamera(bitmap)
-      loadImageProfile()
-      navigateSafe(ProfileFragmentDirections.actionProfileFragmentToCropFragment(viewModel.request))
+    Log.d(TAG, "pickImageViaChooser: on listener Fetch")
+    if (it != null && it && imageUri != null) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        val bitmap = handleCaptureImageRotation(fileCameraCapture,imageUri)
+        bitmap?.let {
+          imageUri = getUriFromBitmapRetrievedByCamera(it)
+          viewModel.request.uri = imageUri
+          loadImageProfile()
+          navigateSafe(ProfileFragmentDirections.actionProfileFragmentToCropFragment(viewModel.request))
+        }
+      }
     }
   }
 
@@ -242,20 +268,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
       .apply(RequestOptions().centerCrop())
       .into(binding.imgProfile)
   }
-
-
-  private fun getUriFromBitmapRetrievedByCamera(bitmap: Bitmap): Uri {
-    val stream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
-    val byteArray = stream.toByteArray()
-    val compressedBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-
-    val path = MediaStore.Images.Media.insertImage(
-      requireContext().contentResolver, compressedBitmap, Date(System.currentTimeMillis()).toString() + "photo", null
-    )
-    return Uri.parse(path)
-  }
-
 
   private fun initView() {
     if(!viewModel.user.country_code.contains("+"))

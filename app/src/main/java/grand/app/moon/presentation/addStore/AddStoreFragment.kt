@@ -36,6 +36,9 @@ import java.io.File
 import java.util.*
 
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
+import grand.app.moon.helpers.utils.getBitmap
+import grand.app.moon.helpers.utils.getUriFromBitmapRetrievedByCamera
+import grand.app.moon.helpers.utils.handleCaptureImageRotation
 
 import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
@@ -174,56 +177,13 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
     )
   }
 
-
-  private fun getBitmap(bitmap: Bitmap, orientation: Int): Bitmap? {
-    var rotatedBitmap: Bitmap? = null
-    Log.d(TAG, "handleCaptureImageRotation: $orientation")
-    when (orientation) {
-      ExifInterface.ORIENTATION_ROTATE_90 -> rotatedBitmap = rotateImage(bitmap, 90)
-      ExifInterface.ORIENTATION_ROTATE_180 -> rotatedBitmap = rotateImage(bitmap, 180)
-      ExifInterface.ORIENTATION_ROTATE_270 -> rotatedBitmap = rotateImage(bitmap, 270)
-      ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap = bitmap
-      else -> rotatedBitmap = bitmap
-    }
-    return rotatedBitmap
-  }
-
-  private fun handleCaptureImageRotation(): Bitmap? {
-    var orientation: Int? = null
-    var bitmap: Bitmap? = null
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-      val ei = ExifInterface(fileCameraCapture!!.absoluteFile)
-      bitmap = BitmapFactory.decodeFile(fileCameraCapture!!.path)
-      orientation = ei.getAttributeInt(
-        ExifInterface.TAG_ORIENTATION,
-        ExifInterface.ORIENTATION_UNDEFINED
-      )
-      return getBitmap(bitmap, orientation)
-    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-      context?.contentResolver?.openInputStream(imageUri!!).use { inputStream ->
-        inputStream?.let {
-          val exif = ExifInterface(it)
-          orientation = exif.getAttributeInt(
-            ExifInterface.TAG_ORIENTATION,
-            ExifInterface.ORIENTATION_NORMAL
-          )
-          bitmap = BitmapFactory.decodeFile(fileCameraCapture?.path)
-          orientation?.let { itOrientation ->
-            return bitmap?.let { getBitmap(it, itOrientation) }
-          }
-        }
-      }
-    }
-    return null
-  }
-
   private val activityResultImageCameraFile = registerForActivityResult(
     ActivityResultContracts.TakePicture()
   ) {
     Log.d(TAG, "pickImageViaChooser: on listener Fetch")
     if (it != null && it && imageUri != null) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        val bitmap = handleCaptureImageRotation()
+        val bitmap = handleCaptureImageRotation(fileCameraCapture,imageUri)
         bitmap?.let {
           imageUri = getUriFromBitmapRetrievedByCamera(it)
         }
@@ -264,19 +224,6 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       filePathCallback?.onReceiveValue(arrayOf())
     }
   }
-
-
-  private fun getUriFromBitmapRetrievedByCamera(bitmap: Bitmap): Uri {
-    val bitmapScaled = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, false)
-    val path = MediaStore.Images.Media.insertImage(
-      requireContext().contentResolver,
-      bitmapScaled,
-      Date(System.currentTimeMillis()).toString() + "photo",
-      null
-    )
-    return Uri.parse(path)
-  }
-
 
   fun createImageUri(): Uri? {
     fileCameraCapture = File(
