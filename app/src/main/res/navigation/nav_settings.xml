@@ -141,6 +141,13 @@
     <action
       android:id="@+id/action_profileFragment_to_cropFragment"
       app:destination="@id/cropFragment" />
+
+
+    <deepLink
+      android:id="@+id/profileFragment"
+      android:autoVerify="true"
+      app:uri="profile://grand.app.moon.profile" />
+
   </fragment>
   <fragment
     android:id="@+id/storeFollowedListFragment"

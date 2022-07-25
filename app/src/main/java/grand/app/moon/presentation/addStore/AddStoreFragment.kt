@@ -31,26 +31,23 @@ import grand.app.moon.databinding.FragmentAddStoreBinding
 import grand.app.moon.core.extenstions.checkSelfPermissionGranted
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.more.SettingsViewModel
-import grand.app.moon.presentation.splash.SplashActivity
-import java.io.ByteArrayOutputStream
+
 import java.io.File
 import java.util.*
-import android.R.attr.bitmap
 
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
 
-import android.R.attr.orientation
-
-
-
+import java.text.SimpleDateFormat
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
 class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   private var filePathCallback: ValueCallback<Array<Uri>>? = null
   private val viewModel: SettingsViewModel by viewModels()
-  lateinit var imageUri: Uri
-  lateinit var fileCameraCapture: File
+  var imageUri: Uri? = null
+  var fileCameraCapture: File? = null
+  var galleryImageMutliple = -1
 
   override
   fun getLayoutId() = R.layout.fragment_add_store
@@ -67,7 +64,6 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
 
   override
   fun setBindingVariables() {
-    imageUri = createImageUri()!!
     Log.d(TAG, "setBindingVariables: HERERERERERERERREERERERERER")
     binding.viewModel = viewModel
     val map = mutableMapOf<String, String>()
@@ -82,6 +78,7 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
     binding.webview.settings.pluginState = WebSettings.PluginState.ON;
     binding.webview.settings.setSupportMultipleWindows(true);
     binding.webview.webViewClient = MyWebViewClient()
+
 
     binding.webview.setOnKeyListener(object : View.OnKeyListener {
       override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
@@ -109,8 +106,11 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       ): Boolean {
 
         Log.d(TAG, "onShowFileChooser: YES")
-
+        fileChooserParams?.mode
         this@AddStoreFragment.filePathCallback = filePathCallback//?.onReceiveValue(null)
+        fileChooserParams?.mode?.let {
+          galleryImageMutliple = it
+        }
 
         if (requireActivity().checkSelfPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
           && requireContext().checkSelfPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -146,67 +146,73 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
     val camera = getString(R.string.camera)
     val gallery = getString(R.string.gallery)
 
-    binding.viewPopUP.showPopup(listOf(camera, gallery)) {
-      when (it.title?.toString()) {
+    binding.viewPopUP.showPopup(
+      listOf(camera, gallery),
+      listener = {
+        Log.d(TAG, "pickImageViaChooser: on listener")
+        when (it.title?.toString()) {
 //        camera -> activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-        camera -> activityResultImageCameraFile.launch(imageUri)
-        else -> activityResultImageGallery.launch(
-          Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-          )
-        )
+          camera -> {
+            imageUri = createImageUri()!!
+            activityResultImageCameraFile.launch(imageUri)
+          }
+          else -> {
+            val intent = Intent(Intent.ACTION_GET_CONTENT).also {
+              it.type = "image/*"
+              if(galleryImageMutliple == WebChromeClient.FileChooserParams.MODE_OPEN_MULTIPLE) it.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            }
+            activityResultImageGallery.launch(
+              intent
+            )
+          }
+        }
+      },
+      onDismiss = {
+        Log.d(TAG, "pickImageViaChooser: onDismiss")
+        filePathCallback?.onReceiveValue(arrayOf())
       }
-    }
-  }
-
-  private val activityResultImageCamera = registerForActivityResult(
-    ActivityResultContracts.StartActivityForResult()
-  ) {
-
-    if (it.resultCode == Activity.RESULT_OK) {
-      Log.d(TAG, ": STARTO")
-      val bitmap = it.data?.extras?.get("data") as? Bitmap ?: return@registerForActivityResult
-
-      val uri = getUriFromBitmapRetrievedByCamera(bitmap)
-
-      kotlin.runCatching {
-        filePathCallback?.onReceiveValue(arrayOf(uri))
-      }.getOrElse {
-        Log.e(TAG, ": ${it.message}")
-      }
-    } else {
-      filePathCallback?.onReceiveValue(arrayOf())
-    }
-  }
-
-  private fun rotateImage(source: Bitmap,angle: Float) : Bitmap{
-    val matrix = Matrix()
-    matrix.postRotate(angle)
-    return Bitmap.createBitmap(
-      source, 0, 0, source.width, source.height,
-      matrix, true
     )
   }
 
-  private fun handleCaptureImageRotation(): Bitmap{
 
+  private fun getBitmap(bitmap: Bitmap, orientation: Int): Bitmap? {
+    var rotatedBitmap: Bitmap? = null
+    Log.d(TAG, "handleCaptureImageRotation: $orientation")
+    when (orientation) {
+      ExifInterface.ORIENTATION_ROTATE_90 -> rotatedBitmap = rotateImage(bitmap, 90)
+      ExifInterface.ORIENTATION_ROTATE_180 -> rotatedBitmap = rotateImage(bitmap, 180)
+      ExifInterface.ORIENTATION_ROTATE_270 -> rotatedBitmap = rotateImage(bitmap, 270)
+      ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap = bitmap
+      else -> rotatedBitmap = bitmap
+    }
+    return rotatedBitmap
+  }
+
+  private fun handleCaptureImageRotation(): Bitmap? {
+    var orientation: Int? = null
+    var bitmap: Bitmap? = null
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-      val ei = ExifInterface(fileCameraCapture.absoluteFile)
-      val bitmap =  BitmapFactory.decodeFile(fileCameraCapture.path)
-      val orientation: Int = ei.getAttributeInt(
+      val ei = ExifInterface(fileCameraCapture!!.absoluteFile)
+      bitmap = BitmapFactory.decodeFile(fileCameraCapture!!.path)
+      orientation = ei.getAttributeInt(
         ExifInterface.TAG_ORIENTATION,
         ExifInterface.ORIENTATION_UNDEFINED
       )
-      var rotatedBitmap: Bitmap? = null
-      when (orientation) {
-        ExifInterface.ORIENTATION_ROTATE_90 -> rotatedBitmap = rotateImage(bitmap, 90)
-        ExifInterface.ORIENTATION_ROTATE_180 -> rotatedBitmap = rotateImage(bitmap, 180)
-        ExifInterface.ORIENTATION_ROTATE_270 -> rotatedBitmap = rotateImage(bitmap, 270)
-        ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap = bitmap
-        else -> rotatedBitmap = bitmap
+      return getBitmap(bitmap, orientation)
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      context?.contentResolver?.openInputStream(imageUri!!).use { inputStream ->
+        inputStream?.let {
+          val exif = ExifInterface(it)
+          orientation = exif.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_NORMAL
+          )
+          bitmap = BitmapFactory.decodeFile(fileCameraCapture?.path)
+          orientation?.let { itOrientation ->
+            return bitmap?.let { getBitmap(it, itOrientation) }
+          }
+        }
       }
-      return rotatedBitmap
     }
     return null
   }
@@ -214,24 +220,45 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
   private val activityResultImageCameraFile = registerForActivityResult(
     ActivityResultContracts.TakePicture()
   ) {
-    Log.d(TAG, "it: " + it)
-    Log.d(TAG, "imageUri: " + imageUri)
-    if (it != null && it && this::imageUri.isInitialized) {
-      filePathCallback?.onReceiveValue(arrayOf(imageUri))
-    } else
+    Log.d(TAG, "pickImageViaChooser: on listener Fetch")
+    if (it != null && it && imageUri != null) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        val bitmap = handleCaptureImageRotation()
+        bitmap?.let {
+          imageUri = getUriFromBitmapRetrievedByCamera(it)
+        }
+      }
+      filePathCallback?.onReceiveValue(arrayOf(imageUri!!))
+    } else {
       filePathCallback?.onReceiveValue(arrayOf())
+    }
   }
 
 
+  val uris = ArrayList<Uri>()
   private val activityResultImageGallery = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
   ) {
     if (it.resultCode == Activity.RESULT_OK) {
-      val uri = it.data?.data ?: return@registerForActivityResult
-      kotlin.runCatching {
-        filePathCallback?.onReceiveValue(arrayOf(uri))
-      }.getOrElse {
-        Log.e(TAG, ": ${it.message}")
+      if(it.data?.clipData != null){
+        val count = it.data?.clipData?.itemCount
+        uris.clear()
+        for(i in 0..count?.minus(1)!!){
+          it.data?.clipData?.getItemAt(i)?.uri.let {
+            it?.let { it1 -> uris.add(it1) }
+          }
+        }
+        filePathCallback?.onReceiveValue(uris.toTypedArray())
+      } else if(it.data?.data != null){
+        val uri = it.data?.data ?: return@registerForActivityResult
+        kotlin.runCatching {
+          filePathCallback?.onReceiveValue(arrayOf(uri))
+        }.getOrElse {
+          Log.e(TAG, ": ${it.message}")
+        }
+      }
+      else {
+        filePathCallback?.onReceiveValue(arrayOf())
       }
     } else {
       filePathCallback?.onReceiveValue(arrayOf())
@@ -240,13 +267,7 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
 
 
   private fun getUriFromBitmapRetrievedByCamera(bitmap: Bitmap): Uri {
-//    val stream = ByteArrayOutputStream()
     val bitmapScaled = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, false)
-
-//    bitmap.compress(Bitmap.CompressFormat.JPEG, 0, stream)
-//    val byteArray = stream.toByteArray()
-//    val compressedBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-
     val path = MediaStore.Images.Media.insertImage(
       requireContext().contentResolver,
       bitmapScaled,
@@ -258,21 +279,16 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
 
 
   fun createImageUri(): Uri? {
-    fileCameraCapture = File(activity?.applicationContext?.filesDir, "camera_photo.png")
+    fileCameraCapture = File(
+      activity?.applicationContext?.filesDir,
+      "camera_photo${SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.ENGLISH)}.png"
+    )
     activity?.applicationContext?.let {
-      return FileProvider.getUriForFile(it, "grand.app.moon.fileprovider", fileCameraCapture)
+      return FileProvider.getUriForFile(it, "grand.app.moon.fileprovider", fileCameraCapture!!)
     }
     return null
   }
 
-//  private val permissionLocationRequest = registerForActivityResult(
-//    ActivityResultContracts.RequestPermission()
-//  ) { isGranted ->
-//
-//    if (isGranted == true) {
-//      activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
-//    }
-//  }
 
   private val permissionLocationRequest = registerForActivityResult(
     ActivityResultContracts.RequestMultiplePermissions()
@@ -293,7 +309,6 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
         )
       }
       permissions[Manifest.permission.CAMERA] == true -> {
-//        activityResultImageCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE)) //osama
         activityResultImageCameraFile.launch(imageUri)
       }
       else -> {
@@ -301,13 +316,6 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
       }
     }
   }
-
-
-  class MyWebChromeClient : WebChromeClient() {
-
-
-  }
-
 
   private val TAG = "AddStoreFragment"
 
@@ -335,12 +343,6 @@ class AddStoreFragment : BaseFragment<FragmentAddStoreBinding>() {
             startActivity(this)
           }
         }
-//        else if(viewModel.browserHelper.isUser() && activity is AddStoreActivity){
-//          Intent(activity,AddStoreActivity::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//            startActivity(this)
-//          }
-//        }
       }
       return false
     }

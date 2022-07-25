@@ -11,6 +11,7 @@ import com.google.android.gms.maps.MapFragment
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
+import grand.app.moon.core.extenstions.isChatAllow
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
@@ -93,11 +94,13 @@ class ItemAdsViewModel(
 
   fun chat(v: View) {
     if (v.context.isLoginWithOpenAuth()) {
-      viewModelScope.launch(Dispatchers.IO) {
-        adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(), 8))
-      }
-      advertisement.store?.let {
-        v.context.openChatStore(v, it.id, it.name, it.image)
+      if(v.isChatAllow()) {
+        viewModelScope.launch(Dispatchers.IO) {
+          adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(), 8))
+        }
+        advertisement.store?.let {
+          v.context.openChatStore(v, it.id, it.name, it.image)
+        }
       }
     }
   }

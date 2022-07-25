@@ -634,7 +634,12 @@ fun loadPremium(imageView: ImageView,isPremium : Int) {
     imageView.hide()
 }
 
-fun View.showPopup(list: List<String>, context: Context = this.context, listener: (MenuItem) -> Unit) {
+fun View.showPopup(
+  list: List<String>,
+  context: Context = this.context,
+  listener: (MenuItem) -> Unit = {},
+  onDismiss: () -> Unit = {}
+) {
   val popupMenu = PopupMenu(context, this)
 
   popupMenu.inflate(R.menu.menu_empty)
@@ -642,12 +647,21 @@ fun View.showPopup(list: List<String>, context: Context = this.context, listener
     popupMenu.menu.add(item)
   }
 
+  var isMenuItemClicked = false
+
   popupMenu.setOnMenuItemClickListener {
+    isMenuItemClicked = true
+
     listener(it)
 
     false
   }
 
+  popupMenu.setOnDismissListener {
+    if (!isMenuItemClicked) {
+      onDismiss()
+    }
+  }
   popupMenu.show()
 }
 

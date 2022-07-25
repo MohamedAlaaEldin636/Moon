@@ -238,6 +238,7 @@ dependencies {
 //  implementation ("com.github.Innovattic:range-seek-bar:1.0.0")
   implementation ("com.rizlee.view:rangeseekbar:1.0.0")
 
+  implementation ("com.android.support:exifinterface:28.0.0")
 
   //eventBus
   implementation("org.greenrobot:eventbus:3.3.1")

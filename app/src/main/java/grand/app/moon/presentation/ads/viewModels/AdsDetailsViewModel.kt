@@ -16,8 +16,6 @@ import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.R
-import grand.app.moon.core.extenstions.isLoginWithOpenAuth
-import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.store.entity.FollowStoreRequest
@@ -35,8 +33,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import androidx.core.os.bundleOf
 import grand.app.moon.appMoonHelper.ListHelper
-import grand.app.moon.core.extenstions.isLogin
-import grand.app.moon.core.extenstions.navigateMap
+import grand.app.moon.core.extenstions.*
 import grand.app.moon.domain.store.entity.ShareRequest
 import grand.app.moon.presentation.ads.adapter.SwitchAdapter
 import java.util.*
@@ -176,10 +173,13 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun chat(v: View) {
-    if (v.context.isLoginWithOpenAuth())
-      advertisement.get()?.store?.let {
-        v.context.openChatStore(v, it.id, it.name, it.image)
+    if (v.context.isLoginWithOpenAuth()) {
+      if(v.isChatAllow()) {
+        advertisement.get()?.store?.let {
+          v.context.openChatStore(v, it.id, it.name, it.image)
+        }
       }
+    }
   }
 
   fun favourite(v: View) {

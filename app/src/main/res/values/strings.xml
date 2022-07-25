@@ -198,4 +198,5 @@
     <string name="area">Area</string>
   <string name="please_choose_your_city">Please Choose Your City</string>
   <string name="my_store">My Store</string>
+    <string name="multiple_images">Multiple Images</string>
 </resources>

@@ -198,9 +198,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     val camera = getString(R.string.camera)
     val gallery = getString(R.string.gallery)
 
-    binding.imgProfile.showPopup(listOf(camera, gallery)) {
+    binding.imgProfile.showPopup(listOf(camera, gallery), listener = {
       pickImage(it.title?.toString() == camera)
-    }
+    })
   }
 
   private fun pickImage(fromCamera: Boolean) {

@@ -13,7 +13,6 @@ import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.models.User
-import grand.app.moon.core.extenstions.convertToString
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseViewModel
@@ -23,9 +22,7 @@ import grand.app.moon.R
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.core.MyApplication
-import grand.app.moon.core.extenstions.isLogin
-import grand.app.moon.core.extenstions.isLoginWithOpenAuth
-import grand.app.moon.core.extenstions.openChatStore
+import grand.app.moon.core.extenstions.*
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.store.entity.FollowStoreRequest
@@ -295,11 +292,13 @@ class StoreDetailsViewModel @Inject constructor(
 
   fun chat(v: View) {
     if (v.context.isLoginWithOpenAuth()) {
-      viewModelScope.launch(Dispatchers.IO) {
-        adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 8))
-      }
-      store.get()?.let {
-        v.context.openChatStore(v, it.id, it.name, it.image)
+      if(v.isChatAllow()) {
+        viewModelScope.launch(Dispatchers.IO) {
+          adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 8))
+        }
+        store.get()?.let {
+          v.context.openChatStore(v, it.id, it.name, it.image)
+        }
       }
     }
   }

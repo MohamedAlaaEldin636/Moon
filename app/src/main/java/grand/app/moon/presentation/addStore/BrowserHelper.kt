@@ -22,12 +22,4 @@ open class BrowserHelper {
     }
     return false
   }
-
-  fun lastUrl(): String {
-    return this.lastUrl
-  }
-
-  fun setLastUr(url: String) {
-    this.lastUrl = url
-  }
 }

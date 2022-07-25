@@ -192,4 +192,5 @@
     <string name="area">المنطقة</string>
   <string name="please_choose_your_city">الرجاء اختيار مدينتك</string>
   <string name="my_store">متجرى</string>
+    <string name="multiple_images">أكثر من صورة</string>
 </resources>
