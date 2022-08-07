@@ -52,12 +52,17 @@ import android.R.attr.bitmap
 import android.content.ComponentName
 import android.content.pm.ResolveInfo
 import android.os.Parcelable
+import android.text.TextUtils
 import grand.app.moon.core.MyApplication
 import java.io.*
 import java.lang.Double.parseDouble
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.ContextCompat.startActivity
+
+
+
 
 
 open class BaseViewModel : ViewModel(), Observable {
@@ -86,9 +91,18 @@ open class BaseViewModel : ViewModel(), Observable {
   }
 
   fun callPhone(context: Context, phone: String) {
-    val call = Uri.parse("tel:$phone")
+    Log.d(TAG, "callPhoneHere: $phone")
+//    val contactPhone = phone.substring(1)
+    val call = Uri.parse("tel:+$phone")
     val surf = Intent(Intent.ACTION_DIAL, call)
     context.startActivity(surf)
+
+//    val i = Intent(Intent.ACTION_CALL)
+//    i.addFlags(Intent.FLAG_FROM_BACKGROUND)
+//    val uri = "tel:" + phone.trim { it <= ' ' }
+//    i.data = Uri.parse(uri)
+//    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//    context.startActivity(i)
   }
 
   override fun addOnPropertyChangedCallback(

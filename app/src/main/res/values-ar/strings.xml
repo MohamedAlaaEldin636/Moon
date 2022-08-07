@@ -144,7 +144,7 @@
   <string name="notifications">إشعارات</string>
   <string name="advertisement">إعلان</string>
   <string name="there_are_no_result_please_try_again">لا يوجد نتائج للبحث , حاول مره أخري</string>
-  <string name="add_store_now">أضف متجرك الان</string>
+  <string name="add_store_now">أضف مشروعك الان</string>
     <string name="filter_by_categories">تصفية حسب الاقسام</string>
   <string name="filter_search">فلترة البحث</string>
     <string name="there_are_no_customers_reviews">لا توجد آراء العملاء</string>
@@ -184,7 +184,7 @@
   <string name="do_you_want_to_exit_from_app">هل تريد الخروج من التطبيق</string>
   <string name="show_mail">إظهار البريد الالكترونى</string>
     <string name="crop_image">قص الصوره</string>
-  <string name="add_store">أضف متجرك</string>
+  <string name="add_store">أضف مشروعك</string>
   <string name="show_stores">عرض المتاجر</string>
   <string name="highest_rate">الاعلي تقييما</string>
   <string name="connected_now">متصل</string>

@@ -221,8 +221,10 @@ class StoreDetailsViewModel @Inject constructor(
 
 
   fun whatsapp(v: View) {
-    viewModelScope.launch(Dispatchers.IO) {
-      adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 7))
+    if(v.context.isLogin()) {
+      viewModelScope.launch(Dispatchers.IO) {
+        adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 7))
+      }
     }
     var url =
       "https://api.whatsapp.com/send?phone=${store.get()?.country?.country_code + store.get()?.phone}"
