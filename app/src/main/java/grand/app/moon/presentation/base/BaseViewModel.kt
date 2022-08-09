@@ -145,6 +145,8 @@ open class BaseViewModel : ViewModel(), Observable {
       null -> ""
       else -> desc
     }
+    Log.d(TAG, "shareWhatsapp: $title , $description")
+    Log.d(TAG, "shareWhatsapp: ")
     var url = "https://api.whatsapp.com/send?phone=${phone}"
     val i = Intent(Intent.ACTION_VIEW)
     url += "&text=" + URLEncoder.encode(

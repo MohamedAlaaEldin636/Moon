@@ -193,6 +193,7 @@
   <style name="Widget.BottomNavigationView"
     parent="Widget.Design.BottomNavigationView">
     <item name="fontFamily">@font/regular</item>
+    <item name="android:textSize">9sp</item>
   </style>
 
 

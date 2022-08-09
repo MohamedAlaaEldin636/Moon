@@ -151,7 +151,7 @@ class AdsDetailsViewModel @Inject constructor(
         advertisement.get()?.phone?.let { it2 ->
           shareWhatsapp(
             v,
-            it, it1, it2
+            it, it1, advertisement.get()?.country?.country_code+it2
           )
         }
       }
@@ -169,7 +169,7 @@ class AdsDetailsViewModel @Inject constructor(
   }
 
   fun phone(v: View) {
-    advertisement.get()?.phone?.let { callPhone(v.context, it) }
+    advertisement.get()?.phone?.let { callPhone(v.context, advertisement.get()?.country?.country_code+it) }
   }
 
   fun chat(v: View) {

@@ -190,13 +190,13 @@
   <string name="do_you_want_to_exit_from_app">Do you want to exit the application?</string>
   <string name="show_mail">Show E-mail</string>
   <string name="crop_image">Crop Image</string>
-  <string name="add_store">Add Store</string>
+  <string name="add_store">Get Listed</string>
   <string name="show_stores">Show Stores</string>
   <string name="highest_rate">Top Rated</string>
   <string name="connected_now">Connected</string>
   <string name="offline_now">Offline</string>
     <string name="area">Area</string>
   <string name="please_choose_your_city">Please Choose Your City</string>
-  <string name="my_store">My Store</string>
+  <string name="my_store">My Project</string>
     <string name="multiple_images">Multiple Images</string>
 </resources>
