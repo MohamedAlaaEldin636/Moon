@@ -21,6 +21,7 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.home.models.ResponseAppGlobalAnnouncement
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
@@ -51,6 +52,15 @@ class HomeViewModel @Inject constructor(
   private val _homeResponse =
     MutableStateFlow<Resource<BaseResponse<HomeResponse>>>(Resource.Default)
   val homeResponse = _homeResponse
+
+	private val _appGlobalResponse =
+		MutableStateFlow<Resource<BaseResponse<ResponseAppGlobalAnnouncement?>>>(Resource.Default)
+	val appGlobalResponse: Flow<Resource<BaseResponse<ResponseAppGlobalAnnouncement?>>> =
+		_appGlobalResponse
+
+	val showLoading = homeResponse.combine(appGlobalResponse) { first, second ->
+		first is Resource.Loading || second is Resource.Loading
+	}
 
   private val _storiesResponse =
     MutableStateFlow<Resource<BaseResponse<ArrayList<Store>>>>(Resource.Default)
@@ -86,6 +96,14 @@ class HomeViewModel @Inject constructor(
   init {
     initIsStoreUser()
   }
+
+	fun getAppGlobalAnnouncement() {
+		homeUseCase.getAppGlobalAnnouncement(true)
+			.onEach { result ->
+				_appGlobalResponse.value = result
+			}
+			.launchIn(viewModelScope)
+	}
 
   fun initIsStoreUser() {
     val lastUrlStorage = accountRepository.getKeyFromLocal(Constants.LAST_URL)

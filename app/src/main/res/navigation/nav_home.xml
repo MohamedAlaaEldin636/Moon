@@ -64,6 +64,9 @@
       app:popEnterAnim="@anim/anim_slide_in_left"
       app:popExitAnim="@anim/anim_slide_out_right"
       app:destination="@id/storyFragment" />
+    <action
+      android:id="@+id/action_home_fragment_to_dest_app_global_announcement_dialog"
+      app:destination="@id/dest_app_global_announcement_dialog" />
     <!--    <action-->
 <!--      android:id="@+id/action_home_fragment_to_storiesListFragment"-->
 <!--      app:enterAnim="@anim/anim_slide_in_right"-->
@@ -567,5 +570,21 @@
       android:autoVerify="true"
       app:uri="confirmCode://grand.app.moon.confirm.code/{country_code}/{phone}/{type}/{profile}" />
   </include>
+
+  <dialog
+    android:id="@+id/dest_app_global_announcement_dialog"
+    android:name="grand.app.moon.presentation.home.AppGlobalAnnouncementDialogFragment"
+    tools:layout="@layout/dialog_fragment_app_global_announcement">
+
+    <argument
+      android:name="title"
+      app:argType="string" />
+    <argument
+      android:name="description"
+      app:argType="string" />
+    <argument
+      android:name="lottieLink"
+      app:argType="string" />
+  </dialog>
 
 </navigation>

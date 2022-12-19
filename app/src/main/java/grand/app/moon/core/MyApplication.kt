@@ -25,6 +25,9 @@ import javax.net.ssl.SSLContext
 @HiltAndroidApp
 class MyApplication : LocaleAwareApplication() {
 
+	var checkedAppGlobalAnnouncement = false
+	var showedAppGlobalAnnouncement = false
+
   override
   fun attachBaseContext(base: Context) {
     super.attachBaseContext(base)

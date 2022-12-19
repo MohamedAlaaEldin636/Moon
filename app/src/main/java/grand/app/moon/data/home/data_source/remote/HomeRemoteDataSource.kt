@@ -10,6 +10,10 @@ class HomeRemoteDataSource @Inject constructor(private val apiService: HomeServi
     apiService.home()
   }
 
+  suspend fun getAppGlobalAnnouncement() = safeApiCall {
+    apiService.getAppGlobalAnnouncement()
+  }
+
   suspend fun stories(categoryId: Int?) = safeApiCall {
     apiService.stories(categoryId)
   }

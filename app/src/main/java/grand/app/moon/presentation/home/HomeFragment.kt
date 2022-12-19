@@ -7,7 +7,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import codes.grand.pretty_pop_up.PrettyPopUpHelper
@@ -21,6 +23,7 @@ import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.appMoonHelper.ListHelper
+import grand.app.moon.core.MyApplication
 import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
@@ -28,6 +31,7 @@ import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.story.storyView.data.Story
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.lang.Exception
 
 @AndroidEntryPoint
@@ -76,7 +80,59 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+	  super.onViewCreated(view, savedInstanceState)
+
+	  viewLifecycleOwner.lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.showLoading.collect {
+					if (it) {
+						hideKeyboard()
+						showLoading()
+					}else {
+						hideLoading()
+					}
+				}
+			}
+	  }
+
+	  viewLifecycleOwner.lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.appGlobalResponse.collect { resource ->
+					if (resource is Resource.Success) {
+						val response = resource.value.data
+
+						if (response != null) {
+							Log.v("TAG", "TAG MA-123 -> $response")
+
+							val app = activity?.application as? MyApplication
+							Log.v("TAG", "TAG MA-123 -> ${app?.showedAppGlobalAnnouncement}")
+							if (app != null && app.showedAppGlobalAnnouncement) {
+								return@collect
+							}else {
+								app?.showedAppGlobalAnnouncement = true
+							}
+
+							binding.root.post {
+								findNavController().navigate(
+									HomeFragmentDirections.actionHomeFragmentToDestAppGlobalAnnouncementDialog(
+										response.title.orEmpty(),
+										response.description.orEmpty(),
+										response.file.orEmpty(),
+									)
+								)
+							}
+						}
+					}
+				}
+			}
+	  }
+
+	  val app = activity?.application as? MyApplication
+	  if (app != null && !app.checkedAppGlobalAnnouncement) {
+		  viewModel.getAppGlobalAnnouncement()
+		  app.checkedAppGlobalAnnouncement = true
+	  }
+
     setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
       if(bundle.containsKey(Constants.SORT_BY) && bundle.containsKey(Constants.TYPE) && bundle.getString(Constants.TYPE) == FilterDialog.CHAT.toString()) {
         Log.d(TAG, "CHAT: WORKING")
@@ -98,11 +154,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
       viewModel.homeResponse.collect {
         when (it) {
           Resource.Loading -> {
-            hideKeyboard()
-            showLoading()
+            //hideKeyboard()
+	          //showLoading()
           }
           is Resource.Success -> {
-            hideLoading()
+	          //hideLoading()
 
             val hr = it.value.data.copy(
               categoryAds = ArrayList(it.value.data.categoryAds.map { ca ->

@@ -3,6 +3,7 @@ package grand.app.moon.domain.home.use_case
 import grand.app.moon.domain.categories.entity.CategoryDetails
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.home.models.ResponseAppGlobalAnnouncement
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.home.repository.HomeRepository
 import grand.app.moon.domain.utils.BaseResponse
@@ -11,10 +12,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-
 class HomeUseCase @Inject constructor(
   private val homeRepository: HomeRepository,
 ) {
+
+	fun getAppGlobalAnnouncement(showProgress: Boolean = true): Flow<Resource<BaseResponse<ResponseAppGlobalAnnouncement?>>> = flow {
+		if(showProgress) emit(Resource.Loading)
+		val result = homeRepository.getAppGlobalAnnouncement()
+		emit(result)
+	}.flowOn(Dispatchers.IO)
 
   fun home(showProgress: Boolean = true): Flow<Resource<BaseResponse<HomeResponse>>> = flow {
     if(showProgress) emit(Resource.Loading)
