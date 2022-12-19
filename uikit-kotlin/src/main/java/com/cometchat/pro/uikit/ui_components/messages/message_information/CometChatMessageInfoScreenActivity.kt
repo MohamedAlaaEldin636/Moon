@@ -25,7 +25,6 @@ import com.cometchat.pro.uikit.ui_resources.utils.ErrorMessagesUtils
 import com.cometchat.pro.uikit.ui_resources.utils.Utils
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
-import okhttp3.internal.Util
 import org.json.JSONException
 import org.json.JSONObject
 

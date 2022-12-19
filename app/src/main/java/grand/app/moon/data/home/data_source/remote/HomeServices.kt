@@ -12,6 +12,20 @@ interface HomeServices {
   @GET("v1/home")
   suspend fun home(): BaseResponse<HomeResponse>
 
+  //@GET("v1/under-construction")
+  //suspend fun getAppGlobalAnnouncement(): BaseResponse<>
+	/*
+	{
+    "code": 200,
+    "message": "The action ran successfully!",
+    "data": {
+        "title": "Souq Moon",
+        "description": "Wait for our latest updates!",
+        "file": "https://souqmoon.com/storage/12366-under-construction.json"
+    }
+}
+	 */
+
   @GET("v1/stories")
   suspend fun stories(@Query("category_id") category_id: Int?): BaseResponse<ArrayList<Store>>
 
