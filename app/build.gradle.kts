@@ -45,10 +45,20 @@ android {
 
     signingConfigs {
       create("releaseConfig") {
-        storeFile = file(rootProject.file("key"))
+        /*storeFile = file(rootProject.file("key"))
         storePassword = "123456"
         keyAlias = "My-Key"
-        keyPassword = "123456"
+        keyPassword = "123456"*/
+
+	      /*storeFile = file(rootProject.file("GrandKey.jks"))
+	      storePassword = "grand2017"
+	      keyAlias = "grand"
+	      keyPassword = "grand2017"*/
+
+	      storeFile = file(rootProject.file("encrypt-key\\GrandKey"))
+	      storePassword = "grand2017"
+	      keyAlias = "grand"
+	      keyPassword = "grand2017"
       }
     }
 
