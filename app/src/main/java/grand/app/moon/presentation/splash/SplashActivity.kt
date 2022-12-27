@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cometchat.pro.core.CometChat
+import com.google.android.material.snackbar.Snackbar
 import com.zeugmasolutions.localehelper.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -15,6 +16,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.addStore.AddStoreActivity
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
+import grand.app.moon.presentation.base.extensions.showSnackBar
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.intro.IntroActivity
@@ -43,35 +45,34 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
     Log.d(TAG, "setUpViews: ${viewModel.lang}")
     binding.viewModel = viewModel
-    viewModel.home()
+    viewModel.homeCategories()
     decideNavigationLogic()
 //    openActivityAndClearStack(HomeActivity::class.java)
-
   }
 
 
 
   private fun decideNavigationLogic() {
-    viewModel.clickEvent.observe(this, {
-      Log.d(TAG, "decideNavigationLogic: $it")
-      val targetActivity = when (it) {
-        Constants.FIRST_TIME -> {
-          Log.d(TAG, "FIRST_TIME: ")
-          IntroActivity::class.java
-        }
-        Constants.STORE_BROWSER -> {
-          AddStoreActivity::class.java
-        }
-        else -> {
-          Log.d(TAG, "HomeActivity: ")
-          HomeActivity::class.java
-        }
-      }
+    viewModel.clickEvent.observe(this) {
+	    Log.d(TAG, "decideNavigationLogic: $it")
+	    val targetActivity = when (it) {
+		    Constants.FIRST_TIME -> {
+			    Log.d(TAG, "FIRST_TIME: ")
+			    IntroActivity::class.java
+		    }
+		    Constants.STORE_BROWSER -> {
+			    AddStoreActivity::class.java
+		    }
+		    else -> {
+			    Log.d(TAG, "HomeActivity: ")
+			    HomeActivity::class.java
+		    }
+	    }
 //      updateLocale(viewModel.lang)
-      openActivityAndClearStack(targetActivity)
-    })
+	    openActivityAndClearStack(targetActivity)
+    }
 
-    lifecycleScope.launchWhenResumed {
+	  lifecycleScope.launchWhenResumed {
       viewModel.categoryItemResponse.collect {
         Log.d(TAG, "decideNavigationLogic: Categories")
         when (it) {
@@ -79,8 +80,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             Log.d(TAG, "decideNavigationLogic: SUCCESS")
             viewModel.saveCategories(it.value)
             viewModel.isCategories = true
-            viewModel.redirect()
+            viewModel.homeCountries()
           }
+	        is Resource.Failure -> showSnackbarWithRetry(true, it)
         }
       }
     }
@@ -96,8 +98,30 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             viewModel.isCountries = true
             viewModel.redirect()
           }
+	        is Resource.Failure -> showSnackbarWithRetry(false, it)
         }
       }
     }
   }
+
+	private fun showSnackbarWithRetry(isCategoriesNotCountriesError: Boolean, failure: Resource.Failure) {
+		val errorMsg = (if (failure.message.isNullOrEmpty()) {
+			getString(R.string.something_went_wrong_please_try_again)
+		}else {
+			failure.message
+		}) + " - ${failure.failureStatus}"
+
+		Log.e("sas", "sas -> $errorMsg")
+
+		Snackbar.make(binding.relativeLayout, errorMsg, Snackbar.LENGTH_INDEFINITE)
+			.setAction(getString(R.string.retry)) {
+				if (isCategoriesNotCountriesError) {
+					viewModel.homeCategories()
+				}else {
+					viewModel.homeCountries()
+				}
+			}
+			.show()
+	}
+
 }

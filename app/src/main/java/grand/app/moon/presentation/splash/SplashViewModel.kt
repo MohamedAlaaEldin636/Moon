@@ -50,6 +50,18 @@ class SplashViewModel @Inject constructor(
       .launchIn(viewModelScope)
 
   }
+  fun homeCategories() {
+    homeUseCase.getCategories().onEach {
+      _categoryItemResponse.value = it
+    }.launchIn(viewModelScope)
+  }
+	fun homeCountries() {
+		countriesUseCase.invoke()
+			.onEach { result ->
+				_countriesResponse.value = result
+			}
+			.launchIn(viewModelScope)
+	}
 
   fun saveCategories(data: BaseResponse<ArrayList<CategoryItem>>) {
     viewModelScope.launch {
@@ -68,21 +80,20 @@ class SplashViewModel @Inject constructor(
     val isStore = browserHelper.isUser()
     Log.d(TAG, "redirect: ${browserHelper.lastUrl}")
     Log.d(TAG, "redirect: ${isStore}")
-    if(isCategories && isCountries) {
-      Log.d(TAG, "redirect: HERE")
+
+	  Log.d(TAG, "redirect: HERE")
 //      if(!browserHelper.isUser() && browserHelper.lastUrl.isNotEmpty())
 //        clickEvent.value = Constants.STORE_BROWSER
 //      else {
-        clickEvent.value = when (accountRepository.getKeyFromLocal(Constants.INTRO)) {
-          "true" -> Constants.HOME
-          else -> {
-            Constants.FIRST_TIME
-          }
-        }
+	  clickEvent.value = when (accountRepository.getKeyFromLocal(Constants.INTRO)) {
+		  "true" -> Constants.HOME
+		  else -> {
+			  Constants.FIRST_TIME
+		  }
+	  }
 //      }
-      isCategories = false
-      isCountries = false
-    }
+	  isCategories = false
+	  isCountries = false
   }
 
   fun saveCountries(value: BaseResponse<List<Country>>) {

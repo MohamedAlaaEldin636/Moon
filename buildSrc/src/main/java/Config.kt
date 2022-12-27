@@ -3,8 +3,8 @@ object Config {
     const val appId = "grand.app.moon"
     const val compileSdkVersion = 31
     const val minSdkVersion = 23
-    const val versionCode = 34
-    const val versionName = "0.0.8"
+    const val versionCode = 36
+    const val versionName = "0.0.10"
     const val testRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -45,7 +45,7 @@ object Config {
   object Environments {
     const val roomDb = "\"moon_db\""
     const val SERVER_CLIENT_ID = "\"AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM\""
-    const val debugBaseUrl = "\"https://souqmoon.com/api/\""
+    const val debugBaseUrl = "\"https://souqmoon.com/api/\""//"\"http://sooqmoon.net/\""
     const val releaseBaseUrl = "\"https://souqmoon.com/api/\""
   }
 }
