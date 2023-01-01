@@ -202,4 +202,6 @@
     <string name="my_ads_2">My Ads</string>
     <string name="add_advertisement">Add Ad</string>
   <string name="advertisement_type">Advertisement Type</string>
+    <string name="what_do_you_offer">What do you offer</string>
+  <string name="advertisement_addition">Advertisement Addition</string>
 </resources>

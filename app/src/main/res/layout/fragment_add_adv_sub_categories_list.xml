@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  tools:ignore="MissingDefaultResource"
+  tools:context="grand.app.moon.presentation.categories.AddAdvSubCategoriesListFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.categories.viewModel.AddAdvSubCategoriesListViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="#FBFBFB">
+
+    <com.google.android.material.appbar.MaterialToolbar
+      android:id="@+id/toolbar"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:background="@color/colorPrimary"
+
+      toolbar_setNavIconClick="@{v -> viewModel.goBack(v)}"
+
+      app:titleTextColor="@color/white"
+      tools:title="title of prev screen selection"
+      app:title="@{viewModel.title}"
+      app:titleTextAppearance="@style/TextTajawalMedium16"
+      app:titleCentered="true"
+
+      app:navigationIcon="@drawable/ic_back_button_xd_with_rotation"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/curveOfToolbarView"
+
+      style="@style/ToolbarCurve"
+
+      app:layout_constraintTop_toBottomOf="@id/toolbar"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:layout_marginTop="8dp"
+
+      android:padding="4dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="vertical"
+      tools:orientation="vertical"
+      tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      tools:listitem="@layout/item_icon_text_arrow"
+
+      app:layout_constraintTop_toBottomOf="@id/curveOfToolbarView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

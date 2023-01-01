@@ -1,6 +1,7 @@
 package grand.app.moon.domain.home.repository
 import grand.app.moon.domain.categories.entity.CategoryDetails
 import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.ResponseAppGlobalAnnouncement
 import grand.app.moon.domain.home.models.Store
@@ -12,5 +13,6 @@ interface HomeRepository {
   suspend fun getAppGlobalAnnouncement(): Resource<BaseResponse<ResponseAppGlobalAnnouncement?>>
   suspend fun stories(categoryId : Int?): Resource<BaseResponse<ArrayList<Store>>>
   suspend fun getCategories(): Resource<BaseResponse<ArrayList<CategoryItem>>>
+  suspend fun getCategories2(): Resource<BaseResponse<List<ItemCategory>?>>
   suspend fun getCategoryDetails(id: Int): Resource<BaseResponse<CategoryDetails>>
 }

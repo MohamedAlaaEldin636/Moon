@@ -596,5 +596,41 @@
     android:name="grand.app.moon.presentation.myAds.AddAdvertisementFragment"
     tools:layout="@layout/fragment_add_advertisement"
     android:label="AddAdvertisementFragment" />
+  <fragment
+    android:id="@+id/dest_add_adv_categories_list"
+    android:name="grand.app.moon.presentation.categories.AddAdvCategoriesListFragment"
+    tools:layout="@layout/fragment_add_adv_categories_list">
+    <action
+      android:id="@+id/action_dest_add_adv_categories_list_to_dest_add_adv_sub_categories_list"
+      app:destination="@id/dest_add_adv_sub_categories_list" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_add_adv_sub_categories_list"
+    android:name="grand.app.moon.presentation.categories.AddAdvSubCategoriesListFragment"
+    tools:layout="@layout/fragment_add_adv_sub_categories_list" >
+    <argument
+      android:name="idOfMainCategory"
+      app:argType="integer" />
+    <argument
+      android:name="nameOfMainCategory"
+      app:argType="string" />
+    <argument
+      android:name="jsonListOfItemSubcategory"
+      app:argType="string" />
+    <action
+      android:id="@+id/action_dest_add_adv_sub_categories_list_to_dest_add_adv_final_page"
+      app:destination="@id/dest_add_adv_final_page" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_add_adv_final_page"
+    android:name="grand.app.moon.presentation.myAds.AddAdvFinalPageFragment"
+    tools:layout="@layout/fragment_add_adv_final_page">
+    <argument
+      android:name="idOfMainCategory"
+      app:argType="integer" />
+    <argument
+      android:name="idOfSubCategory"
+      app:argType="integer" />
+  </fragment>
 
 </navigation>

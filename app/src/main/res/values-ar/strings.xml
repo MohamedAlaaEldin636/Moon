@@ -196,4 +196,6 @@
     <string name="my_ads_2">إعلاناتي</string>
     <string name="add_advertisement">أضف إعلان</string>
   <string name="advertisement_type">نوع الإعلان</string>
+    <string name="what_do_you_offer">ماذا تقدم</string>
+  <string name="advertisement_addition">إضافة إعلان</string>
 </resources>

@@ -2,6 +2,7 @@ package grand.app.moon.domain.home.use_case
 
 import grand.app.moon.domain.categories.entity.CategoryDetails
 import grand.app.moon.domain.categories.entity.CategoryItem
+import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.ResponseAppGlobalAnnouncement
 import grand.app.moon.domain.home.models.Store
@@ -36,6 +37,11 @@ class HomeUseCase @Inject constructor(
 
   fun getCategories(): Flow<Resource<BaseResponse<ArrayList<CategoryItem>>>> = flow {
     val result = homeRepository.getCategories()
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+  fun getCategories2(): Flow<Resource<BaseResponse<List<ItemCategory>?>>> = flow {
+    val result = homeRepository.getCategories2()
     emit(result)
   }.flowOn(Dispatchers.IO)
 
