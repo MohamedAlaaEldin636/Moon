@@ -586,5 +586,10 @@
       android:name="lottieLink"
       app:argType="string" />
   </dialog>
+  <fragment
+    android:id="@+id/dest_my_ads"
+    android:name="grand.app.moon.presentation.myAds.MyAdsFragment"
+    android:label="@string/my_ads_2"
+    tools:layout="@layout/fragment_my_ads"/>
 
 </navigation>

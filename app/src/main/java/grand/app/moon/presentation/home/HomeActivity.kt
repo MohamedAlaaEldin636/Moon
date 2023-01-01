@@ -107,6 +107,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.settings_fragment,
         R.id.myAccountFragment,
         //R.id.mapFragment,
+        R.id.dest_my_ads,
         R.id.exploreFragment
       )
     )
@@ -158,6 +159,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           supportActionBar?.hide()
         }
         R.id.addStoreFragment -> {
+	        // todo add store fragment ...
           binding.bottomNavigationView.show()
           showTopBarControls()
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
@@ -191,7 +193,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showTopBarControls()
           showText()
         }
-        R.id.exploreFragment, R.id.mapFragment -> {
+        R.id.exploreFragment, R.id.dest_my_ads, R.id.mapFragment -> {
           showTopBarControls()
           setStoreImage(false)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
