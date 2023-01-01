@@ -17,8 +17,8 @@
 <!--    android:title="@string/my_account" />-->
 
   <item
-    android:title="@string/add_store"
-    android:id="@+id/addStoreFragment" />
+    android:title="@string/add_advertisement"
+    android:id="@+id/dest_add_advertisement" />
 
   <item
     android:id="@+id/dest_my_ads"

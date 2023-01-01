@@ -200,4 +200,6 @@
   <string name="my_store">My Project</string>
     <string name="multiple_images">Multiple Images</string>
     <string name="my_ads_2">My Ads</string>
+    <string name="add_advertisement">Add Ad</string>
+  <string name="advertisement_type">Advertisement Type</string>
 </resources>

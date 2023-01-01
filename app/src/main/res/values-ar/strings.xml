@@ -194,4 +194,6 @@
   <string name="my_store">مشروعى</string>
   <string name="multiple_images">أكثر من صورة</string>
     <string name="my_ads_2">إعلاناتي</string>
+    <string name="add_advertisement">أضف إعلان</string>
+  <string name="advertisement_type">نوع الإعلان</string>
 </resources>

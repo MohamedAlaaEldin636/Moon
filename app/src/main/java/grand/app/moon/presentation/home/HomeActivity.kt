@@ -158,8 +158,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           hideTopBarControls()
           supportActionBar?.hide()
         }
+	      R.id.dest_add_advertisement -> {
+					hideTopBarControls()
+		      hideAllToolbar()
+		      binding.bottomNavigationView.hide()
+				}
+		    R.id.mapFragment -> {
+			    hideTopBarControls()
+			    binding.bottomNavigationView.hide()
+					/*
+					showTopBarControls()
+          setStoreImage(false)
+//          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
+          binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+          binding.tvHomeTitle.text = destination.label
+          showText()
+					 */
+				}
         R.id.addStoreFragment -> {
-	        // todo add store fragment ...
           binding.bottomNavigationView.show()
           showTopBarControls()
           binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
@@ -193,7 +209,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showTopBarControls()
           showText()
         }
-        R.id.exploreFragment, R.id.dest_my_ads, R.id.mapFragment -> {
+        R.id.exploreFragment, R.id.dest_my_ads -> {
           showTopBarControls()
           setStoreImage(false)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
@@ -241,12 +257,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       }
     }
     binding.imgHomeBottomBar.setOnClickListener {
-      showImage()
-      if (viewModel.browserHelper.isUser())
-        binding.bottomNavigationView.selectedItemId = R.id.addStoreFragment
-      else {
-        openActivity(AddStoreActivity::class.java)
-      }
+	    if (isLogin()) {
+		    nav.navigate(R.id.dest_add_advertisement)
+	    }else {
+		    startActivity(Intent(this, AuthActivity::class.java))
+	    }
     }
     binding.icMenu.setOnClickListener {
       val uri = Uri.Builder()
@@ -261,6 +276,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     }
 
     binding.bottomNavigationView.setupWithNavController(nav)
+    binding.bottomNavigationView.setOnItemSelectedListener { item ->
+	    if (item.itemId == R.id.dest_my_ads && !isLogin()) {
+		    startActivity(Intent(this, AuthActivity::class.java))
+
+		    false
+	    }else {
+		    NavigationUI.onNavDestinationSelected(item, nav)
+	    }
+    }
 
     binding.toolbar.setupWithNavController(nav, appBarConfiguration)
 
@@ -323,6 +347,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       binding.bottomNavigationView.hide()
       binding.imgMoonLogo.hide()
       binding.icNotification.hide()
+      binding.menuItemMap.hide()
       binding.icChat.hide()
       binding.icMenu.hide()
       binding.toolbar.show()
@@ -335,6 +360,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       binding.bottomNavigationView.show()
       binding.imgMoonLogo.show()
       binding.icNotification.show()
+      binding.menuItemMap.show()
       binding.icChat.show()
       binding.icMenu.show()
       binding.toolbar.show()

@@ -591,5 +591,10 @@
     android:name="grand.app.moon.presentation.myAds.MyAdsFragment"
     android:label="@string/my_ads_2"
     tools:layout="@layout/fragment_my_ads"/>
+  <fragment
+    android:id="@+id/dest_add_advertisement"
+    android:name="grand.app.moon.presentation.myAds.AddAdvertisementFragment"
+    tools:layout="@layout/fragment_add_advertisement"
+    android:label="AddAdvertisementFragment" />
 
 </navigation>
