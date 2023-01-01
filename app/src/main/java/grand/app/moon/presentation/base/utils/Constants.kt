@@ -45,6 +45,7 @@ object Constants {
   const val STORES: Int = 34
   const val FOLLOWED_STORES: Int = 35
   const val STORE_BROWSER: Int = 36
+  const val GO_TO_MAP: Int = 41
 
 
   const val PERMISSION_GALLERY = 1000

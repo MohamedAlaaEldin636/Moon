@@ -20,6 +20,12 @@
     android:title="@string/add_store"
     android:id="@+id/addStoreFragment" />
 
+  <!--
+  <item
+    android:id="@+id/my_ads_fragment"
+    android:icon="@drawable/ic_my_ads_2"
+    android:title="@string/my_ads_2" />
+  -->
   <item
     android:id="@+id/mapFragment"
     android:icon="@drawable/ic_global"

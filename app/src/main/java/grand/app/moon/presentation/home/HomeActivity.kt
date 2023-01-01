@@ -106,44 +106,49 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.home_fragment,
         R.id.settings_fragment,
         R.id.myAccountFragment,
-        R.id.mapFragment,
+        //R.id.mapFragment,
         R.id.exploreFragment
       )
     )
     setSupportActionBar(binding.toolbar)
 
-    viewModel.clickEvent.observe(this, {
-      Log.d(TAG, "setUpBottomNavigationWithGraphs: $it")
-      when (it) {
-        Constants.LOGIN_REQUIRED -> startActivity(Intent(this, AuthActivity::class.java))
-        Constants.STORES -> {
-          val uri = Uri.Builder()
-            .scheme("storeList")
-            .authority("grand.app.moon.store.List")
-            .appendPath(getString(R.string.show_stores))
-            .appendPath("1")
-            .appendPath("-1")
-            .build()
-          val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
-          nav.navigate(request)
-        }
-        Constants.CHAT_LIST -> {
-          Log.d(TAG, "setUpBottomNavigationWithGraphs: HERE")
-          nav.navigate(HomeFragmentDirections.toFilterSortDialog(-1, FilterDialog.CHAT))
+    viewModel.clickEvent.observe(this) {
+	    Log.d(TAG, "setUpBottomNavigationWithGraphs: $it")
+	    when (it) {
+		    Constants.LOGIN_REQUIRED -> startActivity(Intent(this, AuthActivity::class.java))
+		    Constants.STORES -> {
+			    val uri = Uri.Builder()
+				    .scheme("storeList")
+				    .authority("grand.app.moon.store.List")
+				    .appendPath(getString(R.string.show_stores))
+				    .appendPath("1")
+				    .appendPath("-1")
+				    .build()
+			    val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+			    nav.navigate(request)
+		    }
+		    Constants.CHAT_LIST -> {
+			    Log.d(TAG, "setUpBottomNavigationWithGraphs: HERE")
+			    nav.navigate(HomeFragmentDirections.toFilterSortDialog(-1, FilterDialog.CHAT))
 //          nav.navigate(HomeFragmentDirections.actionHomeFragmentToCommetChatFragment())
-        }
-        Constants.NOTIFICATION -> {
+		    }
+		    Constants.GO_TO_MAP -> {
+			    Log.d(TAG, "GO TO MAP")
+			    nav.navigate(R.id.mapFragment)
+//          nav.navigate(HomeFragmentDirections.actionHomeFragmentToCommetChatFragment())
+		    }
+		    Constants.NOTIFICATION -> {
 //          if (viewModel.isLoggin)
-          nav.navigate(NavHomeDirections.moveToNotification())
+			    nav.navigate(NavHomeDirections.moveToNotification())
 //          else
 //            startActivity(Intent(this, AuthActivity::class.java))
-        }
-      }
-    })
+		    }
+	    }
+    }
 
 
 
-    nav.addOnDestinationChangedListener { controller, destination, arguments ->
+	  nav.addOnDestinationChangedListener { controller, destination, arguments ->
 
       resetTexts()
       binding.icNotificationFilter.hide()

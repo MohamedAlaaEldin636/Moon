@@ -87,6 +87,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/menuItemMap"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_marginStart="@dimen/dimen10"
+        android:onClick="@{ (v) -> viewModel.goToMap(v)}"
+        android:src="@drawable/ic_global"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ic_menu"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgMoonLogo"
         style="@style/mediumFont"
         android:layout_width="@dimen/dimen100"

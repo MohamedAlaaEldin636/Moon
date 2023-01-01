@@ -219,6 +219,14 @@ class HomeViewModel @Inject constructor(
     }
   }
 
+  fun goToMap(v: View) {
+	  clickEvent.value = Constants.GO_TO_MAP
+    /*if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
+    else {
+      clickEvent.value = Constants.CHAT_LIST
+    }*/
+  }
+
   private val TAG = "HomeViewModel"
   fun updateList(data: HomeResponse) {
     storeAdapter.differ.submitList(data.mostRatedStores)
