@@ -28,6 +28,7 @@ import grand.app.moon.domain.home.models.CategoryAdvertisement
 import grand.app.moon.domain.home.models.HomeResponse
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.extensions.navigateSafely
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.story.storyView.data.Story
 import kotlinx.coroutines.flow.collect
@@ -72,6 +73,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 
       }
     })
+
+	  viewModel.getAnnouncement()
   }
   override
   fun setBindingVariables() {
@@ -95,7 +98,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 			}
 	  }
 
-	  viewLifecycleOwner.lifecycleScope.launch {
+	  /*viewLifecycleOwner.lifecycleScope.launch {
 			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 				viewModel.appGlobalResponse.collect { resource ->
 					if (resource is Resource.Success) {
@@ -125,13 +128,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 					}
 				}
 			}
+	  }*/
+
+	  lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.CREATED) {
+				viewModel.responseAnnouncement.collect { resource ->
+					val response = (resource as? Resource.Success)?.value?.data ?: return@collect
+
+					binding.root.post {
+						if (findNavController().currentDestination?.id == R.id.home_fragment) {
+							findNavController().navigateSafely(
+								HomeFragmentDirections.actionHomeFragmentToDestAnnouncementDialog(
+									response.image.orEmpty()
+								)
+							)
+						}
+					}
+				}
+			}
 	  }
 
-	  val app = activity?.application as? MyApplication
+	  /*val app = activity?.application as? MyApplication
 	  if (app != null && !app.checkedAppGlobalAnnouncement) {
 		  viewModel.getAppGlobalAnnouncement()
 		  app.checkedAppGlobalAnnouncement = true
-	  }
+	  }*/
 
     setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
       if(bundle.containsKey(Constants.SORT_BY) && bundle.containsKey(Constants.TYPE) && bundle.getString(Constants.TYPE) == FilterDialog.CHAT.toString()) {

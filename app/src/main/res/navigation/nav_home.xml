@@ -67,6 +67,9 @@
     <action
       android:id="@+id/action_home_fragment_to_dest_app_global_announcement_dialog"
       app:destination="@id/dest_app_global_announcement_dialog" />
+    <action
+      android:id="@+id/action_home_fragment_to_dest_announcement_dialog"
+      app:destination="@id/dest_announcement_dialog" />
     <!--    <action-->
 <!--      android:id="@+id/action_home_fragment_to_storiesListFragment"-->
 <!--      app:enterAnim="@anim/anim_slide_in_right"-->
@@ -584,6 +587,14 @@
       app:argType="string" />
     <argument
       android:name="lottieLink"
+      app:argType="string" />
+  </dialog>
+  <dialog
+    android:id="@+id/dest_announcement_dialog"
+    android:name="grand.app.moon.presentation.home.AnnouncementDialogFragment"
+    tools:layout="@layout/dialog_fragment_announcement">
+    <argument
+      android:name="image"
       app:argType="string" />
   </dialog>
   <fragment

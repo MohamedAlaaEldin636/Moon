@@ -1,9 +1,12 @@
 package grand.app.moon.domain.home.use_case
 
+import grand.app.moon.domain.account.repository.AccountRepository
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.CategoryDetails
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.home.models.HomeResponse
+import grand.app.moon.domain.home.models.ResponseAnnouncement
 import grand.app.moon.domain.home.models.ResponseAppGlobalAnnouncement
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.home.repository.HomeRepository
@@ -15,12 +18,32 @@ import javax.inject.Inject
 
 class HomeUseCase @Inject constructor(
   private val homeRepository: HomeRepository,
+  private val accountRepository: AccountRepository,
 ) {
 
 	fun getAppGlobalAnnouncement(showProgress: Boolean = true): Flow<Resource<BaseResponse<ResponseAppGlobalAnnouncement?>>> = flow {
 		if(showProgress) emit(Resource.Loading)
 		val result = homeRepository.getAppGlobalAnnouncement()
 		emit(result)
+	}.flowOn(Dispatchers.IO)
+
+	/**
+	 * @return `null` show nothing else show the announcement
+	 */
+	fun getAnnouncement(showProgress: Boolean = true): Flow<Resource<BaseResponse<ResponseAnnouncement?>>> = flow {
+		if(showProgress) emit(Resource.Loading)
+		val result = homeRepository.getAnnouncement()
+
+		val newResult = result.mapSuccess {
+			val toBeShownAnnouncement = accountRepository.checkAnnouncementAndClearIfNullSaveIfNewOrIncrementCountIfExistsAndGetOnlyIfShouldShow(
+				it.data
+			)
+
+			// Only maps success
+			it.copy(data = toBeShownAnnouncement)
+		}
+
+		emit(newResult)
 	}.flowOn(Dispatchers.IO)
 
   fun home(showProgress: Boolean = true): Flow<Resource<BaseResponse<HomeResponse>>> = flow {

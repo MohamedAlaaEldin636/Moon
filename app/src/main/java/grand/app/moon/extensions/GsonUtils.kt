@@ -21,11 +21,12 @@ internal val gson by lazy {
     GsonBuilder()
         .disableHtmlEscaping()
         .setLenient()
-        .serializeNulls()
-        .registerTypeAdapter(YearMonth::class.java, TypeAdapterLocalYearMonth)
-        .registerTypeAdapter(LocalDateTime::class.java, TypeAdapterLocalDateTime)
-        .registerTypeAdapter(LocalDate::class.java, TypeAdapterLocalDate)
-        .registerTypeAdapter(LocalTime::class.java, TypeAdapterLocalTime)
+	      .serializeNulls()
+	    // when used below announcement api response couldn't been using toJson ext. fun dunno why ?!
+       // .registerTypeAdapter(YearMonth::class.java, TypeAdapterLocalYearMonth)
+	    //.registerTypeAdapter(LocalDateTime::class.java, TypeAdapterLocalDateTime)
+	    //.registerTypeAdapter(LocalDate::class.java, TypeAdapterLocalDate)
+	    //.registerTypeAdapter(LocalTime::class.java, TypeAdapterLocalTime)
         .create()
 }
 

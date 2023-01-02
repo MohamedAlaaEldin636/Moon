@@ -3,17 +3,20 @@ package grand.app.moon.data.local.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.core.content.edit
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import grand.app.moon.BuildConfig
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.domain.home.models.ResponseAnnouncement
 import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -85,12 +88,67 @@ class AppPreferences @Inject constructor(private val context: Context) {
     it[COUNTRY_ID] ?: "1"
   }
 
+	/**
+	 * - By client instructions only show 1st time then every 15th time check if same id.
+	 *
+	 * @return `null` in case don't show announcement, else show it.
+	 */
+  suspend fun checkAnnouncementAndClearIfNullSaveIfNewOrIncrementCountIfExistsAndGetOnlyIfShouldShow(
+	  announcement: ResponseAnnouncement?
+  ): ResponseAnnouncement? {
+		val prevAnnouncement = getAnnouncement()
+
+		context.dataStore.edit {
+			it[ANNOUNCEMENT] = announcement.toJsonOrNull(ResponseAnnouncement::class.java).orEmpty()
+		}
+
+		return when {
+			announcement == null -> {
+				// No announcement so clear count and show nothing.
+				saveAnnouncementCount(0)
+
+				null
+			}
+			prevAnnouncement?.id == announcement.id -> {
+				// Same announcement increment count and show according to client's preference.
+				val prevCount = getAnnouncementCount()
+				saveAnnouncementCount(prevCount.inc())
+
+				// nth time after showing ex. if 2 then will see then no see then see etc...
+				val nthTime = if (BuildConfig.DEBUG) 15/*2*/ else 15
+
+				if (prevCount % nthTime == 0) announcement else null
+			}
+			else -> {
+				// New announcement make count 0 and show it
+				saveAnnouncementCount(1)
+
+				announcement
+			}
+		}
+  }
+	private suspend fun getAnnouncement() = context.dataStore.data.map {
+		it[ANNOUNCEMENT].orEmpty().apply {
+			MyLogger.e("nthTime -> json 2 -> $this")
+		}.fromJsonInlinedOrNull<ResponseAnnouncement>()
+  }.firstOrNull()
+  private suspend fun saveAnnouncementCount(count: Int) {
+    context.dataStore.edit {
+      it[ANNOUNCEMENT_COUNT] = count
+    }
+  }
+	private suspend fun getAnnouncementCount() = context.dataStore.data.map {
+		it[ANNOUNCEMENT_COUNT]
+	}.firstOrNull().orZero()
+
   //Old Pref
   companion object {
     val FIREBASE_TOKEN = stringPreferencesKey("FIREBASE_TOKEN")
     val USER_TOKEN = stringPreferencesKey("USER_TOKEN")
     val REGISTER_STEP = stringPreferencesKey("REGISTER_STEP")
     val COUNTRY_ID = stringPreferencesKey("COUNTRY_ID")
+    val ANNOUNCEMENT = stringPreferencesKey("ANNOUNCEMENT")
+    val ANNOUNCEMENT_COUNT = intPreferencesKey("ANNOUNCEMENT_COUNT")
     val USER_NAME = stringPreferencesKey("USER_NAME")
     val EMAIL = stringPreferencesKey("EMAIL")
     val USER_ID = intPreferencesKey("USER_ID")

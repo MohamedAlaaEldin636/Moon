@@ -1,11 +1,13 @@
 package grand.app.moon.domain.categories.entity
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 // List<ItemCategory>? -> BaseResponse
 
 sealed interface ItemRelatedToCategories
 
+@Keep
 data class ItemCategory(
 	var id: Int?,
 	var name: String?,
@@ -15,6 +17,7 @@ data class ItemCategory(
 	@SerializedName("sub-categories") var subCategories: List<ItemSubCategory>?,
 ) : ItemRelatedToCategories
 
+@Keep
 data class ItemSubCategory(
 	var id: Int?,
 	var name: String?,

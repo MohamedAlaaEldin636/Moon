@@ -7,6 +7,7 @@ import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.domain.home.models.ResponseAnnouncement
 import grand.app.moon.domain.utils.BaseResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -85,6 +86,12 @@ class AccountRepositoryImpl @Inject constructor(
   override suspend fun saveCountryId(country_id: String) {
     appPreferences.countryId(country_id)
   }
+
+	override suspend fun checkAnnouncementAndClearIfNullSaveIfNewOrIncrementCountIfExistsAndGetOnlyIfShouldShow(
+		announcement: ResponseAnnouncement?
+	): ResponseAnnouncement? = appPreferences.checkAnnouncementAndClearIfNullSaveIfNewOrIncrementCountIfExistsAndGetOnlyIfShouldShow(
+		announcement
+	)
 
   override  fun clearUser() {
     appPreferences.clearUser()

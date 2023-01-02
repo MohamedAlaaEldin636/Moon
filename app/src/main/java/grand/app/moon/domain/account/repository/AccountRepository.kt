@@ -4,6 +4,7 @@ import grand.app.moon.domain.account.entity.request.SendFirebaseTokenRequest
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.domain.home.models.ResponseAnnouncement
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -43,6 +44,10 @@ interface AccountRepository {
   suspend fun getCountries(): Flow<BaseResponse<List<Country>>>
 
   suspend fun saveCountryId(country_id: String)
+
+	suspend fun checkAnnouncementAndClearIfNullSaveIfNewOrIncrementCountIfExistsAndGetOnlyIfShouldShow(
+		announcement: ResponseAnnouncement?
+	): ResponseAnnouncement?
 
   suspend fun getCountryId(): Flow<String>
 
