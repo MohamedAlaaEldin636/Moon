@@ -258,6 +258,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     }
     binding.imgHomeBottomBar.setOnClickListener {
 	    if (isLogin()) {
+				// todo if user -> 2 path & if shop -> 2 path as well -> call check availability so show loading now isa.
+		    //nav.navigate(R.id.dest_add_adv_categories_list) // dest_add_advertisement
 		    nav.navigate(R.id.dest_add_advertisement)
 	    }else {
 		    startActivity(Intent(this, AuthActivity::class.java))

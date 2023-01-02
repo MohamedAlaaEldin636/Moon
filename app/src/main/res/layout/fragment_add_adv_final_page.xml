@@ -17,27 +17,6 @@
 
     android:background="#FBFBFB">
 
-    <com.google.android.material.appbar.MaterialToolbar
-      android:id="@+id/toolbar"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      android:background="@color/colorPrimary"
-
-      toolbar_setNavIconClick="@{v -> viewModel.goBack(v)}"
-
-      app:titleTextColor="@color/white"
-      app:title="@string/advertisement_addition"
-      app:titleTextAppearance="@style/TextTajawalMedium16"
-      app:titleCentered="true"
-
-      app:navigationIcon="@drawable/ic_back_button_xd_with_rotation"
-
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
-
     <!-- todo continue work -->
 
   </androidx.constraintlayout.widget.ConstraintLayout>

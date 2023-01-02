@@ -14,6 +14,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import grand.app.moon.core.MyApplication
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.utils.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -42,7 +43,7 @@ object RetrofitModule {
 
   @Provides
   @Singleton
-  fun provideHeadersInterceptor(appPreferences: AppPreferences) = run {
+  fun provideHeadersInterceptor(appPreferences: AppPreferences): Interceptor = run {
 
 //    var userToken = appPreferences.getLocal(Constants.TOKEN)
 //    var token2 = appPreferences.getUser().token
@@ -90,7 +91,11 @@ object RetrofitModule {
   @Provides
   @Singleton
   fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-    val logging = HttpLoggingInterceptor()
+    val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+	    override fun log(message: String) {
+				MyLogger.e("HttpLoggingInterceptor -> $message")
+	    }
+    })
     logging.level = HttpLoggingInterceptor.Level.BODY
     return logging
   }
@@ -132,15 +137,17 @@ object RetrofitModule {
     @ApplicationContext context: Context
   ): OkHttpClient {
     return if (BuildConfig.DEBUG) {
+			MyLogger.e("HttpLoggingInterceptor WILL BE AVAILABLE")
       OkHttpClient.Builder()
         .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
+        .addInterceptor(logging)
         .addInterceptor(headersInterceptor)
-        .addNetworkInterceptor(logging)
         .addInterceptor(ChuckInterceptor(context))
 //        .addInterceptor(requestInterceptor)
         .build()
     } else {
+	    MyLogger.e("HttpLoggingInterceptor NOT NOT NOT AVAILABLE")
       OkHttpClient.Builder()
         .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)

@@ -41,6 +41,7 @@ class HomeUseCase @Inject constructor(
   }.flowOn(Dispatchers.IO)
 
   fun getCategories2(): Flow<Resource<BaseResponse<List<ItemCategory>?>>> = flow {
+	  emit(Resource.Loading)
     val result = homeRepository.getCategories2()
     emit(result)
   }.flowOn(Dispatchers.IO)

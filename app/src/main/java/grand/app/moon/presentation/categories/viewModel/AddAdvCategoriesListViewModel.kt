@@ -11,6 +11,7 @@ import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.toJsonInlinedOrNull
 import grand.app.moon.presentation.categories.AddAdvCategoriesListFragmentDirections
 import grand.app.moon.presentation.categories.adapter.RVItemIconTextArrow
@@ -35,7 +36,7 @@ class AddAdvCategoriesListViewModel @Inject constructor(
 			AddAdvCategoriesListFragmentDirections.actionDestAddAdvCategoriesListToDestAddAdvSubCategoriesList(
 				id,
 				name,
-				subcategories.toJsonInlinedOrNull()
+				subcategories.toJsonInlinedOrNull().orEmpty()
 			)
 		)
 	}

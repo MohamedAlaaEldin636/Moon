@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.categories.entity.ItemRelatedToCategories
 import grand.app.moon.domain.categories.entity.ItemSubCategory
+import grand.app.moon.extensions.MyLogger
 
 class RVItemIconTextArrow(
 	private val onItemClick: (view: View, id: Int, name: String, subcategories: List<ItemSubCategory>) -> Unit
