@@ -32,10 +32,12 @@ import com.onesignal.OSNotificationOpenedResult
 import com.onesignal.OneSignal
 import com.onesignal.OneSignal.OSNotificationOpenedHandler
 import grand.app.moon.core.extenstions.isLogin
+import grand.app.moon.extensions.showRetryErrorDialogWithCancelNegativeButton
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
 import grand.app.moon.presentation.addStore.AddStoreActivity
 import grand.app.moon.presentation.base.extensions.openActivity
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
+import grand.app.moon.presentation.base.utils.showMessage
 
 
 @AndroidEntryPoint
@@ -260,12 +262,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 	    if (isLogin()) {
 				val user = viewModel.userLocalUseCase()
 
+		    /*if (true) {
+					showRetryErrorDialogWithCancelNegativeButton(user.phone) {
+						showMessage(this, "Done+")
+					}
+
+					return@setOnClickListener
+		    }*/
+
 		    // todo if user -> 2 path & if shop -> 2 path as well -> call check availability so show
 		    //  loading now isa.
 		    if (user.isStore == true) {
-					// todo ... should be done later not in this sprint
+			    //nav.navigate(R.id.dest_add_adv_categories_list) // if available else packages to renew package
+					TODO("Will be programmed later in sprint 2 isa.")
 		    }else {
-			    //nav.navigate(R.id.dest_add_adv_categories_list) // dest_add_advertisement
+					// todo should be with args of available no. (0 ~ 5) ads to be used isa.
 			    nav.navigate(R.id.dest_add_advertisement)
 		    }
 	    }else {
