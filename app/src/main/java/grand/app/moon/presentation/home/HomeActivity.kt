@@ -7,6 +7,7 @@ import android.util.Log
 import android.webkit.ValueCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
@@ -32,12 +33,14 @@ import com.onesignal.OSNotificationOpenedResult
 import com.onesignal.OneSignal
 import com.onesignal.OneSignal.OSNotificationOpenedHandler
 import grand.app.moon.core.extenstions.isLogin
+import grand.app.moon.extensions.handleRetryAbleActionCancellable
 import grand.app.moon.extensions.showRetryErrorDialogWithCancelNegativeButton
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
 import grand.app.moon.presentation.addStore.AddStoreActivity
 import grand.app.moon.presentation.base.extensions.openActivity
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.utils.showMessage
+import grand.app.moon.presentation.myAds.AddAdvertisementFragmentArgs
 
 
 @AndroidEntryPoint
@@ -276,8 +279,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 			    //nav.navigate(R.id.dest_add_adv_categories_list) // if available else packages to renew package
 					TODO("Will be programmed later in sprint 2 isa.")
 		    }else {
-					// todo should be with args of available no. (0 ~ 5) ads to be used isa.
-			    nav.navigate(R.id.dest_add_advertisement)
+					handleRetryAbleActionCancellable(
+						action = {
+							viewModel.homeUseCase.checkAvailableAdvertisements()
+						}
+					) {
+						nav.navigate(NavHomeDirections.actionGlobalDestAddAdvertisement(it))
+					}
 		    }
 	    }else {
 		    startActivity(Intent(this, AuthActivity::class.java))

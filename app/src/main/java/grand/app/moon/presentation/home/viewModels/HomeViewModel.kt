@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(
   var storeUseCase: StoreUseCase,
   var userLocalUseCase: UserLocalUseCase,
   val accountRepository: AccountRepository,
-  private val homeUseCase: HomeUseCase // UserLocalUseCase
+  val homeUseCase: HomeUseCase
 ) : BaseViewModel() {
 
   var isRefresh = false

@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.base
 
+import android.app.Dialog
 import android.content.Context
 import android.content.IntentSender
 import android.content.res.Configuration
@@ -28,6 +29,8 @@ import grand.app.moon.appMoonHelper.language.LanguagesHelper
 import grand.app.moon.appMoonHelper.language.MyContextWrapper
 import grand.app.moon.core.MyApplication
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
+import grand.app.moon.presentation.base.utils.hideLoadingDialog
+import grand.app.moon.presentation.base.utils.showLoadingDialog
 import java.util.Locale
 
 abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
@@ -35,6 +38,19 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
   private var _binding: VB? = null
   open val binding get() = _binding!!
    lateinit var navController: LiveData<NavController>
+	private var progressDialog: Dialog? = null
+
+	fun showLoading() {
+		hideLoading()
+		progressDialog = showLoadingDialog(this, null)
+	}
+
+	fun showLoading(hint: String?) {
+		hideLoading()
+		progressDialog = showLoadingDialog(this, hint)
+	}
+
+	fun hideLoading() = hideLoadingDialog(progressDialog, this)
 
   override
   fun createConfigurationContext(overrideConfiguration: Configuration): Context {

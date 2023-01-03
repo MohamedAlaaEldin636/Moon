@@ -202,4 +202,5 @@
   <string name="please_complete_login_2">من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط</string>
   <string name="please_enter_your_name_2">من فضلك قم بكتابة الاسم *</string>
   <string name="phone_2">رقم الجوال</string>
+  <string name="pick_adv_type_1">قم باختيار طريقة الإعلان المناسبة لك</string><!--من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط-->
 </resources>

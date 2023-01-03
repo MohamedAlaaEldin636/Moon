@@ -606,7 +606,11 @@
     android:id="@+id/dest_add_advertisement"
     android:name="grand.app.moon.presentation.myAds.AddAdvertisementFragment"
     tools:layout="@layout/fragment_add_advertisement"
-    android:label="AddAdvertisementFragment" />
+    android:label="AddAdvertisementFragment" >
+    <argument
+      android:name="availableNumOfAdvertisements"
+      app:argType="integer" />
+  </fragment>
   <fragment
     android:id="@+id/dest_add_adv_categories_list"
     android:name="grand.app.moon.presentation.categories.AddAdvCategoriesListFragment"
@@ -646,5 +650,8 @@
       android:name="idOfSubCategory"
       app:argType="integer" />
   </fragment>
+  <action
+    android:id="@+id/action_global_dest_add_advertisement"
+    app:destination="@id/dest_add_advertisement" />
 
 </navigation>

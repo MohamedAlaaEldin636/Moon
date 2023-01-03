@@ -34,6 +34,10 @@ class HomeRemoteDataSource @Inject constructor(private val apiService: HomeServi
     apiService.getCategoryDetails(id)
   }
 
+  suspend fun getCheckAvailability(type: Int) = safeApiCall {
+    apiService.getCheckAvailability(type.toString())
+  }
+
 
 
 }

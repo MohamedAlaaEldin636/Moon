@@ -76,8 +76,12 @@ class HomeUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
+	suspend fun checkAvailableAdvertisements() = homeRepository.getCheckAvailability(Availability.ADVERTISEMENT.apiValue)
 
+}
 
-
-
+private enum class Availability(val apiValue: Int) {
+	ADVERTISEMENT(1),
+	EXPLORE(2),
+	STORIES(3),
 }

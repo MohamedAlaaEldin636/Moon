@@ -16,12 +16,20 @@ import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.databinding.DialogRetryErrorHandlingBinding
+import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.domain.utils.FailureStatus
+import grand.app.moon.domain.utils.Resource
+import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.utils.showLoadingDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 /**
@@ -119,4 +127,52 @@ private fun showRetryErrorDialog(
 	progressDialog.setCancelable(false)
 	progressDialog.setCanceledOnTouchOutside(false)
 	progressDialog.show()
+}
+
+fun <T> BaseActivity<*>.handleRetryAbleActionCancellable(
+	action: suspend () -> Resource<BaseResponse<T?>>,
+	onSuccess: (T) -> Unit
+) {
+	handleRetryAbleAction(
+		showLoading = { showLoading() },
+		hideLoading = { hideLoading() },
+		lifecycleScope,
+		action,
+		onError = {
+			showRetryErrorDialogWithCancelNegativeButton(
+				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+			) {
+				handleRetryAbleActionCancellable(action, onSuccess)
+			}
+		},
+		onSuccess
+	)
+}
+
+private fun <T> handleRetryAbleAction(
+	showLoading: () -> Unit,
+	hideLoading: () -> Unit,
+	scope: CoroutineScope,
+	action: suspend () -> Resource<BaseResponse<T?>>,
+	onError: (Resource.Failure) -> Unit,
+	onSuccess: (T) -> Unit,
+) {
+	scope.launch {
+		showLoading()
+		val value = action()
+		hideLoading()
+		when (value) {
+			is Resource.Failure -> onError(value)
+			is Resource.Success -> {
+				val data = value.value.data
+
+				if (data == null) {
+					onError(Resource.Failure(FailureStatus.OTHER))
+				}else {
+					onSuccess(data)
+				}
+			}
+			else -> { /* shouldn't happen */ }
+		}
+	}
 }
