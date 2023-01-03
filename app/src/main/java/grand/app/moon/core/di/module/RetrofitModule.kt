@@ -77,8 +77,11 @@ object RetrofitModule {
     Interceptor { chain ->
 //      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken :,token:$token2:  $countryId")
       val request = chain.request().newBuilder()
-      if (appPreferences.getIsLoggedIn())
-        request.addHeader("Authorization", "Bearer ${appPreferences.getLocal(Constants.TOKEN)}")
+      if (appPreferences.getIsLoggedIn()) {
+				val token = appPreferences.getLocal(Constants.TOKEN)
+	      MyLogger.e("HttpLoggingInterceptor -> Authorization Bearer -> $token")
+	      request.addHeader("Authorization", "Bearer $token")
+      }
       request.addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
       request.addHeader("platform", "1")
       request.addHeader("Accept", "application/json")

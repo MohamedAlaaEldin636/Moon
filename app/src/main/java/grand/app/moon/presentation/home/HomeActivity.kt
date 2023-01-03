@@ -260,14 +260,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 	    if (isLogin()) {
 				val user = viewModel.userLocalUseCase()
 
+		    // todo if user -> 2 path & if shop -> 2 path as well -> call check availability so show
+		    //  loading now isa.
 		    if (user.isStore == true) {
-
+					// todo ... should be done later not in this sprint
 		    }else {
-
+			    //nav.navigate(R.id.dest_add_adv_categories_list) // dest_add_advertisement
+			    nav.navigate(R.id.dest_add_advertisement)
 		    }
-				// todo if user -> 2 path & if shop -> 2 path as well -> call check availability so show loading now isa.
-		    //nav.navigate(R.id.dest_add_adv_categories_list) // dest_add_advertisement
-		    nav.navigate(R.id.dest_add_advertisement)
 	    }else {
 		    startActivity(Intent(this, AuthActivity::class.java))
 	    }

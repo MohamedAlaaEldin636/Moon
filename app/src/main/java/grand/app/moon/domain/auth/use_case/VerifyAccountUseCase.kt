@@ -30,11 +30,11 @@ class VerifyAccountUseCase @Inject constructor(
     if (request.code.isNotEmpty()) {
       emit(Resource.Loading)
       val result = authRepository.verifyAccount(request)
-      if (result is Resource.Success) {
+      /*if (result is Resource.Success) {
 
         userLocalUseCase(result.value.data)
 
-      }
+      }*/
       Log.d(TAG, "invoke: ")
       emit(result)
 

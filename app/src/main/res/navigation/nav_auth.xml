@@ -49,6 +49,17 @@
     <argument
       android:name="type"
       app:argType="string" />
+    <action
+      android:id="@+id/action_fragment_confirm_code_to_dest_complete_login"
+      app:destination="@id/dest_complete_login" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_complete_login"
+    android:name="grand.app.moon.presentation.auth.completeLogin.CompleteLoginFragment"
+    tools:layout="@layout/fragment_complete_login" >
+    <argument
+      android:name="jsonUser"
+      app:argType="string" />
   </fragment>
 
 </navigation>

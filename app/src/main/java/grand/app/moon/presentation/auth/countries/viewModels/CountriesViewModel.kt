@@ -81,6 +81,7 @@ class CountriesViewModel @Inject constructor(
   fun updateCountry(country: Country) {
     accountRepository.saveKeyToLocal(Constants.COUNTRY_ID, country.id.toString())
     accountRepository.saveKeyToLocal(Constants.COUNTRY_ISO, country.isoCode)
+    accountRepository.saveKeyToLocal(Constants.COUNTRY_IMAGE, country.image)
     Log.d(TAG, "updateCountry: ${country.isoCode}")
     this.countryId = country.id.toString()
     notifyPropertyChanged(BR.countryId)

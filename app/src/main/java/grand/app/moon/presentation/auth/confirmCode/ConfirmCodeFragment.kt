@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.common.reflect.TypeToken
@@ -21,6 +22,9 @@ import kotlinx.coroutines.flow.collect
 import com.onesignal.OneSignal
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.explore.entity.Explore
+import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.navigateSafely
+import grand.app.moon.extensions.toJsonInlinedOrNull
 import grand.app.moon.presentation.base.extensions.*
 
 
@@ -116,9 +120,17 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            if(viewModel.profileRequest.country_code.isEmpty())//usual login
-              makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
-            else{
+            if(viewModel.profileRequest.country_code.isEmpty()) {//usual login
+	            if (it.value?.data?.name.isNullOrEmpty()) {
+								findNavController().navigateSafely(
+									ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToDestCompleteLogin(
+										it.value.data.toJsonInlinedOrNull().orEmpty()
+									)
+								)
+							}else {
+								makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
+							}
+            } else{
               //update profile
               viewModel.updateProfile()
             }

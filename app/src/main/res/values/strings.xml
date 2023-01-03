@@ -204,4 +204,8 @@
   <string name="advertisement_type">Advertisement Type</string>
     <string name="what_do_you_offer">What do you offer</string>
   <string name="advertisement_addition">Advertisement Addition</string>
+    <string name="please_complete_login">Please Complete Login</string>
+  <string name="please_complete_login_2">Please fill your data for the first time to login only</string>
+  <string name="please_enter_your_name_2">Please enter your Name *</string>
+  <string name="phone_2">phone</string><!--من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط-->
 </resources>

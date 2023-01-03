@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.auth.completeLogin.CompleteLoginFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.auth.completeLogin.CompleteLoginViewModel" />
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/logoImageView"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/dimen16"
+
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_header"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="@string/please_complete_login"
+        style="@style/TextTajawalBold14"
+        android:textSize="17sp"
+
+        android:layout_marginBottom="19dp"
+
+        app:layout_constraintBottom_toBottomOf="@id/logoImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <TextView
+        android:id="@+id/infoTextView"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/please_complete_login_2"
+        style="@style/TextTajawalMedium16"
+        android:textSize="13sp"
+
+        android:layout_marginTop="7dp"
+
+        android:gravity="center"
+
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+
+        app:layout_constraintTop_toBottomOf="@id/logoImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <TextView
+        android:id="@+id/nameLabelTextView"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/name"
+        style="@style/TextTajawalMedium16"
+        android:textSize="14sp"
+
+        android:layout_marginTop="58dp"
+
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+
+        android:textDirection="locale"
+
+        app:layout_constraintTop_toBottomOf="@id/infoTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <EditText
+        android:id="@+id/nameValueEditText"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/dr_rounded_5_text_field"
+
+        android:inputType="text"
+        android:hint="@string/please_enter_your_name_2"
+
+        android:text="@={viewModel.name}"
+        style="@style/TextTajawalRegular14"
+        android:textSize="13sp"
+
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+
+        android:textDirection="locale"
+
+        app:layout_constraintTop_toBottomOf="@id/nameLabelTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <TextView
+        android:id="@+id/phoneLabelTextView"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/phone_2"
+        style="@style/TextTajawalMedium16"
+        android:textSize="14sp"
+
+        android:layout_marginTop="30dp"
+
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+
+        android:textDirection="locale"
+
+        app:layout_constraintTop_toBottomOf="@id/nameValueEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <LinearLayout
+        android:id="@+id/phoneValueLinearLayout"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:background="@drawable/dr_rounded_5_text_field_with_bg"
+
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false"
+
+        android:gravity="left|center_vertical"
+
+        android:layoutDirection="ltr"
+
+        app:layout_constraintTop_toBottomOf="@id/phoneLabelTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <ImageView
+          android:layout_width="27dp"
+          android:layout_height="18dp"
+
+          android:scaleType="fitXY"
+
+          imageView_setupWithGlideOrSplashBA="@{viewModel.countryImage}"/>
+
+        <TextView
+          android:id="@+id/phoneValueTextView"
+
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+
+          android:background="@android:color/transparent"
+
+          tools:text="+20 01016171926"
+          android:text="@{viewModel.phone}"
+          style="@style/TextTajawalRegular14"
+          android:textSize="13sp"
+
+          android:textDirection="ltr"
+
+          android:gravity="left"
+
+          android:layout_marginStart="12dp"
+
+          app:layout_constraintTop_toBottomOf="@id/phoneLabelTextView"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent" />
+
+      </LinearLayout>
+
+      <com.google.android.material.button.MaterialButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/dr_rounded_5_button"
+
+        android:layout_margin="24dp"
+
+        app:layout_constraintVertical_bias="1"
+
+        android:textAppearance="@style/TextTajawalMedium14"
+        android:textColor="@color/white"
+        android:text="@string/log_in"
+
+        android:onClick="@{v -> viewModel.login(v)}"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phoneValueLinearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+</layout>

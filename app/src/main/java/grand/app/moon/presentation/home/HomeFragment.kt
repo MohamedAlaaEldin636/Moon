@@ -74,7 +74,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
       }
     })
 
-	  viewModel.getAnnouncement()
+	  val app = activity?.application as? MyApplication
+	  if (app != null && !app.checkedAppGlobalAnnouncement) {
+		  viewModel.getAnnouncement()
+		  app.checkedAppGlobalAnnouncement = true
+	  }
   }
   override
   fun setBindingVariables() {
@@ -134,6 +138,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 			repeatOnLifecycle(Lifecycle.State.CREATED) {
 				viewModel.responseAnnouncement.collect { resource ->
 					val response = (resource as? Resource.Success)?.value?.data ?: return@collect
+
+					val app = activity?.application as? MyApplication
+						if (app != null && app.showedAppGlobalAnnouncement) {
+						return@collect
+					}else {
+						app?.showedAppGlobalAnnouncement = true
+					}
 
 					binding.root.post {
 						if (findNavController().currentDestination?.id == R.id.home_fragment) {

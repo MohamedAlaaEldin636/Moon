@@ -3,6 +3,7 @@ package grand.app.moon.data.auth.data_source.remote
 import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.createMultipartBodyPart
 import grand.app.moon.data.remote.BaseRemoteDataSource
+import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.entity.request.*
 import grand.app.moon.helpers.login.SocialRequest
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -29,6 +30,10 @@ class AuthRemoteDataSource @Inject constructor(private val apiService: AuthServi
 
   suspend fun sendCode(request: VerifyAccountRequest) = safeApiCall {
     apiService.sendCode(request)
+  }
+
+  suspend fun updateProfile(name: String, user: User) = safeApiCall {
+    apiService.updateProfile(name.toRequestBody(), user.country_code.toRequestBody(), user.phone.toRequestBody())
   }
 
   suspend fun updateProfile(request: UpdateProfileRequest) = safeApiCall {

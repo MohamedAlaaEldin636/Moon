@@ -38,6 +38,18 @@ class LogInUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
+	suspend fun updateProfile(name: String, user: User): Resource<BaseResponse<User?>> {
+		val value = authRepository.updateProfile(name, user)
+
+		if (value is Resource.Success) {
+			value.value.data?.also {
+				userLocalUseCase(it)
+			}
+		}
+
+		return value
+	}
+
   fun updateProfile(
       request: UpdateProfileRequest,
   ): Flow<Resource<BaseResponse<User>>> = flow {

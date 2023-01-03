@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserLocalUseCase @Inject constructor(private val accountRepository: AccountRepository) {
-  suspend operator fun invoke(user: User) = accountRepository.saveUserToLocal(user)
+  operator fun invoke(user: User) = accountRepository.saveUserToLocal(user)
   operator fun invoke(): User = accountRepository.getUserToLocal()
   suspend fun saveUserToken(value: String) =
     accountRepository.saveUserToken(value)

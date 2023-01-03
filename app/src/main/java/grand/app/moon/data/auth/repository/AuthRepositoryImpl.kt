@@ -31,4 +31,7 @@ class AuthRepositoryImpl @Inject constructor(
   override suspend fun updateProfile(request: UpdateProfileRequest): Resource<BaseResponse<User>> =
     remoteDataSource.updateProfile(request)
 
+  override suspend fun updateProfile(name: String, user: User): Resource<BaseResponse<User?>> =
+    remoteDataSource.updateProfile(name, user)
+
 }

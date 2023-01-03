@@ -37,6 +37,14 @@ interface AuthServices {
   @POST("v1/profile")
   suspend fun updateProfile(@Body request: UpdateProfileRequest): BaseResponse<User>
 
+	@FormUrlEncoded
+  @POST("v1/profile")
+  suspend fun updateProfile(
+		@Field("name") name: RequestBody,
+		@Field("country_code") countryCode: RequestBody,
+		@Field("phone") phone: RequestBody,
+	): BaseResponse<User?>
+
   @Multipart
   @POST("v1/profile")
   suspend fun updateProfile(

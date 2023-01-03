@@ -11,7 +11,7 @@
   <string name="my_account">حسابي</string>
   <string name="map">الخريطة</string>
   <string name="confirm">تأكيد</string>
-  <string name="name">الأسم</string>
+  <string name="name">الإسم</string>
   <string name="content_of_the_message">محتوى الرسالة</string>
   <string name="send">إرسال</string>
   <string name="log_in">تسجيل الدخول</string>
@@ -198,4 +198,8 @@
   <string name="advertisement_type">نوع الإعلان</string>
     <string name="what_do_you_offer">ماذا تقدم</string>
   <string name="advertisement_addition">إضافة إعلان</string>
+    <string name="please_complete_login">برجاء إكمال التسجيل</string>
+  <string name="please_complete_login_2">من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط</string>
+  <string name="please_enter_your_name_2">من فضلك قم بكتابة الاسم *</string>
+  <string name="phone_2">رقم الجوال</string>
 </resources>

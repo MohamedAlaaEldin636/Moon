@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import grand.app.moon.extensions.asBundle
+import grand.app.moon.presentation.auth.completeLogin.CompleteLoginFragmentArgs
 import grand.app.moon.presentation.categories.AddAdvSubCategoriesListFragmentArgs
 import grand.app.moon.presentation.home.AnnouncementDialogFragmentArgs
 import grand.app.moon.presentation.home.AppGlobalAnnouncementDialogFragmentArgs
@@ -33,6 +34,11 @@ object ViewModelArgsModule {
 	@Provides
 	fun provideAddAdvFinalPageFragmentArgs(state: SavedStateHandle): AddAdvFinalPageFragmentArgs {
 		return AddAdvFinalPageFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
+	fun provideCompleteLoginFragmentArgs(state: SavedStateHandle): CompleteLoginFragmentArgs {
+		return CompleteLoginFragmentArgs.fromBundle(state.asBundle())
 	}
 
 }
