@@ -15,6 +15,7 @@ import grand.app.moon.R
 import grand.app.moon.presentation.auth.countries.viewModels.ItemCountryViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import grand.app.moon.databinding.ItemCountryBinding
+import grand.app.moon.extensions.MyLogger
 
 class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
   var lastSelected = -1
@@ -41,7 +42,7 @@ class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
     val data = differ.currentList[position]
     val itemViewModel = ItemCountryViewModel(data)
     itemViewModel.clickEvent.observeForever {
-      Log.d(TAG, "onBindViewHolder: $lastPosition")
+	    Log.d(TAG, "onBindViewHolder: $lastPosition")
       if(lastPosition != -1) {
         differ.currentList[lastPosition].active = 0
         notifyItemChanged(lastPosition)

@@ -9,6 +9,7 @@ import grand.app.moon.presentation.auth.countries.viewModels.CountriesViewModel
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.databinding.FragmentCountriesBinding
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.splash.SplashActivity
 import kotlinx.coroutines.flow.collect
@@ -50,14 +51,14 @@ class CountriesFragment : BaseFragment<FragmentCountriesBinding>() {
       }
     }
 
-    viewModel.adapter.changeEvent.observe(viewLifecycleOwner, { country ->
-      viewModel.updateCountry(country)
-    })
+    viewModel.adapter.changeEvent.observe(viewLifecycleOwner) { country ->
+	    viewModel.updateCountry(country)
+    }
 
 
-    viewModel.clickEvent.observe(viewLifecycleOwner,{
-      openActivityAndClearStack(SplashActivity::class.java)
-    })
+	  viewModel.clickEvent.observe(viewLifecycleOwner) {
+		  openActivityAndClearStack(SplashActivity::class.java)
+	  }
   }
 
 }

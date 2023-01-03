@@ -33,7 +33,7 @@ class AuthRemoteDataSource @Inject constructor(private val apiService: AuthServi
   }
 
   suspend fun updateProfile(name: String, user: User) = safeApiCall {
-    apiService.updateProfile(name.toRequestBody(), user.country_code.toRequestBody(), user.phone.toRequestBody())
+    apiService.updateProfile(name, user.country_code, user.phone, "Bearer ${user.token}")
   }
 
   suspend fun updateProfile(request: UpdateProfileRequest) = safeApiCall {

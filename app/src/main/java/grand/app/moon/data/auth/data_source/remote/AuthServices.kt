@@ -40,9 +40,10 @@ interface AuthServices {
 	@FormUrlEncoded
   @POST("v1/profile")
   suspend fun updateProfile(
-		@Field("name") name: RequestBody,
-		@Field("country_code") countryCode: RequestBody,
-		@Field("phone") phone: RequestBody,
+		@Field("name") name: String,
+		@Field("country_code") countryCode: String,
+		@Field("phone") phone: String,
+		@Header("Authorization") authorization: String
 	): BaseResponse<User?>
 
   @Multipart

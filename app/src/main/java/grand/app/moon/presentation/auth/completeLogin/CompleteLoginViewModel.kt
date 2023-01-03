@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.local.preferences.AppPreferences
+import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.use_case.LogInUseCase
@@ -33,10 +34,8 @@ import kotlin.math.log
 @HiltViewModel
 class CompleteLoginViewModel @Inject constructor(
 	args: CompleteLoginFragmentArgs,
-	private val useCaseUser: UserLocalUseCase,
-	private val useCaseCountries: CountriesUseCase,
 	private val useCaseLogIn: LogInUseCase,
-	appPreferences: AppPreferences,
+	accountRepository: AccountRepository
 ) : ViewModel() {
 
 	val user = args.jsonUser.fromJsonInlinedOrNull<User>().apply {
@@ -48,25 +47,7 @@ class CompleteLoginViewModel @Inject constructor(
 	/** Ex. +20 01016171926 */
 	val phone = MutableLiveData("${user?.country_code} ${user?.phone}")
 
-	val countryImage = MutableLiveData(appPreferences.getLocal(Constants.COUNTRY_IMAGE))
-
-	/*private val _countriesResponse =
-		MutableStateFlow<Resource<BaseResponse<List<Country>>>>(Resource.Default)
-	val countriesResponse: Flow<Resource<BaseResponse<List<Country>>>> = _countriesResponse*/
-
-	init {
-		MyLogger.e("aaaaaaaa -> ${appPreferences.getLocal(Constants.TOKEN)}")
-
-		//getCountries()
-	}
-
-	/*fun getCountries() {
-		useCaseCountries.invoke()
-			.onEach { result ->
-				_countriesResponse.value = result
-			}
-			.launchIn(viewModelScope)
-	}*/
+	val countryImage = MutableLiveData(accountRepository.getKeyFromLocal(Constants.COUNTRY_IMAGE))
 
 	fun login(view: View) {
 		val fragment = view.findFragmentOrNull<CompleteLoginFragment>() ?: return

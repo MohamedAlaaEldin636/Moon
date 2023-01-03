@@ -31,41 +31,5 @@ class CompleteLoginFragment : BaseFragment<FragmentCompleteLoginBinding>()  {
 		binding.viewModel = viewModel
 	}
 
-	/*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-
-		viewLifecycleOwner.lifecycleScope.launch {
-			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-				viewModel.countriesResponse.collect { resource ->
-					when (resource) {
-						is Resource.Loading -> {
-							hideKeyboard()
-							showLoading()
-						}
-						is Resource.Failure -> {
-							hideLoading()
-
-							binding.root.showSnackbarWithAction(resource) {
-								viewModel.getCountries()
-							}
-						}
-						is Resource.Success -> {
-							hideLoading()
-
-							@Suppress("UselessCallOnNotNull")
-							val image = resource.value.data.orEmpty().firstOrNull {
-								it.isoCode == viewModel.user?.country_code
-							}?.image
-
-							MyLogger.e("CompleteLoginFragment -> image -> $image -> ${viewModel.user?.country_code} -> ${resource.value.data.orEmpty()}")
-
-							viewModel.countryImage.value = image
-						}
-					}
-				}
-			}
-		}
-	}*/
-
 }
 
