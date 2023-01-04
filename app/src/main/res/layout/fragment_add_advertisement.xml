@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:ignore="ContentDescription">
 
   <data>
     <variable
@@ -8,55 +11,327 @@
       type="grand.app.moon.presentation.myAds.viewModel.AddAdvertisementViewModel" />
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <com.google.android.material.appbar.MaterialToolbar
-      android:id="@+id/toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
 
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
+      android:background="#FBFBFB">
 
-      android:background="@color/colorPrimary"
+      <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
 
-      toolbar_setNavIconClick="@{v -> viewModel.goBack(v)}"
+        toolbar_setNavIconClick="@{v -> viewModel.goBack(v)}"
+        android:layout_width="0dp"
 
-      app:titleTextColor="@color/white"
-      app:titleTextAppearance="@style/TextTajawalMedium16"
-      app:title="@string/advertisement_type"
-      app:titleCentered="true"
+        android:layout_height="wrap_content"
 
-      app:navigationIcon="@drawable/ic_clear_white_24dp"
+        android:background="@color/colorPrimary"
 
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_clear_white_24dp"
 
-    <androidx.appcompat.widget.AppCompatImageView
-      android:id="@+id/curveImageView"
-      
-      style="@style/ToolbarCurve"
+        app:title="@string/advertisement_type"
 
-      app:layout_constraintTop_toBottomOf="@id/toolbar"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
-    
-    <TextView
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/TextTajawalMedium16"
+        app:titleTextColor="@color/white" />
 
-      android:layout_marginTop="28dp"
-      android:layout_marginStart="16dp"
-      android:layout_marginEnd="16dp"
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/curveImageView"
 
-      android:text="@string/pick_adv_type_1"
-      android:textDirection="locale"
-      style="@style/TextTajawalMedium14"
+        style="@style/ToolbarCurve"
 
-      app:layout_constraintTop_toBottomOf="@id/curveImageView"
-      app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+      <TextView
+        android:id="@+id/titleLabelTextView"
+
+        style="@style/TextTajawalMedium14"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+
+        android:layout_marginEnd="16dp"
+        android:text="@string/pick_adv_type_1"
+        android:textDirection="locale"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/curveImageView" />
+
+      <LinearLayout
+        android:id="@+id/freeAdLinearLayout"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="16dp"
+
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="8dp"
+        tools:background="@drawable/dr_round_selected"
+
+        view_setBackgroundRes="@{viewModel.freeAdvBackgroundRes}"
+
+        android:clipToPadding="false"
+
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="8dp"
+
+        android:paddingBottom="20dp"
+
+        app:layout_constraintEnd_toStartOf="@id/paidAdLinearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleLabelTextView">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+
+          android:src="@drawable/ic_free_ad_large"
+          imageView_setTintResBA="@{viewModel.freeAdvTintColor}"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/TextTajawalMedium14"
+          android:layout_width="match_parent"
+
+          android:layout_height="wrap_content"
+
+          android:layout_marginTop="13dp"
+          android:gravity="center"
+          android:text="@string/free_adv"
+          android:textColor="@color/white"
+          android:textDirection="locale"
+          android:textSize="19sp"
+          textView_setTextColorResBA="@{viewModel.freeAdvTintColor}"
+
+          android:maxLines="1"
+          android:ellipsize="end"
+          app:autoSizeTextType="uniform"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/TextTajawalRegular14"
+          android:layout_width="match_parent"
+
+          android:layout_height="wrap_content"
+
+          android:layout_marginTop="15dp"
+          android:gravity="center"
+          android:text="@string/individuals_advertisements"
+          android:textColor="@color/white"
+          android:textDirection="locale"
+          android:textSize="15sp"
+          textView_setTextColorResBA="@{viewModel.freeAdvTintColor}"
+
+          android:maxLines="1"
+          android:ellipsize="end"
+          app:autoSizeTextType="uniform"/>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/paidAdLinearLayout"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="8dp"
+
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/dr_round_not_selected"
+
+        view_setBackgroundRes="@{viewModel.paidAdvBackgroundRes}"
+
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingTop="20dp"
+
+        android:paddingEnd="8dp"
+        android:paddingBottom="20dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/freeAdLinearLayout"
+        app:layout_constraintTop_toBottomOf="@id/titleLabelTextView">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+
+          android:src="@drawable/ic_paid_ad_large"
+          app:tint="@color/not_selected_3"
+          imageView_setTintResBA="@{viewModel.paidAdvTintColor}"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/TextTajawalMedium14"
+          android:layout_width="match_parent"
+
+          android:layout_height="wrap_content"
+
+          android:layout_marginTop="13dp"
+          android:gravity="center"
+          android:text="@string/paid_advertisement"
+          android:textColor="@color/not_selected_3"
+          android:textDirection="locale"
+          android:textSize="19sp"
+          textView_setTextColorResBA="@{viewModel.paidAdvTintColor}"
+
+          android:maxLines="1"
+          android:ellipsize="end"
+          app:autoSizeTextType="uniform" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+          style="@style/TextTajawalRegular14"
+          android:layout_width="match_parent"
+
+          android:layout_height="wrap_content"
+
+          android:layout_marginTop="15dp"
+          android:gravity="center"
+          android:text="@string/stores_advertisements"
+          android:textColor="@color/not_selected_3"
+          android:textDirection="locale"
+          android:textSize="15sp"
+          textView_setTextColorResBA="@{viewModel.paidAdvTintColor}"
+
+          android:maxLines="1"
+          android:ellipsize="end"
+          app:autoSizeTextType="uniform"/>
+
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/textView1"
+
+        style="@style/TextTajawalRegular14"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+
+        android:layout_marginBottom="30dp"
+        android:text="@{viewModel.availableAdvertisementsText}"
+        tools:text="sss"
+        android:textDirection="locale"
+        app:drawableStartCompat="@drawable/ic_right_add_adv"
+        android:drawablePadding="8dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/freeAdLinearLayout" />
+
+      <TextView
+        android:id="@+id/textView2"
+
+        style="@style/TextTajawalRegular14"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+
+        android:layout_margin="16dp"
+        android:text="@string/ad_benefit_2"
+        android:textDirection="locale"
+        app:drawableStartCompat="@drawable/ic_wrong_add_adv"
+        android:drawablePadding="8dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+      <TextView
+        android:id="@+id/textView3"
+
+        style="@style/TextTajawalRegular14"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+
+        android:layout_margin="16dp"
+        android:text="@string/ad_benefit_3"
+        android:textDirection="locale"
+        app:drawableStartCompat="@drawable/ic_wrong_add_adv"
+        android:drawablePadding="8dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+      <TextView
+        android:id="@+id/textView4"
+
+        style="@style/TextTajawalRegular14"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+
+        android:layout_margin="16dp"
+        android:text="@string/ad_benefit_4"
+        android:textDirection="locale"
+        app:drawableStartCompat="@drawable/ic_wrong_add_adv"
+        android:drawablePadding="8dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView3" />
+
+      <TextView
+        android:id="@+id/textView5"
+
+        style="@style/TextTajawalRegular14"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+
+        android:layout_margin="16dp"
+        android:text="@string/ad_benefit_5"
+        android:textDirection="locale"
+        app:drawableStartCompat="@drawable/ic_wrong_add_adv"
+        android:drawablePadding="8dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView4" />
+
+      <com.google.android.material.button.MaterialButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/dr_rounded_5_button"
+
+        android:layout_margin="24dp"
+
+        app:layout_constraintVertical_bias="1"
+
+        android:textAppearance="@style/TextTajawalMedium14"
+        android:textColor="@color/white"
+        android:text="@{viewModel.buttonText}"
+
+        android:onClick="@{v -> viewModel.goToNextScreen(v)}"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.core.widget.NestedScrollView>
 
 </layout>

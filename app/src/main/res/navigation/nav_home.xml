@@ -610,6 +610,9 @@
     <argument
       android:name="availableNumOfAdvertisements"
       app:argType="integer" />
+    <action
+      android:id="@+id/action_dest_add_advertisement_to_dest_add_adv_categories_list"
+      app:destination="@id/dest_add_adv_categories_list" />
   </fragment>
   <fragment
     android:id="@+id/dest_add_adv_categories_list"

@@ -208,5 +208,17 @@
   <string name="please_complete_login_2">Please fill your data for the first time to login only</string>
   <string name="please_enter_your_name_2">Please enter your Name *</string>
   <string name="phone_2">phone</string>
-    <string name="pick_adv_type_1">Choose type of Advertisement that suits you</string><!--قم باختيار طريقة الإعلان المناسبة لك-->
+    <string name="pick_adv_type_1">Choose type of Advertisement that suits you</string>
+  <string name="ad_benefit_5">You can view advertisements statistics</string>
+  <string name="ad_benefit_4">You can make internal categories in your Store</string>
+  <string name="ad_benefit_3">You can add Explore</string>
+  <string name="ad_benefit_2">You can add Stories</string>
+  <string name="ad_benefit_1">5 free Advertisements only, Remaining</string>
+  <string name="add_free_adv">Add free Advertisement</string>
+  <string name="pick_your_package_now">Pick your package now</string>
+  <string name="individuals_advertisements">Individuals Advertisements</string>
+  <string name="stores_advertisements">Stores Advertisements</string>
+  <string name="paid_advertisement">Paid Advertisement</string>
+  <string name="free_adv">Free Advertisement</string>
+  <string name="ad_benefit_1_paid">Large number of Ads for each package</string><!--قم باختيار طريقة الإعلان المناسبة لك-->
 </resources>

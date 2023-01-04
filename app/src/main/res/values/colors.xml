@@ -2,6 +2,8 @@
 <resources>
   <color name="announcement_dialog_window_background">#47000000</color>
 
+  <color name="not_selected_3">#7F8897</color>
+
   <color name="colorPrimary">#0D0633</color>
   <color name="errorIndication">#7C2121</color>
   <color name="colorPrimaryT">#000D0633</color>

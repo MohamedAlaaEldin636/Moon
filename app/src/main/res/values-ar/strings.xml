@@ -202,5 +202,17 @@
   <string name="please_complete_login_2">من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط</string>
   <string name="please_enter_your_name_2">من فضلك قم بكتابة الاسم *</string>
   <string name="phone_2">رقم الجوال</string>
-  <string name="pick_adv_type_1">قم باختيار طريقة الإعلان المناسبة لك</string><!--من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط-->
+  <string name="pick_adv_type_1">قم باختيار طريقة الإعلان المناسبة لك</string>
+  <string name="ad_benefit_5">يمكن مشاهدة أحصائيات للإعلانات</string>
+  <string name="ad_benefit_4">يمكن عمل أقسام داخلية في متجرك</string>
+  <string name="ad_benefit_3">يمكن إضافة اكسبلور</string>
+  <string name="ad_benefit_2">يمكن إضافة حالات</string>
+  <string name="ad_benefit_1">5 إعلاانت مجانية فقط متبقى</string>
+  <string name="add_free_adv">إضافة إعلان مجاني</string>
+  <string name="pick_your_package_now">أختر باقتك ألان</string>
+  <string name="individuals_advertisements">إعلانات الأفراد</string>
+  <string name="stores_advertisements">إعلانات المتاجر</string>
+  <string name="paid_advertisement">إعلان مدفوع</string>
+  <string name="free_adv">إعلان مجاني</string>
+  <string name="ad_benefit_1_paid">عدد اعلانات كبير لكل باقة</string><!--من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط-->
 </resources>

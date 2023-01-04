@@ -1,6 +1,16 @@
 import android.annotation.SuppressLint
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
+buildscript {
+	repositories {
+		google()
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20")
+	}
+}
+
 plugins {
   id(Config.Plugins.androidApplication)
   id(Config.Plugins.kotlinAndroid)
