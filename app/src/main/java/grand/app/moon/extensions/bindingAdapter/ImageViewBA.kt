@@ -1,6 +1,7 @@
 package grand.app.moon.extensions.bindingAdapter
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -36,5 +37,7 @@ fun ImageView.setupWithGlideOrSplashBA(url :String?) {
 
 @BindingAdapter("imageView_setTintResBA")
 fun ImageView.setTintBA(@ColorRes res: Int?) {
-	imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context, res.orZero()))
+	imageTintList = ColorStateList.valueOf(
+		if (res == null) Color.TRANSPARENT else ContextCompat.getColor(context, res)
+	)
 }

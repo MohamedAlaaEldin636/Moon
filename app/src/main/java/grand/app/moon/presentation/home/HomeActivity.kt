@@ -33,6 +33,7 @@ import com.onesignal.OSNotificationOpenedResult
 import com.onesignal.OneSignal
 import com.onesignal.OneSignal.OSNotificationOpenedHandler
 import grand.app.moon.core.extenstions.isLogin
+import grand.app.moon.extensions.General
 import grand.app.moon.extensions.handleRetryAbleActionCancellable
 import grand.app.moon.extensions.showRetryErrorDialogWithCancelNegativeButton
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
@@ -277,7 +278,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 		    //  loading now isa.
 		    if (user.isStore == true) {
 			    //nav.navigate(R.id.dest_add_adv_categories_list) // if available else packages to renew package
-					TODO("Will be programmed later in sprint 2 isa.")
+			    General.TODO("Will be programmed later in sprint 2 isa.")
 		    }else {
 					handleRetryAbleActionCancellable(
 						action = {

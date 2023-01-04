@@ -1,6 +1,6 @@
 package grand.app.moon.presentation.home
 
-abstract class SomeClass<T> {
+/*abstract class SomeClass<T> {
 	abstract fun execute(): T
 }
 
@@ -26,4 +26,4 @@ fun main() {
 	// T is inferred as Int because OtherImplementation derives from SomeClass<Int>
 	val n = Runner.run<OtherImplementation, _>()
 	assert(n == 42)
-}
+}*/

@@ -2,8 +2,10 @@ package grand.app.moon.extensions
 
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import grand.app.moon.R
+import grand.app.moon.core.MyApplication
 import grand.app.moon.domain.utils.Resource
 
 infix fun <A, B, C> Pair<A, B>.triple(third: C): Triple<A, B, C> = Triple(first, second, third)
@@ -62,3 +64,9 @@ private fun showSnackbarWithRetry(isCategoriesNotCountriesError: Boolean, failur
 			.show()
 	}
  */
+
+object General {
+	fun TODO(any: Any?) {
+		Toast.makeText(MyApplication.instance, any.toString(), Toast.LENGTH_SHORT).show()
+	}
+}

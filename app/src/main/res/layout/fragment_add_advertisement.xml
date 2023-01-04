@@ -72,6 +72,13 @@
       <LinearLayout
         android:id="@+id/freeAdLinearLayout"
 
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.toggleAdType(true)}"
+
+        view_enableAndAllChildren="@{viewModel.enableFreeAdType}"
+        view_enableAndAllChildren_disableAlpha="@{0.75f}"
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
@@ -144,6 +151,10 @@
 
       <LinearLayout
         android:id="@+id/paidAdLinearLayout"
+
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.toggleAdType(false)}"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -249,6 +260,7 @@
         android:text="@string/ad_benefit_2"
         android:textDirection="locale"
         app:drawableStartCompat="@drawable/ic_wrong_add_adv"
+        textView_serDrawableCompatBA_drawableStart="@{viewModel.currentlySelectedTypeIsFree ? @drawable/ic_wrong_add_adv : @drawable/ic_right_add_adv}"
         android:drawablePadding="8dp"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -268,6 +280,7 @@
         android:textDirection="locale"
         app:drawableStartCompat="@drawable/ic_wrong_add_adv"
         android:drawablePadding="8dp"
+        textView_serDrawableCompatBA_drawableStart="@{viewModel.currentlySelectedTypeIsFree ? @drawable/ic_wrong_add_adv : @drawable/ic_right_add_adv}"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -286,6 +299,7 @@
         android:textDirection="locale"
         app:drawableStartCompat="@drawable/ic_wrong_add_adv"
         android:drawablePadding="8dp"
+        textView_serDrawableCompatBA_drawableStart="@{viewModel.currentlySelectedTypeIsFree ? @drawable/ic_wrong_add_adv : @drawable/ic_right_add_adv}"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -304,6 +318,7 @@
         android:textDirection="locale"
         app:drawableStartCompat="@drawable/ic_wrong_add_adv"
         android:drawablePadding="8dp"
+        textView_serDrawableCompatBA_drawableStart="@{viewModel.currentlySelectedTypeIsFree ? @drawable/ic_wrong_add_adv : @drawable/ic_right_add_adv}"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
