@@ -62,6 +62,7 @@ class AddAdvCategoriesListFragment : BaseFragment<FragmentAddAdvCategoriesListBi
 						is Resource.Failure -> binding.root.showSnackbarWithAction(it) {
 							viewModel.getCategories()
 						}
+						else -> {}
 					}
 				}
 			}

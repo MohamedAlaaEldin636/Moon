@@ -45,6 +45,7 @@ class DiscoverFragment : BaseFragment<FragmentDiscoverBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

@@ -73,6 +73,7 @@ class ReviewDialog : BottomSheetDialogFragment() {
             handleApiError(it)
             binding.btnRate.show()
           }
+	        else -> {}
         }
       }
     }

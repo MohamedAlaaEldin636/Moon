@@ -209,6 +209,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

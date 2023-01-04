@@ -84,6 +84,7 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

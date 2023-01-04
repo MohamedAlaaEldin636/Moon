@@ -83,6 +83,7 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -104,6 +105,7 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -123,6 +125,7 @@ class CommentsListFragment : BaseFragment<FragmentCommentsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

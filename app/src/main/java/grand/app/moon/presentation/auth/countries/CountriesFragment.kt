@@ -47,6 +47,7 @@ class CountriesFragment : BaseFragment<FragmentCountriesBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

@@ -444,10 +444,10 @@ fun AppCompatTextView.move(dimentions: Float) {
         setTranslationX(translationX)
       }
       animator.addListener(object : Animator.AnimatorListener{
-        override fun onAnimationStart(p0: Animator?) {
+        override fun onAnimationStart(p0: Animator) {
         }
 
-        override fun onAnimationEnd(p0: Animator?) {
+        override fun onAnimationEnd(p0: Animator) {
           val anim1 = ValueAnimator.ofFloat(-1f, 0f)
           animator.repeatCount = ValueAnimator.RESTART
           anim1.interpolator = LinearInterpolator()
@@ -464,10 +464,10 @@ fun AppCompatTextView.move(dimentions: Float) {
           anim1.start()
         }
 
-        override fun onAnimationCancel(p0: Animator?) {
+        override fun onAnimationCancel(p0: Animator) {
         }
 
-        override fun onAnimationRepeat(p0: Animator?) {
+        override fun onAnimationRepeat(p0: Animator) {
         }
       })
       animator.start()

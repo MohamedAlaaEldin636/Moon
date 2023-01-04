@@ -110,6 +110,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -131,6 +132,7 @@ class SubCategoryFragment : BaseFragment<FragmentSubCategoryBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

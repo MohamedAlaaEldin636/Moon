@@ -1,10 +1,10 @@
 object Config {
   object AppConfig {
     const val appId = "grand.app.moon"
-    const val compileSdkVersion = 31
+    const val compileSdkVersion = 33
     const val minSdkVersion = 23
-    const val versionCode = 36
-    const val versionName = "0.0.10"
+    const val versionCode = 37
+    const val versionName = "0.0.11"
     const val testRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 

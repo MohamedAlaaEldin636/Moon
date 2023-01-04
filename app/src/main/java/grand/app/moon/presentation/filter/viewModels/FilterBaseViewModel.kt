@@ -298,6 +298,7 @@ open class FilterBaseViewModel @Inject constructor(
             if (property.from?.isNotEmpty() == true) request.min_price = property.from
             if (property.to?.isNotEmpty() == true) request.max_price = property.to
           }
+	        else -> {}
         }
         if (property.selectedList.isNotEmpty() && index != 0 && index != adapter.differ.currentList.size - 1) {
           Log.d(TAG, "filterSubmit: ${property.id}")
@@ -339,6 +340,7 @@ open class FilterBaseViewModel @Inject constructor(
             adapter.replaceChildren(it,FILTER_TYPE.AREA)
           }
         }
+	      else -> {}
       }
       adapter.updateFilterSelected(filterProperty)
 //    }

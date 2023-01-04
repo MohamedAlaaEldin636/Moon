@@ -58,6 +58,7 @@ class StoreUsersFragment : BaseFragment<FragmentStoreUsersBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

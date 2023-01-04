@@ -75,70 +75,71 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(),
 
 
   override fun setupObservers() {
-    viewModel.adapter.clickEvent.observe(this, {
-      Log.d(TAG, "setupObservers: ${it.filterType}")
-      when (it.filterType) {
-        FILTER_TYPE.CATEGORY -> {
-          findNavController().navigate(
-            FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
-              it,
-              it.name,
-            )
-          )
-        }
-        FILTER_TYPE.SUB_CATEGORY -> {
-          when {
-            viewModel.request.categoryId != null -> viewModel.request.categoryId?.let { categoryId ->
-              findNavController().navigate(
-                FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
-                  it,
-                  it.name,
-                )
-              )
-            }
-            else -> {
-              showMessage(getString(R.string.please_choose_main_section))
-            }
-          }
+    viewModel.adapter.clickEvent.observe(this) {
+	    Log.d(TAG, "setupObservers: ${it.filterType}")
+	    when (it.filterType) {
+		    FILTER_TYPE.CATEGORY -> {
+			    findNavController().navigate(
+				    FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
+					    it,
+					    it.name,
+				    )
+			    )
+		    }
+		    FILTER_TYPE.SUB_CATEGORY -> {
+			    when {
+				    viewModel.request.categoryId != null -> viewModel.request.categoryId?.let { categoryId ->
+					    findNavController().navigate(
+						    FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
+							    it,
+							    it.name,
+						    )
+					    )
+				    }
+				    else -> {
+					    showMessage(getString(R.string.please_choose_main_section))
+				    }
+			    }
 
-        }
-        FILTER_TYPE.SINGLE_SELECT, FILTER_TYPE.CITY, FILTER_TYPE.SORT_BY, FILTER_TYPE.OTHER_OPTIONS ->
-          findNavController().navigate(
+		    }
+		    FILTER_TYPE.SINGLE_SELECT, FILTER_TYPE.CITY, FILTER_TYPE.SORT_BY, FILTER_TYPE.OTHER_OPTIONS ->
+			    findNavController().navigate(
 
-            FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
-              it,
-              it.name
-            )
-          )
-        FILTER_TYPE.AREA -> {
-          when {
-            (viewModel.request.cityIds != null && viewModel.request.cityIds!!.isNotEmpty()) -> {
-              findNavController().navigate(
-                FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
-                  it,
-                  it.name
-                )
-              )
-            }
-            else -> {
-              showMessage(getString(R.string.please_choose_your_city))
-            }
-          }
-        }
-        FILTER_TYPE.MULTI_SELECT -> {
+				    FilterFragmentDirections.actionFilterFragmentToFilterSingleSelectDialog(
+					    it,
+					    it.name
+				    )
+			    )
+		    FILTER_TYPE.AREA -> {
+			    when {
+				    (viewModel.request.cityIds != null && viewModel.request.cityIds!!.isNotEmpty()) -> {
+					    findNavController().navigate(
+						    FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
+							    it,
+							    it.name
+						    )
+					    )
+				    }
+				    else -> {
+					    showMessage(getString(R.string.please_choose_your_city))
+				    }
+			    }
+		    }
+		    FILTER_TYPE.MULTI_SELECT -> {
 //          Log.d(TAG, "setupObservers: HERE ${it.name} , ${it.children.size}")
-          findNavController().navigate(
-            FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
-              it,
-              it.name
-            )
-          )
-        }
-      }
-    })
+			    findNavController().navigate(
+				    FilterFragmentDirections.actionFilterFragmentToFilterMultiSelectDialog(
+					    it,
+					    it.name
+				    )
+			    )
+		    }
+		    else -> {}
+	    }
+    }
 
 
-    lifecycleScope.launchWhenResumed {
+	  lifecycleScope.launchWhenResumed {
       viewModel.response.collect {
         when (it) {
           Resource.Loading -> {
@@ -156,6 +157,7 @@ class FilterFragment : BaseFragment<FragmentFilterHomeBinding>(),
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

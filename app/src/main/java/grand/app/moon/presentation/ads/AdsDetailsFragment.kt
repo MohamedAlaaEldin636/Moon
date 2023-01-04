@@ -84,6 +84,7 @@ class AdsDetailsFragment : BaseFragment<FragmentAdsDetailsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

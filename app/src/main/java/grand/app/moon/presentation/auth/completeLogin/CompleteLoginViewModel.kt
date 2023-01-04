@@ -74,6 +74,7 @@ class CompleteLoginViewModel @Inject constructor(
 						this@CompleteLoginViewModel.login(view)
 					}
 				}
+				else -> {}
 			}
 		}
 	}

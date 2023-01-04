@@ -58,6 +58,7 @@ class StoreBlockListFragment : BaseFragment<FragmentStoreBlockListBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -77,6 +78,7 @@ class StoreBlockListFragment : BaseFragment<FragmentStoreBlockListBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

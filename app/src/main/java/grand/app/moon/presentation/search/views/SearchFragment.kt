@@ -108,6 +108,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
         println("collection here $it")
         if (it is Resource.Success) {

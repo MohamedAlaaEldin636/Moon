@@ -15,14 +15,11 @@ plugins {
   id(Config.Plugins.androidApplication)
   id(Config.Plugins.kotlinAndroid)
   id(Config.Plugins.kotlinAndroidExtensions)
-
   id(Config.Plugins.kotlinKapt)
   id(Config.Plugins.navigationSafeArgs)
   id(Config.Plugins.hilt)
   id(Config.Plugins.google_services)
   id ("com.onesignal.androidsdk.onesignal-gradle-plugin")
-
-
 }
 
 android {
@@ -108,10 +105,21 @@ android {
   buildFeatures {
     viewBinding = true
     dataBinding = true
+	  compose = true
   }
+
+	composeOptions {
+		kotlinCompilerExtensionVersion = "1.3.2"
+	}
 }
 
 dependencies {
+	implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.1")
+
+	implementation("androidx.compose.ui:ui:1.3.2")
+	implementation("androidx.compose.ui:ui-tooling-preview:1.3.2")
+	implementation("androidx.compose.material3:material3:1.0.1")
+
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
   //Room
   implementation(Libraries.roomVersion)

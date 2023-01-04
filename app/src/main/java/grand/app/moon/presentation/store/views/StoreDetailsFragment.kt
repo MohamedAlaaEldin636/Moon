@@ -152,6 +152,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

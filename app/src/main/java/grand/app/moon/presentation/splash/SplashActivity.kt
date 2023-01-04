@@ -83,6 +83,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             viewModel.homeCountries()
           }
 	        is Resource.Failure -> showSnackbarWithRetry(true, it)
+	        else -> {}
         }
       }
     }
@@ -99,6 +100,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             viewModel.redirect()
           }
 	        is Resource.Failure -> showSnackbarWithRetry(false, it)
+	        else -> {}
         }
       }
     }

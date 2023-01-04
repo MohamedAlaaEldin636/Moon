@@ -98,6 +98,7 @@ class ExploreListFragment : BaseFragment<FragmentExploreListBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

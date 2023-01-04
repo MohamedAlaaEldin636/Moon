@@ -56,6 +56,7 @@ class UserListFragment : BaseFragment<FragmentUserListBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

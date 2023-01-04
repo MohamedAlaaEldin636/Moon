@@ -17,6 +17,7 @@ import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentMapBinding
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.orZero
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.helpers.map.cluster.ClusterCustomItem
 import grand.app.moon.helpers.map.cluster.MarkerRender
@@ -122,6 +123,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -143,6 +145,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -185,7 +188,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
             try {
               when (viewModel.type) {
                 Constants.ADVERTISEMENT_TEXT -> {
-                  viewModel.findAds(marker.tag.toString()?.toInt())
+                  viewModel.findAds(marker.tag.toString()?.toIntOrNull().orZero())
                 }
                 else -> {
                   findNavController().navigate(

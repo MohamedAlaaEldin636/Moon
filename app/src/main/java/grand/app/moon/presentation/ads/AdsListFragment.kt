@@ -91,6 +91,7 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
 
@@ -115,6 +116,7 @@ class AdsListFragment : BaseFragment<FragmentAdsListBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
 

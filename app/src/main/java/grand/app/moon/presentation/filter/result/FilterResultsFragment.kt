@@ -89,6 +89,7 @@ class FilterResultsFragment : BaseFragment<FragmentFilterResultsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
 

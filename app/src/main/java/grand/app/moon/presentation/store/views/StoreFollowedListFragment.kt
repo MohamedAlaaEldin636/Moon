@@ -54,6 +54,7 @@ class StoreFollowedListFragment : BaseFragment<FragmentStoreFollowedListBinding>
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

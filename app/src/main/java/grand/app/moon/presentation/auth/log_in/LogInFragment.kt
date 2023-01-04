@@ -97,6 +97,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
 
         }
       }
@@ -152,7 +153,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
         val account = task.getResult(ApiException::class.java)
 
         val request = SocialRequest(
-          provider_id = account.id!!,
+          provider_id = account?.id!!,
           objective = "google"
         )
         account.displayName?.let {

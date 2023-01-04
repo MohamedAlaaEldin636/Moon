@@ -90,6 +90,7 @@ class CommentsListPaginateFragment : BaseFragment<FragmentCommentsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -109,6 +110,7 @@ class CommentsListPaginateFragment : BaseFragment<FragmentCommentsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

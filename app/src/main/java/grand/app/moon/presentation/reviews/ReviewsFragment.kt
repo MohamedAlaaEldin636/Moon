@@ -117,6 +117,7 @@ class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

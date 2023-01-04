@@ -53,6 +53,7 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -73,6 +74,7 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -92,6 +94,7 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -113,6 +116,7 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

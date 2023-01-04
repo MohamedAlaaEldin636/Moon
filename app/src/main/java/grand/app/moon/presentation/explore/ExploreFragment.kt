@@ -87,6 +87,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

@@ -140,6 +140,7 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

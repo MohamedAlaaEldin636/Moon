@@ -139,6 +139,7 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -157,6 +158,7 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -176,6 +178,7 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

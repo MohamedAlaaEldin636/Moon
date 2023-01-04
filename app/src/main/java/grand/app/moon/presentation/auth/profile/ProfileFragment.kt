@@ -90,9 +90,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
       }
     }
 
-
-
-
     lifecycleScope.launchWhenResumed {
       viewModel.response.collect {
         when (it) {
@@ -109,6 +106,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -148,6 +146,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             handleApiError(it)
           }
 
+	        else -> {}
         }
       }
     }

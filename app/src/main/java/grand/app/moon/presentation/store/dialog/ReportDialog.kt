@@ -85,6 +85,7 @@ class ReportDialog : BottomSheetDialogFragment() {
             viewModel.progress.set(false)
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }
@@ -117,6 +118,7 @@ class ReportDialog : BottomSheetDialogFragment() {
             viewModel.progress.set(false)
             handleApiError(it)
           }
+	        else -> {}
         }
       }
     }

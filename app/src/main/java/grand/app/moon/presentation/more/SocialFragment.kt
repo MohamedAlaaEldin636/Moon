@@ -67,6 +67,7 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
       }
 

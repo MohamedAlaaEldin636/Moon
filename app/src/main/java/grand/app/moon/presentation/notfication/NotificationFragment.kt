@@ -89,6 +89,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
             hideLoading()
             handleApiError(it)
           }
+	        else -> {}
         }
         println("collection here $it")
         if(it is Resource.Success){

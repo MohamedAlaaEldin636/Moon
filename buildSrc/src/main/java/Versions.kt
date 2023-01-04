@@ -1,6 +1,6 @@
 object Versions {
-  const val gradleVersion = "7.0.2"
-  const val kotlin = "1.6.10"
+  const val gradleVersion = "7.3.1"
+  const val kotlin = "1.7.20"
   const val ktLint = "10.2.0"
 
   // Java Inject
@@ -12,7 +12,7 @@ object Versions {
   const val supportVersion = "1.0.0"
 
   // Arch Components
-  const val lifecycle = "2.4.0-alpha03"
+  const val lifecycle = "2.4.0"
   const val paging_version = "3.1.1"
   const val roomVersion = "2.4.0"
 
@@ -42,7 +42,7 @@ object Versions {
   const val permissions = "3.0.0-RC4"
 
   // Hilt
-  const val hiltVersion = "2.40.5"
+  const val hiltVersion = "2.42"
   //const val hiltVersion = "2.42"
 
   // Map
