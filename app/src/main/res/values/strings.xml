@@ -220,5 +220,13 @@
   <string name="stores_advertisements">Stores Advertisements</string>
   <string name="paid_advertisement">Paid Advertisement</string>
   <string name="free_adv">Free Advertisement</string>
-  <string name="ad_benefit_1_paid">Large number of Ads for each package</string><!--قم باختيار طريقة الإعلان المناسبة لك-->
+  <string name="ad_benefit_1_paid">Large number of Ads for each package</string>
+  <string name="address_advertisement">Address Advertisement</string>
+  <string name="price">Price</string>
+    <string name="your_store_category">القسم الرئيسي بمتجرك</string>
+  <string name="description">الوصف</string>
+  <string name="empty_string"/>
+  <string name="no_cities_found">No Cities found to Choose</string>
+  <string name="brand">Brand</string>
+    <string name="addition_12">Add</string>
 </resources>

@@ -4,7 +4,9 @@
 
   <color name="not_selected_3">#7F8897</color>
 
-  <color name="tmpppp">#AFAFAF</color>
+  <color name="required_3">#FF0000</color>
+
+  <color name="tmpppp">#727889</color>
 
   <color name="colorPrimary">#0D0633</color>
   <color name="errorIndication">#7C2121</color>

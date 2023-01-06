@@ -15,6 +15,7 @@ data class ItemCategory(
 	//var ads_count: Int?,
 	//var order_by_no: Int?,
 	@SerializedName("sub-categories") var subCategories: List<ItemSubCategory>?,
+	var brands: List<ItemSubCategory>?,
 ) : ItemRelatedToCategories
 
 @Keep

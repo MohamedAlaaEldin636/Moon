@@ -11,12 +11,20 @@ val Teal200 = Color(0xFF03DAC5)
 
 @Immutable
 data class ExtendedColors(
-	val borderTextField: Color
+	val borderTextField: Color,
+	val dialogScrim: Color,
+	val hintColor: Color,
+	val requiredColor: Color,
+	val iconTextField: Color,
 )
 
 val LocalExtendedColors = staticCompositionLocalOf {
 	ExtendedColors(
-		borderTextField = Color.Red//Color.Unspecified
+		borderTextField = Color.Red,//Color.Unspecified
+		dialogScrim = Color.Red,
+		hintColor = Color.Red,
+		requiredColor = Color.Red,
+		iconTextField = Color.Red
 	)
 }
 

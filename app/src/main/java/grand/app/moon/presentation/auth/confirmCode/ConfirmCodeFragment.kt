@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -26,6 +27,7 @@ import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.navigateSafely
 import grand.app.moon.extensions.toJsonInlinedOrNull
 import grand.app.moon.presentation.base.extensions.*
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -127,7 +129,9 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
 										it.value.data.toJsonInlinedOrNull().orEmpty()
 									)
 								)
-							}else {
+							}else viewModel.viewModelScope.launch {
+		            viewModel.userLocalUseCase(it.value.data)
+
 								makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
 							}
             } else{

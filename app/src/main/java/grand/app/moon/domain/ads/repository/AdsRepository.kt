@@ -1,4 +1,5 @@
 package grand.app.moon.domain.ads.repository
+import grand.app.moon.domain.ads.ResponseFilterDetails
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.entity.SearchData
@@ -31,5 +32,6 @@ interface AdsRepository {
   suspend fun filterDetails(categoryId: Int , subCategoryId: Int?): Resource<BaseResponse<FilterDetails>>
   suspend fun filterResults(url : FilterResultRequest): Resource<BaseResponse<AdsListPaginateData>>
   suspend fun search(url : String?,page: Int): Resource<BaseResponse<SearchData>>
+  suspend fun getFilterDetails2(categoryId: Int, subCategoryId: Int): Resource<BaseResponse<ResponseFilterDetails?>>
 
 }

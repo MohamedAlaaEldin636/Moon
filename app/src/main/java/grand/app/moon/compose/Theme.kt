@@ -35,6 +35,8 @@ private val LightColorPalette = lightColorScheme(
 	tertiaryContainer = Color(225, 220, 189),
 	onTertiaryContainer = Color(44, 22, 0),
 
+	background = Color(251, 251, 251)
+
 	/* Other default colors to override
     background = Color.White,
     surface = Color.White,
@@ -57,10 +59,19 @@ fun ComposeMoonTheme(
 	}
 
 	val extendedColors = ExtendedColors(
-		borderTextField = Color(175, 175, 175)
+		borderTextField = Color(127, 136, 151),
+		dialogScrim = Color.Black.copy(alpha = 0.25f),
+		hintColor = Color(158, 158, 158),
+		requiredColor = Color(255, 0, 0),
+		iconTextField = Color(114, 120, 137)
 	)
 
-	CompositionLocalProvider(LocalExtendedColors provides extendedColors) {
+	val extendedTypography = defaultExtendedTypography.copy()
+
+	CompositionLocalProvider(
+		LocalExtendedColors provides extendedColors,
+		LocalExtendedTypography provides extendedTypography
+	) {
 		MaterialTheme(
 			colorScheme = colors,
 			typography = Typography,
@@ -69,6 +80,21 @@ fun ComposeMoonTheme(
 		)
 	}
 }
+
+// Use with eg. ExtendedTheme.colors.tertiary
+
+object ExtendedTheme {
+	val colors: ExtendedColors
+		@Composable
+		get() = LocalExtendedColors.current
+
+	val typography: ExtendedTypography
+		@Composable
+		get() = LocalExtendedTypography.current
+}
+
+/*
+
 
 @Composable
 fun ExtendedTheme(
@@ -85,10 +111,4 @@ fun ExtendedTheme(
 		)
 	}
 }
-
-// Use with eg. ExtendedTheme.colors.tertiary
-object ExtendedTheme {
-	val colors: ExtendedColors
-		@Composable
-		get() = LocalExtendedColors.current
-}
+ */

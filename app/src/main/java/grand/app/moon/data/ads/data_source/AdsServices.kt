@@ -1,5 +1,6 @@
 package grand.app.moon.data.ads.data_source
 
+import grand.app.moon.domain.ads.ResponseFilterDetails
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.entity.SearchData
@@ -105,6 +106,10 @@ interface AdsServices {
     @QueryMap map: Map<String, String>
   ): BaseResponse<AdsListPaginateData>
 
-
+	@GET("v1/filter/details")
+	suspend fun getFilterDetails2(
+		@Query("category_id") categoryId: String,
+		@Query("sub_category_id") subCategoryId: String,
+	): BaseResponse<ResponseFilterDetails?>
 
 }

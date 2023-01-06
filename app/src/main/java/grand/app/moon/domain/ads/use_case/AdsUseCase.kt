@@ -1,6 +1,7 @@
 package grand.app.moon.domain.ads.use_case
 
 import android.util.Log
+import grand.app.moon.domain.ads.ResponseFilterDetails
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.entity.SearchData
@@ -97,5 +98,13 @@ class AdsUseCase @Inject constructor(
     val result = repo.search(search,page)
     emit(result)
   }.flowOn(Dispatchers.IO)
+
+  fun getFilterDetails2(categoryId: Int, subCategoryId: Int, showProgress: Boolean = true): Flow<Resource<BaseResponse<ResponseFilterDetails?>>> = flow {
+    if(showProgress)emit(Resource.Loading)
+    val result = repo.getFilterDetails2(categoryId, subCategoryId)
+    emit(result)
+  }.flowOn(Dispatchers.IO)
+
+	suspend fun getFilterDetails2Suspend(categoryId: Int, subCategoryId: Int) = repo.getFilterDetails2(categoryId, subCategoryId)
 
 }

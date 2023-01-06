@@ -9,7 +9,7 @@ import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.extensions.MyLogger
 
 class RVItemIconTextArrow(
-	private val onItemClick: (view: View, id: Int, name: String, subcategories: List<ItemSubCategory>) -> Unit
+	private val onItemClick: (view: View, id: Int, name: String, subcategories: List<ItemSubCategory>, brands: List<ItemSubCategory>) -> Unit
 ) : RecyclerView.Adapter<VHItemIconTextArrow>() {
 
 	private var list = emptyList<ItemRelatedToCategories>()
@@ -21,7 +21,10 @@ class RVItemIconTextArrow(
 			val subcategories = list.filterIsInstance<ItemCategory>().firstOrNull { it.id == id }
 				?.subCategories.orEmpty()
 
-			onItemClick(view, id, name, subcategories)
+			val brands = list.filterIsInstance<ItemCategory>().firstOrNull { it.id == id }
+				?.brands.orEmpty()
+
+			onItemClick(view, id, name, subcategories, brands)
 		}
 	}
 

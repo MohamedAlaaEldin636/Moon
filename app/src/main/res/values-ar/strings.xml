@@ -214,5 +214,12 @@
   <string name="stores_advertisements">إعلانات المتاجر</string>
   <string name="paid_advertisement">إعلان مدفوع</string>
   <string name="free_adv">إعلان مجاني</string>
-  <string name="ad_benefit_1_paid">عدد اعلانات كبير لكل باقة</string><!--من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط-->
+  <string name="ad_benefit_1_paid">عدد اعلانات كبير لكل باقة</string>
+  <string name="address_advertisement">عنوان الإعلان</string>
+  <string name="price">السعر</string>
+    <string name="your_store_category">القسم الرئيسي بمتجرك</string>
+  <string name="description">الوصف</string>
+  <string name="no_cities_found">لا يوجد مدن لاختيارها</string>
+  <string name="brand">الماركة</string>
+    <string name="addition_12">إضافة</string><!--من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط-->
 </resources>

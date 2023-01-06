@@ -31,12 +31,13 @@ class AddAdvCategoriesListViewModel @Inject constructor(
 		it is Resource.Loading
 	}
 
-	val adapter = RVItemIconTextArrow { view, id, name, subcategories ->
+	val adapter = RVItemIconTextArrow { view, id, name, subcategories, brands ->
 		view.findNavController().navigate(
 			AddAdvCategoriesListFragmentDirections.actionDestAddAdvCategoriesListToDestAddAdvSubCategoriesList(
 				id,
 				name,
-				subcategories.toJsonInlinedOrNull().orEmpty()
+				subcategories.toJsonInlinedOrNull().orEmpty(),
+				brands.toJsonInlinedOrNull().orEmpty()
 			)
 		)
 	}

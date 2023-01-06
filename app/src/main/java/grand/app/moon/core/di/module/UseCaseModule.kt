@@ -49,8 +49,9 @@ class UseCaseModule {
   @Provides
   @Singleton
   fun provideCountriesUseCase(
-    countriesRepository: CountriesRepository
-  ): CountriesUseCase = CountriesUseCase(countriesRepository)
+    countriesRepository: CountriesRepository,
+    accountRepository: AccountRepository,
+  ): CountriesUseCase = CountriesUseCase(countriesRepository, accountRepository)
 
   @Provides
   @Singleton

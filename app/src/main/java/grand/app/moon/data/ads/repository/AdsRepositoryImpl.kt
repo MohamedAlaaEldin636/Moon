@@ -76,5 +76,7 @@ class AdsRepositoryImpl @Inject constructor(
   override
   suspend fun search(url: String?,page:Int) = remoteDataSource.search(url,page)
 
+  override suspend fun getFilterDetails2(categoryId: Int, subCategoryId: Int) = remoteDataSource.getFilterDetails2(categoryId, subCategoryId)
+
 
 }

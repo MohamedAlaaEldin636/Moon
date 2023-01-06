@@ -9,7 +9,10 @@ import grand.app.moon.domain.utils.BaseResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class UserLocalUseCase @Inject constructor(private val accountRepository: AccountRepository) {
+class UserLocalUseCase @Inject constructor(
+	private val accountRepository: AccountRepository
+) {
+
   operator fun invoke(user: User) = accountRepository.saveUserToLocal(user)
   operator fun invoke(): User = accountRepository.getUserToLocal()
   suspend fun saveUserToken(value: String) =
@@ -37,16 +40,15 @@ class UserLocalUseCase @Inject constructor(private val accountRepository: Accoun
     return accountRepository.getKeyFromLocal(key)
   }
 
-
-
   suspend fun saveToken(value: String) {
     accountRepository.saveFirebaseTokenToLocal(value)
   }
-
 
   fun isLoggin(): Boolean =
     accountRepository.getIsLoggedIn()
 
   suspend fun getToken(): Flow<String> = accountRepository.getFirebaseTokenToLocal()
+
+
 
 }
