@@ -229,4 +229,16 @@
   <string name="no_cities_found">No Cities found to Choose</string>
   <string name="brand">Brand</string>
     <string name="addition_12">Add</string>
+  <string name="no_app_can_handle_this_action">No App can handle this Action</string>
+  <string name="allow_location_permission">Allow Permission</string>
+  <!--للحصول على هذه الخاصية يجب الموافقة على الاذن-->
+  <string name="this_app_need_allow_location">To use this feature you must accept the Permission</string>
+  <!--قم بتغيير الاذن فى اعدادات الجهاز-->
+  <string name="change_permission_in_settings_of_device">Change the Permission in the device Settings</string>
+  <string name="google_geo_api_key" translatable="false">AIzaSyC09l2FLnCPe5VzuIQr34UkMtYxXbtcq0E</string>
+  <string name="location_selection">Select Location</string>
+  <string name="specify_my_location">Select My Location</string>
+  <string name="your_address_has_been_selected_successfully">Location Selected Successfully</string>
+  <string name="all_fields_required">All Fields Required</string>
+  <string name="price_is_negotiable">Price is negotiable</string>
 </resources>

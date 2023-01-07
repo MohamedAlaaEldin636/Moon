@@ -221,5 +221,14 @@
   <string name="description">الوصف</string>
   <string name="no_cities_found">لا يوجد مدن لاختيارها</string>
   <string name="brand">الماركة</string>
-    <string name="addition_12">إضافة</string><!--من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط-->
+    <string name="addition_12">إضافة</string>
+  <string name="no_app_can_handle_this_action">لا يوجد تطبيق يمكنه التعامل مع هذا الاجراء</string>
+  <string name="allow_location_permission">السماح بالاذن</string>
+  <string name="this_app_need_allow_location">للحصول على هذه الخاصية يجب الموافقة على الاذن</string>
+  <string name="change_permission_in_settings_of_device">قم بتغيير الاذن فى اعدادات الجهاز</string><!--من فضلك قم بملئ بيانات التسجيل للمرة الأولي فقط-->
+  <string name="location_selection">تحديد الموقع</string>
+  <string name="specify_my_location">تحديد موقعي</string>
+  <string name="your_address_has_been_selected_successfully">تم اختيار عنوانك بنجاح</string>
+  <string name="all_fields_required">جميع الحقول مطلوبة</string>
+  <string name="price_is_negotiable">السعر قابل للتفاوض</string>
 </resources>

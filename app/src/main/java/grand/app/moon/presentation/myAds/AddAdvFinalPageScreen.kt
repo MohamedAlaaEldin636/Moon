@@ -18,6 +18,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -42,6 +45,7 @@ import grand.app.moon.presentation.myAds.viewModel.AddAdvFinalPageViewModel
 fun AddAdvFinalPageScreen(
 	goGetAddress: () -> Unit,
 	showOrGetCities: () -> Unit,
+	addAdvertisement: () -> Unit,
 ) {
 	Surface(
 		Modifier
@@ -68,12 +72,21 @@ fun AddAdvFinalPageScreen(
 
 				val viewModel = viewModel<AddAdvFinalPageViewModel>()
 
-				val address = viewModel.address.observeAsState()
+				// todo ...
+				val stroke = Stroke(
+					width = 2f,
+					pathEffect = PathEffect.dashPathEffect(floatArrayOf(5f, 5f), 0f)
+				)
+				Canvas(Modifier.fillMaxWidth()/*.height(70.dp)*/){
+					drawRoundRect(color = Color(181, 181, 181), style = stroke)
+				}
+
+				val locationData = viewModel.locationData.observeAsState()
 				UIEditText.WithBorder.TajawalRegularForm(
 					hint = context.getString(R.string.address_advertisement),
 					isRequired = true,
-					text = address.value.orEmpty(),
-					onTextChange = { viewModel.address.value = it },
+					text = locationData.value?.address.orEmpty(),
+					onTextChange = {},
 					onClick = goGetAddress,
 					additionalBoxModifier = Modifier.bringIntoViewRequester(bringIntoViewRequester)
 				)
@@ -97,6 +110,28 @@ fun AddAdvFinalPageScreen(
 					onTextChange = { viewModel.price.value = it },
 					keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 					additionalBoxModifier = Modifier.bringIntoViewRequester(bringIntoViewRequester)
+				)
+
+				Spacer(modifier = Modifier.height(16.dp))
+
+				val negotiable = viewModel.negotiable.observeAsState()
+				UIEditText.WithBorder.TajawalRegularForm(
+					additionalBoxModifier = Modifier.bringIntoViewRequester(bringIntoViewRequester),
+					hint = context.getString(R.string.price_is_negotiable),
+					isRequired = true,
+					text = context.getString(R.string.price_is_negotiable),
+					onTextChange = {},
+					onClick = {
+						viewModel.negotiable.value = viewModel.negotiable.value.orFalse().not()
+					},
+					suffixComposable = {
+						Image(
+							painter = painterResource(
+								id = if (negotiable.value == true) R.drawable.ic_switch_on_1 else R.drawable.ic_switch_off_1
+							),
+							contentDescription = null,
+						)
+					}
 				)
 
 				if (viewModel.user.isStore == true) {
@@ -127,7 +162,7 @@ fun AddAdvFinalPageScreen(
 					Spacer(modifier = Modifier.height(16.dp))
 
 					when (property.type) {
-						11 -> {
+						1 -> {
 							// Multi-Selection
 							AddAdvFinalPageScreenUtils.DropDown(
 								hint = property.name.orEmpty(),
@@ -192,8 +227,7 @@ fun AddAdvFinalPageScreen(
 				Button(
 					modifier = Modifier.fillMaxWidth(),
 					onClick = {
-						showMessage(context, "hello it's me ${viewModel.mapOfProperties.value.orEmpty()
-							.filter { it.value.valueString.isNullOrEmpty().not() }.values}")
+						addAdvertisement()
 					},
 					shape = RoundedCornerShape(5.dp),
 					contentPadding = PaddingValues(16.dp)

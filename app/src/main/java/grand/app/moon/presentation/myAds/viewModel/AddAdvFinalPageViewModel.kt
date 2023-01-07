@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.core.text.buildSpannedString
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
@@ -26,9 +27,12 @@ import grand.app.moon.extensions.app
 import grand.app.moon.extensions.fromJsonInlinedOrNull
 import grand.app.moon.extensions.getAsRequiredText
 import grand.app.moon.extensions.getString
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.categories.AddAdvSubCategoriesListFragmentArgs
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragment
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragmentArgs
+import grand.app.moon.presentation.myAds.AddAdvFinalPageFragmentDirections
+import grand.app.moon.presentation.myAds.model.LocationData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -53,12 +57,12 @@ class AddAdvFinalPageViewModel @Inject constructor(
 
 	val addressLabel: CharSequence = app.getAsRequiredText(getString(R.string.address_advertisement))
 
-	val address = MutableLiveData("")
-
 	// todo cities and city id ba2a w kda isa.
 	//accountRepository.getCountries()
 
 	val price = MutableLiveData("")
+
+	val negotiable = MutableLiveData(false)
 
 	val storeCategory = MutableLiveData("")
 
@@ -79,6 +83,8 @@ class AddAdvFinalPageViewModel @Inject constructor(
 
 	val mapOfProperties = MutableLiveData<Map<Int, ItemProperty>>()
 
+	val locationData = MutableLiveData<LocationData>()
+
 	/*init {
 		adsUseCase.getFilterDetails2(args.idOfMainCategory, args.idOfSubCategory).onEach {
 			_properties.value = it
@@ -86,14 +92,32 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	}*/
 
 	fun goToMapToGetAddress(fragment: AddAdvFinalPageFragment) {
-		// todo ....
-		Toast.makeText(fragment.requireContext(), "go to maps ${price.value}", Toast.LENGTH_SHORT).show()
+		fragment.findNavController().navigate(
+			AddAdvFinalPageFragmentDirections.actionDestAddAdvFinalPageToDestLocationSelection(
+				true,
+				locationData.value?.latitude,
+				locationData.value?.longitude,
+			)
+		)
 	}
 
 	fun getCountries() {
 		countriesUseCase().onEach {
 			_countries.value = it
 		}.launchIn(viewModelScope)
+	}
+
+	fun addAdvertisement(fragment: AddAdvFinalPageFragment) {
+		if (locationData.value == null || selectedCity.value == null || price.value.isNullOrEmpty()
+			|| (brands.isNotEmpty() && selectedBrand.value == null) /*|| description.value.isNullOrEmpty()*/
+			|| mapOfProperties.value.orEmpty().values.any { it.valueId == null && it.valueString == null && it.valueBoolean == null }
+			/*|| todo images as well isa.*/){
+			return fragment.showError(fragment.getString(R.string.all_fields_required))
+		}
+
+		negotiable
+
+		// todo property_ids[0][id]
 	}
 
 }

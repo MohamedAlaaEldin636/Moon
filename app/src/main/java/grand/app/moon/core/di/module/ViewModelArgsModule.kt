@@ -12,10 +12,16 @@ import grand.app.moon.presentation.home.AnnouncementDialogFragmentArgs
 import grand.app.moon.presentation.home.AppGlobalAnnouncementDialogFragmentArgs
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragmentArgs
 import grand.app.moon.presentation.myAds.AddAdvertisementFragmentArgs
+import grand.app.moon.presentation.myAds.LocationSelectionFragmentArgs
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelArgsModule {
+
+	@Provides
+	fun provideLocationSelectionFragmentArgs(state: SavedStateHandle): LocationSelectionFragmentArgs {
+		return LocationSelectionFragmentArgs.fromBundle(state.asBundle())
+	}
 
 	@Provides
 	fun provideAddAdvertisementFragmentArgs(state: SavedStateHandle): AddAdvertisementFragmentArgs {
