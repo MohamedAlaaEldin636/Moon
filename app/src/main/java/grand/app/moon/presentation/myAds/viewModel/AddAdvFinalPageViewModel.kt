@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.myAds.viewModel
 
 import android.app.Application
+import android.net.Uri
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
@@ -84,6 +85,22 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	val mapOfProperties = MutableLiveData<Map<Int, ItemProperty>>()
 
 	val locationData = MutableLiveData<LocationData>()
+
+	/** 1, 2, 4, 5, 6 --- Max. num is 22 also add @Header to make timeout infinity */
+	val mapOfImages = MutableLiveData(emptyMap<Int, List<Uri>>())
+	val showImagesPopupMenu = MutableLiveData(false)
+
+	fun addImage(tag: Int, uri: Uri) {
+		mapOfImages.value = mapOfImages.value.orEmpty().toMutableMap().also { mutableMap ->
+			mutableMap[tag] = mutableMap[tag].orEmpty().toMutableList().also {
+				if (tag != 1) {
+					it.clear()
+				}
+
+				it.add(uri)
+			}.toList()
+		}.toMap()
+	}
 
 	/*init {
 		adsUseCase.getFilterDetails2(args.idOfMainCategory, args.idOfSubCategory).onEach {

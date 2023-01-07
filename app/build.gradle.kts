@@ -114,6 +114,7 @@ android {
 }
 
 dependencies {
+	implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
 	implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.1")
 
 	implementation("androidx.compose.ui:ui:1.3.2")

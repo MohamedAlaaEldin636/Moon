@@ -667,7 +667,8 @@
     app:destination="@id/dest_add_advertisement" />
   <fragment
     android:id="@+id/dest_location_selection"
-    android:name="grand.app.moon.presentation.myAds.LocationSelectionFragment" >
+    android:name="grand.app.moon.presentation.myAds.LocationSelectionFragment"
+    android:label="@string/location_selection">
     <argument
       android:name="showBackButton"
       app:argType="boolean" />

@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
@@ -32,6 +33,27 @@ object UIText {
 			text = text,
 			style = ExtendedTheme.typography.tajawalRegular.copy(
 				fontSize = textSize,
+			),
+			textAlign = textAlign
+		)
+	}
+
+	@Composable
+	fun TajawalMediumForm(
+		text: String,
+		textSize: TextUnit = 14.sp,
+		modifier: Modifier = Modifier
+			.fillMaxWidth()
+			.wrapContentHeight(align = Alignment.Top),
+		textAlign: TextAlign? = null,
+		color: Color? = null
+	) {
+		Text(
+			modifier = modifier,
+			text = text,
+			style = ExtendedTheme.typography.tajawalMedium.copy(
+				fontSize = textSize,
+				color = color ?: ExtendedTheme.typography.tajawalMedium.color
 			),
 			textAlign = textAlign
 		)

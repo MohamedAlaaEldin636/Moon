@@ -43,9 +43,12 @@ import grand.app.moon.presentation.myAds.viewModel.AddAdvFinalPageViewModel
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AddAdvFinalPageScreen(
+	actOnAllPermissionsAcceptedOrRequestPermissions: () -> Unit,
 	goGetAddress: () -> Unit,
 	showOrGetCities: () -> Unit,
 	addAdvertisement: () -> Unit,
+	onCameraClick: () -> Unit,
+	onGalleryClick: () -> Unit,
 ) {
 	Surface(
 		Modifier
@@ -72,14 +75,13 @@ fun AddAdvFinalPageScreen(
 
 				val viewModel = viewModel<AddAdvFinalPageViewModel>()
 
-				// todo ...
-				val stroke = Stroke(
-					width = 2f,
-					pathEffect = PathEffect.dashPathEffect(floatArrayOf(5f, 5f), 0f)
+				AddAdvFinalPageScreenUtils.Images(
+					actOnAllPermissionsAcceptedOrRequestPermissions,
+					onCameraClick,
+					onGalleryClick
 				)
-				Canvas(Modifier.fillMaxWidth()/*.height(70.dp)*/){
-					drawRoundRect(color = Color(181, 181, 181), style = stroke)
-				}
+
+				Spacer(modifier = Modifier.height(16.dp))
 
 				val locationData = viewModel.locationData.observeAsState()
 				UIEditText.WithBorder.TajawalRegularForm(
