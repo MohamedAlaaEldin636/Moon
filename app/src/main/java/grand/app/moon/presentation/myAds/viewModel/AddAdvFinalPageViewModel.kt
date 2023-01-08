@@ -60,6 +60,8 @@ class AddAdvFinalPageViewModel @Inject constructor(
 
 	val price = MutableLiveData("")
 
+	val title = MutableLiveData("")
+
 	val negotiable = MutableLiveData(false)
 
 	val storeCategory = MutableLiveData("")
@@ -124,10 +126,11 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	fun addAdvertisement(fragment: AddAdvFinalPageFragment) {
 		val context = (fragment as? Fragment)?.context ?: return
 
+		// todo if boolean in dynamic data must be selectewd and even if false always true isa.
 		if (locationData.value == null || selectedCity.value == null || price.value.isNullOrEmpty()
 			|| (brands.isNotEmpty() && selectedBrand.value == null) /*|| description.value.isNullOrEmpty()*/
 			|| mapOfProperties.value.orEmpty().values.any { it.valueId == null && it.valueString == null && it.valueBoolean == null }
-			|| mapOfImages.value.orEmpty().all { it.value.isEmpty() }){
+			|| mapOfImages.value.orEmpty().all { it.value.isEmpty() } || title.value.isNullOrEmpty()){
 			return fragment.showError(fragment.getString(R.string.all_fields_required))
 		}
 
@@ -141,6 +144,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 					}.mapNotNull {
 						it.createMultipartBodyPart(context.applicationContext, "images[]")
 					},
+					title.value.orEmpty(),
 					locationData.value?.latitude.orEmpty(),
 					locationData.value?.longitude.orEmpty(),
 					locationData.value?.address.orEmpty(),
@@ -149,7 +153,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 					negotiable.value.orFalse(),
 					selectedBrand.value?.id,
 					description.value.orEmpty(),
-					mapOfProperties.value.orEmpty().map { (_, value) ->
+					mapOfProperties.value.orEmpty().mapNotNull { (_, value) ->
 						when {
 							value.valueId != null -> {
 								value.valueId.orZero()
@@ -158,7 +162,11 @@ class AddAdvFinalPageViewModel @Inject constructor(
 								value.id.orZero()
 							}
 							else /*value.valueBoolean != null*/ -> {
-								value.id.orZero()
+								if (value.valueBoolean == true) {
+									value.id.orZero()
+								}else {
+									null
+								}
 							}
 						}
 					}

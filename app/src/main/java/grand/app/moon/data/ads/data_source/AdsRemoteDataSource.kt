@@ -115,6 +115,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		category_id: Int,
 		sub_category_id: Int,
 		images: List<MultipartBody.Part>,
+		title: String,
 		latitude: String,
 		longitude: String,
 		address: String,
@@ -138,7 +139,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 			map["description"] = description.toRequestBody()
 		}
 
-		map["title"] = "Ad Num 1".toRequestBody()
+		map["title"] = title.toRequestBody()
 
 		apiService.addAdvertisement(
 	    category_id,

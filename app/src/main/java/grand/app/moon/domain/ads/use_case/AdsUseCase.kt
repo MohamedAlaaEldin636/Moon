@@ -113,6 +113,7 @@ class AdsUseCase @Inject constructor(
 		category_id: Int,
 		sub_category_id: Int,
 		images: List<MultipartBody.Part>,
+		title: String,
 		latitude: String,
 		longitude: String,
 		address: String,
@@ -123,7 +124,7 @@ class AdsUseCase @Inject constructor(
 		description: String,
 		propertiesIds: List<Int>,
 	) = repo.addAdvertisement(
-		category_id, sub_category_id, images, latitude, longitude, address, city_id, price,
+		category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price,
 		if (is_negotiable) 1 else 0, brand_id, description, propertiesIds
 	)
 

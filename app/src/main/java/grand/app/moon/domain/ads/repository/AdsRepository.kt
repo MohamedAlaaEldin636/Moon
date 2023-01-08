@@ -38,6 +38,7 @@ interface AdsRepository {
 	  category_id: Int,
 	  sub_category_id: Int,
 	  images: List<MultipartBody.Part>,
+	  title: String,
 	  latitude: String,
 	  longitude: String,
 	  address: String,

@@ -83,13 +83,12 @@ fun AddAdvFinalPageScreen(
 
 				Spacer(modifier = Modifier.height(16.dp))
 
-				val locationData = viewModel.locationData.observeAsState()
+				val title = viewModel.title.observeAsState()
 				UIEditText.WithBorder.TajawalRegularForm(
 					hint = context.getString(R.string.address_advertisement),
 					isRequired = true,
-					text = locationData.value?.address.orEmpty(),
-					onTextChange = {},
-					onClick = goGetAddress,
+					text = title.value.orEmpty(),
+					onTextChange = { viewModel.title.value = it },
 					additionalBoxModifier = Modifier.bringIntoViewRequester(bringIntoViewRequester)
 				)
 
@@ -207,7 +206,18 @@ fun AddAdvFinalPageScreen(
 						}
 					}
 				}
-				// todo dynamic data ... but before it el brands if exists isa.
+
+				Spacer(modifier = Modifier.height(16.dp))
+
+				val locationData = viewModel.locationData.observeAsState()
+				UIEditText.WithBorder.TajawalRegularForm(
+					hint = context.getString(R.string.location_99),
+					isRequired = true,
+					text = locationData.value?.address.orEmpty(),
+					onTextChange = {},
+					onClick = goGetAddress,
+					additionalBoxModifier = Modifier.bringIntoViewRequester(bringIntoViewRequester)
+				)
 
 				Spacer(modifier = Modifier.height(16.dp))
 

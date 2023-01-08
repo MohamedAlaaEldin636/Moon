@@ -83,6 +83,7 @@ class AdsRepositoryImpl @Inject constructor(
 		category_id: Int,
 		sub_category_id: Int,
 		images: List<MultipartBody.Part>,
+		title: String,
 		latitude: String,
 		longitude: String,
 		address: String,
@@ -92,7 +93,7 @@ class AdsRepositoryImpl @Inject constructor(
 		brand_id: Int?,
 		description: String,
 		propertiesIds: List<Int>,
-	) = remoteDataSource.addAdvertisement(category_id, sub_category_id, images, latitude, longitude, address, city_id, price, is_negotiable, brand_id, description, propertiesIds)
+	) = remoteDataSource.addAdvertisement(category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price, is_negotiable, brand_id, description, propertiesIds)
 
 
 }
