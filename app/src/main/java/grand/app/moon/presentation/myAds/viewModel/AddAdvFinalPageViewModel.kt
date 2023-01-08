@@ -129,7 +129,11 @@ class AddAdvFinalPageViewModel @Inject constructor(
 		// todo if boolean in dynamic data must be selectewd and even if false always true isa.
 		if (locationData.value == null || selectedCity.value == null || price.value.isNullOrEmpty()
 			|| (brands.isNotEmpty() && selectedBrand.value == null) /*|| description.value.isNullOrEmpty()*/
-			|| mapOfProperties.value.orEmpty().values.any { it.valueId == null && it.valueString == null && it.valueBoolean == null }
+			|| mapOfProperties.value.orEmpty().values.any {
+				if (it.type != 1 && it.type != 3) false else {
+					it.valueId == null && it.valueString == null && it.valueBoolean == null
+				}
+			}
 			|| mapOfImages.value.orEmpty().all { it.value.isEmpty() } || title.value.isNullOrEmpty()){
 			return fragment.showError(fragment.getString(R.string.all_fields_required))
 		}
