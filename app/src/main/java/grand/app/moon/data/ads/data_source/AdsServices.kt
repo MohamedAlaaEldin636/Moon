@@ -14,6 +14,8 @@ import grand.app.moon.domain.home.models.review.Reviews
 import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 import retrofit2.http.Url
 
@@ -111,5 +113,23 @@ interface AdsServices {
 		@Query("category_id") categoryId: String,
 		@Query("sub_category_id") subCategoryId: String,
 	): BaseResponse<ResponseFilterDetails?>
+
+	@Multipart
+	@POST("v1/my-advertisements")
+	suspend fun addAdvertisement(
+		@Part("category_id") category_id: Int,
+		@Part("sub_category_id") sub_category_id: Int,
+		@Part images: List<MultipartBody.Part>,
+		@Part("latitude") latitude: RequestBody,
+		@Part("longitude") longitude: RequestBody,
+		@Part("address") address: RequestBody,
+		@Part("city_id") city_id: Int,
+		@Part("price") price: Int,
+		@Part("is_negotiable") is_negotiable: Int,
+		//@Part("brand_id") brand_id: Int,
+		//@Part("description") description: RequestBody,
+		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>,
+	): BaseResponse<Any?>
+	/*todo laghayet ma tshof el response isa.*/
 
 }

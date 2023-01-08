@@ -17,6 +17,7 @@ import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import okhttp3.MultipartBody
 
 interface AdsRepository {
   suspend fun getDetails(id: Int,type: Int): Resource<BaseResponse<Advertisement>>
@@ -33,5 +34,19 @@ interface AdsRepository {
   suspend fun filterResults(url : FilterResultRequest): Resource<BaseResponse<AdsListPaginateData>>
   suspend fun search(url : String?,page: Int): Resource<BaseResponse<SearchData>>
   suspend fun getFilterDetails2(categoryId: Int, subCategoryId: Int): Resource<BaseResponse<ResponseFilterDetails?>>
+  suspend fun addAdvertisement(
+	  category_id: Int,
+	  sub_category_id: Int,
+	  images: List<MultipartBody.Part>,
+	  latitude: String,
+	  longitude: String,
+	  address: String,
+	  city_id: Int,
+	  price: Int,
+	  is_negotiable: Int,
+	  brand_id: Int?,
+	  description: String,
+	  propertiesIds: List<Int>,
+  ): Resource<BaseResponse<Any?>>
 
 }

@@ -231,4 +231,6 @@
   <string name="your_address_has_been_selected_successfully">تم اختيار عنوانك بنجاح</string>
   <string name="all_fields_required">جميع الحقول مطلوبة</string>
   <string name="price_is_negotiable">السعر قابل للتفاوض</string>
+  <string name="max_num_of_images_is_22">الحد الاقصى للصور هو 22</string>
+  <string name="ad_has_been_added_successfully">تم إضافة الإعلان بنجاح</string>
 </resources>

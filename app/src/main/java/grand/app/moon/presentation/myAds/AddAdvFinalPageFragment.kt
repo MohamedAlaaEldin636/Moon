@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.compose.BaseTheme
 import grand.app.moon.compose.ui.UILoading
+import grand.app.moon.core.extenstions.showError
 import grand.app.moon.databinding.FragmentAddAdvFinalPageBinding
 import grand.app.moon.domain.ads.ItemProperty
 import grand.app.moon.domain.utils.Resource
@@ -142,14 +143,8 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 							actOnAllPermissionsAcceptedOrRequestPermissions = {
 								permissionsHandlerForProfileImage?.actOnAllPermissionsAcceptedOrRequestPermissions()
 							},
-							onCameraClick = {
-								activityResultImageCameraFile.launch(CameraUtils.createImageUri(context))
-							},
-							onGalleryClick = {
-								activityResultImageGallery.launch(
-									Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-								)
-							},
+							onCameraClick = ::pickImageFromCamera,
+							onGalleryClick = ::pickImageFromGallery,
 							addAdvertisement = {
 								viewModel.addAdvertisement(this@AddAdvFinalPageFragment)
 							},
@@ -195,15 +190,41 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 
 	override fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {
 		if (permissions[Manifest.permission.CAMERA] == true) {
-			activityResultImageCameraFile.launch(
-				CameraUtils.createImageUri((this as Fragment).activity ?: return)
-			)
+			pickImageFromCamera()
 		}else if (permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true
 			&& permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true) {
+			pickImageFromGallery()
+		}
+	}
+
+	private fun pickImageFromCamera() {
+		if (checkCountAndTagBeforePickingAnImageAndGetIfCanPickAnImage()) {
+			activityResultImageCameraFile.launch(
+				CameraUtils.createImageUri((this as? Fragment)?.activity ?: return)
+			)
+		}
+	}
+
+	private fun pickImageFromGallery() {
+		if (checkCountAndTagBeforePickingAnImageAndGetIfCanPickAnImage()) {
 			activityResultImageGallery.launch(
 				Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 			)
 		}
+	}
+
+	private fun checkCountAndTagBeforePickingAnImageAndGetIfCanPickAnImage(): Boolean {
+		if (viewModel.mapOfImages.value.orEmpty().all { it.value.isEmpty() }) {
+			CameraUtils.tag = 1
+		}else if (viewModel.mapOfImages.value.orEmpty().values.sumOf { it.size } == 22) {
+			context?.apply {
+				showError(getString(R.string.max_num_of_images_is_22))
+			}
+
+			return false
+		}
+
+		return true;
 	}
 
 	/*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

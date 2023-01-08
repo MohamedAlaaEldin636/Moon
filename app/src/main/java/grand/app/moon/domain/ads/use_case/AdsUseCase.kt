@@ -19,6 +19,8 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import okhttp3.MultipartBody
+import retrofit2.http.Multipart
 import javax.inject.Inject
 
 
@@ -106,5 +108,23 @@ class AdsUseCase @Inject constructor(
   }.flowOn(Dispatchers.IO)
 
 	suspend fun getFilterDetails2Suspend(categoryId: Int, subCategoryId: Int) = repo.getFilterDetails2(categoryId, subCategoryId)
+
+	suspend fun addAdvertisement(
+		category_id: Int,
+		sub_category_id: Int,
+		images: List<MultipartBody.Part>,
+		latitude: String,
+		longitude: String,
+		address: String,
+		city_id: Int,
+		price: Int,
+		is_negotiable: Boolean,
+		brand_id: Int?,
+		description: String,
+		propertiesIds: List<Int>,
+	) = repo.addAdvertisement(
+		category_id, sub_category_id, images, latitude, longitude, address, city_id, price,
+		if (is_negotiable) 1 else 0, brand_id, description, propertiesIds
+	)
 
 }

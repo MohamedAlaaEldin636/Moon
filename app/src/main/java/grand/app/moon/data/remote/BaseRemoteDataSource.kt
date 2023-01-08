@@ -10,6 +10,7 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.ErrorResponse
 import grand.app.moon.domain.utils.FailureStatus
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.helpers.paging.MAResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -108,15 +109,21 @@ open class BaseRemoteDataSource @Inject constructor() {
     return params
   }
 
+	private var counter = 0
   suspend fun <T> safeApiCall(apiCall: suspend () -> T): Resource<T> {
+	  MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> start")
     println(apiCall)
+	  MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> $apiCall")
     try {
       val apiResponse = apiCall.invoke()
+	    MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> $apiResponse")
       val gson = Gson()
       val json = gson.toJson(apiResponse)
+	    MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> $json")
       Log.d(TAG, "safeApiCall: $json")
 
 //      println(json)
+	    MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> ${(apiResponse as? BaseResponse<*>)?.code}")
       when ((apiResponse as BaseResponse<*>).code) {
         403 -> {
           return Resource.Failure(FailureStatus.TOKEN_EXPIRED)
@@ -143,10 +150,12 @@ open class BaseRemoteDataSource @Inject constructor() {
         }
       }
     } catch (throwable: Throwable) {
-      println(throwable)
+	    MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> throwable $throwable")
+	    println(throwable)
       when(throwable){
         is HttpException -> {
           Log.d(TAG, "http_code: ${throwable.code()}")
+	        MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> throwable CODE ${throwable.code()}")
           when(throwable.code()){
             401 -> {
               val errorResponse = Gson().fromJson(

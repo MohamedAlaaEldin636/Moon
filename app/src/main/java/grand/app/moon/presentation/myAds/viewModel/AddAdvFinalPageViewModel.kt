@@ -6,12 +6,14 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.core.text.buildSpannedString
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
+import grand.app.moon.core.extenstions.createMultipartBodyPart
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.ItemProperty
@@ -24,11 +26,9 @@ import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
-import grand.app.moon.extensions.app
-import grand.app.moon.extensions.fromJsonInlinedOrNull
-import grand.app.moon.extensions.getAsRequiredText
-import grand.app.moon.extensions.getString
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.categories.AddAdvSubCategoriesListFragmentArgs
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragment
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragmentArgs
@@ -57,9 +57,6 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	val brands = args.jsonListOfBrands.fromJsonInlinedOrNull<List<ItemSubCategory>>().orEmpty()
 
 	val addressLabel: CharSequence = app.getAsRequiredText(getString(R.string.address_advertisement))
-
-	// todo cities and city id ba2a w kda isa.
-	//accountRepository.getCountries()
 
 	val price = MutableLiveData("")
 
@@ -125,16 +122,55 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	}
 
 	fun addAdvertisement(fragment: AddAdvFinalPageFragment) {
+		val context = (fragment as? Fragment)?.context ?: return
+
 		if (locationData.value == null || selectedCity.value == null || price.value.isNullOrEmpty()
 			|| (brands.isNotEmpty() && selectedBrand.value == null) /*|| description.value.isNullOrEmpty()*/
 			|| mapOfProperties.value.orEmpty().values.any { it.valueId == null && it.valueString == null && it.valueBoolean == null }
-			/*|| todo images as well isa.*/){
+			|| mapOfImages.value.orEmpty().all { it.value.isEmpty() }){
 			return fragment.showError(fragment.getString(R.string.all_fields_required))
 		}
 
-		negotiable
+		fragment.handleRetryAbleActionCancellable(
+			action = {
+				adsUseCase.addAdvertisement(
+					args.idOfMainCategory,
+					args.idOfSubCategory,
+					mapOfImages.value.orEmpty().flatMap {
+						it.value
+					}.mapNotNull {
+						it.createMultipartBodyPart(context.applicationContext, "images[]")
+					},
+					locationData.value?.latitude.orEmpty(),
+					locationData.value?.longitude.orEmpty(),
+					locationData.value?.address.orEmpty(),
+					selectedCity.value?.id.orZero(),
+					price.value?.toIntOrNull().orZero(),
+					negotiable.value.orFalse(),
+					selectedBrand.value?.id,
+					description.value.orEmpty(),
+					mapOfProperties.value.orEmpty().map { (_, value) ->
+						when {
+							value.valueId != null -> {
+								value.valueId.orZero()
+							}
+							value.valueString != null -> {
+								value.id.orZero()
+							}
+							else /*value.valueBoolean != null*/ -> {
+								value.id.orZero()
+							}
+						}
+					}
+				)
+			}
+		) {
+			fragment.showMessage(context.getString(R.string.ad_has_been_added_successfully))
 
-		// todo property_ids[0][id]
+			fragment.findNavController().navigateSafely(
+				AddAdvFinalPageFragmentDirections.actionDestLocationSelectionToHomeFragment2()
+			)
+		}
 	}
 
 }

@@ -11,6 +11,7 @@ import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class AdsRepositoryImpl @Inject constructor(
@@ -77,6 +78,21 @@ class AdsRepositoryImpl @Inject constructor(
   suspend fun search(url: String?,page:Int) = remoteDataSource.search(url,page)
 
   override suspend fun getFilterDetails2(categoryId: Int, subCategoryId: Int) = remoteDataSource.getFilterDetails2(categoryId, subCategoryId)
+
+	override suspend fun addAdvertisement(
+		category_id: Int,
+		sub_category_id: Int,
+		images: List<MultipartBody.Part>,
+		latitude: String,
+		longitude: String,
+		address: String,
+		city_id: Int,
+		price: Int,
+		is_negotiable: Int,
+		brand_id: Int?,
+		description: String,
+		propertiesIds: List<Int>,
+	) = remoteDataSource.addAdvertisement(category_id, sub_category_id, images, latitude, longitude, address, city_id, price, is_negotiable, brand_id, description, propertiesIds)
 
 
 }

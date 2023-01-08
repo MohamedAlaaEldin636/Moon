@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -214,13 +215,38 @@ object AddAdvFinalPageScreenUtils {
 								if (uri == null) {
 									MainImagePlaceholder()
 								}else {
-									GlideImage(
-										modifier = Modifier
+									Box(
+										Modifier
 											.fillMaxSize()
-											.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp)),
-										model = uri,
-										contentDescription = null
-									)
+											.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp))
+									) {
+										GlideImage(
+											modifier = Modifier
+												.fillMaxSize()
+												.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp)),
+											model = uri,
+											contentDescription = null
+										)
+
+										val count = viewModel.mapOfImages.observeAsState()
+
+										if (count.value?.get(1).orEmpty().size > 1) {
+											Column(
+												Modifier
+													.fillMaxSize()
+													.background(Color.Black.copy(alpha = 0.25f), RoundedCornerShape(5.dp)),
+												verticalArrangement = Arrangement.Center,
+												horizontalAlignment = Alignment.CenterHorizontally,
+											) {
+												UIText.TajawalMediumForm(
+													text = count.value?.get(1).orEmpty().size.toString(),
+													color = Color.White,
+													textAlign = TextAlign.Center,
+													textSize = 20.sp
+												)
+											}
+										}
+									}
 								}
 							}
 
@@ -387,33 +413,41 @@ object AddAdvFinalPageScreenUtils {
 	}
 
 	@Composable
-	fun BoxScope.MainImagePlaceholder() {
+	fun BoxScope.MainImagePlaceholder(
+		viewModel: AddAdvFinalPageViewModel = viewModel()
+	) {
 		val context = LocalContext.current
 
 		Surface(
 			shadowElevation = 4.dp
 		) {
-			Column(
+			Box(
 				Modifier
 					.fillMaxSize()
-					.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp)),
-				verticalArrangement = Arrangement.Center,
-				horizontalAlignment = Alignment.CenterHorizontally,
+					.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp))
 			) {
-				Image(
-					painter = painterResource(
-						id = R.drawable.ic_photo_main_placeholder
-					),
-					contentDescription = null,
-				)
+				Column(
+					Modifier
+						.fillMaxSize()
+						.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp)),
+					verticalArrangement = Arrangement.Center,
+					horizontalAlignment = Alignment.CenterHorizontally,
+				) {
+					Image(
+						painter = painterResource(
+							id = R.drawable.ic_photo_main_placeholder
+						),
+						contentDescription = null,
+					)
 
-				Spacer(modifier = Modifier.height(6.dp))
+					Spacer(modifier = Modifier.height(6.dp))
 
-				UIText.TajawalMediumForm(
-					text = context.getString(R.string.home),
-					color = Color.White,
-					textAlign = TextAlign.Center
-				)
+					UIText.TajawalMediumForm(
+						text = context.getString(R.string.home),
+						color = Color.White,
+						textAlign = TextAlign.Center
+					)
+				}
 			}
 		}
 	}

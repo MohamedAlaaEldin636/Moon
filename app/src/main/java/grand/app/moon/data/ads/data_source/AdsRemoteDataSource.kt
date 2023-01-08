@@ -10,6 +10,11 @@ import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.presentation.filter.FILTER_TYPE
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.http.Part
+import retrofit2.http.PartMap
 import javax.inject.Inject
 
 class AdsRemoteDataSource @Inject constructor(private val apiService: AdsServices) :
@@ -104,6 +109,49 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 
   suspend fun getFilterDetails2(categoryId: Int, subCategoryId: Int) = safeApiCall {
     apiService.getFilterDetails2(categoryId.toString(), subCategoryId.toString())
+  }
+
+	suspend fun addAdvertisement(
+		category_id: Int,
+		sub_category_id: Int,
+		images: List<MultipartBody.Part>,
+		latitude: String,
+		longitude: String,
+		address: String,
+		city_id: Int,
+		price: Int,
+		is_negotiable: Int,
+		brand_id: Int?,
+		description: String,
+		propertiesIds: List<Int>,
+	) = safeApiCall {
+		val map = mutableMapOf<String, RequestBody>()
+		for ((index, id) in propertiesIds.withIndex()) {
+			map["property_ids[$index][id]"] = id.toString().toRequestBody()
+		}
+
+		if (brand_id != null) {
+			map["brand_id"] = brand_id.toString().toRequestBody()
+		}
+
+		if (description.isNotEmpty()) {
+			map["description"] = description.toRequestBody()
+		}
+
+		map["title"] = "Ad Num 1".toRequestBody()
+
+		apiService.addAdvertisement(
+	    category_id,
+	    sub_category_id,
+	    images,
+	    latitude.toRequestBody(),
+	    longitude.toRequestBody(),
+			address.toRequestBody(),
+	    city_id,
+	    price,
+	    is_negotiable,
+	    map,
+    )
   }
 
   suspend fun filterResults(request: FilterResultRequest) = safeApiCall {

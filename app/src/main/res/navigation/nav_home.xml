@@ -661,6 +661,11 @@
     <action
       android:id="@+id/action_dest_add_adv_final_page_to_dest_location_selection"
       app:destination="@id/dest_location_selection" />
+    <action
+      android:id="@+id/action_dest_location_selection_to_home_fragment_2"
+      app:destination="@id/home_fragment"
+      app:popUpTo="@id/home_fragment"
+      app:popUpToInclusive="false"/>
   </fragment>
   <action
     android:id="@+id/action_global_dest_add_advertisement"
@@ -680,6 +685,11 @@
       android:name="longitude"
       app:argType="string"
       app:nullable="true" />
+    <action
+      android:id="@+id/action_dest_location_selection_to_home_fragment"
+      app:destination="@id/home_fragment"
+      app:popUpTo="@id/home_fragment"
+      app:popUpToInclusive="false"/>
   </fragment>
 
 </navigation>
