@@ -234,4 +234,5 @@
   <string name="max_num_of_images_is_22">الحد الاقصى للصور هو 22</string>
   <string name="ad_has_been_added_successfully">تم إضافة الإعلان بنجاح</string>
   <string name="location_99">الموقع</string>
+  <string name="only_var_have_been_picked">تم اختيار %1$s فقط</string>
 </resources>

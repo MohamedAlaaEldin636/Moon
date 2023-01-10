@@ -169,6 +169,26 @@ fun <T> BaseFragment<*>.handleRetryAbleActionCancellable(
 	)
 }
 
+fun <T> BaseFragment<*>.handleRetryAbleActionCancellableNullable(
+	action: suspend () -> Resource<BaseResponse<T?>>,
+	onSuccess: (T?) -> Unit
+) {
+	handleRetryAbleActionNullable(
+		showLoading = { showLoading() },
+		hideLoading = { hideLoading() },
+		lifecycleScope,
+		action,
+		onError = {
+			showRetryErrorDialogWithCancelNegativeButton(
+				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+			) {
+				handleRetryAbleActionCancellable(action, onSuccess)
+			}
+		},
+		onSuccess
+	)
+}
+
 fun <T> BaseFragment<*>.handleRetryAbleActionOrGoBack(
 	action: suspend () -> Resource<BaseResponse<T?>>,
 	onSuccess: (T) -> Unit
@@ -212,6 +232,26 @@ private fun <T> handleRetryAbleAction(
 					onSuccess(data)
 				}
 			}
+			else -> { /* shouldn't happen */ }
+		}
+	}
+}
+
+private fun <T> handleRetryAbleActionNullable(
+	showLoading: () -> Unit,
+	hideLoading: () -> Unit,
+	scope: CoroutineScope,
+	action: suspend () -> Resource<BaseResponse<T?>>,
+	onError: (Resource.Failure) -> Unit,
+	onSuccess: (T?) -> Unit,
+) {
+	scope.launch {
+		showLoading()
+		val value = action()
+		hideLoading()
+		when (value) {
+			is Resource.Failure -> onError(value)
+			is Resource.Success -> onSuccess(value.value.data)
 			else -> { /* shouldn't happen */ }
 		}
 	}

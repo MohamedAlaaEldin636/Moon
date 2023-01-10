@@ -1,5 +1,6 @@
 package grand.app.moon.data.ads.data_source
 
+import grand.app.moon.core.di.module.RetrofitModule
 import grand.app.moon.domain.ads.ResponseFilterDetails
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
@@ -129,7 +130,7 @@ interface AdsServices {
 		//@Part("brand_id") brand_id: Int,
 		//@Part("description") description: RequestBody,
 		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>,
+		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString()
 	): BaseResponse<Any?>
-	/*todo laghayet ma tshof el response isa.*/
 
 }

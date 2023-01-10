@@ -17,6 +17,8 @@ object CameraUtils {
 	private var fileCameraCapture: File? = null
 	var tag: Int? = null
 
+	var selectMultipleImages = false
+
 	fun createImageUri(context: Context): Uri? {
 		fileCameraCapture = File(
 			context.applicationContext.filesDir,

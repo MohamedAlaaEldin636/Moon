@@ -244,4 +244,5 @@
   <string name="max_num_of_images_is_22">Max Number of is 22</string>
   <string name="ad_has_been_added_successfully">Add has been added successfully</string>
   <string name="location_99">Location</string>
+  <string name="only_var_have_been_picked">Only %1$s has been picked</string>
 </resources>

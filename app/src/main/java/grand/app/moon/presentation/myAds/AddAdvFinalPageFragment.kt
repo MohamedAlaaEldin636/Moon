@@ -3,10 +3,8 @@ package grand.app.moon.presentation.myAds
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +14,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.maproductions.mohamedalaa.shared.core.extensions.actOnGetIfNotInitialValueOrGetLiveData
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,71 +23,77 @@ import grand.app.moon.compose.ui.UILoading
 import grand.app.moon.core.extenstions.showError
 import grand.app.moon.databinding.FragmentAddAdvFinalPageBinding
 import grand.app.moon.domain.ads.ItemProperty
-import grand.app.moon.domain.utils.Resource
 import grand.app.moon.extensions.*
-import grand.app.moon.helpers.utils.getUriFromBitmapRetrievedByCamera
-import grand.app.moon.helpers.utils.handleCaptureImageRotation
-import grand.app.moon.presentation.auth.profile.ProfileFragmentDirections
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.base.extensions.hideKeyboard
-import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myAds.addAdvFinalPage.CameraUtils
 import grand.app.moon.presentation.myAds.model.LocationData
 import grand.app.moon.presentation.myAds.viewModel.AddAdvFinalPageViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), PermissionsHandler.Listener {
 
 	private val viewModel by viewModels<AddAdvFinalPageViewModel>()
 
-	var permissionsHandlerForProfileImage: PermissionsHandler? = null
-		private set
+	private var permissionsHandlerForProfileImage: PermissionsHandler? = null
 
 	private val activityResultImageCameraFile = registerForActivityResult(
 		ActivityResultContracts.TakePicture()
-	) {
-		if (it != null && it && CameraUtils.imageUri != null) {
-			viewModel.addImage(CameraUtils.tag ?: return@registerForActivityResult, CameraUtils.imageUri ?: return@registerForActivityResult)
-			/*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-				val bitmap = handleCaptureImageRotation(fileCameraCapture,imageUri)
-				bitmap?.let {
-					imageUri = getUriFromBitmapRetrievedByCamera(it)
-					viewModel.request.uri = imageUri
-					loadImageProfile()
-					navigateSafe(ProfileFragmentDirections.actionProfileFragmentToCropFragment(viewModel.request))
-				}
-			}*/
+	) { result ->
+		if (result != null && result) {
+			CameraUtils.imageUri?.also { imageUri ->
+				val newList = viewModel.listOfImages.value.orEmpty().toMutableList().also { mutableList ->
+					if (viewModel.beforeCheckPermissionsIndexToShowImagesPopupMenu.value.orZero() < mutableList.size) {
+						mutableList.removeAt(viewModel.beforeCheckPermissionsIndexToShowImagesPopupMenu.value.orZero())
+					}
+
+					mutableList.add(imageUri)
+				}.toList()
+
+				viewModel.setImages(newList)
+			}
 		}
 	}
 
 	private val activityResultImageGallery = registerForActivityResult(
 		ActivityResultContracts.StartActivityForResult()
 	) {
+		MyLogger.e("on result -> it.resultCode == Activity.RESULT_OK ${it.resultCode} ${Activity.RESULT_OK}")
 		if (it.resultCode == Activity.RESULT_OK) {
-			/*Hassan Project ... val list = it.data?.clipData?.let { clipData ->
-				List(clipData.itemCount) { index ->
-					clipData.getItemAt(index).uri
-				}.filterNotNull()
-			}.orIfNullOrEmpty {
+			var list = if (viewModel.beforeCheckPermissionsIndexToShowImagesPopupMenu.value == 0) {
+				it.data?.clipData?.let { clipData ->
+					List(clipData.itemCount) { index ->
+						clipData.getItemAt(index).uri
+					}.filterNotNull()
+				}.orIfNullOrEmpty {
+					listOfNotNull(it.data?.data)
+				}
+			}else {
 				listOfNotNull(it.data?.data)
-			}*/
-			val uri = it.data?.data ?: return@registerForActivityResult
+			}
+			MyLogger.e("on result -> list $list ${viewModel.beforeCheckPermissionsIndexToShowImagesPopupMenu.value}")
 
-			viewModel.addImage(CameraUtils.tag ?: return@registerForActivityResult, uri)
-
-			/*if (*//*list.size > 12 || *//*viewModel.adapter.currentList.size + list.size > 12) {
-				context?.showNormalToast(getString(SR.string.only_12_have_been_picked))
+			if (list.isEmpty()) {
+				return@registerForActivityResult
 			}
 
-			val amountToTake = 12 - viewModel.adapter.currentList.size
+			var newList = viewModel.listOfImages.value.orEmpty().toMutableList().also { mutableList ->
+				if (viewModel.beforeCheckPermissionsIndexToShowImagesPopupMenu.value.orZero() < mutableList.size) {
+					mutableList.removeAt(viewModel.beforeCheckPermissionsIndexToShowImagesPopupMenu.value.orZero())
+				}
+			}.toList()
 
-			if (amountToTake > 0) {
-				viewModel.adapter.addItemsUri(list.take(amountToTake))
-			}*/
+			if (newList.size + list.size > 22) {
+				val amountToTake = 22 - newList.size
+
+				showMessage(getString(R.string.only_var_have_been_picked, amountToTake.toString()))
+
+				list = list.take(amountToTake)
+			}
+
+			newList = newList + list
+
+			viewModel.setImages(newList)
 		}
 	}
 
@@ -137,8 +138,6 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 			setContent {
 				BaseTheme {
 					UILoading.TmpScreen(showLoading = false) {
-						val context = LocalContext.current
-
 						AddAdvFinalPageScreen(
 							actOnAllPermissionsAcceptedOrRequestPermissions = {
 								permissionsHandlerForProfileImage?.actOnAllPermissionsAcceptedOrRequestPermissions()
@@ -185,7 +184,8 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 	}
 
 	override fun onAllPermissionsAccepted() {
-		viewModel.showImagesPopupMenu.value = true
+		viewModel.indexToShowImagesPopupMenu.value = viewModel
+			.beforeCheckPermissionsIndexToShowImagesPopupMenu.value.orZero()
 	}
 
 	override fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {
@@ -207,16 +207,21 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 
 	private fun pickImageFromGallery() {
 		if (checkCountAndTagBeforePickingAnImageAndGetIfCanPickAnImage()) {
-			activityResultImageGallery.launch(
+			val intent = if (viewModel.indexToShowImagesPopupMenu.value == 0) {
+				Intent(Intent.ACTION_GET_CONTENT).also {
+					it.type = "image/*"
+					it.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+				}
+			}else {
 				Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-			)
+			}
+
+			activityResultImageGallery.launch(intent)
 		}
 	}
 
 	private fun checkCountAndTagBeforePickingAnImageAndGetIfCanPickAnImage(): Boolean {
-		if (viewModel.mapOfImages.value.orEmpty().all { it.value.isEmpty() }) {
-			CameraUtils.tag = 1
-		}else if (viewModel.mapOfImages.value.orEmpty().values.sumOf { it.size } == 22) {
+		/*if (viewModel.listOfImages.value?.size.orZero() == 22) {
 			context?.apply {
 				showError(getString(R.string.max_num_of_images_is_22))
 			}
@@ -224,29 +229,10 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 			return false
 		}
 
-		return true;
+		it will always be replace not add
+		*/
+
+		return true
 	}
-
-	/*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		if (viewModel.cities.isEmpty()) {
-			handleRetryAbleActionCancellable(
-				action = { viewModel.countriesUseCase.getCities() }
-			) { list ->
-				viewModel.cities = list
-
-				viewModel.showCitiesPopupMenu.value = true
-			}
-		}else {
-			viewModel.showCitiesPopupMenu.value = true
-		}
-	}*/
-
-	/*override fun setBindingVariables() {
-		binding.viewModel = viewModel
-	}*/
-
-	/*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-	}*/
 
 }

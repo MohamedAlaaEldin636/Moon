@@ -2,6 +2,7 @@ package grand.app.moon.extensions.bindingAdapter
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.Uri
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -18,6 +19,15 @@ fun ImageView.setupWithGlideOrEmptyBA(url :String?) {
 	if (!url.isNullOrEmpty()) {
 		Glide.with(this)
 			.load(url)
+			.into(this)
+	}
+}
+
+@BindingAdapter("imageView_setupWithGlideOrEmptyBA_uri")
+fun ImageView.setupWithGlideOrEmptyBAUri(uri :Uri?) {
+	if (uri == null) setImageResource(0) else {
+		Glide.with(this)
+			.load(uri)
 			.into(this)
 	}
 }

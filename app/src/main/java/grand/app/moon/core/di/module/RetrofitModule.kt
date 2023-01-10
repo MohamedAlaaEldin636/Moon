@@ -31,6 +31,8 @@ object RetrofitModule {
 
   const val REQUEST_TIME_OUT: Long = 60
 
+	const val HEADER_KEY_TIME_OUT_IN_MINUTES = "HEADER_KEY_TIME_OUT_IN_MINUTES"
+
   private const val TAG = "RetrofitModule"
 
 //  @Provides
@@ -76,7 +78,17 @@ object RetrofitModule {
 //    Log.d(TAG, "provideHeadersInterceptor: ${appPreferences.getLocal(Constants.LANGUAGE)}")
     Interceptor { chain ->
 //      Log.e("provideHeadersInterceptor", "provideHeadersInterceptor: $userToken :,token:$token2:  $countryId")
-      val request = chain.request().newBuilder()
+	    val newTimeout = chain.request().header(HEADER_KEY_TIME_OUT_IN_MINUTES)?.toIntOrNull()
+	    val request = if (newTimeout != null) {
+		    chain.withReadTimeout(newTimeout, TimeUnit.MINUTES)
+			    .withConnectTimeout(newTimeout, TimeUnit.MINUTES)
+			    .withWriteTimeout(newTimeout, TimeUnit.MINUTES)
+			    .request()
+			    .newBuilder()
+	    }else {
+				chain.request().newBuilder()
+	    }
+
       if (appPreferences.getIsLoggedIn()) {
 				val token = appPreferences.getLocal(Constants.TOKEN)
 	      MyLogger.e("HttpLoggingInterceptor -> Authorization Bearer -> $token")
@@ -144,6 +156,7 @@ object RetrofitModule {
       OkHttpClient.Builder()
         .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
+        .writeTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .addInterceptor(logging)
         .addInterceptor(headersInterceptor)
         .addInterceptor(ChuckInterceptor(context))
@@ -154,6 +167,7 @@ object RetrofitModule {
       OkHttpClient.Builder()
         .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
+        .writeTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .addInterceptor(headersInterceptor)
 //        .addInterceptor(requestInterceptor)
         .build()

@@ -15,3 +15,7 @@ inline fun <reified E> List<E>.forEachWithDivider(
 		}
 	}
 }
+
+fun <E> List<E>?.orIfNullOrEmpty(fallback: () -> List<E>): List<E> {
+	return if (isNullOrEmpty()) fallback() else this
+}

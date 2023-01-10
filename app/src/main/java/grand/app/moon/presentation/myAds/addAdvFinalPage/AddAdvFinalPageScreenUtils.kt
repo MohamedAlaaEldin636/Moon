@@ -5,16 +5,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
@@ -38,8 +37,11 @@ import grand.app.moon.compose.ui.UIEditText
 import grand.app.moon.compose.ui.UIPopupMenuContainer
 import grand.app.moon.compose.ui.UIText
 import grand.app.moon.domain.ads.ItemProperty
+import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.compose.GlideImageViaXml
 import grand.app.moon.extensions.forEachWithDivider
 import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragment
 import grand.app.moon.presentation.myAds.viewModel.AddAdvFinalPageViewModel
 
@@ -135,19 +137,19 @@ object AddAdvFinalPageScreenUtils {
 		onGalleryClick: () -> Unit,
 		viewModel: AddAdvFinalPageViewModel = viewModel()
 	) {
-		val expanded = viewModel.showImagesPopupMenu.observeAsState()
+		val expanded = false//viewModel.showImagesPopupMenu.observeAsState()
 
 		val dismissMenu = {
-			viewModel.showImagesPopupMenu.value = false
+			//viewModel.showImagesPopupMenu.value = false
 		}
 
 		val context = LocalContext.current
 
 		UIPopupMenuContainer(
 			mainContent = {
-				ImagesInsideContainer(actOnAllPermissionsAcceptedOrRequestPermissions)
+				ImagesInsideContainer(actOnAllPermissionsAcceptedOrRequestPermissions, onCameraClick = onCameraClick, onGalleryClick = onGalleryClick)
 			},
-			expanded = expanded.value.orFalse(),
+			expanded = expanded/*.value.orFalse()*/,
 			onDismissRequest = dismissMenu
 		) {
 			DropdownMenuItem(
@@ -181,6 +183,8 @@ object AddAdvFinalPageScreenUtils {
 	private fun ImagesInsideContainer(
 		actOnAllPermissionsAcceptedOrRequestPermissions: () -> Unit,
 		viewModel: AddAdvFinalPageViewModel = viewModel(),
+		onCameraClick: () -> Unit,
+		onGalleryClick: () -> Unit,
 	) {
 		Box {
 			var size by remember {
@@ -189,7 +193,18 @@ object AddAdvFinalPageScreenUtils {
 
 			DimensionSubcomposeLayout(
 				mainContent = {
-					val mapOfImages = viewModel.mapOfImages.observeAsState()
+					if (true) {
+						ImagesInsideContainerMainContent(
+							actOnAllPermissionsAcceptedOrRequestPermissions,
+							viewModel,
+							onCameraClick,
+							onGalleryClick,
+						)
+
+						return@DimensionSubcomposeLayout
+					}
+
+					/*val mapOfImages = viewModel.mapOfImages.observeAsState()
 
 					Column(
 						Modifier
@@ -212,6 +227,13 @@ object AddAdvFinalPageScreenUtils {
 							) {
 								val uri = mapOfImages.value?.get(1)?.firstOrNull()
 
+								*//*LazyVerticalGrid(
+									columns = GridCells.Fixed(3),
+								) {
+									items(photos) { photo ->
+										PhotoItem(photo)
+									}
+								}*//*
 								if (uri == null) {
 									MainImagePlaceholder()
 								}else {
@@ -391,7 +413,7 @@ object AddAdvFinalPageScreenUtils {
 								}
 							}
 						}
-					}
+					}*/
 				},
 				dependentContent = {
 					size = it
@@ -408,6 +430,124 @@ object AddAdvFinalPageScreenUtils {
 					.height(LocalDensity.current.run { size.toDpSize() }.height)
 			){
 				drawRoundRect(color = Color(181, 181, 181), style = stroke)
+			}
+		}
+	}
+
+	@Composable
+	private fun ImagesInsideContainerMainContent(
+		actOnAllPermissionsAcceptedOrRequestPermissions: () -> Unit,
+		viewModel: AddAdvFinalPageViewModel = viewModel(),
+		onCameraClick: () -> Unit,
+		onGalleryClick: () -> Unit,
+	) {
+		//val mapOfImages = viewModel.mapOfImages.observeAsState()
+		val listOfImages = viewModel.listOfImages.observeAsState()
+
+		val numberOfRows = (listOfImages.value?.size.orZero().coerceAtLeast(6).dec() / 3).inc()
+
+		/*96.dp fixed of cell and all paddings are 8.dp*/
+		val height = (96.dp.times(numberOfRows)) + (8.dp.times(numberOfRows/*.inc()*/))
+		LazyVerticalGrid(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(4.dp)
+				.height(height),
+			columns = GridCells.Fixed(3),
+		) {
+			items(listOfImages.value.orEmpty().size.coerceAtLeast(6)) { index ->
+				Box(
+					Modifier
+						.fillMaxWidth()
+						.padding(4.dp)
+				) {
+					val expanded = viewModel.indexToShowImagesPopupMenu.observeAsState()
+
+					val dismissMenu = {
+						viewModel.indexToShowImagesPopupMenu.value = null
+					}
+
+					val context = LocalContext.current
+
+					UIPopupMenuContainer(
+						mainContent = {
+							val modifierInnerBox = Modifier
+								.fillMaxWidth()
+								.height(96.dp)
+								.clickable {
+									viewModel.beforeCheckPermissionsIndexToShowImagesPopupMenu.value = index
+
+									actOnAllPermissionsAcceptedOrRequestPermissions()
+								}
+							if (listOfImages.value.orEmpty().getOrNull(index) == null) {
+								Box(modifierInnerBox) {
+									if (index == 0) {
+										MainImagePlaceholder()
+									}else {
+										SubImagePlaceholder()
+									}
+								}
+							}else {
+								key(listOfImages.value) {
+									Box(
+										modifierInnerBox
+											.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp))
+											.clip(RoundedCornerShape(5.dp))
+									) {
+										GlideImageViaXml(
+											modifier = Modifier.fillMaxSize(),
+											model = listOfImages.value.orEmpty().getOrNull(index)
+										)
+
+										val listOfImages2 = viewModel.listOfImages.observeAsState()
+
+										Box(Modifier.padding(4.dp)) {
+											Image(
+												modifier = Modifier.clickable {
+													viewModel.listOfImages.value = viewModel.listOfImages.value.orEmpty().toMutableList().also {
+														MyLogger.e("index $index, item ${it.getOrNull(index)}")
+
+														it.removeAt(index)
+													}.toList()
+												},
+												painter = painterResource(id = R.drawable.ic_close_876),
+												contentDescription = System.currentTimeMillis().plus(
+													listOfImages2.value.orEmpty().size.toLong()
+												).toString()
+											)
+										}
+									}
+								}
+							}
+						},
+						expanded = expanded.value == index,
+						onDismissRequest = dismissMenu
+					) {
+						DropdownMenuItem(
+							text = {
+								Text(text = context.getString(R.string.camera))
+							},
+							onClick = {
+								onCameraClick()
+
+								dismissMenu()
+							}
+						)
+
+						Divider()
+
+						DropdownMenuItem(
+							text = {
+								Text(text = context.getString(R.string.gallery))
+							},
+							onClick = {
+								onGalleryClick()
+
+								dismissMenu()
+							}
+						)
+					}
+				}
 			}
 		}
 	}
