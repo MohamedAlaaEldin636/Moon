@@ -36,13 +36,17 @@ import grand.app.moon.compose.ui.DimensionSubcomposeLayout
 import grand.app.moon.compose.ui.UIEditText
 import grand.app.moon.compose.ui.UIPopupMenuContainer
 import grand.app.moon.compose.ui.UIText
+import grand.app.moon.core.extenstions.showError
 import grand.app.moon.domain.ads.ItemProperty
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.compose.GlideImageViaXml
+import grand.app.moon.extensions.compose.GlideImageViaXmlModel
 import grand.app.moon.extensions.forEachWithDivider
 import grand.app.moon.extensions.orFalse
 import grand.app.moon.extensions.orZero
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragment
+import grand.app.moon.presentation.myAds.model.LocalOrApiItemImage
 import grand.app.moon.presentation.myAds.viewModel.AddAdvFinalPageViewModel
 
 object AddAdvFinalPageScreenUtils {
@@ -135,7 +139,8 @@ object AddAdvFinalPageScreenUtils {
 		actOnAllPermissionsAcceptedOrRequestPermissions: () -> Unit,
 		onCameraClick: () -> Unit,
 		onGalleryClick: () -> Unit,
-		viewModel: AddAdvFinalPageViewModel = viewModel()
+		viewModel: AddAdvFinalPageViewModel = viewModel(),
+		deleteImageFromApi: (id: Int, onSuccess: () -> Unit) -> Unit,
 	) {
 		val expanded = false//viewModel.showImagesPopupMenu.observeAsState()
 
@@ -147,7 +152,12 @@ object AddAdvFinalPageScreenUtils {
 
 		UIPopupMenuContainer(
 			mainContent = {
-				ImagesInsideContainer(actOnAllPermissionsAcceptedOrRequestPermissions, onCameraClick = onCameraClick, onGalleryClick = onGalleryClick)
+				ImagesInsideContainer(
+					actOnAllPermissionsAcceptedOrRequestPermissions, 
+					onCameraClick = onCameraClick, 
+					onGalleryClick = onGalleryClick,
+					deleteImageFromApi = deleteImageFromApi
+				)
 			},
 			expanded = expanded/*.value.orFalse()*/,
 			onDismissRequest = dismissMenu
@@ -185,6 +195,7 @@ object AddAdvFinalPageScreenUtils {
 		viewModel: AddAdvFinalPageViewModel = viewModel(),
 		onCameraClick: () -> Unit,
 		onGalleryClick: () -> Unit,
+		deleteImageFromApi: (id: Int, onSuccess: () -> Unit) -> Unit,
 	) {
 		Box {
 			var size by remember {
@@ -199,6 +210,7 @@ object AddAdvFinalPageScreenUtils {
 							viewModel,
 							onCameraClick,
 							onGalleryClick,
+							deleteImageFromApi,
 						)
 
 						return@DimensionSubcomposeLayout
@@ -434,12 +446,14 @@ object AddAdvFinalPageScreenUtils {
 		}
 	}
 
+	@OptIn(ExperimentalGlideComposeApi::class)
 	@Composable
 	private fun ImagesInsideContainerMainContent(
 		actOnAllPermissionsAcceptedOrRequestPermissions: () -> Unit,
 		viewModel: AddAdvFinalPageViewModel = viewModel(),
 		onCameraClick: () -> Unit,
 		onGalleryClick: () -> Unit,
+		deleteImageFromApi: (id: Int, onSuccess: () -> Unit) -> Unit,
 	) {
 		//val mapOfImages = viewModel.mapOfImages.observeAsState()
 		val listOfImages = viewModel.listOfImages.observeAsState()
@@ -496,7 +510,13 @@ object AddAdvFinalPageScreenUtils {
 									) {
 										GlideImageViaXml(
 											modifier = Modifier.fillMaxSize(),
-											model = listOfImages.value.orEmpty().getOrNull(index)
+											model = listOfImages.value.orEmpty().getOrNull(index)?.let { item ->
+												when (item) {
+													is LocalOrApiItemImage.Api -> GlideImageViaXmlModel.IString(item.itemImage.image)
+													is LocalOrApiItemImage.Local -> GlideImageViaXmlModel.IUri(item.uri)
+												}
+											},
+											//contentDescription = null
 										)
 
 										val listOfImages2 = viewModel.listOfImages.observeAsState()
@@ -504,11 +524,25 @@ object AddAdvFinalPageScreenUtils {
 										Box(Modifier.padding(4.dp)) {
 											Image(
 												modifier = Modifier.clickable {
-													viewModel.listOfImages.value = viewModel.listOfImages.value.orEmpty().toMutableList().also {
-														MyLogger.e("index $index, item ${it.getOrNull(index)}")
+													val item = viewModel.listOfImages.value?.getOrNull(index) ?: return@clickable
+													
+													if (item is LocalOrApiItemImage.Api) {
+														deleteImageFromApi(item.itemImage.id.orZero()) {
+															viewModel.listOfImages.value = viewModel.listOfImages.value.orEmpty().toMutableList().also {
+																MyLogger.e("index $index, item ${it.getOrNull(index)}")
+																
+																it.removeAt(index)
+															}.toList()
+														}
+													}else if (viewModel.response != null && viewModel.listOfImages.value.orEmpty().size == 1) {
+														context.showError(context.getString(R.string.at_least_1_image_898))
+													}else {
+														viewModel.listOfImages.value = viewModel.listOfImages.value.orEmpty().toMutableList().also {
+															MyLogger.e("index $index, item ${it.getOrNull(index)}")
 
-														it.removeAt(index)
-													}.toList()
+															it.removeAt(index)
+														}.toList()
+													}
 												},
 												painter = painterResource(id = R.drawable.ic_close_876),
 												contentDescription = System.currentTimeMillis().plus(

@@ -666,6 +666,10 @@
       app:destination="@id/home_fragment"
       app:popUpTo="@id/home_fragment"
       app:popUpToInclusive="false"/>
+    <argument
+      android:name="jsonResponseMyAdvDetails"
+      app:argType="string"
+      app:nullable="true" />
   </fragment>
   <action
     android:id="@+id/action_global_dest_add_advertisement"
@@ -715,6 +719,9 @@
     <action
       android:id="@+id/action_dest_my_adv_details_to_dest_location_viewer"
       app:destination="@id/dest_location_viewer" />
+    <action
+      android:id="@+id/action_dest_my_adv_details_to_dest_add_adv_final_page"
+      app:destination="@id/dest_add_adv_final_page" />
   </fragment>
   <fragment
     android:id="@+id/dest_location_viewer"

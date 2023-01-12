@@ -158,6 +158,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 	suspend fun getMyAdvertisementDetails(id: Int) = safeApiCall { apiService.getMyAdvertisementDetails(id) }
 
 	suspend fun deleteAdvertisement(id: Int) = safeApiCall { apiService.deleteAdvertisement(id) }
+	suspend fun deleteImageInAdvertisement(id: Int) = safeApiCall { apiService.deleteImageInAdvertisement(id) }
 
 	suspend fun makeMyAdvertisementPremium(id: Int, packageId: Int) = safeApiCall { apiService.makeMyAdvertisementPremium(id, packageId) }
 

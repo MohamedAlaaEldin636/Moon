@@ -261,4 +261,5 @@
   <string name="confirm_deletion">Confirm Deletion</string>
   <string name="are_you_sure_del_ad">Are you sure you want to delete the advertisement from your account ?</string>
   <string name="done_successfully">Done Successfully</string>
+  <string name="at_least_1_image_898">At least one image must remain</string>
 </resources>

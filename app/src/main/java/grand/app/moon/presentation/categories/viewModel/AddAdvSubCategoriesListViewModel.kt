@@ -33,7 +33,8 @@ class AddAdvSubCategoriesListViewModel @Inject constructor(
 			AddAdvSubCategoriesListFragmentDirections.actionDestAddAdvSubCategoriesListToDestAddAdvFinalPage(
 				args.idOfMainCategory,
 				id,
-				args.jsonListOfBrands
+				args.jsonListOfBrands,
+				null
 			)
 		)
 	}

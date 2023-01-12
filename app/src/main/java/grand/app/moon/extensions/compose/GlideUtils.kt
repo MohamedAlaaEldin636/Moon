@@ -14,7 +14,7 @@ import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrEmptyBAUri
 
 @Composable
 fun GlideImageViaXml(
-	model: Uri?,
+	model: GlideImageViaXmlModel?,
 	modifier: Modifier = Modifier,
 ) {
 	AndroidView(modifier = modifier, factory = { context ->
@@ -22,8 +22,17 @@ fun GlideImageViaXml(
 			context.layoutInflater, R.layout.item_image_view, null, false
 		)
 
-		binding.imageView.setupWithGlideOrEmptyBAUri(model)
+		when (model) {
+			is GlideImageViaXmlModel.IString -> binding.imageView.setupWithGlideOrEmptyBA(model.string)
+			is GlideImageViaXmlModel.IUri -> binding.imageView.setupWithGlideOrEmptyBAUri(model.uri)
+			null -> {}
+		}
 
 		binding.root
 	})
+}
+
+sealed interface GlideImageViaXmlModel {
+	data class IUri(val uri: Uri?) : GlideImageViaXmlModel
+	data class IString(val string: String?) : GlideImageViaXmlModel
 }

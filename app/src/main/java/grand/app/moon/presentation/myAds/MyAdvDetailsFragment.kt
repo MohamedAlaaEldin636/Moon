@@ -9,10 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentMyAdvDetailsBinding
-import grand.app.moon.extensions.handleRetryAbleActionCancellable
-import grand.app.moon.extensions.makeStatusBarToPrimaryDarkWithWhiteIcons
-import grand.app.moon.extensions.makeStatusBarTransparentWithWhiteIcons
-import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.hideKeyboard
 import grand.app.moon.presentation.myAds.viewModel.MyAdvDetailsViewModel
@@ -80,7 +77,7 @@ class MyAdvDetailsFragment : BaseFragment<FragmentMyAdvDetailsBinding>() {
 		)
 
 		binding.recyclerViewSwitches.setupWithRVItemCommonListUsage(
-			viewModel.adapterProperties,
+			viewModel.adapterSwitches,
 			false,
 			3
 		)
@@ -94,10 +91,13 @@ class MyAdvDetailsFragment : BaseFragment<FragmentMyAdvDetailsBinding>() {
 		viewModel.response.observe(viewLifecycleOwner) { response ->
 			if (response == null) return@observe
 
+			MyLogger.e("ad details cycle -> images -> ${response.images?.map { it.image.orEmpty() }.orEmpty()}")
+			MyLogger.e("ad details cycle -> images 2 -> ${response.images}")
 			viewModel.adapterImages.submitList(
 				response.images?.map { it.image.orEmpty() }.orEmpty()
 			)
 			binding.sliderView.post {
+				binding.sliderView.setSliderAdapter(viewModel.adapterImages)
 				binding.sliderView.startAutoCycle()
 			}
 

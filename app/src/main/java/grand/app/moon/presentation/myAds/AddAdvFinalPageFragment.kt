@@ -9,9 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,13 +24,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.compose.BaseTheme
 import grand.app.moon.compose.ui.UILoading
+import grand.app.moon.core.extenstions.inflateLayout
 import grand.app.moon.core.extenstions.showError
 import grand.app.moon.databinding.FragmentAddAdvFinalPageBinding
 import grand.app.moon.domain.ads.ItemProperty
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myAds.addAdvFinalPage.CameraUtils
+import grand.app.moon.presentation.myAds.model.LocalOrApiItemImage
 import grand.app.moon.presentation.myAds.model.LocationData
 import grand.app.moon.presentation.myAds.viewModel.AddAdvFinalPageViewModel
 
@@ -47,7 +54,7 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 						mutableList.removeAt(viewModel.beforeCheckPermissionsIndexToShowImagesPopupMenu.value.orZero())
 					}
 
-					mutableList.add(imageUri)
+					mutableList.add(LocalOrApiItemImage.Local(imageUri))
 				}.toList()
 
 				viewModel.setImages(newList)
@@ -91,7 +98,7 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 				list = list.take(amountToTake)
 			}
 
-			newList = newList + list
+			newList = newList + list.map { item -> LocalOrApiItemImage.Local(item) }
 
 			viewModel.setImages(newList)
 		}
@@ -119,12 +126,49 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 				viewModel.adsUseCase.getFilterDetails2Suspend(viewModel.args.idOfMainCategory, viewModel.args.idOfSubCategory)
 			}
 		) {
-			viewModel.properties.value = it.properties
-			val map = mutableMapOf<Int, ItemProperty>()
+			val map = sortedMapOf<Int, ItemProperty>()
+			val responseProperties = viewModel.response?.properties.orEmpty() +
+				viewModel.response?.switches.orEmpty()
 			for (property in it.properties.orEmpty()) {
+				if (viewModel.response != null) {
+					val withValueProperty = responseProperties.firstOrNull { item -> item.id == property.id }
+
+					when (property.type) {
+						1 -> {
+							// Multi-Selection
+							property.valueId = withValueProperty?.id
+						}
+						3 -> {
+							// Text
+							property.valueString = withValueProperty?.text
+						}
+						else /* null */ -> {
+							// Boolean
+							property.valueBoolean = withValueProperty != null
+						}
+					}
+				}
+
 				map[property.id.orZero()] = property
 			}
+			viewModel.properties.value = it.properties
 			viewModel.mapOfProperties.value = map
+
+			if (viewModel.response != null) {
+				handleRetryAbleActionCancellable(
+					action = { viewModel.countriesUseCase.getCities() }
+				) { list ->
+					viewModel.cities = list
+
+					if (list.isEmpty()) {
+						return@handleRetryAbleActionCancellable showMessage(getString(R.string.no_cities_found))
+					}
+
+					viewModel.selectedCity.value = viewModel.cities.firstOrNull { item ->
+						item.id == viewModel.response?.cityId
+					}
+				}
+			}
 		}
 	}
 
@@ -138,34 +182,60 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 			setContent {
 				BaseTheme {
 					UILoading.TmpScreen(showLoading = false) {
-						AddAdvFinalPageScreen(
-							actOnAllPermissionsAcceptedOrRequestPermissions = {
-								permissionsHandlerForProfileImage?.actOnAllPermissionsAcceptedOrRequestPermissions()
-							},
-							onCameraClick = ::pickImageFromCamera,
-							onGalleryClick = ::pickImageFromGallery,
-							addAdvertisement = {
-								viewModel.addAdvertisement(this@AddAdvFinalPageFragment)
-							},
-							goGetAddress = { viewModel.goToMapToGetAddress(this@AddAdvFinalPageFragment) },
-							showOrGetCities = {
-								if (viewModel.cities.isEmpty()) {
-									handleRetryAbleActionCancellable(
-										action = { viewModel.countriesUseCase.getCities() }
-									) { list ->
-										viewModel.cities = list
+						Column {
+							if (viewModel.response != null) {
+								AndroidView(
+									modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+									factory = { context ->
+										context.inflateLayout(R.layout.item_toolbar_curve)
+									}
+								)
+							}
 
-										if (list.isEmpty()) {
-											return@handleRetryAbleActionCancellable showMessage(getString(R.string.no_cities_found))
+							AddAdvFinalPageScreen(
+								deleteImageFromApi = { id, onSuccess ->
+									if (viewModel.listOfImages.value.orEmpty().size == 1) {
+										showError(context.getString(R.string.at_least_1_image_898))
+
+										return@AddAdvFinalPageScreen
+									}
+
+									handleRetryAbleActionCancellableNullable(
+										action = {
+											viewModel.adsUseCase.deleteImageInAdvertisement(id)
 										}
+									) {
+										onSuccess()
+									}
+								},
+								actOnAllPermissionsAcceptedOrRequestPermissions = {
+									permissionsHandlerForProfileImage?.actOnAllPermissionsAcceptedOrRequestPermissions()
+								},
+								onCameraClick = ::pickImageFromCamera,
+								onGalleryClick = ::pickImageFromGallery,
+								addAdvertisement = {
+									viewModel.addAdvertisement(this@AddAdvFinalPageFragment)
+								},
+								goGetAddress = { viewModel.goToMapToGetAddress(this@AddAdvFinalPageFragment) },
+								showOrGetCities = {
+									if (viewModel.cities.isEmpty()) {
+										handleRetryAbleActionCancellable(
+											action = { viewModel.countriesUseCase.getCities() }
+										) { list ->
+											viewModel.cities = list
 
+											if (list.isEmpty()) {
+												return@handleRetryAbleActionCancellable showMessage(getString(R.string.no_cities_found))
+											}
+
+											viewModel.showCitiesPopupMenu.value = true
+										}
+									}else {
 										viewModel.showCitiesPopupMenu.value = true
 									}
-								}else {
-									viewModel.showCitiesPopupMenu.value = true
 								}
-							}
-						)
+							)
+						}
 					}
 				}
 			}

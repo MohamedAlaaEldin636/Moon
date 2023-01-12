@@ -2,6 +2,8 @@ package grand.app.moon.presentation.myAds.viewModel
 
 import android.app.Application
 import android.net.Uri
+import android.provider.MediaStore.Audio.Genres
+import android.provider.Settings.Global
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
@@ -22,11 +24,14 @@ import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragment
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragmentArgs
 import grand.app.moon.presentation.myAds.AddAdvFinalPageFragmentDirections
+import grand.app.moon.presentation.myAds.model.LocalOrApiItemImage
 import grand.app.moon.presentation.myAds.model.LocationData
+import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.SortedMap
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,23 +44,24 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	val adsUseCase: AdsUseCase
 ) : AndroidViewModel(application) {
 
+	val response = args.jsonResponseMyAdvDetails.fromJsonInlinedOrNull<ResponseMyAdvDetails>()
+
 	val user = useCaseUser()
 
 	val brands = args.jsonListOfBrands.fromJsonInlinedOrNull<List<ItemSubCategory>>().orEmpty()
 
 	val addressLabel: CharSequence = app.getAsRequiredText(getString(R.string.address_advertisement))
 
-	val price = MutableLiveData("")
+	val price = MutableLiveData(response?.price?.toString().orEmpty())
 
-	val title = MutableLiveData("")
+	val title = MutableLiveData(response?.title.orEmpty())
 
-	val negotiable = MutableLiveData(false)
+	val negotiable = MutableLiveData(response?.isNegotiable.orFalse())
 
+	// todo and subcategory only if is store.
 	val storeCategory = MutableLiveData("")
 
-	val description = MutableLiveData("")
-
-	// todo list of available store categories asln isa oh fuck if is store asln ya zaki isa..
+	val description = MutableLiveData(response?.description.orEmpty())
 
 	// todo cities are only if user type isa.
 	private val _countries =
@@ -65,24 +71,36 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	val showCitiesPopupMenu = MutableLiveData(false)
 	val selectedCity = MutableLiveData<Country>()
 
-	val selectedBrand = MutableLiveData<ItemSubCategory>()
+	val selectedBrand = MutableLiveData<ItemSubCategory>(
+		brands.firstOrNull { it.id == response?.brand?.id }
+	)
 
 	val properties = MutableLiveData<List<ItemProperty>>()
 
-	val mapOfProperties = MutableLiveData<Map<Int, ItemProperty>>()
+	val mapOfProperties = MutableLiveData<SortedMap<Int, ItemProperty>>()
 
-	val locationData = MutableLiveData<LocationData>()
+	val locationData = MutableLiveData<LocationData>(
+		response?.latitude?.let { latitude ->
+			response.longitude?.let { longitude ->
+				response.address?.let { address ->
+					LocationData(latitude, longitude, address)
+				}
+			}
+		}
+	)
 
-	val listOfImages = MutableLiveData(emptyList<Uri>())
+	val listOfImages = MutableLiveData<List<LocalOrApiItemImage>>(
+		response?.images?.map { LocalOrApiItemImage.Api(it) }.orEmpty()
+	)
 	val indexToShowImagesPopupMenu = MutableLiveData<Int>()
 	val beforeCheckPermissionsIndexToShowImagesPopupMenu = MutableLiveData<Int>()
 
-	fun addImages(list: List<Uri>) {
+	/*fun addImages(list: List<Uri>) {
 		listOfImages.value = listOfImages.value.orEmpty().toMutableList().also {
 			it.addAll(list)
 		}.toList()
-	}
-	fun setImages(list: List<Uri>) {
+	}*/
+	fun setImages(list: List<LocalOrApiItemImage>) {
 		listOfImages.value = list
 	}
 
@@ -103,6 +121,12 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	}
 
 	fun addAdvertisement(fragment: AddAdvFinalPageFragment) {
+		if (response != null) {
+			General.TODO("lesaaaaa")
+
+			return
+		}
+
 		val context = (fragment as? Fragment)?.context ?: return
 
 		if (locationData.value == null || selectedCity.value == null || price.value.isNullOrEmpty()
@@ -122,7 +146,8 @@ class AddAdvFinalPageViewModel @Inject constructor(
 					args.idOfMainCategory,
 					args.idOfSubCategory,
 					listOfImages.value.orEmpty().mapNotNull {
-						it.createMultipartBodyPart(context.applicationContext, "images[]")
+						(it as? LocalOrApiItemImage.Local)?.uri
+							?.createMultipartBodyPart(context.applicationContext, "images[]")
 					},
 					title.value.orEmpty(),
 					locationData.value?.latitude.orEmpty(),

@@ -31,10 +31,12 @@
       app:autoSizeTextType="uniform"
       app:autoSizeMaxTextSize="14sp"
       app:autoSizeMinTextSize="6sp"
+      android:maxLines="1"
+      android:ellipsize="end"
 
       android:layout_width="0dp"
       android:layout_weight="1"
-      android:layout_height="wrap_content"
+      android:layout_height="24dp"
 
       tools:text="value"
 

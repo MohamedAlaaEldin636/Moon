@@ -7,6 +7,7 @@ import android.util.Log
 import android.webkit.ValueCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
@@ -32,10 +33,9 @@ import com.onesignal.OSNotificationOpenedResult
 
 import com.onesignal.OneSignal
 import com.onesignal.OneSignal.OSNotificationOpenedHandler
+import grand.app.moon.core.di.module.ViewModelArgsModule
 import grand.app.moon.core.extenstions.isLogin
-import grand.app.moon.extensions.General
-import grand.app.moon.extensions.handleRetryAbleActionCancellable
-import grand.app.moon.extensions.showRetryErrorDialogWithCancelNegativeButton
+import grand.app.moon.extensions.*
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
 import grand.app.moon.presentation.addStore.AddStoreActivity
 import grand.app.moon.presentation.base.extensions.openActivity
@@ -253,10 +253,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         else -> {
           Log.d(TAG, "setUpBottomNavigationWithGraphs: ${destination.label}")
           binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite))
-          binding.toolbar.title =
-            if (arguments != null && arguments.containsKey(Constants.TabBarText)) arguments.getString(
-              Constants.TabBarText
-            ) else destination.label
+          binding.toolbar.title = if (destination.id == R.id.dest_add_adv_final_page) {
+	          val res = if (arguments?.getString("jsonResponseMyAdvDetails").isNullOrEmpty()) {
+							R.string.advertisement_addition
+	          }else {
+							R.string.edit_adv
+	          }
+
+	          MyLogger.e("ad details cycle -> args -> ${getString(res)}")
+
+	          getString(res)
+          }else if (arguments != null && arguments.containsKey(Constants.TabBarText)) {
+						arguments.getString(Constants.TabBarText)
+					}else {
+						destination.label
+					}
           hideTopBarControls()
           showText()
         }

@@ -49,6 +49,7 @@ fun AddAdvFinalPageScreen(
 	addAdvertisement: () -> Unit,
 	onCameraClick: () -> Unit,
 	onGalleryClick: () -> Unit,
+	deleteImageFromApi: (id: Int, onSuccess: () -> Unit) -> Unit,
 ) {
 	Surface(
 		Modifier
@@ -78,7 +79,8 @@ fun AddAdvFinalPageScreen(
 				AddAdvFinalPageScreenUtils.Images(
 					actOnAllPermissionsAcceptedOrRequestPermissions,
 					onCameraClick,
-					onGalleryClick
+					onGalleryClick,
+					deleteImageFromApi = deleteImageFromApi,
 				)
 
 				Spacer(modifier = Modifier.height(16.dp))
@@ -172,9 +174,9 @@ fun AddAdvFinalPageScreen(
 								}.orEmpty(),
 								options = map.value?.get(property.id.orZero())?.children.orEmpty(),
 								onSelection = {
-									viewModel.mapOfProperties.value = viewModel.mapOfProperties.value.orEmpty().toMutableMap().also { mutableMap ->
+									viewModel.mapOfProperties.value = viewModel.mapOfProperties.value.orEmpty().toSortedMap().also { mutableMap ->
 										mutableMap[property.id.orZero()] = property.copy(valueId = it.id)
-									}.toMap()
+									}.toSortedMap()
 								}
 							)
 						}
@@ -185,9 +187,9 @@ fun AddAdvFinalPageScreen(
 								isRequired = true,
 								text = map.value?.get(property.id.orZero())?.valueString.orEmpty(),
 								onTextChange = {
-									viewModel.mapOfProperties.value = viewModel.mapOfProperties.value.orEmpty().toMutableMap().also { mutableMap ->
+									viewModel.mapOfProperties.value = viewModel.mapOfProperties.value.orEmpty().toSortedMap().also { mutableMap ->
 										mutableMap[property.id.orZero()] = property.copy(valueString = it)
-									}.toMap()
+									}.toSortedMap()
 								},
 								additionalBoxModifier = Modifier.bringIntoViewRequester(bringIntoViewRequester)
 							)
@@ -198,9 +200,9 @@ fun AddAdvFinalPageScreen(
 								hint = property.name.orEmpty(),
 								currentSelection = map.value?.get(property.id.orZero())?.valueBoolean.orFalse(),
 								onSelectionAfterToggle = {
-									viewModel.mapOfProperties.value = viewModel.mapOfProperties.value.orEmpty().toMutableMap().also { mutableMap ->
+									viewModel.mapOfProperties.value = viewModel.mapOfProperties.value.orEmpty().toSortedMap().also { mutableMap ->
 										mutableMap[property.id.orZero()] = property.copy(valueBoolean = it)
-									}.toMap()
+									}.toSortedMap()
 								}
 							)
 						}
@@ -248,7 +250,9 @@ fun AddAdvFinalPageScreen(
 						modifier = Modifier
 							.fillMaxWidth()
 							.align(Alignment.CenterVertically),
-						text = stringResource(R.string.addition_12),
+						text = stringResource(
+							if (viewModel.response != null) R.string.update else R.string.addition_12
+						),
 						textAlign = TextAlign.Center
 					)
 				}

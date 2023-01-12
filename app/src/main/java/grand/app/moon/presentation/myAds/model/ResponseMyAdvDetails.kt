@@ -35,6 +35,10 @@ data class ResponseMyAdvDetails(
 	@SerializedName("is_negotiable") var negotiable: Int?,
 	var oldPrice: Int?,
 	@SerializedName("share_link") var shareLink: String?,
+	var category: ItemCategoryInAdvDetails?,
+	@SerializedName("sub_category") var subCategory: ItemSubCategoryInAdvDetails?,
+	var city: ItemCityInAdvDetails?,
+	var brand: ItemBrandInAdvDetails?,
 ) {
 	val isPremium get() = premium == 1
 
@@ -46,6 +50,48 @@ data class ResponseMyAdvDetails(
 
 }
 
+data class ItemBrandInAdvDetails(
+	var id: Int?,
+	var name: String?,
+	var image: String?,
+	@SerializedName("ads_count") var adsCount: Int?,
+	@SerializedName("order_by_no") var orderByNo: Int?,
+)
+
+data class ItemSubCategoryInAdvDetails(
+	var id: Int?,
+	var name: String?,
+	var image: String?,
+	@SerializedName("ads_count") var adsCount: Int?,
+	@SerializedName("order_by_no") var orderByNo: Int?,
+)
+/*
+"sub_category": {
+            "id": 14,
+            "name": "مرسيدسمرسيدس",
+            "image": "https://sooqmoon.net/storage/categories/1652082742N54KO.webp",
+            "ads_count": null,
+            "order_by_no": null
+        }
+ */
+
+data class ItemCityInAdvDetails(
+	var id: Int?,
+	var name: String?,
+	var image: String?,
+	var currency: String?,
+	@SerializedName("currency_code") var currencyCode: String?,
+	@SerializedName("iso_code") var isoCode: String?,
+)
+
+data class ItemCategoryInAdvDetails(
+	var id: Int?,
+	var name: String?,
+	var image: String?,
+	@SerializedName("ads_count") var adsCount: Int?,
+	@SerializedName("order_by_no") var orderByNo: Int?,
+)
+
 data class ItemCountryInAdvDetails(
 	var id: Int?,
 	var name: String?,
@@ -54,23 +100,6 @@ data class ItemCountryInAdvDetails(
 	@SerializedName("iso_code") var isoCode: String?,
 	var image: String?,
 )
-/*
- "category": {
-            "id": 2,
-            "name": "Cars",
-            "image": "https://sooqmoon.net/storage/categories/1660634702LfbkU.webp",
-            "ads_count": null,
-            "order_by_no": 1
-        },
-        "city": {
-            "id": 137,
-            "name": "Sharqia",
-            "currency": null,
-            "country_code": "",
-            "iso_code": null,
-            "image": "https://sooqmoon.net/storage/countries/1653460229d2sGe.webp"
-        },
- */
 
 data class ItemImage(
 	var id: Int?,

@@ -14,3 +14,12 @@ fun SavedStateHandle.asBundle(): Bundle {
 	
 	return bundle
 }
+
+fun Bundle.asSavedStateHandle(): SavedStateHandle {
+	val map = mutableMapOf<String, Any?>()
+	for (key in keySet()) {
+		map += key to get(key)
+	}
+
+	return SavedStateHandle()
+}

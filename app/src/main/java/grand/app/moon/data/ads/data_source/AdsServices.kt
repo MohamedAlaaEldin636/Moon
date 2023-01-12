@@ -151,4 +151,9 @@ interface AdsServices {
 		@Path("id") id: Int
 	): BaseResponse<Any?>
 
+	@DELETE("v1/my-advertisements/images/{id}")
+	suspend fun deleteImageInAdvertisement(
+		@Path("id") id: Int
+	): BaseResponse<Any?>
+
 }

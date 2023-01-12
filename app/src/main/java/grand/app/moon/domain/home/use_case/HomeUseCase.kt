@@ -69,6 +69,7 @@ class HomeUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
+  suspend fun getCategoriesSuspend(): Resource<BaseResponse<List<ItemCategory>?>> = homeRepository.getCategories2()
 
   fun getCategoryDetails(id: Int): Flow<Resource<BaseResponse<CategoryDetails>>> = flow {
     emit(Resource.Loading)

@@ -132,6 +132,8 @@ class AdsUseCase @Inject constructor(
 
 	suspend fun deleteAdvertisement(id: Int) = repo.deleteAdvertisement(id)
 
+	suspend fun deleteImageInAdvertisement(id: Int) = repo.deleteImageInAdvertisement(id)
+
 	suspend fun makeMyAdvertisementPremium(id: Int, packageId: Int) = repo.makeMyAdvertisementPremium(id, packageId)
 
 }

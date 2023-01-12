@@ -23,12 +23,14 @@ import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrSplashBA
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myAds.MyAdvDetailsFragment
 import grand.app.moon.presentation.myAds.MyAdvDetailsFragmentArgs
 import grand.app.moon.presentation.myAds.MyAdvDetailsFragmentDirections
 import grand.app.moon.presentation.myAds.adapter.RVSliderImageFull
 import grand.app.moon.presentation.myAds.model.*
+import kotlinx.coroutines.flow.firstOrNull
 import java.math.BigDecimal
 import java.math.RoundingMode
 import javax.inject.Inject
@@ -239,7 +241,29 @@ class MyAdvDetailsViewModel @Inject constructor(
 	}
 
 	fun editAdv(view: View) {
-		TODO()
+		val response = response.value ?: return
+
+		val fragment = view.findFragmentOrNull<MyAdvDetailsFragment>() ?: return
+
+		fragment.handleRetryAbleActionCancellable(
+			action = {
+				homeUseCase.getCategoriesSuspend()
+			}
+		) { list ->
+			val categoryId = response.category?.id.orZero()
+
+			val category = list.firstOrNull { it.id == categoryId }
+				?: return@handleRetryAbleActionCancellable fragment.showError(fragment.getString(R.string.something_went_wrong_please_try_again))
+
+			view.findNavController().navigate(
+				MyAdvDetailsFragmentDirections.actionDestMyAdvDetailsToDestAddAdvFinalPage(
+					category.id.orZero(),
+					response.subCategory?.id.orZero(),
+					category.brands.toJsonInlinedOrNull().orEmpty(),
+					response.toJsonInlinedOrNull().orEmpty()
+				)
+			)
+		}
 	}
 
 	/**

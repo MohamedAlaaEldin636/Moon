@@ -114,7 +114,7 @@ fun <VDB : ViewDataBinding> showCustomDialog(
 		activity?.let {
 			InsetDrawable(
 				ContextCompat.getDrawable(activity, R.drawable.dr_round_white_5) ?: ColorDrawable(Color.WHITE),
-				activity.dpToPx(5f).roundToInt()
+				activity.dpToPx(16f).roundToInt()
 			)
 		} ?: ColorDrawable(Color.WHITE)
 	},
