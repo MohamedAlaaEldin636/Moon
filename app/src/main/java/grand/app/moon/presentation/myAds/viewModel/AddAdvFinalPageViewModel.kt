@@ -123,12 +123,6 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	}
 
 	fun addAdvertisement(fragment: AddAdvFinalPageFragment) {
-		if (response != null) {
-			General.TODO("lesaaaaa")
-
-			return
-		}
-
 		val context = (fragment as? Fragment)?.context ?: return
 
 		if (locationData.value == null || selectedCity.value == null || price.value.isNullOrEmpty()
@@ -144,43 +138,81 @@ class AddAdvFinalPageViewModel @Inject constructor(
 
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
-				adsUseCase.addAdvertisement(
-					args.idOfMainCategory,
-					args.idOfSubCategory,
-					listOfImages.value.orEmpty().mapNotNull {
-						(it as? LocalOrApiItemImage.Local)?.uri
-							?.createMultipartBodyPart(context.applicationContext, "images[]")
-					},
-					title.value.orEmpty(),
-					locationData.value?.latitude.orEmpty(),
-					locationData.value?.longitude.orEmpty(),
-					locationData.value?.address.orEmpty(),
-					selectedCity.value?.id.orZero(),
-					price.value?.toIntOrNull().orZero(),
-					negotiable.value.orFalse(),
-					selectedBrand.value?.id,
-					description.value.orEmpty(),
-					mapOfProperties.value.orEmpty().mapNotNull { (_, value) ->
-						when {
-							value.valueId != null -> {
-								value.valueId.orZero() to null
-							}
-							value.valueString != null -> {
-								value.id.orZero() to value.valueString
-							}
-							else /*value.valueBoolean != null*/ -> {
-								if (value.valueBoolean == true) {
-									value.id.orZero() to null
-								}else {
-									null
+				if (response != null) {
+					adsUseCase.updateAdvertisement(
+						response.id.orZero(),
+						args.idOfMainCategory,
+						args.idOfSubCategory,
+						listOfImages.value.orEmpty().mapNotNull {
+							(it as? LocalOrApiItemImage.Local)?.uri
+								?.createMultipartBodyPart(context.applicationContext, "images[]")
+						},
+						title.value.orEmpty(),
+						locationData.value?.latitude.orEmpty(),
+						locationData.value?.longitude.orEmpty(),
+						locationData.value?.address.orEmpty(),
+						selectedCity.value?.id.orZero(),
+						price.value?.toIntOrNull().orZero(),
+						negotiable.value.orFalse(),
+						selectedBrand.value?.id,
+						description.value.orEmpty(),
+						mapOfProperties.value.orEmpty().mapNotNull { (_, value) ->
+							when {
+								value.valueId != null -> {
+									value.valueId.orZero() to null
+								}
+								value.valueString != null -> {
+									value.id.orZero() to value.valueString
+								}
+								else /*value.valueBoolean != null*/ -> {
+									if (value.valueBoolean == true) {
+										value.id.orZero() to null
+									}else {
+										null
+									}
 								}
 							}
 						}
-					}
-				)
+					)
+				}else {
+					adsUseCase.addAdvertisement(
+						args.idOfMainCategory,
+						args.idOfSubCategory,
+						listOfImages.value.orEmpty().mapNotNull {
+							(it as? LocalOrApiItemImage.Local)?.uri
+								?.createMultipartBodyPart(context.applicationContext, "images[]")
+						},
+						title.value.orEmpty(),
+						locationData.value?.latitude.orEmpty(),
+						locationData.value?.longitude.orEmpty(),
+						locationData.value?.address.orEmpty(),
+						selectedCity.value?.id.orZero(),
+						price.value?.toIntOrNull().orZero(),
+						negotiable.value.orFalse(),
+						selectedBrand.value?.id,
+						description.value.orEmpty(),
+						mapOfProperties.value.orEmpty().mapNotNull { (_, value) ->
+							when {
+								value.valueId != null -> {
+									value.valueId.orZero() to null
+								}
+								value.valueString != null -> {
+									value.id.orZero() to value.valueString
+								}
+								else /*value.valueBoolean != null*/ -> {
+									if (value.valueBoolean == true) {
+										value.id.orZero() to null
+									}else {
+										null
+									}
+								}
+							}
+						}
+					)
+				}
 			}
 		) {
-			fragment.showMessage(context.getString(R.string.ad_has_been_added_successfully))
+			fragment.showMessage(context.getString(R.string.done_successfully))
 
 			val navController = fragment.findNavController()
 

@@ -136,7 +136,6 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 			}
 		}
 
-		MyLogger.e("qwqw -> $brand_id")
 		if (brand_id != null) {
 			map["brand_id"] = brand_id.toString().toRequestBody()
 		}
@@ -150,6 +149,56 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		apiService.addAdvertisement(
 	    category_id,
 	    sub_category_id,
+	    images,
+	    latitude.toRequestBody(),
+	    longitude.toRequestBody(),
+			address.toRequestBody(),
+	    city_id,
+	    price,
+	    is_negotiable,
+	    map,
+    )
+  }
+
+	suspend fun updateAdvertisement(
+		advId: Int,
+		category_id: Int,
+		sub_category_id: Int,
+		images: List<MultipartBody.Part>,
+		title: String,
+		latitude: String,
+		longitude: String,
+		address: String,
+		city_id: Int,
+		price: Int,
+		is_negotiable: Int,
+		brand_id: Int?,
+		description: String,
+		propertiesIds: List<Pair<Int, String?>>,
+	) = safeApiCall {
+		val map = mutableMapOf<String, RequestBody>()
+		for ((index, pair) in propertiesIds.withIndex()) {
+			val (id, text) = pair
+			map["property_ids[$index][id]"] = id.toString().toRequestBody()
+			if (text.isNullOrEmpty().not()) {
+				map["property_ids[$index][text]"] = text.orEmpty().toRequestBody()
+			}
+		}
+
+		if (brand_id != null) {
+			map["brand_id"] = brand_id.toString().toRequestBody()
+		}
+
+		if (description.isNotEmpty()) {
+			map["description"] = description.toRequestBody()
+		}
+
+		map["title"] = title.toRequestBody()
+
+		apiService.updateAdvertisement(
+	    advId,
+			category_id,
+			sub_category_id,
 	    images,
 	    latitude.toRequestBody(),
 	    longitude.toRequestBody(),

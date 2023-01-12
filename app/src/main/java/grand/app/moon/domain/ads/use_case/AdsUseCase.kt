@@ -128,6 +128,26 @@ class AdsUseCase @Inject constructor(
 		if (is_negotiable) 1 else 0, brand_id, description, propertiesIds
 	)
 
+	suspend fun updateAdvertisement(
+		advId: Int,
+		category_id: Int,
+		sub_category_id: Int,
+		images: List<MultipartBody.Part>,
+		title: String,
+		latitude: String,
+		longitude: String,
+		address: String,
+		city_id: Int,
+		price: Int,
+		is_negotiable: Boolean,
+		brand_id: Int?,
+		description: String,
+		propertiesIds: List<Pair<Int, String?>>,
+	) = repo.updateAdvertisement(
+		advId, category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price,
+		if (is_negotiable) 1 else 0, brand_id, description, propertiesIds
+	)
+
 	suspend fun getMyAdvertisementDetails(id: Int) = repo.getMyAdvertisementDetails(id)
 
 	suspend fun deleteAdvertisement(id: Int) = repo.deleteAdvertisement(id)

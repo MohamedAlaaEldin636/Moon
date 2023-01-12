@@ -50,6 +50,22 @@ interface AdsRepository {
 	  description: String,
 	  propertiesIds: List<Pair<Int, String?>>,
   ): Resource<BaseResponse<ResponseMyAdvDetails?>>
+  suspend fun updateAdvertisement(
+	  advId: Int,
+	  category_id: Int,
+	  sub_category_id: Int,
+	  images: List<MultipartBody.Part>,
+	  title: String,
+	  latitude: String,
+	  longitude: String,
+	  address: String,
+	  city_id: Int,
+	  price: Int,
+	  is_negotiable: Int,
+	  brand_id: Int?,
+	  description: String,
+	  propertiesIds: List<Pair<Int, String?>>,
+  ): Resource<BaseResponse<ResponseMyAdvDetails?>>
 	suspend fun getMyAdvertisementDetails(id: Int): Resource<BaseResponse<ResponseMyAdvDetails?>>
 	suspend fun deleteAdvertisement(id: Int): Resource<BaseResponse<Any?>>
 	suspend fun deleteImageInAdvertisement(id: Int): Resource<BaseResponse<Any?>>

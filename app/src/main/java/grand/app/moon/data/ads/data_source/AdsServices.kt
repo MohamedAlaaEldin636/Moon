@@ -134,6 +134,23 @@ interface AdsServices {
 		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString()
 	): BaseResponse<ResponseMyAdvDetails?>
 
+	@Multipart
+	@POST("v1/my-advertisements/update/{id}")
+	suspend fun updateAdvertisement(
+		@Path("id") id: Int,
+		@Part("category_id") category_id: Int,
+		@Part("sub_category_id") sub_category_id: Int,
+		@Part images: List<MultipartBody.Part>,
+		@Part("latitude") latitude: RequestBody,
+		@Part("longitude") longitude: RequestBody,
+		@Part("address") address: RequestBody,
+		@Part("city_id") city_id: Int,
+		@Part("price") price: Int,
+		@Part("is_negotiable") is_negotiable: Int,
+		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>,
+		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString()
+	): BaseResponse<ResponseMyAdvDetails?>
+
 	@GET("v1/my-advertisements/{id}")
 	suspend fun getMyAdvertisementDetails(
 		@Path("id") id: Int

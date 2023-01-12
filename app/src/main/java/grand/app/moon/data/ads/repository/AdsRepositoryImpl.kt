@@ -96,6 +96,23 @@ class AdsRepositoryImpl @Inject constructor(
 		propertiesIds: List<Pair<Int, String?>>,
 	) = remoteDataSource.addAdvertisement(category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price, is_negotiable, brand_id, description, propertiesIds)
 
+	override suspend fun updateAdvertisement(
+		advId: Int,
+		category_id: Int,
+		sub_category_id: Int,
+		images: List<MultipartBody.Part>,
+		title: String,
+		latitude: String,
+		longitude: String,
+		address: String,
+		city_id: Int,
+		price: Int,
+		is_negotiable: Int,
+		brand_id: Int?,
+		description: String,
+		propertiesIds: List<Pair<Int, String?>>,
+	) = remoteDataSource.updateAdvertisement(advId, category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price, is_negotiable, brand_id, description, propertiesIds)
+
 	override suspend fun getMyAdvertisementDetails(id: Int): Resource<BaseResponse<ResponseMyAdvDetails?>> =
 		remoteDataSource.getMyAdvertisementDetails(id)
 
