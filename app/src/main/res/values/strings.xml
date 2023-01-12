@@ -245,4 +245,15 @@
   <string name="ad_has_been_added_successfully">Add has been added successfully</string>
   <string name="location_99">Location</string>
   <string name="only_var_have_been_picked">Only %1$s has been picked</string>
+  <string name="special_221">Premium</string>
+  <string name="comparedd_to_last_month">Compared to last month</string>
+  <string name="remaining_time_var_days">Remaining Time %1$s Days</string>
+  <string name="app_not_found">App not found</string>
+  <string name="pick_app">Pick App</string>
+  <string name="copy_is_done_successfully">Copy done successfully</string>
+  <string name="edit_adv">Edit Ad</string>
+  <string name="prem_ad">Premium Ad</string>
+  <string name="del_ad">Delete Ad</string>
+  <string name="check_ad_premium">Check Premium</string>
+  <string name="no_link_exists">No link Exists</string>
 </resources>

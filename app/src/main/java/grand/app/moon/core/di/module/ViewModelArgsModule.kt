@@ -10,13 +10,21 @@ import grand.app.moon.presentation.auth.completeLogin.CompleteLoginFragmentArgs
 import grand.app.moon.presentation.categories.AddAdvSubCategoriesListFragmentArgs
 import grand.app.moon.presentation.home.AnnouncementDialogFragmentArgs
 import grand.app.moon.presentation.home.AppGlobalAnnouncementDialogFragmentArgs
-import grand.app.moon.presentation.myAds.AddAdvFinalPageFragmentArgs
-import grand.app.moon.presentation.myAds.AddAdvertisementFragmentArgs
-import grand.app.moon.presentation.myAds.LocationSelectionFragmentArgs
+import grand.app.moon.presentation.myAds.*
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelArgsModule {
+
+	@Provides
+	fun provideLocationViewerFragmentArgs(state: SavedStateHandle): LocationViewerFragmentArgs {
+		return LocationViewerFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
+	fun provideMyAdvDetailsFragmentArgs(state: SavedStateHandle): MyAdvDetailsFragmentArgs {
+		return MyAdvDetailsFragmentArgs.fromBundle(state.asBundle())
+	}
 
 	@Provides
 	fun provideLocationSelectionFragmentArgs(state: SavedStateHandle): LocationSelectionFragmentArgs {

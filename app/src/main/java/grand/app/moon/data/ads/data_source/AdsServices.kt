@@ -15,6 +15,7 @@ import grand.app.moon.domain.home.models.review.Reviews
 import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -131,6 +132,18 @@ interface AdsServices {
 		//@Part("description") description: RequestBody,
 		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>,
 		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString()
+	): BaseResponse<ResponseMyAdvDetails?>
+
+	@GET("v1/my-advertisements/{id}")
+	suspend fun getMyAdvertisementDetails(
+		@Path("id") id: Int
+	): BaseResponse<ResponseMyAdvDetails?>
+
+	@GET("v1/packages/payment/success")
+	suspend fun makeMyAdvertisementPremium(
+		@Query("advertisement_id") id: Int,
+		@Query("package_id") packageId: Int,
+		@Query("type") type: Int = 1
 	): BaseResponse<Any?>
 
 }

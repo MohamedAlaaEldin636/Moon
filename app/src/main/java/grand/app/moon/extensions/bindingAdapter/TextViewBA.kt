@@ -2,6 +2,7 @@ package grand.app.moon.extensions.bindingAdapter
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.text.TextUtils
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -28,6 +29,31 @@ fun TextView.serDrawableCompatBA(
 	bottom: Drawable?,
 ) {
 	setCompoundDrawablesRelativeWithIntrinsicBounds(start, top, end, bottom)
+}
+
+@BindingAdapter("textView_makeItHorizontallyScrollable")
+fun TextView.makeItHorizontallyScrollable(andFade: Boolean?) {
+	setSingleLine()
+	ellipsize = TextUtils.TruncateAt.MARQUEE
+	marqueeRepeatLimit = -1
+	isFocusable = true
+	isFocusableInTouchMode = true
+	canScrollHorizontally(-1)
+	setHorizontallyScrolling(true)
+	if (andFade == true) {
+		isSelected = true
+	}else {
+		isHorizontalFadingEdgeEnabled = true
+	}
+
+	/*
+	android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit ="marquee_forever"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:scrollHorizontally="true"
+	 */
 }
 
 /*

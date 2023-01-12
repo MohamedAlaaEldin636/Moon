@@ -235,4 +235,15 @@
   <string name="ad_has_been_added_successfully">تم إضافة الإعلان بنجاح</string>
   <string name="location_99">الموقع</string>
   <string name="only_var_have_been_picked">تم اختيار %1$s فقط</string>
+  <string name="special_221">مميز</string>
+  <string name="comparedd_to_last_month">مقارنة بالشهر الماضي</string>
+  <string name="remaining_time_var_days">الوقت المتبقي %1$s أيام</string>
+  <string name="app_not_found">التطبيق غير موجود</string>
+  <string name="pick_app">اختر تطبيق</string>
+  <string name="copy_is_done_successfully">تم النسخ بنجاح</string>
+  <string name="edit_adv">تعديل الإعلان</string>
+  <string name="prem_ad">تمييز الإعلان</string>
+  <string name="del_ad">حذف الإعلان</string>
+  <string name="check_ad_premium">متابعة التميز</string>
+  <string name="no_link_exists">لا يوجد لينك</string>
 </resources>

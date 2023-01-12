@@ -24,4 +24,5 @@ class HomeRepositoryImpl @Inject constructor(
   override suspend fun getCategories2(): Resource<BaseResponse<List<ItemCategory>?>> = homeRemoteDataSource.getCategories2()
   override suspend fun getCategoryDetails(id: Int): Resource<BaseResponse<CategoryDetails>>  = homeRemoteDataSource.getCategoryDetails(id)
   override suspend fun getCheckAvailability(type: Int): Resource<BaseResponse<Int?>>  = homeRemoteDataSource.getCheckAvailability(type)
+  override suspend fun getCheckAvailabilityForPremiumAds(): Resource<BaseResponse<Int?>>  = homeRemoteDataSource.getCheckAvailabilityForPremiumAds()
 }

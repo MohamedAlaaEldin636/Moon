@@ -26,8 +26,8 @@
     android:requestLegacyExternalStorage="true"
     android:roundIcon="${appRoundIcon}"
     android:theme="@style/Theme.AppTheme"
-    tools:replace="android:allowBackup,android:supportsRtl"
-    android:supportsRtl="true">
+    android:supportsRtl="true"
+    tools:replace="android:allowBackup,android:supportsRtl">
 
     <provider
       android:name="androidx.core.content.FileProvider"

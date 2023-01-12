@@ -78,6 +78,8 @@ class HomeUseCase @Inject constructor(
 
 	suspend fun checkAvailableAdvertisements() = homeRepository.getCheckAvailability(Availability.ADVERTISEMENT.apiValue)
 
+	suspend fun getCheckAvailabilityForPremiumAds() = homeRepository.getCheckAvailabilityForPremiumAds()
+
 }
 
 private enum class Availability(val apiValue: Int) {

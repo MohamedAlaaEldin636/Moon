@@ -34,7 +34,12 @@ interface HomeServices {
   suspend fun getCategoryDetails(@Query("category_id") category_id: Int): BaseResponse<CategoryDetails>
 
   @GET("v1/check")
-  suspend fun getCheckAvailability(@Query("type") type: String): BaseResponse<Int?>
+  suspend fun getCheckAvailability(
+	  @Query("type") type: String
+	): BaseResponse<Int?>
+
+  @GET("v1/check?type=1&premium=1")
+  suspend fun getCheckAvailabilityForPremiumAds(): BaseResponse<Int?>
 
 
 }

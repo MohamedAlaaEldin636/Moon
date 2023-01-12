@@ -1,11 +1,22 @@
 package grand.app.moon.extensions.bindingAdapter
 
+import android.graphics.Outline
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import androidx.annotation.DrawableRes
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import grand.app.moon.extensions.orZero
+
+@BindingAdapter("view_clipBackground")
+fun View.clipBackground(clip: Boolean?) {
+	outlineProvider = ViewOutlineProvider.BACKGROUND
+	clipToOutline = true
+	if (this is ViewGroup) {
+		clipChildren = true
+	}
+}
 
 @BindingAdapter("view_setBackgroundRes")
 fun View.setBackgroundRes(@DrawableRes res: Int?) {

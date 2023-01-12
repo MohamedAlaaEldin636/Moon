@@ -155,6 +155,10 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     )
   }
 
+	suspend fun getMyAdvertisementDetails(id: Int) = safeApiCall { apiService.getMyAdvertisementDetails(id) }
+
+	suspend fun makeMyAdvertisementPremium(id: Int, packageId: Int) = safeApiCall { apiService.makeMyAdvertisementPremium(id, packageId) }
+
   suspend fun filterResults(request: FilterResultRequest) = safeApiCall {
     val map = getParameters(request).toMutableMap()
 //    if(map.containsKey("properties"))

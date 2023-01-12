@@ -18,4 +18,5 @@ interface HomeRepository {
   suspend fun getCategories2(): Resource<BaseResponse<List<ItemCategory>?>>
   suspend fun getCategoryDetails(id: Int): Resource<BaseResponse<CategoryDetails>>
   suspend fun getCheckAvailability(type: Int): Resource<BaseResponse<Int?>>
+  suspend fun getCheckAvailabilityForPremiumAds(): Resource<BaseResponse<Int?>>
 }

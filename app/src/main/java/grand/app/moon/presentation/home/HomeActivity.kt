@@ -164,7 +164,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           hideTopBarControls()
           supportActionBar?.hide()
         }
-	      R.id.dest_add_advertisement -> {
+	      R.id.dest_add_advertisement, R.id.dest_my_adv_details -> {
 					hideTopBarControls()
 		      hideAllToolbar()
 		      binding.bottomNavigationView.hide()
@@ -244,7 +244,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showText()
 
         }
-        R.id.adsDetailsFragment, R.id.storeDetailsFragment, R.id.countriesFragment3, R.id.fragment_confirm_code2, R.id.webFragment2, R.id.zoomPagerFragment-> {
+        R.id.adsDetailsFragment, R.id.storeDetailsFragment, R.id.countriesFragment3, R.id.fragment_confirm_code2, R.id.webFragment2,
+        R.id.zoomPagerFragment -> {
           hideTopBarControls()
           hideAllToolbar()
         }

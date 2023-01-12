@@ -691,5 +691,42 @@
       app:popUpTo="@id/home_fragment"
       app:popUpToInclusive="false"/>
   </fragment>
+  <fragment
+    android:id="@+id/dest_my_adv_details"
+    android:name="grand.app.moon.presentation.myAds.MyAdvDetailsFragment"
+    tools:layout="@layout/fragment_my_adv_details" >
+    <argument
+      android:name="id"
+      app:argType="integer"
+      android:defaultValue="-1" />
+    <argument
+      android:name="jsonOfResponseMyAdvDetails"
+      app:argType="string"
+      app:nullable="true"
+      android:defaultValue="@null" />
+    <deepLink
+      android:id="@+id/deep_link_dest_my_adv_details_id"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.presentation.myAds.dest.my.adv.details.id/{id}"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_my_adv_details_json_of_response_my_adv_details"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.presentation.myAds.dest.my.adv.details.json.of.response.my.adv.details/{jsonOfResponseMyAdvDetails}"/>
+    <action
+      android:id="@+id/action_dest_my_adv_details_to_dest_location_viewer"
+      app:destination="@id/dest_location_viewer" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_location_viewer"
+    android:name="grand.app.moon.presentation.myAds.LocationViewerFragment"
+    android:label="@string/location_99"
+    tools:layout="@layout/fragment_location_viewer" >
+    <argument
+      android:name="latitude"
+      app:argType="string" />
+    <argument
+      android:name="longitude"
+      app:argType="string" />
+  </fragment>
 
 </navigation>

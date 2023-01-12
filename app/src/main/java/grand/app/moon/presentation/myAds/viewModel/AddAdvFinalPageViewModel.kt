@@ -155,8 +155,16 @@ class AddAdvFinalPageViewModel @Inject constructor(
 		) {
 			fragment.showMessage(context.getString(R.string.ad_has_been_added_successfully))
 
-			fragment.findNavController().navigateSafely(
+			val navController = fragment.findNavController()
+
+			navController.navigateSafely(
 				AddAdvFinalPageFragmentDirections.actionDestLocationSelectionToHomeFragment2()
+			)
+
+			navController.navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.presentation.myAds.dest.my.adv.details.json.of.response.my.adv.details",
+				paths = arrayOf(it.toJsonInlinedOrNull().orEmpty())
 			)
 		}
 	}
