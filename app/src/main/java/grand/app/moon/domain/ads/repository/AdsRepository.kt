@@ -51,6 +51,7 @@ interface AdsRepository {
 	  propertiesIds: List<Int>,
   ): Resource<BaseResponse<ResponseMyAdvDetails?>>
 	suspend fun getMyAdvertisementDetails(id: Int): Resource<BaseResponse<ResponseMyAdvDetails?>>
+	suspend fun deleteAdvertisement(id: Int): Resource<BaseResponse<Any?>>
 
 	suspend fun makeMyAdvertisementPremium(id: Int, packageId: Int): Resource<BaseResponse<Any?>>
 

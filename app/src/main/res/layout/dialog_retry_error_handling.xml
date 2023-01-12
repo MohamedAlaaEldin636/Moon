@@ -16,6 +16,7 @@
     android:layout_gravity="center"
 
     android:background="@drawable/dr_round_white_16"
+    tools:backgroundTint="@color/grey"
 
     android:padding="16dp">
 

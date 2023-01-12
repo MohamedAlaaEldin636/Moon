@@ -99,6 +99,9 @@ class AdsRepositoryImpl @Inject constructor(
 	override suspend fun getMyAdvertisementDetails(id: Int): Resource<BaseResponse<ResponseMyAdvDetails?>> =
 		remoteDataSource.getMyAdvertisementDetails(id)
 
+	override suspend fun deleteAdvertisement(id: Int): Resource<BaseResponse<Any?>> =
+		remoteDataSource.deleteAdvertisement(id)
+
 	override suspend fun makeMyAdvertisementPremium(id: Int, packageId: Int): Resource<BaseResponse<Any?>> =
 		remoteDataSource.makeMyAdvertisementPremium(id, packageId)
 

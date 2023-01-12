@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.showError
@@ -22,6 +23,7 @@ import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrSplashBA
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myAds.MyAdvDetailsFragment
 import grand.app.moon.presentation.myAds.MyAdvDetailsFragmentArgs
 import grand.app.moon.presentation.myAds.MyAdvDetailsFragmentDirections
@@ -284,7 +286,27 @@ class MyAdvDetailsViewModel @Inject constructor(
 	}
 
 	fun deleteAdv(view: View) {
-		TODO()
+		val fragment = view.findFragmentOrNull<MyAdvDetailsFragment>() ?: return
+		val context = fragment.context ?: return
+
+		val id = response.value?.id ?: return
+
+		fragment.showCustomYesNoWarningDialog(
+			context.getString(R.string.confirm_deletion),
+			context.getString(R.string.are_you_sure_del_ad)
+		) { dialog ->
+			fragment.handleRetryAbleActionCancellableNullable(
+				action = {
+					adsUseCase.deleteAdvertisement(id)
+				}
+			) {
+				dialog.dismiss()
+
+				fragment.showMessage(context.getString(R.string.done_successfully))
+
+				fragment.findNavController().navigateUp()
+			}
+		}
 	}
 
 }

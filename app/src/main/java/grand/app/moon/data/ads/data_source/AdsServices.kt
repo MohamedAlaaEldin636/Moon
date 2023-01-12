@@ -146,4 +146,9 @@ interface AdsServices {
 		@Query("type") type: Int = 1
 	): BaseResponse<Any?>
 
+	@DELETE("v1/my-advertisements/{id}")
+	suspend fun deleteAdvertisement(
+		@Path("id") id: Int
+	): BaseResponse<Any?>
+
 }

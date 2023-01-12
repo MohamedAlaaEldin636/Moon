@@ -256,4 +256,9 @@
   <string name="del_ad">Delete Ad</string>
   <string name="check_ad_premium">Check Premium</string>
   <string name="no_link_exists">No link Exists</string>
+  <string name="yes_confirm">Yes Confirm</string>
+  <string name="no_thanks">No Thanks</string>
+  <string name="confirm_deletion">Confirm Deletion</string>
+  <string name="are_you_sure_del_ad">Are you sure you want to delete the advertisement from your account ?</string>
+  <string name="done_successfully">Done Successfully</string>
 </resources>
