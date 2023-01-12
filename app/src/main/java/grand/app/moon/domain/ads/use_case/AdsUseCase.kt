@@ -122,7 +122,7 @@ class AdsUseCase @Inject constructor(
 		is_negotiable: Boolean,
 		brand_id: Int?,
 		description: String,
-		propertiesIds: List<Int>,
+		propertiesIds: List<Pair<Int, String?>>,
 	) = repo.addAdvertisement(
 		category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price,
 		if (is_negotiable) 1 else 0, brand_id, description, propertiesIds

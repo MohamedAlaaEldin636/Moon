@@ -262,6 +262,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
 	          MyLogger.e("ad details cycle -> args -> ${getString(res)}")
 
+	          /*binding.toolbar.post {
+							binding.toolbar.title = getString(res)
+	          }*/
+
 	          getString(res)
           }else if (arguments != null && arguments.containsKey(Constants.TabBarText)) {
 						arguments.getString(Constants.TabBarText)

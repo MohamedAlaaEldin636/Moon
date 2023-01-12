@@ -72,7 +72,9 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	val selectedCity = MutableLiveData<Country>()
 
 	val selectedBrand = MutableLiveData<ItemSubCategory>(
-		brands.firstOrNull { it.id == response?.brand?.id }
+		brands.firstOrNull { it.id == response?.brand?.id }.also {
+			MyLogger.e("ad details cycle -> $brands ${response?.brand}")
+		}
 	)
 
 	val properties = MutableLiveData<List<ItemProperty>>()
@@ -161,14 +163,14 @@ class AddAdvFinalPageViewModel @Inject constructor(
 					mapOfProperties.value.orEmpty().mapNotNull { (_, value) ->
 						when {
 							value.valueId != null -> {
-								value.valueId.orZero()
+								value.valueId.orZero() to null
 							}
 							value.valueString != null -> {
-								value.id.orZero()
+								value.id.orZero() to value.valueString
 							}
 							else /*value.valueBoolean != null*/ -> {
 								if (value.valueBoolean == true) {
-									value.id.orZero()
+									value.id.orZero() to null
 								}else {
 									null
 								}

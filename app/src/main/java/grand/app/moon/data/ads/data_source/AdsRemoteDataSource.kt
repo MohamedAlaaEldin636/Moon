@@ -9,6 +9,7 @@ import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.filter.FILTER_TYPE
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -124,13 +125,18 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		is_negotiable: Int,
 		brand_id: Int?,
 		description: String,
-		propertiesIds: List<Int>,
+		propertiesIds: List<Pair<Int, String?>>,
 	) = safeApiCall {
 		val map = mutableMapOf<String, RequestBody>()
-		for ((index, id) in propertiesIds.withIndex()) {
+		for ((index, pair) in propertiesIds.withIndex()) {
+			val (id, text) = pair
 			map["property_ids[$index][id]"] = id.toString().toRequestBody()
+			if (text.isNullOrEmpty().not()) {
+				map["property_ids[$index][text]"] = text.orEmpty().toRequestBody()
+			}
 		}
 
+		MyLogger.e("qwqw -> $brand_id")
 		if (brand_id != null) {
 			map["brand_id"] = brand_id.toString().toRequestBody()
 		}

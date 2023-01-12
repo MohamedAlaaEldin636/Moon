@@ -129,21 +129,25 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 			val map = sortedMapOf<Int, ItemProperty>()
 			val responseProperties = viewModel.response?.properties.orEmpty() +
 				viewModel.response?.switches.orEmpty()
+			MyLogger.e("ad details cycle -> withValueProperty -> $responseProperties")
+			MyLogger.e("ad details cycle -> withValueProperty -> ${it.properties}")
 			for (property in it.properties.orEmpty()) {
 				if (viewModel.response != null) {
-					val withValueProperty = responseProperties.firstOrNull { item -> item.id == property.id }
 
 					when (property.type) {
 						1 -> {
 							// Multi-Selection
+							val withValueProperty = responseProperties.firstOrNull { item -> item.parent?.id == property.id }
 							property.valueId = withValueProperty?.id
 						}
 						3 -> {
 							// Text
+							val withValueProperty = responseProperties.firstOrNull { item -> item.id == property.id }
 							property.valueString = withValueProperty?.text
 						}
 						else /* null */ -> {
 							// Boolean
+							val withValueProperty = responseProperties.firstOrNull { item -> item.id == property.id }
 							property.valueBoolean = withValueProperty != null
 						}
 					}

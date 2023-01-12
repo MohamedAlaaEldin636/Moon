@@ -48,7 +48,7 @@ interface AdsRepository {
 	  is_negotiable: Int,
 	  brand_id: Int?,
 	  description: String,
-	  propertiesIds: List<Int>,
+	  propertiesIds: List<Pair<Int, String?>>,
   ): Resource<BaseResponse<ResponseMyAdvDetails?>>
 	suspend fun getMyAdvertisementDetails(id: Int): Resource<BaseResponse<ResponseMyAdvDetails?>>
 	suspend fun deleteAdvertisement(id: Int): Resource<BaseResponse<Any?>>

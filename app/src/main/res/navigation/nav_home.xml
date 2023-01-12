@@ -647,8 +647,7 @@
   <fragment
     android:id="@+id/dest_add_adv_final_page"
     android:name="grand.app.moon.presentation.myAds.AddAdvFinalPageFragment"
-    tools:layout="@layout/fragment_add_adv_final_page"
-    android:label="@string/advertisement_addition">
+    tools:layout="@layout/fragment_add_adv_final_page">
     <argument
       android:name="idOfMainCategory"
       app:argType="integer" />
@@ -665,7 +664,7 @@
       android:id="@+id/action_dest_location_selection_to_home_fragment_2"
       app:destination="@id/home_fragment"
       app:popUpTo="@id/home_fragment"
-      app:popUpToInclusive="false"/>
+      app:popUpToInclusive="false" />
     <argument
       android:name="jsonResponseMyAdvDetails"
       app:argType="string"

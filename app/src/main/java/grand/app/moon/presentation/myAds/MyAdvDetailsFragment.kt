@@ -91,8 +91,6 @@ class MyAdvDetailsFragment : BaseFragment<FragmentMyAdvDetailsBinding>() {
 		viewModel.response.observe(viewLifecycleOwner) { response ->
 			if (response == null) return@observe
 
-			MyLogger.e("ad details cycle -> images -> ${response.images?.map { it.image.orEmpty() }.orEmpty()}")
-			MyLogger.e("ad details cycle -> images 2 -> ${response.images}")
 			viewModel.adapterImages.submitList(
 				response.images?.map { it.image.orEmpty() }.orEmpty()
 			)
