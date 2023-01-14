@@ -322,10 +322,12 @@
           <TextView
             android:id="@+id/isNegotiableTextView"
 
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:layout_margin="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
 
             android:textColor="#B7B7B7"
             style="@style/TextTajawalRegular14"
@@ -334,18 +336,28 @@
             tools:visibility="gone"
             android:visibility="@{viewModel.showIsNegotiable}"
 
+            app:autoSizeTextType="uniform"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="6sp"
+
+            android:maxLines="1"
+            android:ellipsize="end"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/priceTextView"/>
 
           <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/priceTextView"
 
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
 
             android:layout_marginEnd="8dp"
             android:layout_marginStart="11dp"
+
+            android:gravity="start"
 
             android:textColor="#E89028"
             style="@style/TextTajawalBold14"
@@ -370,7 +382,7 @@
           <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/oldPriceTextView"
 
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
 
             android:layout_marginEnd="8dp"
@@ -381,12 +393,14 @@
             android:textColor="#0D0633"
             style="@style/TextTajawalBold14"
             android:textSize="10sp"
-            tools:text="1000 ريال"
+            tools:text="100sassaasasassasa0 ريال"
             android:text="@{viewModel.oldPrice}"
 
             app:autoSizeTextType="uniform"
             app:autoSizeMaxTextSize="10sp"
             app:autoSizeMinTextSize="6sp"
+
+            android:gravity="start"
 
             android:maxLines="1"
             android:ellipsize="end"

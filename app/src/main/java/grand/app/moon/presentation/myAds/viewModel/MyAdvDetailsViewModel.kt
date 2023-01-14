@@ -51,22 +51,22 @@ class MyAdvDetailsViewModel @Inject constructor(
 
 	/** ( 4.5 ) */
 	val ratingText = response.map {
-		"( ${it?.averageRate?.round(1)?.toIntIfNoFractionsOrThisFloat().toStringOrEmpty()} )"
+		"( ${it?.averageRate?.round(1).orZero().toIntIfNoFractionsOrThisFloat().toStringOrEmpty()} )"
 	}
 
 	/** 102 */
 	val favText = response.map {
-		it?.favoriteCount.toStringOrEmpty()
+		it?.favoriteCount.orZero().toStringOrEmpty()
 	}
 
 	/** 102 */
 	val viewsText = response.map {
-		it?.viewsCount.toStringOrEmpty()
+		it?.viewsCount.orZero().toStringOrEmpty()
 	}
 
 	/** 102 */
 	val sharesText = response.map {
-		it?.shareCount.toStringOrEmpty()
+		it?.shareCount.orZero().toStringOrEmpty()
 	}
 
 	val showPremium = response.map {

@@ -67,12 +67,12 @@ class MyAdsViewModel @Inject constructor(
 
 		binding.shapeableImageView.setupWithGlideOrEmptyBA(item.image)
 
-		binding.ratingTextView.text = "( ${item.averageRate?.round(1)
-			?.toIntIfNoFractionsOrThisFloat().toStringOrEmpty()} )"
+		binding.ratingTextView.text = "( ${item.averageRate?.round(1).orZero()
+			.toIntIfNoFractionsOrThisFloat().toStringOrEmpty()} )"
 
-		binding.favsTextView.text = item.favoriteCount.toStringOrEmpty()
+		binding.favsTextView.text = item.favoriteCount.orZero().toStringOrEmpty()
 
-		binding.viewsTextView.text = item.viewsCount.toStringOrEmpty()
+		binding.viewsTextView.text = item.viewsCount.orZero().toStringOrEmpty()
 
 		binding.titleTextView.text = item.title.orEmpty()
 

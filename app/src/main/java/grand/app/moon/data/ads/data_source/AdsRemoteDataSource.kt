@@ -238,11 +238,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 			map["to"] = toDate
 		}
 
-		val premium = when (typeOfAd) {
-			TypeOfAd.FREE -> 2
-			TypeOfAd.PREMIUM -> 1
-			else -> null
-		}
+		val premium = typeOfAd?.apiValue
 		if (premium != null) {
 			map["premium"] = premium.toString()
 		}
