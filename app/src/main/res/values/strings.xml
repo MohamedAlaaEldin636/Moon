@@ -262,4 +262,15 @@
   <string name="are_you_sure_del_ad">Are you sure you want to delete the advertisement from your account ?</string>
   <string name="done_successfully">Done Successfully</string>
   <string name="at_least_1_image_898">At least one image must remain</string>
+  <string name="filtering_results">Filtering Results</string>
+  <string name="ad_type">Advertisement Type</string>
+  <string name="search_ad_title">Search Advertisement Title</string>
+  <string name="ad_name">Advertisement Name</string>
+  <string name="all_ads_3">All Advertisements</string>
+  <string name="date_hint">Day / Month / Year</string>
+  <string name="search_now">Search Now</string>
+  <string name="date_from">Date from</string>
+  <string name="date_to">Date to</string>
+  <string name="price_8789">Price :</string>
+  <string name="category_8789">Category :</string>
 </resources>

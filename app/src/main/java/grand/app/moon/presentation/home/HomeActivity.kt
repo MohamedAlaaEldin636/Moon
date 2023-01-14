@@ -171,6 +171,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 				}
 		    R.id.mapFragment -> {
 			    hideTopBarControls()
+			    hideAllToolbar()
 			    binding.bottomNavigationView.hide()
 					/*
 					showTopBarControls()

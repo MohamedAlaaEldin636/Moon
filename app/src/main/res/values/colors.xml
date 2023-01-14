@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <color name="prefix_in_my_ads_item">#727889</color>
+  
   <color name="announcement_dialog_window_background">#47000000</color>
 
   <color name="not_selected_3">#7F8897</color>

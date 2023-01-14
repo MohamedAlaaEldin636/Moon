@@ -12,6 +12,8 @@ import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
+import grand.app.moon.presentation.myAds.model.ResponseMyAdvertisements
+import grand.app.moon.presentation.myAds.model.TypeOfAd
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
@@ -124,5 +126,13 @@ class AdsRepositoryImpl @Inject constructor(
 
 	override suspend fun makeMyAdvertisementPremium(id: Int, packageId: Int): Resource<BaseResponse<Any?>> =
 		remoteDataSource.makeMyAdvertisementPremium(id, packageId)
+
+	override suspend fun getMyAdvertisements(
+		title: String?,
+		typeOfAd: TypeOfAd?,
+		fromDate: String?,
+		toDate: String?,
+	): Resource<BaseResponse<ResponseMyAdvertisements?>> =
+		remoteDataSource.getMyAdvertisements(title, typeOfAd, fromDate, toDate)
 
 }

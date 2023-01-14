@@ -17,6 +17,7 @@ import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.presentation.myAds.model.TypeOfAd
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import okhttp3.MultipartBody
@@ -155,5 +156,14 @@ class AdsUseCase @Inject constructor(
 	suspend fun deleteImageInAdvertisement(id: Int) = repo.deleteImageInAdvertisement(id)
 
 	suspend fun makeMyAdvertisementPremium(id: Int, packageId: Int) = repo.makeMyAdvertisementPremium(id, packageId)
+
+	suspend fun getMyAdvertisements(
+		title: String?,
+		typeOfAd: TypeOfAd?,
+		fromDate: String?,
+		toDate: String?,
+	) = repo.getMyAdvertisements(
+		title, typeOfAd, fromDate, toDate
+	)
 
 }

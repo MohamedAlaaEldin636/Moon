@@ -11,6 +11,7 @@ import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.filter.FILTER_TYPE
+import grand.app.moon.presentation.myAds.model.TypeOfAd
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -216,6 +217,38 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 	suspend fun deleteImageInAdvertisement(id: Int) = safeApiCall { apiService.deleteImageInAdvertisement(id) }
 
 	suspend fun makeMyAdvertisementPremium(id: Int, packageId: Int) = safeApiCall { apiService.makeMyAdvertisementPremium(id, packageId) }
+
+	suspend fun getMyAdvertisements(
+		title: String?,
+		typeOfAd: TypeOfAd?,
+		fromDate: String?,
+		toDate: String?,
+	) = safeApiCall {
+		val map = mutableMapOf<String, String>()
+
+		if (!title.isNullOrEmpty()) {
+			map["title"] = title
+		}
+
+		if (!fromDate.isNullOrEmpty()) {
+			map["from"] = fromDate
+		}
+
+		if (!toDate.isNullOrEmpty()) {
+			map["to"] = toDate
+		}
+
+		val premium = when (typeOfAd) {
+			TypeOfAd.FREE -> 2
+			TypeOfAd.PREMIUM -> 1
+			else -> null
+		}
+		if (premium != null) {
+			map["premium"] = premium.toString()
+		}
+
+		apiService.getMyAdvertisements(map)
+	}
 
   suspend fun filterResults(request: FilterResultRequest) = safeApiCall {
     val map = getParameters(request).toMutableMap()

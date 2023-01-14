@@ -252,4 +252,15 @@
   <string name="are_you_sure_del_ad">هل تريد تأكيد حذف الإعلان من حسابك ؟</string>
   <string name="done_successfully">تم بنجاح</string>
   <string name="at_least_1_image_898">على الأقل صورة واحدة يجب ان تبقى</string>
+  <string name="filtering_results">فلترة النتائج</string>
+  <string name="ad_type">نوع الاعلان</string>
+  <string name="search_ad_title">ابحث عن عنوان الإعلان</string>
+  <string name="ad_name">اسم الإعلان</string>
+  <string name="all_ads_3">كل الإعلانات</string>
+  <string name="date_hint">يوم / شهر / سنة</string>
+  <string name="search_now">ابحث الأن</string>
+  <string name="date_from">من تاريخ</string>
+  <string name="date_to">إلي تاريخ</string>
+  <string name="price_8789">السعر :</string>
+  <string name="category_8789">القسم :</string>
 </resources>

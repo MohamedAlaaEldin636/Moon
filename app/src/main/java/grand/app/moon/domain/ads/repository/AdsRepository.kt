@@ -18,6 +18,8 @@ import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
+import grand.app.moon.presentation.myAds.model.ResponseMyAdvertisements
+import grand.app.moon.presentation.myAds.model.TypeOfAd
 import okhttp3.MultipartBody
 
 interface AdsRepository {
@@ -71,5 +73,12 @@ interface AdsRepository {
 	suspend fun deleteImageInAdvertisement(id: Int): Resource<BaseResponse<Any?>>
 
 	suspend fun makeMyAdvertisementPremium(id: Int, packageId: Int): Resource<BaseResponse<Any?>>
+
+	suspend fun getMyAdvertisements(
+		title: String?,
+		typeOfAd: TypeOfAd?,
+		fromDate: String?,
+		toDate: String?,
+	): Resource<BaseResponse<ResponseMyAdvertisements?>>
 
 }

@@ -16,6 +16,7 @@ import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
+import grand.app.moon.presentation.myAds.model.ResponseMyAdvertisements
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -172,5 +173,10 @@ interface AdsServices {
 	suspend fun deleteImageInAdvertisement(
 		@Path("id") id: Int
 	): BaseResponse<Any?>
+
+	@GET("v1/my-advertisements")
+	suspend fun getMyAdvertisements(
+		@QueryMap filtersMap: Map<String, String>,
+	): BaseResponse<ResponseMyAdvertisements?>
 
 }

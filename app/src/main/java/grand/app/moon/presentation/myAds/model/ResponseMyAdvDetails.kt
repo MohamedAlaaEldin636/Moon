@@ -6,6 +6,10 @@ import grand.app.moon.extensions.orZero
 import java.math.BigDecimal
 import java.math.RoundingMode
 
+data class ResponseMyAdvertisements(
+	var advertisements: List<ResponseMyAdvDetails>?
+)
+
 data class ResponseMyAdvDetails(
 	var id: Int?,
 	var title: String?,
