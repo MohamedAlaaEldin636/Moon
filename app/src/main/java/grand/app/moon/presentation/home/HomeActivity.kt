@@ -42,6 +42,7 @@ import grand.app.moon.presentation.base.extensions.openActivity
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.utils.showMessage
 import grand.app.moon.presentation.myAds.AddAdvertisementFragmentArgs
+import grand.app.moon.presentation.packages.MyBecomeShopPackageFragment
 
 
 @AndroidEntryPoint
@@ -283,27 +284,28 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 	    if (isLogin()) {
 				val user = viewModel.userLocalUseCase()
 
-		    /*if (true) {
-					showRetryErrorDialogWithCancelNegativeButton(user.phone) {
-						showMessage(this, "Done+")
-					}
-
-					return@setOnClickListener
-		    }*/
-
-		    // todo if user -> 2 path & if shop -> 2 path as well -> call check availability so show
-		    //  loading now isa.
-		    if (user.isStore == true) {
-			    //nav.navigate(R.id.dest_add_adv_categories_list) // if available else packages to renew package
-			    General.TODO("Will be programmed later in sprint 2 isa.")
-		    }else {
-					handleRetryAbleActionCancellable(
-						action = {
-							viewModel.homeUseCase.checkAvailableAdvertisements()
+		    handleRetryAbleActionCancellable(
+			    action = {
+				    viewModel.homeUseCase.checkAvailableAdvertisements()
+			    }
+		    ) {
+			    if (user.isStore == true) {
+						if (it > 0) {
+							// Add Adv
+							nav.navigateDeepLinkWithOptions(
+								"fragment-dest",
+								"grand.app.moon.dest.add.adv.categories.list"
+							)
+						}else {
+							// Renew current package or subscribe to a new package
+							nav.navigateDeepLinkWithOptions(
+								"fragment-dest",
+								"grand.app.moon.dest.my.become.shop.package"
+							)
 						}
-					) {
-						nav.navigate(NavHomeDirections.actionGlobalDestAddAdvertisement(it))
-					}
+			    }else {
+				    nav.navigate(NavHomeDirections.actionGlobalDestAddAdvertisement(it))
+			    }
 		    }
 	    }else {
 		    startActivity(Intent(this, AuthActivity::class.java))

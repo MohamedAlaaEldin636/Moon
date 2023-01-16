@@ -7,6 +7,7 @@ import androidx.annotation.NavigationRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.navigation.*
+import androidx.navigation.fragment.findNavController
 import grand.app.moon.R
 
 /*fun Fragment.findNavControllerOfProject(): NavController {
@@ -104,3 +105,32 @@ fun NavController.inflateGraph(@NavigationRes navigationRes: Int, args: Bundle? 
 private fun NavController.getBackStackEntryOrNull(destinationId: Int) = kotlin.runCatching {
 	getBackStackEntry(destinationId)
 }.getOrNull()
+
+inline fun <reified T> NavController.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(any: T) {
+	navigateUp()
+
+	currentBackStackEntry?.savedStateHandle?.set(
+		AppConsts.NavController.GSON_KEY,
+		any.toJsonInlinedOrNull().orEmpty()
+	)
+}
+
+inline fun <reified T> Fragment.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull(noinline onNotNullResult: (T) -> Unit) {
+	findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
+		AppConsts.NavController.GSON_KEY,
+		""
+	)?.observe(viewLifecycleOwner) {
+		if (it.isNullOrEmpty().not()) {
+			val value = it.fromJsonInlinedOrNull<T>()
+
+			findNavController().currentBackStackEntry?.savedStateHandle?.set(
+				AppConsts.NavController.GSON_KEY,
+				""
+			)
+
+			if (value != null) {
+				onNotNullResult(value)
+			}
+		}
+	}
+}

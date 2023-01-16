@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.packages.MyBecomeShopPackageFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.packages.viewModel.MyBecomeShopPackageViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+      android:id="@+id/toolbarCurve"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      layout="@layout/item_toolbar_curve"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/button"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:background="@drawable/dr_rounded_5_text_field_with_bg"
+      app:backgroundTint="@color/colorPrimary"
+
+      android:onClick="@{v -> viewModel.renewOrSubscribeToNewPackage(v)}"
+
+      tools:text="التجديد و الاشتراك في باقة اخري"
+      style="@style/TextTajawalMedium14"
+      android:textColor="@color/white"
+      android:gravity="center"
+      android:textDirection="locale"
+
+      android:padding="17dp"
+
+      android:layout_marginBottom="17dp"
+      android:layout_marginStart="27dp"
+      android:layout_marginEnd="27dp"
+
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -151,18 +151,20 @@ fun <T> BaseActivity<*>.handleRetryAbleActionCancellable(
 
 fun <T> BaseFragment<*>.handleRetryAbleActionCancellable(
 	action: suspend () -> Resource<BaseResponse<T?>>,
+	showLoadingAction: () -> Unit = { showLoading() },
+	hideLoadingAction: () -> Unit = { hideLoading() },
 	onSuccess: (T) -> Unit
 ) {
 	handleRetryAbleAction(
-		showLoading = { showLoading() },
-		hideLoading = { hideLoading() },
+		showLoading = { showLoadingAction() },
+		hideLoading = { hideLoadingAction() },
 		lifecycleScope,
 		action,
 		onError = {
 			showRetryErrorDialogWithCancelNegativeButton(
 				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
 			) {
-				handleRetryAbleActionCancellable(action, onSuccess)
+				handleRetryAbleActionCancellable(action, showLoadingAction, hideLoadingAction, onSuccess)
 			}
 		},
 		onSuccess
@@ -182,7 +184,7 @@ fun <T> BaseFragment<*>.handleRetryAbleActionCancellableNullable(
 			showRetryErrorDialogWithCancelNegativeButton(
 				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
 			) {
-				handleRetryAbleActionCancellable(action, onSuccess)
+				handleRetryAbleActionCancellableNullable(action, onSuccess)
 			}
 		},
 		onSuccess
@@ -202,7 +204,7 @@ fun <T> BaseFragment<*>.handleRetryAbleActionOrGoBack(
 			showRetryErrorDialogWithBackNegativeButton(
 				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
 			) {
-				handleRetryAbleActionCancellable(action, onSuccess)
+				handleRetryAbleActionOrGoBack(action, onSuccess)
 			}
 		},
 		onSuccess

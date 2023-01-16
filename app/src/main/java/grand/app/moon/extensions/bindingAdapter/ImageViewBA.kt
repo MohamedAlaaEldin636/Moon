@@ -23,6 +23,17 @@ fun ImageView.setupWithGlideOrEmptyBA(url :String?) {
 	}
 }
 
+@BindingAdapter("imageView_setupWithGlideOrIgnore_drawableResName")
+fun ImageView.setupWithGlideOrIgnoreDrawableResName(name :String?) {
+	val id = context?.resources?.getIdentifier(name, "drawable", context?.packageName).orZero()
+
+	if (id != 0) {
+		Glide.with(this)
+			.load(id)
+			.into(this)
+	}
+}
+
 @BindingAdapter("imageView_setupWithGlideOrEmptyBA_uri")
 fun ImageView.setupWithGlideOrEmptyBAUri(uri :Uri?) {
 	if (uri == null) setImageResource(0) else {

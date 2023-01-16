@@ -1,10 +1,16 @@
 package grand.app.moon.presentation.myAds
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentAddAdvertisementBinding
 import grand.app.moon.databinding.FragmentMyAdsBinding
+import grand.app.moon.extensions.navigateDeepLinkWithOptions
+import grand.app.moon.extensions.navigateSafely
+import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.myAds.viewModel.AddAdvertisementViewModel
 
@@ -17,6 +23,23 @@ class AddAdvertisementFragment : BaseFragment<FragmentAddAdvertisementBinding>()
 
 	override fun setBindingVariables() {
 		binding.viewModel = viewModel
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
+			if (it) {
+				val navController = findNavController()
+
+				navController.navigateUp()
+
+				navController.navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.add.adv.categories.list"
+				)
+			}
+		}
 	}
 
 }

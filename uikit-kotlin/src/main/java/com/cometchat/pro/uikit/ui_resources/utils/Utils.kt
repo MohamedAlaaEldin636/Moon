@@ -765,8 +765,8 @@ public class Utils {
                     val notificationManager = NotificationManagerCompat.from(context)
                     builder.setGroup(GROUP_ID + "Call")
                     builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
-                    builder.addAction(0, "Answers", PendingIntent.getBroadcast(context, REQUEST_CODE, callIntent, PendingIntent.FLAG_UPDATE_CURRENT))
-                    builder.addAction(0, "Decline", PendingIntent.getBroadcast(context, 1, callIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    //builder.addAction(0, "Answers", PendingIntent.getBroadcast(context, REQUEST_CODE, callIntent, PendingIntent.FLAG_UPDATE_CURRENT))
+                    //builder.addAction(0, "Decline", PendingIntent.getBroadcast(context, 1, callIntent, PendingIntent.FLAG_UPDATE_CURRENT))
                     notificationManager.notify(5, builder.build())
                 }.start()
             } catch (e: java.lang.Exception) {

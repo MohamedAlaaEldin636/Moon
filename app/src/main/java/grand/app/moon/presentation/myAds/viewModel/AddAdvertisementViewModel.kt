@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
 import grand.app.moon.extensions.General
 import grand.app.moon.extensions.findFragmentOrNull
 import grand.app.moon.extensions.getString
+import grand.app.moon.extensions.navigateSafely
 import grand.app.moon.presentation.base.extensions.enable
 import grand.app.moon.presentation.myAds.AddAdvertisementFragment
 import grand.app.moon.presentation.myAds.AddAdvertisementFragmentArgs
@@ -63,12 +65,17 @@ class AddAdvertisementViewModel @Inject constructor(
 	fun goToNextScreen(view: View) {
 		val fragment = view.findFragmentOrNull<AddAdvertisementFragment>() ?: return
 
+		goToNextScreen(fragment)
+	}
+	fun goToNextScreen(fragment: AddAdvertisementFragment) {
 		if (currentlySelectedTypeIsFree.value == true) {
-			fragment.findNavController().navigate(
+			fragment.findNavController().navigateSafely(
 				AddAdvertisementFragmentDirections.actionDestAddAdvertisementToDestAddAdvCategoriesList()
 			)
 		}else {
-			General.TODO("Will be programmed later in sprint 2 isa.")
+			fragment.findNavController().navigateSafely(
+				AddAdvertisementFragmentDirections.actionDestAddAdvertisementToDestBecomeShopPackages()
+			)
 		}
 	}
 

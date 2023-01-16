@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <color name="selected_page_indicator">#e89028</color>
+  <color name="unselected_page_indicator">#d8d8d8</color>
+
   <color name="prefix_in_my_ads_item">#727889</color>
   
   <color name="announcement_dialog_window_background">#47000000</color>

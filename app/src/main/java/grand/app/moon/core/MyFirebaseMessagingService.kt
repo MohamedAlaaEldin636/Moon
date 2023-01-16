@@ -60,6 +60,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
       //.setArguments(bundleOf())
       .createPendingIntent()
 
+	  //pendingIntent.fla;
+	  // FLAG_IMMUTABLE
+
 
     Log.d(TAG, "sendNotification: HRERE")
     messageBody.forEach { (s, s2) ->

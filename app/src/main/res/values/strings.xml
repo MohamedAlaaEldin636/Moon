@@ -273,4 +273,17 @@
   <string name="date_to">Date to</string>
   <string name="price_8789">Price :</string>
   <string name="category_8789">Category :</string>
+    <string name="pick_siutable_package_for_yourself">Pick suitable Package</string>
+  <string name="packages_898">Packages</string>
+  <string name="days">Days</string>
+  <string name="months">Months</string>
+  <string name="years">Years</string>
+  <string name="free">Free</string>
+  <string name="ads_count_var">Advertisements Count %1$s</string>
+  <string name="addintg_var_stories">Adding %1$s Stories</string>
+  <string name="addintg_var_explore">Adding %1$s Explore</string>
+  <string name="checking_statistics_var">View the statistics %1$s</string>
+  <string name="subscribe_now">Subscribe Now</string>
+  <string name="already_subscribed">Already Subscribed</string>
+  <string name="your_subscription_will_end_in_var_days">Your subscription will end in %1$s Days</string>
 </resources>

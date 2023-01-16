@@ -159,7 +159,7 @@ object RetrofitModule {
         .writeTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .addInterceptor(logging)
         .addInterceptor(headersInterceptor)
-        .addInterceptor(ChuckInterceptor(context))
+        //.addInterceptor(ChuckInterceptor(context))
 //        .addInterceptor(requestInterceptor)
         .build()
     } else {

@@ -2,6 +2,8 @@ package grand.app.moon.presentation.base.extensions
 
 import android.Manifest
 import android.app.Activity
+import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
@@ -16,7 +18,7 @@ fun <A : Activity> Activity.openActivityAndClearStack(activity: Class<A>) {
   }
 
   Intent(this, activity).apply {
-    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK// or PendingIntent.FLAG_IMMUTABLE
     this.action = intent.action
     this.data = intent.data
     startActivity(this)

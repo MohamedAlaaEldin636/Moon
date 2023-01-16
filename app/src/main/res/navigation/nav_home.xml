@@ -613,6 +613,9 @@
     <action
       android:id="@+id/action_dest_add_advertisement_to_dest_add_adv_categories_list"
       app:destination="@id/dest_add_adv_categories_list" />
+    <action
+      android:id="@+id/action_dest_add_advertisement_to_dest_become_shop_packages"
+      app:destination="@id/dest_become_shop_packages" />
   </fragment>
   <fragment
     android:id="@+id/dest_add_adv_categories_list"
@@ -622,6 +625,10 @@
     <action
       android:id="@+id/action_dest_add_adv_categories_list_to_dest_add_adv_sub_categories_list"
       app:destination="@id/dest_add_adv_sub_categories_list" />
+    <deepLink
+      android:id="@+id/deep_link_dest_add_adv_categories_list"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.add.adv.categories.list"/>
   </fragment>
   <fragment
     android:id="@+id/dest_add_adv_sub_categories_list"
@@ -733,6 +740,24 @@
     <argument
       android:name="longitude"
       app:argType="string" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_become_shop_packages"
+    android:name="grand.app.moon.presentation.packages.BecomeShopPackagesFragment"
+    android:label="@string/packages_898"
+    tools:layout="@layout/fragment_become_shop_packages">
+    <action
+      android:id="@+id/action_dest_become_shop_packages_to_dest_my_become_shop_package"
+      app:destination="@id/dest_my_become_shop_package" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_my_become_shop_package"
+    android:name="grand.app.moon.presentation.packages.MyBecomeShopPackageFragment"
+    tools:layout="@layout/fragment_my_become_shop_package">
+    <deepLink
+      android:id="@+id/deep_link_dest_my_become_shop_package"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.my.become.shop.package"/>
   </fragment>
 
 </navigation>
