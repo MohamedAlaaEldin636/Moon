@@ -106,25 +106,47 @@ private fun NavController.getBackStackEntryOrNull(destinationId: Int) = kotlin.r
 	getBackStackEntry(destinationId)
 }.getOrNull()
 
-inline fun <reified T> NavController.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(any: T) {
+inline fun <reified T> NavController.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
+	any: T,
+	key: String = AppConsts.NavController.GSON_KEY,
+) {
+	MyLogger.e("resultssss -> navUpThenSetResultInBackStackEntrySavedStateHandleViaGson $any $key")
+
 	navigateUp()
 
 	currentBackStackEntry?.savedStateHandle?.set(
-		AppConsts.NavController.GSON_KEY,
+		key,
 		any.toJsonInlinedOrNull().orEmpty()
 	)
 }
 
-inline fun <reified T> Fragment.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull(noinline onNotNullResult: (T) -> Unit) {
+inline fun <reified T> NavController.setResultInPreviousBackStackEntrySavedStateHandleViaGson(
+	any: T,
+	key: String = AppConsts.NavController.GSON_KEY,
+) {
+	MyLogger.e("resultssss -> setResultInPreviousBackStackEntrySavedStateHandleViaGson $any $key")
+
+	previousBackStackEntry?.savedStateHandle?.set(
+		key,
+		any.toJsonInlinedOrNull().orEmpty()
+	)
+}
+
+inline fun <reified T> Fragment.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull(
+	key: String = AppConsts.NavController.GSON_KEY,
+	noinline onNotNullResult: (T) -> Unit
+) {
 	findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
-		AppConsts.NavController.GSON_KEY,
+		key,
 		""
 	)?.observe(viewLifecycleOwner) {
+		MyLogger.e("resultssss -> observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull on observe $key, $it")
+
 		if (it.isNullOrEmpty().not()) {
 			val value = it.fromJsonInlinedOrNull<T>()
 
 			findNavController().currentBackStackEntry?.savedStateHandle?.set(
-				AppConsts.NavController.GSON_KEY,
+				key,
 				""
 			)
 

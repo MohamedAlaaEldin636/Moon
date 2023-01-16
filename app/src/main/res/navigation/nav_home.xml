@@ -51,19 +51,19 @@
     <action
       android:id="@+id/action_home_fragment_to_nav_category_list_ads"
 
+      app:destination="@id/nav_category_list_ads"
       app:enterAnim="@anim/anim_slide_in_right"
-      app:exitAnim="@anim/anim_slide_out_left"
 
+      app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/nav_category_list_ads" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_home_fragment_to_storyFragment"
+      app:destination="@id/storyFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/storyFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_home_fragment_to_dest_app_global_announcement_dialog"
       app:destination="@id/dest_app_global_announcement_dialog" />
@@ -71,15 +71,14 @@
       android:id="@+id/action_home_fragment_to_dest_announcement_dialog"
       app:destination="@id/dest_announcement_dialog" />
     <!--    <action-->
-<!--      android:id="@+id/action_home_fragment_to_storiesListFragment"-->
-<!--      app:enterAnim="@anim/anim_slide_in_right"-->
-<!--      app:exitAnim="@anim/anim_slide_out_left"-->
-<!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
-<!--      app:popExitAnim="@anim/anim_slide_out_right"-->
-<!--      app:destination="@id/storiesListFragment" />-->
+    <!--      android:id="@+id/action_home_fragment_to_storiesListFragment"-->
+    <!--      app:enterAnim="@anim/anim_slide_in_right"-->
+    <!--      app:exitAnim="@anim/anim_slide_out_left"-->
+    <!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
+    <!--      app:popExitAnim="@anim/anim_slide_out_right"-->
+    <!--      app:destination="@id/storiesListFragment" />-->
 
   </fragment>
-
 
 
   <action
@@ -101,34 +100,35 @@
   <fragment
     android:id="@+id/mapFragment"
     android:name="grand.app.moon.presentation.map.MapFragment"
-    android:label="@string/map" >
+    android:label="@string/map">
 
-    <argument android:name="type"
+    <argument
+      android:name="type"
       android:defaultValue="store"
       app:argType="string" />
     <argument
       android:name="category_id"
-      app:argType="string"
       android:defaultValue="@null"
-      app:nullable="true"/>
+      app:argType="string"
+      app:nullable="true" />
     <argument
       android:name="sub_category_id"
-      app:argType="string"
       android:defaultValue="@null"
-      app:nullable="true"/>
+      app:argType="string"
+      app:nullable="true" />
     <argument
       android:name="subCategory"
       app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
     <argument
       android:name="property_id"
-      app:argType="string"
       android:defaultValue="@null"
-      app:nullable="true"/>
+      app:argType="string"
+      app:nullable="true" />
 
     <argument
       android:name="order_by"
-      app:argType="integer"
-      android:defaultValue="0" />
+      android:defaultValue="0"
+      app:argType="integer" />
 
     <deepLink
       android:id="@+id/mapFragmentStore"
@@ -141,34 +141,35 @@
   <fragment
     android:id="@+id/mapFragment2"
     android:name="grand.app.moon.presentation.map.MapFragment"
-    android:label="@string/map" >
+    android:label="@string/map">
 
-    <argument android:name="type"
+    <argument
+      android:name="type"
       android:defaultValue="store"
       app:argType="string" />
     <argument
       android:name="category_id"
-      app:argType="string"
       android:defaultValue="@null"
-      app:nullable="true"/>
+      app:argType="string"
+      app:nullable="true" />
     <argument
       android:name="sub_category_id"
-      app:argType="string"
       android:defaultValue="@null"
-      app:nullable="true"/>
+      app:argType="string"
+      app:nullable="true" />
     <argument
       android:name="subCategory"
       app:argType="grand.app.moon.domain.subCategory.entity.SubCategoryResponse" />
     <argument
       android:name="property_id"
-      app:argType="string"
       android:defaultValue="@null"
-      app:nullable="true"/>
+      app:argType="string"
+      app:nullable="true" />
 
     <argument
       android:name="order_by"
-      app:argType="integer"
-      android:defaultValue="0" />
+      android:defaultValue="0"
+      app:argType="integer" />
 
 
   </fragment>
@@ -205,7 +206,7 @@
     app:enterAnim="@anim/anim_slide_in_right"
     app:exitAnim="@anim/anim_slide_out_left"
     app:popEnterAnim="@anim/anim_slide_in_left"
-    app:popExitAnim="@anim/anim_slide_out_right" >
+    app:popExitAnim="@anim/anim_slide_out_right">
     <argument
       android:name="tabBarText"
       app:argType="string" />
@@ -256,18 +257,18 @@
       app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_categoryDetailsFragment_to_nav_ad_list"
+      app:destination="@id/nav_ad_list"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/nav_ad_list" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
     <action
       android:id="@+id/action_categoryDetailsFragment_to_storyFragment"
+      app:destination="@id/storyFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/storyFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
   </fragment>
 
 
@@ -285,7 +286,6 @@
     <action
       android:id="@+id/action_notificationFragment_to_filterSortDialog"
       app:destination="@id/filterSortDialog" />
-
 
 
   </fragment>
@@ -342,36 +342,36 @@
 
     <argument
       android:name="category_id"
-      app:argType="integer"
-      android:defaultValue="-1" />
+      android:defaultValue="-1"
+      app:argType="integer" />
 
     <argument
       android:name="search"
-      app:argType="string"
-      android:defaultValue="" />
+      android:defaultValue=""
+      app:argType="string" />
 
-<!--    <action-->
-<!--      android:id="@+id/action_storeListFragment_to_storeFilterFragment"-->
-<!--      app:enterAnim="@anim/anim_slide_in_right"-->
-<!--      app:exitAnim="@anim/anim_slide_out_left"-->
-<!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
-<!--      app:popExitAnim="@anim/anim_slide_out_right"-->
-<!--      app:destination="@id/storeFilterFragment" />-->
+    <!--    <action-->
+    <!--      android:id="@+id/action_storeListFragment_to_storeFilterFragment"-->
+    <!--      app:enterAnim="@anim/anim_slide_in_right"-->
+    <!--      app:exitAnim="@anim/anim_slide_out_left"-->
+    <!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
+    <!--      app:popExitAnim="@anim/anim_slide_out_right"-->
+    <!--      app:destination="@id/storeFilterFragment" />-->
     <action
       android:id="@+id/action_storeListFragment_to_webFragment2"
+      app:destination="@id/webFragment2"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/webFragment2" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
 
     <action
+      android:id="@+id/action_storeListFragment_to_mapFragment"
+      app:destination="@id/mapFragment2"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      android:id="@+id/action_storeListFragment_to_mapFragment"
-      app:destination="@id/mapFragment2" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
 
 
     <deepLink
@@ -386,45 +386,45 @@
 
 
   </fragment>
-<!--  <fragment-->
-<!--    android:id="@+id/storeFilterFragment"-->
-<!--    android:name="grand.app.moon.presentation.storeFilter.views.StoreFilterFragment"-->
-<!--    android:label="@string/filter_search">-->
-<!--    <argument-->
-<!--      android:name="store_filter"-->
-<!--      app:argType="grand.app.moon.domain.store.entity.StoreFilterRequest" />-->
-<!--  </fragment>-->
-<!--  <dialog-->
-<!--    android:id="@+id/filterSingleSelectDialog"-->
-<!--    android:name="grand.app.moon.presentation.filter.dialog.FilterSingleSelectDialog"-->
-<!--    android:label="{tabBarText}">-->
-<!--    <argument-->
-<!--      android:name="propety"-->
-<!--      app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />-->
-<!--    <argument-->
-<!--      android:name="tabBarText"-->
-<!--      app:argType="string" />-->
-<!--  </dialog>-->
+  <!--  <fragment-->
+  <!--    android:id="@+id/storeFilterFragment"-->
+  <!--    android:name="grand.app.moon.presentation.storeFilter.views.StoreFilterFragment"-->
+  <!--    android:label="@string/filter_search">-->
+  <!--    <argument-->
+  <!--      android:name="store_filter"-->
+  <!--      app:argType="grand.app.moon.domain.store.entity.StoreFilterRequest" />-->
+  <!--  </fragment>-->
+  <!--  <dialog-->
+  <!--    android:id="@+id/filterSingleSelectDialog"-->
+  <!--    android:name="grand.app.moon.presentation.filter.dialog.FilterSingleSelectDialog"-->
+  <!--    android:label="{tabBarText}">-->
+  <!--    <argument-->
+  <!--      android:name="propety"-->
+  <!--      app:argType="grand.app.moon.domain.filter.entitiy.FilterProperty" />-->
+  <!--    <argument-->
+  <!--      android:name="tabBarText"-->
+  <!--      app:argType="string" />-->
+  <!--  </dialog>-->
 
 
-<!--  <fragment-->
-<!--    android:id="@+id/filterHomeFragment"-->
-<!--    android:name="grand.app.moon.presentation.filter.FilterFragment"-->
-<!--    android:label="@string/filter_search" >-->
-<!--    <action-->
-<!--      android:id="@+id/action_filterHomeFragment_to_filterSingleSelectDialog"-->
-<!--      app:destination="@id/filterSingleSelectDialog" />-->
-<!--    <action-->
-<!--      android:id="@+id/action_filterHomeFragment_to_filterMultiSelectDialog"-->
-<!--      app:destination="@id/filterMultiSelectDialog" />-->
-<!--    <action-->
-<!--      android:id="@+id/action_filterHomeFragment_to_filterResultsFragment"-->
-<!--      app:enterAnim="@anim/anim_slide_in_right"-->
-<!--      app:exitAnim="@anim/anim_slide_out_left"-->
-<!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
-<!--      app:popExitAnim="@anim/anim_slide_out_right"-->
-<!--      app:destination="@id/filterResultsFragment" />-->
-<!--  </fragment>-->
+  <!--  <fragment-->
+  <!--    android:id="@+id/filterHomeFragment"-->
+  <!--    android:name="grand.app.moon.presentation.filter.FilterFragment"-->
+  <!--    android:label="@string/filter_search" >-->
+  <!--    <action-->
+  <!--      android:id="@+id/action_filterHomeFragment_to_filterSingleSelectDialog"-->
+  <!--      app:destination="@id/filterSingleSelectDialog" />-->
+  <!--    <action-->
+  <!--      android:id="@+id/action_filterHomeFragment_to_filterMultiSelectDialog"-->
+  <!--      app:destination="@id/filterMultiSelectDialog" />-->
+  <!--    <action-->
+  <!--      android:id="@+id/action_filterHomeFragment_to_filterResultsFragment"-->
+  <!--      app:enterAnim="@anim/anim_slide_in_right"-->
+  <!--      app:exitAnim="@anim/anim_slide_out_left"-->
+  <!--      app:popEnterAnim="@anim/anim_slide_in_left"-->
+  <!--      app:popExitAnim="@anim/anim_slide_out_right"-->
+  <!--      app:destination="@id/filterResultsFragment" />-->
+  <!--  </fragment>-->
 
   <fragment
     android:id="@+id/commetChatFragment"
@@ -488,18 +488,18 @@
 
   <action
     android:id="@+id/to_filter"
+    app:destination="@id/nav_filter"
     app:enterAnim="@anim/anim_slide_in_right"
     app:exitAnim="@anim/anim_slide_out_left"
     app:popEnterAnim="@anim/anim_slide_in_left"
-    app:popExitAnim="@anim/anim_slide_out_right"
-    app:destination="@id/nav_filter" />
+    app:popExitAnim="@anim/anim_slide_out_right" />
 
   <include app:graph="@navigation/nav_filter" />
 
   <fragment
     android:id="@+id/storiesListFragment"
     android:name="grand.app.moon.presentation.story.view.StoriesListFragment"
-    android:label="@string/show_more" >
+    android:label="@string/show_more">
     <argument
       android:name="stories"
       app:argType="grand.app.moon.domain.store.entity.StoreListPaginateData" />
@@ -507,20 +507,20 @@
 
     <action
       android:id="@+id/action_storiesListFragment_to_storyFragment"
+      app:destination="@id/storyFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"
       app:popEnterAnim="@anim/anim_slide_in_left"
-      app:popExitAnim="@anim/anim_slide_out_right"
-      app:destination="@id/storyFragment" />
+      app:popExitAnim="@anim/anim_slide_out_right" />
   </fragment>
 
   <action
     android:id="@+id/to_stories"
+    app:destination="@id/storiesListFragment"
     app:enterAnim="@anim/anim_slide_in_right"
     app:exitAnim="@anim/anim_slide_out_left"
     app:popEnterAnim="@anim/anim_slide_in_left"
-    app:popExitAnim="@anim/anim_slide_out_right"
-    app:destination="@id/storiesListFragment" >
+    app:popExitAnim="@anim/anim_slide_out_right">
     <argument
       android:name="stories"
       app:argType="grand.app.moon.domain.store.entity.StoreListPaginateData" />
@@ -532,7 +532,7 @@
   <fragment
     android:id="@+id/storyFragment"
     android:name="grand.app.moon.presentation.story.view.StoryFragment"
-    android:label="@string/show_all" >
+    android:label="@string/show_all">
 
     <argument
       android:name="stories"
@@ -540,8 +540,8 @@
 
     <argument
       android:name="store"
-      app:argType="string"
-      android:defaultValue="" />
+      android:defaultValue=""
+      app:argType="string" />
 
 
     <deepLink
@@ -554,7 +554,7 @@
   <fragment
     android:id="@+id/webFragment2"
     android:name="grand.app.moon.presentation.more.WebFragment"
-    android:label="{tabBarText}" >
+    android:label="{tabBarText}">
     <argument
       android:name="tabBarText"
       app:argType="string" />
@@ -567,7 +567,7 @@
     android:name="grand.app.moon.presentation.addStore.AddStoreFragment"
     android:label="@string/add_store_now" />
 
-  <include app:graph="@navigation/nav_auth" >
+  <include app:graph="@navigation/nav_auth">
     <deepLink
       android:id="@+id/confirmCode"
       android:autoVerify="true"
@@ -601,12 +601,12 @@
     android:id="@+id/dest_my_ads"
     android:name="grand.app.moon.presentation.myAds.MyAdsFragment"
     android:label="@string/my_ads_2"
-    tools:layout="@layout/fragment_my_ads"/>
+    tools:layout="@layout/fragment_my_ads" />
   <fragment
     android:id="@+id/dest_add_advertisement"
     android:name="grand.app.moon.presentation.myAds.AddAdvertisementFragment"
-    tools:layout="@layout/fragment_add_advertisement"
-    android:label="AddAdvertisementFragment" >
+    android:label="AddAdvertisementFragment"
+    tools:layout="@layout/fragment_add_advertisement">
     <argument
       android:name="availableNumOfAdvertisements"
       app:argType="integer" />
@@ -620,21 +620,21 @@
   <fragment
     android:id="@+id/dest_add_adv_categories_list"
     android:name="grand.app.moon.presentation.categories.AddAdvCategoriesListFragment"
-    tools:layout="@layout/fragment_add_adv_categories_list"
-    android:label="@string/what_do_you_offer">
+    android:label="@string/what_do_you_offer"
+    tools:layout="@layout/fragment_add_adv_categories_list">
     <action
       android:id="@+id/action_dest_add_adv_categories_list_to_dest_add_adv_sub_categories_list"
       app:destination="@id/dest_add_adv_sub_categories_list" />
     <deepLink
       android:id="@+id/deep_link_dest_add_adv_categories_list"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.add.adv.categories.list"/>
+      app:uri="fragment-dest://grand.app.moon.dest.add.adv.categories.list" />
   </fragment>
   <fragment
     android:id="@+id/dest_add_adv_sub_categories_list"
     android:name="grand.app.moon.presentation.categories.AddAdvSubCategoriesListFragment"
-    tools:layout="@layout/fragment_add_adv_sub_categories_list"
-    android:label="{nameOfMainCategory}">
+    android:label="{nameOfMainCategory}"
+    tools:layout="@layout/fragment_add_adv_sub_categories_list">
     <argument
       android:name="idOfMainCategory"
       app:argType="integer" />
@@ -699,29 +699,29 @@
       android:id="@+id/action_dest_location_selection_to_home_fragment"
       app:destination="@id/home_fragment"
       app:popUpTo="@id/home_fragment"
-      app:popUpToInclusive="false"/>
+      app:popUpToInclusive="false" />
   </fragment>
   <fragment
     android:id="@+id/dest_my_adv_details"
     android:name="grand.app.moon.presentation.myAds.MyAdvDetailsFragment"
-    tools:layout="@layout/fragment_my_adv_details" >
+    tools:layout="@layout/fragment_my_adv_details">
     <argument
       android:name="id"
-      app:argType="integer"
-      android:defaultValue="-1" />
+      android:defaultValue="-1"
+      app:argType="integer" />
     <argument
       android:name="jsonOfResponseMyAdvDetails"
+      android:defaultValue="@null"
       app:argType="string"
-      app:nullable="true"
-      android:defaultValue="@null" />
+      app:nullable="true" />
     <deepLink
       android:id="@+id/deep_link_dest_my_adv_details_id"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.presentation.myAds.dest.my.adv.details.id/{id}"/>
+      app:uri="fragment-dest://grand.app.moon.presentation.myAds.dest.my.adv.details.id/{id}" />
     <deepLink
       android:id="@+id/deep_link_dest_my_adv_details_json_of_response_my_adv_details"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.presentation.myAds.dest.my.adv.details.json.of.response.my.adv.details/{jsonOfResponseMyAdvDetails}"/>
+      app:uri="fragment-dest://grand.app.moon.presentation.myAds.dest.my.adv.details.json.of.response.my.adv.details/{jsonOfResponseMyAdvDetails}" />
     <action
       android:id="@+id/action_dest_my_adv_details_to_dest_location_viewer"
       app:destination="@id/dest_location_viewer" />
@@ -733,7 +733,7 @@
     android:id="@+id/dest_location_viewer"
     android:name="grand.app.moon.presentation.myAds.LocationViewerFragment"
     android:label="@string/location_99"
-    tools:layout="@layout/fragment_location_viewer" >
+    tools:layout="@layout/fragment_location_viewer">
     <argument
       android:name="latitude"
       app:argType="string" />
@@ -749,6 +749,9 @@
     <action
       android:id="@+id/action_dest_become_shop_packages_to_dest_my_become_shop_package"
       app:destination="@id/dest_my_become_shop_package" />
+    <action
+      android:id="@+id/action_dest_become_shop_packages_to_dest_create_store"
+      app:destination="@id/dest_create_store" />
   </fragment>
   <fragment
     android:id="@+id/dest_my_become_shop_package"
@@ -757,7 +760,12 @@
     <deepLink
       android:id="@+id/deep_link_dest_my_become_shop_package"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.my.become.shop.package"/>
+      app:uri="fragment-dest://grand.app.moon.dest.my.become.shop.package" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_create_store"
+    android:name="grand.app.moon.presentation.myStore.CreateStoreFragment"
+    android:label="@string/store_data"
+    tools:layout="@layout/fragment_create_store" />
 
 </navigation>

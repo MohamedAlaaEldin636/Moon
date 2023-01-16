@@ -136,8 +136,28 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 				val user = userLocalUseCase()
 				userLocalUseCase(user.copy(isStore = true))
 
-				navController.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
+				navController.setResultInPreviousBackStackEntrySavedStateHandleViaGson(
 					true // subscribed successfully
+				)
+				/*navController.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
+					true // subscribed successfully
+				)*/
+
+				// Change Data
+				response.value = response.value?.copy(isSubscribed = true)
+
+				val parentFragment = (fragment.parentFragment as? BecomeShopPackagesFragment)
+
+				val parentViewModel = parentFragment?.viewModel
+				parentViewModel?.allPackages?.firstOrNull {
+					it.id == response.value?.id
+				}?.isSubscribed = true
+
+				// Now go to create store data and on result of it's creation nav up.
+				parentFragment?.observeCreateShopFragment()
+
+				navController.navigateSafely(
+					BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestCreateStore()
 				)
 			}
 		}

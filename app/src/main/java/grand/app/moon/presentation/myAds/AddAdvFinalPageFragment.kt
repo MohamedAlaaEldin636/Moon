@@ -290,7 +290,9 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 				Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 			}
 
-			activityResultImageGallery.launch(intent)
+			activityResultImageGallery.launchSafely(
+				intent.createChooserMA(getString(R.string.pick_image))
+			)
 		}
 	}
 

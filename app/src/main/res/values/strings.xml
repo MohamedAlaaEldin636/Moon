@@ -286,4 +286,6 @@
   <string name="subscribe_now">Subscribe Now</string>
   <string name="already_subscribed">Already Subscribed</string>
   <string name="your_subscription_will_end_in_var_days">Your subscription will end in %1$s Days</string>
+  <string name="pick_image">Pick Image</string>
+  <string name="store_data">Store Data</string>
 </resources>

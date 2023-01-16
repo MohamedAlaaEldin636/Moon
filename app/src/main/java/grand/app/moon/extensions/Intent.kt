@@ -7,6 +7,8 @@ import grand.app.moon.R
 import grand.app.moon.core.extenstions.showError
 import grand.app.moon.presentation.base.utils.showMessage
 
+fun Intent.createChooserMA(title: CharSequence) = Intent.createChooser(this, title)
+
 fun Context.launchTelegram() {
 	val intent = packageManager?.getLaunchIntentForPackage("org.telegram.messenger")
 	

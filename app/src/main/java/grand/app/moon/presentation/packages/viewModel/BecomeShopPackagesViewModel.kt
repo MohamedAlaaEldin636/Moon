@@ -3,7 +3,10 @@ package grand.app.moon.presentation.packages.viewModel
 import android.app.Application
 import android.content.res.ColorStateList
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
@@ -12,7 +15,10 @@ import grand.app.moon.databinding.ItemPageIndicatorBinding
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.packages.BasePagination
 import grand.app.moon.domain.packages.ResponseBecomeShopPackage
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.RVItemCommonListUsage
+import grand.app.moon.extensions.toJsonInlinedOrNull
+import grand.app.moon.presentation.packages.PageBecomeShopPackageFragment
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,6 +49,15 @@ class BecomeShopPackagesViewModel @Inject constructor(
 		)
 	}
 
+	private var pagerAdapter: PagerAdapter? = null
+
+	@Synchronized
+	fun getPagerAdapter(fragment: Fragment): PagerAdapter {
+		return pagerAdapter ?: PagerAdapter(fragment).also {
+			pagerAdapter = it
+		}
+	}
+
 	fun changePageIndicatorsSize(size: Int) {
 		adapter.submitList(List(size) { it })
 	}
@@ -50,6 +65,24 @@ class BecomeShopPackagesViewModel @Inject constructor(
 	fun changeSelectedPageIndicator(index: Int) {
 		currentlySelectedPageIndex = index
 		adapter.notifyDataSetChanged()
+	}
+
+	override fun onCleared() {
+		pagerAdapter = null
+
+		super.onCleared()
+	}
+
+	inner class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+		override fun getItemCount(): Int = allPackages.size
+
+		override fun createFragment(position: Int): Fragment = PageBecomeShopPackageFragment().also {
+			MyLogger.e("euiwhid -> ch 0 -> ${allPackages.getOrNull(position).toJsonInlinedOrNull()}")
+
+			it.arguments = bundleOf(
+				PageBecomeShopPackageFragment.ARGS_ITEM to allPackages.getOrNull(position).toJsonInlinedOrNull()
+			)
+		}
 	}
 
 }
