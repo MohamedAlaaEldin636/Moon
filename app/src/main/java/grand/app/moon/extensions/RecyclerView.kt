@@ -2,6 +2,12 @@ package grand.app.moon.extensions
 
 import androidx.recyclerview.widget.RecyclerView
 
+fun RecyclerView.Adapter<*>.notifyItemsChanged(vararg ids: Int?) {
+	ids.filterNotNull().forEach {
+		notifyItemChanged(it)
+	}
+}
+
 inline fun <reified ID : RecyclerView.ItemDecoration> RecyclerView.addUniqueTypeItemDecoration(
 	itemDecoration: ID
 ) {

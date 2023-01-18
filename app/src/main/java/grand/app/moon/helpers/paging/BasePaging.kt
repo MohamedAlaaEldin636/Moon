@@ -29,7 +29,7 @@ class BasePaging<T : Any>(
 			is MAResult.Success -> LoadResult.Page(
 				result.value.data?.data.orEmpty(),
 				if (pageNumber == 1) null else pageNumber.dec(),
-				if (result.value.data?.nextPageUrl == null) null else pageNumber.inc()
+				if (result.value.data?.links?.next.isNullOrEmpty()) null else pageNumber.inc()
 			)
 			is MAResult.Failure -> LoadResult.Error(MAPagingException(result))
 		}

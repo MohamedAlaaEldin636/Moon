@@ -149,6 +149,8 @@ class AdsUseCase @Inject constructor(
 		if (is_negotiable) 1 else 0, brand_id, description, propertiesIds
 	)
 
+	suspend fun updateAdvertisementToBePremium(advId: Int) = repo.updateAdvertisementToBePremium(advId)
+
 	suspend fun getMyAdvertisementDetails(id: Int) = repo.getMyAdvertisementDetails(id)
 
 	suspend fun deleteAdvertisement(id: Int) = repo.deleteAdvertisement(id)

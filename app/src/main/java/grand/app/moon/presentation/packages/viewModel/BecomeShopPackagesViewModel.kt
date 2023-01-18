@@ -9,12 +9,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
-import grand.app.moon.core.MyApplication
 import grand.app.moon.data.packages.RepositoryPackages
 import grand.app.moon.databinding.ItemPageIndicatorBinding
-import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.packages.BasePagination
-import grand.app.moon.domain.packages.ResponseBecomeShopPackage
+import grand.app.moon.domain.packages.ResponsePackage
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.RVItemCommonListUsage
 import grand.app.moon.extensions.toJsonInlinedOrNull
@@ -29,9 +27,9 @@ class BecomeShopPackagesViewModel @Inject constructor(
 
 	var currentlySelectedPageIndex = 0
 
-	var currentResponsePagination: BasePagination<List<ResponseBecomeShopPackage>>? = null
+	var currentResponsePagination: BasePagination<ResponsePackage>? = null
 
-	var allPackages = emptyList<ResponseBecomeShopPackage>()
+	var allPackages = emptyList<ResponsePackage>()
 
 	val adapter = RVItemCommonListUsage<ItemPageIndicatorBinding, Int>(
 		R.layout.item_page_indicator,

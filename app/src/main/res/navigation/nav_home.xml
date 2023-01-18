@@ -728,6 +728,14 @@
     <action
       android:id="@+id/action_dest_my_adv_details_to_dest_add_adv_final_page"
       app:destination="@id/dest_add_adv_final_page" />
+    <action
+      android:id="@+id/action_dest_my_adv_details_to_dest_make_adv_or_store_premium"
+      app:destination="@id/dest_make_adv_or_store_premium"
+      app:launchSingleTop="true" />
+    <action
+      android:id="@+id/action_dest_my_adv_details_to_dest_my_ad_or_shop_package"
+      app:destination="@id/dest_my_ad_or_shop_package"
+      app:launchSingleTop="true" />
   </fragment>
   <fragment
     android:id="@+id/dest_location_viewer"
@@ -767,5 +775,34 @@
     android:name="grand.app.moon.presentation.myStore.CreateStoreFragment"
     android:label="@string/store_data"
     tools:layout="@layout/fragment_create_store" />
+  <fragment
+    android:id="@+id/dest_make_adv_or_store_premium"
+    android:name="grand.app.moon.presentation.myAds.MakeAdvOrStorePremiumFragment"
+    android:label="@string/ads_promotion_87"
+    tools:layout="@layout/fragment_make_adv_or_store_premium" >
+    <argument
+      android:name="advertisementId"
+      app:argType="integer" />
+    <action
+      android:id="@+id/action_dest_make_adv_or_store_premium_to_dest_my_ad_or_shop_package"
+      app:destination="@id/dest_my_ad_or_shop_package"
+      app:launchSingleTop="true" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_my_ad_or_shop_package"
+    android:name="grand.app.moon.presentation.myAds.MyAdOrShopPackageFragment"
+    android:label="@string/ads_promotion_87"
+    tools:layout="@layout/fragment_my_ad_or_shop_package" >
+    <argument
+      android:name="advertisementId"
+      app:argType="integer" />
+    <argument
+      android:name="isAdvNotShop"
+      app:argType="boolean" />
+    <action
+      android:id="@+id/action_dest_my_ad_or_shop_package_to_dest_make_adv_or_store_premium"
+      app:destination="@id/dest_make_adv_or_store_premium"
+      app:launchSingleTop="true" />
+  </fragment>
 
 </navigation>

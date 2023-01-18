@@ -27,14 +27,7 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		// todo remove below code used for testing purposes
-		binding.materialButton.setOnClickListener {
-			showMessage(getString(R.string.done_successfully))
 
-			findNavController().navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
-				true, // created shop successfully
-			)
-		}
 	}
 
 }

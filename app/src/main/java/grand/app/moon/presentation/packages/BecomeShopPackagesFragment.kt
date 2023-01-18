@@ -2,19 +2,14 @@ package grand.app.moon.presentation.packages
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.core.view.postDelayed
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.databinding.FragmentBecomeShopPackagesBinding
-import grand.app.moon.domain.packages.BasePagination
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.packages.viewModel.BecomeShopPackagesViewModel
@@ -34,9 +29,13 @@ class BecomeShopPackagesFragment : BaseFragment<FragmentBecomeShopPackagesBindin
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
+		getPackages()
+	}
+
+	private fun getPackages() {
 		handleRetryAbleActionCancellable(
 			action = {
-				viewModel.repoPackages.getBecomeShopPackages()
+				viewModel.repoPackages.getBecomeShopPackagesSuspend()
 			},
 			hideLoadingAction = {}
 		) {
@@ -46,17 +45,6 @@ class BecomeShopPackagesFragment : BaseFragment<FragmentBecomeShopPackagesBindin
 				val pagerAdapter = viewModel.getPagerAdapter(this)
 				pagerAdapter.notifyItemRangeInserted(pagerAdapter.itemCount, it.data.orEmpty().size)
 				viewModel.changePageIndicatorsSize(viewModel.allPackages.size)
-
-				/*@Suppress("UNNECESSARY_SAFE_CALL")
-				binding?.root?.post {
-					val index = viewModel.allPackages.indexOfFirst { response ->
-						response.isSubscribed == true
-					}.let { index ->
-						if (index == -1) 0 else index
-					}
-
-					binding.viewPager2.setCurrentItem(index, true)
-				}*/
 			}
 		}
 	}
@@ -92,7 +80,7 @@ class BecomeShopPackagesFragment : BaseFragment<FragmentBecomeShopPackagesBindin
 				) {
 					handleRetryAbleActionCancellable(
 						action = {
-							viewModel.repoPackages.getBecomeShopPackages(
+							viewModel.repoPackages.getBecomeShopPackagesSuspend(
 								viewModel.currentResponsePagination?.meta?.currentPage.orZero().inc()
 							)
 						}
@@ -122,7 +110,9 @@ class BecomeShopPackagesFragment : BaseFragment<FragmentBecomeShopPackagesBindin
 				binding.viewPager2.setCurrentItem(0, true)
 				binding.viewPager2.visibility = View.VISIBLE
 
-				hideLoading()
+				if (viewModel.allPackages.isNotEmpty()) {
+					hideLoading()
+				}
 			}
 		}
 

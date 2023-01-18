@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.createMultipartBodyPart
 import grand.app.moon.core.extenstions.showError
 import grand.app.moon.databinding.ItemPropertyInAdvDetailsBinding
 import grand.app.moon.databinding.ItemReviewInAdvDetailsBinding
@@ -25,6 +26,7 @@ import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrSplashBA
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
+import grand.app.moon.presentation.myAds.MyAdsFragment
 import grand.app.moon.presentation.myAds.MyAdvDetailsFragment
 import grand.app.moon.presentation.myAds.MyAdvDetailsFragmentArgs
 import grand.app.moon.presentation.myAds.MyAdvDetailsFragmentDirections
@@ -107,6 +109,7 @@ class MyAdvDetailsViewModel @Inject constructor(
 		it?.isNegotiable.orFalse()
 	}
 
+	// todo only show mokarna b el shahr el made onlyyyy if store not user isa.
 	private val drawablePositiveGrowth by lazy {
 		ContextCompat.getDrawable(app, R.drawable.ic_positive_growth).orTransparent()
 	}
@@ -273,13 +276,17 @@ class MyAdvDetailsViewModel @Inject constructor(
 	 * since we are in the stage where packages not done yet then just make it success ias.
 	 */
 	fun makeAdvPremiumOrCheckAdvPremium(view: View) {
-		if (response.value?.isPremium == true) {
-			return General.TODO("Will be programmed later in another sprint")
-		}
-
-		val id = response.value?.id ?: return
-
 		val fragment = view.findFragmentOrNull<MyAdvDetailsFragment>() ?: return
+
+		if (response.value?.isPremium == true) {
+			fragment.findNavController().navigateSafely(
+				MyAdvDetailsFragmentDirections.actionDestMyAdvDetailsToDestMyAdOrShopPackage(
+					response.value?.id.orZero(), true
+				)
+			)
+
+			return
+		}
 
 		fragment.handleRetryAbleActionCancellable(
 			action = {
@@ -289,24 +296,38 @@ class MyAdvDetailsViewModel @Inject constructor(
 			MyLogger.e("availableAds $availableAds")
 
 			if (availableAds > 0) {
-				makeAdPremium(id, fragment)
+				updateAdvertisementToBePremium(fragment)
 			}else {
-				// todo change later to redirect to packages but for now skit it as it is not in this sprint.
-				makeAdPremium(id, fragment)
+				fragment.findNavController().navigateSafely(
+					MyAdvDetailsFragmentDirections.actionDestMyAdvDetailsToDestMakeAdvOrStorePremium(
+						response.value?.id.orZero()
+					)
+				)
 			}
 		}
 	}
 
-	private fun makeAdPremium(id: Int, fragment: MyAdvDetailsFragment) {
+	private fun updateAdvertisementToBePremium(fragment: MyAdvDetailsFragment) {
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
-				adsUseCase.makeMyAdvertisementPremium(id, 53/*todo forced since for now current sprint not including packages*/)
+				adsUseCase.updateAdvertisementToBePremium(response.value?.id.orZero())
 			}
 		) {
-			response.value = response.value?.copy()?.also {
-				it.makePremium()
-			}
+			afterBecamePremium(fragment)
 		}
+	}
+
+	fun afterBecamePremium(fragment: MyAdvDetailsFragment) {
+		response.value = response.value?.copy()?.also {
+			it.makePremium()
+		}
+
+		fragment.findNavController().setResultInPreviousBackStackEntrySavedStateHandleViaGson(
+			MyAdsFragment.NewAdvertisementChange(
+				response.value?.id.orZero(),
+				MyAdsFragment.NewAdvertisementState.BECAME_PREMIUM
+			)
+		)
 	}
 
 	fun deleteAdv(view: View) {
@@ -328,7 +349,12 @@ class MyAdvDetailsViewModel @Inject constructor(
 
 				fragment.showMessage(context.getString(R.string.done_successfully))
 
-				fragment.findNavController().navigateUp()
+				fragment.findNavController().navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
+					MyAdsFragment.NewAdvertisementChange(
+						id,
+						MyAdsFragment.NewAdvertisementState.DELETED
+					)
+				)
 			}
 		}
 	}

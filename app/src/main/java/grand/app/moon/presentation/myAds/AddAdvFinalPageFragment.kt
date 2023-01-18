@@ -282,6 +282,7 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 	private fun pickImageFromGallery() {
 		if (checkCountAndTagBeforePickingAnImageAndGetIfCanPickAnImage()) {
 			val intent = if (viewModel.indexToShowImagesPopupMenu.value == 0) {
+				// todo -> https://stackoverflow.com/questions/67367649/intent-extra-allow-multiple-not-working-with-intent-action-pick-when-i-test-on-o
 				Intent(Intent.ACTION_GET_CONTENT).also {
 					it.type = "image/*"
 					it.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)

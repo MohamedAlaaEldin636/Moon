@@ -23,6 +23,15 @@ fun View.setBackgroundRes(@DrawableRes res: Int?) {
 	setBackgroundResource(res.orZero())
 }
 
+@BindingAdapter("view_setBackgroundResName")
+fun View.setBackgroundResName(resName: String?) {
+	setBackgroundResource(
+		context?.resources?.getIdentifier(
+			resName, "drawable", context?.packageName ?: return
+		) ?: return
+	)
+}
+
 @BindingAdapter("view_enableAndAllChildren", "view_enableAndAllChildren_disableAlpha")
 fun View.enableAndAllChildren(enable: Boolean?, disableAlpha: Float?) {
 	val value = enable ?: false

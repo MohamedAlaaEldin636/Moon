@@ -3,12 +3,59 @@ package grand.app.moon.extensions.bindingAdapter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
+import android.util.TypedValue
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
+import grand.app.moon.core.extenstions.pxToSp
+import grand.app.moon.core.extenstions.spToPx
 import grand.app.moon.extensions.orZero
+import kotlin.math.roundToInt
+
+fun AppCompatTextView.adjustInsideRV(
+	text: CharSequence,
+	maxTextSizeInSpUsedInAutoSizing: Float = context.pxToSp(
+		TextViewCompat.getAutoSizeMaxTextSize(this).toFloat()
+	),
+	minTextSizeInSpUsedInAutoSizing: Float = context.pxToSp(
+		TextViewCompat.getAutoSizeMinTextSize(this).toFloat()
+	),
+) {
+
+	TextViewCompat.setAutoSizeTextTypeWithDefaults(
+		this,
+		TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE
+	)
+
+	setTextSize(TypedValue.COMPLEX_UNIT_SP, maxTextSizeInSpUsedInAutoSizing)
+
+	this.text = text
+
+	post {
+		TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+			this,
+			minTextSizeInSpUsedInAutoSizing.roundToInt(),
+			maxTextSizeInSpUsedInAutoSizing.roundToInt(),
+			TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM,
+			TypedValue.COMPLEX_UNIT_SP
+		)
+	}
+}
+
+@BindingAdapter("textView_setHeightForSingleLine")
+fun TextView.setHeightForSingleLine(heightInSp: Int) {
+	val height = context.spToPx(heightInSp.toFloat())
+
+	layoutParams = ViewGroup.LayoutParams(
+		ViewGroup.LayoutParams.MATCH_PARENT,
+		height.roundToInt()
+	)
+}
 
 @BindingAdapter("textView_setTextColorResBA")
 fun TextView.setTextColorResBA(@ColorRes res: Int?) {

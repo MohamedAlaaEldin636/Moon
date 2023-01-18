@@ -1,5 +1,9 @@
 package grand.app.moon.extensions
 
+inline fun <T> List<T>.indexOfFirstOrNull(predicate: (T) -> Boolean): Int? {
+	return indexOfFirst(predicate).let { if (it == -1) null else it }
+}
+
 /**
  * @param dividerAction only executed between items not after last item and not before first item.
  */

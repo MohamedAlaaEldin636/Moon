@@ -5,8 +5,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
-import grand.app.moon.databinding.FragmentExploreBinding
 import grand.app.moon.databinding.FragmentMyAdsBinding
+import grand.app.moon.extensions.indexOfFirstOrNull
+import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.myAds.viewModel.MyAdsViewModel
@@ -36,6 +37,34 @@ class MyAdsFragment : BaseFragment<FragmentMyAdsBinding>()  {
 			false,
 			1
 		)
+
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<NewAdvertisementChange> { change ->
+			when (change.state) {
+				NewAdvertisementState.BECAME_PREMIUM -> {
+					viewModel.adapter.list.indexOfFirstOrNull { it.id == change.id }?.also {
+						viewModel.adapter.list[it].makePremium()
+
+						viewModel.adapter.notifyItemChanged(it)
+					}
+				}
+				NewAdvertisementState.DELETED -> {
+					viewModel.adapter.list.indexOfFirstOrNull { it.id == change.id }?.also {
+						viewModel.adapter.list[it].makePremium()
+
+						viewModel.adapter.notifyItemChanged(it)
+					}
+				}
+			}
+		}
+	}
+
+	data class NewAdvertisementChange(
+		var id: Int,
+		var state: NewAdvertisementState,
+	)
+
+	enum class NewAdvertisementState {
+		BECAME_PREMIUM, DELETED
 	}
 
 }

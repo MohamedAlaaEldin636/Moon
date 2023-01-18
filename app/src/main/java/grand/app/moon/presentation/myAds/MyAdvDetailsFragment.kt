@@ -56,13 +56,6 @@ class MyAdvDetailsFragment : BaseFragment<FragmentMyAdvDetailsBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 
 		binding.sliderView.setSliderAdapter(viewModel.adapterImages)
-		/*binding.sliderView.post {
-			binding.sliderView.isAutoCycle = false
-
-			binding.sliderView.setIndicatorEnabled(true)
-			binding.sliderView.indicatorSelectedColor = requireContext().getColor(R.color.colorPrimaryDark)
-			binding.sliderView.indicatorUnselectedColor = requireContext().getColor(R.color.colorPrimaryLight)
-		}*/
 
 		binding.recyclerViewStats.setupWithRVItemCommonListUsage(
 			viewModel.adapterStats,
@@ -114,6 +107,12 @@ class MyAdvDetailsFragment : BaseFragment<FragmentMyAdvDetailsBinding>() {
 			viewModel.adapterReviews.submitList(
 				response.reviews.orEmpty()
 			)
+		}
+
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<MyAdsFragment.NewAdvertisementState> {
+			if (it == MyAdsFragment.NewAdvertisementState.BECAME_PREMIUM) {
+				viewModel.afterBecamePremium(this)
+			}
 		}
 	}
 

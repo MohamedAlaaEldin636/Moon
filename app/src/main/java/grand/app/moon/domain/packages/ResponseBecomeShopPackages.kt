@@ -6,7 +6,7 @@ import grand.app.moon.R
 import grand.app.moon.extensions.orZero
 
 data class BasePagination<T>(
-	var data: T?,
+	var data: List<T>?,
 	var links: PaginationLinks?,
 	var meta: PaginationMeta?,
 )
@@ -25,9 +25,16 @@ data class PaginationMeta(
 	val oneThirdPerPage get() = perPage.orZero() / 3
 }
 
+// premium_advertisements=>1,premium_shops=>2,shops=>0
+enum class PackageType(val apiValue: String) {
+	PREMIUM_ADS("premium_advertisements"),
+	PREMIUM_SHOPS("premium_shops"),
+	BECOME_SHOP("shops"),
+}
+
 // period_type =>{0=>days,1=>month,2=>year,3=>free}
 // recommended=>{0=>flase,1=>true}
-data class ResponseBecomeShopPackage(
+data class ResponsePackage(
 	var id: Int?,
 	var period: Int?,
 	@SerializedName("period_type") var periodType: Int?,

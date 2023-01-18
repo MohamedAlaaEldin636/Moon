@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class MABasePaging<T>(
     val data: List<T>?,
 
-    //val links: Links?,
+    val links: MAPagingLinks?,
 
     @SerializedName("current_page") val currentPage: Int,
 
@@ -23,6 +23,10 @@ data class MABasePaging<T>(
     @SerializedName("total") val totalNumberOfItems: Int,
     /** 20 */
     @SerializedName("per_page") val numOfItemsPerPage: Int,
+)
+
+data class MAPagingLinks(
+	var next: String?,
 )
 
 /*

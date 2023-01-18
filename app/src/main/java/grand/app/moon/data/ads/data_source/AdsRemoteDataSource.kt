@@ -161,6 +161,10 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
     )
   }
 
+	suspend fun updateAdvertisementToBePremium(advId: Int) = safeApiCall {
+		apiService.updateAdvertisementToBePremium(advId)
+	}
+
 	suspend fun updateAdvertisement(
 		advId: Int,
 		category_id: Int,

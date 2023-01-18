@@ -10,7 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.packages.RepositoryPackages
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
-import grand.app.moon.domain.packages.ResponseBecomeShopPackage
+import grand.app.moon.domain.packages.ResponsePackage
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.packages.BecomeShopPackagesFragment
@@ -25,7 +25,7 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 	private val repositoryPackages: RepositoryPackages,
 ) : AndroidViewModel(application) {
 
-	val response = MutableLiveData<ResponseBecomeShopPackage?>()
+	val response = MutableLiveData<ResponsePackage?>()
 
 	val title = response.map {
 		it?.title.orEmpty()

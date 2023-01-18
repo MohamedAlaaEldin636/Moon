@@ -35,7 +35,8 @@ import java.util.Locale
 
 abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
 
-  private var _binding: VB? = null
+  var _binding: VB? = null
+		private set
   open val binding get() = _binding!!
   private var mRootView: View? = null
   private var hasInitializedRootView = false
@@ -167,5 +168,11 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
         }, Throwable::printStackTrace)
     }
   }
+
+	/*override fun onDestroyView() {
+		_binding = null
+
+		super.onDestroyView()
+	}*/
 
 }

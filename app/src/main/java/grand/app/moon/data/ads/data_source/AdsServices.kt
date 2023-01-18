@@ -152,6 +152,13 @@ interface AdsServices {
 		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString()
 	): BaseResponse<ResponseMyAdvDetails?>
 
+	@Multipart
+	@POST("v1/my-advertisements/update/{id}")
+	suspend fun updateAdvertisementToBePremium(
+		@Path("id") id: Int,
+		@Part("premium") premium: Int = 1
+	): BaseResponse<Any?>
+
 	@GET("v1/my-advertisements/{id}")
 	suspend fun getMyAdvertisementDetails(
 		@Path("id") id: Int

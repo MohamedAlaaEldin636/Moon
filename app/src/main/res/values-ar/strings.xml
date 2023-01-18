@@ -278,4 +278,24 @@
   <string name="your_subscription_will_end_in_var_days">سينتهي اشتراكك بعد %1$s يوم</string>
   <string name="pick_image">إختر صورة</string>
   <string name="store_data">بيانات المتجر</string>
+  <string name="ads_promotions_1">تتميز الإعلانات</string>
+  <string name="stores_promotions_1">تتميز المتاجر</string>
+  <string name="for_var">لمدة %1$s</string>
+  <string name="var_ads">%1$s إعلانات</string>
+  <string name="cons_of_ads_promotions">مميزات ترقية الإعلان</string>
+  <string name="cons_of_store_promotions">مميزات ترقية المتجر</string>
+  <string name="appearance_priority_in_ads">اولوية الظهور في الإعلانات</string>
+  <string name="republish_daily">إعادة نشر يوميا</string>
+  <string name="appearance_in_suggestions">الظهور في الاقتراحات</string>
+  <string name="reach_the_largest_number_of_customers">الوصول لأكبر عدد من العملاء</string>
+  <string name="ensure_reach_to_clients">ضمان الوصول الي العملاء</string>
+  <string name="shop_promotion_8">تمييز المتجر</string>
+  <string name="ads_promotion_87">ترقية الإعلان</string>
+  <string name="store_promotion_87">ترقية المتجر</string>
+  <string name="please_select_package">من فضلك إختر باقة</string>
+  <string name="available_only_for_store_account">متاحة فقط لحساب متجر</string>
+  <string name="subscription_will_end_after">سينتهي الاشتراك بعد</string>
+  <string name="var_days">%1$s أيام</string>
+  <string name="renew_and_subscribe_in_another_package">التجديد و الاشتراك في باقة اخري</string>
+  <string name="renew_package">تجديد الباقة</string>
 </resources>

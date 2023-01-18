@@ -17,6 +17,16 @@ import grand.app.moon.presentation.myAds.*
 object ViewModelArgsModule {
 
 	@Provides
+	fun provideMyAdOrShopPackageFragmentArgs(state: SavedStateHandle): MyAdOrShopPackageFragmentArgs {
+		return MyAdOrShopPackageFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
+	fun provideMakeAdvOrStorePremiumFragmentArgs(state: SavedStateHandle): MakeAdvOrStorePremiumFragmentArgs {
+		return MakeAdvOrStorePremiumFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
 	fun provideLocationViewerFragmentArgs(state: SavedStateHandle): LocationViewerFragmentArgs {
 		return LocationViewerFragmentArgs.fromBundle(state.asBundle())
 	}

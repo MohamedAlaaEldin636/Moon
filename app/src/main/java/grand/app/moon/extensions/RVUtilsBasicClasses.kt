@@ -1,50 +1,72 @@
+@file:Suppress("OPT_IN_USAGE")
+
 package grand.app.moon.extensions
 
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.compose.ui.Alignment
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.paging.LoadState
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import grand.app.moon.R
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import grand.app.moon.core.extenstions.layoutInflater
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.mapLatest
 
-fun <VDB : ViewDataBinding, Item : Any> RecyclerView.setupWithRVItemCommonListUsage(
-	adapter: RVItemCommonListUsage<VDB, Item>,
+fun RecyclerView.setupWithRVItemCommonListUsage(
+	adapter: RecyclerView.Adapter<*>/*RVItemCommonListUsage<VDB, Item>*/,
 	isHorizontalNotVertical: Boolean,
 	spanCount: Int,
+	onLayoutManager: LayoutManager.(RecyclerView.LayoutParams) -> Unit = {},
 ) {
 	layoutManager = if (spanCount == 1) {
-		LinearLayoutManager(
+		object : LinearLayoutManager(
 			context,
-			if (isHorizontalNotVertical) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL,
+			if (isHorizontalNotVertical) HORIZONTAL else VERTICAL,
 			false
-		)
+		) {
+			override fun checkLayoutParams(layoutParams: RecyclerView.LayoutParams?): Boolean {
+				if (layoutParams != null) {
+					onLayoutManager(layoutParams)
+				}
+
+				return super.checkLayoutParams(layoutParams)
+			}
+		}
 	}else {
-		GridLayoutManager(
+		object : GridLayoutManager(
 			context,
 			spanCount,
-			if (isHorizontalNotVertical) GridLayoutManager.HORIZONTAL else GridLayoutManager.VERTICAL,
+			if (isHorizontalNotVertical) HORIZONTAL else VERTICAL,
 			false
-		)
+		) {
+			override fun checkLayoutParams(layoutParams: RecyclerView.LayoutParams?): Boolean {
+				if (layoutParams != null) {
+					onLayoutManager(layoutParams)
+				}
+
+				return super.checkLayoutParams(layoutParams)
+			}
+		}
 	}
 
 	this.adapter = adapter
 }
 
-/*
-direction - span(col/rows) - cell item xml - on click - additional listeners setups def none - onBind changes
-accepts list - has change all submit list - bs kda el donya tmam isa. can start with the list as well
- */
 class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	@LayoutRes private val layoutRes: Int,
-	private var list: List<Item> = emptyList(),
+	list: List<Item> = emptyList(),
 	private val onItemClick: ((adapter: RVItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
 	private val additionalListenersSetups: ((adapter: RVItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
 	private val onBind: (binding: VDB, position: Int, item: Item) -> Unit,
 ) : RecyclerView.Adapter<VHItemCommonListUsage<VDB, Item>>() {
+
+	var list = list
+		private set
 
 	override fun getItemCount(): Int = list.size
 
@@ -68,6 +90,87 @@ class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	fun submitList(list: List<Item>) {
 		this.list = list
 		notifyDataSetChanged()
+	}
+
+	fun insertList(list: List<Item>) {
+		if (list.isEmpty()) return
+		if (this.list.isEmpty()) return submitList(list)
+
+		val start = this.list.size
+		this.list = this.list + list
+		notifyItemRangeInserted(start, list.size)
+	}
+
+}
+
+open class RVPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
+	@LayoutRes private val layoutRes: Int,
+	areItemsTheSameComparison: (oldItem: Item, newItem: Item) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	areContentsTheSameComparison: (oldItem: Item, newItem: Item) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	private val onItemClick: ((adapter: RVPagingItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
+	private val additionalListenersSetups: ((adapter: RVPagingItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
+	private val onBind: (binding: VDB, position: Int, item: Item) -> Unit,
+) : PagingDataAdapter<Item, VHPagingItemCommonListUsage<VDB, Item>>(
+	object : DiffUtil.ItemCallback<Item>() {
+		override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean =
+			areItemsTheSameComparison(oldItem, newItem)
+
+		override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean =
+			areContentsTheSameComparison(oldItem, newItem)
+	}
+) {
+
+	/*
+	viewModel.adapter.loadStateFlow.collectLatest { loadState ->
+                        if (loadState/*.source*/.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached) {
+                            viewModel.showEmptyView.value = viewModel.adapter.snapshot().isEmpty()
+                        }
+                    }
+	 */
+	val showEmptyViewFlow get() = loadStateFlow.mapLatest { loadState ->
+		loadState.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached &&
+			snapshot().isEmpty()
+	}
+
+	override fun onCreateViewHolder(
+		parent: ViewGroup,
+		viewType: Int
+	): VHPagingItemCommonListUsage<VDB, Item> {
+		return VHPagingItemCommonListUsage(
+			this,
+			DataBindingUtil.inflate(parent.context.layoutInflater, layoutRes, parent, false),
+			onBind,
+			onItemClick,
+			additionalListenersSetups
+		)
+	}
+
+	override fun onBindViewHolder(holder: VHPagingItemCommonListUsage<VDB, Item>, position: Int) {
+		holder.bind(position, getItem(position) ?: return)
+	}
+
+}
+
+class VHPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
+	private val adapter: RVPagingItemCommonListUsage<VDB, Item>,
+	private val binding: VDB,
+	private val onBind: (binding: VDB, position: Int, item: Item) -> Unit,
+	private val onItemClick: ((adapter: RVPagingItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
+	additionalListenersSetups: ((adapter: RVPagingItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
+) : RecyclerView.ViewHolder(binding.root) {
+
+	init {
+		if (onItemClick != null) {
+			binding.root.setOnClickListener {
+				onItemClick.invoke(adapter, binding)
+			}
+		}
+
+		additionalListenersSetups?.invoke(adapter, binding)
+	}
+
+	fun bind(position: Int, item: Item) {
+		onBind(binding, position, item)
 	}
 
 }

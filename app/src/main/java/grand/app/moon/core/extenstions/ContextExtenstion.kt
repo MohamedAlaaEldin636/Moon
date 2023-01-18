@@ -28,6 +28,16 @@ fun Context.dpToPx(value: Float): Float {
   )
 }
 
+fun Context.spToPx(value: Float): Float {
+  return TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_SP, value, resources.displayMetrics
+  )
+}
+
+fun Context.pxToSp(value: Float): Float {
+	return value / resources.displayMetrics.scaledDensity
+}
+
 /** - Layout inflater from `receiver`, by using [LayoutInflater.from] */
 val Context.layoutInflater: LayoutInflater
   get() = LayoutInflater.from(this)
