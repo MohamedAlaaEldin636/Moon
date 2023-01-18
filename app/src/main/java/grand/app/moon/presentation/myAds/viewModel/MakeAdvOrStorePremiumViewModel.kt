@@ -4,7 +4,9 @@ import android.app.Application
 import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,13 +47,13 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 		val selectedPackage = getCurrentlyUsedAdapter().snapshot().firstOrNull { it?.id == selectedId }
 
 		when {
-			selectedPackage == null -> ""
+			selectedPackage == null -> app.getString(R.string.pick_your_package_now)
 			selectedPackage.isSubscribed == true -> if (selectedPackage.restDays.orZero() > 0) {
 				app.getString(R.string.check_ad_premium)
 			}else {
 				app.getString(R.string.renew_package)
 			}
-			else -> "${selectedPackage.price.orZero()} ${selectedPackage.country?.currency.orEmpty()}"
+			else -> app.getString(R.string.promote_and_pay_var_var, selectedPackage.price.orZero(), selectedPackage.country?.currency.orEmpty())
 		}
 	}
 
@@ -146,16 +148,21 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 
 				if (previousSelectionPosition == newSelectionPosition) return@apply
 
+				val newSelectionId = binding.innerConstraintLayout.tag as? Int ?: return@apply
 				if (isForAdsNotShops) {
-					selectedAdsPackageId.value = newSelectionPosition
+					selectedAdsPackageId.value = newSelectionId
 				}else {
-					selectedShopsPackageId.value = newSelectionPosition
+					selectedShopsPackageId.value = newSelectionId
 				}
+
+				MyLogger.e("selectedAdsPackageId.value selectedShopsPackageId.value ch 0 ${selectedAdsPackageId.value} ${selectedShopsPackageId.value}")
 
 				adapter.notifyItemsChanged(previousSelectionPosition, newSelectionPosition)
 			}
 		},
 		onBind = { binding, position, item ->
+			MyLogger.e("selectedAdsPackageId.value selectedShopsPackageId.value ch 1 ${selectedAdsPackageId.value} ${selectedShopsPackageId.value}")
+
 			apply {
 				val context = binding.root.context ?: return@apply
 

@@ -137,6 +137,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
 	  lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.CREATED) {
 				viewModel.responseAnnouncement.collect { resource ->
+					// todo show in dialog fragment and make whole view invisible till whole loading is done isa.
 					val response = (resource as? Resource.Success)?.value?.data ?: return@collect
 
 					val app = activity?.application as? MyApplication

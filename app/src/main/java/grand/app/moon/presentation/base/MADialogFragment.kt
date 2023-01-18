@@ -8,6 +8,8 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import grand.app.moon.presentation.base.utils.hideLoadingDialog
+import grand.app.moon.presentation.base.utils.showLoadingDialog
 
 abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 
@@ -15,6 +17,8 @@ abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 	open val heightIsMatchParent: Boolean = false
 	open val windowGravity: Int = Gravity.CENTER
 	open val canceledOnTouchOutside: Boolean = true
+
+	private var progressDialog: Dialog? = null
 
 	protected var _binding: VDB? = null
 	
@@ -100,6 +104,14 @@ abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 	 * - Covers all cases, such as [onCancelListener] & [onBackPressed]
 	 */
 	open fun onDismissListener() {}
+
+	fun showLoading() {
+		progressDialog = showLoadingDialog(activity, null)
+	}
+	fun hideLoading() {
+		hideLoadingDialog(progressDialog, activity)
+		progressDialog = null
+	}
 	
 }
 

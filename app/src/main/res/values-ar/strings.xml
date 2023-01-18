@@ -298,4 +298,5 @@
   <string name="var_days">%1$s أيام</string>
   <string name="renew_and_subscribe_in_another_package">التجديد و الاشتراك في باقة اخري</string>
   <string name="renew_package">تجديد الباقة</string>
+  <string name="promote_and_pay_var_var">الترقية و دفع %1$s %2$s</string>
 </resources>

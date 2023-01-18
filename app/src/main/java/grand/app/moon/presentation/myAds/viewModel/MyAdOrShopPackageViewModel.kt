@@ -35,7 +35,9 @@ class MyAdOrShopPackageViewModel @Inject constructor(
 	}
 
 	val duration = response.map {
-		app.getString(R.string.for_var, it?.period)
+		val typeOfPeriod = it?.typePeriod?.stringRes?.let { app.getString(it) }.orEmpty()
+		val period = "${it?.period.orZero()} $typeOfPeriod"
+		app.getString(R.string.for_var, period)
 	}
 
 	val price = response.map {

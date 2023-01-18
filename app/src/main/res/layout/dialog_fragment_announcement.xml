@@ -12,13 +12,15 @@
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     android:background="@color/announcement_dialog_window_background">
 
-    <com.google.android.material.card.MaterialCardView
-      android:id="@+id/materialCardView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/innerConstraintLayout"
 
       android:layout_width="0dp"
       android:layout_height="0dp"
@@ -27,42 +29,57 @@
 
       android:layout_margin="26dp"
 
+      android:padding="9dp"
       android:clipToPadding="false"
 
-      app:cardCornerRadius="20dp"
-
-      app:cardElevation="0dp"
-      app:cardMaxElevation="0dp"
+      android:visibility="invisible"
 
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent">
 
+      <!--        imageView_setupWithGlideOrSplashBA="@{viewModel.image}"
+-->
       <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/imageView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
         tools:src="@drawable/splash"
-        imageView_setupWithGlideOrSplashBA="@{viewModel.image}"
 
-        android:scaleType="fitXY"/>
+        android:adjustViewBounds="true"
 
-    </com.google.android.material.card.MaterialCardView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ImageView
-      android:layout_width="36dp"
-      android:layout_height="36dp"
+      <View
+        android:id="@+id/helperView"
 
-      android:src="@drawable/ic_announcement_close"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
 
-      android:onClick="@{v -> viewModel.closeDialog(v)}"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
 
+        app:layout_constraintBottom_toTopOf="@id/imageView"
+        app:layout_constraintEnd_toStartOf="@id/imageView"/>
 
-      app:layout_constraintTop_toTopOf="@id/materialCardView"
-      app:layout_constraintBottom_toTopOf="@id/materialCardView"
-      app:layout_constraintStart_toStartOf="@id/materialCardView"
-      app:layout_constraintEnd_toStartOf="@id/materialCardView"/>
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/ic_ann_close_44"
+
+        android:onClick="@{v -> viewModel.closeDialog(v)}"
+
+        app:layout_constraintTop_toTopOf="@id/helperView"
+        app:layout_constraintStart_toStartOf="@id/helperView"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
