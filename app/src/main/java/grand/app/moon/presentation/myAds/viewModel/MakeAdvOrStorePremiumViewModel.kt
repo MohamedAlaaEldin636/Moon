@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
@@ -41,6 +42,13 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 
 	private val selectedAdsPackageId = MutableLiveData<Int?>()
 	private val selectedShopsPackageId = MutableLiveData<Int?>()
+
+	val adsToggleTextColorRes = adsNotStoresAreSelected.map {
+		if (it == true) R.color.white else R.color.colorPrimary
+	}
+	val storeToggleTextColorRes = adsNotStoresAreSelected.map {
+		if (it != true) R.color.white else R.color.colorPrimary
+	}
 
 	val buttonText = switchMapMultiple2(adsNotStoresAreSelected, selectedAdsPackageId, selectedShopsPackageId) {
 		val selectedId = if (adsNotStoresAreSelected.value == true) selectedAdsPackageId.value else selectedShopsPackageId.value

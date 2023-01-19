@@ -42,6 +42,7 @@
       style="@style/TextTajawalMedium14"
       android:textSize="13sp"
       android:textColor="@color/white"
+      textView_setTextColorResBA="@{viewModel.adsToggleTextColorRes}"
       android:gravity="center"
 
       android:text="@string/ads_promotions_1"
@@ -70,7 +71,8 @@
 
       style="@style/TextTajawalMedium14"
       android:textSize="13sp"
-      android:textColor="#0D0633"
+      android:textColor="@color/colorPrimary"
+      textView_setTextColorResBA="@{viewModel.storeToggleTextColorRes}"
       android:gravity="center"
 
       android:text="@string/stores_promotions_1"

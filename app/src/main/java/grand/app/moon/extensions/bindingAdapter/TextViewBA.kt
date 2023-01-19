@@ -47,6 +47,15 @@ fun AppCompatTextView.adjustInsideRV(
 	}
 }
 
+@BindingAdapter("textView_setTextColorResName")
+fun TextView.setTextColorResName(resName: String?) {
+	setTextColor(
+		context?.resources?.getIdentifier(
+			resName, "color", context?.packageName ?: return
+		) ?: return
+	)
+}
+
 @BindingAdapter("textView_setHeightForSingleLine")
 fun TextView.setHeightForSingleLine(heightInSp: Int) {
 	val height = context.spToPx(heightInSp.toFloat())
