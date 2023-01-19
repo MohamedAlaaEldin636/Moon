@@ -88,10 +88,20 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 		it?.isSubscribed.orFalse()
 	}
 
-	val buttonText = isSubscribed.map {
-		app.getString(
-			if (it) R.string.already_subscribed else R.string.subscribe_now
-		)
+	val buttonText = switchMapMultiple2(isSubscribed, response) {
+		val res = when {
+			isSubscribed.value == true && response.value?.restDays.orZero() > 0 -> {
+				R.string.already_subscribed
+			}
+			isSubscribed.value == true -> {
+				R.string.renew_package
+			}
+			else -> {
+				R.string.subscribe_now
+			}
+		}
+
+		app.getString(res)
 	}
 
 	val remainingDaysInPackageText = response.map {
@@ -131,13 +141,13 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 
 		val navController = fragment.findNavController()
 
-		if (isSubscribed.value == true) {
+		if (isSubscribed.value == true && response.value?.restDays.orZero() > 0) {
 			// Check Subscription
 			fragment.findNavController().navigateSafely(
 				BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestMyBecomeShopPackage()
 			)
 		}else {
-			// Subscribe Now and return success isa.
+			// Subscribe Now to new package or renew current package and return success isa.
 			fragment.handleRetryAbleActionCancellableNullable(
 				action = {
 					repositoryPackages.subscribeToBecomeShopPackage(response.value?.id.orZero())
@@ -156,7 +166,10 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 				)*/
 
 				// Change Data
-				response.value = response.value?.copy(isSubscribed = true)
+				response.value = response.value?.copy(
+					isSubscribed = true,
+					restDays = response.value?.getPeriodInDays().orZero()
+				)
 
 				val parentFragment = (fragment.parentFragment as? BecomeShopPackagesFragment)
 
