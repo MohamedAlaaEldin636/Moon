@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.R
 import grand.app.moon.extensions.orZero
+import kotlin.time.Duration.Companion.days
 
 data class BasePagination<T>(
 	var data: List<T>?,
@@ -64,6 +65,15 @@ data class ResponsePackage(
 		MONTHS(1, R.string.months),
 		YEARS(2, R.string.years),
 		FREE(3, R.string.free),
+	}
+
+	fun getPeriodInDays(): Int {
+		val period = period.orZero()
+		return when (typePeriod) {
+			TypePeriod.DAYS, TypePeriod.FREE, null -> period
+			TypePeriod.MONTHS -> period * 30
+			TypePeriod.YEARS -> period * 365
+		}
 	}
 
 }

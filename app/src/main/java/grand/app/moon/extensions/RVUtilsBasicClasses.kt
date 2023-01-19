@@ -101,6 +101,16 @@ class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 		notifyItemRangeInserted(start, list.size)
 	}
 
+	fun deleteAt(index: Int) {
+		if (index >= list.size) return
+
+		list = list.toMutableList().also {
+			it.removeAt(index)
+		}.toList()
+
+		notifyItemRemoved(index)
+	}
+
 }
 
 open class RVPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(

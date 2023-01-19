@@ -49,9 +49,7 @@ class MyAdsFragment : BaseFragment<FragmentMyAdsBinding>()  {
 				}
 				NewAdvertisementState.DELETED -> {
 					viewModel.adapter.list.indexOfFirstOrNull { it.id == change.id }?.also {
-						viewModel.adapter.list[it].makePremium()
-
-						viewModel.adapter.notifyItemChanged(it)
+						viewModel.adapter.deleteAt(it)
 					}
 				}
 			}

@@ -110,6 +110,7 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 				fragment.showMessage(fragment.getString(R.string.done_successfully))
 
 				selectedPackage.isSubscribed = true
+				selectedPackage.restDays = selectedPackage.getPeriodInDays()
 
 				if (adsNotStoresAreSelected.value == true) {
 					selectedAdsPackageId.value = null

@@ -142,19 +142,28 @@
         <ImageView
           android:id="@+id/popularImageView"
 
-          android:layout_width="0dp"
-          android:layout_height="0dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
 
-          android:src="@drawable/premium_32"
+          android:src="@drawable/ic_popular_for_packages"
 
           tools:visibility="visible"
           android:visibility="@{viewModel.isPopular()}"
+
+          app:layout_constraintTop_toTopOf="@id/popularImageHelperView"
+          app:layout_constraintStart_toStartOf="@id/popularImageHelperView"/>
+
+        <View
+          android:id="@+id/popularImageHelperView"
+
+          android:layout_width="0dp"
+          android:layout_height="0dp"
 
           app:layout_constraintDimensionRatio="1:1"
 
           app:layout_constraintTop_toTopOf="@id/backgroundImageView"
           app:layout_constraintBottom_toBottomOf="@id/popularHelperView"
-          app:layout_constraintEnd_toEndOf="@id/backgroundImageView"/>
+          app:layout_constraintStart_toStartOf="@id/backgroundImageView"/>
 
         <TextView
           android:id="@+id/adsCountTextView"
