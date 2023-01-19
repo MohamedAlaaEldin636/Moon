@@ -9,6 +9,11 @@ import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import grand.app.moon.extensions.orZero
 
+@BindingAdapter("view_visibleOrInvisible")
+fun View.visibleOrInvisible(show: Boolean?) {
+	visibility = if (show == true) View.VISIBLE else View.INVISIBLE
+}
+
 @BindingAdapter("view_clipBackground")
 fun View.clipBackground(clip: Boolean?) {
 	outlineProvider = ViewOutlineProvider.BACKGROUND

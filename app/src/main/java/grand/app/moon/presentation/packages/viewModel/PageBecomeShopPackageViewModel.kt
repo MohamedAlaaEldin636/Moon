@@ -102,10 +102,22 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 		}
 	}
 
-	fun performShowAdsTooltip() = showAdsTooltip.postValue(true)
-	fun performShowStoriesTooltip() = showStoriesTooltip.postValue(true)
-	fun performShowExploreTooltip() = showExploreTooltip.postValue(true)
-	fun performShowStatsViewsTooltip() = showStatsViewsTooltip.postValue(true)
+	fun performShowAdsTooltip() {
+		clearTooltips()
+		showAdsTooltip.postValue(true)
+	}
+	fun performShowStoriesTooltip() {
+		clearTooltips()
+		showStoriesTooltip.postValue(true)
+	}
+	fun performShowExploreTooltip() {
+		clearTooltips()
+		showExploreTooltip.postValue(true)
+	}
+	fun performShowStatsViewsTooltip() {
+		clearTooltips()
+		showStatsViewsTooltip.postValue(true)
+	}
 
 	fun clearTooltips() {
 		showAdsTooltip.value = false

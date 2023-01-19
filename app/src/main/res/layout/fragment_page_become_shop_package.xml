@@ -300,7 +300,7 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
 
-          android:visibility="@{viewModel.showAdsTooltip}"
+          view_visibleOrInvisible="@{viewModel.showAdsTooltip}"
 
           android:gravity="center"
           android:textDirection="locale"
@@ -337,7 +337,7 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
 
-          android:visibility="@{viewModel.showStoriesTooltip}"
+          view_visibleOrInvisible="@{viewModel.showStoriesTooltip}"
 
           android:gravity="center"
           android:textDirection="locale"
@@ -372,7 +372,7 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
 
-          android:visibility="@{viewModel.showExploreTooltip}"
+          view_visibleOrInvisible="@{viewModel.showExploreTooltip}"
 
           android:gravity="center"
           android:textDirection="locale"
@@ -407,7 +407,7 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
 
-          android:visibility="@{viewModel.showStatsViewsTooltip}"
+          view_visibleOrInvisible="@{viewModel.showStatsViewsTooltip}"
 
           android:gravity="center"
           android:textDirection="locale"
