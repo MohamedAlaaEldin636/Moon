@@ -760,6 +760,10 @@
     <action
       android:id="@+id/action_dest_become_shop_packages_to_dest_create_store"
       app:destination="@id/dest_create_store" />
+    <deepLink
+      android:id="@+id/deep_link_dest_become_shop_packages"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.become.shop.packages" />
   </fragment>
   <fragment
     android:id="@+id/dest_my_become_shop_package"

@@ -11,6 +11,8 @@ import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentSettingsBinding
+import grand.app.moon.extensions.General
+import grand.app.moon.extensions.navigateDeepLinkWithOptions
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.intro.IntroActivity
@@ -104,70 +106,70 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     viewModel.moreAdapter.differ.submitList(moreItems)
     setData()
 
-    viewModel.moreAdapter.clickEvent.observe(this, {
-      Log.d(TAG, "setBindingVariables: here")
-      if (it?.id is String) {
-        when (it.id) {
-          Constants.GOOGLE_PLAY -> rateApp()
-          Constants.SHARE -> {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "text/plain"
+    viewModel.moreAdapter.clickEvent.observe(this) {
+	    Log.d(TAG, "setBindingVariables: here")
+	    if (it?.id is String) {
+		    when (it.id) {
+			    Constants.GOOGLE_PLAY -> rateApp()
+			    Constants.SHARE -> {
+				    val intent = Intent(Intent.ACTION_SEND)
+				    intent.type = "text/plain"
 
-            val messageDisplay =
-              "https://play.google.com/store/apps/details?id=${activity?.applicationContext?.packageName}"
-            intent.putExtra(Intent.EXTRA_SUBJECT, resources.getString(R.string.app_name))
-            intent.putExtra(Intent.EXTRA_TEXT, messageDisplay)
-            context?.startActivity(
-              Intent.createChooser(
-                intent,
-                resources.getString(R.string.share)
-              )
-            )
-          }
-          else -> {
-            Log.d(TAG, "setBindingVariables: ${it.id}")
-            navigateSafe(
-              SettingsFragmentDirections.actionSettingsFragmentToWebFragment(
-                it.title!!,
-                it.id.toString()
-              )
-            )
-          }
-        }
-        Log.d(TAG, "setBindingVariables: ")
+				    val messageDisplay =
+					    "https://play.google.com/store/apps/details?id=${activity?.applicationContext?.packageName}"
+				    intent.putExtra(Intent.EXTRA_SUBJECT, resources.getString(R.string.app_name))
+				    intent.putExtra(Intent.EXTRA_TEXT, messageDisplay)
+				    context?.startActivity(
+					    Intent.createChooser(
+						    intent,
+						    resources.getString(R.string.share)
+					    )
+				    )
+			    }
+			    else -> {
+				    Log.d(TAG, "setBindingVariables: ${it.id}")
+				    navigateSafe(
+					    SettingsFragmentDirections.actionSettingsFragmentToWebFragment(
+						    it.title!!,
+						    it.id.toString()
+					    )
+				    )
+			    }
+		    }
+		    Log.d(TAG, "setBindingVariables: ")
 //        openUrl(it.id.toString())
-      } else {
-        if (it?.id != -1) {
+	    } else {
+		    if (it?.id != -1) {
 //          Log.d(TAG, "setBindingVariables: ${it.id}")
-          when (it?.id) {
-            Constants.CONTACT -> {
-              navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToContactUsFragment())
-            }
-            Constants.LANG -> {
-              navigateSafe(
-                SettingsFragmentDirections.actionMoreFragmentToLanguageFragment2(
-                  Constants.MORE
-                )
-              )
-            }
-            Constants.COUNTRY -> {
-              navigateSafe(
-                SettingsFragmentDirections.actionMoreFragmentToCountriesFragment3(
-                  Constants.MORE
-                )
-              )
-            }
-            Constants.SOCIAL -> {
-              navigateSafe(
-                SettingsFragmentDirections.actionSettingsFragmentToSocialFragment()
-              )
-            }
-            else -> {
-            }
-          }
-        }
-      }
-    })
+			    when (it?.id) {
+				    Constants.CONTACT -> {
+					    navigateSafe(SettingsFragmentDirections.actionSettingsFragmentToContactUsFragment())
+				    }
+				    Constants.LANG -> {
+					    navigateSafe(
+						    SettingsFragmentDirections.actionMoreFragmentToLanguageFragment2(
+							    Constants.MORE
+						    )
+					    )
+				    }
+				    Constants.COUNTRY -> {
+					    navigateSafe(
+						    SettingsFragmentDirections.actionMoreFragmentToCountriesFragment3(
+							    Constants.MORE
+						    )
+					    )
+				    }
+				    Constants.SOCIAL -> {
+					    navigateSafe(
+						    SettingsFragmentDirections.actionSettingsFragmentToSocialFragment()
+					    )
+				    }
+				    else -> {
+				    }
+			    }
+		    }
+	    }
+    }
   }
 
   private val TAG = "MoreFragment"
@@ -195,6 +197,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
           )
         }
       }
+
+	    // todo del later just for current sprint testing purpose
+	    list.add(
+		    MoreItem(
+			    getString(R.string.packages_898),
+			    getMyDrawable(R.drawable.ic_view),
+			    Constants.PACKAGES
+		    )
+			)
     }
     viewModel.accountAdapter.differ.submitList(list)
     viewModel.accountAdapter.notifyDataSetChanged()
@@ -256,48 +267,58 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
   fun setData() {
     setListProfile()
-    viewModel.accountAdapter.clickEvent.observe(this, {
+    viewModel.accountAdapter.clickEvent.observe(this) {
 //      Log.d(TAG, "setBindingVariables: here $it")
-      if (it?.id is String) {
-        Log.d(TAG, "setData: ASDASSADDSA")
-        when (it.id) {
-          
-          Constants.PROFILE -> navigateSafe(SettingsFragmentDirections.actionMyAccountFragmentToProfileFragment())
-          Constants.LOGIN -> openLoginActivity()
-          Constants.LAST_ADS -> navigateSafe(
-            SettingsFragmentDirections.actionMyAccountFragmentToAdsListFragment(
-              2,
-              resources.getString(R.string.last_ads_seen)
-            )
-          )
-          Constants.FAVOURITE -> navigateSafe(
-            SettingsFragmentDirections.actionMyAccountFragmentToAdsListFragment(
-              1,
-              resources.getString(R.string.favourite)
-            )
-          )
-          Constants.LAST_SEARCH -> navigateSafe(
-            SettingsFragmentDirections.actionMyAccountFragmentToAdsListFragment(
-              5,
-              resources.getString(R.string.last_search)
-            )
-          )
-          Constants.STORES_FOLLOWED -> {
-            navigateSafe(
-              SettingsFragmentDirections.actionMyAccountFragmentToStoreFollowedListFragment()
-            )
-          }
-          Constants.STORES_BLOCKED -> {
-            findNavController().navigate(SettingsFragmentDirections.actionMyAccountFragmentToStoreBlockListFragment())
-          }
-          Constants.LOGOUT -> {
-            viewModel.logout()
-            logout()
-            openActivityAndClearStack(HomeActivity::class.java)
-          }
-        }
-      }
-    })
+	    if (it?.id is String) {
+		    Log.d(TAG, "setData: ASDASSADDSA")
+		    when (it.id) {
+			    Constants.PACKAGES -> {
+				    if (viewModel.userLocalUseCase().isStore == true) {
+					    findNavController().navigateDeepLinkWithOptions(
+						    "fragment-dest",
+						    "grand.app.moon.dest.become.shop.packages"
+					    )
+				    }else {
+							// Remove below later
+							General.TODO("Only for shop account")
+				    }
+					}
+			    Constants.PROFILE -> navigateSafe(SettingsFragmentDirections.actionMyAccountFragmentToProfileFragment())
+			    Constants.LOGIN -> openLoginActivity()
+			    Constants.LAST_ADS -> navigateSafe(
+				    SettingsFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+					    2,
+					    resources.getString(R.string.last_ads_seen)
+				    )
+			    )
+			    Constants.FAVOURITE -> navigateSafe(
+				    SettingsFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+					    1,
+					    resources.getString(R.string.favourite)
+				    )
+			    )
+			    Constants.LAST_SEARCH -> navigateSafe(
+				    SettingsFragmentDirections.actionMyAccountFragmentToAdsListFragment(
+					    5,
+					    resources.getString(R.string.last_search)
+				    )
+			    )
+			    Constants.STORES_FOLLOWED -> {
+				    navigateSafe(
+					    SettingsFragmentDirections.actionMyAccountFragmentToStoreFollowedListFragment()
+				    )
+			    }
+			    Constants.STORES_BLOCKED -> {
+				    findNavController().navigate(SettingsFragmentDirections.actionMyAccountFragmentToStoreBlockListFragment())
+			    }
+			    Constants.LOGOUT -> {
+				    viewModel.logout()
+				    logout()
+				    openActivityAndClearStack(HomeActivity::class.java)
+			    }
+		    }
+	    }
+    }
   }
 
   override fun onResume() {

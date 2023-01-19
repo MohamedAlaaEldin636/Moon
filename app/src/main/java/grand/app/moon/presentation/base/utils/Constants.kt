@@ -96,6 +96,7 @@ object Constants {
   const val LOGIN: String = "login"
   const val LOGOUT: String = "logout"
   const val PROFILE: String = "profile"
+  const val PACKAGES: String = "PACKAGES"
   const val LAST_ADS: String = "last_ads"
 //  const val STORE_ID: String = "store_id"
   const val STORES_ID: String = "stores_id"

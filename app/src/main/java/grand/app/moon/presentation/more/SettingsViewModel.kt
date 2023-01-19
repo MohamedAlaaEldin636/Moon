@@ -21,7 +21,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
   var userLocalUseCase: UserLocalUseCase,
   private val loginUseCase: LogInUseCase,
-  val accountRepository: AccountRepository
+  val accountRepository: AccountRepository,
 ) : BaseViewModel() {
   @Bindable
   val accountAdapter = MoreAdapter()
