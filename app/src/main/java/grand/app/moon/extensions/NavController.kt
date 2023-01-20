@@ -1,9 +1,11 @@
 package grand.app.moon.extensions
 
+import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.NavigationRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.navigation.*
@@ -130,6 +132,32 @@ inline fun <reified T> NavController.setResultInPreviousBackStackEntrySavedState
 		key,
 		any.toJsonInlinedOrNull().orEmpty()
 	)
+}
+
+inline fun <reified T> AppCompatActivity.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull(
+	navController: NavController,
+	key: String = AppConsts.NavController.GSON_KEY,
+	noinline onNotNullResult: (T) -> Unit
+) {
+	navController.currentBackStackEntry?.savedStateHandle?.getLiveData(
+		key,
+		""
+	)?.observe(this) {
+		MyLogger.e("resultssss -> observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull on observe $key, $it")
+
+		if (it.isNullOrEmpty().not()) {
+			val value = it.fromJsonInlinedOrNull<T>()
+
+			navController.currentBackStackEntry?.savedStateHandle?.set(
+				key,
+				""
+			)
+
+			if (value != null) {
+				onNotNullResult(value)
+			}
+		}
+	}
 }
 
 inline fun <reified T> Fragment.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull(

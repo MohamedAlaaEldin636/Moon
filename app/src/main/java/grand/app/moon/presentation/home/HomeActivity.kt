@@ -298,6 +298,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 							)
 						}else {
 							// Renew current package or subscribe to a new package
+							observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(nav) {
+								nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
+
+								nav.navigateDeepLinkWithOptions(
+									"fragment-dest",
+									"grand.app.moon.dest.add.adv.categories.list"
+								)
+							}
+
 							nav.navigateDeepLinkWithOptions(
 								"fragment-dest",
 								"grand.app.moon.dest.my.become.shop.package"

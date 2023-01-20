@@ -161,9 +161,6 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 				navController.setResultInPreviousBackStackEntrySavedStateHandleViaGson(
 					true // subscribed successfully
 				)
-				/*navController.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
-					true // subscribed successfully
-				)*/
 
 				// Change Data
 				response.value = response.value?.copy(
@@ -176,9 +173,13 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 				val parentViewModel = parentFragment?.viewModel
 				parentViewModel?.allPackages?.firstOrNull {
 					it.id == response.value?.id
-				}?.isSubscribed = true
+				}?.also {
+					it.isSubscribed = true
+					it.restDays = response.value?.getPeriodInDays().orZero()
+				}
 
 				if (false /* todo response model will change to return where to redirect next isa. */) {
+					// todo zawed args from nav graph if shouldRedirectToCreateAdvertisement: Boolean
 					// Check Subscription
 					navController.navigateSafely(
 						BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestMyBecomeShopPackage()

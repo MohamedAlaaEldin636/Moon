@@ -26,9 +26,9 @@ class MyBecomeShopPackageViewModel @Inject constructor(
 		it?.title.orEmpty()
 	}
 
-	val duration = response.map {
-		val typeOfPeriod = it?.typePeriod?.stringRes?.let { app.getString(it) }.orEmpty()
-		val period = "${it?.period.orZero()} $typeOfPeriod"
+	val duration = response.map { response ->
+		val typeOfPeriod = response?.typePeriod?.stringRes?.let { app.getString(it) }.orEmpty()
+		val period = "${response?.period.orZero()} $typeOfPeriod"
 		app.getString(R.string.for_var, period)
 	}
 

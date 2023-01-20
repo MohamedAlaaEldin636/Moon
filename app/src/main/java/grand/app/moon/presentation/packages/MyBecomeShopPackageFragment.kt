@@ -3,10 +3,14 @@ package grand.app.moon.presentation.packages
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentMyBecomeShopPackageBinding
+import grand.app.moon.extensions.AppConsts
 import grand.app.moon.extensions.handleRetryAbleActionCancellable
+import grand.app.moon.extensions.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson
+import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.packages.viewModel.MyBecomeShopPackageViewModel
@@ -41,6 +45,20 @@ class MyBecomeShopPackageFragment : BaseFragment<FragmentMyBecomeShopPackageBind
 
 		viewModel.name.observe(viewLifecycleOwner) {
 			(activity as? HomeActivity)?.binding?.toolbar?.title = it
+		}
+
+		if (findNavController().previousBackStackEntry?.destination?.id != R.id.dest_become_shop_packages) {
+			findNavController().currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
+
+			observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
+				if (it) {
+					hideLoading()
+
+					findNavController().navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
+						true // success package
+					)
+				}
+			}
 		}
 	}
 
