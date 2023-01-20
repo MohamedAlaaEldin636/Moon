@@ -327,4 +327,16 @@
   <string name="whatsapp_phone">هاتف الواتساب</string>
   <string name="tax_number">الرقم الضريبي</string>
   <string name="fill_required_fields">Fill Required Fields</string>
+  <string name="your_store_data_is_not_complete">Your store data is incomplete</string>
+  <string name="store_data_not_complete_1">Please complete your store\'s data so that your store appears properly to customers and merchants, and you can easily control all the features of Hungary and the ability to modify them</string>
+  <string name="store_data_not_complete_2">Complete incomplete data</string>
+  <string name="store_settings">Store Settings</string>
+  <string name="clients_stats">إحصائيات العملاء</string>
+  <string name="your_store_main_categories">الأقسام الرئيسية لمتجرك</string>
+  <string name="your_store_sub_categories">الأقسام الفرعية لمتجرك</string>
+  <string name="working_hours">مواعيد العمل</string>
+  <string name="your_store_social_media">سوشيال ميدي ا المتجر</string>
+  <string name="cients_opionions">آراء العملاء</string>
+  <string name="store_story">ستوري المتجر</string>
+  <string name="store_explore">اكسبلور المتجر</string>
 </resources>

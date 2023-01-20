@@ -199,11 +199,18 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
       }
 
 	    // todo del later just for current sprint testing purpose
-	    list.add(
+	    /*list.add(
 		    MoreItem(
 			    getString(R.string.packages_898),
 			    getMyDrawable(R.drawable.ic_view),
 			    Constants.PACKAGES
+		    )
+			)*/
+	    list.add(
+		    MoreItem(
+			    getString(R.string.store_data),
+			    getMyDrawable(R.drawable.ic_store_data_4),
+			    Constants.STORE_INFO
 		    )
 			)
     }
@@ -281,6 +288,17 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 				    }else {
 							// Remove below later
 							General.TODO("Only for shop account")
+				    }
+					}
+			    Constants.STORE_INFO -> {
+				    if (viewModel.userLocalUseCase().isStore == true) {
+					    findNavController().navigateDeepLinkWithOptions(
+						    "fragment-dest",
+						    "grand.app.moon.dest_store.full.data"
+					    )
+				    }else {
+					    // Remove below later
+					    General.TODO("Only for shop account")
 				    }
 					}
 			    Constants.PROFILE -> navigateSafe(SettingsFragmentDirections.actionMyAccountFragmentToProfileFragment())

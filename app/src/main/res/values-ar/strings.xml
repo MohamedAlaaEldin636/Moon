@@ -317,4 +317,16 @@
   <string name="whatsapp_phone">هاتف الواتساب</string>
   <string name="tax_number">الرقم الضريبي</string>
   <string name="fill_required_fields">إملأ الحقول المطلوبة</string>
+  <string name="your_store_data_is_not_complete">بيانات متجرك غير مكتملة</string>
+  <string name="store_data_not_complete_1">برجاء إكمال بيانات متجرك ليتم ظهور متجرك بشكل لائق للعملاء و التجار و التحكم في كافة خصائص المجر بسهولة و امكانية تعديلها</string>
+  <string name="store_data_not_complete_2">إكمال البيانات غير المكتملة</string>
+  <string name="store_settings">اعدادت المتجر</string>
+  <string name="clients_stats">إحصائيات العملاء</string>
+  <string name="your_store_main_categories">الأقسام الرئيسية لمتجرك</string>
+  <string name="your_store_sub_categories">الأقسام الفرعية لمتجرك</string>
+  <string name="working_hours">مواعيد العمل</string>
+  <string name="your_store_social_media">سوشيال ميدي ا المتجر</string>
+  <string name="cients_opionions">آراء العملاء</string>
+  <string name="store_story">ستوري المتجر</string>
+  <string name="store_explore">اكسبلور المتجر</string>
 </resources>

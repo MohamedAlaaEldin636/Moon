@@ -26,7 +26,7 @@ data class ResponseMyStoreDetails(
 
 	var phone: String?,
 	@SerializedName("country_code") var countryCode: String?,
-	@SerializedName("progress_bar") var progressBar: Boolean?,
+	@SerializedName("progress_bar") var progressBar: Int?,
 	@SerializedName("store_info") var storeInfo: Boolean?,
 	var categories: Boolean?,
 	@SerializedName("sub_categories") var subCategories: Boolean?,

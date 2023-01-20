@@ -180,7 +180,7 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 
 				if (false /* todo response model will change to return where to redirect next isa. */) {
 					// todo zawed args from nav graph if shouldRedirectToCreateAdvertisement: Boolean
-					// Check Subscription
+					// Check Subscription // ALSO ASK if came from add adv should go back to add adv wla go to check my packages screen ?!!?
 					navController.navigateSafely(
 						BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestMyBecomeShopPackage()
 					)

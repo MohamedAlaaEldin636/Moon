@@ -5,9 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import androidx.annotation.DrawableRes
+import androidx.annotation.FloatRange
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import grand.app.moon.extensions.orZero
+
+@BindingAdapter("view_constraintPercentWidth")
+fun View.constraintPercentWidth(@FloatRange(from = 0.0, to = 1.0) value: Float?) {
+	val layoutParams = layoutParams as? ConstraintLayout.LayoutParams ?: return
+	layoutParams.matchConstraintPercentWidth = value.orZero()
+		.coerceAtLeast(0f).coerceAtMost(1f)
+	this.layoutParams = layoutParams
+}
 
 @BindingAdapter("view_visibleOrInvisible")
 fun View.visibleOrInvisible(show: Boolean?) {

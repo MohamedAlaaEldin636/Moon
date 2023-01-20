@@ -782,7 +782,12 @@
     android:id="@+id/dest_create_store"
     android:name="grand.app.moon.presentation.myStore.CreateStoreFragment"
     android:label="@string/store_data"
-    tools:layout="@layout/fragment_create_store" />
+    tools:layout="@layout/fragment_create_store" >
+    <deepLink
+      android:id="@+id/deep_link_dest_create_store"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.create.store" />
+  </fragment>
   <fragment
     android:id="@+id/dest_make_adv_or_store_premium"
     android:name="grand.app.moon.presentation.myAds.MakeAdvOrStorePremiumFragment"
