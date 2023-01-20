@@ -5,7 +5,7 @@
 
   tools:context="grand.app.moon.presentation.myStore.CreateStoreFragment"
 
-  tools:ignore="Autofill,LabelFor">
+  tools:ignore="Autofill,LabelFor,ContentDescription">
 
   <data>
     <variable
@@ -17,9 +17,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:fillViewport="true"
-
-    tools:ignore="ContentDescription">
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -29,6 +27,8 @@
 
       <ImageView
         android:id="@+id/backgroundImageView"
+
+        imageView_setupWithGlideOrIgnoreGlideImageViaXmlModelBA="@{viewModel.backgroundImage}"
 
         android:layout_width="0dp"
         android:layout_height="156dp"
@@ -55,7 +55,7 @@
         android:layout_marginTop="9dp"
         android:layout_marginEnd="11dp"
 
-        android:text="@string/remaining_stories_number"
+        android:text="@string/change_background_image"
         style="@style/TextTajawalMedium16"
         android:textSize="11sp"
         android:textColor="#FFFFFF"
@@ -71,12 +71,12 @@
       <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/logoImageView"
 
+        imageView_setupWithGlideOrIgnoreGlideImageViaXmlModelBA="@{viewModel.profileImage}"
+
         android:layout_width="109dp"
         android:layout_height="109dp"
 
         android:src="@drawable/ic_logo_shop_in_create_shop"
-
-        android:adjustViewBounds="true"
 
         android:scaleType="centerCrop"
 
@@ -87,6 +87,8 @@
         app:strokeWidth="2dp"
 
         android:onClick="@{v -> viewModel.changeLogoImage(v)}"
+
+        android:padding="2dp"
 
         app:layout_constraintTop_toBottomOf="@id/backgroundImageView"
         app:layout_constraintBottom_toBottomOf="@id/backgroundImageView"
@@ -192,6 +194,8 @@
 
           tools:hint="@string/area"
           editText_setHintWithRequiredAstrix="@{@string/area}"
+
+          android:enabled="@{viewModel.enableAreaField}"
 
           android:text="@{viewModel.areaName}"
 

@@ -11,6 +11,7 @@ import androidx.fragment.app.findFragment
 import androidx.navigation.*
 import androidx.navigation.fragment.findNavController
 import grand.app.moon.R
+import grand.app.moon.presentation.myStore.CreateStoreFragment
 
 /*fun Fragment.findNavControllerOfProject(): NavController {
 	return Navigation.findNavController(
@@ -183,4 +184,23 @@ inline fun <reified T> Fragment.observeBackStackEntrySavedStateHandleLiveDataVia
 			}
 		}
 	}
+}
+
+fun NavController.navDeepToLocationSelection(
+	latitude: String?,
+	longitude: String?,
+) {
+	val noCoordinates = latitude.isNullOrEmpty() || longitude.isNullOrEmpty()
+
+	navigateDeepLinkWithOptions(
+		"fragment-dest",
+		"grand.app.moon.dest.location.selection" + if (noCoordinates) ".no.coordinates" else "",
+		paths = arrayOf(
+			true.toString(),
+			latitude.toStringOrEmpty(),
+			longitude.toStringOrEmpty(),
+		).let {
+			if (noCoordinates) it.take(1).toTypedArray() else it
+		}
+	)
 }

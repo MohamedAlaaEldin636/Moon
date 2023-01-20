@@ -107,12 +107,9 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	}
 
 	fun goToMapToGetAddress(fragment: AddAdvFinalPageFragment) {
-		fragment.findNavController().navigate(
-			AddAdvFinalPageFragmentDirections.actionDestAddAdvFinalPageToDestLocationSelection(
-				true,
-				locationData.value?.latitude,
-				locationData.value?.longitude,
-			)
+		fragment.findNavController().navDeepToLocationSelection(
+			locationData.value?.latitude,
+			locationData.value?.longitude,
 		)
 	}
 

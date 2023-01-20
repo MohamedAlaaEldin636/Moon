@@ -54,13 +54,15 @@ class CreateStoreViewModel @Inject constructor(
 		it?.userName.orEmpty()
 	}
 
-	var cities = emptyList<ResponseCity>()
+	val cities = MutableLiveData(emptyList<ResponseCity>())
 	val selectedCity = MutableLiveData<ResponseCity?>()
 	val cityName = selectedCity.map { it?.name.orEmpty() }
 
-	var areas = emptyList<ResponseArea>()
+	val areas = MutableLiveData(emptyList<ResponseArea>())
 	val selectedArea = MutableLiveData<ResponseArea?>()
 	val areaName = selectedArea.map { it?.name.orEmpty() }
+
+	val enableAreaField = areas.map { it.isNullOrEmpty().not() }
 
 	val locationData = response.mapNullableToMutableLiveData { response ->
 		response?.latitude?.let { latitude ->
@@ -114,13 +116,14 @@ class CreateStoreViewModel @Inject constructor(
 
 	fun selectCity(view: View) {
 		view.showPopup(
-			cities.map { it.name.orEmpty() },
+			cities.value.orEmpty().map { it.name.orEmpty() },
 			listener = { menuItem ->
-				val newSelectedCity = cities.firstOrNull { it.name == menuItem.title.toStringOrEmpty() }
+				val newSelectedCity = cities.value.orEmpty().firstOrNull { it.name == menuItem.title.toStringOrEmpty() }
 
 				if (newSelectedCity?.id != selectedCity.value?.id) {
 					selectedCity.value = newSelectedCity
 
+					areas.value = newSelectedCity?.areas
 					selectedArea.value = null
 				}
 			}
@@ -128,23 +131,20 @@ class CreateStoreViewModel @Inject constructor(
 	}
 
 	fun selectArea(view: View) {
+		if (areas.value.orEmpty().isEmpty()) return
+
 		view.showPopup(
-			areas.map { it.name.orEmpty() },
+			areas.value.orEmpty().map { it.name.orEmpty() },
 			listener = { menuItem ->
-				selectedArea.value = areas.firstOrNull { it.name == menuItem.title.toStringOrEmpty() }
+				selectedArea.value = areas.value.orEmpty().firstOrNull { it.name == menuItem.title.toStringOrEmpty() }
 			}
 		)
 	}
 
 	fun selectLocation(view: View) {
-		view.findFragmentOrNull<CreateStoreFragment>()?.findNavController()?.navigateDeepLinkWithOptions(
-			"fragment-dest",
-			"grand.app.moon.dest.location.selection",
-			paths = arrayOf(
-				true.toString(),
-				locationData.value?.latitude.toStringOrEmpty(),
-				locationData.value?.longitude.toStringOrEmpty(),
-			)
+		view.findFragmentOrNull<CreateStoreFragment>()?.findNavController()?.navDeepToLocationSelection(
+			locationData.value?.latitude,
+			locationData.value?.longitude
 		)
 	}
 

@@ -325,8 +325,9 @@
   <string name="your_store_main_categories">الأقسام الرئيسية لمتجرك</string>
   <string name="your_store_sub_categories">الأقسام الفرعية لمتجرك</string>
   <string name="working_hours">مواعيد العمل</string>
-  <string name="your_store_social_media">سوشيال ميدي ا المتجر</string>
+  <string name="your_store_social_media">سوشيال ميديا المتجر</string>
   <string name="cients_opionions">آراء العملاء</string>
   <string name="store_story">ستوري المتجر</string>
   <string name="store_explore">اكسبلور المتجر</string>
+  <string name="change_background_image">تغير صورة الخلفية</string>
 </resources>

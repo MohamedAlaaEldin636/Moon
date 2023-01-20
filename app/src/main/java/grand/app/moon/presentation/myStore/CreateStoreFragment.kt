@@ -91,10 +91,10 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 					viewModel.useCaseShop.getCitiesWithAreas()
 				}
 			) { cities ->
-				viewModel.cities = cities
+				viewModel.cities.value = cities
 
 				val areas = cities.firstOrNull { it.id == responseShopDetails.cityId }?.areas.orEmpty()
-				viewModel.areas = areas
+				viewModel.areas.value = areas
 
 				viewModel.selectedCity.value = cities.firstOrNull { it.id == responseShopDetails.cityId }
 				viewModel.selectedArea.value = areas.firstOrNull { it.id == responseShopDetails.areaId }

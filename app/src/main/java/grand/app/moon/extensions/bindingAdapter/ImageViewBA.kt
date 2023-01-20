@@ -9,8 +9,26 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import grand.app.moon.R
+import grand.app.moon.extensions.compose.GlideImageViaXmlModel
 import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.base.extensions.setTint
+
+@BindingAdapter("imageView_setupWithGlideOrIgnoreGlideImageViaXmlModelBA")
+fun ImageView.setupWithGlideOrIgnoreGlideImageViaXmlModelBA(model: GlideImageViaXmlModel?) {
+	when (model) {
+		is GlideImageViaXmlModel.IString -> if (model.string != null) {
+			Glide.with(this)
+				.load(model.string)
+				.into(this)
+		}
+		is GlideImageViaXmlModel.IUri -> if (model.uri != null) {
+			Glide.with(this)
+				.load(model.uri)
+				.into(this)
+		}
+		null -> {}
+	}
+}
 
 @BindingAdapter("imageView_setupWithGlideOrEmptyBA")
 fun ImageView.setupWithGlideOrEmptyBA(url :String?) {

@@ -19,6 +19,14 @@ fun View.constraintPercentWidth(@FloatRange(from = 0.0, to = 1.0) value: Float?)
 	this.layoutParams = layoutParams
 }
 
+@BindingAdapter("view_layoutConstraintHorizontalBias")
+fun View.layoutConstraintHorizontalBias(@FloatRange(from = 0.0, to = 1.0) value: Float?) {
+	val layoutParams = layoutParams as? ConstraintLayout.LayoutParams ?: return
+	layoutParams.horizontalBias = value.orZero()
+		.coerceAtLeast(0f).coerceAtMost(1f)
+	this.layoutParams = layoutParams
+}
+
 @BindingAdapter("view_visibleOrInvisible")
 fun View.visibleOrInvisible(show: Boolean?) {
 	visibility = if (show == true) View.VISIBLE else View.INVISIBLE

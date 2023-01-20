@@ -133,7 +133,8 @@
 
           android:background="@color/colorPrimary"
 
-          app:layout_constraintWidth_percent="0.3"
+          app:layout_constraintWidth_percent="0"
+          tools:layout_constraintWidth_percent="0.5"
           view_constraintPercentWidth="@{viewModel.progressFromZeroToOne}"
 
           app:layout_constraintHorizontal_bias="0"
@@ -153,8 +154,9 @@
       android:layout_width="1dp"
       android:layout_height="1dp"
 
-      app:layout_constraintHorizontal_bias="0.3"
-      view_constraintPercentWidth="@{viewModel.progressFromZeroToOne}"
+      app:layout_constraintHorizontal_bias="0"
+      tools:layout_constraintHorizontal_bias="0.99"
+      view_layoutConstraintHorizontalBias="@{viewModel.progressFromZeroToOne}"
 
       app:layout_constraintBottom_toTopOf="@id/progressCardView"
       app:layout_constraintStart_toStartOf="@id/progressCardView"
