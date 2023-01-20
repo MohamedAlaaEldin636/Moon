@@ -1,12 +1,15 @@
 package grand.app.moon.data.packages
 
 import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
+import grand.app.moon.domain.myStore.ResponseMyStoreDetails
 import grand.app.moon.domain.packages.BasePagination
 import grand.app.moon.domain.packages.ResponsePackage
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
-import retrofit2.http.GET
-import retrofit2.http.Query
+import grand.app.moon.presentation.myStore.model.ResponseCountry
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 interface PackagesServices {
 
@@ -50,5 +53,26 @@ interface PackagesServices {
 	suspend fun getMyPackage(
 		@Query("type") type: String,
 	): BaseResponse<ResponsePackage?>
+
+	@GET("v1/profile")
+	suspend fun getShopInfo(): BaseResponse<ResponseMyStoreDetails?>
+
+	@GET("v1/countries")
+	suspend fun getCountries(): BaseResponse<List<ResponseCountry>?>
+
+	@Multipart
+	@POST
+	suspend fun addOrUpdateStore(
+		@Part images: List<MultipartBody.Part>,
+		@Part("name") storeName: RequestBody,
+		@Part("nickname") userName: RequestBody,
+		@Part("city_id") cityId: Int,
+		@Part("area_id") areaId: Int,
+		@Part("latitude") latitude: RequestBody,
+		@Part("longitude") longitude: RequestBody,
+		@Part("address") address: RequestBody,
+		@Part("description") description: RequestBody,
+		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>,
+	): BaseResponse<Any?>
 
 }

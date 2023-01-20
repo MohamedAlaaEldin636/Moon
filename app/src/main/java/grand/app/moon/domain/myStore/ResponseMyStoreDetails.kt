@@ -1,39 +1,35 @@
 package grand.app.moon.domain.myStore
 
+import com.google.gson.annotations.SerializedName
+
+/**
+ * @param id used in response to store info api not in request of creation or update it.
+ */
 data class ResponseMyStoreDetails(
-	var backgroundImage: String?,
-	var profileImage: String?,
-	var storeName: String?,
-	var userName: String?,
-	var cityId: Int?,
-	var areaId: Int?,
+	var id: Int?,
+	@SerializedName("background_image") var coverImage: String?,
+	@SerializedName("image") var logoImage: String?,
+	@SerializedName("name") var storeName: String?,
+	@SerializedName("nickname") var userName: String?,
+	@SerializedName("city_id") var cityId: Int?,
+	@SerializedName("area_id") var areaId: Int?,
 	var latitude: String?,
 	var longitude: String?,
 	var address: String?,
 	var description: String?,
+	@SerializedName("advertising_website") var advertisingWebsite: String?,
 	var email: String?,
-	var websiteLink: String?,
-	var contactPhone: String?,
-	var whatsAppPhone: String?,
-	var taxNumber: String?,
+	@SerializedName("website") var websiteLink: String?,
+	@SerializedName("ads_phone") var adsPhone: String?,
+	@SerializedName("whatsapp_phone") var whatsappPhone: String?,
+	@SerializedName("tax_number") var taxNumber: String?,
+
+	var phone: String?,
+	@SerializedName("country_code") var countryCode: String?,
+	@SerializedName("progress_bar") var progressBar: Boolean?,
+	@SerializedName("store_info") var storeInfo: Boolean?,
+	var categories: Boolean?,
+	@SerializedName("sub_categories") var subCategories: Boolean?,
+	@SerializedName("working_hours") var workingHours: Boolean?,
+	@SerializedName("social_media_links") var socialMediaLinks: Boolean?,
 )
-/*
-val backgroundImage = MutableLiveData<GlideImageViaXmlModel>()
-
-	val profileImage = MutableLiveData<GlideImageViaXmlModel>()
-
-	val storeName = MutableLiveData("")
-
-	val userName = MutableLiveData("")
-
-	val cities = emptyList<Country>()
-	val selectedCity = MutableLiveData<Country>()
-
-	val regions = emptyList<Country>()
-	val selectedRegion = MutableLiveData<Country>()
-
-	private val locationData = MutableLiveData<LocationData?>()
-	val address = locationData.map { it?.address }
-
-	val description = MutableLiveData("")
- */

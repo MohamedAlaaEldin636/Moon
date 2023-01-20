@@ -40,4 +40,16 @@ class CountriesUseCase @Inject constructor(
 		)
 	}
 
+	suspend fun getCitiesAndAreas() = countryRepository.countries().mapSuccess { response ->
+		val countryId = accountRepository.getCountryId().firstOrNull()
+
+		BaseResponse<Pair<List<Country>, List<Country>>?>(
+			response.data?.firstOrNull { it.id?.toString() == countryId }?.let {
+				it.cities.orEmpty() to it.areas.orEmpty()
+			},
+			response.message,
+			response.code
+		)
+	}
+
 }

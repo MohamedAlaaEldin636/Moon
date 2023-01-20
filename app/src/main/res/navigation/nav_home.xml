@@ -695,6 +695,10 @@
       android:name="longitude"
       app:argType="string"
       app:nullable="true" />
+    <deepLink
+      android:id="@+id/deep_link_dest_location_selection"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.location.selection/{showBackButton}/{latitude}/{longitude}" />
     <action
       android:id="@+id/action_dest_location_selection_to_home_fragment"
       app:destination="@id/home_fragment"

@@ -3,15 +3,20 @@ package grand.app.moon.extensions.bindingAdapter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.text.buildSpannedString
+import androidx.core.text.set
 import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
+import grand.app.moon.R
 import grand.app.moon.core.extenstions.pxToSp
 import grand.app.moon.core.extenstions.spToPx
 import grand.app.moon.extensions.orZero
@@ -44,6 +49,17 @@ fun AppCompatTextView.adjustInsideRV(
 			TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM,
 			TypedValue.COMPLEX_UNIT_SP
 		)
+	}
+}
+
+@BindingAdapter("editText_setHintWithRequiredAstrix")
+fun TextView.setHintWithRequiredAstrix(text: String?) {
+	val color = (context ?: return).let { ContextCompat.getColor(it, R.color.required_3) }
+
+	hint = buildSpannedString {
+		append("$text *")
+
+		this[lastIndex..length] = ForegroundColorSpan(color)
 	}
 }
 

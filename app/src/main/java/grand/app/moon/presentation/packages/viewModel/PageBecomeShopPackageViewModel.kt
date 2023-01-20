@@ -178,12 +178,19 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 					it.id == response.value?.id
 				}?.isSubscribed = true
 
-				// Now go to create store data and on result of it's creation nav up.
-				parentFragment?.observeCreateShopFragment()
+				if (false /* todo response model will change to return where to redirect next isa. */) {
+					// Check Subscription
+					navController.navigateSafely(
+						BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestMyBecomeShopPackage()
+					)
+				}else {
+					// Now go to create store data and on result of it's creation nav up.
+					parentFragment?.observeCreateShopFragment()
 
-				navController.navigateSafely(
-					BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestCreateStore()
-				)
+					navController.navigateSafely(
+						BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestCreateStore()
+					)
+				}
 			}
 		}
 	}

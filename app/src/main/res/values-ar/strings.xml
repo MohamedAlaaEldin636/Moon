@@ -299,4 +299,22 @@
   <string name="renew_and_subscribe_in_another_package">التجديد و الاشتراك في باقة اخري</string>
   <string name="renew_package">تجديد الباقة</string>
   <string name="promote_and_pay_var_var">الترقية و دفع %1$s %2$s</string>
+    <string name="remaining_ads_number">عدد الإعلانات المتبقية</string>
+    <string name="remaining_stories_number">عدد الحالات المتبقية</string>
+    <string name="remaining_explore_number">عدد الإكسبلور المتبقية</string>
+  <string name="ads">إعلانات</string>
+  <string name="stories">حالات</string>
+  <string name="explore">إكسبلور</string>
+  <string name="store_logo">شعار المتجر</string>
+  <string name="store_main_data">بيانات المتجر الأساسية</string>
+  <string name="store_name">اسم المتجر</string>
+  <string name="user_name">اسم المستخدم</string>
+  <string name="store_sub_data">بيانات المتجر الفرعية</string>
+  <string name="advertisement_website_link">لينك الموقع التسويقي</string>
+  <string name="email_9">البريد الإلكتروني</string>
+  <string name="website_link">لينك الموقع</string>
+  <string name="contact_phone">هاتف الاتصال</string>
+  <string name="whatsapp_phone">هاتف الواتساب</string>
+  <string name="tax_number">الرقم الضريبي</string>
+  <string name="fill_required_fields">إملأ الحقول المطلوبة</string>
 </resources>

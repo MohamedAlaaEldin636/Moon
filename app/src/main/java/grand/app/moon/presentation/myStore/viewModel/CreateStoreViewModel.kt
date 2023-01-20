@@ -8,61 +8,191 @@ import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.createMultipartBodyPart
+import grand.app.moon.data.packages.RepositoryPackages
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.domain.myStore.ResponseMyStoreDetails
+import grand.app.moon.extensions.*
 import grand.app.moon.extensions.compose.GlideImageViaXmlModel
-import grand.app.moon.extensions.findFragmentOrNull
-import grand.app.moon.extensions.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
+import grand.app.moon.presentation.base.extensions.showPopup
+import grand.app.moon.presentation.myAds.AddAdvFinalPageFragmentDirections
+import grand.app.moon.presentation.myAds.addAdvFinalPage.CameraUtils
+import grand.app.moon.presentation.myAds.model.LocalOrApiItemImage
 import grand.app.moon.presentation.myAds.model.LocationData
 import grand.app.moon.presentation.myStore.CreateStoreFragment
+import grand.app.moon.presentation.myStore.model.ResponseArea
+import grand.app.moon.presentation.myStore.model.ResponseCity
 import javax.inject.Inject
 
-/**
- * todo nor update nor get info exists only create.
- *  lesa until sprint 3.
- *
- *  todo kfaaya astrix for required and sheeel kol el aksam isa.
- *
- *   returns null ...
- */
 @HiltViewModel
 class CreateStoreViewModel @Inject constructor(
 	application: Application,
+	val userLocalUseCase: UserLocalUseCase,
+	val useCaseShop: RepositoryPackages,
 ) : AndroidViewModel(application) {
 
 	val response = MutableLiveData<ResponseMyStoreDetails>()
 
-	val backgroundImage = MutableLiveData<GlideImageViaXmlModel>()
+	val backgroundImage = response.mapNullableToMutableLiveData<ResponseMyStoreDetails, GlideImageViaXmlModel> {
+		GlideImageViaXmlModel.IString(it?.coverImage.orEmpty())
+	}
 
-	val profileImage = MutableLiveData<GlideImageViaXmlModel>()
+	val profileImage = response.mapNullableToMutableLiveData<ResponseMyStoreDetails, GlideImageViaXmlModel> {
+		GlideImageViaXmlModel.IString(it?.logoImage.orEmpty())
+	}
 
-	val storeName = MutableLiveData("")
+	val storeName = response.mapNullableToMutableLiveData {
+		it?.storeName.orEmpty()
+	}
 
-	val userName = MutableLiveData("")
+	val userName = response.mapNullableToMutableLiveData {
+		it?.userName.orEmpty()
+	}
 
-	val cities = emptyList<Country>()
-	val selectedCity = MutableLiveData<Country>()
+	var cities = emptyList<ResponseCity>()
+	val selectedCity = MutableLiveData<ResponseCity?>()
+	val cityName = selectedCity.map { it?.name.orEmpty() }
 
-	val areas = emptyList<Country>()
-	val selectedArea = MutableLiveData<Country>()
+	var areas = emptyList<ResponseArea>()
+	val selectedArea = MutableLiveData<ResponseArea?>()
+	val areaName = selectedArea.map { it?.name.orEmpty() }
 
-	private val locationData = MutableLiveData<LocationData?>()
-	val address = locationData.map { it?.address }
+	val locationData = response.mapNullableToMutableLiveData { response ->
+		response?.latitude?.let { latitude ->
+			response.longitude?.let { longitude ->
+				response.address?.let { address ->
+					LocationData(latitude, longitude, address)
+				}
+			}
+		}
+	}
+	val address = locationData.map { it?.address.orEmpty() }
 
-	val description = MutableLiveData("")
+	val description = response.mapNullableToMutableLiveData {
+		it?.description.orEmpty()
+	}
 
-	fun createOrUpdateStore(view: View) {
-		// todo Fields checks
+	val advertisingLink = response.mapNullableToMutableLiveData {
+		it?.advertisingWebsite.orEmpty()
+	}
+	val email = response.mapNullableToMutableLiveData {
+		it?.email.orEmpty()
+	}
+	val websiteLink = response.mapNullableToMutableLiveData {
+		it?.websiteLink.orEmpty()
+	}
+	val advertisingPhone = response.mapNullableToMutableLiveData {
+		it?.adsPhone.orEmpty()
+	}
+	val whatsAppPhone = response.mapNullableToMutableLiveData {
+		it?.whatsappPhone.orEmpty()
+	}
+	val taxNumber = response.mapNullableToMutableLiveData {
+		it?.taxNumber.orEmpty()
+	}
 
+	fun changeLogoImage(view: View) {
 		val fragment = view.findFragmentOrNull<CreateStoreFragment>() ?: return
 
-		fragment.apply {
-			showMessage(getString(R.string.done_successfully))
+		CameraUtils.tag = AppConsts.LOGO_IMAGE
 
-			findNavController().navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
-				true, // created shop successfully
+		fragment.permissionsHandlerForProfileImage?.actOnAllPermissionsAcceptedOrRequestPermissions()
+	}
+
+	fun changeCoverImage(view: View) {
+		val fragment = view.findFragmentOrNull<CreateStoreFragment>() ?: return
+
+		CameraUtils.tag = AppConsts.COVER_IMAGE
+
+		fragment.permissionsHandlerForProfileImage?.actOnAllPermissionsAcceptedOrRequestPermissions()
+	}
+
+	fun selectCity(view: View) {
+		view.showPopup(
+			cities.map { it.name.orEmpty() },
+			listener = { menuItem ->
+				val newSelectedCity = cities.firstOrNull { it.name == menuItem.title.toStringOrEmpty() }
+
+				if (newSelectedCity?.id != selectedCity.value?.id) {
+					selectedCity.value = newSelectedCity
+
+					selectedArea.value = null
+				}
+			}
+		)
+	}
+
+	fun selectArea(view: View) {
+		view.showPopup(
+			areas.map { it.name.orEmpty() },
+			listener = { menuItem ->
+				selectedArea.value = areas.firstOrNull { it.name == menuItem.title.toStringOrEmpty() }
+			}
+		)
+	}
+
+	fun selectLocation(view: View) {
+		view.findFragmentOrNull<CreateStoreFragment>()?.findNavController()?.navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.location.selection",
+			paths = arrayOf(
+				true.toString(),
+				locationData.value?.latitude.toStringOrEmpty(),
+				locationData.value?.longitude.toStringOrEmpty(),
 			)
+		)
+	}
+
+	fun createOrUpdateStore(view: View) {
+		val fragment = view.findFragmentOrNull<CreateStoreFragment>() ?: return
+		val context = fragment.context ?: return
+
+		if (
+			backgroundImage.value == null || profileImage.value == null || storeName.value.isNullOrEmpty()
+			|| userName.value.isNullOrEmpty() || selectedCity.value == null || selectedArea.value == null
+			|| locationData.value == null || description.value.isNullOrEmpty()
+		) {
+			return fragment.showError(fragment.getString(R.string.fill_required_fields))
+		}
+
+		fragment.handleRetryAbleActionCancellableNullable(
+			action = {
+				useCaseShop.addOrUpdateStore(
+					(backgroundImage.value as? GlideImageViaXmlModel.IUri)?.uri
+						?.createMultipartBodyPart(context.applicationContext, "background_image"),
+					(profileImage.value as? GlideImageViaXmlModel.IUri)?.uri
+						?.createMultipartBodyPart(context.applicationContext, "image"),
+					storeName.value.orEmpty(),
+					userName.value.orEmpty(),
+					selectedCity.value?.id.orZero(),
+					selectedArea.value?.id.orZero(),
+					locationData.value?.latitude.orEmpty(),
+					locationData.value?.longitude.orEmpty(),
+					locationData.value?.address.orEmpty(),
+					description.value.orEmpty(),
+					advertisingLink.value.orEmpty(),
+					email.value.orEmpty(),
+					websiteLink.value.orEmpty(),
+					advertisingPhone.value.orEmpty(),
+					whatsAppPhone.value.orEmpty(),
+					taxNumber.value.orEmpty(),
+				)
+			}
+		) {
+			userLocalUseCase(userLocalUseCase().copy(isStore = true))
+
+			fragment.apply {
+				showMessage(getString(R.string.done_successfully))
+
+				findNavController().navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
+					true, // created shop successfully
+				)
+			}
 		}
 	}
 
