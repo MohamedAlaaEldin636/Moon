@@ -340,4 +340,9 @@
   <string name="store_story">Store Story</string>
   <string name="store_explore">Store Explore</string>
   <string name="change_background_image">Change Background Image</string>
+  <string name="your_store_main_categories_2">أقسام متجرك الرئيسية</string>
+  <string name="add_new_category">إضافة قسم جديد</string>
+  <string name="del_category_desc">هل تريد حذف القسم الرئيسي من متجرك ؟</string>
+  <string name="edit_category">تعديل القسم</string>
+  <string name="category_name">اسم القسم</string>
 </resources>

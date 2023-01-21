@@ -15,6 +15,7 @@ import grand.app.moon.data.country.data_source.CountriesServices
 import grand.app.moon.data.explorer.data_source.ExploreServices
 import grand.app.moon.data.map.data_source.MapServices
 import grand.app.moon.data.packages.PackagesServices
+import grand.app.moon.data.shop.ShopServices
 import grand.app.moon.data.store.data_source.StoreServices
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -72,6 +73,11 @@ object NetworkServicesModule {
   @Singleton
   fun providePackagesServices(retrofit: Retrofit): PackagesServices =
     retrofit.create(PackagesServices::class.java)
+
+  @Provides
+  @Singleton
+  fun provideShopServices(retrofit: Retrofit): ShopServices =
+    retrofit.create(ShopServices::class.java)
 
   @Provides
   @Singleton

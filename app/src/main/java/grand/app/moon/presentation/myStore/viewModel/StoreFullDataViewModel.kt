@@ -104,7 +104,10 @@ class StoreFullDataViewModel @Inject constructor(
 					General.TODO("Not programmed yet.")
 				}
 				R.drawable.ic_category_4 -> {
-					General.TODO("Not programmed yet.")
+					navController.navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.store.categories.a"
+					)
 				}
 				R.drawable.ic_sub_category_4 -> {
 					General.TODO("Not programmed yet.")

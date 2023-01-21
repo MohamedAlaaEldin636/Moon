@@ -130,13 +130,6 @@ open class RVPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	}
 ) {
 
-	/*
-	viewModel.adapter.loadStateFlow.collectLatest { loadState ->
-                        if (loadState/*.source*/.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached) {
-                            viewModel.showEmptyView.value = viewModel.adapter.snapshot().isEmpty()
-                        }
-                    }
-	 */
 	val showEmptyViewFlow get() = loadStateFlow.mapLatest { loadState ->
 		loadState.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached &&
 			snapshot().isEmpty()
