@@ -7,6 +7,7 @@ import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.domain.intro.repository.IntroRepository
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -31,7 +32,9 @@ class CountriesUseCase @Inject constructor(
 	}
 
 	suspend fun getCities() = countryRepository.countries().mapSuccess { response ->
-		val countryId = accountRepository.getCountryId().firstOrNull()
+		val countryId = kotlin.runCatching {
+			accountRepository.getKeyFromLocal(Constants.COUNTRY_ID)
+		}.getOrNull()
 
 		BaseResponse<List<Country>?>(
 			response.data?.firstOrNull { it.id?.toString() == countryId }?.cities,

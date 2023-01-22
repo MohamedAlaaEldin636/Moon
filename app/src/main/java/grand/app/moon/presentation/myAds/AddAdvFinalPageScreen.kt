@@ -393,7 +393,6 @@ private fun TextFieldStoreCategory(
 				text = storeCategory.value.orEmpty(),
 				onTextChange = { viewModel.storeCategory.value = it },
 				onClick = {
-					// todo get data from api el awal w kda isa.
 					expanded = true
 				},
 				suffixComposable = {
