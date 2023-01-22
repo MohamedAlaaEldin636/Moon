@@ -13,5 +13,5 @@ data class User(
   val phone: String = "",
   val token: String = "",
   val country_code: String = "",
-  @SerializedName("is_store") val isStore: Boolean? = null,
+  @SerializedName("is_shop") val isStore: Boolean? = null,
 ) : Serializable
