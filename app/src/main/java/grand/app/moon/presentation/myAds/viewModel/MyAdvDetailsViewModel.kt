@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.set
+import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,6 +21,7 @@ import grand.app.moon.databinding.ItemPropertyInAdvDetailsBinding
 import grand.app.moon.databinding.ItemReviewInAdvDetailsBinding
 import grand.app.moon.databinding.ItemStatsInAdvDetailsBinding
 import grand.app.moon.databinding.ItemSwitchInAdvDetailsBinding
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
@@ -44,7 +46,12 @@ class MyAdvDetailsViewModel @Inject constructor(
 	val args: MyAdvDetailsFragmentArgs,
 	val adsUseCase: AdsUseCase,
 	val homeUseCase: HomeUseCase,
+	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
+
+	private val isShop by lazy {
+		userLocalUseCase().isStore.orFalse()
+	}
 
 	val response = MutableLiveData<ResponseMyAdvDetails?>(
 		args.jsonOfResponseMyAdvDetails.fromJsonInlinedOrNull()
@@ -110,7 +117,6 @@ class MyAdvDetailsViewModel @Inject constructor(
 		it?.isNegotiable.orFalse()
 	}
 
-	// todo only show mokarna b el shahr el made onlyyyy if store not user isa.
 	private val drawablePositiveGrowth by lazy {
 		ContextCompat.getDrawable(app, R.drawable.ic_positive_growth).orTransparent()
 	}
@@ -130,6 +136,7 @@ class MyAdvDetailsViewModel @Inject constructor(
 
 		binding.numberTextView.text = item.totalCount.orZero().toString()
 
+		binding.statsTextView.isVisible = isShop
 		binding.statsTextView.adjustInsideRV(
 			buildSpannedString {
 				val growthRate = item.growthRate
