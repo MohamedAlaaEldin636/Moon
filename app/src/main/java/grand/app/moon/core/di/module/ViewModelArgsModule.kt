@@ -12,10 +12,16 @@ import grand.app.moon.presentation.home.AnnouncementDialogFragmentArgs
 import grand.app.moon.presentation.home.AppGlobalAnnouncementDialogFragmentArgs
 import grand.app.moon.presentation.myAds.*
 import grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragmentArgs
+import grand.app.moon.presentation.myStore.AddOrEditStoreSubCategoryFragmentArgs
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelArgsModule {
+
+	@Provides
+	fun provideAddOrEditStoreSubCategoryFragmentArgs(state: SavedStateHandle): AddOrEditStoreSubCategoryFragmentArgs {
+		return AddOrEditStoreSubCategoryFragmentArgs.fromBundle(state.asBundle())
+	}
 
 	@Provides
 	fun provideAddOrEditStoreCategoryFragmentArgs(state: SavedStateHandle): AddOrEditStoreCategoryFragmentArgs {

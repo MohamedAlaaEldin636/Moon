@@ -2,6 +2,7 @@ package grand.app.moon.data.shop
 
 import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
 import grand.app.moon.domain.shop.IdAndName
+import grand.app.moon.domain.shop.ResponseStoreSubCategory
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
 import retrofit2.http.DELETE
@@ -35,6 +36,31 @@ interface ShopServices {
 	suspend fun updateCategory(
 		@Path("id") id: Int,
 		@Field("name") name: String,
+	): BaseResponse<Any?>
+
+	@GET("v1/my-categories/subs")
+	suspend fun getMySubCategories(
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ResponseStoreSubCategory>>
+
+	@DELETE("v1/my-categories/{id}")
+	suspend fun deleteSubCategory(
+		@Path("id") id: Int,
+	): BaseResponse<Any?>
+
+	@FormUrlEncoded
+	@POST("v1/my-categories")
+	suspend fun createSubCategory(
+		@Field("name") name: String,
+		@Field("parent_id") parentId: Int,
+	): BaseResponse<Any?>
+
+	@FormUrlEncoded
+	@POST("v1/my-categories/update/{id}")
+	suspend fun updateSubCategory(
+		@Path("id") id: Int,
+		@Field("name") name: String,
+		@Field("parent_id") parentId: Int,
 	): BaseResponse<Any?>
 
 }

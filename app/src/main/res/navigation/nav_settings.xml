@@ -221,6 +221,16 @@
       app:uri="fragment-dest://grand.app.moon.dest.store.categories.a" />
   </fragment>
   <fragment
+    android:id="@+id/dest_store_sub_categories"
+    android:name="grand.app.moon.presentation.myStore.StoreSubCategoriesFragment"
+    android:label="@string/your_store_sub_categories"
+    tools:layout="@layout/fragment_store_sub_categories">
+    <deepLink
+      android:id="@+id/deep_link_dest_store_sub_categories_1"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.store.sub.categories.a" />
+  </fragment>
+  <fragment
     android:id="@+id/dest_add_or_edit_store_category"
     android:name="grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragment"
     android:label="fragment_add_or_edit_store_category"
@@ -243,6 +253,35 @@
       android:id="@+id/deep_link_dest_add_or_edit_store_category_2"
       android:autoVerify="true"
       app:uri="fragment-dest-2://grand.app.moon.dest.add.or.edit.store.category.create"/>
+  </fragment>
+  <fragment
+    android:id="@+id/dest_add_or_edit_store_sub_category"
+    android:name="grand.app.moon.presentation.myStore.AddOrEditStoreSubCategoryFragment"
+    android:label="fragment_add_or_edit_store_sub_category"
+    tools:layout="@layout/fragment_add_or_edit_store_sub_category" >
+    <argument
+      android:name="id"
+      app:argType="string"
+      app:nullable="true"
+      android:defaultValue="@null"/>
+    <argument
+      android:name="name"
+      app:argType="string"
+      app:nullable="true"
+      android:defaultValue="@null"/>
+    <argument
+      android:name="parentId"
+      app:argType="string"
+      app:nullable="true"
+      android:defaultValue="@null"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_add_or_edit_store_sub_category_1"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.add.or.edit.store.sub.category.edit/{id}/{name}/{parentId}"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_add_or_edit_store_sub_category_2"
+      android:autoVerify="true"
+      app:uri="fragment-dest-2://grand.app.moon.dest.add.or.edit.store.sub.category.create"/>
   </fragment>
 
 </navigation>

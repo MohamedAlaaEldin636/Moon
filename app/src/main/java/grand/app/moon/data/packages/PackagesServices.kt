@@ -61,7 +61,7 @@ interface PackagesServices {
 	suspend fun getCountries(): BaseResponse<List<ResponseCountry>?>
 
 	@Multipart
-	@POST
+	@POST("v1/stores")
 	suspend fun addOrUpdateStore(
 		@Part images: List<MultipartBody.Part>,
 		@Part("name") storeName: RequestBody,

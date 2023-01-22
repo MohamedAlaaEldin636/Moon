@@ -164,7 +164,7 @@ class CreateStoreViewModel @Inject constructor(
 			action = {
 				useCaseShop.addOrUpdateStore(
 					(backgroundImage.value as? GlideImageViaXmlModel.IUri)?.uri
-						?.createMultipartBodyPart(context.applicationContext, "background_image"),
+						?.createMultipartBodyPart(context.applicationContext, "background"),
 					(profileImage.value as? GlideImageViaXmlModel.IUri)?.uri
 						?.createMultipartBodyPart(context.applicationContext, "image"),
 					storeName.value.orEmpty(),

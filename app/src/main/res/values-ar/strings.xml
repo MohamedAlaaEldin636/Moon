@@ -335,4 +335,12 @@
   <string name="del_category_desc">هل تريد حذف القسم الرئيسي من متجرك ؟</string>
   <string name="edit_category">تعديل القسم</string>
   <string name="category_name">اسم القسم</string>
+  <string name="your_store_sub_categories_2">أقسام متجرك الفرعية</string>
+  <string name="add_new_sub_category">إضافة قسم فرعي جديد</string>
+  <string name="del_sub_category_desc">هل تريد حذف القسم الفرعي من متجرك ؟</string>
+  <string name="subcategory_name">اسم القسم الفرعي</string>
+  <string name="main_category">القسم الرئيسي</string>
+  <string name="pick_sub_category">اختر القسم الرئيسي</string>
+  <string name="edit_sub_category">تعديل القسم الفرعى</string>
+  <string name="create_main_category_firstly">قم بإنشاء متجر رئيسى أولاً</string>
 </resources>
