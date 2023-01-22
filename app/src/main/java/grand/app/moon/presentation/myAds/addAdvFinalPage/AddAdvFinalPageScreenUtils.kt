@@ -1,9 +1,6 @@
 package grand.app.moon.presentation.myAds.addAdvFinalPage
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -506,6 +503,7 @@ object AddAdvFinalPageScreenUtils {
 									Box(
 										modifierInnerBox
 											.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp))
+											//.border(1.dp, ExtendedTheme.colors.imagesBorder, RoundedCornerShape(5.dp))
 											.clip(RoundedCornerShape(5.dp))
 									) {
 										GlideImageViaXml(
@@ -593,12 +591,13 @@ object AddAdvFinalPageScreenUtils {
 		val context = LocalContext.current
 
 		Surface(
-			shadowElevation = 4.dp
+			shadowElevation = 0.dp
 		) {
 			Box(
 				Modifier
 					.fillMaxSize()
 					.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp))
+					.border(1.dp, ExtendedTheme.colors.imagesBorder, RoundedCornerShape(5.dp))
 			) {
 				Column(
 					Modifier
@@ -616,7 +615,7 @@ object AddAdvFinalPageScreenUtils {
 
 					Spacer(modifier = Modifier.height(6.dp))
 
-					UIText.TajawalMediumForm(
+					UIText.TajawalRegularForm(
 						text = context.getString(R.string.home),
 						color = Color.White,
 						textAlign = TextAlign.Center
@@ -629,12 +628,13 @@ object AddAdvFinalPageScreenUtils {
 	@Composable
 	fun BoxScope.SubImagePlaceholder() {
 		Surface(
-			shadowElevation = 4.dp
+			shadowElevation = 0.dp
 		) {
 			Column(
 				Modifier
 					.fillMaxSize()
-					.background(Color.White, RoundedCornerShape(5.dp)),
+					.background(Color.White, RoundedCornerShape(5.dp))
+					.border(1.dp, ExtendedTheme.colors.imagesBorder, RoundedCornerShape(5.dp)),
 				verticalArrangement = Arrangement.Center,
 				horizontalAlignment = Alignment.CenterHorizontally
 			) {

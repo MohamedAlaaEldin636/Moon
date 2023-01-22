@@ -26,13 +26,15 @@ object UIText {
 		modifier: Modifier = Modifier
 			.fillMaxWidth()
 			.wrapContentHeight(align = Alignment.Top),
-		textAlign: TextAlign? = null
+		textAlign: TextAlign? = null,
+		color: Color? = null
 	) {
 		Text(
 			modifier = modifier,
 			text = text,
 			style = ExtendedTheme.typography.tajawalRegular.copy(
 				fontSize = textSize,
+				color = color ?: ExtendedTheme.typography.tajawalRegular.color
 			),
 			textAlign = textAlign
 		)

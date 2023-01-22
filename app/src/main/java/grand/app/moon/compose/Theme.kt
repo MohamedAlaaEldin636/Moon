@@ -63,7 +63,8 @@ fun ComposeMoonTheme(
 		dialogScrim = Color.Black.copy(alpha = 0.25f),
 		hintColor = Color(158, 158, 158),
 		requiredColor = Color(255, 0, 0),
-		iconTextField = Color(114, 120, 137)
+		iconTextField = Color(114, 120, 137),
+		imagesBorder = Color(206, 206, 206),
 	)
 
 	val extendedTypography = defaultExtendedTypography.copy()

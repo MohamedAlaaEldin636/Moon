@@ -16,6 +16,7 @@ data class ExtendedColors(
 	val hintColor: Color,
 	val requiredColor: Color,
 	val iconTextField: Color,
+	val imagesBorder: Color,
 )
 
 val LocalExtendedColors = staticCompositionLocalOf {
@@ -24,7 +25,8 @@ val LocalExtendedColors = staticCompositionLocalOf {
 		dialogScrim = Color.Red,
 		hintColor = Color.Red,
 		requiredColor = Color.Red,
-		iconTextField = Color.Red
+		iconTextField = Color.Red,
+		imagesBorder = Color.Red,
 	)
 }
 
