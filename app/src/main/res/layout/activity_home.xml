@@ -175,7 +175,7 @@
       android:layout_width="@dimen/dimen90"
       app:layout_constraintBottom_toTopOf="@+id/guideline8"
       android:layout_height="@dimen/dimen90"
-      android:src="@drawable/ic_home_circle_not_active"
+      android:src="@drawable/btn_add"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
 
