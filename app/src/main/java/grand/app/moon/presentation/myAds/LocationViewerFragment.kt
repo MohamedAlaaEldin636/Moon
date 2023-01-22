@@ -18,6 +18,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import grand.app.moon.R
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.OnTokenCanceledListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -79,6 +80,10 @@ class LocationViewerFragment : BaseFragment<FragmentLocationViewerBinding>(),
             viewModel.args.latitude.toDoubleOrNull() ?: 0.0,
             viewModel.args.longitude.toDoubleOrNull() ?: 0.0
         )
+
+		    googleMap.addMarker(
+			    MarkerOptions().position(location)
+				)
 
         googleMap.animateCamera(
             CameraUpdateFactory.newLatLngZoom(

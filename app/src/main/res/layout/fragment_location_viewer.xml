@@ -63,6 +63,8 @@
       android:src="@drawable/ic_location_icon"
       android:tint="@android:color/transparent"
 
+      android:visibility="gone"
+
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
