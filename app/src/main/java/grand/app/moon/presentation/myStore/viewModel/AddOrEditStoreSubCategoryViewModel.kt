@@ -67,11 +67,12 @@ class AddOrEditStoreSubCategoryViewModel @Inject constructor(
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
 				val id = args.id
-				val name = categoryName.value.orEmpty()
+				val name = subCategoryName.value.orEmpty()
+				val selectedCategoryId = selectedCategory.value?.id.orZero()
 				if (id == null) {
-					repoShop.createSubCategory(name, selectedCategory.value?.id.orZero())
+					repoShop.createSubCategory(name, selectedCategoryId)
 				}else {
-					repoShop.updateSubCategory(id.toIntOrNull().orZero(), name, selectedCategory.value?.id.orZero())
+					repoShop.updateSubCategory(id.toIntOrNull().orZero(), name, selectedCategoryId)
 				}
 			}
 		) {
