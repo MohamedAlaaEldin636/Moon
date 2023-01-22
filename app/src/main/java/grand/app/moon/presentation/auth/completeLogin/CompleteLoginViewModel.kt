@@ -16,10 +16,7 @@ import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
-import grand.app.moon.extensions.MyLogger
-import grand.app.moon.extensions.findFragmentOrNull
-import grand.app.moon.extensions.fromJsonInlinedOrNull
-import grand.app.moon.extensions.showSnackbarWithAction
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.makeIntegrationWithRedirectHome
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.base.utils.Constants
@@ -47,7 +44,10 @@ class CompleteLoginViewModel @Inject constructor(
 	/** Ex. +20 01016171926 */
 	val phone = MutableLiveData("${user?.country_code} ${user?.phone}")
 
-	val countryImage = MutableLiveData(accountRepository.getKeyFromLocal(Constants.COUNTRY_IMAGE))
+	val countryImage = MutableLiveData(
+		args.flagResId
+		//accountRepository.getKeyFromLocal(Constants.COUNTRY_IMAGE)
+	)
 
 	fun login(view: View) {
 		val fragment = view.findFragmentOrNull<CompleteLoginFragment>() ?: return

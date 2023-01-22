@@ -52,6 +52,9 @@
     <action
       android:id="@+id/action_fragment_confirm_code_to_dest_complete_login"
       app:destination="@id/dest_complete_login" />
+    <argument
+      android:name="flagResId"
+      app:argType="integer" />
   </fragment>
   <fragment
     android:id="@+id/dest_complete_login"
@@ -60,6 +63,9 @@
     <argument
       android:name="jsonUser"
       app:argType="string" />
+    <argument
+      android:name="flagResId"
+      app:argType="integer" />
   </fragment>
 
 </navigation>

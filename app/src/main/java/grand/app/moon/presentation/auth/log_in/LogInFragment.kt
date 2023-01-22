@@ -131,9 +131,12 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
   }
 
   private fun openConfirm() {
-    navigateSafe(
+    navigateSafe( // ccp
       LogInFragmentDirections.actionLogInFragmentToFragmentConfirmCode(
-        viewModel.request.country_code,viewModel.request.phone, Constants.Verify
+        viewModel.request.country_code,
+	      viewModel.request.phone,
+	      Constants.Verify,
+	      _binding?.ccp?.selectedCountryFlagResourceId ?: return
       )
     )
   }

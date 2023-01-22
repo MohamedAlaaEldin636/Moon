@@ -62,7 +62,7 @@ fun ImageView.setupWithGlideOrEmptyBAUri(uri :Uri?) {
 }
 
 @BindingAdapter("imageView_setupWithGlideOrSplashBA")
-fun ImageView.setupWithGlideOrSplashBA(url :String?) {
+fun ImageView.setupWithGlideOrSplashBA(url: String?) {
 	Glide.with(this)
 		.load(R.drawable.splash)
 		.into(this)
@@ -70,6 +70,19 @@ fun ImageView.setupWithGlideOrSplashBA(url :String?) {
 	if (!url.isNullOrEmpty()) {
 		Glide.with(this)
 			.load(url)
+			.into(this)
+	}
+}
+
+@BindingAdapter("imageView_setupWithGlideResIdOrSplashBA")
+fun ImageView.setupWithGlideResIdOrSplashBA(resId: Int?) {
+	Glide.with(this)
+		.load(R.drawable.splash)
+		.into(this)
+
+	if (resId != null) {
+		Glide.with(this)
+			.load(resId)
 			.into(this)
 	}
 }

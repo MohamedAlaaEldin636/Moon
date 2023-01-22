@@ -25,6 +25,7 @@ import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.navigateSafely
+import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.toJsonInlinedOrNull
 import grand.app.moon.presentation.base.extensions.*
 import kotlinx.coroutines.launch
@@ -126,7 +127,8 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
 	            if (it.value?.data?.name.isNullOrEmpty()) {
 								findNavController().navigateSafely(
 									ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToDestCompleteLogin(
-										it.value.data.toJsonInlinedOrNull().orEmpty()
+										it.value.data.toJsonInlinedOrNull().orEmpty(),
+										arguments?.getInt("flagResId", 0).orZero()
 									)
 								)
 							}else viewModel.viewModelScope.launch {

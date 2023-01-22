@@ -176,7 +176,7 @@
 
           android:scaleType="fitXY"
 
-          imageView_setupWithGlideOrSplashBA="@{viewModel.countryImage}"/>
+          imageView_setupWithGlideResIdOrSplashBA="@{viewModel.countryImage}"/>
 
         <TextView
           android:id="@+id/phoneValueTextView"
