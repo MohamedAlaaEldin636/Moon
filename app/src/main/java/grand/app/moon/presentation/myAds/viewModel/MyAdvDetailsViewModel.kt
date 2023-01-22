@@ -23,6 +23,7 @@ import grand.app.moon.databinding.ItemSwitchInAdvDetailsBinding
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
+import grand.app.moon.extensions.bindingAdapter.adjustInsideRV
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrSplashBA
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
@@ -129,19 +130,24 @@ class MyAdvDetailsViewModel @Inject constructor(
 
 		binding.numberTextView.text = item.totalCount.orZero().toString()
 
-		binding.statsTextView.text = buildSpannedString {
-			val growthRate = item.growthRate
-			val isPositive = growthRate > 0.toBigDecimal()
-			val absGrowthRate = growthRate.abs()
+		binding.statsTextView.adjustInsideRV(
+			buildSpannedString {
+				val growthRate = item.growthRate
+				val isPositive = growthRate > 0.toBigDecimal()
+				val absGrowthRate = growthRate.abs()
 
-			append("$absGrowthRate ? % ")
+				append("$absGrowthRate  ?  % ")
 
-			this["?"] = DrawableSpan(
-				if (isPositive || absGrowthRate == BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)) drawablePositiveGrowth else drawableNegativeGrowth
-			)
+				this[" ? "] = DrawableSpanKt(
+					if (isPositive || absGrowthRate == BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)) drawablePositiveGrowth else drawableNegativeGrowth,
+					makeHeightSameAsWidthIfPossible = true,
+				)
 
-			append(context.getString(R.string.comparedd_to_last_month))
-		}
+				append(context.getString(R.string.comparedd_to_last_month))
+			},
+			16f,
+			8f
+		)
 
 		val drawableRes = when (item.type) {
 			ItemStatsInAdvDetails.Type.VIEWS -> R.drawable.ic_views_stats

@@ -22,14 +22,12 @@
     <ImageView
       android:id="@+id/iconImageView"
 
-      android:layout_width="25dp"
-      android:layout_height="25dp"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
 
       android:layout_margin="6dp"
 
       android:background="@drawable/circle_of_primary_color"
-
-      view_clipBackground="@{true}"
 
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"/>
@@ -86,19 +84,21 @@
       android:ellipsize="end"
 
       android:layout_width="0dp"
-      android:layout_height="20dp"
+      android:layout_height="wrap_content"
 
       style="@style/TextTajawalBold14"
       android:textSize="16sp"
-      android:textColor="#112253"
+      android:textColor="#727889"
 
       android:layout_marginStart="9dp"
       android:layout_marginEnd="9dp"
       android:layout_marginTop="6dp"
 
-      tools:text="1500k"
+      tools:text="1500k 1500k 1500k 1500k 1500k 1500k 1500k 1500k 1500k 1500k 1500k 1500k"
 
       android:textDirection="locale"
+
+      android:gravity="center_vertical|bottom"
 
       app:layout_constraintTop_toBottomOf="@id/numberTextView"
       app:layout_constraintEnd_toEndOf="parent"
