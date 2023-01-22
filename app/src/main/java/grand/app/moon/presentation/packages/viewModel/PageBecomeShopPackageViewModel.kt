@@ -152,7 +152,7 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 				action = {
 					repositoryPackages.subscribeToBecomeShopPackage(response.value?.id.orZero())
 				}
-			) {
+			) { successResponse ->
 				fragment.showMessage(fragment.getString(R.string.done_successfully))
 
 				val user = userLocalUseCase()
@@ -178,9 +178,8 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 					it.restDays = response.value?.getPeriodInDays().orZero()
 				}
 
-				if (false /* todo response model will change to return where to redirect next isa. */) {
-					// todo zawed args from nav graph if shouldRedirectToCreateAdvertisement: Boolean
-					// Check Subscription // ALSO ASK if came from add adv should go back to add adv wla go to check my packages screen ?!!?
+				if (successResponse?.storeInfoIsCompleted == true) {
+					// Check Subscription
 					navController.navigateSafely(
 						BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestMyBecomeShopPackage()
 					)

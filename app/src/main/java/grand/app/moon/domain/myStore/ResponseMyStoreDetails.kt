@@ -2,6 +2,10 @@ package grand.app.moon.domain.myStore
 
 import com.google.gson.annotations.SerializedName
 
+data class ResponseSuccessPackageForBecomeShop(
+	@SerializedName("store_info") var storeInfoIsCompleted: Boolean?,
+)
+
 /**
  * @param id used in response to store info api not in request of creation or update it.
  */

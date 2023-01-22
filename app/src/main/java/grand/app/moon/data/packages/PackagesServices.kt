@@ -2,6 +2,7 @@ package grand.app.moon.data.packages
 
 import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
 import grand.app.moon.domain.myStore.ResponseMyStoreDetails
+import grand.app.moon.domain.myStore.ResponseSuccessPackageForBecomeShop
 import grand.app.moon.domain.packages.BasePagination
 import grand.app.moon.domain.packages.ResponsePackage
 import grand.app.moon.domain.utils.BaseResponse
@@ -36,7 +37,7 @@ interface PackagesServices {
 	@GET("v1/packages/payment/success?type=shops")
 	suspend fun subscribeToBecomeShopPackage(
 		@Query("package_id") packageId: Int
-	): BaseResponse<Any?>
+	): BaseResponse<ResponseSuccessPackageForBecomeShop?>
 
 	@GET("v1/packages/payment/success?type=premium_advertisements")
 	suspend fun subscribeToMakeAdvertisementPremiumPackage(
