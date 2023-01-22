@@ -21,6 +21,8 @@
     <item name="android:windowActionBarOverlay">true</item>
   </style>
 
+  <style name="MyStyle" parent="@style/Theme.AppTheme"/>
+
   <style name="buttonText" parent="Widget.MaterialComponents.Button.UnelevatedButton">
     <item name="android:textColor">@color/mtrl_text_btn_text_color_selector</item>
     <item name="android:paddingLeft">@dimen/mtrl_btn_text_btn_padding_left</item>

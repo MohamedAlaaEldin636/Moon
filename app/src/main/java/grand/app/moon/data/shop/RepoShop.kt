@@ -1,18 +1,12 @@
 package grand.app.moon.data.shop
 
-import grand.app.moon.domain.account.repository.AccountRepository
-import grand.app.moon.domain.packages.PackageType
 import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.toFailureStatus
 import grand.app.moon.helpers.paging.BasePaging
-import grand.app.moon.helpers.paging.MABasePaging
 import grand.app.moon.helpers.paging.MAResult
-import grand.app.moon.presentation.myStore.model.ResponseArea
-import grand.app.moon.presentation.myStore.model.ResponseCity
-import kotlinx.coroutines.flow.firstOrNull
-import okhttp3.MultipartBody
+import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -67,5 +61,9 @@ class RepoShop @Inject constructor(
 			)
 		)
 	}
+
+	suspend fun getWorkingHours() = remoteDataSource.getWorkingHours()
+
+	suspend fun saveWorkingHours(list: List<ItemWorkingHours2>) = remoteDataSource.saveWorkingHours(list)
 
 }

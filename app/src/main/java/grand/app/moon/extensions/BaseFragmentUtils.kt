@@ -211,6 +211,26 @@ fun <T> BaseFragment<*>.handleRetryAbleActionOrGoBack(
 	)
 }
 
+fun <T> BaseFragment<*>.handleRetryAbleActionOrGoBackNullable(
+	action: suspend () -> Resource<BaseResponse<T?>>,
+	onSuccess: (T?) -> Unit
+) {
+	handleRetryAbleActionNullable(
+		showLoading = { showLoading() },
+		hideLoading = { hideLoading() },
+		lifecycleScope,
+		action,
+		onError = {
+			showRetryErrorDialogWithBackNegativeButton(
+				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+			) {
+				handleRetryAbleActionOrGoBack(action, onSuccess)
+			}
+		},
+		onSuccess
+	)
+}
+
 private fun <T> handleRetryAbleAction(
 	showLoading: () -> Unit,
 	hideLoading: () -> Unit,

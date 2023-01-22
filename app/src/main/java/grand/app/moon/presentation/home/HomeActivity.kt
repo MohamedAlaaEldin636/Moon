@@ -186,7 +186,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.addStoreFragment -> {
           binding.bottomNavigationView.show()
           showTopBarControls()
-          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
+          binding.imgHomeBottomBar.setImageResource(R.drawable.btn_add)
         }
         R.id.home_fragment -> {
           binding.bottomNavigationView.show()
@@ -375,15 +375,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   private fun setStoreImage(isActive: Boolean) {
     if (isActive) {
       if (viewModel.browserHelper.isUser()) {
-        binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
+        binding.imgHomeBottomBar.setImageResource(R.drawable.btn_add)
       } else {
-        binding.imgHomeBottomBar.setImageResource(R.drawable.ic_my_store)
+        binding.imgHomeBottomBar.setImageResource(R.drawable.btn_add)
       }
     } else {
       if (viewModel.browserHelper.isUser()) {
-        binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_not_active)
+        binding.imgHomeBottomBar.setImageResource(R.drawable.btn_add)
       } else {
-        binding.imgHomeBottomBar.setImageResource(R.drawable.ic_my_store)
+        binding.imgHomeBottomBar.setImageResource(R.drawable.btn_add)
       }
     }
   }

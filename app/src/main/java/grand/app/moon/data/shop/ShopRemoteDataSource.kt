@@ -1,19 +1,10 @@
 package grand.app.moon.data.shop
 
 import grand.app.moon.data.remote.BaseRemoteDataSource
-import grand.app.moon.domain.packages.PackageType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.http.Part
-import retrofit2.http.PartMap
+import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import javax.inject.Inject
 
 class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServices) : BaseRemoteDataSource() {
-
-	/*suspend fun getDetails(id: Int, type: Int) = safeApiCall {
-		apiService.details(id, type)
-	}*/
 
 	suspend fun getMyCategories(page: Int) = safeApiCall2 {
 		apiService.getMyCategories(page)
@@ -39,6 +30,22 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	}
 	suspend fun updateSubCategory(id: Int, name: String, parentId: Int) = safeApiCall {
 		apiService.updateSubCategory(id, name, parentId)
+	}
+
+	suspend fun getWorkingHours() = safeApiCall {
+		apiService.getWorkingHours()
+	}
+
+	suspend fun saveWorkingHours(list: List<ItemWorkingHours2>) = safeApiCall {
+		val map = mutableMapOf<String, String>()
+
+		for ((index, item) in list.withIndex()) {
+			map["working_hours[$index][from]"] = item.from
+			map["working_hours[$index][to]"] = item.to
+			map["working_hours[$index][status]"] = item.enabled.toString()
+		}
+
+		apiService.saveWorkingHours(map)
 	}
 
 }

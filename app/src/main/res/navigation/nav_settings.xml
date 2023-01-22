@@ -283,5 +283,15 @@
       android:autoVerify="true"
       app:uri="fragment-dest-2://grand.app.moon.dest.add.or.edit.store.sub.category.create"/>
   </fragment>
+  <fragment
+    android:id="@+id/dest_working_hours"
+    android:name="grand.app.moon.presentation.myStore.WorkingHoursFragment"
+    android:label="@string/working_hours_2"
+    tools:layout="@layout/fragment_working_hours" >
+    <deepLink
+      android:id="@+id/deep_link_dest_working_hours"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.working.hours"/>
+  </fragment>
 
 </navigation>

@@ -345,4 +345,9 @@
   <string name="create_main_category_firstly">قم بإنشاء متجر رئيسى أولاً</string>
   <string name="pick_main_category_firstly">إختر متجر رئيسى أولاً</string>
   <string name="add_rate_2">أضف تقييم</string>
+  <string name="working_hours_2">مواعيد العمل</string>
+  <string name="working_hours_hint">ساعة / دقيقة / صباحاً</string>
+  <string name="select_time">حدد الوقت</string>
+  <string name="working_hours_value_am">%1$d / %2$d / ص</string>
+  <string name="working_hours_value_pm">%1$d / %2$d / م</string>
 </resources>

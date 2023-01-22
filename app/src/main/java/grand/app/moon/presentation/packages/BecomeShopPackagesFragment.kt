@@ -62,11 +62,15 @@ class BecomeShopPackagesFragment : BaseFragment<FragmentBecomeShopPackagesBindin
 		)
 
 		binding.viewPager2.isSaveEnabled = false
-		binding.viewPager2.setPageTransformer(DepthPageTransformer2(
-			requireContext().dpToPx(48f - 8f/*was 64 try 32*/).roundToInt(),
-			requireContext().dpToPx(33f).roundToInt(),
-			additionalOffsetPx = requireContext().dpToPx(24f)
-		))
+		kotlin.runCatching {
+			binding.viewPager2.setPageTransformer(DepthPageTransformer2(
+				requireContext().dpToPx(48f - 8f/*was 64 try 32*/).roundToInt(),
+				requireContext().dpToPx(33f).roundToInt(),
+				additionalOffsetPx = requireContext().dpToPx(24f)
+			))
+		}.getOrElse {
+			MyLogger.e("error vpppp -> $it")
+		}
 		binding.viewPager2.offscreenPageLimit = 3
 		binding.viewPager2.adapter = viewModel.getPagerAdapter(this)
 		binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

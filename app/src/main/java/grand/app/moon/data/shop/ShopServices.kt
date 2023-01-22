@@ -3,10 +3,12 @@ package grand.app.moon.data.shop
 import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
 import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.domain.shop.ResponseStoreSubCategory
+import grand.app.moon.domain.shop.ResponseWorkingHour
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
 import retrofit2.http.DELETE
 import retrofit2.http.Field
+import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -61,6 +63,15 @@ interface ShopServices {
 		@Path("id") id: Int,
 		@Field("name") name: String,
 		@Field("parent_id") parentId: Int,
+	): BaseResponse<Any?>
+
+	@GET("v1/profile/working-hours")
+	suspend fun getWorkingHours(): BaseResponse<List<ResponseWorkingHour>?>
+
+	@FormUrlEncoded
+	@POST("v1/profile/working-hours")
+	suspend fun saveWorkingHours(
+		@FieldMap map: Map<String, String>
 	): BaseResponse<Any?>
 
 }
