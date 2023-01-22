@@ -333,17 +333,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView4" />
 
-      <com.google.android.material.button.MaterialButton
+      <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         android:background="@drawable/dr_rounded_5_button"
 
-        android:layout_margin="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="27dp"
 
         app:layout_constraintVertical_bias="1"
 
-        android:textAppearance="@style/TextTajawalMedium14"
+        android:padding="16dp"
+
+        android:gravity="center"
+        style="@style/TextTajawalMedium14"
         android:textColor="@color/white"
         android:text="@{viewModel.buttonText}"
 
