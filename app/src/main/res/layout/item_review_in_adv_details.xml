@@ -20,15 +20,18 @@
 
     android:background="#FBFBFB">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
       android:id="@+id/imageView"
 
       android:layout_width="54dp"
       android:layout_height="54dp"
 
-      view_clipBackground="@{true}"
-
       android:background="@drawable/circle_of_primary_color"
+
+      app:shapeAppearance="@style/ShapeCircle"
+      app:shapeAppearanceOverlay="@style/ShapeCircle"
+
+      tools:src="@drawable/ic_default_user"
 
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"

@@ -74,6 +74,21 @@ fun ImageView.setupWithGlideOrSplashBA(url: String?) {
 	}
 }
 
+@BindingAdapter("imageView_setupWithGlideOrElseResNameBA_url", "imageView_setupWithGlideOrElseResNameBA_resName", requireAll = true)
+fun ImageView.setupWithGlideOrElseResNameBA(url: String?, resName: String) {
+	val id = context?.resources?.getIdentifier(resName, "drawable", context?.packageName).orZero()
+
+	Glide.with(this)
+		.load(id)
+		.into(this)
+
+	if (!url.isNullOrEmpty()) {
+		Glide.with(this)
+			.load(url)
+			.into(this)
+	}
+}
+
 @BindingAdapter("imageView_setupWithGlideResIdOrSplashBA")
 fun ImageView.setupWithGlideResIdOrSplashBA(resId: Int?) {
 	Glide.with(this)

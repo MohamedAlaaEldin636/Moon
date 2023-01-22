@@ -26,6 +26,7 @@ import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.adjustInsideRV
+import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrElseResNameBA
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrSplashBA
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
@@ -232,7 +233,7 @@ class MyAdvDetailsViewModel @Inject constructor(
 		binding.ratingBar.isVisible = item.user?.id != userId
 		binding.ratingBar.setProgressBA(item.rate.orZero() * 20)
 
-		binding.imageView.setupWithGlideOrSplashBA(item.user?.image)
+		binding.imageView.setupWithGlideOrElseResNameBA(item.user?.image, "ic_default_user")
 	}
 	val showReviews = response.map {
 		it?.reviews.isNullOrEmpty().not()
