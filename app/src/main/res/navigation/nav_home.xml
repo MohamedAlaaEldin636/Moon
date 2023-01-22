@@ -19,6 +19,11 @@
       app:popExitAnim="@anim/anim_slide_out_right" />
 
 
+    <!--
+
+
+
+    -->
     <action
       android:id="@+id/action_home_fragment_to_nav_ads"
       app:destination="@id/nav_ads"
@@ -711,6 +716,10 @@
       app:popUpTo="@id/home_fragment"
       app:popUpToInclusive="false" />
   </fragment>
+  <!--
+
+
+  -->
   <fragment
     android:id="@+id/dest_my_adv_details"
     android:name="grand.app.moon.presentation.myAds.MyAdvDetailsFragment"

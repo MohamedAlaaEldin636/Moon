@@ -192,6 +192,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
           is Resource.Success -> {
 	          //hideLoading()
 
+	          /*kotlin.runCatching {
+		          it.value.data.suggestions.firstOrNull { it.store.id }
+	          }*/
+
             val hr = it.value.data.copy(
               categoryAds = ArrayList(it.value.data.categoryAds.map { ca ->
                 ca.copy(name = "${resources.getString(R.string.advertisements)} ${ca.name}")
