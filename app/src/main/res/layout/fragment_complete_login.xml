@@ -101,6 +101,7 @@
 
         android:inputType="text"
         android:hint="@string/please_enter_your_name_2"
+        editText_setHintWithRequiredAstrix="@{@string/please_enter_your_name_2}"
 
         android:text="@={viewModel.name}"
         style="@style/TextTajawalRegular14"
