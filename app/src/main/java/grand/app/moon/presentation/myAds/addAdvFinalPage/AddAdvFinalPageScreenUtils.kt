@@ -454,7 +454,11 @@ object AddAdvFinalPageScreenUtils {
 		//val mapOfImages = viewModel.mapOfImages.observeAsState()
 		val listOfImages = viewModel.listOfImages.observeAsState()
 
-		val numberOfRows = (listOfImages.value?.size.orZero().coerceAtLeast(6).dec() / 3).inc()
+		val minimumValue = if (listOfImages.value?.size.orZero() < 6) 6 else {
+			listOfImages.value?.size.orZero().inc().coerceAtMost(22)
+		}
+
+		val numberOfRows = (listOfImages.value?.size.orZero().coerceAtLeast(minimumValue).dec() / 3).inc()
 
 		/*96.dp fixed of cell and all paddings are 8.dp*/
 		val height = (96.dp.times(numberOfRows)) + (8.dp.times(numberOfRows/*.inc()*/))
@@ -465,7 +469,7 @@ object AddAdvFinalPageScreenUtils {
 				.height(height),
 			columns = GridCells.Fixed(3),
 		) {
-			items(listOfImages.value.orEmpty().size.coerceAtLeast(6)) { index ->
+			items(listOfImages.value.orEmpty().size.coerceAtLeast(minimumValue)) { index ->
 				Box(
 					Modifier
 						.fillMaxWidth()
