@@ -285,10 +285,9 @@ private fun TextFieldCity(
 				onTextChange = {},
 				onClick = showOrGetCities,
 				suffixComposable = {
-					Icon(
-						painter = painterResource(id = R.drawable.ic_keyboard_arrow_down_red_24dp),
+					Image(
+						painter = painterResource(id = R.drawable.ic_arrow_down_d999),
 						contentDescription = "",
-						tint = ExtendedTheme.colors.iconTextField
 					)
 				}
 			)
@@ -341,10 +340,9 @@ private fun TextFieldBrand(
 					expanded = true
 				},
 				suffixComposable = {
-					Icon(
-						painter = painterResource(id = R.drawable.ic_keyboard_arrow_down_red_24dp),
+					Image(
+						painter = painterResource(id = R.drawable.ic_arrow_down_d999),
 						contentDescription = "",
-						tint = ExtendedTheme.colors.iconTextField
 					)
 				},
 				additionalBoxModifier = boxModifier
@@ -399,10 +397,9 @@ private fun TextFieldStoreCategory(
 					expanded = true
 				},
 				suffixComposable = {
-					Icon(
-						painter = painterResource(id = R.drawable.ic_keyboard_arrow_down_red_24dp),
+					Image(
+						painter = painterResource(id = R.drawable.ic_arrow_down_d999),
 						contentDescription = "",
-						tint = ExtendedTheme.colors.iconTextField
 					)
 				}
 			)

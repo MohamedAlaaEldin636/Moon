@@ -59,7 +59,7 @@ fun ComposeMoonTheme(
 	}
 
 	val extendedColors = ExtendedColors(
-		borderTextField = Color(127, 136, 151),
+		borderTextField = Color(175, 175, 175),
 		dialogScrim = Color.Black.copy(alpha = 0.25f),
 		hintColor = Color(158, 158, 158),
 		requiredColor = Color(255, 0, 0),

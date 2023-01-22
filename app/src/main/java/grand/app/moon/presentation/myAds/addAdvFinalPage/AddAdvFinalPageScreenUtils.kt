@@ -74,10 +74,9 @@ object AddAdvFinalPageScreenUtils {
 					onTextChange = {},
 					onClick = { expanded = true },
 					suffixComposable = {
-						Icon(
-							painter = painterResource(id = R.drawable.ic_keyboard_arrow_down_red_24dp),
+						Image(
+							painter = painterResource(id = R.drawable.ic_arrow_down_d999),
 							contentDescription = "",
-							tint = ExtendedTheme.colors.iconTextField
 						)
 					}
 				)
