@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.findFragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.facebook.*
@@ -46,7 +47,9 @@ class LogInViewModel @Inject constructor(
 //  lateinit var btnFacebook: LoginButton
 //  var callbackManager: CallbackManager? = null
 
-  lateinit var  socialRequest: SocialRequest
+	val phone = MutableLiveData("")
+
+  lateinit var socialRequest: SocialRequest
   lateinit var registerRequest: SocialRequest
   val showSocial = ObservableBoolean(true)
   var request = LogInRequest()

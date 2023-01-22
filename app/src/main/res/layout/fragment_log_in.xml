@@ -95,7 +95,7 @@
           android:background="@null"
           android:inputType="phone"
           android:textDirection="ltr"
-          android:text="@={viewModel.request.phone}"
+          android:text="@={viewModel.phone}"
           android:textAppearance="@style/TextAppearance.AppCompat.Small"
           android:textColor="@color/colorPrimaryDark"
           android:textColorHint="@color/gray" />
@@ -111,7 +111,7 @@
         android:layout_marginTop="@dimen/dimen30"
         android:layout_marginEnd="@dimen/dimen12"
         android:background="@drawable/corner_primary"
-        android:enabled="false"
+        android:enabled="@{viewModel.phone != null &amp;&amp; viewModel.phone.length() > 0}"
         android:onClick="@{(v)-> viewModel.onLogInClicked(v)}"
         android:text="@string/log_in"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

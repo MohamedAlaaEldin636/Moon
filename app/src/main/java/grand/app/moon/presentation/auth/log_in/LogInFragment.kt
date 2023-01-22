@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import com.hbb20.CountryCodePicker.OnCountryChangeListener
 import grand.app.moon.core.extenstions.showError
+import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.login.SocialRequest
 import java.lang.Exception
 import java.security.MessageDigest
@@ -118,7 +119,7 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
         s: CharSequence, start: Int,
         count: Int, after: Int
       ) {
-        binding.btnPhone.isEnabled = count == 0
+	      //binding.btnPhone.isEnabled = count == 0
       }
 
       override fun onTextChanged(
@@ -127,7 +128,12 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
       ) {
       }
     })
-    binding.btnPhone.isEnabled = viewModel.request.phone.trim().isNotEmpty()
+    //binding.btnPhone.isEnabled = viewModel.request.phone.trim().isNotEmpty()
+
+	  viewModel.request.phone = viewModel.phone.value.orEmpty()
+	  viewModel.phone.observe(viewLifecycleOwner) {
+			viewModel.request.phone = it.orEmpty()
+	  }
   }
 
   private fun openConfirm() {

@@ -206,7 +206,7 @@
   <string name="advertisement_addition">Advertisement Addition</string>
     <string name="please_complete_login">Please Complete Login</string>
   <string name="please_complete_login_2">Please fill your data for the first time to login only</string>
-  <string name="please_enter_your_name_2">Please enter your Name *</string>
+  <string name="please_enter_your_name_2">Please enter your Name</string>
   <string name="phone_2">phone</string>
     <string name="pick_adv_type_1">Choose type of Advertisement that suits you</string>
   <string name="ad_benefit_5">You can view advertisements statistics</string>
