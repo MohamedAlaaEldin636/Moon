@@ -11,6 +11,7 @@ import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.extensions.*
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.base.extensions.showPopup
 import grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragment
@@ -59,14 +60,18 @@ class AddOrEditStoreSubCategoryViewModel @Inject constructor(
 	fun addOrEdit(view: View) {
 		val fragment = view.findFragmentOrNull<AddOrEditStoreSubCategoryFragment>() ?: return
 
+		if (selectedCategory.value == null) {
+			return fragment.showError(fragment.getString(R.string.pick_main_category_firstly))
+		}
+
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
 				val id = args.id
 				val name = categoryName.value.orEmpty()
 				if (id == null) {
-					repoShop.createCategory(name)
+					repoShop.createSubCategory(name, selectedCategory.value?.id.orZero())
 				}else {
-					repoShop.updateCategory(id.toIntOrNull().orZero(), name)
+					repoShop.updateSubCategory(id.toIntOrNull().orZero(), name, selectedCategory.value?.id.orZero())
 				}
 			}
 		) {
