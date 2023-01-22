@@ -58,6 +58,8 @@ class StoreSubCategoriesViewModel @Inject constructor(
 			binding.editImageView.setOnClickListener { view ->
 				val id = binding.textView.tag as? Int ?: return@setOnClickListener
 
+				val parentId = binding.editImageView.tag as? Int ?: return@setOnClickListener
+
 				val name = binding.textView.text.toStringOrEmpty()
 
 				val fragment = view.findFragmentOrNull<StoreSubCategoriesFragment>() ?: return@setOnClickListener
@@ -65,12 +67,13 @@ class StoreSubCategoriesViewModel @Inject constructor(
 				fragment.findNavController().navigateDeepLinkWithOptions(
 					"fragment-dest",
 					"grand.app.moon.dest.add.or.edit.store.sub.category.edit",
-					paths = arrayOf(id.toString(), name)
+					paths = arrayOf(id.toString(), name, parentId.toString())
 				)
 			}
 		}
 	) { binding, _, item ->
 		binding.textView.tag = item.id
+		binding.editImageView.tag = item.parentId
 
 		binding.textView.text = item.name
 	}
