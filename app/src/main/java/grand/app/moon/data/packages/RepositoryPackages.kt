@@ -1,8 +1,10 @@
 package grand.app.moon.data.packages
 
 import grand.app.moon.domain.account.repository.AccountRepository
+import grand.app.moon.domain.myStore.ResponseSuccessPackageForBecomeShop
 import grand.app.moon.domain.packages.PackageType
 import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.domain.utils.Resource
 import grand.app.moon.helpers.paging.BasePaging
 import grand.app.moon.presentation.myStore.model.ResponseArea
 import grand.app.moon.presentation.myStore.model.ResponseCity
@@ -29,7 +31,7 @@ class RepositoryPackages @Inject constructor(
 
 	suspend fun getBecomeShopPackagesSuspend(page: Int = 1) = packagesRemoteDataSource.getBecomeShopPackagesPrimitivePagination(page)
 
-	suspend fun subscribeToBecomeShopPackage(packageId: Int) = packagesRemoteDataSource.subscribeToBecomeShopPackage(packageId)
+	suspend fun subscribeToBecomeShopPackage(packageId: Int): Resource<BaseResponse<ResponseSuccessPackageForBecomeShop?>> = packagesRemoteDataSource.subscribeToBecomeShopPackage(packageId)
 	suspend fun subscribeToMakeAdvertisementPremiumPackage(advertisementId: Int, packageId: Int) =
 		packagesRemoteDataSource.subscribeToMakeAdvertisementPremiumPackage(advertisementId, packageId)
 	suspend fun subscribeToMakeShopPremiumPackage(packageId: Int) =

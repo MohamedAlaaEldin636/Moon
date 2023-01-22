@@ -9,6 +9,7 @@ import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.extensions.MyLogger
 
 class RVItemIconTextArrow(
+	private val hideImage: Boolean = false,
 	private val onItemClick: (view: View, id: Int, name: String, subcategories: List<ItemSubCategory>, brands: List<ItemSubCategory>) -> Unit
 ) : RecyclerView.Adapter<VHItemIconTextArrow>() {
 
@@ -17,7 +18,7 @@ class RVItemIconTextArrow(
 	override fun getItemCount(): Int = list.size
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHItemIconTextArrow {
-		return VHItemIconTextArrow(parent) { view, id, name ->
+		return VHItemIconTextArrow(parent, hideImage) { view, id, name ->
 			val subcategories = list.filterIsInstance<ItemCategory>().firstOrNull { it.id == id }
 				?.subCategories.orEmpty()
 

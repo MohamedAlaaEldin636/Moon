@@ -18,7 +18,11 @@ import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrEmptyBA
 
-class VHItemIconTextArrow(parent: ViewGroup, private val onItemClick: (view: View, id: Int, name: String) -> Unit) : RecyclerView.ViewHolder(
+class VHItemIconTextArrow(
+	parent: ViewGroup,
+	private val hideImage: Boolean,
+	private val onItemClick: (view: View, id: Int, name: String) -> Unit
+) : RecyclerView.ViewHolder(
 	parent.context.inflateLayout(R.layout.item_icon_text_arrow, parent)
 ) {
 
@@ -45,7 +49,7 @@ class VHItemIconTextArrow(parent: ViewGroup, private val onItemClick: (view: Vie
 		}
 
 		binding.textView.text = text
-		binding.imageImageView.isVisible = image.isNullOrEmpty().not()
+		binding.imageImageView.isVisible = hideImage.not() && image.isNullOrEmpty().not()
 		binding.imageImageView.setupWithGlideOrEmptyBA(image)
 	}
 

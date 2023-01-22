@@ -28,7 +28,7 @@ class AddAdvSubCategoriesListViewModel @Inject constructor(
 
 	val title = MutableLiveData(args.nameOfMainCategory)
 
-	val adapter = RVItemIconTextArrow { view, id, _, _, _ ->
+	val adapter = RVItemIconTextArrow(true) { view, id, _, _, _ ->
 		view.findNavController().navigate(
 			AddAdvSubCategoriesListFragmentDirections.actionDestAddAdvSubCategoriesListToDestAddAdvFinalPage(
 				args.idOfMainCategory,

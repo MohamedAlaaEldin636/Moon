@@ -1,7 +1,10 @@
 package grand.app.moon.data.packages
 
 import grand.app.moon.data.remote.BaseRemoteDataSource
+import grand.app.moon.domain.myStore.ResponseSuccessPackageForBecomeShop
 import grand.app.moon.domain.packages.PackageType
+import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.domain.utils.Resource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -21,7 +24,7 @@ class PackagesRemoteDataSource @Inject constructor(private val apiService: Packa
 
 	suspend fun getBecomeShopPackagesPrimitivePagination(page: Int) = safeApiCall { apiService.getBecomeShopPackagesPrimitivePagination(page) }
 
-	suspend fun subscribeToBecomeShopPackage(packageId: Int) = safeApiCall { apiService.subscribeToBecomeShopPackage(packageId) }
+	suspend fun subscribeToBecomeShopPackage(packageId: Int): Resource<BaseResponse<ResponseSuccessPackageForBecomeShop?>> = safeApiCall { apiService.subscribeToBecomeShopPackage(packageId) }
 	suspend fun subscribeToMakeAdvertisementPremiumPackage(advertisementId: Int, packageId: Int) = safeApiCall {
 		apiService.subscribeToMakeAdvertisementPremiumPackage(advertisementId, packageId)
 	}
