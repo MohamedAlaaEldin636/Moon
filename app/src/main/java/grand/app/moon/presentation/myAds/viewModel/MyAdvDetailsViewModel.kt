@@ -49,8 +49,16 @@ class MyAdvDetailsViewModel @Inject constructor(
 	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
 
+	val user by lazy {
+		userLocalUseCase()
+	}
+
+	val userId by lazy {
+		user.id
+	}
+
 	private val isShop by lazy {
-		userLocalUseCase().isStore.orFalse()
+		user.isStore.orFalse()
 	}
 
 	val response = MutableLiveData<ResponseMyAdvDetails?>(
@@ -221,6 +229,7 @@ class MyAdvDetailsViewModel @Inject constructor(
 
 		binding.commentTextView.text = item.review
 
+		binding.ratingBar.isVisible = item.user?.id != userId
 		binding.ratingBar.setProgressBA(item.rate.orZero() * 20)
 
 		binding.imageView.setupWithGlideOrSplashBA(item.user?.image)

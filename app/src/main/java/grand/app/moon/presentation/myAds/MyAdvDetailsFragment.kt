@@ -12,6 +12,8 @@ import grand.app.moon.databinding.FragmentMyAdvDetailsBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.hideKeyboard
+import grand.app.moon.presentation.myAds.model.ItemReviewInAdvDetails
+import grand.app.moon.presentation.myAds.model.ItemUserInReviewsInAdvDetails
 import grand.app.moon.presentation.myAds.viewModel.MyAdvDetailsViewModel
 import kotlinx.coroutines.launch
 
@@ -104,8 +106,30 @@ class MyAdvDetailsFragment : BaseFragment<FragmentMyAdvDetailsBinding>() {
 				response.switches.orEmpty()
 			)
 
-			viewModel.adapterReviews.submitList(
+			val reviews = if (response.reviews.isNullOrEmpty()) {
+				listOf(
+					ItemReviewInAdvDetails(
+						ItemUserInReviewsInAdvDetails(
+							viewModel.userId,
+							null,
+							null,
+							viewModel.user.name.orEmpty(),
+							null,
+							null,
+							null,
+							viewModel.user.image.orEmpty(),
+							null,
+						),
+						0,
+						getString(R.string.add_rate_2),
+						""
+					)
+				)
+			}else {
 				response.reviews.orEmpty()
+			}
+			viewModel.adapterReviews.submitList(
+				reviews
 			)
 		}
 

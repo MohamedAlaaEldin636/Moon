@@ -344,4 +344,5 @@
   <string name="edit_sub_category">تعديل القسم الفرعى</string>
   <string name="create_main_category_firstly">قم بإنشاء متجر رئيسى أولاً</string>
   <string name="pick_main_category_firstly">إختر متجر رئيسى أولاً</string>
+  <string name="add_rate_2">أضف تقييم</string>
 </resources>
