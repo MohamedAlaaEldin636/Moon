@@ -1,6 +1,7 @@
 package grand.app.moon.data.shop
 
 import grand.app.moon.data.remote.BaseRemoteDataSource
+import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import javax.inject.Inject
 
@@ -46,6 +47,23 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		}
 
 		apiService.saveWorkingHours(map)
+	}
+
+	suspend fun getSocialMedia() = safeApiCall {
+		apiService.getSocialMedia()
+	}
+
+	suspend fun saveSocialMedia(list: List<ResponseStoreSocialMedia>) = safeApiCall {
+		val map = mutableMapOf<String, String>()
+
+		for ((index, item) in list.withIndex()) {
+			if (item.linkUrl.isNullOrEmpty().not()) {
+				map["social_media_links[$index][type]"] = item.typeOfLink?.apiType.orEmpty()
+				map["social_media_links[$index][link]"] = item.linkUrl.orEmpty()
+			}
+		}
+
+		apiService.saveSocialMedia(map)
 	}
 
 }

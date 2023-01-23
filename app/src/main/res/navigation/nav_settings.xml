@@ -293,5 +293,15 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.working.hours"/>
   </fragment>
+  <fragment
+    android:id="@+id/dest_store_social_media"
+    android:name="grand.app.moon.presentation.myStore.StoreSocialMediaFragment"
+    android:label="@string/social_media_2"
+    tools:layout="@layout/fragment_store_social_media" >
+    <deepLink
+      android:id="@+id/deep_link_dest_store_social_media"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.store.social.media"/>
+  </fragment>
 
 </navigation>

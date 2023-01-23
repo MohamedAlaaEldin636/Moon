@@ -2,6 +2,7 @@ package grand.app.moon.data.shop
 
 import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
 import grand.app.moon.domain.shop.IdAndName
+import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.domain.shop.ResponseStoreSubCategory
 import grand.app.moon.domain.shop.ResponseWorkingHour
 import grand.app.moon.domain.utils.BaseResponse
@@ -71,6 +72,15 @@ interface ShopServices {
 	@FormUrlEncoded
 	@POST("v1/profile/working-hours")
 	suspend fun saveWorkingHours(
+		@FieldMap map: Map<String, String>
+	): BaseResponse<Any?>
+
+	@GET("v1/profile/social-media")
+	suspend fun getSocialMedia(): BaseResponse<List<ResponseStoreSocialMedia>?>
+
+	@FormUrlEncoded
+	@POST("v1/profile/social-media")
+	suspend fun saveSocialMedia(
 		@FieldMap map: Map<String, String>
 	): BaseResponse<Any?>
 

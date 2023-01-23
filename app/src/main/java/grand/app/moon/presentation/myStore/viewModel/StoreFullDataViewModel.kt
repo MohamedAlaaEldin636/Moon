@@ -122,7 +122,10 @@ class StoreFullDataViewModel @Inject constructor(
 					)
 				}
 				R.drawable.ic_social_4 -> {
-					General.TODO("Not programmed yet.")
+					navController.navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.store.social.media"
+					)
 				}
 				R.drawable.ic_reviews_4 -> {
 					General.TODO("Not programmed yet.")

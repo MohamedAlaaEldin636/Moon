@@ -350,4 +350,10 @@
   <string name="select_time">حدد الوقت</string>
   <string name="working_hours_value_am">%1$d / %2$d / ص</string>
   <string name="working_hours_value_pm">%1$d / %2$d / م</string>
+  <string name="facebook">فيسبوك</string>
+  <string name="twitter">تويتر</string>
+  <string name="snapchat">سناب شات</string>
+  <string name="instagram">انستجرام</string>
+  <string name="youtube">يوتيوب</string>
+  <string name="social_media_2">وسائل التواصل الاجتماعي</string>
 </resources>

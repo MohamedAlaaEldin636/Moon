@@ -1,6 +1,7 @@
 package grand.app.moon.data.shop
 
 import grand.app.moon.domain.shop.IdAndName
+import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.toFailureStatus
@@ -65,5 +66,9 @@ class RepoShop @Inject constructor(
 	suspend fun getWorkingHours() = remoteDataSource.getWorkingHours()
 
 	suspend fun saveWorkingHours(list: List<ItemWorkingHours2>) = remoteDataSource.saveWorkingHours(list)
+
+	suspend fun getSocialMedia() = remoteDataSource.getSocialMedia()
+
+	suspend fun saveSocialMedia(list: List<ResponseStoreSocialMedia>) = remoteDataSource.saveSocialMedia(list)
 
 }
