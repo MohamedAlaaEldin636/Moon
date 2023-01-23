@@ -53,7 +53,7 @@ class WorkingHoursFragment : BaseFragment<FragmentWorkingHoursBinding>() {
 
 fun List<ResponseWorkingHour>?.toItemWorkingHours2(context: Context): List<ItemWorkingHours2> = context.run {
 	List(7) { index ->
-		val response = this@toItemWorkingHours2?.getOrNull(0) ?: ResponseWorkingHour()
+		val response = this@toItemWorkingHours2?.getOrNull(index) ?: ResponseWorkingHour()
 
 		val day = when (index) {
 			0 -> getString(R.string.saturday)

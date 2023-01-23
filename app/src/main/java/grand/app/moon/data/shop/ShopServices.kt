@@ -7,12 +7,15 @@ import grand.app.moon.domain.shop.ResponseStoreSubCategory
 import grand.app.moon.domain.shop.ResponseWorkingHour
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
+import okhttp3.RequestBody
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PartMap
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -78,10 +81,10 @@ interface ShopServices {
 	@GET("v1/profile/social-media")
 	suspend fun getSocialMedia(): BaseResponse<List<ResponseStoreSocialMedia>?>
 
-	@FormUrlEncoded
+	@Multipart
 	@POST("v1/profile/social-media")
 	suspend fun saveSocialMedia(
-		@FieldMap map: Map<String, String>
+		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>
 	): BaseResponse<Any?>
 
 }

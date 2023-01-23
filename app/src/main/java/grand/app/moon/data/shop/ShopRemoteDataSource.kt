@@ -3,6 +3,8 @@ package grand.app.moon.data.shop
 import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServices) : BaseRemoteDataSource() {
@@ -54,12 +56,13 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	}
 
 	suspend fun saveSocialMedia(list: List<ResponseStoreSocialMedia>) = safeApiCall {
-		val map = mutableMapOf<String, String>()
+		val map = mutableMapOf<String, @JvmSuppressWildcards RequestBody>()
 
-		for ((index, item) in list.withIndex()) {
+		var index = 0
+		for (item in list) {
 			if (item.linkUrl.isNullOrEmpty().not()) {
-				map["social_media_links[$index][type]"] = item.typeOfLink?.apiType.orEmpty()
-				map["social_media_links[$index][link]"] = item.linkUrl.orEmpty()
+				map["social_media_links[$index][type]"] = item.typeOfLink?.apiType.orEmpty().toRequestBody()
+				map["social_media_links[${index++}][link]"] = item.linkUrl.orEmpty().toRequestBody()
 			}
 		}
 
