@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentStoreSocialMediaBinding
+import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.extensions.handleRetryAbleActionOrGoBackNullable
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.presentation.base.BaseFragment
@@ -23,8 +24,12 @@ class StoreSocialMediaFragment : BaseFragment<FragmentStoreSocialMediaBinding>()
 			action = {
 				viewModel.repoShop.getSocialMedia()
 			}
-		) {
-			viewModel.adapter.submitList(it.orEmpty())
+		) { list ->
+			val newList = ResponseStoreSocialMedia.Type.values().map { type ->
+				list?.firstOrNull { it.typeOfLink == type } ?: ResponseStoreSocialMedia(type.apiType)
+			}
+
+			viewModel.adapter.submitList(newList)
 		}
 	}
 
