@@ -356,4 +356,9 @@
   <string name="instagram">انستجرام</string>
   <string name="youtube">يوتيوب</string>
   <string name="social_media_2">وسائل التواصل الاجتماعي</string>
+  <string name="name_2">الاسم</string>
+  <string name="search_by_name">البحث بالاسم</string>
+  <string name="phone_hint_3">الجوال :</string>
+  <string name="email_hint_3">البريد الإلكتروني :</string>
+  <string name="comment_8">التعليق</string>
 </resources>

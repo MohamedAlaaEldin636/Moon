@@ -234,74 +234,84 @@
     android:id="@+id/dest_add_or_edit_store_category"
     android:name="grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragment"
     android:label="fragment_add_or_edit_store_category"
-    tools:layout="@layout/fragment_add_or_edit_store_category" >
+    tools:layout="@layout/fragment_add_or_edit_store_category">
     <argument
       android:name="id"
+      android:defaultValue="@null"
       app:argType="string"
-      app:nullable="true"
-      android:defaultValue="@null"/>
+      app:nullable="true" />
     <argument
       android:name="name"
+      android:defaultValue="@null"
       app:argType="string"
-      app:nullable="true"
-      android:defaultValue="@null"/>
+      app:nullable="true" />
     <deepLink
       android:id="@+id/deep_link_dest_add_or_edit_store_category_1"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.add.or.edit.store.category.edit/{id}/{name}"/>
+      app:uri="fragment-dest://grand.app.moon.dest.add.or.edit.store.category.edit/{id}/{name}" />
     <deepLink
       android:id="@+id/deep_link_dest_add_or_edit_store_category_2"
       android:autoVerify="true"
-      app:uri="fragment-dest-2://grand.app.moon.dest.add.or.edit.store.category.create"/>
+      app:uri="fragment-dest-2://grand.app.moon.dest.add.or.edit.store.category.create" />
   </fragment>
   <fragment
     android:id="@+id/dest_add_or_edit_store_sub_category"
     android:name="grand.app.moon.presentation.myStore.AddOrEditStoreSubCategoryFragment"
     android:label="fragment_add_or_edit_store_sub_category"
-    tools:layout="@layout/fragment_add_or_edit_store_sub_category" >
+    tools:layout="@layout/fragment_add_or_edit_store_sub_category">
     <argument
       android:name="id"
+      android:defaultValue="@null"
       app:argType="string"
-      app:nullable="true"
-      android:defaultValue="@null"/>
+      app:nullable="true" />
     <argument
       android:name="name"
+      android:defaultValue="@null"
       app:argType="string"
-      app:nullable="true"
-      android:defaultValue="@null"/>
+      app:nullable="true" />
     <argument
       android:name="parentId"
+      android:defaultValue="@null"
       app:argType="string"
-      app:nullable="true"
-      android:defaultValue="@null"/>
+      app:nullable="true" />
     <deepLink
       android:id="@+id/deep_link_dest_add_or_edit_store_sub_category_1"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.add.or.edit.store.sub.category.edit/{id}/{name}/{parentId}"/>
+      app:uri="fragment-dest://grand.app.moon.dest.add.or.edit.store.sub.category.edit/{id}/{name}/{parentId}" />
     <deepLink
       android:id="@+id/deep_link_dest_add_or_edit_store_sub_category_2"
       android:autoVerify="true"
-      app:uri="fragment-dest-2://grand.app.moon.dest.add.or.edit.store.sub.category.create"/>
+      app:uri="fragment-dest-2://grand.app.moon.dest.add.or.edit.store.sub.category.create" />
   </fragment>
   <fragment
     android:id="@+id/dest_working_hours"
     android:name="grand.app.moon.presentation.myStore.WorkingHoursFragment"
     android:label="@string/working_hours_2"
-    tools:layout="@layout/fragment_working_hours" >
+    tools:layout="@layout/fragment_working_hours">
     <deepLink
       android:id="@+id/deep_link_dest_working_hours"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.working.hours"/>
+      app:uri="fragment-dest://grand.app.moon.dest.working.hours" />
   </fragment>
   <fragment
     android:id="@+id/dest_store_social_media"
     android:name="grand.app.moon.presentation.myStore.StoreSocialMediaFragment"
     android:label="@string/social_media_2"
-    tools:layout="@layout/fragment_store_social_media" >
+    tools:layout="@layout/fragment_store_social_media">
     <deepLink
       android:id="@+id/deep_link_dest_store_social_media"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.store.social.media"/>
+      app:uri="fragment-dest://grand.app.moon.dest.store.social.media" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_store_clients_reviews"
+    android:name="grand.app.moon.presentation.myStore.StoreClientsReviewsFragment"
+    android:label="@string/cients_opionions"
+    tools:layout="@layout/fragment_store_clients_reviews">
+    <deepLink
+      android:id="@+id/deep_link_dest_store_clients_reviews"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.store.clients.reviews" />
   </fragment>
 
 </navigation>

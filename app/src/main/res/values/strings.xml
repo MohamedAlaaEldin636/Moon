@@ -366,4 +366,9 @@
   <string name="instagram">Instagram</string>
   <string name="youtube">Youtube</string>
   <string name="social_media_2">Social Media</string>
+  <string name="name_2">Name</string>
+  <string name="search_by_name">Search by Name</string>
+  <string name="phone_hint_3">Phone :</string>
+  <string name="email_hint_3">Email :</string>
+  <string name="comment_8">Comment</string>
 </resources>

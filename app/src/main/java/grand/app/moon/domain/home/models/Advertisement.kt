@@ -26,7 +26,7 @@ data class Advertisement(
   val id: Int = 0,
   @SerializedName("image")
   val image: String = "",
-  @SerializedName("images")
+  @SerializedName("images2")
   var images: ArrayList<String> = arrayListOf(),
   @SerializedName("properties")
   val properties: ArrayList<Property> = arrayListOf(),

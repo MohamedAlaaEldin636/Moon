@@ -5,6 +5,7 @@ import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.http.Query
 import javax.inject.Inject
 
 class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServices) : BaseRemoteDataSource() {
@@ -67,6 +68,21 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		}
 
 		apiService.saveSocialMedia(map)
+	}
+
+	suspend fun getClientsReviews(
+		query: String?,
+		from: String?,
+		to: String?,
+		page: Int
+	) = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+
+		if (!query.isNullOrEmpty()) map["search"] = query
+		if (!from.isNullOrEmpty()) map["from"] = from
+		if (!to.isNullOrEmpty()) map["to"] = to
+
+		apiService.getClientsReviews(page, map)
 	}
 
 }

@@ -71,4 +71,19 @@ class RepoShop @Inject constructor(
 
 	suspend fun saveSocialMedia(list: List<ResponseStoreSocialMedia>) = remoteDataSource.saveSocialMedia(list)
 
+	fun getClientsReviews(
+		query: String?,
+		from: String?,
+		to: String?,
+	) = BasePaging.createFlowViaPager {
+		remoteDataSource.getClientsReviews(query, from, to, it)
+	}
+
+	suspend fun getClientsReviewsSuspend(
+		query: String?,
+		from: String?,
+		to: String?,
+		page: Int,
+	) = remoteDataSource.getClientsReviews(query, from, to, page)
+
 }
