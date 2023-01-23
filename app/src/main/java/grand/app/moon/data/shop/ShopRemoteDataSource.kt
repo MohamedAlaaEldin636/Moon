@@ -40,12 +40,12 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	}
 
 	suspend fun saveWorkingHours(list: List<ItemWorkingHours2>) = safeApiCall {
-		val map = mutableMapOf<String, String>()
+		val map = mutableMapOf<String, RequestBody>()
 
 		for ((index, item) in list.withIndex()) {
-			map["working_hours[$index][from]"] = item.from
-			map["working_hours[$index][to]"] = item.to
-			map["working_hours[$index][status]"] = item.enabled.toString()
+			map["working_hours[$index][from]"] = item.from.toRequestBody()
+			map["working_hours[$index][to]"] = item.to.toRequestBody()
+			map["working_hours[$index][status]"] = item.enabled.toString().toRequestBody()
 		}
 
 		apiService.saveWorkingHours(map)

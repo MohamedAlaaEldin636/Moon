@@ -72,10 +72,10 @@ interface ShopServices {
 	@GET("v1/profile/working-hours")
 	suspend fun getWorkingHours(): BaseResponse<List<ResponseWorkingHour>?>
 
-	@FormUrlEncoded
+	@Multipart
 	@POST("v1/profile/working-hours")
 	suspend fun saveWorkingHours(
-		@FieldMap map: Map<String, String>
+		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>
 	): BaseResponse<Any?>
 
 	@GET("v1/profile/social-media")
