@@ -3,8 +3,10 @@ package grand.app.moon.data.shop
 import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.http.Part
 import retrofit2.http.Query
 import javax.inject.Inject
 
@@ -84,5 +86,7 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 		apiService.getClientsReviews(page, map)
 	}
+
+	suspend fun addExplore(@Part files: List<MultipartBody.Part>) = safeApiCall { apiService.addExplore(files) }
 
 }

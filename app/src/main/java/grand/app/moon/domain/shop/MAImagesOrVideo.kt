@@ -8,4 +8,9 @@ sealed interface MAImagesOrVideo {
 
 	data class Video(val video: Uri) : MAImagesOrVideo
 
+	fun getUris() = when (this) {
+		is Images -> images
+		is Video -> listOf(video)
+	}
+
 }

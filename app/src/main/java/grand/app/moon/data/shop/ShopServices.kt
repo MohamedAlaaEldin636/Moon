@@ -1,21 +1,13 @@
 package grand.app.moon.data.shop
 
 import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
+import grand.app.moon.core.di.module.RetrofitModule
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.DELETE
-import retrofit2.http.Field
-import retrofit2.http.FieldMap
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.PartMap
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.QueryMap
+import retrofit2.http.*
 
 interface ShopServices {
 
@@ -90,5 +82,12 @@ interface ShopServices {
 		@Query("page") page: Int,
 		@QueryMap map: Map<String, String>,
 	): MABaseResponse<MABasePaging<ResponseClientReviews>>
+
+	@Multipart
+	@POST("v1/profile/explores")
+	suspend fun addExplore(
+		@Part files: List<MultipartBody.Part>,
+		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString(),
+	): BaseResponse<Any?>
 
 }

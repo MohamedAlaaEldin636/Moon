@@ -8,6 +8,8 @@ import grand.app.moon.domain.utils.toFailureStatus
 import grand.app.moon.helpers.paging.BasePaging
 import grand.app.moon.helpers.paging.MAResult
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
+import okhttp3.MultipartBody
+import retrofit2.http.Part
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -85,5 +87,7 @@ class RepoShop @Inject constructor(
 		to: String?,
 		page: Int,
 	) = remoteDataSource.getClientsReviews(query, from, to, page)
+
+	suspend fun addExplore(files: List<MultipartBody.Part>) = remoteDataSource.addExplore(files)
 
 }
