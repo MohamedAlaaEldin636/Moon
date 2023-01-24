@@ -24,10 +24,10 @@ open class PermissionsHandler private constructor(
 	context: Context,
 	host: Any,
 	private val permissions: List<String>,
-	listener: Listener?,
+	listener: Listener,
 ) : DefaultLifecycleObserver {
 
-	constructor(fragment: Fragment, lifecycle: Lifecycle, context: Context, permissions: List<String>, listener: Listener?) : this(
+	constructor(fragment: Fragment, lifecycle: Lifecycle, context: Context, permissions: List<String>, listener: Listener) : this(
 		lifecycle, context, fragment, permissions, listener
 	)
 
@@ -35,14 +35,9 @@ open class PermissionsHandler private constructor(
 		lifecycle, context, activity, permissions, listener
 	)
 
-	fun setListener(listener: Listener?) {
-		weakRefListener.clear()
-		weakRefListener = WeakReference(listener)
-	}
-
 	private val weakRefLifecycle = WeakReference(lifecycle)
 	private val weakRefContext = WeakReference(context)
-	protected val weakRefHost = WeakReference(host)
+	val weakRefHost = WeakReference(host)
 	private var weakRefListener = WeakReference(listener)
 
 	init {
@@ -94,6 +89,7 @@ open class PermissionsHandler private constructor(
 
 	fun actOnAllPermissionsAcceptedOrRequestPermissions() {
 		val context = weakRefContext.get() ?: return
+		MyLogger.e("aaaaaaaaaa -> on all weakRefListener.get() ${weakRefListener.get()}")
 		if (permissions.all { ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED }) {
 			weakRefListener.get()?.onAllPermissionsAccepted()
 		}else {

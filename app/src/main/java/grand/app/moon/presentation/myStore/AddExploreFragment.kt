@@ -6,7 +6,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentAddExploreBinding
 import grand.app.moon.domain.shop.MAImagesOrVideo
-import grand.app.moon.extensions.GettingImagesOrVideoHandler
+import grand.app.moon.extensions.PickImagesOrVideoHandler
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myStore.viewModel.AddExploreViewModel
@@ -16,16 +16,16 @@ class AddExploreFragment : BaseFragment<FragmentAddExploreBinding>() {
 
 	private val viewModel by viewModels<AddExploreViewModel>()
 
-	var gettingImagesOrVideoHandler: GettingImagesOrVideoHandler? = null
+	var gettingImagesOrVideoHandler: PickImagesOrVideoHandler? = null
 		private set
 
 	override fun onCreate(savedInstanceState: Bundle?) {
-		gettingImagesOrVideoHandler = GettingImagesOrVideoHandler(
+		gettingImagesOrVideoHandler = PickImagesOrVideoHandler(
 			this,
-			GettingImagesOrVideoHandler.SupportedMediaType.BOTH,
+			PickImagesOrVideoHandler.SupportedMediaType.BOTH,
 			3 * 60,
 			true,
-			getAnchor = { _binding?.dottedView }
+			getAnchor = { _binding?.buttonTextView }
 		) { uris, _, isImageNotVideo ->
 			if (isImageNotVideo) {
 				val amountToTake = 5

@@ -313,5 +313,15 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.store.clients.reviews" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_add_explore"
+    android:name="grand.app.moon.presentation.myStore.AddExploreFragment"
+    android:label="@string/add_explore_9"
+    tools:layout="@layout/fragment_add_explore">
+    <deepLink
+      android:id="@+id/deep_link_dest_add_explore"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.add.explore" />
+  </fragment>
 
 </navigation>

@@ -29,7 +29,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
 
-  const val REQUEST_TIME_OUT: Long = 60
+  const val REQUEST_TIME_OUT: Long = 10
 
 	const val HEADER_KEY_TIME_OUT_IN_MINUTES = "HEADER_KEY_TIME_OUT_IN_MINUTES"
 

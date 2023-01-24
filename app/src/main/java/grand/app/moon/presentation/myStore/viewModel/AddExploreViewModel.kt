@@ -11,10 +11,7 @@ import grand.app.moon.R
 import grand.app.moon.core.extenstions.createMultipartBodyPart
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.domain.shop.MAImagesOrVideo
-import grand.app.moon.extensions.app
-import grand.app.moon.extensions.findFragmentOrNull
-import grand.app.moon.extensions.handleRetryAbleActionCancellableNullable
-import grand.app.moon.extensions.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myStore.AddExploreFragment
 import javax.inject.Inject
@@ -29,6 +26,8 @@ class AddExploreViewModel @Inject constructor(
 
 	fun pickImagesOrVideo(view: View) {
 		val fragment = view.findFragmentOrNull<AddExploreFragment>() ?: return
+
+		MyLogger.e("aaaaaaaaaa -> Clickedddddddd ${fragment.gettingImagesOrVideoHandler}")
 
 		fragment.gettingImagesOrVideoHandler?.requestImageOrVideo()
 	}
