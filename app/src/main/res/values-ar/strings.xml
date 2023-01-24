@@ -235,6 +235,7 @@
   <string name="ad_has_been_added_successfully">تم إضافة الإعلان بنجاح</string>
   <string name="location_99">الموقع</string>
   <string name="only_var_have_been_picked">تم اختيار %1$s فقط</string>
+  <string name="var_have_been_picked">تم اختيار %1$s</string>
   <string name="special_221">مميز</string>
   <string name="comparedd_to_last_month">مقارنة بالشهر الماضي</string>
   <string name="remaining_time_var_days">الوقت المتبقي %1$s أيام</string>
@@ -361,4 +362,9 @@
   <string name="phone_hint_3">الجوال :</string>
   <string name="email_hint_3">البريد الإلكتروني :</string>
   <string name="comment_8">التعليق</string>
+  <string name="max_video_hint_3_min">الفيديو بحد اقصى 3 دقائق</string>
+  <string name="image">صورة</string>
+  <string name="video">فيديو</string>
+  <string name="upload_explore">إرفاق اكسبلور</string>
+  <string name="explore_add_label_desc">يمكنك ألان إرفاق اكسبلور لمتجرك صور متعددة او فيديوهات</string>
 </resources>

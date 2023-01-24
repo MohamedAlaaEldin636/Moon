@@ -245,6 +245,7 @@
   <string name="ad_has_been_added_successfully">Add has been added successfully</string>
   <string name="location_99">Location</string>
   <string name="only_var_have_been_picked">Only %1$s has been picked</string>
+  <string name="var_have_been_picked">%1$s has been picked</string>
   <string name="special_221">Premium</string>
   <string name="comparedd_to_last_month">Compared to last month</string>
   <string name="remaining_time_var_days">Remaining Time %1$s Days</string>
@@ -371,4 +372,9 @@
   <string name="phone_hint_3">Phone :</string>
   <string name="email_hint_3">Email :</string>
   <string name="comment_8">Comment</string>
+  <string name="max_video_hint_3_min">الفيديو بحد اقصى 3 دقائق</string>
+  <string name="image">صورة</string>
+  <string name="video">فيديو</string>
+  <string name="upload_explore">إرفاق اكسبلور</string>
+  <string name="explore_add_label_desc">يمكنك ألان إرفاق اكسبلور لمتجرك صور متعددة او فيديوهات</string>
 </resources>

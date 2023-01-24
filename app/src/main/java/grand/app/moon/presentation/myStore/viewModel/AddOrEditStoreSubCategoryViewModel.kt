@@ -13,9 +13,7 @@ import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
-import grand.app.moon.presentation.base.extensions.showPopup
-import grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragment
-import grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragmentArgs
+import grand.app.moon.core.extenstions.showPopup
 import grand.app.moon.presentation.myStore.AddOrEditStoreSubCategoryFragment
 import grand.app.moon.presentation.myStore.AddOrEditStoreSubCategoryFragmentArgs
 import javax.inject.Inject

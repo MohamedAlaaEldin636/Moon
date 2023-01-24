@@ -7,11 +7,8 @@ import android.util.Log
 import android.webkit.ValueCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
@@ -21,28 +18,16 @@ import grand.app.moon.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.NavHomeDirections
 import grand.app.moon.presentation.auth.AuthActivity
-import grand.app.moon.presentation.base.extensions.hide
-import grand.app.moon.presentation.base.extensions.show
+import grand.app.moon.core.extenstions.hide
+import grand.app.moon.core.extenstions.show
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
-import com.zeugmasolutions.localehelper.LocaleHelper
 import grand.app.moon.appMoonHelper.FilterDialog
-import grand.app.moon.core.MyApplication
-import java.util.*
-import com.onesignal.OSNotificationOpenedResult
 
 import com.onesignal.OneSignal
-import com.onesignal.OneSignal.OSNotificationOpenedHandler
-import grand.app.moon.core.di.module.ViewModelArgsModule
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
-import grand.app.moon.presentation.addStore.AddStoreActivity
-import grand.app.moon.presentation.base.extensions.openActivity
-import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
-import grand.app.moon.presentation.base.utils.showMessage
-import grand.app.moon.presentation.myAds.AddAdvertisementFragmentArgs
-import grand.app.moon.presentation.packages.MyBecomeShopPackageFragment
 
 
 @AndroidEntryPoint

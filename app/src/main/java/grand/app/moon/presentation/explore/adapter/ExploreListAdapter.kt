@@ -1,14 +1,10 @@
-package com.structure.base_mvvm.presentation.notification.adapter
+package grand.app.moon.presentation.explore.adapter
 
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -51,7 +47,6 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemExploreViewModel(data, position,user,fromStore)
-    Log.d(TAG, "onBindViewHolder: " + data.file)
 //    holder.itemLayoutBinding.appCompatEditText.setOnEditorActionListener(TextView.OnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
 //      if (i == EditorInfo.IME_ACTION_SEND) {
 //        exploreAction.exploreId = data.id

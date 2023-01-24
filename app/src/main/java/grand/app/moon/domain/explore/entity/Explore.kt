@@ -8,23 +8,23 @@ import java.io.Serializable
 
 @Keep
 data class Explore(
-  var id: Int = 0,
-  @SerializedName("created_at")
+	var id: Int = 0,
+	@SerializedName("created_at")
   val createdAt: String = "",
-  @SerializedName("file")
-  var file: String = "",
-  @SerializedName("mime_type")
+	@SerializedName("file") // file array
+  var file: List<String>? = emptyList(),
+	@SerializedName("mime_type")
   val mimeType: String = "",
-  @SerializedName("likes_count")
+	@SerializedName("likes_count")
   var likes: Int = 0,
-  @SerializedName("shares_count")
+	@SerializedName("shares_count")
   var shares: Int = 0,
-  @SerializedName("comments_count")
+	@SerializedName("comments_count")
   var comments: Int = 0,
-  @SerializedName("is_liked")
+	@SerializedName("is_liked")
   var isLike: Boolean = false,
-  @SerializedName("store")
+	@SerializedName("store")
   var store: Store = Store(),
 
 
-  ) : Serializable
+	) : Serializable

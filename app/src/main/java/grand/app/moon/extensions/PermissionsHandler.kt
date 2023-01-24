@@ -19,15 +19,15 @@ import java.lang.ref.WeakReference
 
 abstract class ListenerOfPermissionsHandler : PermissionsHandler.Listener
 
-class PermissionsHandler private constructor(
+open class PermissionsHandler private constructor(
 	lifecycle: Lifecycle,
 	context: Context,
 	host: Any,
 	private val permissions: List<String>,
-	listener: Listener,
+	listener: Listener?,
 ) : DefaultLifecycleObserver {
 
-	constructor(fragment: Fragment, lifecycle: Lifecycle, context: Context, permissions: List<String>, listener: Listener) : this(
+	constructor(fragment: Fragment, lifecycle: Lifecycle, context: Context, permissions: List<String>, listener: Listener?) : this(
 		lifecycle, context, fragment, permissions, listener
 	)
 
@@ -35,10 +35,15 @@ class PermissionsHandler private constructor(
 		lifecycle, context, activity, permissions, listener
 	)
 
+	fun setListener(listener: Listener?) {
+		weakRefListener.clear()
+		weakRefListener = WeakReference(listener)
+	}
+
 	private val weakRefLifecycle = WeakReference(lifecycle)
 	private val weakRefContext = WeakReference(context)
-	private val weakRefHost = WeakReference(host)
-	private val weakRefListener = WeakReference(listener)
+	protected val weakRefHost = WeakReference(host)
+	private var weakRefListener = WeakReference(listener)
 
 	init {
 		lifecycle.addObserver(this)

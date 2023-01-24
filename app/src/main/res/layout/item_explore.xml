@@ -5,7 +5,7 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <data>
-
+    <import type="grand.app.moon.core.extenstions.ViewExtensions"/>
     <import type="android.view.View" />
     <import type="grand.app.moon.presentation.base.utils.Constants" />
 
@@ -43,7 +43,7 @@
       app:progressBar="@{progress}"
 
       app:exploreHeight="@{viewModel.position}"
-      app:loadImageExplore="@{viewModel.model.file}"
+      app:loadImageExplore="@{ViewExtensions.firstOrEmpty(viewModel.model.file)}"
       app:defaultImage="@{@drawable/corner_primary}" />
 
 

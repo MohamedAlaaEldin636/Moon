@@ -5,7 +5,7 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <data>
-
+    <import type="grand.app.moon.core.extenstions.ViewExtensions"/>
     <import type="android.view.View" />
     <import type="grand.app.moon.presentation.base.utils.Constants" />
 
@@ -89,7 +89,7 @@
       android:layout_marginTop="@dimen/dimen10"
       app:layout_constraintTop_toBottomOf="@+id/barrier5"
       android:onClick="@{ (v) -> viewModel.click(v) }"
-      app:loadImage="@{viewModel.model.file}"
+      app:loadImage="@{ViewExtensions.firstOrEmpty(viewModel.model.file)}"
       app:progressBar="@{progress}" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -101,7 +101,7 @@
       app:layout_constraintStart_toStartOf="parent"
       android:layout_marginTop="@dimen/dimen10"
       app:layout_constraintTop_toBottomOf="@+id/barrier5"
-      app:imageUrlUpload="@{viewModel.model.file}" />
+      app:imageUrlUpload="@{ViewExtensions.firstOrEmpty(viewModel.model.file)}" />
 
 
 

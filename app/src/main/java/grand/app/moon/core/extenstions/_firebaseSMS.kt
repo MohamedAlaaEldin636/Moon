@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
@@ -12,9 +11,6 @@ import com.google.firebase.auth.*
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
 import grand.app.moon.R
-import grand.app.moon.core.MyApplication
-import grand.app.moon.presentation.base.extensions.disable
-import grand.app.moon.presentation.base.extensions.enable
 import java.util.concurrent.TimeUnit
 
 private  val TAG = "_firebaseSMS"

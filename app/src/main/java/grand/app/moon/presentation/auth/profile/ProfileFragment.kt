@@ -3,8 +3,6 @@ package grand.app.moon.presentation.auth.profile
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -24,6 +22,7 @@ import grand.app.moon.core.extenstions.checkSelfPermissionGranted
 import grand.app.moon.core.extenstions.convertToString
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.showPopup
 import grand.app.moon.databinding.FragmentProfileBinding
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.utils.Resource
@@ -32,8 +31,6 @@ import grand.app.moon.helpers.utils.handleCaptureImageRotation
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
-import kotlinx.coroutines.flow.collect
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*

@@ -50,7 +50,6 @@ class ExploreGridEqualAdapter: RecyclerView.Adapter<ExploreGridEqualAdapter.View
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val data = differ.currentList[position]
     val itemViewModel = ItemExploreViewModel(data,position,user,false)
-    Log.d(TAG, "onBindViewHolder: "+data.file)
     holder.itemLayoutBinding.itemExplore.setOnClickListener {
 //      val list = ExploreListPaginateData()
 //      list.list.addAll(differ.currentList)

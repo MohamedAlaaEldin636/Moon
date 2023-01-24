@@ -3,6 +3,7 @@ package grand.app.moon.presentation.myStore
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -17,11 +18,9 @@ import grand.app.moon.databinding.FragmentCreateStoreBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.compose.GlideImageViaXmlModel
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.base.extensions.showMessage
-import grand.app.moon.presentation.base.extensions.showPopup
+import grand.app.moon.core.extenstions.showPopup
 import grand.app.moon.presentation.myAds.LocationSelectionFragment
 import grand.app.moon.presentation.myAds.addAdvFinalPage.CameraUtils
-import grand.app.moon.presentation.myAds.model.LocalOrApiItemImage
 import grand.app.moon.presentation.myAds.model.LocationData
 import grand.app.moon.presentation.myStore.viewModel.CreateStoreViewModel
 
@@ -69,11 +68,15 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 			this,
 			lifecycle,
 			requireContext(),
-			listOf(
-				Manifest.permission.WRITE_EXTERNAL_STORAGE,
-				Manifest.permission.READ_EXTERNAL_STORAGE,
-				Manifest.permission.CAMERA,
-			),
+			buildList {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+					add(Manifest.permission.READ_MEDIA_IMAGES)
+				}else {
+					add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+					add(Manifest.permission.READ_EXTERNAL_STORAGE)
+				}
+				add(Manifest.permission.CAMERA)
+			},
 			this
 		)
 
@@ -146,6 +149,9 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 	override fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {
 		if (permissions[Manifest.permission.CAMERA] == true) {
 			pickImageFromCamera()
+		}else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+			&& permissions[Manifest.permission.READ_MEDIA_IMAGES] == true) {
+			pickImageFromGallery()
 		}else if (permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true
 			&& permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true) {
 			pickImageFromGallery()

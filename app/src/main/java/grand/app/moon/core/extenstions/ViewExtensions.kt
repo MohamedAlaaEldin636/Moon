@@ -1,4 +1,4 @@
-package grand.app.moon.presentation.base.extensions
+package grand.app.moon.core.extenstions
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -8,9 +8,6 @@ import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.media.AudioRecord.MetricsConstants.SOURCE
-import android.media.MediaPlayer
-import android.media.browse.MediaBrowser
 
 import com.google.android.exoplayer2.MediaItem
 
@@ -28,17 +25,14 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.Group
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import androidx.navigation.NavDeepLinkRequest.Builder.Companion.fromUri
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
 import coil.request.ImageRequest
-import coil.size.Scale
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.airbnb.lottie.LottieAnimationView
@@ -50,7 +44,6 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.util.LruCache
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
@@ -65,15 +58,19 @@ import java.lang.Exception
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSourceFactory
-import com.google.android.material.slider.RangeSlider
 import com.rizlee.rangeseekbar.RangeSeekBar
-import grand.app.moon.core.extenstions.isEnglish
 import grand.app.moon.domain.filter.entitiy.FilterProperty
-import grand.app.moon.domain.intro.entity.AppTutorial
 import grand.app.moon.domain.utils.SpannedGridLayoutManager
-import grand.app.moon.presentation.media.image.utils.ImageMatrixTouchHandler
 import kotlinx.android.synthetic.main.pausable_progress.view.*
 
+object ViewExtensions {
+
+	@JvmStatic
+	fun firstOrEmpty(list: List<String>?): String {
+		return list?.firstOrNull().orEmpty()
+	}
+
+}
 
 fun View.show() {
   if (visibility == View.VISIBLE) return

@@ -4,24 +4,18 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.cometchat.pro.core.CometChat
 import com.google.android.material.snackbar.Snackbar
-import com.zeugmasolutions.localehelper.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
-import grand.app.moon.core.MyApplication
-import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.databinding.ActivitySplashBinding
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.addStore.AddStoreActivity
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
-import grand.app.moon.presentation.base.extensions.showSnackBar
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.intro.IntroActivity
 import kotlinx.android.synthetic.main.fragment_log_in.*
-import kotlinx.coroutines.flow.collect
 import java.util.*
 
 @SuppressLint("CustomSplashScreen")

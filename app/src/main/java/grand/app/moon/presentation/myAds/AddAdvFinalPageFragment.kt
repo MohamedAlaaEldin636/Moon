@@ -3,6 +3,7 @@ package grand.app.moon.presentation.myAds
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -111,11 +112,15 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 			this,
 			lifecycle,
 			requireContext(),
-			listOf(
-				Manifest.permission.WRITE_EXTERNAL_STORAGE,
-				Manifest.permission.READ_EXTERNAL_STORAGE,
-				Manifest.permission.CAMERA,
-			),
+			buildList {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+					add(Manifest.permission.READ_MEDIA_IMAGES)
+				}else {
+					add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+					add(Manifest.permission.READ_EXTERNAL_STORAGE)
+				}
+				add(Manifest.permission.CAMERA)
+			},
 			this
 		)
 
@@ -263,8 +268,15 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 	}
 
 	override fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {
+		/*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+			return onAllPermissionsAccepted()
+		}*/
+
 		if (permissions[Manifest.permission.CAMERA] == true) {
 			pickImageFromCamera()
+		}else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+			&& permissions[Manifest.permission.READ_MEDIA_IMAGES] == true) {
+			pickImageFromGallery()
 		}else if (permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true
 			&& permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true) {
 			pickImageFromGallery()

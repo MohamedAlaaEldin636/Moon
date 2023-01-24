@@ -18,9 +18,8 @@ import grand.app.moon.databinding.ItemInMyAdsBinding
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrEmptyBA
-import grand.app.moon.presentation.base.extensions.showPopup
+import grand.app.moon.core.extenstions.showPopup
 import grand.app.moon.presentation.myAds.MyAdsFragment
-import grand.app.moon.presentation.myAds.model.MyAdsFilter
 import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
 import grand.app.moon.presentation.myAds.model.TypeOfAd
 import java.time.Instant

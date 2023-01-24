@@ -8,10 +8,29 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import grand.app.moon.R
+import grand.app.moon.domain.shop.MAImagesOrVideo
 import grand.app.moon.extensions.compose.GlideImageViaXmlModel
 import grand.app.moon.extensions.orZero
-import grand.app.moon.presentation.base.extensions.setTint
+
+@BindingAdapter("imageView_setupWithGlideOrIgnoreMAImagesOrVideo")
+fun ImageView.setupWithGlideOrIgnoreMAImagesOrVideo(model: MAImagesOrVideo?) {
+	when (model) {
+		is MAImagesOrVideo.Images -> {
+			Glide.with(this)
+				.load(model.images.firstOrNull() ?: return)
+				.into(this)
+		}
+		is MAImagesOrVideo.Video -> {
+			Glide.with(this)
+				.load(model.video)
+				.apply(RequestOptions().frame(1)/*.centerCrop()*/)
+				.into(this)
+		}
+		null -> {}
+	}
+}
 
 @BindingAdapter("imageView_setupWithGlideOrIgnoreGlideImageViaXmlModelBA")
 fun ImageView.setupWithGlideOrIgnoreGlideImageViaXmlModelBA(model: GlideImageViaXmlModel?) {

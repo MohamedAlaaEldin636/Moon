@@ -22,6 +22,7 @@ import grand.app.moon.databinding.FragmentExploreBinding
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.utils.SpannedGridLayoutManager
+import grand.app.moon.extensions.getExploreLayoutManager
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.explore.viewmodel.ExploreViewModel
 import kotlinx.coroutines.flow.collect
@@ -93,26 +94,26 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     }
 
 
-    viewModel.adapter.clickEvent.observe(this,{
-      if(it != -1) {
-        val list = ArrayList(viewModel.adapter.differ.currentList)
-        viewModel.adapter.swapPosition = it
+    viewModel.adapter.clickEvent.observe(this) {
+	    if (it != -1) {
+		    val list = ArrayList(viewModel.adapter.differ.currentList)
+		    viewModel.adapter.swapPosition = it
 //        viewModel.lastData.list.clear()
 //        viewModel.adapter.tmpList.clear()
 //        viewModel.adapter.tmpList.addAll(list)
 //        viewModel.lastData.list.addAll(list)
-        viewModel.lastData.list.clear()
-        viewModel.lastData.list.addAll(list)
-        Collections.swap(viewModel.lastData.list, 0, viewModel.adapter.swapPosition);
-        val action = ExploreFragmentDirections.actionExploreFragmentToExploreListFragment(
-          viewModel.lastData,
-        )
-        action.page = viewModel.page
-        findNavController().navigate(
-          action
-        )
-      }
-    })
+		    viewModel.lastData.list.clear()
+		    viewModel.lastData.list.addAll(list)
+		    Collections.swap(viewModel.lastData.list, 0, viewModel.adapter.swapPosition);
+		    val action = ExploreFragmentDirections.actionExploreFragmentToExploreListFragment(
+			    viewModel.lastData,
+		    )
+		    action.page = viewModel.page
+		    findNavController().navigate(
+			    action
+		    )
+	    }
+    }
   }
 
 
@@ -128,7 +129,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
 
           return when {
             position == 1 || x % 2 == 1 || (position - 1) % 18 == 0 ->
-              SpannedGridLayoutManager.SpanInfo(2, 2)
+              SpannedGridLayoutManager.SpanInfo(1, 2)
             else ->
               SpannedGridLayoutManager.SpanInfo(1, 1)
           }
@@ -136,9 +137,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
         }
       },
       3,  // number of columns
-      1f // how big is default item
+      0.5f // how big is default item
     )
-    binding.recyclerView.layoutManager = manager
+    binding.recyclerView.layoutManager = requireContext().getExploreLayoutManager()
     binding.recyclerView.adapter = viewModel.adapter
 
 

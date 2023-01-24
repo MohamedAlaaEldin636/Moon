@@ -1,8 +1,5 @@
 package grand.app.moon.presentation.more
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,14 +13,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import grand.app.moon.R
-import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.databinding.FragmentSettingsBinding
+import grand.app.moon.core.extenstions.hide
+import grand.app.moon.core.extenstions.show
 import grand.app.moon.databinding.FragmentWebBinding
-import grand.app.moon.databinding.ReviewDialogBinding
-import grand.app.moon.presentation.base.utils.Constants
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class WebFragment : BottomSheetDialogFragment() {

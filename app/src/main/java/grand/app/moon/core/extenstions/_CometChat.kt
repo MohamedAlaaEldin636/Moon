@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.cometchat.pro.constants.CometChatConstants
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
@@ -12,12 +11,7 @@ import com.cometchat.pro.models.User
 import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMessageListActivity
 import com.cometchat.pro.uikit.ui_resources.constants.UIKitConstants
 import com.cometchat.pro.uikit.ui_settings.UIKitSettings
-import com.onesignal.OneSignal
-import grand.app.moon.appMoonHelper.ThirdPartyHelper
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
-import grand.app.moon.core.MyApplication
-import grand.app.moon.presentation.base.extensions.disable
-import grand.app.moon.presentation.base.extensions.enable
 import grand.app.moon.presentation.base.utils.Constants
 
 private val TAG = "_CometChat"

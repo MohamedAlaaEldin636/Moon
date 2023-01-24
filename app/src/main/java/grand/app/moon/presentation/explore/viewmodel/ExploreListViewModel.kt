@@ -6,12 +6,11 @@ import androidx.databinding.Bindable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.viewModelScope
-import com.structure.base_mvvm.presentation.notification.adapter.ExploreListAdapter
+import grand.app.moon.presentation.explore.adapter.ExploreListAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
-import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.explore.use_case.ExploreUseCase
@@ -148,7 +147,7 @@ class ExploreListViewModel @Inject constructor(
       exploreAction.type = 3
       explore.shares++
       adapter.notifyItemChanged(adapter.position)
-      share(v.findFragment<Fragment>().requireActivity(), explore.store.name, explore.file)
+      share(v.findFragment<Fragment>().requireActivity(), explore.store.name, explore.file?.firstOrNull().orEmpty())
 //      shareTitleMessageImage(v.findFragment<Fragment>().requireActivity(),explore.store.name,explore.store.description,explore.file)
     }
 

@@ -16,12 +16,12 @@ import grand.app.moon.presentation.reviews.viewModels.ReviewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.hide
+import grand.app.moon.core.extenstions.show
 import grand.app.moon.databinding.ReviewDialogBinding
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
-import kotlinx.coroutines.flow.collect
-import java.util.*
 
 @AndroidEntryPoint
 class ReviewDialog : BottomSheetDialogFragment() {
