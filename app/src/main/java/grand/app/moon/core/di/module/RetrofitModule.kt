@@ -85,6 +85,7 @@ object RetrofitModule {
 			    .withWriteTimeout(newTimeout, TimeUnit.MINUTES)
 			    .request()
 			    .newBuilder()
+			    .removeHeader(HEADER_KEY_TIME_OUT_IN_MINUTES)
 	    }else {
 				chain.request().newBuilder()
 	    }
