@@ -1,6 +1,6 @@
 package grand.app.moon.data.explorer.data_source
 
-import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
+import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.domain.comment.entity.Comment
 import grand.app.moon.domain.comment.entity.CommentListPaginateData
 import grand.app.moon.domain.explore.entity.ExploreAction

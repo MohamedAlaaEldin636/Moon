@@ -1,6 +1,6 @@
 package grand.app.moon.data.shop
 
-import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
+import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.core.di.module.RetrofitModule
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
@@ -88,6 +88,17 @@ interface ShopServices {
 	suspend fun addExplore(
 		@Part files: List<MultipartBody.Part>,
 		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString(),
+	): BaseResponse<Any?>
+
+	@GET("v1/profile/explores")
+	suspend fun getExplores(
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>,
+	): MABaseResponse<ResponseExploreInShopInfo>
+
+	@DELETE("v1/profile/explores/{id}")
+	suspend fun deleteExplore(
+		@Path("id") id: Int,
 	): BaseResponse<Any?>
 
 }

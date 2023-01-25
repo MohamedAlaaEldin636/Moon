@@ -5,8 +5,7 @@ import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.toFailureStatus
-import grand.app.moon.helpers.paging.BasePaging
-import grand.app.moon.helpers.paging.MAResult
+import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import okhttp3.MultipartBody
 import retrofit2.http.Part
@@ -81,6 +80,19 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getClientsReviews(query, from, to, it)
 	}
 
+	fun getExplores(
+		from: String?,
+		to: String?,
+	) = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getExplores(from, to, page).mapImmediate { response ->
+			response.map { innerResponse ->
+				innerResponse?.explores?.map {
+					innerResponse.exploresRestCount to it
+				}
+			}
+		}
+	}
+
 	suspend fun getClientsReviewsSuspend(
 		query: String?,
 		from: String?,
@@ -89,5 +101,7 @@ class RepoShop @Inject constructor(
 	) = remoteDataSource.getClientsReviews(query, from, to, page)
 
 	suspend fun addExplore(files: List<MultipartBody.Part>) = remoteDataSource.addExplore(files)
+
+	suspend fun deleteExplore(id: Int) = remoteDataSource.deleteExplore(id)
 
 }

@@ -1,7 +1,6 @@
 package grand.app.moon.data.explorer.repository
 
 import androidx.paging.PagingData
-import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
 import grand.app.moon.data.explorer.data_source.ExploreRemoteDataSource
 import grand.app.moon.domain.comment.entity.Comment
 import grand.app.moon.domain.comment.entity.CommentListPaginateData
@@ -11,7 +10,6 @@ import grand.app.moon.domain.explore.repository.ExploreRepository
 import grand.app.moon.domain.user.entity.UserListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
-import grand.app.moon.helpers.paging.MABasePaging
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

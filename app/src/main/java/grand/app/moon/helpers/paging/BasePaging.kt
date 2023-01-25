@@ -1,7 +1,6 @@
 package grand.app.moon.helpers.paging
 
 import androidx.paging.*
-import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
 import kotlinx.coroutines.flow.Flow
 
 class BasePaging<T : Any>(

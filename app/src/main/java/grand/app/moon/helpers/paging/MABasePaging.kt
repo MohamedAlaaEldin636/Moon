@@ -2,6 +2,13 @@ package grand.app.moon.helpers.paging
 
 import com.google.gson.annotations.SerializedName
 
+fun <T, R> MABasePaging<T>.map(transformation: (T) -> R): MABasePaging<R> {
+	return MABasePaging(
+		data?.map { transformation(it) },
+		links, currentPage, nextPageUrl, firstPageUrl, lastPage, fromInPage, toInPage, totalNumberOfItems, numOfItemsPerPage
+	)
+}
+
 data class MABasePaging<T>(
     val data: List<T>?,
 

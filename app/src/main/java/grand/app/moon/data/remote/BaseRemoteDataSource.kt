@@ -2,7 +2,7 @@ package grand.app.moon.data.remote
 
 import android.util.Log
 import com.google.gson.Gson
-import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
+import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.core.extenstions.loginPage
 import grand.app.moon.core.extenstions.logout
 import grand.app.moon.core.MyApplication

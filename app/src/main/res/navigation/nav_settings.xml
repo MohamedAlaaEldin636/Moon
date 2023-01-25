@@ -323,5 +323,30 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.add.explore" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_explore_in_shop_info"
+    android:name="grand.app.moon.presentation.myStore.ExploreInShopInfoFragment"
+    android:label="@string/store_explore"
+    tools:layout="@layout/fragment_explore_in_shop_info">
+    <deepLink
+      android:id="@+id/deep_link_dest_explore_in_shop_info"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.explore.in.shop.info" />
+  </fragment>
+  <dialog
+    android:id="@+id/dest_show_images_or_video"
+    android:name="grand.app.moon.presentation.myStore.ShowImagesOrVideoDialogFragment"
+    tools:layout="@layout/dialog_fragment_show_images_or_video" >
+    <deepLink
+      android:id="@+id/deep_link_dest_show_images_or_video"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.show.images.or.video/{areImagesNotVideo}/{jsonListOfUrls}" />
+    <argument
+      android:name="areImagesNotVideo"
+      app:argType="boolean" />
+    <argument
+      android:name="jsonListOfUrls"
+      app:argType="string" />
+  </dialog>
 
 </navigation>

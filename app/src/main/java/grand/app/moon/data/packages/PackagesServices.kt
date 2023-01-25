@@ -1,6 +1,6 @@
 package grand.app.moon.data.packages
 
-import com.maproductions.mohamedalaa.shared.core.customTypes.MABaseResponse
+import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.domain.myStore.ResponseMyStoreDetails
 import grand.app.moon.domain.myStore.ResponseSuccessPackageForBecomeShop
 import grand.app.moon.domain.packages.BasePagination

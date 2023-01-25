@@ -372,10 +372,17 @@
   <string name="phone_hint_3">Phone :</string>
   <string name="email_hint_3">Email :</string>
   <string name="comment_8">Comment</string>
-  <string name="max_video_hint_3_min">الفيديو بحد اقصى 3 دقائق</string>
-  <string name="image">صورة</string>
-  <string name="video">فيديو</string>
-  <string name="upload_explore">إرفاق اكسبلور</string>
-  <string name="explore_add_label_desc">يمكنك ألان إرفاق اكسبلور لمتجرك صور متعددة او فيديوهات</string>
-  <string name="add_explore_9">إضافة اكسبلور</string>
+  <string name="max_video_hint_3_min">Video max limit is 3 minutes</string>
+  <string name="image">Image</string>
+  <string name="video">Video</string>
+  <string name="upload_explore">Upload Explore</string>
+  <string name="explore_add_label_desc">You can now upload multiple Images or Videos to your Store Explore</string>
+  <string name="add_explore_9">Add Explore</string>
+  <string name="rem_explore_count">Remaining Explore count</string>
+    <string name="file">File</string>
+  <string name="shares">Shares</string>
+  <string name="creation_date">Creation Date</string>
+  <string name="procedures">Procedures</string>
+  <string name="delete">Delete</string>
+  <string name="view_921">مشاهدة</string>
 </resources>

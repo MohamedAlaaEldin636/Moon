@@ -145,7 +145,7 @@ class StoreFullDataViewModel @Inject constructor(
 				R.drawable.ic_store_explore_4 -> {
 					navController.navigateDeepLinkWithOptions(
 						"fragment-dest",
-						"grand.app.moon.dest.add.explore"
+						"grand.app.moon.dest.explore.in.shop.info"
 					)
 				}
 			}

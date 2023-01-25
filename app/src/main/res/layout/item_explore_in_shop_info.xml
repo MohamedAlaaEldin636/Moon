@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_margin="8dp"
+
+    android:layout_gravity="center"
+
+    android:background="@drawable/dr_rect_5"
+
+    android:paddingStart="9dp"
+    android:paddingTop="7dp"
+    android:paddingEnd="14dp"
+    android:paddingBottom="21dp"
+    android:clipToPadding="false">
+
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/imageView"
+
+      android:layout_width="68dp"
+      android:layout_height="41dp"
+
+      app:shapeAppearance="@style/ShapeRound5"
+      app:shapeAppearanceOverlay="@style/ShapeRound5"
+
+      tools:src="@drawable/ic_baseline_refresh_24"
+
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+      android:id="@+id/fileImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="16dp"
+
+      android:src="@drawable/ex_file"
+
+      app:layout_constraintTop_toTopOf="@id/imageView"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+      android:id="@+id/fileLabelTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginStart="7dp"
+      android:layout_marginEnd="7dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="13sp"
+      android:textDirection="locale"
+      android:text="@string/file"
+
+      app:layout_constraintTop_toTopOf="@id/fileImageView"
+      app:layout_constraintBottom_toBottomOf="@id/fileImageView"
+      app:layout_constraintStart_toEndOf="@id/fileImageView"
+      app:layout_constraintEnd_toStartOf="@id/imageView"/>
+
+    <View
+      android:id="@+id/belowFileView"
+
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+
+      android:background="#F8F8F8"
+
+      android:layout_marginTop="18dp"
+
+      app:layout_constraintTop_toBottomOf="@id/fileLabelTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/likeLabelTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="18dp"
+      android:layout_marginEnd="7dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="13sp"
+      android:textDirection="locale"
+      android:text="@string/likes"
+
+      app:layout_constraintTop_toBottomOf="@id/belowFileView"
+      app:layout_constraintBottom_toBottomOf="@id/likeImageView"
+      app:layout_constraintStart_toStartOf="@id/fileLabelTextView"
+      app:layout_constraintEnd_toStartOf="@id/likeValueTextView"/>
+
+    <ImageView
+      android:id="@+id/likeImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/ex_like"
+
+      android:layout_marginEnd="7dp"
+
+      app:layout_constraintTop_toTopOf="@id/likeValueTextView"
+      app:layout_constraintBottom_toBottomOf="@id/likeValueTextView"
+      app:layout_constraintEnd_toStartOf="@id/likeLabelTextView"/>
+
+    <TextView
+      android:id="@+id/likeValueTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginBottom="1dp"
+
+      style="@style/TextTajawalBold14"
+      android:textSize="11sp"
+      android:textColor="#E89028"
+      tools:text="500 إعجاب"
+
+      app:layout_constraintTop_toTopOf="@id/likeLabelTextView"
+      app:layout_constraintBottom_toBottomOf="@id/likeLabelTextView"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+      android:id="@+id/belowLikeView"
+
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+
+      android:background="#F8F8F8"
+
+      android:layout_marginTop="18dp"
+
+      app:layout_constraintTop_toBottomOf="@id/likeLabelTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/commentsLabelTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="18dp"
+      android:layout_marginEnd="7dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="13sp"
+      android:textDirection="locale"
+      android:text="@string/comments"
+
+      app:layout_constraintTop_toBottomOf="@id/belowLikeView"
+      app:layout_constraintBottom_toBottomOf="@id/commentsImageView"
+      app:layout_constraintStart_toStartOf="@id/likeLabelTextView"
+      app:layout_constraintEnd_toStartOf="@id/commentsValueTextView"/>
+
+    <ImageView
+      android:id="@+id/commentsImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/ex_comment"
+
+      android:layout_marginEnd="7dp"
+
+      app:layout_constraintTop_toTopOf="@id/commentsValueTextView"
+      app:layout_constraintBottom_toBottomOf="@id/commentsValueTextView"
+      app:layout_constraintEnd_toStartOf="@id/commentsLabelTextView"/>
+
+    <TextView
+      android:id="@+id/commentsValueTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginBottom="1dp"
+
+      style="@style/TextTajawalBold14"
+      android:textSize="11sp"
+      android:textColor="#E89028"
+      tools:text="500 إعجاب"
+
+      app:layout_constraintTop_toTopOf="@id/commentsLabelTextView"
+      app:layout_constraintBottom_toBottomOf="@id/commentsLabelTextView"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+      android:id="@+id/belowCommentsView"
+
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+
+      android:background="#F8F8F8"
+
+      android:layout_marginTop="18dp"
+
+      app:layout_constraintTop_toBottomOf="@id/commentsLabelTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/sharesLabelTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="18dp"
+      android:layout_marginEnd="7dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="13sp"
+      android:textDirection="locale"
+      android:text="@string/shares"
+
+      app:layout_constraintTop_toBottomOf="@id/belowCommentsView"
+      app:layout_constraintBottom_toBottomOf="@id/sharesImageView"
+      app:layout_constraintStart_toStartOf="@id/commentsLabelTextView"
+      app:layout_constraintEnd_toStartOf="@id/sharesValueTextView"/>
+
+    <ImageView
+      android:id="@+id/sharesImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/ex_share"
+
+      android:layout_marginEnd="7dp"
+
+      app:layout_constraintTop_toTopOf="@id/sharesValueTextView"
+      app:layout_constraintBottom_toBottomOf="@id/sharesValueTextView"
+      app:layout_constraintEnd_toStartOf="@id/sharesLabelTextView"/>
+
+    <TextView
+      android:id="@+id/sharesValueTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginBottom="1dp"
+
+      style="@style/TextTajawalBold14"
+      android:textSize="11sp"
+      android:textColor="#E89028"
+      tools:text="500 إعجاب"
+
+      app:layout_constraintTop_toTopOf="@id/sharesLabelTextView"
+      app:layout_constraintBottom_toBottomOf="@id/sharesLabelTextView"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+      android:id="@+id/belowSharesView"
+
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+
+      android:background="#F8F8F8"
+
+      android:layout_marginTop="18dp"
+
+      app:layout_constraintTop_toBottomOf="@id/sharesLabelTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/creationDateLabelTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="18dp"
+      android:layout_marginEnd="7dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="13sp"
+      android:textDirection="locale"
+      android:text="@string/creation_date"
+
+      app:layout_constraintTop_toBottomOf="@id/belowSharesView"
+      app:layout_constraintBottom_toBottomOf="@id/creationDateImageView"
+      app:layout_constraintStart_toStartOf="@id/sharesLabelTextView"
+      app:layout_constraintEnd_toStartOf="@id/creationDateValueTextView"/>
+
+    <ImageView
+      android:id="@+id/creationDateImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/ex_date_creation"
+
+      android:layout_marginEnd="7dp"
+
+      app:layout_constraintTop_toTopOf="@id/creationDateValueTextView"
+      app:layout_constraintBottom_toBottomOf="@id/creationDateValueTextView"
+      app:layout_constraintEnd_toStartOf="@id/creationDateLabelTextView"/>
+
+    <TextView
+      android:id="@+id/creationDateValueTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginBottom="1dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textStyle="bold"
+      android:textSize="13sp"
+      tools:text="25 May 2022"
+
+      app:layout_constraintTop_toTopOf="@id/creationDateLabelTextView"
+      app:layout_constraintBottom_toBottomOf="@id/creationDateLabelTextView"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+      android:id="@+id/belowCreationDateView"
+
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+
+      android:background="#F8F8F8"
+
+      android:layout_marginTop="18dp"
+
+      app:layout_constraintTop_toBottomOf="@id/creationDateLabelTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/actionLabelTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="18dp"
+      android:layout_marginEnd="7dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="13sp"
+      android:textDirection="locale"
+      android:text="@string/procedures"
+
+      app:layout_constraintTop_toBottomOf="@id/belowCreationDateView"
+      app:layout_constraintBottom_toBottomOf="@id/actionImageView"
+      app:layout_constraintStart_toStartOf="@id/creationDateLabelTextView"
+      app:layout_constraintEnd_toStartOf="@id/delImageView"/>
+
+    <ImageView
+      android:id="@+id/actionImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/ex_actions"
+
+      android:layout_marginEnd="7dp"
+
+      app:layout_constraintTop_toTopOf="@id/actionValueTextView"
+      app:layout_constraintBottom_toBottomOf="@id/actionValueTextView"
+      app:layout_constraintEnd_toStartOf="@id/actionLabelTextView"/>
+
+    <TextView
+      android:id="@+id/actionValueTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginBottom="1dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="12sp"
+      android:textColor="#727889"
+      android:text="@string/delete"
+
+      app:layout_constraintTop_toTopOf="@id/actionLabelTextView"
+      app:layout_constraintBottom_toBottomOf="@id/actionLabelTextView"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+      android:id="@+id/delImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/ex_delete"
+
+      android:layout_marginEnd="6dp"
+
+      app:layout_constraintEnd_toStartOf="@id/actionValueTextView"
+      app:layout_constraintTop_toTopOf="@id/actionValueTextView"
+      app:layout_constraintBottom_toBottomOf="@id/actionValueTextView"/>
+
+    <View
+      android:id="@+id/delView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      app:layout_constraintStart_toStartOf="@id/delImageView"
+      app:layout_constraintTop_toTopOf="@id/delImageView"
+      app:layout_constraintBottom_toBottomOf="@id/delImageView"
+      app:layout_constraintEnd_toEndOf="@id/actionValueTextView"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -87,6 +87,21 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getClientsReviews(page, map)
 	}
 
-	suspend fun addExplore(@Part files: List<MultipartBody.Part>) = safeApiCall { apiService.addExplore(files) }
+	suspend fun getExplores(
+		from: String?,
+		to: String?,
+		page: Int
+	) = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+
+		if (!from.isNullOrEmpty()) map["from"] = from
+		if (!to.isNullOrEmpty()) map["to"] = to
+
+		apiService.getExplores(page, map)
+	}
+
+	suspend fun addExplore(files: List<MultipartBody.Part>) = safeApiCall { apiService.addExplore(files) }
+
+	suspend fun deleteExplore(id: Int) = safeApiCall { apiService.deleteExplore(id) }
 
 }

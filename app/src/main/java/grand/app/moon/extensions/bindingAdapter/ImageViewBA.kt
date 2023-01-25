@@ -14,6 +14,34 @@ import grand.app.moon.domain.shop.MAImagesOrVideo
 import grand.app.moon.extensions.compose.GlideImageViaXmlModel
 import grand.app.moon.extensions.orZero
 
+@BindingAdapter("imageView_setupWithGlideWithDefaultsPlaceholderAndError")
+fun ImageView.setupWithGlideWithDefaultsPlaceholderAndError(url: String?) {
+	Glide.with(this)
+		.load(url)
+		.placeholder(R.drawable.ic_baseline_refresh_24)
+		.error(R.drawable.ic_baseline_broken_image_24)
+		.into(this)
+}
+
+@BindingAdapter("imageView_setupWithGlideWithDefaultsPlaceholderAndError_video")
+fun ImageView.setupWithGlideWithDefaultsPlaceholderAndErrorVideo(url: String?) {
+	Glide.with(this)
+		.load(url)
+		.apply(RequestOptions().frame(1)/*.centerCrop()*/)
+		.placeholder(R.drawable.ic_baseline_refresh_24)
+		.error(R.drawable.ic_baseline_broken_image_24)
+		.into(this)
+}
+
+@BindingAdapter("imageView_setupWithGlideWithDefaultsPlaceholderAndError_listImagesOrVideo")
+fun ImageView.setupWithGlideWithDefaultsPlaceholderAndErrorListImagesOrVideo(urls: List<String>?) {
+	Glide.with(this)
+		.load(urls?.firstOrNull())
+		.placeholder(R.drawable.ic_baseline_refresh_24)
+		.error(R.drawable.ic_baseline_broken_image_24)
+		.into(this)
+}
+
 @BindingAdapter("imageView_setupWithGlideOrIgnoreMAImagesOrVideo")
 fun ImageView.setupWithGlideOrIgnoreMAImagesOrVideo(model: MAImagesOrVideo?) {
 	when (model) {
