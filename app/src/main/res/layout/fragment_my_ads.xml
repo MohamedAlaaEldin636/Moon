@@ -15,7 +15,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="#FBFBFB">
+    android:background="#FBFBFB"
+
+    android:paddingBottom="27dp"
+    android:clipToPadding="false">
 
     <include
       android:id="@+id/toolbarCurve"

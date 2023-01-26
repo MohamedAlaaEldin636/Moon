@@ -30,7 +30,7 @@
     android:title="@string/map" />-->
 
   <item
-    android:id="@+id/nav_settings"
+    android:id="@+id/dest_more"
     android:icon="@drawable/ic_more_bottom_bar"
     android:title="@string/more" />
 

@@ -97,6 +97,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.addStoreFragment,
         R.id.home_fragment,
         R.id.settings_fragment,
+	      R.id.dest_more,
         R.id.myAccountFragment,
         //R.id.mapFragment,
         R.id.dest_my_ads,
@@ -222,7 +223,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showText()
 //          binding.toolbar.hide()
         }
-        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings -> {
+        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings, R.id.dest_more -> {
           setStoreImage(false)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label

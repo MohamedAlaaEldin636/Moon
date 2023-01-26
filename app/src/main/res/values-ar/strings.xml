@@ -375,4 +375,8 @@
   <string name="procedures">الإجراءات</string>
   <string name="delete">حذف</string>
   <string name="view_921">مشاهدة</string>
+  <string name="upgrade_to_shop_now">الترقية إلي متجر الأن</string>
+  <string name="chat_with_app_managers">محادثة إدارة التطبيق</string>
+  <string name="complains_and_suggestions">الشكاوي و المقترحات</string>
+  <string name="general_settings">الإعددادت العامة</string>
 </resources>
