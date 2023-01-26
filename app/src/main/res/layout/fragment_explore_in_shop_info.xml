@@ -58,7 +58,7 @@
       android:background="@drawable/dr_round_7_with_stroke"
       android:backgroundTint="@color/colorPrimary"
 
-      android:onClick="@{() -> viewModel.search()}"
+      android:onClick="@{v -> viewModel.search(v)}"
 
       android:layout_marginStart="4.75dp"
       android:layout_marginEnd="16dp"
@@ -130,8 +130,14 @@
       app:layout_constraintStart_toEndOf="@id/labelDateFromTextView"
       app:layout_constraintEnd_toStartOf="@id/searchButton"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/dateFromTextView"
+
+      android:maxLines="1"
+      android:ellipsize="end"
+      app:autoSizeTextType="uniform"
+      app:autoSizeMaxTextSize="10sp"
+      app:autoSizeMinTextSize="6sp"
 
       android:layout_width="0dp"
       android:layout_height="wrap_content"
@@ -163,8 +169,14 @@
       app:layout_constraintStart_toStartOf="@id/labelDateFromTextView"
       app:layout_constraintEnd_toStartOf="@id/dateToTextView"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/dateToTextView"
+
+      android:maxLines="1"
+      android:ellipsize="end"
+      app:autoSizeTextType="uniform"
+      app:autoSizeMaxTextSize="10sp"
+      app:autoSizeMinTextSize="6sp"
 
       android:layout_width="0dp"
       android:layout_height="wrap_content"

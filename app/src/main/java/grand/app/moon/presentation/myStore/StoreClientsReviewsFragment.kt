@@ -10,6 +10,7 @@ import grand.app.moon.databinding.FragmentStoreSocialMediaBinding
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.extensions.RetryAbleFlow
 import grand.app.moon.extensions.handleRetryAbleActionOrGoBackNullable
+import grand.app.moon.extensions.minLengthZerosPrefix
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
@@ -27,8 +28,8 @@ class StoreClientsReviewsFragment : BaseFragment<FragmentStoreClientsReviewsBind
 			getFlow = {
 				viewModel.repoShop.getClientsReviews(
 					viewModel.name.value,
-					viewModel.dateFrom.value,
-					viewModel.dateTo.value,
+					viewModel.dateFrom.value?.fromUiToApiDate(),
+					viewModel.dateTo.value?.fromUiToApiDate(),
 				)
 			},
 			collectLatestAction = {
@@ -56,6 +57,18 @@ class StoreClientsReviewsFragment : BaseFragment<FragmentStoreClientsReviewsBind
 		)
 
 		retryAbleFlow.collectLatest()
+	}
+
+	private fun String.fromUiToApiDate(): String? {
+		val array = if (contains(" / ")) split(" / ") else return null
+
+		val day = array.getOrNull(0)?.toIntOrNull() ?: return null
+		val month = array.getOrNull(1)?.toIntOrNull() ?: return null
+		val year = array.getOrNull(2)?.toIntOrNull() ?: return null
+
+		return "${year.toString().minLengthZerosPrefix(4)}-" +
+			"${month.toString().minLengthZerosPrefix(2)}-" +
+			day.toString().minLengthZerosPrefix(2)
 	}
 
 }

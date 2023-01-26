@@ -1,7 +1,12 @@
 package grand.app.moon.data.shop
 
 import grand.app.moon.data.remote.BaseRemoteDataSource
+import grand.app.moon.domain.shop.ItemExploreInShopInfo
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
+import grand.app.moon.helpers.paging.MABasePaging
+import grand.app.moon.helpers.paging.MABaseResponse
+import grand.app.moon.helpers.paging.MAResult
+import grand.app.moon.helpers.paging.map
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -91,13 +96,21 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		from: String?,
 		to: String?,
 		page: Int
-	) = safeApiCall2 {
+	): MAResult.Immediate<MABaseResponse<MABasePaging<ItemExploreInShopInfo>>> = safeApiCall2 {
 		val map = mutableMapOf<String, String>()
 
 		if (!from.isNullOrEmpty()) map["from"] = from
 		if (!to.isNullOrEmpty()) map["to"] = to
 
-		apiService.getExplores(page, map)
+		//    fetchPage: suspend (Int) -> MAResult.Immediate<MABaseResponse<MABasePaging<T>>>
+
+		apiService.getExplores(page, map).map {
+			it?.explores?.map { item ->
+				item.copy(
+					exploresRestCount = it.exploresRestCount
+				)
+			}
+		}
 	}
 
 	suspend fun addExplore(files: List<MultipartBody.Part>) = safeApiCall { apiService.addExplore(files) }

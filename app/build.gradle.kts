@@ -213,7 +213,7 @@ dependencies {
   implementation("com.cometchat:pro-android-chat-sdk:3.0.4")
 
   //exo-player
-  implementation("com.google.android.exoplayer:exoplayer:2.10.0")
+  implementation("com.google.android.exoplayer:exoplayer:2.18.2")
 
   //glide
   implementation("com.github.bumptech.glide:glide:4.11.0")

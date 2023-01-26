@@ -18,6 +18,7 @@ data class ItemExploreInShopInfo(
 	@SerializedName("shares_count") var sharesCount: Int?,
 	@SerializedName("is_liked") var isLiked: Boolean?,
 	@SerializedName("created_at") var createdAt: String?,
+	@SerializedName("explores_rest_count") var exploresRestCount: Int?,
 ) {
 	val isVideo get() = mimeType?.startsWith(Constants.VIDEO) == true
 }

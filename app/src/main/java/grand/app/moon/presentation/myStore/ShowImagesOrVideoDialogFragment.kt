@@ -14,10 +14,13 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
+import com.google.android.exoplayer2.source.MediaSourceFactory
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DefaultAllocator
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.DialogFragmentAnnouncementBinding
@@ -54,11 +57,20 @@ class ShowImagesOrVideoDialogFragment : MADialogFragment<DialogFragmentShowImage
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		initializePlayer2()
+		/*binding.playerView.hideController()
+		binding.playerView.useController = true*/
+		//binding.playerView.player = player
+
 		binding.sliderView.setSliderAdapter(viewModel.adapter)
 
 		binding.sliderView.post {
 			binding.sliderView.setSliderAdapter(viewModel.adapter)
 			binding.sliderView.startAutoCycle()
+
+			binding.sliderView.post {
+				viewModel.adapter.submitList(viewModel.files)
+			}
 		}
 	}
 
@@ -66,7 +78,7 @@ class ShowImagesOrVideoDialogFragment : MADialogFragment<DialogFragmentShowImage
 		super.onStart()
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			initializePlayer()
+			//initializePlayer()
 		}
 	}
 
@@ -74,7 +86,7 @@ class ShowImagesOrVideoDialogFragment : MADialogFragment<DialogFragmentShowImage
 		super.onResume()
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || player == null) {
-			initializePlayer()
+			//initializePlayer()
 		}
 	}
 
@@ -94,17 +106,79 @@ class ShowImagesOrVideoDialogFragment : MADialogFragment<DialogFragmentShowImage
 		}
 	}
 
+	private val MIN_BUFFER_DURATION = 2000
+
+	//Max Video you want to buffer during PlayBack
+	private val MAX_BUFFER_DURATION = 5000
+
+	//Min Video you want to buffer before start Playing it
+	private val MIN_PLAYBACK_START_BUFFER = 1500
+
+	//Min video You want to buffer when user resumes video
+	private val MIN_PLAYBACK_RESUME_BUFFER = 2000
+
+	private fun initializePlayer2() {
+		if (viewModel.args.areImagesNotVideo.not()) {
+			if (player == null) {
+				val allocator = DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE)
+				val loadControl: LoadControl = DefaultLoadControl.Builder()
+					.setAllocator(DefaultAllocator(true, 16))
+					.setBufferDurationsMs(
+						MIN_BUFFER_DURATION,
+						MAX_BUFFER_DURATION,
+						MIN_PLAYBACK_START_BUFFER,
+						MIN_PLAYBACK_RESUME_BUFFER
+					)
+					.setTargetBufferBytes(-1)
+					.setPrioritizeTimeOverSizeThresholds(true).createDefaultLoadControl()
+				val mediaDataSourceFactory: com.google.android.exoplayer2.upstream.DataSource.Factory = DefaultDataSourceFactory(
+					requireContext(),
+					Util.getUserAgent(requireContext(), "mediaPlayerSample")
+				)
+				val mediaSource: ProgressiveMediaSource =
+					ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(
+						MediaItem.fromUri(viewModel.files.firstOrNull().orEmpty())
+					)
+				val mediaSourceFactory: MediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
+				player = SimpleExoPlayer.Builder(requireContext())
+					.setMediaSourceFactory(mediaSourceFactory)
+					.setLoadControl(loadControl)
+					.build()
+				player!!.addMediaSource(mediaSource)
+				player!!.prepare()
+				binding.playerView.hideController()
+				binding.playerView.useController = true
+				binding.playerView.player = player
+				player!!.play()
+				player!!.addListener(object : Player.Listener {
+					override fun onPlaybackStateChanged(state: Int) {
+						if (state == ExoPlayer.STATE_BUFFERING) {
+//                        binding.spinnerVideoDetails.setVisibility(View.VISIBLE);
+						} else {
+							//binding.spinnerVideoDetails.visibility = View.GONE
+						}
+					}
+				})
+			}
+		}
+	}
+
 	private fun initializePlayer() {
 		if (viewModel.args.areImagesNotVideo.not()) {
 			viewModel.files.firstOrNull()?.also { videoUrl ->
-				player = SimpleExoPlayer.Builder(requireContext())
+				player = /*Simple*/ExoPlayer.Builder(requireContext())
+					//.setLoadControl()
 					.build()
+
+				/*if (_binding != null && _binding?.playerView?.player == null) {
+					_binding?.playerView?.player = player
+				}*/
 
 				player?.also { exoPlayer ->
 					val mediaItem = MediaItem.fromUri(videoUrl)
 					exoPlayer.setMediaItem(mediaItem)
 
-					exoPlayer.addListener(this)
+					//exoPlayer.addListener(this)
 
 					exoPlayer.playWhenReady = true
 					exoPlayer.prepare()

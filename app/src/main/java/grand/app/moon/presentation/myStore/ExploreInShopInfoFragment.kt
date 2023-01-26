@@ -9,6 +9,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentExploreInShopInfoBinding
+import grand.app.moon.extensions.RetryAbleFlow
+import grand.app.moon.extensions.minLengthZerosPrefix
+import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
@@ -20,6 +23,24 @@ import kotlinx.coroutines.launch
 class ExploreInShopInfoFragment : BaseFragment<FragmentExploreInShopInfoBinding>() {
 
 	private val viewModel by viewModels<ExploreInShopInfoViewModel>()
+
+	val retryAbleFlow by lazy {
+		RetryAbleFlow(
+			this,
+			getFlow = {
+				viewModel.repoShop.getExplores2(
+					viewModel.dateFrom.value?.fromUiToApiDate(),
+					viewModel.dateTo.value?.fromUiToApiDate(),
+				)
+			},
+			collectLatestAction = {
+				viewModel.adapter.submitData(it)
+			},
+			onRetry = {
+				viewModel.adapter.refresh()
+			}
+		)
+	}
 
 	override fun getLayoutId(): Int = R.layout.fragment_explore_in_shop_info
 
@@ -36,13 +57,23 @@ class ExploreInShopInfoFragment : BaseFragment<FragmentExploreInShopInfoBinding>
 			1
 		)
 
-		viewLifecycleOwner.lifecycleScope.launch {
-			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-				viewModel.explores.collectLatest {
-					viewModel.adapter.submitData(it)
-				}
-			}
+		retryAbleFlow.collectLatest()
+
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
+			viewModel.adapter.refresh()
 		}
+	}
+
+	private fun String.fromUiToApiDate(): String? {
+		val array = if (contains(" / ")) split(" / ") else return null
+
+		val day = array.getOrNull(0)?.toIntOrNull() ?: return null
+		val month = array.getOrNull(1)?.toIntOrNull() ?: return null
+		val year = array.getOrNull(2)?.toIntOrNull() ?: return null
+
+		return "${year.toString().minLengthZerosPrefix(4)}-" +
+			"${month.toString().minLengthZerosPrefix(2)}-" +
+			day.toString().minLengthZerosPrefix(2)
 	}
 
 }

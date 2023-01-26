@@ -9,10 +9,13 @@ import android.view.View
 import androidx.core.text.buildSpannedString
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemExploreInShopInfoBinding
 import grand.app.moon.domain.shop.ItemExploreInShopInfo
@@ -28,6 +31,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @HiltViewModel
 class ExploreInShopInfoViewModel @Inject constructor(
@@ -45,13 +49,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 		"${app.getString(R.string.rem_explore_count)} ( ${it.toStringOrEmpty()} )"
 	}
 
-	val key = MutableLiveData(1)
-
-	val explores = key.switchMap {
-		repoShop.getExplores(dateFrom.value, dateTo.value).asLiveData()
-	}.asFlow()
-
-	val adapter = RVPagingItemCommonListUsage<ItemExploreInShopInfoBinding, Pair<Int?, ItemExploreInShopInfo>>(
+	val adapter = RVPagingItemCommonListUsage<ItemExploreInShopInfoBinding, /*Pair<Int?, */ItemExploreInShopInfo/*>*/>(
 		R.layout.item_explore_in_shop_info,
 		additionalListenersSetups = { adapter, binding ->
 			binding.imageView.setOnClickListener { view ->
@@ -104,20 +102,33 @@ class ExploreInShopInfoViewModel @Inject constructor(
 			}
 		}
 	) { binding, _, item ->
-		if (remainingExploreCount.value != item.first) {
-			remainingExploreCount.value = item.first
+		if (remainingExploreCount.value != item.exploresRestCount) {
+			remainingExploreCount.value = item.exploresRestCount
 		}
 
 		val context = binding.root.context ?: return@RVPagingItemCommonListUsage
 
-		val explore = item.second
+		val explore = item//.second
 
 		binding.constraintLayout.tag = explore.toJsonInlinedOrNull()
 
 		if (explore.isVideo) {
-			binding.imageView.setupWithGlideWithDefaultsPlaceholderAndErrorVideo(explore.files?.firstOrNull())
+			Glide.with(binding.imageView)
+				.load(explore.files?.firstOrNull())
+				//.override(imgWidth, imgHeight)
+				.apply(RequestOptions().frame(1)/*.centerCrop()*/)
+				.placeholder(R.drawable.ic_baseline_refresh_24)
+				.error(R.drawable.ic_baseline_broken_image_24)
+				.into(binding.imageView)
+			//binding.imageView.setupWithGlideWithDefaultsPlaceholderAndErrorVideo(explore.files?.firstOrNull())
 		}else {
-			binding.imageView.setupWithGlideWithDefaultsPlaceholderAndError(explore.files?.firstOrNull())
+			Glide.with(binding.imageView)
+				.load(explore.files?.firstOrNull())
+				//.override(imgWidth, imgHeight)
+				.placeholder(R.drawable.ic_baseline_refresh_24)
+				.error(R.drawable.ic_baseline_broken_image_24)
+				.into(binding.imageView)
+			//binding.imageView.setupWithGlideWithDefaultsPlaceholderAndError(explore.files?.firstOrNull())
 		}
 
 		binding.likeValueTextView.text = getSpannedString(
@@ -139,7 +150,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 	}
 
 	fun pickDate(view: View, isFromNotTo: Boolean) {
-		val fragment = view.findFragmentOrNull<StoreClientsReviewsFragment>() ?: return
+		val fragment = view.findFragmentOrNull<ExploreInShopInfoFragment>() ?: return
 
 		val localDateTimeConstraint = when {
 			isFromNotTo && dateTo.value.isNullOrEmpty().not() -> {
@@ -202,8 +213,8 @@ class ExploreInShopInfoViewModel @Inject constructor(
 		picker.show(fragment.childFragmentManager, "Date")
 	}
 
-	fun search() {
-		key.value = key.value.orZero().inc()
+	fun search(view: View) {
+		view.findFragmentOrNull<ExploreInShopInfoFragment>()?.retryAbleFlow?.retry()
 	}
 
 	fun goToAddExplore(view: View) {

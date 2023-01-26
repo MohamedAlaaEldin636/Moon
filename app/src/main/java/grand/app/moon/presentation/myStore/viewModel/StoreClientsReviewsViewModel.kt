@@ -130,16 +130,4 @@ class StoreClientsReviewsViewModel @Inject constructor(
 		fragment.retryAbleFlow.retry()
 	}
 
-	private fun String.fromUiToApiDate(): String? {
-		val array = if (contains(" / ")) split(" / ") else return null
-
-		val day = array.getOrNull(0)?.toIntOrNull() ?: return null
-		val month = array.getOrNull(1)?.toIntOrNull() ?: return null
-		val year = array.getOrNull(2)?.toIntOrNull() ?: return null
-
-		return "${year.toString().minLengthZerosPrefix(4)}-" +
-			"${month.toString().minLengthZerosPrefix(2)}-" +
-			day.toString().minLengthZerosPrefix(2)
-	}
-
 }

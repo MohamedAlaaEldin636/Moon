@@ -80,7 +80,7 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getClientsReviews(query, from, to, it)
 	}
 
-	fun getExplores(
+	/*fun getExplores(
 		from: String?,
 		to: String?,
 	) = BasePaging.createFlowViaPager { page ->
@@ -91,6 +91,20 @@ class RepoShop @Inject constructor(
 				}
 			}
 		}
+	}*/
+
+	fun getExplores2(
+		from: String?,
+		to: String?,
+	) = BasePaging.createFlowViaPager { page ->
+		//    fetchPage: suspend (Int) -> MAResult.Immediate<MABaseResponse<MABasePaging<T>>>
+		remoteDataSource.getExplores(from, to, page)/*.mapImmediate { response ->
+			response.map { innerResponse ->
+				innerResponse?.explores?.map {
+					it
+				}
+			}
+		}*/
 	}
 
 	suspend fun getClientsReviewsSuspend(

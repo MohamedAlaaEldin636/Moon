@@ -19,70 +19,55 @@
 
     android:background="@color/announcement_dialog_window_background">
 
-    <com.google.android.material.card.MaterialCardView
-      android:id="@+id/materialCardView"
+    <com.smarteist.autoimageslider.SliderView
+      android:id="@+id/sliderView"
 
       android:layout_width="0dp"
       android:layout_height="0dp"
 
-      app:layout_constraintHeight_percent="0.5"
+      android:background="@color/white"
+
+      view_visibleOrInvisible="@{viewModel.showImagesNotVideo}"
+
+      app:sliderAnimationDuration="600"
+      app:sliderAutoCycleDirection="back_and_forth"
+      app:sliderAutoCycleEnabled="false"
+      app:sliderIndicatorAnimationDuration="600"
+      app:sliderIndicatorGravity="center_horizontal|bottom"
+      app:sliderIndicatorOrientation="horizontal"
+      app:sliderIndicatorPadding="3dp"
+      app:sliderIndicatorRadius="2dp"
+      app:sliderIndicatorMarginBottom="6dp"
+      app:sliderIndicatorSelectedColor="#E89028"
+      app:sliderIndicatorUnselectedColor="@color/white"
+      app:sliderScrollTimeInSec="3"
+      app:sliderStartAutoCycle="false"
 
       android:layout_margin="26dp"
 
-      android:padding="9dp"
-      android:clipToPadding="false"
-
-      android:visibility="invisible"
-      tools:visibility="visible"
-
-      app:cardElevation="0dp"
-      app:cardMaxElevation="0dp"
-
-      app:cardCornerRadius="5dp"
-      app:cardBackgroundColor="@color/white"
+      app:layout_constraintHeight_percent="0.5"
 
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent">
+      app:layout_constraintEnd_toEndOf="parent"/>
 
-      <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <com.google.android.exoplayer2.ui.PlayerView
+      android:id="@+id/playerView"
 
-        <com.smarteist.autoimageslider.SliderView
-          android:id="@+id/sliderView"
+      android:visibility="@{!viewModel.showImagesNotVideo}"
 
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
 
-          android:visibility="@{viewModel.showImagesNotVideo}"
+      android:layout_margin="26dp"
 
-          app:sliderAnimationDuration="600"
-          app:sliderAutoCycleDirection="back_and_forth"
-          app:sliderAutoCycleEnabled="false"
-          app:sliderIndicatorAnimationDuration="600"
-          app:sliderIndicatorGravity="center_horizontal|bottom"
-          app:sliderIndicatorOrientation="horizontal"
-          app:sliderIndicatorPadding="3dp"
-          app:sliderIndicatorRadius="2dp"
-          app:sliderIndicatorMarginBottom="6dp"
-          app:sliderIndicatorSelectedColor="#E89028"
-          app:sliderIndicatorUnselectedColor="@color/white"
-          app:sliderScrollTimeInSec="3"
-          app:sliderStartAutoCycle="false"/>
+      app:layout_constraintHeight_percent="0.5"
 
-        <com.google.android.exoplayer2.ui.PlayerView
-          android:id="@+id/playerView"
-
-          android:visibility="@{!viewModel.showImagesNotVideo}"
-
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"/>
-
-      </FrameLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
       android:layout_width="wrap_content"
@@ -94,8 +79,8 @@
 
       android:onClick="@{v -> viewModel.close(v)}"
 
-      app:layout_constraintBottom_toTopOf="@id/materialCardView"
-      app:layout_constraintStart_toStartOf="@id/materialCardView"/>
+      app:layout_constraintBottom_toTopOf="@id/sliderView"
+      app:layout_constraintStart_toStartOf="@id/sliderView"/>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
