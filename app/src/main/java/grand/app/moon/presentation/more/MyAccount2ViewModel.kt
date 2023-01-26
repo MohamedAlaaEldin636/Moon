@@ -22,7 +22,7 @@ import grand.app.moon.presentation.myStore.model.ItemStoreInfo
 import javax.inject.Inject
 
 @HiltViewModel
-class MoreViewModel @Inject constructor(
+class MyAccount2ViewModel @Inject constructor(
 	application: Application,
 	userLocalUseCase: UserLocalUseCase,
 	val repoShop: RepoShop,
@@ -35,48 +35,22 @@ class MoreViewModel @Inject constructor(
 
 	val user = userLocalUseCase()
 
-	val restDaysInPackage = MutableLiveData<Int?>()
-
-	val storeNoticeText = restDaysInPackage.map {
-		val res = when {
-			user.isStore.orFalse().not() -> R.string.upgrade_to_shop_now
-			else -> if (it.orZero() > 0) {
-				R.string.check_ad_premium
-			}else {
-				R.string.renew_and_subscribe_in_another_package
-			}
-		}
-
-		app.getString(res)
-	}
-
-	val showBecomeStoreIcon = MutableLiveData(user.isStore.orFalse().not())
-
 	val adapter = RVItemCommonListUsage<ItemStoreFullDataBinding, ItemStoreInfo>(
 		R.layout.item_store_full_data,
 		listOf(
-			ItemStoreInfo.complete(R.drawable.ic_profile, R.string.my_account),
-			ItemStoreInfo.complete(R.drawable.ic_store_data_4, R.string.store_data),
-			ItemStoreInfo.complete(R.drawable.ic_about_moon_settings, R.string.about_moon),
-			ItemStoreInfo.complete(R.drawable.ic_chat_with_app_managers, R.string.chat_with_app_managers),
-			ItemStoreInfo.complete(R.drawable.ic_contact_settings, R.string.contact_us),
-			ItemStoreInfo.complete(R.drawable.ic_complains_and_suggestions, R.string.complains_and_suggestions),
-			ItemStoreInfo.complete(R.drawable.ic_terms_settings, R.string.terms),
-			ItemStoreInfo.complete(R.drawable.ic_help_settings, R.string.general_settings),
+			ItemStoreInfo.complete(R.drawable.ic_profile, R.string.my_personal_data),
+			ItemStoreInfo.complete(R.drawable.ic_view, R.string.last_ads_seen),
 		),
 		onItemClick = { _, binding ->
 			val navController = binding.root.findNavController()
 
 			when (binding.constraintLayout.tag as? Int) {
 				R.drawable.ic_profile -> {
-					navController.navigateSafely(
-						MoreFragmentDirections.actionDestMoreToNavAccount()
-					)
-					/*navController.navigateDeepLinkWithOptions(
+					navController.navigateDeepLinkWithOptions(
 						"fragment-dest",
 						"" // todo ...
 					)
-					TODO()*/
+					TODO()
 				}
 				R.drawable.ic_store_data_4 -> {
 					if (user.isStore.orFalse()) {
@@ -136,32 +110,6 @@ class MoreViewModel @Inject constructor(
 		binding.notCompleteImageView.isVisible = item.notComplete
 
 		binding.textTextView.text = binding.root.context.getString(item.nameStringRes)
-	}
-
-	fun onBecomeShopOrAlreadySubscribedClick(view: View) {
-		val fragment = view.findFragmentOrNull<MoreFragment>() ?: return
-
-		val navController = fragment.findNavController()
-
-		when {
-			user.isStore.orFalse().not() -> {
-				navController.navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.become.shop.packages"
-				)
-			}
-			else -> if (restDaysInPackage.value.orZero() > 0) {
-				navController.navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.my.become.shop.package"
-				)
-			}else {
-				navController.navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.become.shop.packages"
-				)
-			}
-		}
 	}
 
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentMoreBinding
+import grand.app.moon.databinding.FragmentMyAccount2Binding
 import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
 import grand.app.moon.extensions.orFalse
 import grand.app.moon.extensions.orZero
@@ -13,25 +14,11 @@ import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.presentation.base.BaseFragment
 
 @AndroidEntryPoint
-class MoreFragment : BaseFragment<FragmentMoreBinding>() {
+class MyAccount2Fragment : BaseFragment<FragmentMyAccount2Binding>() {
 
-	val viewModel by viewModels<MoreViewModel>()
+	val viewModel by viewModels<MyAccount2ViewModel>()
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-
-		if (viewModel.user.isStore.orFalse()) {
-			handleRetryAbleActionOrGoBack(
-				action = {
-					viewModel.repoPackages.getMyPackageOfBeingShop()
-				}
-			) {
-				viewModel.restDaysInPackage.value = it.restDays.orZero()
-			}
-		}
-	}
-
-	override fun getLayoutId(): Int = R.layout.fragment_more
+	override fun getLayoutId(): Int = R.layout.fragment_my_account_2
 
 	override fun setBindingVariables() {
 		binding.viewModel = viewModel

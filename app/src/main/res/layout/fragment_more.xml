@@ -20,10 +20,7 @@
     android:orientation="vertical"
 
     android:background="#FBFBFB"
-    tools:backgroundTint="#EFECEC"
-
-    android:paddingBottom="27dp"
-    android:clipToPadding="false">
+    tools:backgroundTint="#EFECEC">
 
     <include
       android:id="@+id/toolbarCurve"
@@ -94,7 +91,10 @@
       android:layout_width="0dp"
       android:layout_height="0dp"
 
-      android:padding="8dp"
+      android:paddingTop="8dp"
+      android:paddingEnd="8dp"
+      android:paddingStart="8dp"
+      android:paddingBottom="35dp"
       android:clipToPadding="false"
 
       android:scrollbars="vertical"

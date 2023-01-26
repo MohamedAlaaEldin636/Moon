@@ -837,6 +837,10 @@
     android:id="@+id/dest_more"
     android:name="grand.app.moon.presentation.more.MoreFragment"
     android:label="@string/more"
-    tools:layout="@layout/fragment_more" />
+    tools:layout="@layout/fragment_more" >
+    <action
+      android:id="@+id/action_dest_more_to_nav_account"
+      app:destination="@id/nav_account" />
+  </fragment>
 
 </navigation>

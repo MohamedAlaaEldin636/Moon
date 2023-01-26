@@ -15,10 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="#FBFBFB"
-
-    android:paddingBottom="27dp"
-    android:clipToPadding="false">
+    android:background="#FBFBFB">
 
     <include
       android:id="@+id/toolbarCurve"
@@ -307,7 +304,10 @@
       android:layout_width="0dp"
       android:layout_height="0dp"
 
-      android:padding="8dp"
+      android:paddingTop="8dp"
+      android:paddingEnd="8dp"
+      android:paddingStart="8dp"
+      android:paddingBottom="35dp"
       android:clipToPadding="false"
 
       tools:visibility="invisible"
