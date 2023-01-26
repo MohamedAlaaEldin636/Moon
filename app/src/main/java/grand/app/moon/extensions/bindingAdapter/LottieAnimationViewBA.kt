@@ -9,3 +9,8 @@ fun LottieAnimationView.setAnimationFromUrlBA(link: String?) {
 		setAnimationFromUrl(link)
 	}
 }
+
+@BindingAdapter("lottieAnimationView_setAnimationFileNameBA")
+fun LottieAnimationView.setAnimationFileNameBA(name: String?) {
+	setAnimation(name)
+}

@@ -6,13 +6,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.airbnb.lottie.LottieDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentExploreInShopInfoBinding
-import grand.app.moon.extensions.RetryAbleFlow
-import grand.app.moon.extensions.minLengthZerosPrefix
-import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
-import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.databinding.ItemLottieAppWarningBinding
+import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.myStore.viewModel.ExploreInShopInfoViewModel
@@ -62,6 +61,15 @@ class ExploreInShopInfoFragment : BaseFragment<FragmentExploreInShopInfoBinding>
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 			viewModel.adapter.refresh()
 		}
+
+		_binding?.lottieFrameLayout?.removeAllViews()
+		_binding?.lottieFrameLayout?.addView(ItemLottieAppWarningBinding.inflate(layoutInflater).root)
+	}
+
+	override fun onDestroyView() {
+		_binding?.lottieFrameLayout?.removeAllViews()
+
+		super.onDestroyView()
 	}
 
 	private fun String.fromUiToApiDate(): String? {
