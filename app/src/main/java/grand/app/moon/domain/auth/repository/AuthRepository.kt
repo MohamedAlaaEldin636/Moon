@@ -11,6 +11,7 @@ interface AuthRepository {
   suspend fun logIn(request: LogInRequest): Resource<BaseResponse<User>>
   suspend fun socialRegister(request: SocialRequest): Resource<BaseResponse<User>>
   suspend fun logout(): Resource<BaseResponse<*>>
+  suspend fun logoutSuspend(): Resource<BaseResponse<Any?>>
   suspend fun updateProfile(name: String, user: User): Resource<BaseResponse<User?>>
   suspend fun updateProfile(request: UpdateProfileRequest): Resource<BaseResponse<User>>
   suspend fun verifyAccount(request: VerifyAccountRequest): Resource<BaseResponse<User>>

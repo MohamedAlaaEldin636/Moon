@@ -1,14 +1,9 @@
 package grand.app.moon.presentation.more
 
 import android.app.Application
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.packages.RepositoryPackages
@@ -16,8 +11,11 @@ import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemStoreFullDataBinding
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.extensions.*
-import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.base.extensions.logout
+import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
+import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.myStore.model.ItemStoreInfo
 import javax.inject.Inject
 
@@ -28,10 +26,8 @@ class MyAccount2ViewModel @Inject constructor(
 	val repoShop: RepoShop,
 	val repoPackages: RepositoryPackages,
 	val accountRepository: AccountRepository,
+	val logInUseCase: LogInUseCase,
 ) : AndroidViewModel(application) {
-
-	private val countryIso = accountRepository.getKeyFromLocal(Constants.COUNTRY_ISO)
-	private val lang = accountRepository.getKeyFromLocal(Constants.LANGUAGE)
 
 	val user = userLocalUseCase()
 
@@ -40,65 +36,70 @@ class MyAccount2ViewModel @Inject constructor(
 		listOf(
 			ItemStoreInfo.complete(R.drawable.ic_profile, R.string.my_personal_data),
 			ItemStoreInfo.complete(R.drawable.ic_view, R.string.last_ads_seen),
+			ItemStoreInfo.complete(R.drawable.stores_followed, R.string.stores_had_been_followed),
+			ItemStoreInfo.complete(R.drawable.ic_last_search, R.string.last_search),
+			ItemStoreInfo.complete(R.drawable.ic_favourite_user, R.string.favourite),
+			ItemStoreInfo.complete(R.drawable.ic_stores_block, R.string.stores_had_been_blocked),
+			ItemStoreInfo.complete(R.drawable.ic_login, R.string.logout, false),
+			ItemStoreInfo.complete(R.drawable.ic_del_acc_permenently, R.string.del_account_permenantly, false),
 		),
 		onItemClick = { _, binding ->
+			val fragment = binding.root.findFragmentOrNull<MyAccount2Fragment>() ?: return@RVItemCommonListUsage
+
 			val navController = binding.root.findNavController()
 
 			when (binding.constraintLayout.tag as? Int) {
 				R.drawable.ic_profile -> {
 					navController.navigateDeepLinkWithOptions(
-						"fragment-dest",
-						"" // todo ...
+						"profile",
+						"grand.app.moon.profile"
 					)
-					TODO()
 				}
-				R.drawable.ic_store_data_4 -> {
-					if (user.isStore.orFalse()) {
-						navController.navigateDeepLinkWithOptions(
-							"fragment-dest",
-							"grand.app.moon.dest_store.full.data"
-						)
-					}else {
-						navController.navigateDeepLinkWithOptions(
-							"fragment-dest",
-							"grand.app.moon.dest.become.shop.packages"
-						)
+				R.drawable.ic_view -> {
+					navController.navigateDeepLinkWithOptions(
+						"profile",
+						"grand.app.moon.dest.adsListFragment",
+						paths = arrayOf(2.toString(), app.getString(R.string.last_ads_seen), true.toString())
+					)
+				}
+				R.drawable.stores_followed -> {
+					navController.navigateDeepLinkWithOptions(
+						"store",
+						"grand.app.moon.store.followed",
+					)
+				}
+				R.drawable.ic_last_search -> {
+					navController.navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.adsListFragment",
+						paths = arrayOf(5.toString(), app.getString(R.string.last_search), true.toString())
+					)
+				}
+				R.drawable.ic_favourite_user -> {
+					navController.navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.adsListFragment",
+						paths = arrayOf(1.toString(), app.getString(R.string.favourite), true.toString())
+					)
+				}
+				R.drawable.ic_stores_block -> {
+					navController.navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.storeBlockListFragment",
+					)
+				}
+				R.drawable.ic_login -> {
+					fragment.handleRetryAbleActionCancellableNullable(
+						action = {
+							logInUseCase.logoutSuspend()
+						}
+					) {
+						fragment.logout()
+						fragment.openActivityAndClearStack(HomeActivity::class.java)
 					}
 				}
-				R.drawable.ic_about_moon_settings -> {
-					navController.navigateDeepLinkWithOptions(
-						"fragment-dest",
-						"grand.app.moon.dest.webFragment",
-						paths = arrayOf(
-							binding.textTextView.text.toStringOrEmpty(),
-							"https://${countryIso}.souqmoon.com/${lang}/mobile/about"
-						)
-					)
-				}
-				R.drawable.ic_chat_with_app_managers -> {
-					General.TODO("will be programmed after comet chat starts to work properly so later isa.")
-				}
-				R.drawable.ic_contact_settings -> {
-					navController.navigateDeepLinkWithOptions(
-						"fragment-dest",
-						"grand.app.moon.dest.contactUsFragment"
-					)
-				}
-				R.drawable.ic_complains_and_suggestions -> {
-					General.TODO("will be programmed in the next sprint isa.")
-				}
-				R.drawable.ic_terms_settings -> {
-					navController.navigateDeepLinkWithOptions(
-						"fragment-dest",
-						"grand.app.moon.dest.webFragment",
-						paths = arrayOf(
-							binding.textTextView.text.toStringOrEmpty(),
-							"https://${countryIso}.souqmoon.com/${lang}/mobile/terms"
-						)
-					)
-				}
-				R.drawable.ic_help_settings -> {
-					TODO()
+				R.drawable.ic_del_acc_permenently -> {
+					General.TODO("Wasn't programmed before.")
 				}
 			}
 		}
@@ -110,6 +111,8 @@ class MyAccount2ViewModel @Inject constructor(
 		binding.notCompleteImageView.isVisible = item.notComplete
 
 		binding.textTextView.text = binding.root.context.getString(item.nameStringRes)
+
+		binding.arrowImageView.isVisible = item.showArrow
 	}
 
 }

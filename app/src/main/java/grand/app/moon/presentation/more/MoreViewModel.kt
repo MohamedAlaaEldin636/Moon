@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.redirectIfNotLoggedIn
 import grand.app.moon.data.packages.RepositoryPackages
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemStoreFullDataBinding
@@ -69,26 +70,26 @@ class MoreViewModel @Inject constructor(
 
 			when (binding.constraintLayout.tag as? Int) {
 				R.drawable.ic_profile -> {
-					navController.navigateSafely(
-						MoreFragmentDirections.actionDestMoreToNavAccount()
-					)
-					/*navController.navigateDeepLinkWithOptions(
-						"fragment-dest",
-						"" // todo ...
-					)
-					TODO()*/
+					if (binding.root.context.redirectIfNotLoggedIn().not()) {
+						navController.navigateDeepLinkWithOptions(
+							"fragment-dest",
+							"grand.app.moon.dest.my.account.two"
+						)
+					}
 				}
 				R.drawable.ic_store_data_4 -> {
-					if (user.isStore.orFalse()) {
-						navController.navigateDeepLinkWithOptions(
-							"fragment-dest",
-							"grand.app.moon.dest_store.full.data"
-						)
-					}else {
-						navController.navigateDeepLinkWithOptions(
-							"fragment-dest",
-							"grand.app.moon.dest.become.shop.packages"
-						)
+					if (binding.root.context.redirectIfNotLoggedIn().not()) {
+						if (user.isStore.orFalse()) {
+							navController.navigateDeepLinkWithOptions(
+								"fragment-dest",
+								"grand.app.moon.dest_store.full.data"
+							)
+						}else {
+							navController.navigateDeepLinkWithOptions(
+								"fragment-dest",
+								"grand.app.moon.dest.become.shop.packages"
+							)
+						}
 					}
 				}
 				R.drawable.ic_about_moon_settings -> {
@@ -140,6 +141,12 @@ class MoreViewModel @Inject constructor(
 
 	fun onBecomeShopOrAlreadySubscribedClick(view: View) {
 		val fragment = view.findFragmentOrNull<MoreFragment>() ?: return
+
+		val context = fragment.context ?: return
+
+		if (context.redirectIfNotLoggedIn()) {
+			return
+		}
 
 		val navController = fragment.findNavController()
 

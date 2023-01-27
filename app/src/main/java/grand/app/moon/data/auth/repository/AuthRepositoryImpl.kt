@@ -22,6 +22,9 @@ class AuthRepositoryImpl @Inject constructor(
   override suspend fun logout(): Resource<BaseResponse<*>> =
     remoteDataSource.logout()
 
+  override suspend fun logoutSuspend(): Resource<BaseResponse<Any?>> =
+    remoteDataSource.logoutSuspend()
+
   override suspend fun verifyAccount(request: VerifyAccountRequest): Resource<BaseResponse<User>> =
     remoteDataSource.verifyAccount(request)
 

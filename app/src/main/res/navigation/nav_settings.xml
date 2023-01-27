@@ -140,6 +140,10 @@
       android:name="is_profile"
       android:defaultValue="true"
       app:argType="boolean" />
+    <deepLink
+      android:id="@+id/deep_link_dest_adsListFragment"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.adsListFragment/{type}/{tabBarText}/{is_profile}" />
   </fragment>
   <fragment
     android:id="@+id/profileFragment"
@@ -170,7 +174,12 @@
   <fragment
     android:id="@+id/storeBlockListFragment"
     android:name="grand.app.moon.presentation.store.views.StoreBlockListFragment"
-    android:label="@string/stores_had_been_blocked" />
+    android:label="@string/stores_had_been_blocked">
+    <deepLink
+      android:id="@+id/deep_link_storeBlockListFragment"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.storeBlockListFragment" />
+  </fragment>
   <fragment
     android:id="@+id/cropFragment"
     android:name="grand.app.moon.presentation.auth.profile.CropFragment"

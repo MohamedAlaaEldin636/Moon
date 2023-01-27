@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.databinding.FragmentMoreBinding
 import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
 import grand.app.moon.extensions.orFalse
@@ -20,7 +21,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		if (viewModel.user.isStore.orFalse()) {
+		if (requireContext().isLogin() && viewModel.user.isStore.orFalse()) {
 			handleRetryAbleActionOrGoBack(
 				action = {
 					viewModel.repoPackages.getMyPackageOfBeingShop()

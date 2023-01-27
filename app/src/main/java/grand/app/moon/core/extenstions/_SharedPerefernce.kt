@@ -17,6 +17,15 @@ import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.Constants
 
+/**
+ * @return `true` if not logged in and made redirection isa.
+ */
+fun Context.redirectIfNotLoggedIn(): Boolean {
+	return if (isLogin()) false else {
+		startActivity(Intent(this, AuthActivity::class.java))
+		true
+	}
+}
 
 fun Context.isLogin(): Boolean {
   val appPreferences: SharedPreferences =

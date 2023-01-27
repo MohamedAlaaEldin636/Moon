@@ -86,4 +86,6 @@ class LogInUseCase @Inject constructor(
     emit(result)
   }.flowOn(Dispatchers.IO)
 
+	suspend fun logoutSuspend(): Resource<BaseResponse<Any?>> = authRepository.logoutSuspend()
+
 }

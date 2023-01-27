@@ -21,6 +21,9 @@ interface AuthServices {
   @POST("v1/auth/logout")
   suspend fun logout(): BaseResponse<*>
 
+  @POST("v1/auth/logout")
+  suspend fun logoutSuspend(): BaseResponse<Any?>
+
   @POST("v1/auth/verify_code")
   suspend fun verifyAccount(@Body request: VerifyAccountRequest): BaseResponse<User>
 
