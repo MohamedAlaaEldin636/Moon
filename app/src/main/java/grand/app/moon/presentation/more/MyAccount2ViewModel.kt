@@ -57,7 +57,7 @@ class MyAccount2ViewModel @Inject constructor(
 				}
 				R.drawable.ic_view -> {
 					navController.navigateDeepLinkWithOptions(
-						"profile",
+						"fragment-dest",
 						"grand.app.moon.dest.adsListFragment",
 						paths = arrayOf(2.toString(), app.getString(R.string.last_ads_seen), true.toString())
 					)
