@@ -845,7 +845,7 @@
   <fragment
     android:id="@+id/dest_my_account_2"
     android:name="grand.app.moon.presentation.more.MyAccount2Fragment"
-    android:label="fragment_my_account_2"
+    android:label="@string/my_account"
     tools:layout="@layout/fragment_my_account_2">
     <deepLink
       android:id="@+id/deep_link_dest_my_account_2"
