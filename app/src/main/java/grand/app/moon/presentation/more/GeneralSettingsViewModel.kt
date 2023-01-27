@@ -46,7 +46,7 @@ class GeneralSettingsViewModel @Inject constructor(
 			ItemStoreInfo.complete(R.drawable.ic_rate_app, R.string.rate_app),
 		),
 		onItemClick = { _, binding ->
-			val fragment = binding.root.findFragmentOrNull<MyAccount2Fragment>() ?: return@RVItemCommonListUsage
+			val fragment = binding.root.findFragmentOrNull<GeneralSettingsFragment>() ?: return@RVItemCommonListUsage
 
 			val context = fragment.context ?: return@RVItemCommonListUsage
 
