@@ -2,7 +2,6 @@ package grand.app.moon.presentation.myStore.viewModel
 
 import androidx.core.text.set
 import android.app.Application
-import android.content.Context
 import android.graphics.Color
 import android.text.style.ForegroundColorSpan
 import android.view.View
@@ -15,48 +14,50 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
-import grand.app.moon.core.extenstions.dpToPx
+import grand.app.moon.core.extenstions.showPopup
 import grand.app.moon.data.shop.RepoShop
-import grand.app.moon.databinding.ItemExploreInShopInfoBinding
+import grand.app.moon.databinding.ItemStoryInShopInfoBinding
 import grand.app.moon.domain.shop.ItemExploreInShopInfo
+import grand.app.moon.domain.shop.ItemStoryInShopInfo
+import grand.app.moon.domain.shop.StoryType
 import grand.app.moon.extensions.*
-import grand.app.moon.extensions.bindingAdapter.setupWithGlideWithDefaultsPlaceholderAndError
-import grand.app.moon.extensions.bindingAdapter.setupWithGlideWithDefaultsPlaceholderAndErrorListImagesOrVideo
-import grand.app.moon.extensions.bindingAdapter.setupWithGlideWithDefaultsPlaceholderAndErrorVideo
 import grand.app.moon.presentation.base.extensions.showMessage
-import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.myStore.ExploreInShopInfoFragment
-import grand.app.moon.presentation.myStore.StoreClientsReviewsFragment
+import grand.app.moon.presentation.myStore.StoryInShopInfoFragment
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 @HiltViewModel
-class ExploreInShopInfoViewModel @Inject constructor(
+class StoryInShopInfoViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop,
 ) : AndroidViewModel(application) {
+
+	val type = MutableLiveData<StoryType?>()
+
+	val typeValue = type.map { type ->
+		type?.let { app.getString(it.stringRes) }.orEmpty()
+	}
 
 	/** Day / Month / Year -> 3 / 11 / 2023 */
 	val dateFrom = MutableLiveData("")
 
 	val dateTo = MutableLiveData("")
 
-	private val remainingExploreCount = MutableLiveData<Int?>()
-	val textRemainingExploreCount = remainingExploreCount.map {
-		"${app.getString(R.string.rem_explore_count)} ( ${it.toStringOrEmpty()} )"
+	private val remainingCount = MutableLiveData<Int?>()
+	val textRemainingCount = remainingCount.map {
+		"${app.getString(R.string.rem_story_count)} ( ${it.toStringOrEmpty()} )"
 	}
 
-	val adapter = RVPagingItemCommonListUsage<ItemExploreInShopInfoBinding, /*Pair<Int?, */ItemExploreInShopInfo/*>*/>(
+	val adapter = RVPagingItemCommonListUsage<ItemStoryInShopInfoBinding, ItemStoryInShopInfo>(
 		R.layout.item_explore_in_shop_info,
 		additionalListenersSetups = { adapter, binding ->
 			binding.imageView.setOnClickListener { view ->
 				val item = (binding.constraintLayout.tag as? String)
 					.fromJsonInlinedOrNull<ItemExploreInShopInfo>() ?: return@setOnClickListener
 
-				view.findFragmentOrNull<ExploreInShopInfoFragment>()?.findNavController()?.navigateDeepLinkWithoutOptions(
+				view.findFragmentOrNull<StoryInShopInfoFragment>()?.findNavController()?.navigateDeepLinkWithoutOptions(
 					"fragment-dest",
 					"grand.app.moon.dest.show.images.or.video",
 					paths = arrayOf(item.isVideo.not().toString(), item.files.toJsonInlinedOrNull().orEmpty())
@@ -76,7 +77,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 			}
 
 			binding.delView.setOnClickListener { view ->
-				val fragment = view.findFragmentOrNull<ExploreInShopInfoFragment>() ?: return@setOnClickListener
+				val fragment = view.findFragmentOrNull<StoryInShopInfoFragment>() ?: return@setOnClickListener
 
 				val context = fragment.context ?: return@setOnClickListener
 
@@ -85,11 +86,11 @@ class ExploreInShopInfoViewModel @Inject constructor(
 
 				fragment.showCustomYesNoWarningDialog(
 					context.getString(R.string.confirm_deletion),
-					context.getString(R.string.del_explore_desc)
+					context.getString(R.string.del_story_desc)
 				) { dialog ->
 					fragment.handleRetryAbleActionCancellableNullable(
 						action = {
-							repoShop.deleteExplore(item.id.orZero())
+							repoShop.deleteStory(item.id.orZero())
 						}
 					) {
 						dialog.dismiss()
@@ -101,20 +102,18 @@ class ExploreInShopInfoViewModel @Inject constructor(
 				}
 			}
 		}
-	) { binding, _, item ->
-		if (remainingExploreCount.value != item.exploresRestCount) {
-			remainingExploreCount.value = item.exploresRestCount
+	) { binding, _, story ->
+		if (remainingCount.value != story.storiesRestCount) {
+			remainingCount.value = story.storiesRestCount
 		}
 
 		val context = binding.root.context ?: return@RVPagingItemCommonListUsage
 
-		val explore = item//.second
+		binding.constraintLayout.tag = story.toJsonInlinedOrNull()
 
-		binding.constraintLayout.tag = explore.toJsonInlinedOrNull()
-
-		if (explore.isVideo) {
+		if (story.isVideo) {
 			Glide.with(binding.imageView)
-				.load(explore.files?.firstOrNull())
+				.load(story.file)
 				//.override(imgWidth, imgHeight)
 				.apply(RequestOptions().frame(1)/*.centerCrop()*/)
 				.placeholder(R.drawable.ic_baseline_refresh_24)
@@ -123,7 +122,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 			//binding.imageView.setupWithGlideWithDefaultsPlaceholderAndErrorVideo(explore.files?.firstOrNull())
 		}else {
 			Glide.with(binding.imageView)
-				.load(explore.files?.firstOrNull())
+				.load(story.file)
 				//.override(imgWidth, imgHeight)
 				.placeholder(R.drawable.ic_baseline_refresh_24)
 				.error(R.drawable.ic_baseline_broken_image_24)
@@ -132,25 +131,40 @@ class ExploreInShopInfoViewModel @Inject constructor(
 		}
 
 		binding.likeValueTextView.text = getSpannedString(
-			explore.likesCount.toStringOrEmpty(),
+			story.likesCount.toStringOrEmpty(),
 			context.getString(R.string.like)
 		)
 
 		binding.commentsValueTextView.text = getSpannedString(
-			explore.commentsCount.toStringOrEmpty(),
+			story.commentsCount.toStringOrEmpty(),
 			context.getString(R.string.view_921)
 		)
 
 		binding.sharesValueTextView.text = getSpannedString(
-			explore.sharesCount.toStringOrEmpty(),
+			story.sharesCount.toStringOrEmpty(),
 			context.getString(R.string.share)
 		)
 
-		binding.creationDateValueTextView.text = explore.createdAt.orEmpty()
+		binding.creationDateValueTextView.text = story.createdAtDate.orEmpty()
+
+		binding.destructionDateValueTextView.text = "${story.hoursRemaining.orZero()} ${app.getString(R.string.hours)}"
+	}
+
+	fun pickStoryType(view: View) {
+		view.showPopup(
+			StoryType.values().map {
+				app.getString(it.stringRes)
+			},
+			listener = { menuItem ->
+				type.value = StoryType.values().firstOrNull {
+					app.getString(it.stringRes) == menuItem.title.toStringOrEmpty()
+				}
+			}
+		)
 	}
 
 	fun pickDate(view: View, isFromNotTo: Boolean) {
-		val fragment = view.findFragmentOrNull<ExploreInShopInfoFragment>() ?: return
+		val fragment = view.findFragmentOrNull<StoryInShopInfoFragment>() ?: return
 
 		val localDateTimeConstraint = when {
 			isFromNotTo && dateTo.value.isNullOrEmpty().not() -> {
@@ -214,14 +228,15 @@ class ExploreInShopInfoViewModel @Inject constructor(
 	}
 
 	fun search(view: View) {
-		view.findFragmentOrNull<ExploreInShopInfoFragment>()?.retryAbleFlow?.retry()
+		view.findFragmentOrNull<StoryInShopInfoFragment>()?.retryAbleFlow?.retry()
 	}
 
-	fun goToAddExplore(view: View) {
-		view.findFragmentOrNull<ExploreInShopInfoFragment>()?.findNavController()?.navigateDeepLinkWithOptions(
+	fun goToAddStory(view: View) {
+		view.findFragmentOrNull<StoryInShopInfoFragment>()?.findNavController()?.navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.add.explore"
 		)
+		TODO()
 	}
 
 	private fun getSpannedString(value1: String, value2: String) = buildSpannedString {

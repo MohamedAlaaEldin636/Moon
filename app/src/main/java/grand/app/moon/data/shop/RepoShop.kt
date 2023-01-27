@@ -2,6 +2,7 @@ package grand.app.moon.data.shop
 
 import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
+import grand.app.moon.domain.shop.StoryType
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.toFailureStatus
@@ -107,6 +108,14 @@ class RepoShop @Inject constructor(
 		}*/
 	}
 
+	fun getStories(
+		from: String?,
+		to: String?,
+		storyType: StoryType?,
+	) = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getStories(from, to, storyType, page)
+	}
+
 	suspend fun getClientsReviewsSuspend(
 		query: String?,
 		from: String?,
@@ -117,5 +126,7 @@ class RepoShop @Inject constructor(
 	suspend fun addExplore(files: List<MultipartBody.Part>) = remoteDataSource.addExplore(files)
 
 	suspend fun deleteExplore(id: Int) = remoteDataSource.deleteExplore(id)
+
+	suspend fun deleteStory(id: Int) = remoteDataSource.deleteStory(id)
 
 }

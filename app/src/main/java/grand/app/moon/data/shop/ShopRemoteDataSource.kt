@@ -2,7 +2,11 @@ package grand.app.moon.data.shop
 
 import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.shop.ItemExploreInShopInfo
+import grand.app.moon.domain.shop.ItemStoryInShopInfo
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
+import grand.app.moon.domain.shop.StoryType
+import grand.app.moon.extensions.orZero
+import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.paging.MABasePaging
 import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.helpers.paging.MAResult
@@ -113,8 +117,31 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		}
 	}
 
+	suspend fun getStories(
+		from: String?,
+		to: String?,
+		storyType: StoryType?,
+		page: Int
+	): MAResult.Immediate<MABaseResponse<MABasePaging<ItemStoryInShopInfo>>> = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+
+		if (!from.isNullOrEmpty()) map["from"] = from
+		if (!to.isNullOrEmpty()) map["to"] = to
+		if (storyType != null) map["type"] = storyType.apiValue.toStringOrEmpty()
+
+		apiService.getStories(page, map).map {
+			it?.stories?.map { item ->
+				item.copy(
+					storiesRestCount = it.storiesRestCount
+				)
+			}
+		}
+	}
+
 	suspend fun addExplore(files: List<MultipartBody.Part>) = safeApiCall { apiService.addExplore(files) }
 
 	suspend fun deleteExplore(id: Int) = safeApiCall { apiService.deleteExplore(id) }
+
+	suspend fun deleteStory(id: Int) = safeApiCall { apiService.deleteStory(id) }
 
 }

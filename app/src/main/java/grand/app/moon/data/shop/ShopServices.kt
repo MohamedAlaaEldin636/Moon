@@ -101,4 +101,22 @@ interface ShopServices {
 		@Path("id") id: Int,
 	): BaseResponse<Any?>
 
+	/*@Multipart
+	@POST("v1/profile/stories")
+	suspend fun addStory(
+		@Part files: List<MultipartBody.Part>,
+		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString(),
+	): BaseResponse<Any?>*/
+
+	@GET("v1/profile/stories")
+	suspend fun getStories(
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>,
+	): MABaseResponse<ResponseStoriesInShopInfo>
+
+	@DELETE("v1/profile/stories/{id}")
+	suspend fun deleteStory(
+		@Path("id") id: Int,
+	): BaseResponse<Any?>
+
 }

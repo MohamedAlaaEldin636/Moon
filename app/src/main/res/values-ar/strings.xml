@@ -369,6 +369,7 @@
   <string name="explore_add_label_desc">يمكنك ألان إرفاق اكسبلور لمتجرك صور متعددة او فيديوهات</string>
   <string name="add_explore_9">إضافة اكسبلور</string>
   <string name="rem_explore_count">عدد اكسبلور المتبقي</string>
+  <string name="rem_story_count">عدد الحالات المتبقية</string>
     <string name="file">الملف</string>
   <string name="shares">المشاركات</string>
   <string name="creation_date">تاريخ الإنشاء</string>
@@ -382,4 +383,12 @@
   <string name="my_personal_data">بياناتي الشخصية</string>
   <string name="del_account_permenantly">حذف الحساب نهائي</string>
   <string name="night_mode">الوضع الليلي</string>
+  <string name="story_type">نوع الحالة</string>
+  <string name="add_story_9">إضافة ستوري</string>
+  <string name="highlighted_story">مثبتة</string>
+  <string name="non_highlighted_story">غير مثبتة</string>
+  <string name="destruction_date">تاريخ الانتهاء</string>
+  <string name="hours">ساعات</string>
+  <string name="del_explore_desc">هل تريد تأكيد حذف الاستوري من حسابك ؟</string>
+  <string name="del_story_desc">هل تريد تأكيد حذف الاستوري من حسابك ؟</string>
 </resources>
