@@ -5,26 +5,20 @@ import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.maproductions.mohamedalaa.shared.core.extensions.actOnGetIfNotInitialValueOrGetLiveData
+import grand.app.moon.core.extenstions.actOnGetIfNotInitialValueOrGetLiveData
 import grand.app.moon.presentation.reviews.viewModels.ReviewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
-import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.FragmentReviewsBinding
-import grand.app.moon.domain.home.models.review.Reviews
 import grand.app.moon.domain.home.models.review.ReviewsPaginateData
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.base.extensions.backToPreviousScreen
 import grand.app.moon.presentation.base.extensions.handleApiError
 import grand.app.moon.presentation.base.extensions.hideKeyboard
 import grand.app.moon.presentation.base.utils.Constants
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ReviewsFragment : BaseFragment<FragmentReviewsBinding>() {

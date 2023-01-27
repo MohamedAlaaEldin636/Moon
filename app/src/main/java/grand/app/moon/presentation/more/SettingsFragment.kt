@@ -4,18 +4,16 @@ import android.content.Intent
 import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.maproductions.mohamedalaa.shared.core.extensions.rateApp
+import grand.app.moon.core.extenstions.rateApp
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentSettingsBinding
 import grand.app.moon.extensions.General
 import grand.app.moon.extensions.navigateDeepLinkWithOptions
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.HomeActivity
-import grand.app.moon.presentation.intro.IntroActivity
 import java.util.ArrayList
 
 @AndroidEntryPoint

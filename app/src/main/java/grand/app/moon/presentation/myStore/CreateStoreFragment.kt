@@ -11,7 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.maproductions.mohamedalaa.shared.core.extensions.actOnGetIfNotInitialValueOrGetLiveData
+import grand.app.moon.core.extenstions.actOnGetIfNotInitialValueOrGetLiveData
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentCreateStoreBinding

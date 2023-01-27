@@ -10,7 +10,6 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,13 +17,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.facebook.FacebookSdk.getApplicationContext
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.tabs.TabLayout
-import com.maproductions.mohamedalaa.shared.core.extensions.actOnGetIfNotInitialValueOrGetLiveData
+import grand.app.moon.core.extenstions.actOnGetIfNotInitialValueOrGetLiveData
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
@@ -36,14 +34,9 @@ import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.home.models.Property
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.explore.ExploreFragmentDirections
 import grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapReadyCallback {

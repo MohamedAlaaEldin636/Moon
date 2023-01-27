@@ -1,6 +1,5 @@
 package grand.app.moon.presentation.store.views
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,29 +8,19 @@ import android.widget.TextView
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.maproductions.mohamedalaa.shared.core.extensions.actOnGetIfNotInitialValueOrGetLiveData
+import grand.app.moon.core.extenstions.actOnGetIfNotInitialValueOrGetLiveData
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.NavHomeDirections
-import grand.app.moon.appMoonHelper.ListHelper
-import grand.app.moon.databinding.FragmentExploreListBinding
-import grand.app.moon.databinding.FragmentStoreFollowedListBinding
 import grand.app.moon.databinding.FragmentStoreListBinding
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
-import grand.app.moon.domain.store.entity.StoreFilterRequest
-import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.explore.viewmodel.ExploreListViewModel
-import grand.app.moon.presentation.store.viewModels.StoreFollowedListViewModel
 import grand.app.moon.presentation.store.viewModels.StoreListViewModel
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {

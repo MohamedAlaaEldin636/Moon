@@ -391,4 +391,5 @@
   <string name="general_settings">الإعددادت العامة</string>
   <string name="my_personal_data">بياناتي الشخصية</string>
   <string name="del_account_permenantly">حذف الحساب نهائي</string>
+  <string name="night_mode">الوضع الليلي</string>
 </resources>

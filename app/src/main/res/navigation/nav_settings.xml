@@ -97,6 +97,10 @@
     <argument
       android:name="type"
       app:argType="string" />
+    <deepLink
+      android:id="@+id/deep_link_languageFragment2"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.languageFragment2/{type}" />
   </fragment>
   <fragment
     android:id="@+id/countriesFragment3"
@@ -105,6 +109,10 @@
     <argument
       android:name="from"
       app:argType="string" />
+    <deepLink
+      android:id="@+id/deep_link_countriesFragment3"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.countriesFragment3/{from}" />
   </fragment>
   <fragment
     android:id="@+id/webFragment"
@@ -124,7 +132,12 @@
   <fragment
     android:id="@+id/socialFragment"
     android:name="grand.app.moon.presentation.more.SocialFragment"
-    android:label="@string/social_media" />
+    android:label="@string/social_media">
+    <deepLink
+      android:id="@+id/deep_link_socialFragment"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.socialFragment" />
+  </fragment>
 
   <fragment
     android:id="@+id/adsListFragment"
