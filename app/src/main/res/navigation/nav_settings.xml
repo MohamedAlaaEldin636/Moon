@@ -378,5 +378,15 @@
       android:name="jsonListOfUrls"
       app:argType="string" />
   </dialog>
+  <fragment
+    android:id="@+id/generalSettingsFragment"
+    android:name="grand.app.moon.presentation.more.GeneralSettingsFragment"
+    android:label="@string/general_settings"
+    tools:layout="@layout/fragment_general_settings">
+    <deepLink
+      android:id="@+id/deep_link_dest_generalSettingsFragment"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.generalSettingsFragment" />
+  </fragment>
 
 </navigation>

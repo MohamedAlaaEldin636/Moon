@@ -125,7 +125,10 @@ class MoreViewModel @Inject constructor(
 					)
 				}
 				R.drawable.ic_help_settings -> {
-					TODO()
+					navController.navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.generalSettingsFragment",
+					)
 				}
 			}
 		}
