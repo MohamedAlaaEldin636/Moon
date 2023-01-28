@@ -30,6 +30,8 @@ class AdvClientsReviewsFragment : BaseFragment<FragmentAdvClientsReviewsBinding>
 			false,
 			1
 		)
+
+		//
 	}
 
 }

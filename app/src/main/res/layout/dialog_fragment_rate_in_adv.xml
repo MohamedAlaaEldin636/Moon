@@ -11,11 +11,9 @@
             type="grand.app.moon.presentation.myAds.viewModel.RateInAdvViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        tools:ignore="ContentDescription"
 
         android:orientation="vertical"
 
@@ -24,14 +22,25 @@
 
         tools:layout_gravity="bottom"
 
+      android:gravity="center_horizontal"
+
         android:paddingTop="28dp"
         android:paddingBottom="29dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:clipToPadding="false">
 
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="@string/rate_ad"
+
+        style="@style/TextTajawalBold14"
+        android:textSize="16sp"/>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </layout>

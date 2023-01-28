@@ -415,4 +415,5 @@
   <string name="no_store_sub_categories_found">لا يوجد اقسام فرعية بمتجرك</string>
   <string name="your_store_sub_category">القسم الفرعي بمتجرك</string>
   <string name="pick_main_category_firstly_2">Pick Main Category firstly</string>
+    <string name="rate_ad">تقيم الاعلان</string>
 </resources>
