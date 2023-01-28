@@ -1,9 +1,6 @@
 package grand.app.moon.data.shop
 
-import grand.app.moon.domain.shop.IdAndName
-import grand.app.moon.domain.shop.ResponseStoreSocialMedia
-import grand.app.moon.domain.shop.StoryLink
-import grand.app.moon.domain.shop.StoryType
+import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.toFailureStatus
@@ -64,6 +61,10 @@ class RepoShop @Inject constructor(
 				200
 			)
 		)
+	}
+
+	suspend fun getMySubCategoriesInAllPagesOfPagination(parentId: Int): Resource<BaseResponse<List<IdAndName>?>> = BasePaging.getAllPages {
+		remoteDataSource.getMySubCategoriesWithParentId(parentId, it)
 	}
 
 	suspend fun getWorkingHours() = remoteDataSource.getWorkingHours()

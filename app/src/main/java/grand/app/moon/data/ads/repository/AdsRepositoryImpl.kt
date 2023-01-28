@@ -90,13 +90,16 @@ class AdsRepositoryImpl @Inject constructor(
 		latitude: String,
 		longitude: String,
 		address: String,
-		city_id: Int,
+		city_id: Int?,
 		price: Int,
 		is_negotiable: Int,
 		brand_id: Int?,
 		description: String,
 		propertiesIds: List<Pair<Int, String?>>,
-	) = remoteDataSource.addAdvertisement(category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price, is_negotiable, brand_id, description, propertiesIds)
+		price_before: Int?,
+		store_category_id: Int?,
+		store_sub_category_id: Int?,
+	) = remoteDataSource.addAdvertisement(category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price, is_negotiable, brand_id, description, propertiesIds, price_before, store_category_id, store_sub_category_id)
 
 	override suspend fun updateAdvertisement(
 		advId: Int,
@@ -107,13 +110,16 @@ class AdsRepositoryImpl @Inject constructor(
 		latitude: String,
 		longitude: String,
 		address: String,
-		city_id: Int,
+		city_id: Int?,
 		price: Int,
 		is_negotiable: Int,
 		brand_id: Int?,
 		description: String,
 		propertiesIds: List<Pair<Int, String?>>,
-	) = remoteDataSource.updateAdvertisement(advId, category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price, is_negotiable, brand_id, description, propertiesIds)
+		price_before: Int?,
+		store_category_id: Int?,
+		store_sub_category_id: Int?,
+	) = remoteDataSource.updateAdvertisement(advId, category_id, sub_category_id, images, title, latitude, longitude, address, city_id, price, is_negotiable, brand_id, description, propertiesIds, price_before, store_category_id, store_sub_category_id)
 
 	override suspend fun updateAdvertisementToBePremium(advId: Int) = remoteDataSource.updateAdvertisementToBePremium(advId)
 

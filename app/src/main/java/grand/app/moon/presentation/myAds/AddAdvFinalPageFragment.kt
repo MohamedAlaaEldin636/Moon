@@ -239,7 +239,45 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 									}else {
 										viewModel.showCitiesPopupMenu.value = true
 									}
-								}
+								},
+								showOrGetCategories = {
+									if (viewModel.storeCategories.isEmpty()) {
+										handleRetryAbleActionCancellable(
+											action = { viewModel.repoShop.getMyCategoriesInAllPagesOfPagination() }
+										) { list ->
+											viewModel.storeCategories = list
+
+											if (list.isEmpty()) {
+												return@handleRetryAbleActionCancellable showMessage(getString(R.string.no_store_categories_found))
+											}
+
+											viewModel.showCategoriesPopupMenu.value = true
+										}
+									}else {
+										viewModel.showCategoriesPopupMenu.value = true
+									}
+								},
+								showOrGetSubCategories = {
+									if (viewModel.storeSubCategories.isEmpty()) {
+										handleRetryAbleActionCancellable(
+											action = {
+												viewModel.repoShop.getMySubCategoriesInAllPagesOfPagination(
+													viewModel.selectedCategory.value?.id.orZero()
+												)
+											}
+										) { list ->
+											viewModel.storeSubCategories = list
+
+											if (list.isEmpty()) {
+												return@handleRetryAbleActionCancellable showMessage(getString(R.string.no_store_sub_categories_found))
+											}
+
+											viewModel.showSubCategoriesPopupMenu.value = true
+										}
+									}else {
+										viewModel.showSubCategoriesPopupMenu.value = true
+									}
+								},
 							)
 						}
 					}

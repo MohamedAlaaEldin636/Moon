@@ -10,12 +10,14 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.createMultipartBodyPart
+import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.ItemProperty
 import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
+import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.extensions.*
@@ -41,7 +43,8 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	val args: AddAdvFinalPageFragmentArgs,
 	useCaseUser: UserLocalUseCase,
 	val countriesUseCase: CountriesUseCase,
-	val adsUseCase: AdsUseCase
+	val adsUseCase: AdsUseCase,
+	val repoShop: RepoShop,
 ) : AndroidViewModel(application) {
 
 	val response = args.jsonResponseMyAdvDetails.fromJsonInlinedOrNull<ResponseMyAdvDetails>()
@@ -60,18 +63,22 @@ class AddAdvFinalPageViewModel @Inject constructor(
 
 	val negotiable = MutableLiveData(response?.isNegotiable.orFalse())
 
-	// todo and subcategory only if is store.
-	val storeCategory = MutableLiveData("")
-
 	val description = MutableLiveData(response?.description.orEmpty())
 
-	// todo cities are only if user type isa.
 	private val _countries =
 		MutableStateFlow<Resource<BaseResponse<List<Country>>>>(Resource.Default)
 	val countries: Flow<Resource<BaseResponse<List<Country>>>> = _countries
 	var cities = emptyList<Country>()
 	val showCitiesPopupMenu = MutableLiveData(false)
 	val selectedCity = MutableLiveData<Country>()
+
+	var storeCategories = emptyList<IdAndName>()
+	val showCategoriesPopupMenu = MutableLiveData(false)
+	val selectedCategory = MutableLiveData<IdAndName?>()
+
+	var storeSubCategories = emptyList<IdAndName>()
+	val showSubCategoriesPopupMenu = MutableLiveData(false)
+	val selectedSubCategory = MutableLiveData<IdAndName?>()
 
 	val selectedBrand = MutableLiveData<ItemSubCategory>(
 		brands.firstOrNull { it.id == response?.brand?.id }.also {
@@ -99,11 +106,6 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	val indexToShowImagesPopupMenu = MutableLiveData<Int>()
 	val beforeCheckPermissionsIndexToShowImagesPopupMenu = MutableLiveData<Int>()
 
-	/*fun addImages(list: List<Uri>) {
-		listOfImages.value = listOfImages.value.orEmpty().toMutableList().also {
-			it.addAll(list)
-		}.toList()
-	}*/
 	fun setImages(list: List<LocalOrApiItemImage>) {
 		listOfImages.value = list
 	}
@@ -124,21 +126,28 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	fun addAdvertisement(fragment: AddAdvFinalPageFragment) {
 		val context = (fragment as? Fragment)?.context ?: return
 
-		if (locationData.value == null || selectedCity.value == null || price.value.isNullOrEmpty()
+		val isStore = user.isStore.orFalse()
+
+		if (locationData.value == null || (isStore.not() && selectedCity.value == null) || price.value.isNullOrEmpty()
 			|| (brands.isNotEmpty() && selectedBrand.value == null) /*|| description.value.isNullOrEmpty()*/
 			|| mapOfProperties.value.orEmpty().values.any {
 				if (it.type != 1 && it.type != 3) false else {
 					it.valueId == null && it.valueString == null && it.valueBoolean == null
 				}
 			}
-			|| listOfImages.value.isNullOrEmpty() || title.value.isNullOrEmpty()){
+			|| listOfImages.value.isNullOrEmpty() || title.value.isNullOrEmpty()
+			|| (isStore && selectedCategory.value == null) || (isStore && selectedSubCategory.value == null)){
 			return fragment.showError(fragment.getString(R.string.all_fields_required))
 		}
 
+		// price_before
+		// category_id
+		// sub_category_id todo
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
 				if (response != null) {
 					adsUseCase.updateAdvertisement(
+						isStore,
 						response.id.orZero(),
 						args.idOfMainCategory,
 						args.idOfSubCategory,
@@ -150,7 +159,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 						locationData.value?.latitude.orEmpty(),
 						locationData.value?.longitude.orEmpty(),
 						locationData.value?.address.orEmpty(),
-						selectedCity.value?.id.orZero(),
+						selectedCity.value?.id,
 						price.value?.toIntOrNull().orZero(),
 						negotiable.value.orFalse(),
 						selectedBrand.value?.id,
@@ -171,10 +180,14 @@ class AddAdvFinalPageViewModel @Inject constructor(
 									}
 								}
 							}
-						}
+						},
+						priceBeforeDiscount.value?.toIntOrNull(),
+						selectedCategory.value?.id,
+						selectedSubCategory.value?.id,
 					)
 				}else {
 					adsUseCase.addAdvertisement(
+						isStore,
 						args.idOfMainCategory,
 						args.idOfSubCategory,
 						listOfImages.value.orEmpty().mapNotNull {
@@ -185,7 +198,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 						locationData.value?.latitude.orEmpty(),
 						locationData.value?.longitude.orEmpty(),
 						locationData.value?.address.orEmpty(),
-						selectedCity.value?.id.orZero(),
+						selectedCity.value?.id,
 						price.value?.toIntOrNull().orZero(),
 						negotiable.value.orFalse(),
 						selectedBrand.value?.id,
@@ -206,7 +219,10 @@ class AddAdvFinalPageViewModel @Inject constructor(
 									}
 								}
 							}
-						}
+						},
+						priceBeforeDiscount.value?.toIntOrNull(),
+						selectedCategory.value?.id,
+						selectedSubCategory.value?.id,
 					)
 				}
 			}

@@ -45,12 +45,15 @@ interface AdsRepository {
 	  latitude: String,
 	  longitude: String,
 	  address: String,
-	  city_id: Int,
+	  city_id: Int?,
 	  price: Int,
 	  is_negotiable: Int,
 	  brand_id: Int?,
 	  description: String,
 	  propertiesIds: List<Pair<Int, String?>>,
+	  price_before: Int?,
+	  store_category_id: Int?,
+	  store_sub_category_id: Int?,
   ): Resource<BaseResponse<ResponseMyAdvDetails?>>
   suspend fun updateAdvertisement(
 	  advId: Int,
@@ -61,12 +64,15 @@ interface AdsRepository {
 	  latitude: String,
 	  longitude: String,
 	  address: String,
-	  city_id: Int,
+	  city_id: Int?,
 	  price: Int,
 	  is_negotiable: Int,
 	  brand_id: Int?,
 	  description: String,
 	  propertiesIds: List<Pair<Int, String?>>,
+	  price_before: Int?,
+	  store_category_id: Int?,
+	  store_sub_category_id: Int?,
   ): Resource<BaseResponse<ResponseMyAdvDetails?>>
 	suspend fun updateAdvertisementToBePremium(advId: Int): Resource<BaseResponse<Any?>>
 	suspend fun getMyAdvertisementDetails(id: Int): Resource<BaseResponse<ResponseMyAdvDetails?>>

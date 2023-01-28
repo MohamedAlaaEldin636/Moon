@@ -39,6 +39,12 @@ interface ShopServices {
 		@Query("page") page: Int,
 	): MABaseResponse<MABasePaging<ResponseStoreSubCategory>>
 
+	@GET("v1/my-categories/subs")
+	suspend fun getMySubCategoriesWithParentId(
+		@Query("parent_id") parentId: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<IdAndName>>
+
 	@DELETE("v1/my-categories/{id}")
 	suspend fun deleteSubCategory(
 		@Path("id") id: Int,

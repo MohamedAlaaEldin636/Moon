@@ -343,8 +343,8 @@
   <string name="main_category">القسم الرئيسي</string>
   <string name="pick_sub_category">اختر القسم الرئيسي</string>
   <string name="edit_sub_category">تعديل القسم الفرعى</string>
-  <string name="create_main_category_firstly">قم بإنشاء متجر رئيسى أولاً</string>
-  <string name="pick_main_category_firstly">إختر متجر رئيسى أولاً</string>
+  <string name="create_main_category_firstly">قم بإنشاء قسم رئيسى أولاً</string>
+  <string name="pick_main_category_firstly">إختر قسم رئيسى أولاً</string>
   <string name="add_rate_2">أضف تقييم</string>
   <string name="working_hours_2">مواعيد العمل</string>
   <string name="working_hours_hint">ساعة / دقيقة / صباحاً</string>
@@ -401,4 +401,8 @@
   <string name="chat_2">الدردشة</string>
   <string name="image_has_been_added">تم إضافة الصورة</string>
   <string name="price_before_discount">السعر قبل الخصم ( في حالة وجود خصم )</string>
+  <string name="no_store_categories_found">لا يوجد اقسام رشيسية بمتجرك</string>
+  <string name="no_store_sub_categories_found">لا يوجد اقسام فرعية بمتجرك</string>
+  <string name="your_store_sub_category">القسم الفرعي بمتجرك</string>
+  <string name="pick_main_category_firstly_2">إختر قسم رئيسى أولاً</string>
 </resources>

@@ -33,6 +33,9 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	suspend fun getMySubCategories(page: Int) = safeApiCall2 {
 		apiService.getMySubCategories(page)
 	}
+	suspend fun getMySubCategoriesWithParentId(parentId: Int, page: Int) = safeApiCall2 {
+		apiService.getMySubCategoriesWithParentId(parentId, page)
+	}
 	suspend fun deleteSubCategory(id: Int) = safeApiCall {
 		apiService.deleteSubCategory(id)
 	}

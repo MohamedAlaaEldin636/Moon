@@ -18,9 +18,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,7 +26,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import grand.app.moon.R
-import grand.app.moon.compose.ExtendedTheme
 import grand.app.moon.compose.ui.UIEditText
 import grand.app.moon.compose.ui.UIPopupMenuContainer
 import grand.app.moon.compose.ui.UIText
@@ -50,6 +46,8 @@ fun AddAdvFinalPageScreen(
 	onCameraClick: () -> Unit,
 	onGalleryClick: () -> Unit,
 	deleteImageFromApi: (id: Int, onSuccess: () -> Unit) -> Unit,
+	showOrGetCategories: () -> Unit,
+	showOrGetSubCategories: () -> Unit,
 ) {
 	Surface(
 		Modifier
@@ -152,11 +150,24 @@ fun AddAdvFinalPageScreen(
 				if (viewModel.user.isStore == true) {
 					Spacer(modifier = Modifier.height(16.dp))
 
-					TextFieldStoreCategory()
+					TextFieldStoreCategory(
+						showOrGetCategories = showOrGetCategories,
+						boxModifier = Modifier
+							.bringIntoViewRequester(bringIntoViewRequester)
+							.focusRequester(focusRequester)
+					)
 
 					Spacer(modifier = Modifier.height(16.dp))
 
-					// todo sub category as well
+					val selectedCategory = viewModel.selectedCategory.observeAsState()
+
+					TextFieldStoreSubCategory(
+						enabled = selectedCategory.value != null,
+						showOrGetSubCategories = showOrGetSubCategories,
+						boxModifier = Modifier
+							.bringIntoViewRequester(bringIntoViewRequester)
+							.focusRequester(focusRequester)
+					)
 				}
 
 				if (viewModel.brands.isNotEmpty()) {
@@ -321,6 +332,126 @@ private fun TextFieldCity(
 }
 
 @Composable
+private fun TextFieldStoreCategory(
+	viewModel: AddAdvFinalPageViewModel = viewModel(),
+	context: Context = LocalContext.current,
+	showOrGetCategories: () -> Unit,
+	boxModifier: Modifier = Modifier,
+) {
+	val expanded = viewModel.showCategoriesPopupMenu.observeAsState()
+
+	val dismissMenu = {
+		viewModel.showCategoriesPopupMenu.value = false
+	}
+
+	UIPopupMenuContainer(
+		mainContent = {
+			val category = viewModel.selectedCategory.observeAsState()
+			UIEditText.WithBorder.TajawalRegularForm(
+				additionalBoxModifier = boxModifier,
+				hint = context.getString(R.string.your_store_category),
+				isRequired = true,
+				text = category.value?.name.orEmpty(),
+				onTextChange = {},
+				onClick = showOrGetCategories,
+				suffixComposable = {
+					Image(
+						painter = painterResource(id = R.drawable.ic_arrow_down_d999),
+						contentDescription = "",
+					)
+				}
+			)
+		},
+		expanded = expanded.value.orFalse(),
+		onDismissRequest = dismissMenu
+	) {
+		viewModel.storeCategories.forEachWithDivider(
+			dividerAction = {
+				Divider()
+			}
+		) {
+			DropdownMenuItem(
+				text = {
+					Text(text = it.name.orEmpty())
+				},
+				onClick = {
+					if (viewModel.selectedCategory.value != it) {
+						viewModel.selectedCategory.value = it
+
+						viewModel.storeSubCategories = emptyList()
+						viewModel.selectedSubCategory.value = null
+					}
+
+					dismissMenu()
+				}
+			)
+		}
+	}
+}
+
+@Composable
+private fun TextFieldStoreSubCategory(
+	enabled: Boolean,
+	viewModel: AddAdvFinalPageViewModel = viewModel(),
+	context: Context = LocalContext.current,
+	showOrGetSubCategories: () -> Unit,
+	boxModifier: Modifier = Modifier,
+) {
+	val expanded = viewModel.showSubCategoriesPopupMenu.observeAsState()
+
+	val dismissMenu = {
+		viewModel.showSubCategoriesPopupMenu.value = false
+	}
+
+	UIPopupMenuContainer(
+		mainContent = {
+			val subCategory = viewModel.selectedSubCategory.observeAsState()
+			UIEditText.WithBorder.TajawalRegularForm(
+				additionalBoxModifier = boxModifier,
+				hint = context.getString(R.string.your_store_sub_category),
+				isRequired = true,
+				text = subCategory.value?.name.orEmpty(),
+				onTextChange = {},
+				onClick = {
+					if (enabled) {
+						showOrGetSubCategories()
+					}else {
+						showMessage(context, context.getString(R.string.pick_main_category_firstly_2))
+					}
+				},
+				suffixComposable = {
+					Image(
+						painter = painterResource(id = R.drawable.ic_arrow_down_d999),
+						contentDescription = "",
+					)
+				}
+			)
+		},
+		expanded = expanded.value.orFalse(),
+		onDismissRequest = dismissMenu
+	) {
+		viewModel.storeSubCategories.forEachWithDivider(
+			dividerAction = {
+				Divider()
+			}
+		) {
+			DropdownMenuItem(
+				text = {
+					Text(text = it.name.orEmpty())
+				},
+				onClick = {
+					if (viewModel.selectedSubCategory.value != it) {
+						viewModel.selectedSubCategory.value = it
+					}
+
+					dismissMenu()
+				}
+			)
+		}
+	}
+}
+
+@Composable
 private fun TextFieldBrand(
 	viewModel: AddAdvFinalPageViewModel = viewModel(),
 	context: Context = LocalContext.current,
@@ -376,7 +507,7 @@ private fun TextFieldBrand(
 	}
 }
 
-@Composable
+/*@Composable
 private fun TextFieldStoreCategory(
 	viewModel: AddAdvFinalPageViewModel = viewModel(),
 	context: Context = LocalContext.current,
@@ -422,7 +553,7 @@ private fun TextFieldStoreCategory(
 			}
 		)
 	}
-}
+}*/
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable

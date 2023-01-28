@@ -121,12 +121,15 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		latitude: String,
 		longitude: String,
 		address: String,
-		city_id: Int,
+		city_id: Int?,
 		price: Int,
 		is_negotiable: Int,
 		brand_id: Int?,
 		description: String,
 		propertiesIds: List<Pair<Int, String?>>,
+		price_before: Int?,
+		store_category_id: Int?,
+		store_sub_category_id: Int?,
 	) = safeApiCall {
 		val map = mutableMapOf<String, RequestBody>()
 		for ((index, pair) in propertiesIds.withIndex()) {
@@ -147,6 +150,19 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 
 		map["title"] = title.toRequestBody()
 
+		if (city_id != null) {
+			map["city_id"] = city_id.toString().toRequestBody()
+		}
+		if (price_before != null) {
+			map["price_before"] = price_before.toString().toRequestBody()
+		}
+		if (store_category_id != null) {
+			map["store_category_id"] = store_category_id.toString().toRequestBody()
+		}
+		if (store_sub_category_id != null) {
+			map["store_sub_category_id"] = store_sub_category_id.toString().toRequestBody()
+		}
+
 		apiService.addAdvertisement(
 	    category_id,
 	    sub_category_id,
@@ -154,7 +170,6 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 	    latitude.toRequestBody(),
 	    longitude.toRequestBody(),
 			address.toRequestBody(),
-	    city_id,
 	    price,
 	    is_negotiable,
 	    map,
@@ -174,12 +189,15 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		latitude: String,
 		longitude: String,
 		address: String,
-		city_id: Int,
+		city_id: Int?,
 		price: Int,
 		is_negotiable: Int,
 		brand_id: Int?,
 		description: String,
 		propertiesIds: List<Pair<Int, String?>>,
+		price_before: Int?,
+		store_category_id: Int?,
+		store_sub_category_id: Int?,
 	) = safeApiCall {
 		val map = mutableMapOf<String, RequestBody>()
 		for ((index, pair) in propertiesIds.withIndex()) {
@@ -200,6 +218,19 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 
 		map["title"] = title.toRequestBody()
 
+		if (city_id != null) {
+			map["city_id"] = city_id.toString().toRequestBody()
+		}
+		if (price_before != null) {
+			map["price_before"] = price_before.toString().toRequestBody()
+		}
+		if (store_category_id != null) {
+			map["store_category_id"] = store_category_id.toString().toRequestBody()
+		}
+		if (store_sub_category_id != null) {
+			map["store_sub_category_id"] = store_sub_category_id.toString().toRequestBody()
+		}
+
 		apiService.updateAdvertisement(
 	    advId,
 			category_id,
@@ -208,7 +239,6 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 	    latitude.toRequestBody(),
 	    longitude.toRequestBody(),
 			address.toRequestBody(),
-	    city_id,
 	    price,
 	    is_negotiable,
 	    map,

@@ -1,7 +1,49 @@
 package grand.app.moon.helpers.paging
 
 import androidx.paging.*
+import grand.app.moon.domain.shop.IdAndName
+import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.domain.utils.Resource
+import grand.app.moon.domain.utils.toFailureStatus
 import kotlinx.coroutines.flow.Flow
+
+suspend fun <T : Any> BasePaging.Companion.getAllPages(
+	fetchPage: suspend (Int) -> MAResult.Immediate<MABaseResponse<MABasePaging<T>>>
+): Resource<BaseResponse<List<T>?>> {
+	var page = 1
+	val list = mutableListOf<T>()
+	val message: String?
+	val code: Int?
+	while (true) {
+		when (val response = fetchPage(page++)) {
+			is MAResult.Failure -> {
+				return Resource.Failure(
+					response.toFailureStatus(),
+					response.code,
+					response.message,
+				)
+			}
+			is MAResult.Success -> {
+				list += response.value.data?.data.orEmpty()
+
+				if (response.value.data?.links?.next.isNullOrEmpty()) {
+					message = response.value.message
+					code = response.value.code
+
+					break
+				}
+			}
+		}
+	}
+
+	return Resource.Success(
+		BaseResponse(
+			list.toList(),
+			message.orEmpty(),
+			code ?: 200
+		)
+	)
+}
 
 class BasePaging<T : Any>(
 	private val fetchPage: suspend (Int) -> MAResult.Immediate<MABaseResponse<MABasePaging<T>>>
