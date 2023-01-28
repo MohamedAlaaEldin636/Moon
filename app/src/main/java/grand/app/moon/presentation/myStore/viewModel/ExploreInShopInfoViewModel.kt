@@ -44,7 +44,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 
 	val dateTo = MutableLiveData("")
 
-	private val remainingExploreCount = MutableLiveData<Int?>()
+	val remainingExploreCount = MutableLiveData<Int?>()
 	val textRemainingExploreCount = remainingExploreCount.map {
 		"${app.getString(R.string.rem_explore_count)} ( ${it.toStringOrEmpty()} )"
 	}
@@ -96,6 +96,8 @@ class ExploreInShopInfoViewModel @Inject constructor(
 
 						fragment.showMessage(context.getString(R.string.done_successfully))
 
+						remainingExploreCount.value = remainingExploreCount.value.orZero().inc()
+
 						adapter.refresh()
 					}
 				}
@@ -132,17 +134,17 @@ class ExploreInShopInfoViewModel @Inject constructor(
 		}
 
 		binding.likeValueTextView.text = getSpannedString(
-			explore.likesCount.toStringOrEmpty(),
+			explore.likesCount.orZero().toStringOrEmpty(),
 			context.getString(R.string.like)
 		)
 
 		binding.commentsValueTextView.text = getSpannedString(
-			explore.commentsCount.toStringOrEmpty(),
+			explore.commentsCount.orZero().toStringOrEmpty(),
 			context.getString(R.string.view_921)
 		)
 
 		binding.sharesValueTextView.text = getSpannedString(
-			explore.sharesCount.toStringOrEmpty(),
+			explore.sharesCount.orZero().toStringOrEmpty(),
 			context.getString(R.string.share)
 		)
 

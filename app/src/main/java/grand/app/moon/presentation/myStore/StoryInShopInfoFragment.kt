@@ -44,6 +44,18 @@ class StoryInShopInfoFragment : BaseFragment<FragmentStoryInShopInfoBinding>() {
 		)
 	}
 
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		handleRetryAbleActionOrGoBack(
+			action = {
+				viewModel.repoShop.getStoriesRemainingCount()
+			}
+		) {
+			viewModel.remainingCount.value = it
+		}
+	}
+
 	override fun getLayoutId(): Int = R.layout.fragment_story_in_shop_info
 
 	override fun setBindingVariables() {

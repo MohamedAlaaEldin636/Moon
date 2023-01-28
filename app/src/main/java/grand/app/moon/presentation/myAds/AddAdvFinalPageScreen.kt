@@ -96,12 +96,24 @@ fun AddAdvFinalPageScreen(
 
 				Spacer(modifier = Modifier.height(16.dp))
 
-				TextFieldCity(
-					showOrGetCities = showOrGetCities,
-					boxModifier = Modifier
-						.bringIntoViewRequester(bringIntoViewRequester)
-						.focusRequester(focusRequester)
-				)
+				if (viewModel.user.isStore == true) {
+					val priceBeforeDiscount = viewModel.priceBeforeDiscount.observeAsState()
+					UIEditText.WithBorder.TajawalRegularForm(
+						hint = context.getString(R.string.price_before_discount),
+						isRequired = false,
+						text = priceBeforeDiscount.value.orEmpty(),
+						onTextChange = { viewModel.priceBeforeDiscount.value = it },
+						keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+						additionalBoxModifier = Modifier.bringIntoViewRequester(bringIntoViewRequester)
+					)
+				}else {
+					TextFieldCity(
+						showOrGetCities = showOrGetCities,
+						boxModifier = Modifier
+							.bringIntoViewRequester(bringIntoViewRequester)
+							.focusRequester(focusRequester)
+					)
+				}
 
 				Spacer(modifier = Modifier.height(16.dp))
 
@@ -136,12 +148,6 @@ fun AddAdvFinalPageScreen(
 						)
 					}
 				)
-
-				if (viewModel.user.isStore == true) {
-					Spacer(modifier = Modifier.height(16.dp))
-
-					// todo ... add el se3r abl el khasm isa.
-				}
 
 				if (viewModel.user.isStore == true) {
 					Spacer(modifier = Modifier.height(16.dp))

@@ -54,6 +54,8 @@ class AddAdvFinalPageViewModel @Inject constructor(
 
 	val price = MutableLiveData(response?.price?.toString().orEmpty())
 
+	val priceBeforeDiscount = MutableLiveData(response?.priceBeforeDiscount?.toString().orEmpty())
+
 	val title = MutableLiveData(response?.title.orEmpty())
 
 	val negotiable = MutableLiveData(response?.isNegotiable.orFalse())

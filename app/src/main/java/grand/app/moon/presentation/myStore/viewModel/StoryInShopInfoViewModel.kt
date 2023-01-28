@@ -45,22 +45,22 @@ class StoryInShopInfoViewModel @Inject constructor(
 
 	val dateTo = MutableLiveData("")
 
-	private val remainingCount = MutableLiveData<Int?>()
+	val remainingCount = MutableLiveData<Int?>()
 	val textRemainingCount = remainingCount.map {
 		"${app.getString(R.string.rem_story_count)} ( ${it.toStringOrEmpty()} )"
 	}
 
 	val adapter = RVPagingItemCommonListUsage<ItemStoryInShopInfoBinding, ItemStoryInShopInfo>(
-		R.layout.item_explore_in_shop_info,
+		R.layout.item_story_in_shop_info,
 		additionalListenersSetups = { adapter, binding ->
 			binding.imageView.setOnClickListener { view ->
 				val item = (binding.constraintLayout.tag as? String)
-					.fromJsonInlinedOrNull<ItemExploreInShopInfo>() ?: return@setOnClickListener
+					.fromJsonInlinedOrNull<ItemStoryInShopInfo>() ?: return@setOnClickListener
 
 				view.findFragmentOrNull<StoryInShopInfoFragment>()?.findNavController()?.navigateDeepLinkWithoutOptions(
 					"fragment-dest",
 					"grand.app.moon.dest.show.images.or.video",
-					paths = arrayOf(item.isVideo.not().toString(), item.files.toJsonInlinedOrNull().orEmpty())
+					paths = arrayOf(item.isVideo.not().toString(), listOf(item.file).toJsonInlinedOrNull().orEmpty())
 				)
 			}
 
@@ -82,7 +82,7 @@ class StoryInShopInfoViewModel @Inject constructor(
 				val context = fragment.context ?: return@setOnClickListener
 
 				val item = (binding.constraintLayout.tag as? String)
-					.fromJsonInlinedOrNull<ItemExploreInShopInfo>() ?: return@setOnClickListener
+					.fromJsonInlinedOrNull<ItemStoryInShopInfo>() ?: return@setOnClickListener
 
 				fragment.showCustomYesNoWarningDialog(
 					context.getString(R.string.confirm_deletion),
@@ -96,6 +96,8 @@ class StoryInShopInfoViewModel @Inject constructor(
 						dialog.dismiss()
 
 						fragment.showMessage(context.getString(R.string.done_successfully))
+
+						remainingCount.value = remainingCount.value.orZero().inc()
 
 						adapter.refresh()
 					}
@@ -131,17 +133,17 @@ class StoryInShopInfoViewModel @Inject constructor(
 		}
 
 		binding.likeValueTextView.text = getSpannedString(
-			story.likesCount.toStringOrEmpty(),
+			story.likesCount.orZero().toStringOrEmpty(),
 			context.getString(R.string.like)
 		)
 
 		binding.commentsValueTextView.text = getSpannedString(
-			story.commentsCount.toStringOrEmpty(),
+			story.viewsCount.orZero().toStringOrEmpty(),
 			context.getString(R.string.view_921)
 		)
 
 		binding.sharesValueTextView.text = getSpannedString(
-			story.sharesCount.toStringOrEmpty(),
+			story.sharesCount.orZero().toStringOrEmpty(),
 			context.getString(R.string.share)
 		)
 
@@ -234,9 +236,8 @@ class StoryInShopInfoViewModel @Inject constructor(
 	fun goToAddStory(view: View) {
 		view.findFragmentOrNull<StoryInShopInfoFragment>()?.findNavController()?.navigateDeepLinkWithOptions(
 			"fragment-dest",
-			"grand.app.moon.dest.add.explore"
+			"grand.app.moon.dest.add.story"
 		)
-		TODO()
 	}
 
 	private fun getSpannedString(value1: String, value2: String) = buildSpannedString {

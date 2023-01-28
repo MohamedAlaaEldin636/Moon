@@ -41,6 +41,18 @@ class ExploreInShopInfoFragment : BaseFragment<FragmentExploreInShopInfoBinding>
 		)
 	}
 
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		handleRetryAbleActionOrGoBack(
+			action = {
+				viewModel.repoShop.getExploresRemainingCount()
+			}
+		) {
+			viewModel.remainingExploreCount.value = it
+		}
+	}
+
 	override fun getLayoutId(): Int = R.layout.fragment_explore_in_shop_info
 
 	override fun setBindingVariables() {

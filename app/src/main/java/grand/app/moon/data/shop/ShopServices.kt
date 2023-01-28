@@ -101,12 +101,15 @@ interface ShopServices {
 		@Path("id") id: Int,
 	): BaseResponse<Any?>
 
-	/*@Multipart
+	@Multipart
 	@POST("v1/profile/stories")
 	suspend fun addStory(
-		@Part files: List<MultipartBody.Part>,
+		@Part file: List<MultipartBody.Part>,
+		@Part("story_link_type") storyLinkType: Int,
+		@Part("highlight") storyType: Int,
+		@Part("highlight_name") name: RequestBody,
 		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString(),
-	): BaseResponse<Any?>*/
+	): BaseResponse<Any?>
 
 	@GET("v1/profile/stories")
 	suspend fun getStories(

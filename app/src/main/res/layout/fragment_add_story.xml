@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+
+  tools:context="grand.app.moon.presentation.myStore.AddStoryFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.myStore.viewModel.AddStoryViewModel" />
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+    android:orientation="vertical"
+
+    android:background="#FBFBFB">
+    
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      
+      android:fillViewport="true">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical">
+
+        <include
+          android:id="@+id/toolbarCurve"
+
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+
+          layout="@layout/item_toolbar_curve"
+
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+          style="@style/LabelTextForAddStory"
+
+          android:layout_marginTop="19dp"
+
+          android:text="@string/story_linking_type"/>
+
+        <TextView
+          style="@style/EditTextForAddStory.DropDown"
+
+          android:onClick="@{v -> viewModel.pickStoryLinkingType(v)}"
+
+          android:text="@{viewModel.textLink}"
+
+          android:hint="@string/story_linking_type"/>
+
+        <TextView
+          style="@style/LabelTextForAddStory"
+
+          android:text="@string/shop_story_type"/>
+
+        <TextView
+          style="@style/EditTextForAddStory.DropDown"
+
+          android:onClick="@{v -> viewModel.pickStoryType(v)}"
+
+          android:text="@{viewModel.textType}"
+
+          android:hint="@string/shop_story_type"/>
+
+        <TextView
+          style="@style/LabelTextForAddStory"
+
+          android:text="@string/story_name"/>
+
+        <EditText
+          style="@style/EditTextForAddStory"
+
+          android:text="@={viewModel.name}"
+
+          android:hint="@string/story_name"/>
+
+        <TextView
+          style="@style/LabelTextForAddStory"
+
+          tools:visibility="visible"
+
+          android:visibility="@{viewModel.showCover}"
+
+          android:text="@string/cover_img"/>
+
+        <TextView
+          android:id="@+id/coverImageTextView"
+
+          tools:visibility="visible"
+
+          style="@style/EditTextForAddStory.DropDown"
+
+          app:drawableEndCompat="@drawable/ic_link_31"
+
+          android:text="@{viewModel.textCover}"
+
+          android:visibility="@{viewModel.showCover}"
+
+          android:onClick="@{v -> viewModel.pickCoverImage(v)}"
+
+          android:hint="@string/add_cover_img"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="268dp"
+
+          android:layout_margin="16dp"
+
+          android:paddingTop="9dp"
+          android:paddingBottom="9dp"
+          android:paddingStart="14dp"
+          android:paddingEnd="14dp"
+          android:clipToPadding="false"
+
+          android:background="@drawable/dr_rect_5">
+
+          <View
+            android:id="@+id/dottedView"
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:background="@drawable/dr_bg_5_dotted"
+
+            android:onClick="@{v -> viewModel.pickImagesOrVideo(v)}"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+          <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieView"
+
+            android:layout_width="142dp"
+            android:layout_height="106dp"
+
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="upload_general_1.json"
+            app:lottie_loop="true"
+
+            android:layout_marginBottom="3.5dp"
+
+            app:layout_constraintVertical_chainStyle="packed"
+
+            android:visibility="@{viewModel.file == null}"
+
+            app:layout_constraintTop_toTopOf="@id/dottedView"
+            app:layout_constraintStart_toStartOf="@id/dottedView"
+            app:layout_constraintEnd_toEndOf="@id/dottedView"
+            app:layout_constraintBottom_toTopOf="@id/labelTitle"/>
+
+          <TextView
+            android:id="@+id/labelTitle"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="3.5dp"
+            android:layout_marginBottom="7dp"
+
+            android:text="@string/upload_explore"
+            style="@style/TextTajawalBold14"
+            android:textSize="17sp"
+
+            android:visibility="@{viewModel.file == null}"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lottieView"
+            app:layout_constraintBottom_toTopOf="@id/labelDescription"/>
+
+          <TextView
+            android:id="@+id/labelDescription"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="3.5dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+
+            android:visibility="@{viewModel.file == null}"
+
+            android:gravity="center"
+            android:textDirection="locale"
+            android:text="@string/explore_add_label_desc"
+            style="@style/TextTajawalRegular14"
+            android:textColor="#727889"
+
+            app:layout_constraintStart_toStartOf="@id/dottedView"
+            app:layout_constraintEnd_toEndOf="@id/dottedView"
+            app:layout_constraintTop_toBottomOf="@id/labelTitle"
+            app:layout_constraintBottom_toBottomOf="@id/dottedView"/>
+
+          <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:padding="1dp"
+
+            imageView_setupWithGlideOrIgnoreMAImagesOrVideo="@{viewModel.file}"
+
+            android:visibility="@{viewModel.file != null}"
+
+            app:layout_constraintTop_toTopOf="@id/dottedView"
+            app:layout_constraintBottom_toBottomOf="@id/dottedView"
+            app:layout_constraintStart_toStartOf="@id/dottedView"
+            app:layout_constraintEnd_toEndOf="@id/dottedView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+      </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:background="@color/white"
+
+      android:paddingTop="17dp"
+      android:paddingBottom="22dp"
+      android:paddingStart="11dp"
+      android:paddingEnd="11dp"
+      android:clipToPadding="false">
+
+      <TextView
+        android:id="@+id/buttonTextView"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="16dp"
+
+        style="@style/TextTajawalMedium14"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="@string/addition_12"
+
+        android:onClick="@{v -> viewModel.add(v)}"
+
+        android:background="@drawable/dr_rounded_5_button"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    </FrameLayout>
+    
+  </LinearLayout>
+
+</layout>

@@ -401,4 +401,14 @@
   <string name="hours">Hours</string>
   <string name="del_explore_desc">هل تريد تأكيد حذف الاستوري من حسابك ؟</string>
   <string name="del_story_desc">هل تريد تأكيد حذف الاستوري من حسابك ؟</string>
+  <string name="story_linking_type">ربط الاستوري</string>
+  <string name="shop_story_type">ثتبيت ستوري المتجر</string>
+  <string name="story_name">اسم الاستوري</string>
+  <string name="cover_img">صورة غلاف</string>
+  <string name="add_cover_img">إضافة صورة غلاف</string>
+  <string name="whatsapp_2">الواتس اب</string>
+  <string name="call_2">رقم الهاتف</string>
+  <string name="chat_2">الدردشة</string>
+  <string name="image_has_been_added">تم إضافة الصورة</string>
+    <string name="price_before_discount">السعر قبل الخصم ( في حالة وجود خصم )</string>
 </resources>

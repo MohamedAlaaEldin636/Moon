@@ -2,6 +2,7 @@ package grand.app.moon.data.shop
 
 import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
+import grand.app.moon.domain.shop.StoryLink
 import grand.app.moon.domain.shop.StoryType
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -94,6 +95,8 @@ class RepoShop @Inject constructor(
 		}
 	}*/
 
+	suspend fun getExploresRemainingCount(): Resource<BaseResponse<Int?>> = remoteDataSource.getExploresRemainingCount()
+
 	fun getExplores2(
 		from: String?,
 		to: String?,
@@ -107,6 +110,8 @@ class RepoShop @Inject constructor(
 			}
 		}*/
 	}
+
+	suspend fun getStoriesRemainingCount(): Resource<BaseResponse<Int?>> = remoteDataSource.getStoriesRemainingCount()
 
 	fun getStories(
 		from: String?,
@@ -128,5 +133,13 @@ class RepoShop @Inject constructor(
 	suspend fun deleteExplore(id: Int) = remoteDataSource.deleteExplore(id)
 
 	suspend fun deleteStory(id: Int) = remoteDataSource.deleteStory(id)
+
+	suspend fun addStory(
+		file: MultipartBody.Part,
+		storyLink: StoryLink,
+		storyType: StoryType,
+		name: String?,
+		coverImage: MultipartBody.Part?,
+	) = remoteDataSource.addStory(file, storyLink, storyType, name, coverImage)
 
 }

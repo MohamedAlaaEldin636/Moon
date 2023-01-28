@@ -1,16 +1,12 @@
 package grand.app.moon.data.shop
 
 import grand.app.moon.data.remote.BaseRemoteDataSource
-import grand.app.moon.domain.shop.ItemExploreInShopInfo
-import grand.app.moon.domain.shop.ItemStoryInShopInfo
-import grand.app.moon.domain.shop.ResponseStoreSocialMedia
-import grand.app.moon.domain.shop.StoryType
+import grand.app.moon.domain.shop.*
+import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.domain.utils.Resource
 import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.toStringOrEmpty
-import grand.app.moon.helpers.paging.MABasePaging
-import grand.app.moon.helpers.paging.MABaseResponse
-import grand.app.moon.helpers.paging.MAResult
-import grand.app.moon.helpers.paging.map
+import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -96,6 +92,12 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getClientsReviews(page, map)
 	}
 
+	suspend fun getExploresRemainingCount(): Resource<BaseResponse<Int?>> = safeApiCall {
+		apiService.getExplores(1, emptyMap()).map {
+			it?.exploresRestCount.orZero()
+		}.toBaseResponse()
+	}
+
 	suspend fun getExplores(
 		from: String?,
 		to: String?,
@@ -115,6 +117,12 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 				)
 			}
 		}
+	}
+
+	suspend fun getStoriesRemainingCount(): Resource<BaseResponse<Int?>> = safeApiCall {
+		apiService.getStories(1, emptyMap()).map {
+			it?.storiesRestCount.orZero()
+		}.toBaseResponse()
 	}
 
 	suspend fun getStories(
@@ -143,5 +151,20 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	suspend fun deleteExplore(id: Int) = safeApiCall { apiService.deleteExplore(id) }
 
 	suspend fun deleteStory(id: Int) = safeApiCall { apiService.deleteStory(id) }
+
+	suspend fun addStory(
+		file: MultipartBody.Part,
+		storyLink: StoryLink,
+		storyType: StoryType,
+		name: String?,
+		coverImage: MultipartBody.Part?,
+	) = safeApiCall {
+		apiService.addStory(
+			listOfNotNull(file, coverImage),
+			storyLink.apiValue,
+			storyType.apiValue,
+			name.orEmpty().toRequestBody()
+		)
+	}
 
 }

@@ -43,6 +43,8 @@ data class ResponseMyAdvDetails(
 	@SerializedName("sub_category") var subCategory: ItemSubCategoryInAdvDetails?,
 	var city: ItemCityInAdvDetails?,
 	var brand: ItemBrandInAdvDetails?,
+
+	@SerializedName("price_before") var priceBeforeDiscount: Int?,
 ) {
 	val isPremium get() = premium == 1
 
