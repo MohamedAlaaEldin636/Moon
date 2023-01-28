@@ -83,6 +83,10 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getClientsReviews(query, from, to, it)
 	}
 
+	fun getClientsReviewsForAdv(advertisementId: Int) = BasePaging.createFlowViaPager {
+		remoteDataSource.getClientsReviewsForAdv(advertisementId, it)
+	}
+
 	/*fun getExplores(
 		from: String?,
 		to: String?,

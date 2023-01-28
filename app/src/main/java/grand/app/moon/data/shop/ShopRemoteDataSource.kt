@@ -95,6 +95,10 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getClientsReviews(page, map)
 	}
 
+	suspend fun getClientsReviewsForAdv(advertisementId: Int, page: Int) = safeApiCall2 {
+		apiService.getClientsReviewsForAdv(advertisementId, page)
+	}
+
 	suspend fun getExploresRemainingCount(): Resource<BaseResponse<Int?>> = safeApiCall {
 		apiService.getExplores(1, emptyMap()).map {
 			it?.exploresRestCount.orZero()

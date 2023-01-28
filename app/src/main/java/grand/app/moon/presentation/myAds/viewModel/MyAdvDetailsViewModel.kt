@@ -235,9 +235,6 @@ class MyAdvDetailsViewModel @Inject constructor(
 
 		binding.imageView.setupWithGlideOrElseResNameBA(item.user?.image, "ic_default_user")
 	}
-	val showReviews = response.map {
-		it?.reviews.isNullOrEmpty().not()
-	}
 
 	fun goToHomeScreen(view: View) {
 		view.findNavController().navigateUp()
@@ -263,7 +260,13 @@ class MyAdvDetailsViewModel @Inject constructor(
 	}
 
 	fun goToReviews(view: View) {
-		General.TODO("Will be programmed later in another sprint")
+		val fragment = view.findFragmentOrNull<MyAdvDetailsFragment>() ?: return
+
+		fragment.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.adv.clients.reviews",
+			paths = arrayOf(response.value?.id.orZero().toString())
+		)
 	}
 
 	fun editAdv(view: View) {

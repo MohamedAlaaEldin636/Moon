@@ -128,4 +128,10 @@ interface ShopServices {
 		@Path("id") id: Int,
 	): BaseResponse<Any?>
 
+	@GET("v1/reviews")
+	suspend fun getClientsReviewsForAdv(
+		@Query("advertisement_id") advertisementId: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ResponseClientReviews>>
+
 }

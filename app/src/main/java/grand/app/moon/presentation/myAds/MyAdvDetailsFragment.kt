@@ -126,7 +126,7 @@ class MyAdvDetailsFragment : BaseFragment<FragmentMyAdvDetailsBinding>() {
 					)
 				)
 			}else {
-				response.reviews.orEmpty()
+				response.reviews.orEmpty().take(3)
 			}
 			viewModel.adapterReviews.submitList(
 				reviews
