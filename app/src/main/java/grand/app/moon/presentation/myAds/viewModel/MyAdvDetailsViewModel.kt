@@ -265,7 +265,10 @@ class MyAdvDetailsViewModel @Inject constructor(
 		fragment.findNavController().navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.adv.clients.reviews",
-			paths = arrayOf(response.value?.id.orZero().toString())
+			paths = arrayOf(
+				response.value?.id.orZero().toString(),
+				false.toString() // cam from not MY advertisement meaning not my own adv of my account.
+			)
 		)
 	}
 

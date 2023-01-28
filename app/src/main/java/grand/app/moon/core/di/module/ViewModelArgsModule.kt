@@ -20,6 +20,11 @@ import grand.app.moon.presentation.myStore.ShowImagesOrVideoDialogFragmentArgs
 object ViewModelArgsModule {
 
 	@Provides
+	fun provideRateInAdvDialogFragmentArgs(state: SavedStateHandle): RateInAdvDialogFragmentArgs {
+		return RateInAdvDialogFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
 	fun provideAdvClientsReviewsFragmentArgs(state: SavedStateHandle): AdvClientsReviewsFragmentArgs {
 		return AdvClientsReviewsFragmentArgs.fromBundle(state.asBundle())
 	}

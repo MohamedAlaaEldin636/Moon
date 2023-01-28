@@ -4,17 +4,16 @@ import android.app.Application
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemReviewInAdvDetailsBinding
 import grand.app.moon.databinding.ItemReviewInClientsReviewsInAdvDetailsBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
-import grand.app.moon.extensions.RVItemCommonListUsage
-import grand.app.moon.extensions.RVPagingItemCommonListUsage
+import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrElseResNameBA
-import grand.app.moon.extensions.orZero
-import grand.app.moon.extensions.setProgressBA
+import grand.app.moon.presentation.myAds.AdvClientsReviewsFragment
 import grand.app.moon.presentation.myAds.AdvClientsReviewsFragmentArgs
 import grand.app.moon.presentation.myAds.model.ItemReviewInAdvDetails
 import javax.inject.Inject
@@ -53,7 +52,13 @@ class AdvClientsReviewsViewModel @Inject constructor(
 	}
 
 	fun addReview(view: View) {
-		//TODO()
+		val fragment = view.findFragmentOrNull<AdvClientsReviewsFragment>() ?: return
+
+		fragment.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.rate.in.adv.dialog",
+			paths = arrayOf(args.advId.toString(), args.useRating.toString())
+		)
 	}
 
 }

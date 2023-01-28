@@ -159,6 +159,12 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun deleteStory(id: Int) = safeApiCall { apiService.deleteStory(id) }
 
+	suspend fun addReviewForAdv(
+		advertisementId: Int,
+		rate: Int?,
+		review: String
+	) = safeApiCall { apiService.addReviewForAdv(advertisementId, rate, review) }
+
 	suspend fun addStory(
 		file: MultipartBody.Part,
 		storyLink: StoryLink,

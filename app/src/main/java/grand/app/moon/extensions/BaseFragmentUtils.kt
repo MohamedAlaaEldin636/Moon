@@ -27,6 +27,7 @@ import grand.app.moon.domain.utils.FailureStatus
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.MADialogFragment
 import grand.app.moon.presentation.base.utils.showLoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -74,6 +75,13 @@ fun BaseFragment<*>.showRetryErrorDialogWithBackNegativeButton(
  * - Can't be dismissed, If wanna show a can be dismissed error use [Toast] or [Snackbar] isa.
  */
 fun BaseFragment<*>.showRetryErrorDialogWithCancelNegativeButton(
+	msg: String = getString(R.string.something_went_wrong_please_try_again),
+	negativeButton: String = getString(R.string.cancel),
+	negativeButtonAction: () -> Unit = {},
+	onRetry: () -> Unit
+) = showRetryErrorDialog(activity, msg, negativeButton, negativeButtonAction, onRetry)
+
+fun MADialogFragment<*>.showRetryErrorDialogWithCancelNegativeButton(
 	msg: String = getString(R.string.something_went_wrong_please_try_again),
 	negativeButton: String = getString(R.string.cancel),
 	negativeButtonAction: () -> Unit = {},
@@ -172,6 +180,26 @@ fun <T> BaseFragment<*>.handleRetryAbleActionCancellable(
 }
 
 fun <T> BaseFragment<*>.handleRetryAbleActionCancellableNullable(
+	action: suspend () -> Resource<BaseResponse<T?>>,
+	onSuccess: (T?) -> Unit
+) {
+	handleRetryAbleActionNullable(
+		showLoading = { showLoading() },
+		hideLoading = { hideLoading() },
+		lifecycleScope,
+		action,
+		onError = {
+			showRetryErrorDialogWithCancelNegativeButton(
+				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+			) {
+				handleRetryAbleActionCancellableNullable(action, onSuccess)
+			}
+		},
+		onSuccess
+	)
+}
+
+fun <T> MADialogFragment<*>.handleRetryAbleActionCancellableNullable(
 	action: suspend () -> Resource<BaseResponse<T?>>,
 	onSuccess: (T?) -> Unit
 ) {

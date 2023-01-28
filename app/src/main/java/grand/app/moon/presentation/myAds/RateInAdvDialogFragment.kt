@@ -26,7 +26,7 @@ class RateInAdvDialogFragment : MADialogFragment<DialogFragmentRateInAdvBinding>
 	}
 
 	override fun initializeBindingVariables() {
-		binding?.viewModel = viewModel
+		binding.viewModel = viewModel
 	}
 
 }

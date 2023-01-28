@@ -20,7 +20,7 @@ abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 
 	private var progressDialog: Dialog? = null
 
-	protected var _binding: VDB? = null
+	var _binding: VDB? = null
 	
 	protected val binding get() = _binding!!
 

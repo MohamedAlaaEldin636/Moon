@@ -134,4 +134,12 @@ interface ShopServices {
 		@Query("page") page: Int,
 	): MABaseResponse<MABasePaging<ResponseClientReviews>>
 
+	@FormUrlEncoded
+	@POST("v1/review")
+	suspend fun addReviewForAdv(
+		@Query("advertisement_id") advertisement_id: Int,
+		@Query("rate") rate: Int?,
+		@Query("review") review: String,
+	): BaseResponse<Any?>
+
 }

@@ -860,10 +860,30 @@
     <argument
       android:name="advId"
       app:argType="integer" />
+    <argument
+      android:name="useRating"
+      app:argType="boolean" />
     <deepLink
       android:id="@+id/deep_link_dest_adv_clients_reviews"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.adv.clients.reviews/{advId}" />
+      app:uri="fragment-dest://grand.app.moon.dest.adv.clients.reviews/{advId}/{useRating}" />
   </fragment>
+  <!--advId, useRating-->
+  <dialog
+    android:id="@+id/dest_rate_in_adv_dialog"
+    android:name="grand.app.moon.presentation.myAds.RateInAdvDialogFragment"
+    android:label=""
+    tools:layout="@layout/dialog_fragment_rate_in_adv" >
+    <argument
+      android:name="advId"
+      app:argType="integer" />
+    <argument
+      android:name="useRating"
+      app:argType="boolean" />
+    <deepLink
+      android:id="@+id/deep_link_dest_rate_in_adv_dialog"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.rate.in.adv.dialog/{advId}/{useRating}" />
+  </dialog>
 
 </navigation>

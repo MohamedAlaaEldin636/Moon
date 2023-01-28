@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentAdvClientsReviewsBinding
+import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
@@ -31,7 +32,9 @@ class AdvClientsReviewsFragment : BaseFragment<FragmentAdvClientsReviewsBinding>
 			1
 		)
 
-		//
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
+			viewModel.adapter.refresh()
+		}
 	}
 
 }

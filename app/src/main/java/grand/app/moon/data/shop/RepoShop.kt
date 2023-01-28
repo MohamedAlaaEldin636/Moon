@@ -87,6 +87,12 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getClientsReviewsForAdv(advertisementId, it)
 	}
 
+	suspend fun addReviewForAdv(
+		advertisementId: Int,
+		rate: Int?,
+		review: String
+	) = remoteDataSource.addReviewForAdv(advertisementId, rate, review)
+
 	/*fun getExplores(
 		from: String?,
 		to: String?,

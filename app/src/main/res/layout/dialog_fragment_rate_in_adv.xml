@@ -39,7 +39,81 @@
         style="@style/TextTajawalBold14"
         android:textSize="16sp"/>
 
+      <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/ratingBar"
 
+        android:layout_marginTop="31dp"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="@{viewModel.showRating}"
+
+        android:numStars="5"
+        android:progress="0"
+        tools:progress="60"
+        android:max="100"
+
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+
+        android:progressTint="#FFBC23"
+        android:progressBackgroundTint="#DAD9E2"/>
+
+      <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/dr_rect_5_888"
+
+        android:layout_marginTop="30dp"
+
+        android:text="@={viewModel.comment}"
+
+        android:textDirection="locale"
+
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+
+        android:minLines="4"
+
+        android:gravity="top"
+
+        style="@style/TextTajawalRegular14"
+        android:textColorHint="#8B8B8B"
+        android:hint="@string/add_description_for_rate"
+
+        android:inputType="textMultiLine"/>
+      
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="30dp">
+
+        <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+
+          android:minHeight="48dp"
+
+          app:layout_constraintWidth_percent="0.5"
+
+          android:background="@drawable/dr_rounded_5_button"
+
+          android:text="@string/add_rate"
+          style="@style/TextTajawalMedium14"
+          android:textColor="@color/white"
+          android:gravity="center"
+
+          android:onClick="@{v -> viewModel.addRate(v)}"
+
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"/>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
