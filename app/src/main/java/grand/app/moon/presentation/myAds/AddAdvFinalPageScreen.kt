@@ -15,8 +15,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -68,7 +66,7 @@ fun AddAdvFinalPageScreen(
 			Column(Modifier.fillMaxSize()) {
 				val bringIntoViewRequester = remember { BringIntoViewRequester() }
 
-				val focusRequester = remember { FocusRequester() }
+				//val focusRequester = remember { FocusRequester() }
 
 				val context = LocalContext.current
 
@@ -109,7 +107,7 @@ fun AddAdvFinalPageScreen(
 						showOrGetCities = showOrGetCities,
 						boxModifier = Modifier
 							.bringIntoViewRequester(bringIntoViewRequester)
-							.focusRequester(focusRequester)
+							//.focusRequester(focusRequester)
 					)
 				}
 
@@ -154,7 +152,7 @@ fun AddAdvFinalPageScreen(
 						showOrGetCategories = showOrGetCategories,
 						boxModifier = Modifier
 							.bringIntoViewRequester(bringIntoViewRequester)
-							.focusRequester(focusRequester)
+							//.focusRequester(focusRequester)
 					)
 
 					Spacer(modifier = Modifier.height(16.dp))
@@ -166,7 +164,7 @@ fun AddAdvFinalPageScreen(
 						showOrGetSubCategories = showOrGetSubCategories,
 						boxModifier = Modifier
 							.bringIntoViewRequester(bringIntoViewRequester)
-							.focusRequester(focusRequester)
+							//.focusRequester(focusRequester)
 					)
 				}
 
@@ -555,6 +553,7 @@ private fun TextFieldStoreCategory(
 	}
 }*/
 
+/*
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AddAdvFinalPageScreen2() {
@@ -591,6 +590,7 @@ fun AddAdvFinalPageScreen2() {
 	}
 
 }
+*/
 
 /*
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
