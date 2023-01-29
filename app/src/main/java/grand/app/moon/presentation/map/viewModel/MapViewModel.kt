@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
+import grand.app.moon.core.extenstions.getUserIdOrNull
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
@@ -26,6 +27,7 @@ import grand.app.moon.domain.map.use_case.MapUseCase
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.helpers.map.cluster.ClusterCustomItem
 import grand.app.moon.helpers.map.cluster.MarkerRender
@@ -91,12 +93,20 @@ class MapViewModel @Inject constructor(
   fun details(v: View) {
     Log.d(TAG, "details_id: ${advertisement.get()?.id}")
     Log.d(TAG, "details_type: $type")
-    v.findNavController().navigate(
-      R.id.nav_ads, bundleOf(
-        "id" to advertisement.get()?.id,
-        "type" to type_ads
-      )
-    )
+
+	  val context = v.context ?: return
+
+	  MyLogger.e("aa -> ch 1")
+	  if (context.isLogin() && advertisement.get()?.user?.id == context.getUserIdOrNull()) {
+			// todo ...
+	  }else {
+		  v.findNavController().navigate(
+			  R.id.nav_ads, bundleOf(
+				  "id" to advertisement.get()?.id,
+				  "type" to type_ads
+			  )
+		  )
+	  }
   }
 
 

@@ -56,7 +56,7 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 	}
 
 	val statsCount = response.map {
-		app.getString(R.string.checking_statistics_var, it?.statisticsViewsCount.orZero().toString())
+		app.getString(R.string.checking_statistics)
 	}
 
 	val adsTooltip = response.map {

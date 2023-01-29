@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
+import grand.app.moon.core.extenstions.getUserIdOrNull
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.databinding.ItemAdsBinding
 import grand.app.moon.databinding.ItemAdsGridBinding
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.ads.viewModels.ItemAdsViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
@@ -95,12 +98,19 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
       Constants.GRID_2 -> {
         holder.itemLayoutGridBinding.itemAdsContainer.setOnClickListener {
           Log.d(TAG, "onBindViewHolder: THERE CLICK")
-          holder.itemLayoutGridBinding.root.findNavController().navigate(
-            R.id.nav_ads, bundleOf(
-              "id" to data.id,
-              "type" to type
-            )
-          )
+
+	        MyLogger.e("aa -> ch 2")
+	        if (holder.itemLayoutGridBinding.root.context.isLogin() &&
+		        data.user?.id == holder.itemLayoutGridBinding.root.context.getUserIdOrNull()) {
+						// todo. ..
+	        }else {
+		        holder.itemLayoutGridBinding.root.findNavController().navigate(
+			        R.id.nav_ads, bundleOf(
+				        "id" to data.id,
+				        "type" to type
+			        )
+		        )
+	        }
         }
       }
     }

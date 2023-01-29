@@ -35,6 +35,7 @@ import com.onesignal.OneSignal
 import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.*
 import grand.app.moon.domain.home.models.Advertisement
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.home.HomeActivity
 import java.io.File
 import java.io.FileOutputStream
@@ -245,12 +246,21 @@ fun setImagesAppTutrial(sliderView: ImageSlider, images: ArrayList<Advertisement
     sliderView.setImageList(list)
     sliderView.setItemClickListener(object : ItemClickListener {
       override fun onItemSelected(position: Int) {
-        sliderView.findNavController().navigate(
-          R.id.nav_ads, bundleOf(
-            "id" to images[position].id,
-            "type" to 2,
-          )
-        )
+	      val context = sliderView.context ?: return
+
+	      val advertisement = images[position]
+
+	      if (context.isLogin() && advertisement.user?.id == context.getUserIdOrNull()) {
+		      // todo ...
+	      }else {
+		      MyLogger.e("aa -> ch 5")
+		      sliderView.findNavController().navigate(
+			      R.id.nav_ads, bundleOf(
+				      "id" to images[position].id,
+				      "type" to 2,
+			      )
+		      )
+	      }
       }
     })
   }

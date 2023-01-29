@@ -66,5 +66,13 @@ data class Advertisement(
   @SerializedName("similar_ads")
   var similarAds: ArrayList<Advertisement> = arrayListOf(),
 
+  @SerializedName("store") var user: UserInAdvertisementOld? = null,
 
-  ) : Serializable
+  @SerializedName("user_id") var userId: Int? = null,
+  @SerializedName("store_id") var storeId: Int? = null,
+  @SerializedName("shop_id") var shopId: Int? = null,
+) : Serializable
+
+data class UserInAdvertisementOld(
+	var id: Int?,
+)

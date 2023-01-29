@@ -55,6 +55,7 @@
         android:max="100"
 
         style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:isIndicator="false"
 
         android:progressTint="#FFBC23"
         android:progressBackgroundTint="#DAD9E2"/>

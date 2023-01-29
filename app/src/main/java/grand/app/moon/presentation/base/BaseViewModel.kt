@@ -60,9 +60,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.ContextCompat.startActivity
-
-
-
+import grand.app.moon.extensions.MyLogger
 
 
 open class BaseViewModel : ViewModel(), Observable {
@@ -468,7 +466,8 @@ open class BaseViewModel : ViewModel(), Observable {
           )
         }else if(isDeepLinkAds(link)){
           val id = getDeepLinkAdsId(link)
-          v.findNavController().navigate(
+	        MyLogger.e("aa -> ch 4")
+	        v.findNavController().navigate(
             R.id.nav_ads, bundleOf(
               "id" to id,
               "type" to 2

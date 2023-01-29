@@ -11,14 +11,12 @@ import com.google.android.gms.maps.MapFragment
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
-import grand.app.moon.core.extenstions.isChatAllow
-import grand.app.moon.core.extenstions.isLogin
-import grand.app.moon.core.extenstions.isLoginWithOpenAuth
-import grand.app.moon.core.extenstions.openChatStore
+import grand.app.moon.core.extenstions.*
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.InteractionRequest
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.ads.AdsDetailsFragment
 import grand.app.moon.presentation.ads.AdsListFragment
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
@@ -50,13 +48,21 @@ class ItemAdsViewModel(
   private val TAG = "ItemAdsViewModel"
   fun details(v: View) {
     Log.d(TAG, "details: $type")
-    v.findNavController().navigate(
-      R.id.nav_ads, bundleOf(
-        "id" to advertisement.id,
-        "type" to type,
-        "from_store" to fromStore
-      )
-    )
+
+	  val context = v.context ?: return
+
+	  MyLogger.e("aa -> ch 3 ${advertisement.user?.id} ${context.getUserIdOrNull()} ${advertisement.userId} ${advertisement.storeId} ${advertisement.shopId}")
+    if (context.isLogin() && advertisement.user?.id == context.getUserIdOrNull()) {
+			// todo ...
+    }else {
+	    v.findNavController().navigate(
+		    R.id.nav_ads, bundleOf(
+			    "id" to advertisement.id,
+			    "type" to type,
+			    "from_store" to fromStore
+		    )
+	    )
+    }
   }
 
   fun storeDetails(v: View) {

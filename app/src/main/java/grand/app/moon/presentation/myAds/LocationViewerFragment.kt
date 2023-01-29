@@ -16,6 +16,8 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import grand.app.moon.R
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -26,6 +28,7 @@ import grand.app.moon.databinding.FragmentLocationSelectionBinding
 import grand.app.moon.databinding.FragmentLocationViewerBinding
 import grand.app.moon.extensions.LocationHandler
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.iconDrawableRes
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.myAds.viewModel.LocationSelectionViewModel
 import grand.app.moon.presentation.myAds.viewModel.LocationViewerViewModel
@@ -82,7 +85,9 @@ class LocationViewerFragment : BaseFragment<FragmentLocationViewerBinding>(),
         )
 
 		    googleMap.addMarker(
-			    MarkerOptions().position(location)
+			    MarkerOptions()
+				    .position(location)
+				    .iconDrawableRes(context, R.drawable.icon_location_on_map_4)
 				)
 
         googleMap.animateCamera(

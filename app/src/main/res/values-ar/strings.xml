@@ -407,4 +407,6 @@
   <string name="pick_main_category_firstly_2">إختر قسم رئيسى أولاً</string>
     <string name="rate_ad">تقيم الاعلان</string>
   <string name="percentage_sign">%</string>
+  <string name="checking_statistics">الإطلاع علي الإحصائيات</string>
+  <string name="nick_name">الإسم المستعار</string>
 </resources>

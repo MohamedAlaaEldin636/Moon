@@ -417,4 +417,6 @@
   <string name="pick_main_category_firstly_2">Pick Main Category firstly</string>
     <string name="rate_ad">تقيم الاعلان</string>
     <string name="percentage_sign">%</string>
+  <string name="checking_statistics">View the statistics</string>
+  <string name="nick_name">Nickname</string>
 </resources>

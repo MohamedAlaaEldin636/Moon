@@ -33,6 +33,12 @@ fun Context.isLogin(): Boolean {
   return appPreferences.getInt("id", -1) != -1
 }
 
+fun Context.getUserIdOrNull(): Int? {
+  val appPreferences: SharedPreferences =
+    getSharedPreferences(AppPreferences.APP_PREFERENCES_NAME, AppPreferences.MODE)
+  return appPreferences.getInt("id", -1).let { if (it == -1) null else it }
+}
+
 fun Context.isEnglish(): Boolean {
   val appPreferences: SharedPreferences =
     getSharedPreferences(AppPreferences.APP_PREFERENCES_NAME, AppPreferences.MODE)

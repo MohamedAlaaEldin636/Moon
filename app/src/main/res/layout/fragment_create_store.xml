@@ -174,8 +174,8 @@
         <EditText
           style="@style/EditTextForCreateShop"
 
-          tools:hint="@string/user_name"
-          editText_setHintWithRequiredAstrix="@{@string/user_name}"
+          tools:hint="@string/nick_name"
+          editText_setHintWithRequiredAstrix="@{@string/nick_name}"
 
           android:text="@={viewModel.userName}"/>
 
