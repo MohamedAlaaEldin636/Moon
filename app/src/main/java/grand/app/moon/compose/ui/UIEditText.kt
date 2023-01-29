@@ -45,7 +45,7 @@ object UIEditText {
 				decorationBox = {
 					Row(
 						boxModifier
-							.border(1.dp, ExtendedTheme.colors.borderTextField, RoundedCornerShape(5.dp))
+							.border(0.2.dp, ExtendedTheme.colors.borderTextField, RoundedCornerShape(5.dp))
 							.clip(RoundedCornerShape(5.dp))
 							.padding(16.dp)
 					) {

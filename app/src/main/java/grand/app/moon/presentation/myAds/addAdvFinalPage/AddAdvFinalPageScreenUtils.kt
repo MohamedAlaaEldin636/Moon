@@ -600,7 +600,7 @@ object AddAdvFinalPageScreenUtils {
 				Modifier
 					.fillMaxSize()
 					.background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp))
-					.border(1.dp, ExtendedTheme.colors.imagesBorder, RoundedCornerShape(5.dp))
+					.border(0.2.dp, ExtendedTheme.colors.imagesBorder, RoundedCornerShape(5.dp))
 			) {
 				Column(
 					Modifier
@@ -637,7 +637,7 @@ object AddAdvFinalPageScreenUtils {
 				Modifier
 					.fillMaxSize()
 					.background(Color.White, RoundedCornerShape(5.dp))
-					.border(1.dp, ExtendedTheme.colors.imagesBorder, RoundedCornerShape(5.dp)),
+					.border(0.2.dp, ExtendedTheme.colors.imagesBorder, RoundedCornerShape(5.dp)),
 				verticalArrangement = Arrangement.Center,
 				horizontalAlignment = Alignment.CenterHorizontally
 			) {
