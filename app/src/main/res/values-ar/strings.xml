@@ -209,7 +209,7 @@
   <string name="ad_benefit_2">يمكن إضافة حالات</string>
   <string name="ad_benefit_1">5 إعلاانت مجانية فقط متبقى</string>
   <string name="add_free_adv">إضافة إعلان مجاني</string>
-  <string name="pick_your_package_now">إختر باقتك</string>
+  <string name="pick_your_package_now">إختر باقتك الاَن</string>
   <string name="individuals_advertisements">إعلانات الأفراد</string>
   <string name="stores_advertisements">إعلانات المتاجر</string>
   <string name="paid_advertisement">إعلان مدفوع</string>
@@ -406,4 +406,5 @@
   <string name="your_store_sub_category">القسم الفرعي بمتجرك</string>
   <string name="pick_main_category_firstly_2">إختر قسم رئيسى أولاً</string>
     <string name="rate_ad">تقيم الاعلان</string>
+  <string name="percentage_sign">%</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.redirectIfNotLoggedIn
 import grand.app.moon.data.packages.RepositoryPackages
 import grand.app.moon.data.shop.RepoShop
@@ -38,9 +39,9 @@ class MoreViewModel @Inject constructor(
 
 	val restDaysInPackage = MutableLiveData<Int?>()
 
-	val storeNoticeText = restDaysInPackage.map {
+	val storeNoticeText = restDaysInPackage.mapToMutableLiveData {
 		val res = when {
-			user.isStore.orFalse().not() -> R.string.upgrade_to_shop_now
+			app.isLogin().not() || user.isStore.orFalse().not() -> R.string.upgrade_to_shop_now
 			else -> if (it.orZero() > 0) {
 				R.string.check_ad_premium
 			}else {
@@ -56,7 +57,7 @@ class MoreViewModel @Inject constructor(
 	val adapter = RVItemCommonListUsage<ItemStoreFullDataBinding, ItemStoreInfo>(
 		R.layout.item_store_full_data,
 		listOf(
-			ItemStoreInfo.complete(R.drawable.ic_profile, R.string.my_account),
+			ItemStoreInfo.complete(R.drawable.ic_profile, if (app.isLogin()) R.string.my_account else R.string.log_in),
 			ItemStoreInfo.complete(R.drawable.ic_store_data_4, R.string.store_data),
 			ItemStoreInfo.complete(R.drawable.ic_about_moon_settings, R.string.about_moon),
 			ItemStoreInfo.complete(R.drawable.ic_chat_with_app_managers, R.string.chat_with_app_managers),

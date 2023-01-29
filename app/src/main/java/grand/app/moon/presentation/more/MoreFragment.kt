@@ -29,6 +29,8 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 			) {
 				viewModel.restDaysInPackage.value = it.restDays.orZero()
 			}
+		}else {
+			viewModel.restDaysInPackage.value = 0
 		}
 	}
 

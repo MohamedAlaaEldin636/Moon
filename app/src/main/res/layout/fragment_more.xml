@@ -83,7 +83,7 @@
       android:visibility="@{viewModel.showBecomeStoreIcon}"
 
       app:layout_constraintTop_toTopOf="@id/storeNoticeView"
-      app:layout_constraintStart_toStartOf="@id/storeNoticeView"/>
+      app:layout_constraintEnd_toEndOf="@id/storeNoticeView"/>
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerView"
