@@ -24,7 +24,7 @@ class RateInAdvViewModel @Inject constructor(
 	val args: RateInAdvDialogFragmentArgs,
 ) : AndroidViewModel(application) {
 
-	val showRating = MutableLiveData(args.useRating)
+	val showRating = MutableLiveData(true/*args.useRating*/)
 
 	val comment = MutableLiveData("")
 
@@ -33,7 +33,7 @@ class RateInAdvViewModel @Inject constructor(
 
 		val binding = fragment._binding ?: return
 
-		val rate = if (args.useRating) binding.ratingBar.progress / 20 else null
+		val rate = if (true/*args.useRating*/) binding.ratingBar.progress / 20 else null
 
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
