@@ -128,7 +128,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 
 		val isStore = user.isStore.orFalse()
 
-		if (locationData.value == null || (isStore.not() && selectedCity.value == null) || price.value.isNullOrEmpty()
+		if (locationData.value == null || selectedCity.value == null || price.value.isNullOrEmpty()
 			|| (brands.isNotEmpty() && selectedBrand.value == null) /*|| description.value.isNullOrEmpty()*/
 			|| mapOfProperties.value.orEmpty().values.any {
 				if (it.type != 1 && it.type != 3) false else {
@@ -140,9 +140,6 @@ class AddAdvFinalPageViewModel @Inject constructor(
 			return fragment.showError(fragment.getString(R.string.all_fields_required))
 		}
 
-		// price_before
-		// category_id
-		// sub_category_id todo
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
 				if (response != null) {
@@ -159,7 +156,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 						locationData.value?.latitude.orEmpty(),
 						locationData.value?.longitude.orEmpty(),
 						locationData.value?.address.orEmpty(),
-						selectedCity.value?.id,
+						selectedCity.value?.id.orZero(),
 						price.value?.toIntOrNull().orZero(),
 						negotiable.value.orFalse(),
 						selectedBrand.value?.id,
@@ -198,7 +195,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 						locationData.value?.latitude.orEmpty(),
 						locationData.value?.longitude.orEmpty(),
 						locationData.value?.address.orEmpty(),
-						selectedCity.value?.id,
+						selectedCity.value?.id.orZero(),
 						price.value?.toIntOrNull().orZero(),
 						negotiable.value.orFalse(),
 						selectedBrand.value?.id,

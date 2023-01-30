@@ -121,7 +121,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		latitude: String,
 		longitude: String,
 		address: String,
-		city_id: Int?,
+		city_id: Int,
 		price: Int,
 		is_negotiable: Int,
 		brand_id: Int?,
@@ -150,9 +150,8 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 
 		map["title"] = title.toRequestBody()
 
-		if (city_id != null) {
-			map["city_id"] = city_id.toString().toRequestBody()
-		}
+		map["city_id"] = city_id.toString().toRequestBody()
+
 		if (price_before != null) {
 			map["price_before"] = price_before.toString().toRequestBody()
 		}
@@ -189,7 +188,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		latitude: String,
 		longitude: String,
 		address: String,
-		city_id: Int?,
+		city_id: Int,
 		price: Int,
 		is_negotiable: Int,
 		brand_id: Int?,
@@ -218,9 +217,8 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 
 		map["title"] = title.toRequestBody()
 
-		if (city_id != null) {
-			map["city_id"] = city_id.toString().toRequestBody()
-		}
+		map["city_id"] = city_id.toString().toRequestBody()
+
 		if (price_before != null) {
 			map["price_before"] = price_before.toString().toRequestBody()
 		}

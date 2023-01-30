@@ -10,6 +10,9 @@ import grand.app.moon.domain.home.models.store.WorkingHours
 import grand.app.moon.domain.story.entity.StoryItem
 import java.io.Serializable
 
+// website
+// country_code
+// token
 @Keep
 data class Store(
   @SerializedName("share_link")

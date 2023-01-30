@@ -3,8 +3,13 @@ package grand.app.moon.core.di.module
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
 import grand.app.moon.BuildConfig
 import grand.app.moon.data.local.preferences.AppPreferences
 import com.readystatesoftware.chuck.ChuckInterceptor
@@ -181,8 +186,19 @@ object RetrofitModule {
     return GsonBuilder()
       .setLenient()
       .serializeNulls() // To allow sending null values
+	    //.registerTypeAdapter()
       .create()
   }
+
+	/*val k = object : TypeAdapter<String?>() {
+		override fun write(out: JsonWriter?, value: String?) {
+			out?.value(value)
+		}
+
+		override fun read(`in`: JsonReader?): String? {
+			return `in`?.nextString()
+		}
+	}*/
 
   @Provides
   @Singleton
