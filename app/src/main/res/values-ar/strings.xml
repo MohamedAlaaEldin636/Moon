@@ -409,4 +409,6 @@
   <string name="percentage_sign">%</string>
   <string name="checking_statistics">الإطلاع علي الإحصائيات</string>
   <string name="nick_name">الإسم المستعار</string>
+  <string name="price_before_and_after_check">السعر قبل الخصم يجب ان يكون اكبر من ما بعد الخصم</string>
+  <string name="nickname_must_be_in_english_characters">الإسم المستعار يجب ان يكون باللغة الإنجليزية</string>
 </resources>

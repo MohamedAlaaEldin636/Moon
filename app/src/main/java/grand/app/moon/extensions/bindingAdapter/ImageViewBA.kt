@@ -63,7 +63,7 @@ fun ImageView.setupWithGlideOrIgnoreMAImagesOrVideo(model: MAImagesOrVideo?) {
 @BindingAdapter("imageView_setupWithGlideOrIgnoreGlideImageViaXmlModelBA")
 fun ImageView.setupWithGlideOrIgnoreGlideImageViaXmlModelBA(model: GlideImageViaXmlModel?) {
 	when (model) {
-		is GlideImageViaXmlModel.IString -> if (model.string != null) {
+		is GlideImageViaXmlModel.IString -> if (model.string.isNullOrEmpty().not()) {
 			Glide.with(this)
 				.load(model.string)
 				.into(this)

@@ -248,7 +248,12 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 											viewModel.storeCategories = list
 
 											if (list.isEmpty()) {
-												return@handleRetryAbleActionCancellable showMessage(getString(R.string.no_store_categories_found))
+												findNavController().navigateDeepLinkWithOptions(
+													"fragment-dest",
+													"grand.app.moon.dest.store.categories.a"
+												)
+
+												return@handleRetryAbleActionCancellable
 											}
 
 											viewModel.showCategoriesPopupMenu.value = true
@@ -269,7 +274,12 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 											viewModel.storeSubCategories = list
 
 											if (list.isEmpty()) {
-												return@handleRetryAbleActionCancellable showMessage(getString(R.string.no_store_sub_categories_found))
+												findNavController().navigateDeepLinkWithOptions(
+													"fragment-dest",
+													"grand.app.moon.dest.store.sub.categories.a"
+												)
+
+												return@handleRetryAbleActionCancellable
 											}
 
 											viewModel.showSubCategoriesPopupMenu.value = true
