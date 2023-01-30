@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -25,7 +26,11 @@ import grand.app.moon.databinding.FragmentLocationSelectionBinding
 import grand.app.moon.extensions.LocationHandler
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.myAds.model.getAddressFromLatitudeAndLongitude
 import grand.app.moon.presentation.myAds.viewModel.LocationSelectionViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.min
 
 @AndroidEntryPoint
@@ -78,6 +83,25 @@ class LocationSelectionFragment : BaseFragment<FragmentLocationSelectionBinding>
 
     override fun onMapReady(googleMap: GoogleMap) {
         viewModel.googleMap = googleMap
+
+	    viewModel.googleMap?.setOnCameraIdleListener {
+				lifecycleScope.launch(Dispatchers.IO) {
+					val googleMap2 = viewModel.googleMap ?: return@launch
+
+					context?.getAddressFromLatitudeAndLongitude(
+						withContext(Dispatchers.Main) {
+							googleMap2.cameraPosition.target.latitude
+						},
+						withContext(Dispatchers.Main) {
+							googleMap2.cameraPosition.target.longitude
+						}
+					)?.also {
+						withContext(Dispatchers.Main) {
+							viewModel.search.value = it
+						}
+					}
+				}
+	    }
 
         MyLogger.e("onMapReady -> ${viewModel.args.latitude}")
 

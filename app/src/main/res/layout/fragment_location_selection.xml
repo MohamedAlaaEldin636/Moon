@@ -84,19 +84,43 @@
       android:focusable="true"
       android:onClick="@{v -> viewModel.toSearchPlace(v)}"
 
+      app:cardBackgroundColor="@color/white"
+
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent">
 
-      <com.google.android.material.textfield.TextInputLayout
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:minHeight="48dp"
+
+        style="@style/TextTajawalRegular12"
+
+        android:textDirection="locale"
+
+        android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+        android:text="@{viewModel.search}"
+
+        android:padding="16dp"
+
+        app:drawableStartCompat="@drawable/ic_search_2"
+        android:drawablePadding="8dp"
+
+        android:gravity="center_vertical"/>
+
+      <!--<com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
 
-        android:hint="@string/search"
-        app:hintTextColor="#848484"
+        android:hint="@{viewModel.search}"
+        app:hintTextColor="@color/black"
+        app:hintTextAppearance="@style/TextTajawalRegular12.WithDirection"
 
         android:clickable="true"
         android:focusable="true"
@@ -114,7 +138,9 @@
 
           style="@style/TextTajawalRegular12"
           android:textColor="@color/black"
-          android:text="@{viewModel.search}"
+          android:text=""
+
+          android:textDirection="locale"
 
           android:background="@color/white"
 
@@ -124,7 +150,7 @@
 
           android:enabled="false"/>
 
-      </com.google.android.material.textfield.TextInputLayout>
+      </com.google.android.material.textfield.TextInputLayout>-->
 
     </com.google.android.material.card.MaterialCardView>
 
