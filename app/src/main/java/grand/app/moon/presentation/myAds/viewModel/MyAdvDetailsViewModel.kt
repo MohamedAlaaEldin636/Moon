@@ -113,13 +113,13 @@ class MyAdvDetailsViewModel @Inject constructor(
 	/** same as [price] but strikethrough */
 	val oldPrice: LiveData<CharSequence> = response.map {
 		buildSpannedString {
-			append("${it?.oldPrice.orZero()} ${it?.country?.currency.orEmpty()}")
+			append("${it?.priceBeforeDiscount.orZero()} ${it?.country?.currency.orEmpty()}")
 
 			this[0..length] = StrikethroughSpan()
 		}
 	}
 	val showOldPrice = response.map {
-		it?.oldPrice != null
+		it?.priceBeforeDiscount != null
 	}
 
 	val showIsNegotiable = response.map {

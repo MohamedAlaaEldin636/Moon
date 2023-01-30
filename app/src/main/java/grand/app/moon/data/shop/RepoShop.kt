@@ -1,8 +1,11 @@
 package grand.app.moon.data.shop
 
+import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.domain.utils.map
 import grand.app.moon.domain.utils.toFailureStatus
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
@@ -14,6 +17,7 @@ import javax.inject.Singleton
 @Singleton
 class RepoShop @Inject constructor(
 	private val remoteDataSource: ShopRemoteDataSource,
+	private val useCaseCountries: CountriesUseCase,
 ) {
 
 	fun getMyCategories() = BasePaging.createFlowViaPager {
@@ -153,4 +157,52 @@ class RepoShop @Inject constructor(
 		coverImage: MultipartBody.Part?,
 	) = remoteDataSource.addStory(file, storyLink, storyType, name, coverImage)
 
+	/**
+	 * @param storeCategoryId `null` if NOT store
+	 */
+	suspend fun getCitiesAndStoreCategoriesAndSubCategoriesIfPossible(storeCategoryId: Int?): Resource<BaseResponse<CitiesAndStoreCategoriesAndSubCategories?>> {
+		val resourceCities = useCaseCountries.getCities()
+
+		if (storeCategoryId == null) {
+			return resourceCities.mapSuccess { baseResponse ->
+				baseResponse.map { CitiesAndStoreCategoriesAndSubCategories(it.orEmpty()) }
+			}
+		}
+
+		return if (resourceCities is Resource.Success) {
+			val resourceCategories = getMyCategoriesInAllPagesOfPagination()
+
+			if (resourceCategories is Resource.Success) {
+				val resourceSubCategories = getMySubCategoriesInAllPagesOfPagination(storeCategoryId)
+
+				if (resourceSubCategories is Resource.Success) {
+					resourceSubCategories.mapSuccess { baseResponse ->
+						baseResponse.map {
+							CitiesAndStoreCategoriesAndSubCategories(
+								resourceCities.value.data.orEmpty(),
+								resourceCategories.value.data.orEmpty(),
+								resourceSubCategories.value.data.orEmpty(),
+							)
+						}
+					}
+				}else {
+					resourceSubCategories.mapToEmpty()
+				}
+			}else {
+				resourceCategories.mapToEmpty()
+			}
+		}else {
+			resourceCities.mapToEmpty()
+		}
+	}
+
+	private fun <T> Resource<BaseResponse<T>>.mapToEmpty():  Resource<BaseResponse<CitiesAndStoreCategoriesAndSubCategories?>> =
+		mapSuccess { it.map { CitiesAndStoreCategoriesAndSubCategories() } }
+
 }
+
+data class CitiesAndStoreCategoriesAndSubCategories(
+	val cities: List<Country> = emptyList(),
+	val categories: List<IdAndName> = emptyList(),
+	val subCategories: List<IdAndName> = emptyList(),
+)

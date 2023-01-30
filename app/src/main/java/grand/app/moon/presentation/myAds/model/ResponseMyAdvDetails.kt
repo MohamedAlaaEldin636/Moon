@@ -37,7 +37,6 @@ data class ResponseMyAdvDetails(
 	var country: ItemCountryInAdvDetails?,
 	@SerializedName("rest_days") var restDays: Int?,
 	@SerializedName("is_negotiable") var negotiable: Int?,
-	var oldPrice: Int?,
 	@SerializedName("share_link") var shareLink: String?,
 	var category: ItemCategoryInAdvDetails?,
 	@SerializedName("sub_category") var subCategory: ItemSubCategoryInAdvDetails?,
@@ -45,6 +44,8 @@ data class ResponseMyAdvDetails(
 	var brand: ItemBrandInAdvDetails?,
 
 	@SerializedName("price_before") var priceBeforeDiscount: Int?,
+	@SerializedName("store_category_id") var storeCategoryId: Int?,
+	@SerializedName("store_sub_category_id") var storeSubCategoryId: Int?,
 ) {
 	val isPremium get() = premium == 1
 

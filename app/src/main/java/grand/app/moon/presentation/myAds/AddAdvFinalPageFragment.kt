@@ -162,16 +162,26 @@ class AddAdvFinalPageFragment : BaseFragment<FragmentAddAdvFinalPageBinding>(), 
 
 			if (viewModel.response != null) {
 				handleRetryAbleActionCancellable(
-					action = { viewModel.countriesUseCase.getCities() }
-				) { list ->
-					viewModel.cities = list
+					action = { viewModel.repoShop.getCitiesAndStoreCategoriesAndSubCategoriesIfPossible(viewModel.response?.storeCategoryId) }
+				) { value ->
+					viewModel.cities = value.cities
 
-					if (list.isEmpty()) {
+					/*if (value.cities.isEmpty()) {
 						return@handleRetryAbleActionCancellable showMessage(getString(R.string.no_cities_found))
-					}
+					}*/
 
 					viewModel.selectedCity.value = viewModel.cities.firstOrNull { item ->
 						item.id == viewModel.response?.cityId
+					}
+
+					viewModel.storeCategories = value.categories
+					viewModel.selectedCategory.value = viewModel.storeCategories.firstOrNull { item ->
+						item.id == viewModel.response?.storeCategoryId
+					}
+
+					viewModel.storeSubCategories = value.subCategories
+					viewModel.selectedSubCategory.value = viewModel.storeSubCategories.firstOrNull { item ->
+						item.id == viewModel.response?.storeSubCategoryId
 					}
 				}
 			}
