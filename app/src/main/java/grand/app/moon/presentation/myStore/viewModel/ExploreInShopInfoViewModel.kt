@@ -23,10 +23,12 @@ import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideWithDefaultsPlaceholderAndError
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideWithDefaultsPlaceholderAndErrorListImagesOrVideo
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideWithDefaultsPlaceholderAndErrorVideo
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.myStore.ExploreInShopInfoFragment
 import grand.app.moon.presentation.myStore.StoreClientsReviewsFragment
+import grand.app.moon.presentation.myStore.StoryInShopInfoFragment
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -220,10 +222,16 @@ class ExploreInShopInfoViewModel @Inject constructor(
 	}
 
 	fun goToAddExplore(view: View) {
-		view.findFragmentOrNull<ExploreInShopInfoFragment>()?.findNavController()?.navigateDeepLinkWithOptions(
-			"fragment-dest",
-			"grand.app.moon.dest.add.explore"
-		)
+		val fragment = view.findFragmentOrNull<ExploreInShopInfoFragment>() ?: return
+
+		if (remainingExploreCount.value.orZero() > 0) {
+			fragment.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.add.explore"
+			)
+		}else {
+			fragment.showError(fragment.getString(R.string.no_more_rem_stories_in_your_package))
+		}
 	}
 
 	private fun getSpannedString(value1: String, value2: String) = buildSpannedString {

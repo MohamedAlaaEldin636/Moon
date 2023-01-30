@@ -21,6 +21,7 @@ import grand.app.moon.domain.shop.ItemExploreInShopInfo
 import grand.app.moon.domain.shop.ItemStoryInShopInfo
 import grand.app.moon.domain.shop.StoryType
 import grand.app.moon.extensions.*
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myStore.StoryInShopInfoFragment
 import java.time.Instant
@@ -234,10 +235,16 @@ class StoryInShopInfoViewModel @Inject constructor(
 	}
 
 	fun goToAddStory(view: View) {
-		view.findFragmentOrNull<StoryInShopInfoFragment>()?.findNavController()?.navigateDeepLinkWithOptions(
-			"fragment-dest",
-			"grand.app.moon.dest.add.story"
-		)
+		val fragment = view.findFragmentOrNull<StoryInShopInfoFragment>() ?: return
+
+		if (remainingCount.value.orZero() > 0) {
+			fragment.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.add.story"
+			)
+		}else {
+			fragment.showError(fragment.getString(R.string.no_more_rem_stories_in_your_package))
+		}
 	}
 
 	private fun getSpannedString(value1: String, value2: String) = buildSpannedString {

@@ -426,4 +426,5 @@
   <string name="done_subscription">تم الاشتراك</string>
   <string name="create_your_store_now">أنشئ متجرك الاَن</string>
   <string name="invalid_working_hours_hint">يجب إختيار الوقت لليوم فى حالة التفعيل</string>
+  <string name="no_more_rem_stories_in_your_package">لا يوجد حالات متبقية فى باقتك</string>
 </resources>
