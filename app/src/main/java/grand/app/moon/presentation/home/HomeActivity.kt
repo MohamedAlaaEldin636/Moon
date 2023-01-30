@@ -28,6 +28,7 @@ import com.onesignal.OneSignal
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
+import grand.app.moon.presentation.packages.BecomeShopPackagesFragmentDirections
 
 
 @AndroidEntryPoint
@@ -276,28 +277,54 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 			    }
 		    ) {
 			    if (user.isStore == true) {
-						if (it > 0) {
-							// Add Adv
-							nav.navigateDeepLinkWithOptions(
-								"fragment-dest",
-								"grand.app.moon.dest.add.adv.categories.list"
-							)
-						}else {
-							// Renew current package or subscribe to a new package
-							observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(nav) {
-								nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
+				    handleRetryAbleActionCancellable(
+					    action = {
+						    viewModel.repoPackages.getShopInfo()
+					    }
+				    ) { responseMyStoreDetails ->
+					    val notCompleted = responseMyStoreDetails.storeInfo.orFalse().not()
 
-								nav.navigateDeepLinkWithOptions(
-									"fragment-dest",
-									"grand.app.moon.dest.add.adv.categories.list"
-								)
-							}
+					    if (notCompleted) {
+						    nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
+						    observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(nav) {
+							    nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
 
-							nav.navigateDeepLinkWithOptions(
-								"fragment-dest",
-								"grand.app.moon.dest.my.become.shop.package"
-							)
-						}
+							    nav.navigateDeepLinkWithOptions(
+								    "fragment-dest",
+								    "grand.app.moon.dest.add.adv.categories.list"
+							    )
+						    }
+
+						    nav.navigateDeepLinkWithOptions(
+							    "fragment-dest",
+							    "grand.app.moon.dest.create.store"
+						    )
+					    }else {
+						    if (it > 0) {
+							    // Add Adv
+							    nav.navigateDeepLinkWithOptions(
+								    "fragment-dest",
+								    "grand.app.moon.dest.add.adv.categories.list"
+							    )
+						    }else {
+							    // Renew current package or subscribe to a new package
+							    nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
+							    observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(nav) {
+								    nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
+
+								    nav.navigateDeepLinkWithOptions(
+									    "fragment-dest",
+									    "grand.app.moon.dest.add.adv.categories.list"
+								    )
+							    }
+
+							    nav.navigateDeepLinkWithOptions(
+								    "fragment-dest",
+								    "grand.app.moon.dest.my.become.shop.package"
+							    )
+						    }
+					    }
+				    }
 			    }else {
 				    nav.navigate(NavHomeDirections.actionGlobalDestAddAdvertisement(it))
 			    }

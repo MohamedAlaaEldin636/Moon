@@ -16,6 +16,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
+import grand.app.moon.data.packages.RepositoryPackages
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.CategoryItem
@@ -39,7 +40,8 @@ class HomeViewModel @Inject constructor(
   var storeUseCase: StoreUseCase,
   var userLocalUseCase: UserLocalUseCase,
   val accountRepository: AccountRepository,
-  val homeUseCase: HomeUseCase
+  val homeUseCase: HomeUseCase,
+  val repoPackages: RepositoryPackages
 ) : BaseViewModel() {
 
   var isRefresh = false

@@ -31,9 +31,17 @@ data class ResponseMyStoreDetails(
 	var phone: String?,
 	@SerializedName("country_code") var countryCode: String?,
 	@SerializedName("progress_bar") var progressBar: Int?,
-	@SerializedName("store_info") var storeInfo: Boolean?,
-	var categories: Boolean?,
-	@SerializedName("sub_categories") var subCategories: Boolean?,
-	@SerializedName("working_hours") var workingHours: Boolean?,
-	@SerializedName("social_media_links") var socialMediaLinks: Boolean?,
+	@SerializedName("store_info_status") var storeInfo: Boolean?,
+	@SerializedName("categories_status") var categories: Boolean?,
+	@SerializedName("sub_categories_status") var subCategories: Boolean?,
+	@SerializedName("working_hours_status") var workingHours: Boolean?,
+	@SerializedName("social_media_links_status") var socialMediaLinks: Boolean?,
 )
+/*
+"store_info_status":false,
+"categories_status":false,
+"sub_categories_status":false,
+"working_hours_status":false
+,"social_media_links_status":false,
+
+ */
