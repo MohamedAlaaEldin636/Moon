@@ -171,7 +171,7 @@
             android:layout_marginTop="3.5dp"
             android:layout_marginBottom="7dp"
 
-            android:text="@string/upload_explore"
+            android:text="@string/upload_story"
             style="@style/TextTajawalBold14"
             android:textSize="17sp"
 
@@ -197,7 +197,7 @@
 
             android:gravity="center"
             android:textDirection="locale"
-            android:text="@string/explore_add_label_desc"
+            android:text="@string/story_add_label_desc"
             style="@style/TextTajawalRegular14"
             android:textColor="#727889"
 
@@ -222,14 +222,10 @@
             app:layout_constraintEnd_toEndOf="@id/dottedView" />
 
           <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
 
             android:visibility="@{viewModel.showVideoIndicator}"
-
-            app:layout_constraintDimensionRatio="1:1"
-
-            app:layout_constraintWidth_percent="0.3"
 
             android:src="@drawable/ic_baseline_play_circle_filled_24"
             app:tint="@color/white"

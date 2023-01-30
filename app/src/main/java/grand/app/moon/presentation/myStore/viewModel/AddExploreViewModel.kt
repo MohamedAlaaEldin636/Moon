@@ -29,6 +29,10 @@ class AddExploreViewModel @Inject constructor(
 		it is MAImagesOrVideo.Video
 	}
 
+	/*val showMultiImageIndicator = uris.map {
+		it is MAImagesOrVideo.Images && it.images.size > 1
+	}*/
+
 	fun pickImagesOrVideo(view: View) {
 		val fragment = view.findFragmentOrNull<AddExploreFragment>() ?: return
 

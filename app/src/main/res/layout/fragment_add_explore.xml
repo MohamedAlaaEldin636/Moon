@@ -172,23 +172,41 @@
       app:layout_constraintStart_toStartOf="@id/dottedView"
       app:layout_constraintEnd_toEndOf="@id/dottedView" />
 
+    <!--android:background="@drawable/dr_scrim_circle"-->
     <ImageView
-      android:layout_width="0dp"
-      android:layout_height="0dp"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
 
       android:visibility="@{viewModel.showVideoIndicator}"
+      tools:visibility="gone"
 
-      app:layout_constraintDimensionRatio="1:1"
-
-      app:layout_constraintWidth_percent="0.3"
-
-      android:src="@drawable/ic_baseline_play_circle_filled_24"
+      android:src="@drawable/video_indicator"
       app:tint="@color/white"
+      tools:tint="@color/black"
 
-      app:layout_constraintTop_toTopOf="@id/dottedView"
-      app:layout_constraintBottom_toBottomOf="@id/dottedView"
+      android:layout_margin="16dp"
+
       app:layout_constraintStart_toStartOf="@id/dottedView"
+      app:layout_constraintBottom_toBottomOf="@id/dottedView"
+      app:layout_constraintTop_toTopOf="@id/dottedView"
       app:layout_constraintEnd_toEndOf="@id/dottedView" />
+
+    <!--<ImageView
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+
+      android:visibility="@{viewModel.showMultiImageIndicator}"
+
+      android:src="@drawable/multi_image_indicator"
+      app:tint="@color/white"
+      tools:tint="@color/black"
+
+      android:layout_margin="16dp"
+
+      app:layout_constraintStart_toStartOf="@id/dottedView"
+      app:layout_constraintBottom_toBottomOf="@id/dottedView"
+      app:layout_constraintTop_toTopOf="@id/dottedView"
+      app:layout_constraintEnd_toEndOf="@id/dottedView" />-->
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

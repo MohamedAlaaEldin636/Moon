@@ -417,4 +417,7 @@
   <string name="create_your_store_now">أنشئ متجرك الاَن</string>
   <string name="invalid_working_hours_hint">يجب إختيار الوقت لليوم فى حالة التفعيل</string>
   <string name="no_more_rem_stories_in_your_package">لا يوجد حالات متبقية فى باقتك</string>
+  <string name="no_more_rem_explore_in_your_package">لا يوجد اكسبلور متبقي فى باقتك</string>
+  <string name="story_add_label_desc">يمكنك ألان إرفاق إستوري لمتجرك صور متعددة او فيديوهات</string>
+  <string name="upload_story">إرفاق ستوري</string>
 </resources>

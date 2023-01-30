@@ -230,7 +230,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 				"grand.app.moon.dest.add.explore"
 			)
 		}else {
-			fragment.showError(fragment.getString(R.string.no_more_rem_stories_in_your_package))
+			fragment.showError(fragment.getString(R.string.no_more_rem_explore_in_your_package))
 		}
 	}
 
