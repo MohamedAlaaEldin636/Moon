@@ -273,21 +273,37 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
 		    handleRetryAbleActionCancellable(
 			    action = {
-				    viewModel.homeUseCase.checkAvailableAdvertisements()
+				    viewModel.homeUseCase.checkAvailableAdvertisementsAndShopInfo(user.isStore.orFalse())
 			    }
-		    ) {
+		    ) { item ->
 			    if (user.isStore == true) {
-				    handleRetryAbleActionCancellable(
-					    action = {
-						    viewModel.repoPackages.getShopInfo()
-					    }
-				    ) { responseMyStoreDetails ->
-					    val notCompleted = responseMyStoreDetails.storeInfo.orFalse().not()
+				    if (item.shopInfoIsNotCompleted) {
+					    nav.currentBackStackEntry?.savedStateHandle?.remove<String>(AppConsts.NavController.GSON_KEY)
+					    observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(nav) {
+						    nav.currentBackStackEntry?.savedStateHandle?.remove<String>(AppConsts.NavController.GSON_KEY)
 
-					    if (notCompleted) {
-						    nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
+						    nav.navigateDeepLinkWithOptions(
+							    "fragment-dest",
+							    "grand.app.moon.dest.add.adv.categories.list"
+						    )
+					    }
+
+					    nav.navigateDeepLinkWithOptions(
+						    "fragment-dest",
+						    "grand.app.moon.dest.create.store"
+					    )
+				    }else {
+					    if (item.availableAdsCount > 0) {
+						    // Add Adv
+						    nav.navigateDeepLinkWithOptions(
+							    "fragment-dest",
+							    "grand.app.moon.dest.add.adv.categories.list"
+						    )
+					    }else {
+						    // Renew current package or subscribe to a new package
+						    nav.currentBackStackEntry?.savedStateHandle?.remove<String>(AppConsts.NavController.GSON_KEY)
 						    observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(nav) {
-							    nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
+							    nav.currentBackStackEntry?.savedStateHandle?.remove<String>(AppConsts.NavController.GSON_KEY)
 
 							    nav.navigateDeepLinkWithOptions(
 								    "fragment-dest",
@@ -297,36 +313,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
 						    nav.navigateDeepLinkWithOptions(
 							    "fragment-dest",
-							    "grand.app.moon.dest.create.store"
+							    "grand.app.moon.dest.my.become.shop.package"
 						    )
-					    }else {
-						    if (it > 0) {
-							    // Add Adv
-							    nav.navigateDeepLinkWithOptions(
-								    "fragment-dest",
-								    "grand.app.moon.dest.add.adv.categories.list"
-							    )
-						    }else {
-							    // Renew current package or subscribe to a new package
-							    nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
-							    observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(nav) {
-								    nav.currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
-
-								    nav.navigateDeepLinkWithOptions(
-									    "fragment-dest",
-									    "grand.app.moon.dest.add.adv.categories.list"
-								    )
-							    }
-
-							    nav.navigateDeepLinkWithOptions(
-								    "fragment-dest",
-								    "grand.app.moon.dest.my.become.shop.package"
-							    )
-						    }
 					    }
 				    }
 			    }else {
-				    nav.navigate(NavHomeDirections.actionGlobalDestAddAdvertisement(it))
+				    nav.navigate(NavHomeDirections.actionGlobalDestAddAdvertisement(item.availableAdsCount))
 			    }
 		    }
 	    }else {

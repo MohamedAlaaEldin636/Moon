@@ -48,7 +48,7 @@ class MyBecomeShopPackageFragment : BaseFragment<FragmentMyBecomeShopPackageBind
 		}
 
 		if (findNavController().previousBackStackEntry?.destination?.id != R.id.dest_become_shop_packages) {
-			findNavController().currentBackStackEntry?.savedStateHandle?.remove<Boolean>(AppConsts.NavController.GSON_KEY)
+			findNavController().currentBackStackEntry?.savedStateHandle?.remove<String>(AppConsts.NavController.GSON_KEY)
 
 			observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 				if (it) {

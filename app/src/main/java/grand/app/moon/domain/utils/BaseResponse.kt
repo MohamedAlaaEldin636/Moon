@@ -7,3 +7,5 @@ data class BaseResponse<T>(
   val message: String,
   val code: Int,
 ) : Serializable
+
+fun <T, R> BaseResponse<T>.map(transformation: (T) -> R) = BaseResponse(transformation(data), message, code)
