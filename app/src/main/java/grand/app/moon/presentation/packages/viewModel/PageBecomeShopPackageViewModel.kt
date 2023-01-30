@@ -169,11 +169,13 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 				val parentFragment = (fragment.parentFragment as? BecomeShopPackagesFragment)
 
 				val parentViewModel = parentFragment?.viewModel
-				parentViewModel?.allPackages?.firstOrNull {
-					it.id == response.value?.id
-				}?.also {
-					it.isSubscribed = true
-					it.restDays = response.value?.getPeriodInDays().orZero()
+				parentViewModel?.allPackages?.forEach {
+					if (it.id == response.value?.id) {
+						it.isSubscribed = true
+						it.restDays = response.value?.getPeriodInDays().orZero()
+					}else {
+						it.isSubscribed = false
+					}
 				}
 
 				val willGoToCreateShopNotMyPackage = if (successResponse?.storeInfoIsCompleted == true) {
