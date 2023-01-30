@@ -26,7 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MoreViewModel @Inject constructor(
 	application: Application,
-	userLocalUseCase: UserLocalUseCase,
+	val userLocalUseCase: UserLocalUseCase,
 	val repoShop: RepoShop,
 	val repoPackages: RepositoryPackages,
 	val accountRepository: AccountRepository,
@@ -35,13 +35,13 @@ class MoreViewModel @Inject constructor(
 	private val countryIso = accountRepository.getKeyFromLocal(Constants.COUNTRY_ISO)
 	private val lang = accountRepository.getKeyFromLocal(Constants.LANGUAGE)
 
-	val user = userLocalUseCase()
+	val user = MutableLiveData(userLocalUseCase())
 
 	val restDaysInPackage = MutableLiveData<Int?>()
 
 	val storeNoticeText = restDaysInPackage.mapToMutableLiveData {
 		val res = when {
-			app.isLogin().not() || user.isStore.orFalse().not() -> R.string.upgrade_to_shop_now
+			app.isLogin().not() || user.value?.isStore.orFalse().not() -> R.string.upgrade_to_shop_now
 			else -> if (it.orZero() > 0) {
 				R.string.check_ad_premium
 			}else {
@@ -52,7 +52,9 @@ class MoreViewModel @Inject constructor(
 		app.getString(res)
 	}
 
-	val showBecomeStoreIcon = MutableLiveData(user.isStore.orFalse().not())
+	val showBecomeStoreIcon = user.map {
+		it?.isStore.orFalse().not()
+	}
 
 	val adapter = RVItemCommonListUsage<ItemStoreFullDataBinding, ItemStoreInfo>(
 		R.layout.item_store_full_data,
@@ -80,7 +82,7 @@ class MoreViewModel @Inject constructor(
 				}
 				R.drawable.ic_store_data_4 -> {
 					if (binding.root.context.redirectIfNotLoggedIn().not()) {
-						if (user.isStore.orFalse()) {
+						if (user.value?.isStore.orFalse()) {
 							navController.navigateDeepLinkWithOptions(
 								"fragment-dest",
 								"grand.app.moon.dest_store.full.data"
@@ -155,7 +157,7 @@ class MoreViewModel @Inject constructor(
 		val navController = fragment.findNavController()
 
 		when {
-			user.isStore.orFalse().not() -> {
+			user.value?.isStore.orFalse().not() -> {
 				navController.navigateDeepLinkWithOptions(
 					"fragment-dest",
 					"grand.app.moon.dest.become.shop.packages"

@@ -7,10 +7,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.databinding.FragmentMoreBinding
-import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
-import grand.app.moon.extensions.orFalse
-import grand.app.moon.extensions.orZero
-import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 
 @AndroidEntryPoint
@@ -21,17 +18,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		if (requireContext().isLogin() && viewModel.user.isStore.orFalse()) {
-			handleRetryAbleActionOrGoBack(
-				action = {
-					viewModel.repoPackages.getMyPackageOfBeingShop()
-				}
-			) {
-				viewModel.restDaysInPackage.value = it.restDays.orZero()
-			}
-		}else {
-			viewModel.restDaysInPackage.value = 0
-		}
+		checkRestDaysInPackage()
 	}
 
 	override fun getLayoutId(): Int = R.layout.fragment_more
@@ -48,6 +35,26 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 			false,
 			1
 		)
+
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
+			viewModel.user.value = viewModel.userLocalUseCase()
+
+			checkRestDaysInPackage()
+		}
+	}
+
+	private fun checkRestDaysInPackage() {
+		if (requireContext().isLogin() && viewModel.user.value?.isStore.orFalse()) {
+			handleRetryAbleActionOrGoBack(
+				action = {
+					viewModel.repoPackages.getMyPackageOfBeingShop()
+				}
+			) {
+				viewModel.restDaysInPackage.value = it.restDays.orZero()
+			}
+		}else {
+			viewModel.restDaysInPackage.value = 0
+		}
 	}
 
 }
