@@ -161,7 +161,7 @@
       style="@style/TextTajawalMedium14"
       android:textSize="13sp"
       android:textDirection="locale"
-      android:text="@string/comments"
+      android:text="@string/views"
 
       app:layout_constraintTop_toBottomOf="@id/belowLikeView"
       app:layout_constraintBottom_toBottomOf="@id/commentsImageView"

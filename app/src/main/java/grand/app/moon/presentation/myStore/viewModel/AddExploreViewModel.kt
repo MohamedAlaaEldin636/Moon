@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
@@ -23,6 +24,10 @@ class AddExploreViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
 	val uris = MutableLiveData<MAImagesOrVideo?>()
+
+	val showVideoIndicator = uris.map {
+		it is MAImagesOrVideo.Video
+	}
 
 	fun pickImagesOrVideo(view: View) {
 		val fragment = view.findFragmentOrNull<AddExploreFragment>() ?: return

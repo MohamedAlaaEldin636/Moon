@@ -53,6 +53,10 @@ class AddStoryViewModel @Inject constructor(
 
 	val file = MutableLiveData<MAImagesOrVideo?>()
 
+	val showVideoIndicator = file.map {
+		it is MAImagesOrVideo.Video
+	}
+
 	fun pickStoryLinkingType(view: View) {
 		view.showPopup(
 			StoryLink.values().map { app.getString(it.stringRes) },

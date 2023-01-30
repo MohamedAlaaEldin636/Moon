@@ -73,7 +73,7 @@
 
       app:layout_constraintTop_toBottomOf="@id/labelFilteringResultsTextView"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toStartOf="@id/labelDateToTextView"/>
+      app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/storyTypeTextView"
@@ -90,7 +90,7 @@
       android:background="@drawable/dr_round_7_white_with_stroke"
 
       android:layout_marginTop="13dp"
-      android:layout_marginEnd="6.5dp"
+      android:layout_marginEnd="16dp"
 
       android:padding="13dp"
 
@@ -111,7 +111,7 @@
 
       app:layout_constraintTop_toBottomOf="@id/labelStoryTypeFromTextView"
       app:layout_constraintStart_toStartOf="@id/labelDateFromTextView"
-      app:layout_constraintEnd_toStartOf="@id/labelDateToTextView"/>
+      app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
       android:id="@+id/searchButton"
@@ -353,7 +353,7 @@
       tools:itemCount="6"
       app:spanCount="1"
       tools:orientation="vertical"
-      tools:listitem="@layout/item_explore_in_shop_info"
+      tools:listitem="@layout/item_story_in_shop_info"
       tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
 
       app:layout_constraintTop_toBottomOf="@id/remCountLinearLayout"

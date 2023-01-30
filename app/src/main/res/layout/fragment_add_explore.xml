@@ -172,6 +172,24 @@
       app:layout_constraintStart_toStartOf="@id/dottedView"
       app:layout_constraintEnd_toEndOf="@id/dottedView" />
 
+    <ImageView
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:visibility="@{viewModel.showVideoIndicator}"
+
+      app:layout_constraintDimensionRatio="1:1"
+
+      app:layout_constraintWidth_percent="0.3"
+
+      android:src="@drawable/ic_baseline_play_circle_filled_24"
+      app:tint="@color/white"
+
+      app:layout_constraintTop_toTopOf="@id/dottedView"
+      app:layout_constraintBottom_toBottomOf="@id/dottedView"
+      app:layout_constraintStart_toStartOf="@id/dottedView"
+      app:layout_constraintEnd_toEndOf="@id/dottedView" />
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
