@@ -55,8 +55,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		val map = mutableMapOf<String, RequestBody>()
 
 		for ((index, item) in list.withIndex()) {
-			map["working_hours[$index][from]"] = item.from.minLengthZerosPrefix(2).toRequestBody()
-			map["working_hours[$index][to]"] = item.to.minLengthZerosPrefix(2).toRequestBody()
+			map["working_hours[$index][from]"] = (if (item.from.isEmpty()) item.from else item.from.minLengthZerosPrefix(2)).toRequestBody()
+			map["working_hours[$index][to]"] = (if (item.to.isEmpty()) item.to else item.to.minLengthZerosPrefix(2)).toRequestBody()
 			map["working_hours[$index][status]"] = item.enabled.toString().toRequestBody()
 		}
 
