@@ -15,6 +15,7 @@ import grand.app.moon.databinding.ItemAdsHomeBinding
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.CategoryAdvertisement
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.ads.viewModels.ItemAdsHomeViewModel
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
 import javax.inject.Inject
@@ -90,9 +91,9 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
 //          val boolean = ListHelper.getFavourite(ads.id)
 //          differ.currentList[indexCategoryAds].advertisements[indexAds].isFavorite = boolean
 //        }
-        if(ads.store.isFollowing != ListHelper.getFollowStore(ads.store.id)){
+        if(ads.store.isFollowing != ListHelper.getFollowStore(ads.store.id.orZero())){
           check = true
-          ads.store.isFollowing = ListHelper.getFollowStore(ads.store.id)
+          ads.store.isFollowing = ListHelper.getFollowStore(ads.store.id.orZero())
         }
         if (check) notifyItemChanged(indexCategoryAds)
 
@@ -109,7 +110,7 @@ class AdsHomeAdapter @Inject constructor(private val adsRepository: AdsRepositor
     differ.currentList.forEachIndexed { indexCategoryAds, categoryAds ->
       val listAds = ArrayList<Advertisement>()
       categoryAds.advertisements.forEachIndexed { indexAds, ads ->
-        if (!ListHelper.checkBlockStore(ads.store.id)) {
+        if (!ListHelper.checkBlockStore(ads.store.id.orZero())) {
           isBlocked = true
           Log.d(TAG, "checkBlockStore: ADDEDD to unBlock")
           listAds.add(ads)

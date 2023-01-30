@@ -20,6 +20,8 @@ import grand.app.moon.databinding.ItemAdsGridBinding
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.navToMyAdvDetails
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.ads.viewModels.ItemAdsViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
@@ -100,9 +102,10 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
           Log.d(TAG, "onBindViewHolder: THERE CLICK")
 
 	        MyLogger.e("aa -> ch 2")
+	        // advertisement.user?.id == advertisement.storeId
 	        if (holder.itemLayoutGridBinding.root.context.isLogin() &&
-		        data.user?.id == holder.itemLayoutGridBinding.root.context.getUserIdOrNull()) {
-						// todo. ..
+		        data.user?.id == data.storeId) {
+		        holder.itemLayoutGridBinding.root.findNavController().navToMyAdvDetails(data.id)
 	        }else {
 		        holder.itemLayoutGridBinding.root.findNavController().navigate(
 			        R.id.nav_ads, bundleOf(
@@ -158,8 +161,8 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
         it.viewsCount = advertisement.viewsCount
         check = true
       }
-      if(it.store.isFollowing != ListHelper.getFollowStore(it.store.id)){
-        it.store.isFollowing = ListHelper.getFollowStore(it.store.id)
+      if(it.store.isFollowing != ListHelper.getFollowStore(it.store.id.orZero())){
+        it.store.isFollowing = ListHelper.getFollowStore(it.store.id.orZero())
         check = true
       }
       if(check)
@@ -194,7 +197,7 @@ class AdsAdapter @Inject constructor(private val adsRepository: AdsRepository) :
   fun checkBlockStore() {
     val list = ArrayList(differ.currentList)
     differ.currentList.forEachIndexed { index, ads ->
-      if (ListHelper.checkBlockStore(ads.store!!.id) && index < list.size) {
+      if (ListHelper.checkBlockStore(ads.store?.id.orZero()) && index < list.size) {
         list.removeAt(index)
       }
     }

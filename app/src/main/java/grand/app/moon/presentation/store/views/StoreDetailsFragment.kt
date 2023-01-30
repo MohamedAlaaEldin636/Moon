@@ -32,6 +32,8 @@ import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.FragmentStoreDetailsBinding
 import grand.app.moon.domain.explore.entity.ExploreListPaginateData
 import grand.app.moon.domain.home.models.Property
+import grand.app.moon.extensions.orZero
+import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.store.viewModels.StoreDetailsViewModel
@@ -81,7 +83,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
       { it == true }
     ) {
       Log.d(TAG, "onViewCreated: REVIEW")
-      viewModel.store.get()!!.rateCount = viewModel.store.get()!!.rateCount.toInt().plus(1).toString()
+      viewModel.store.get()?.rateCount = viewModel.store.get()?.rateCount?.toIntOrNull()?.plus(1).toStringOrEmpty()
       viewModel.notifyChange()
     }
   }
@@ -128,7 +130,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
           is Resource.Success -> {
             hideLoading()
             updateMap()
-            it.value.data.category.add(
+            it.value.data.category?.add(
               0,
               Property(0, name = resources.getString(R.string.show_all), parent = null)
             )
@@ -137,7 +139,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
               it.value.data,
               days
             )
-            if(it.value.data.explore.size == 0)
+            if(it.value.data.explore?.size == 0)
               binding.tabLayout.visibility = View.GONE
             setLocation()
           }
@@ -261,7 +263,7 @@ class StoreDetailsFragment : BaseFragment<FragmentStoreDetailsBinding>(), OnMapR
 //        it.get().let {
         if (it?.latitude != 0.0) {
           Log.d(TAG, "setLocation: ${it?.latitude}")
-          val location = it?.latitude?.let { it1 -> LatLng(it1, it.longitude) }
+          val location = it?.latitude?.let { it1 -> LatLng(it1, it.longitude.orZero()) }
           location?.let { it1 ->
             MarkerOptions().position(it1)
               .title(it.name) // below line is use to add custom marker on our map.

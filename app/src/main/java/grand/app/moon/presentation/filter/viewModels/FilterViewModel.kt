@@ -11,6 +11,7 @@ import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.filter.FILTER_TYPE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -138,8 +139,8 @@ class FilterViewModel @Inject constructor(
   }
 
   fun setStore(store: Store) {
-    if(store.category.size > 0) {
-      addCategoriesByStore(store.category) {
+    if(store.category?.size.orZero() > 0) {
+      addCategoriesByStore(store.category ?: arrayListOf()) {
         Log.d(TAG, "setStore_children: ${it.children.size}")
         adapter.update(0, it)
       }

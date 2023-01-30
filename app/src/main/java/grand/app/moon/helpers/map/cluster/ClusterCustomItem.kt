@@ -5,6 +5,7 @@ import android.widget.Checkable
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.extensions.orZero
 
 class ClusterCustomItem(story: Store, posArray: Int) : ClusterItem,
   Checkable {
@@ -50,10 +51,10 @@ class ClusterCustomItem(story: Store, posArray: Int) : ClusterItem,
   }
 
   init {
-    position = LatLng(story.latitude, story.longitude)
+    position = LatLng(story.latitude.orZero(), story.longitude.orZero())
     Log.d(TAG, "cluster: ${story.name} , ${story.nickname}")
-    title = if (story.name != "") story.name else story.nickname
-    snippet = story.nickname
+    title = if (story.name != "") story.name.orEmpty() else story.nickname.orEmpty()
+    snippet = story.nickname.orEmpty()
     this.store = story
     this.posArray = posArray
   }

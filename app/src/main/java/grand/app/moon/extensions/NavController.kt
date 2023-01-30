@@ -13,6 +13,14 @@ import androidx.navigation.fragment.findNavController
 import grand.app.moon.R
 import grand.app.moon.presentation.myStore.CreateStoreFragment
 
+fun NavController.navToMyAdvDetails(id: Int) {
+	navigateDeepLinkWithOptions(
+		"fragment-dest",
+		"grand.app.moon.presentation.myAds.dest.my.adv.details.id",
+		paths = arrayOf(id.toString())
+	)
+}
+
 /*fun Fragment.findNavControllerOfProject(): NavController {
 	return Navigation.findNavController(
 		requireActivity(),

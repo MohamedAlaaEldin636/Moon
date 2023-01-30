@@ -229,7 +229,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
               var isSeen: Boolean
               it.value.data.forEach {
                 isSeen = false
-                it.stories.forEach { storyItem ->
+                it.stories?.forEach { storyItem ->
                   if(storyItem.isSeen && !isSeen)
                     isSeen = true
                 }
@@ -242,7 +242,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), RangeSeekBar.OnRangeSe
               viewModel.storiesAdapter.storiesPaginate.list.clear()
               viewModel.storiesAdapter.storiesPaginate.list.addAll(it.value.data)
               val store = Store()
-              store.stories.add(StoryItem(name = getString(R.string.show_more), isFirst = true))
+              store.stories?.add(StoryItem(name = getString(R.string.show_more), isFirst = true))
               it.value.data.add(0, store)
               viewModel.updateStories(it.value.data)
               ListHelper.addStories(it.value.data)

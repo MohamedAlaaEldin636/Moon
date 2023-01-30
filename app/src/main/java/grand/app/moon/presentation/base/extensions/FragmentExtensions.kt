@@ -36,6 +36,7 @@ import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.*
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.navToMyAdvDetails
 import grand.app.moon.presentation.home.HomeActivity
 import java.io.File
 import java.io.FileOutputStream
@@ -250,8 +251,8 @@ fun setImagesAppTutrial(sliderView: ImageSlider, images: ArrayList<Advertisement
 
 	      val advertisement = images[position]
 
-	      if (context.isLogin() && advertisement.user?.id == context.getUserIdOrNull()) {
-		      // todo ...
+	      if (context.isLogin() && advertisement.user?.id == advertisement.storeId) {
+		      sliderView.findNavController().navToMyAdvDetails(advertisement.id)
 	      }else {
 		      MyLogger.e("aa -> ch 5")
 		      sliderView.findNavController().navigate(

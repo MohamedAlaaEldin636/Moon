@@ -13,6 +13,8 @@ import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.databinding.ItemStoreFollowedBinding
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
 
 class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHolder>() {
@@ -58,9 +60,9 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
 
   fun removeItem(){
     val list = ArrayList(differ.currentList)
-    list[position].isFollowing = !list[position].isFollowing
+    list[position].isFollowing = !list[position].isFollowing.orFalse()
     notifyItemChanged(position)
-    ListHelper.addFollowStore(list[position].id,list[position].isFollowing)
+    ListHelper.addFollowStore(list[position].id.orZero(),list[position].isFollowing.orFalse())
 
 //    list.removeAt(position)
 //    differ.submitList(list)
@@ -69,7 +71,7 @@ class StoreFollowingAdapter : RecyclerView.Adapter<StoreFollowingAdapter.ViewHol
 
   fun changeFollowingText(){
     val list = ArrayList(differ.currentList)
-    list[position].isFollowing = !list[position].isFollowing
+    list[position].isFollowing = !list[position].isFollowing.orFalse()
     notifyItemChanged(position)
   }
 

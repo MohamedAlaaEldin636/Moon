@@ -95,7 +95,7 @@ class CategoryDetailsFragment : BaseFragment<FragmentCategoryDetailsBinding>() {
             if(it.value.data.size > 0) {
               viewModel.storiesAdapter.storiesPaginate.list.addAll(it.value.data)
               val store = Store()
-              store.stories.add(StoryItem(name = getString(R.string.show_more), isFirst = true))
+              store.stories?.add(StoryItem(name = getString(R.string.show_more), isFirst = true))
               it.value.data.add(0, store)
               viewModel.updateStories(it.value.data)
             }

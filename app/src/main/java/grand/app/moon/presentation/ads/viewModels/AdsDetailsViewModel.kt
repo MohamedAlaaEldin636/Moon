@@ -35,6 +35,7 @@ import androidx.core.os.bundleOf
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.core.extenstions.*
 import grand.app.moon.domain.store.entity.ShareRequest
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.ads.adapter.SwitchAdapter
 import java.util.*
 
@@ -176,7 +177,7 @@ class AdsDetailsViewModel @Inject constructor(
     if (v.context.isLoginWithOpenAuth()) {
       if(v.isChatAllow()) {
         advertisement.get()?.store?.let {
-          v.context.openChatStore(v, it.id, it.name, it.image)
+          v.context.openChatStore(v, it.id.orZero(), it.name.orEmpty(), it.image)
         }
       }
     }

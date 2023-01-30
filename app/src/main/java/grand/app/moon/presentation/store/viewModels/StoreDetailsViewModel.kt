@@ -33,6 +33,8 @@ import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.ShareRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
+import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.orZero
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.utils.Constants
@@ -127,8 +129,8 @@ class StoreDetailsViewModel @Inject constructor(
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
       Log.d(TAG, "follow: ${store.get()!!.followersCount}")
       store.get()?.isFollowing = store.get()?.isFollowing != true
-      var followers: Int = store.get()!!.followersCount.toInt()
-      if(store.get()!!.isFollowing) followers++
+      var followers: Int = store.get()?.followersCount?.toIntOrNull().orZero()
+      if(store.get()?.isFollowing.orFalse()) followers++
       else followers--
       store.get()!!.followersCount = followers.toString()
 //      store.get()?.followersCount =
@@ -159,9 +161,9 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun story(): String {
-    val textStory = if (store.get()!!.stories.size > 0) store.get()!!.stories[0].file else ""
-    Log.d(TAG, "story: ${textStory}")
-    return textStory
+    val textStory = if ((store.get()?.stories?.size ?: -1) > 0) store.get()?.stories?.getOrNull(0)?.file else ""
+    Log.d(TAG, "story: $textStory")
+    return textStory.orEmpty()
   }
 
   fun story(v: View) {
@@ -182,7 +184,7 @@ class StoreDetailsViewModel @Inject constructor(
     v.findNavController()
       .navigate(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToZoomFragment2(
-          store.get()!!.backgroundImage
+          store.get()?.backgroundImage.orEmpty()
         )
       )
   }
@@ -191,7 +193,7 @@ class StoreDetailsViewModel @Inject constructor(
     v.findNavController()
       .navigate(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReviewsFragment2(
-          store.get()!!.id,
+          store.get()?.id.orZero(),
           Constants.FOLLOWERS,
           v.resources.getString(R.string.rates)
         )
@@ -202,7 +204,7 @@ class StoreDetailsViewModel @Inject constructor(
   fun followers(v: View) {
     v.findNavController().navigate(
       StoreDetailsFragmentDirections.actionStoreDetailsFragmentToStoreUsersFragment(
-        store.get()!!.id,
+        store.get()?.id.orZero(),
         Constants.FOLLOWERS,
         v.resources.getString(R.string.followers)
       )
@@ -212,7 +214,7 @@ class StoreDetailsViewModel @Inject constructor(
   fun seen(v: View) {
     v.findNavController().navigate(
       StoreDetailsFragmentDirections.actionStoreDetailsFragmentToStoreUsersFragment(
-        store.get()!!.id,
+        store.get()?.id.orZero(),
         Constants.VIEWS,
         v.resources.getString(R.string.views)
       )
@@ -265,7 +267,7 @@ class StoreDetailsViewModel @Inject constructor(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_report_reason),
           7,
-          store.get()!!.id, -1
+          store.get()?.id.orZero(), -1
         )
       )
     }
@@ -286,7 +288,7 @@ class StoreDetailsViewModel @Inject constructor(
         StoreDetailsFragmentDirections.actionStoreDetailsFragmentToReportDialog(
           v.resources.getString(R.string.please_choose_block_reason),
           8,
-          store.get()!!.id, -1
+          store.get()?.id.orZero(), -1
         )
       )
     }
@@ -299,7 +301,7 @@ class StoreDetailsViewModel @Inject constructor(
           adsRepository.setInteraction(InteractionRequest(store_id = store.get()?.id, type = 8))
         }
         store.get()?.let {
-          v.context.openChatStore(v, it.id, it.name, it.image)
+          v.context.openChatStore(v, it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
         }
       }
     }
@@ -354,12 +356,12 @@ class StoreDetailsViewModel @Inject constructor(
 
 //    Log.d(TAG, "update: ${data.advertisements.size}")
     checkOnline()
-    val list = ArrayList(data.advertisements.take(limit))
+    val list = ArrayList(data.advertisements?.take(limit).orEmpty())
     adsAdapter.differ.submitList(list)
     propertiesAdapter.selected = 0
     propertiesAdapter.differ.submitList(data.category)
     val storeItem = Store()
-    data.explore.forEach { explore ->
+    data.explore?.forEach { explore ->
       storeItem.id = data.id
       storeItem.image = data.image
       storeItem.name = data.name

@@ -17,6 +17,8 @@ import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.InteractionRequest
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.navToMyAdvDetails
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.ads.AdsDetailsFragment
 import grand.app.moon.presentation.ads.AdsListFragment
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
@@ -52,8 +54,8 @@ class ItemAdsViewModel(
 	  val context = v.context ?: return
 
 	  MyLogger.e("aa -> ch 3 ${advertisement.user?.id} ${context.getUserIdOrNull()} ${advertisement.userId} ${advertisement.storeId} ${advertisement.shopId}")
-    if (context.isLogin() && advertisement.user?.id == context.getUserIdOrNull()) {
-			// todo ...
+    if (context.isLogin() && advertisement.user?.id == advertisement.storeId) {
+	    v.findNavController().navToMyAdvDetails(advertisement.id)
     }else {
 	    v.findNavController().navigate(
 		    R.id.nav_ads, bundleOf(
@@ -105,7 +107,7 @@ class ItemAdsViewModel(
           adsRepository.setInteraction(InteractionRequest(advertisement.id.toString(), 8))
         }
         advertisement.store?.let {
-          v.context.openChatStore(v, it.id, it.name, it.image)
+          v.context.openChatStore(v, it.id.orZero(), it.name.orEmpty(), it.image)
         }
       }
     }

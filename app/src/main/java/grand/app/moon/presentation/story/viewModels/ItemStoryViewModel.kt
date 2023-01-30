@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.base.BaseViewModel
 
 class ItemStoryViewModel constructor(val store: Store) : BaseViewModel() {
@@ -15,6 +16,6 @@ class ItemStoryViewModel constructor(val store: Store) : BaseViewModel() {
   }
 
   fun getStory(): StoryItem {
-    return if (store.stories.size > 0) store.stories[0] else StoryItem()
+    return if (store.stories?.size.orZero() > 0) store.stories?.getOrNull(0) ?: StoryItem() else StoryItem()
   }
 }

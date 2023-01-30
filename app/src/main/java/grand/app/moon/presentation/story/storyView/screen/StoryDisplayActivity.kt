@@ -15,6 +15,7 @@ import grand.app.moon.presentation.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.ActivityStoryDisplayBinding
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.story.viewModels.StoryDisplayViewModel
 import pt.tornelas.segmentedprogressbar.SegmentedProgressBarListener
@@ -69,7 +70,7 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>() ,
   }
 
   fun init() {
-    binding.progress.segmentCount = viewModel.store.get()!!.stories.size
+    binding.progress.segmentCount = viewModel.store.get()?.stories?.size.orZero()
     binding.progress.listener = this
     binding.progress.start()
     binding.skip.setOnClickListener {
@@ -107,9 +108,9 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>() ,
 //    Log.d(TAG, "loadImage: ${viewModel.store.get()!!.stories[viewModel.pos].file}")
     viewModel.isLoaded = false
     pause()
-    viewModel.image.set(viewModel.store.get()!!.stories[viewModel.pos].file)
+    viewModel.image.set(viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.file.orEmpty())
     Glide.with(this)
-      .load(viewModel.store.get()!!.stories[viewModel.pos].file)
+      .load(viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.file.orEmpty())
       .listener(object : RequestListener<Drawable> {
         override fun onLoadFailed(
           e: GlideException?,
@@ -153,7 +154,7 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>() ,
   override fun onPage(oldPageIndex: Int, newPageIndex: Int) {
     Log.d(TAG, "onPageHere: $oldPageIndex , withNew $newPageIndex")
     viewModel.pos = newPageIndex
-    viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[viewModel.pos].id
+    viewModel.storyRequest.story_id = viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.id.orZero()
     Log.d(TAG, "onPage: ${viewModel.storyRequest.story_id}")
     viewModel.storyRequest.type = 1
     viewModel.callService()
@@ -178,7 +179,7 @@ class StoryDisplayActivity : BaseActivity<ActivityStoryDisplayBinding>() ,
     binding.progress.reset()
     viewModel.pos = 0
     viewModel.isFinish = false
-    binding.progress.segmentCount = viewModel.store.get()!!.stories.size
+    binding.progress.segmentCount = viewModel.store.get()?.stories?.size.orZero()
     resume()
   }
 

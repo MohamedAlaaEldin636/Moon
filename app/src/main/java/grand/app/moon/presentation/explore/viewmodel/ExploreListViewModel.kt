@@ -18,6 +18,8 @@ import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -112,9 +114,9 @@ class ExploreListViewModel @Inject constructor(
     else {
       followStoreRequest.storeId = adapter.differ.currentList[adapter.position].store.id
       storeUseCase.follow(followStoreRequest).launchIn(viewModelScope)
-      adapter.differ.currentList[adapter.position].store.isFollowing = !adapter.differ.currentList[adapter.position].store.isFollowing
-      adapter.changeFollowing(adapter.differ.currentList[adapter.position].store.id,adapter.differ.currentList[adapter.position].store.isFollowing)
-      ListHelper.addFollowStore(adapter.differ.currentList[adapter.position].store.id,adapter.differ.currentList[adapter.position].store.isFollowing)
+      adapter.differ.currentList[adapter.position].store.isFollowing = !adapter.differ.currentList[adapter.position].store.isFollowing.orFalse()
+      adapter.changeFollowing(adapter.differ.currentList[adapter.position].store.id.orZero(),adapter.differ.currentList[adapter.position].store.isFollowing.orFalse())
+      ListHelper.addFollowStore(adapter.differ.currentList[adapter.position].store.id.orZero(),adapter.differ.currentList[adapter.position].store.isFollowing.orFalse())
       adapter.notifyItemChanged(adapter.position)
     }
   }
@@ -147,7 +149,7 @@ class ExploreListViewModel @Inject constructor(
       exploreAction.type = 3
       explore.shares++
       adapter.notifyItemChanged(adapter.position)
-      share(v.findFragment<Fragment>().requireActivity(), explore.store.name, explore.file?.firstOrNull().orEmpty())
+      share(v.findFragment<Fragment>().requireActivity(), explore.store.name.orEmpty(), explore.file?.firstOrNull().orEmpty())
 //      shareTitleMessageImage(v.findFragment<Fragment>().requireActivity(),explore.store.name,explore.store.description,explore.file)
     }
 

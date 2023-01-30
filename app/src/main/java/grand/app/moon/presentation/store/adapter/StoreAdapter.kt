@@ -21,6 +21,8 @@ import grand.app.moon.domain.home.models.Advertisement
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
+import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
@@ -95,8 +97,8 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
 
   fun changeFollowingText(){
     val list = ArrayList(differ.currentList)
-    list[position].isFollowing = !list[position].isFollowing
-    ListHelper.addFollowStore(list[position].id,list[position].isFollowing)
+    list[position].isFollowing = !list[position].isFollowing.orFalse()
+    ListHelper.addFollowStore(list[position].id.orZero(),list[position].isFollowing.orFalse())
     notifyItemChanged(position)
   }
 
@@ -134,7 +136,7 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   fun checkBlockStore() {
     val array = ArrayList(differ.currentList)
     differ.currentList.forEachIndexed{ index, store ->
-      if(ListHelper.checkBlockStore(differ.currentList[index].id)){
+      if(ListHelper.checkBlockStore(differ.currentList[index].id.orZero())){
         array.removeAt(index)
 //        notifyItemRemoved(index)
       }
@@ -147,8 +149,8 @@ class StoreAdapter : RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
   }
   fun checkFollowingStore(){
     differ.currentList.forEachIndexed { index, store ->
-      if (store.isFollowing != ListHelper.getFollowStore(store.id)) {
-        store.isFollowing = ListHelper.getFollowStore(store.id)
+      if (store.isFollowing != ListHelper.getFollowStore(store.id.orZero())) {
+        store.isFollowing = ListHelper.getFollowStore(store.id.orZero())
         notifyItemChanged(index)
       }
     }

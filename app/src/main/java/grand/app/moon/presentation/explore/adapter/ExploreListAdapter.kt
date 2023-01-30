@@ -16,6 +16,7 @@ import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.explore.use_case.ExploreUseCase
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.explore.viewmodel.ItemExploreViewModel
 
 class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>() {
@@ -121,8 +122,8 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
 
   fun checkFollowingStore() {
     differ.currentList.forEachIndexed{ index , explore ->
-      if (explore.store.isFollowing != ListHelper.getFollowStore(explore.store.id)) {
-        explore.store.isFollowing = ListHelper.getFollowStore(explore.store.id)
+      if (explore.store.isFollowing != ListHelper.getFollowStore(explore.store.id.orZero())) {
+        explore.store.isFollowing = ListHelper.getFollowStore(explore.store.id.orZero())
         notifyItemChanged(index)
       }
     }
@@ -131,7 +132,7 @@ class ExploreListAdapter : RecyclerView.Adapter<ExploreListAdapter.ViewHolder>()
   fun checkBlockStore() {
     val array = ArrayList<Explore>()
     differ.currentList.forEachIndexed{ index, explore ->
-      if(!ListHelper.checkBlockStore(differ.currentList[index].store.id)){
+      if(!ListHelper.checkBlockStore(differ.currentList[index].store.id.orZero())){
         array.add(explore)
 //        notifyItemRemoved(index)
       }

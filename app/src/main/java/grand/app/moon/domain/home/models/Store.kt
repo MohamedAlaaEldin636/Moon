@@ -16,68 +16,66 @@ import java.io.Serializable
 @Keep
 data class Store(
   @SerializedName("share_link")
-  var share: String = "",
+  var share: String? = "",
   @SerializedName("advertisements_count")
-  val advertisementsCount: String = "0",
+  val advertisementsCount: String? = "0",
   @SerializedName("average_rate")
   var averageRate: String? = "0",
   @SerializedName("email")
-  val email: String = "",
+  val email: String? = "",
   @SerializedName("website")
-  var website: String = "",
+  var website: String? = "",
   @SerializedName("id")
-  var id: Int = 0,
+  var id: Int? = 0,
   @SerializedName("sub_category_id")
-  val subCategoryId: Int = 0,
+  val subCategoryId: Int? = 0,
   @SerializedName("image")
-  var image: String = "",
+  var image: String? = "",
   @SerializedName("name")
-  var name: String = "",
+  var name: String? = "",
   @SerializedName("nickname")
-  var nickname: String = "",
+  var nickname: String? = "",
   @SerializedName("phone")
-  val phone: String = "",
+  val phone: String? = "",
   @SerializedName("token")
-  val token: String = "",
+  val token: String? = "",
   @SerializedName("background_image")
-  val backgroundImage: String = "",
+  val backgroundImage: String? = "",
   @SerializedName("views_count")
-  val viewsCount: String = "0",
+  val viewsCount: String? = "0",
   @SerializedName("rate_count")
-  var rateCount: String = "0",
+  var rateCount: String? = "0",
   @SerializedName("followers_count")
-  var followersCount: String = "0",
+  var followersCount: String? = "0",
   @SerializedName("latitude")
-  var latitude: Double = 0.0,
+  var latitude: Double? = 0.0,
   @SerializedName("longitude")
-  var longitude: Double = 0.0,
+  var longitude: Double? = 0.0,
   @SerializedName("is_following")
-  var isFollowing: Boolean = true,
+  var isFollowing: Boolean? = true,
   @SerializedName("social_media_links")
-  var socialMediaLinks: ArrayList<SocialLink> = arrayListOf(),
+  var socialMediaLinks: ArrayList<SocialLink>? = arrayListOf(),
   @SerializedName("working_hours")
   var workingHours: ArrayList<WorkingHours>? = arrayListOf(),
   @SerializedName("advertisements")
-  var advertisements: ArrayList<Advertisement> = arrayListOf(),
+  var advertisements: ArrayList<Advertisement>? = arrayListOf(),
   @SerializedName("explores")
-  var explore: ArrayList<Explore> = arrayListOf(),
+  var explore: ArrayList<Explore>? = arrayListOf(),
   @SerializedName("city")
-  val city: Country = Country(),
+  val city: Country? = Country(),
   @SerializedName("country")
-  val country: Country = Country(),
+  val country: Country? = Country(),
   @SerializedName("description")
-  val description: String = "",
+  val description: String? = "",
   @SerializedName("created_at")
-  val createdAt: String = "",
+  val createdAt: String? = "",
   @SerializedName("premium")
-  val premium: Int = 0,
+  val premium: Int? = 0,
   @SerializedName("category")
-  val category: ArrayList<Property> = arrayListOf(),
+  val category: ArrayList<Property>? = arrayListOf(),
   @SerializedName("stories")
-  val stories: ArrayList<StoryItem> = arrayListOf(),
-  var type:String = "Store",
-  var isBlocked:Boolean = true,
-  var isLiked:Boolean = false //for stories not stores
-
-
-  ) : Serializable
+  val stories: ArrayList<StoryItem>? = arrayListOf(),
+  var type:String? = "Store",
+  var isBlocked:Boolean? = true,
+  var isLiked:Boolean? = false //for stories not stores
+) : Serializable

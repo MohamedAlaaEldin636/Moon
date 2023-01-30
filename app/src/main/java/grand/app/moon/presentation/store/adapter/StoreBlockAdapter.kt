@@ -13,6 +13,8 @@ import grand.app.moon.R
 import grand.app.moon.databinding.ItemStoreBlockedBinding
 import grand.app.moon.databinding.ItemStoreFollowedBinding
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.store.viewModels.ItemStoreViewModel
 
 class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
@@ -91,13 +93,13 @@ class StoreBlockAdapter : RecyclerView.Adapter<StoreBlockAdapter.ViewHolder>() {
     else unBlocks.remove(id)
     Log.d(TAG, "changeBlock: ${unBlocks.size}")
     Log.d(TAG, "changeBlock: ${unBlocks}")
-    differ.currentList[position].isBlocked = !differ.currentList[position].isBlocked
+    differ.currentList[position].isBlocked = !differ.currentList[position].isBlocked.orFalse()
     notifyItemChanged(position)
   }
 
   fun setAllBlocks(list: ArrayList<Store>){
     list.forEach {
-      unBlocks.add(it.id)
+      unBlocks.add(it.id.orZero())
     }
   }
 

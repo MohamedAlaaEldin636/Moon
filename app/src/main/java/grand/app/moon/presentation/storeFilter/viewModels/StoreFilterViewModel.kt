@@ -21,6 +21,7 @@ import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.filter.entitiy.FilterDetails
 import grand.app.moon.domain.filter.entitiy.FilterProperty
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.auth.countries.CountriesFragmentArgs
 import grand.app.moon.presentation.auth.countries.adapters.CityAdapter
 import grand.app.moon.presentation.base.utils.Constants
@@ -174,8 +175,8 @@ class StoreFilterViewModel @Inject constructor(
   }
 
   fun setStore(store: Store) {
-    if(store.category.size > 0) {
-      addCategoriesByStore(store.category) {
+    if(store.category?.size.orZero() > 0) {
+      addCategoriesByStore(store.category ?: arrayListOf()) {
         Log.d(TAG, "setStore_children: ${it.children.size}")
         adapter.update(0, it)
       }

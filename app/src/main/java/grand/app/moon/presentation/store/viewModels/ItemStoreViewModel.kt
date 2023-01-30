@@ -74,6 +74,6 @@ class ItemStoreViewModel(val store: Store,val type: Int,var percentage: Int,var 
   }
 
   fun callPhone(v: View){
-    callPhone(v.context,store.country.country_code+store.phone)
+    callPhone(v.context,store.country?.country_code.orEmpty()+store.phone.orEmpty())
   }
 }

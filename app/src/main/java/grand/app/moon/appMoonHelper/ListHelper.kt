@@ -106,7 +106,7 @@ object ListHelper {
   fun addStories(data: ArrayList<Store>) {
     data.forEach {
       var isSeen = true
-      it.stories.forEach { story ->
+      it.stories?.forEach { story ->
         likedStories[story.id] = story.is_liked
         if(!story.isSeen) isSeen = false
       }

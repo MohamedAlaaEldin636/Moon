@@ -18,6 +18,7 @@ import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.store.entity.StoryRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.story.storyView.data.Story
@@ -61,7 +62,7 @@ class StoryDisplayViewModel @Inject constructor(
   fun chat(v: View) {
     if (v.context.isLoginWithOpenAuth()) {
       store.get()?.let {
-        v.context.openChatStore(v, it.id, it.name, it.image)
+        v.context.openChatStore(v, it.id.orZero(), it.name.orEmpty(), it.image)
       }
     }
   }
@@ -69,8 +70,8 @@ class StoryDisplayViewModel @Inject constructor(
   fun like(v: View) {
     if (v.context.isLoginWithOpenAuth()) {
       isLike.set(!isLike.get())
-      store.get()!!.stories[pos].is_liked = isLike.get()
-      ListHelper.addLike(store.get()!!.stories[pos].id, isLike.get())
+      store.get()?.stories?.getOrNull(pos)?.is_liked = isLike.get()
+      ListHelper.addLike(store.get()?.stories?.getOrNull(pos)?.id.orZero(), isLike.get())
       storyRequest.type = 2
       callService()
     }
@@ -95,7 +96,7 @@ class StoryDisplayViewModel @Inject constructor(
   }
 
   fun allowNext(): Boolean {
-    return pos < store.get()!!.stories.size - 1
+    return pos < store.get()?.stories?.size.orZero() - 1
   }
 
   fun allowPrev(): Boolean {
@@ -113,7 +114,7 @@ class StoryDisplayViewModel @Inject constructor(
 
   fun nextStory(): Boolean {
     if (positionStoryAdapter < stories.size - 1) {
-      ListHelper.addViewStory(stories[positionStoryAdapter].id)
+      ListHelper.addViewStory(stories?.getOrNull(positionStoryAdapter)?.id.orZero())
       positionStoryAdapter++
       store.set(stories[positionStoryAdapter])
       return true
@@ -122,14 +123,14 @@ class StoryDisplayViewModel @Inject constructor(
   }
 
   fun share(v: View) {
-    share(v.findFragment<Fragment>().requireActivity(), store.get()!!.name, store.get()!!.stories[pos].shareLink)
+    share(v.findFragment<Fragment>().requireActivity(), store.get()?.name.orEmpty(), store.get()?.stories?.getOrNull(pos)?.shareLink.orEmpty())
   }
 
 
 
   fun checkBlockStore(): Boolean {
     stories.forEach {
-      if(ListHelper.checkBlockStore(it.id))
+      if(ListHelper.checkBlockStore(it.id.orZero()))
         return true
     }
     return false

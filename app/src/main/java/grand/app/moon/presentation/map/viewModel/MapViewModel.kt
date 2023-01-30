@@ -28,6 +28,8 @@ import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.navToMyAdvDetails
+import grand.app.moon.extensions.orZero
 import grand.app.moon.helpers.map.MapConfig
 import grand.app.moon.helpers.map.cluster.ClusterCustomItem
 import grand.app.moon.helpers.map.cluster.MarkerRender
@@ -97,8 +99,8 @@ class MapViewModel @Inject constructor(
 	  val context = v.context ?: return
 
 	  MyLogger.e("aa -> ch 1")
-	  if (context.isLogin() && advertisement.get()?.user?.id == context.getUserIdOrNull()) {
-			// todo ...
+	  if (context.isLogin() && advertisement.get()?.user?.id == advertisement.get()?.storeId) {
+		  v.findNavController().navToMyAdvDetails(advertisement.get()?.id.orZero())
 	  }else {
 		  v.findNavController().navigate(
 			  R.id.nav_ads, bundleOf(
@@ -178,7 +180,7 @@ class MapViewModel @Inject constructor(
           adsRepository.setInteraction(InteractionRequest(it.id.toString(), 8))
         }
         it.store?.let { store ->
-          v.context.openChatStore(v, store.id, store.name, store.image)
+          v.context.openChatStore(v, store.id.orZero(), store.name.orEmpty(), store.image.orEmpty())
         }
       }
     }
@@ -305,8 +307,8 @@ class MapViewModel @Inject constructor(
           advertisement.get()?.viewsCount = advertisementLocal.viewsCount
         }
       }
-      if (it.store.isFollowing != ListHelper.getFollowStore(it.store.id)) {
-        it.store.isFollowing = ListHelper.getFollowStore(it.store.id)
+      if (it.store.isFollowing != ListHelper.getFollowStore(it.store.id.orZero())) {
+        it.store.isFollowing = ListHelper.getFollowStore(it.store.id.orZero())
       }
     }
   }

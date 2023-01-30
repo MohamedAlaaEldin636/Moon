@@ -14,6 +14,7 @@ import grand.app.moon.domain.store.entity.StoreListPaginateData
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.store.adapter.StoreBlockAdapter
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -105,7 +106,7 @@ class StoreBlockListViewModel @Inject constructor(
     blocks.clear()
     adapter.differ.currentList.forEach {
       if(!adapter.unBlocks.contains(it.id))
-        blocks.add(it.id)
+        blocks.add(it.id.orZero())
     }
     Log.d(TAG, "blocks: ${blocks.toString()}")
     storeUseCase.unBlock(blocks)

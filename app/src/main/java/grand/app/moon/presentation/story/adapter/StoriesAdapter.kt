@@ -21,6 +21,7 @@ import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.home.models.StoreModel
 import grand.app.moon.domain.store.entity.StoreListPaginateData
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.base.extensions.navigateSafe
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SingleLiveEvent
@@ -113,7 +114,7 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
   fun checkBlockStore() {
     val array = ArrayList(differ.currentList)
     differ.currentList.forEachIndexed { index, store ->
-      if (ListHelper.checkBlockStore(differ.currentList[index].id)) {
+      if (ListHelper.checkBlockStore(differ.currentList[index].id.orZero())) {
         array.removeAt(index)
 //          notifyItemRemoved(index)
       }
@@ -129,13 +130,13 @@ class StoriesAdapter : RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
     val list = ArrayList(differ.currentList)
     list.forEachIndexed { index, it ->
       checked = false
-      if (ListHelper.isViewedStory(it.id)) {
-        it.stories.forEach {
+      if (ListHelper.isViewedStory(it.id.orZero())) {
+        it.stories?.forEach {
           it.isSeen = true
         }
         checked = true
       }
-      it.stories.forEachIndexed { index , story ->
+      it.stories?.forEachIndexed { index , story ->
         if(story.is_liked !=  ListHelper.isStoryLike(story.id)) {
           story.is_liked = ListHelper.isStoryLike(story.id)
           checked = true

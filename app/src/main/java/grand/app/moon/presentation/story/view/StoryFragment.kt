@@ -40,6 +40,8 @@ import grand.app.moon.databinding.FragmentNotificationBinding
 import grand.app.moon.databinding.FragmentStoryBinding
 import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SwipeToDeleteCallback
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
@@ -125,7 +127,7 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   }
 
   fun init() {
-    binding.progress.segmentCount = viewModel.store.get()!!.stories.size
+    binding.progress.segmentCount = viewModel.store.get()?.stories?.size.orZero()
     binding.progress.listener = this
     binding.progress.start()
     binding.skip.setOnClickListener {
@@ -163,13 +165,13 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 //
   fun loadImage() {
     Log.d(TAG, "loadImage: here")
-    Log.d(TAG, "loadImage: ${viewModel.store.get()!!.stories[viewModel.pos].file}")
+    Log.d(TAG, "loadImage: ${viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.file.orEmpty()}")
     viewModel.isLoaded = false
     pause()
-    viewModel.image.set(viewModel.store.get()!!.stories[viewModel.pos].file)
+    viewModel.image.set(viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.file.orEmpty())
     try {
       Glide.with(requireContext())
-        .load(viewModel.store.get()!!.stories[viewModel.pos].file)
+        .load(viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.file.orEmpty())
         .listener(object : RequestListener<Drawable> {
           override fun onLoadFailed(
             e: GlideException?,
@@ -216,8 +218,8 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   override fun onPage(oldPageIndex: Int, newPageIndex: Int) {
     Log.d(TAG, "onPage: $oldPageIndex , withNew $newPageIndex")
     viewModel.pos = newPageIndex
-    viewModel.storyRequest.story_id = viewModel.store.get()!!.stories[viewModel.pos].id
-    viewModel.isLike.set(viewModel.store.get()!!.stories[viewModel.pos].is_liked)
+    viewModel.storyRequest.story_id = viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.id.orZero()
+    viewModel.isLike.set(viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.is_liked.orFalse())
     viewModel.storyRequest.type = 1
     if (binding.root.context.isLogin()) {
       viewModel.callService()
@@ -245,7 +247,7 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
     binding.progress.reset()
     viewModel.pos = 0
     viewModel.isFinish = false
-    binding.progress.segmentCount = viewModel.store.get()!!.stories.size
+    binding.progress.segmentCount = viewModel.store.get()?.stories?.size.orZero()
     resume()
   }
 

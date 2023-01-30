@@ -40,7 +40,7 @@ data class Advertisement(
   val price: Double = 0.0,
   @SerializedName("phone")
   val phone: String = "",
-  @SerializedName("store")
+  @SerializedName("store2")
   val store: Store = Store(),
   @SerializedName("latitude")
   val latitude: Double = 0.0,
