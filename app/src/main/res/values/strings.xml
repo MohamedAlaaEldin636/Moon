@@ -425,4 +425,5 @@
   <string name="payment_done_successfully_desc">تم الاشتراك في الباقة الشهرية بنجاح و يمكنك ألان الاستمتاع بالمميزات</string>
   <string name="done_subscription">تم الاشتراك</string>
   <string name="create_your_store_now">أنشئ متجرك الاَن</string>
+  <string name="invalid_working_hours_hint">يجب إختيار الوقت لليوم فى حالة التفعيل</string>
 </resources>

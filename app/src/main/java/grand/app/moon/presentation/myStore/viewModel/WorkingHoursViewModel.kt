@@ -14,6 +14,7 @@ import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemWorkingHours2Binding
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.adjustInsideRV
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import grand.app.moon.presentation.myStore.WorkingHoursFragment
@@ -143,6 +144,10 @@ class WorkingHoursViewModel @Inject constructor(
 
 	fun save(view: View) {
 		val fragment = view.findFragmentOrNull<WorkingHoursFragment>() ?: return
+
+		if (adapter.list.any { it.enabled && (it.from.isEmpty() || it.to.isEmpty()) }) {
+			return fragment.showError(fragment.getString(R.string.invalid_working_hours_hint))
+		}
 
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
