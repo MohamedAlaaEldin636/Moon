@@ -178,11 +178,13 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 					it.restDays = response.value?.getPeriodInDays().orZero()
 				}
 
-				if (successResponse?.storeInfoIsCompleted == true) {
+				val willGoToCreateShopNotMyPackage = if (successResponse?.storeInfoIsCompleted == true) {
 					// Check Subscription
 					navController.navigateSafely(
 						BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestMyBecomeShopPackage()
 					)
+
+					false
 				}else {
 					// Now go to create store data and on result of it's creation nav up.
 					parentFragment?.observeCreateShopFragment()
@@ -190,7 +192,15 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 					navController.navigateSafely(
 						BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestCreateStore()
 					)
+
+					true
 				}
+
+				navController.navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.success.shop.subscription",
+					paths = arrayOf(willGoToCreateShopNotMyPackage.toString())
+				)
 			}
 		}
 	}

@@ -421,4 +421,8 @@
   <string name="nick_name">Nickname</string>
   <string name="price_before_and_after_check">السعر قبل الخصم يجب ان يكون اكبر من ما بعد الخصم</string>
   <string name="nickname_must_be_in_english_characters">الإسم المستعار يجب ان يكون باللغة الإنجليزية</string>
+  <string name="payment_done_successfully">تم الدفع بنجاح</string>
+  <string name="payment_done_successfully_desc">تم الاشتراك في الباقة الشهرية بنجاح و يمكنك ألان الاستمتاع بالمميزات</string>
+  <string name="done_subscription">تم الاشتراك</string>
+  <string name="create_your_store_now">أنشئ متجرك الاَن</string>
 </resources>

@@ -885,5 +885,18 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.rate.in.adv.dialog/{advId}/{useRating}" />
   </dialog>
+  <fragment
+    android:id="@+id/dest_success_shop_subscription"
+    android:name="grand.app.moon.presentation.packages.SuccessShopSubscriptionFragment"
+    android:label="@string/done_subscription"
+    tools:layout="@layout/fragment_success_shop_subscription">
+    <argument
+      android:name="willGoToCreateShopNotMyPackage"
+      app:argType="boolean" />
+    <deepLink
+      android:id="@+id/deep_link_dest_success_shop_subscription"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.success.shop.subscription/{willGoToCreateShopNotMyPackage}" />
+  </fragment>
 
 </navigation>

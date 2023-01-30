@@ -14,10 +14,16 @@ import grand.app.moon.presentation.myAds.*
 import grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragmentArgs
 import grand.app.moon.presentation.myStore.AddOrEditStoreSubCategoryFragmentArgs
 import grand.app.moon.presentation.myStore.ShowImagesOrVideoDialogFragmentArgs
+import grand.app.moon.presentation.packages.SuccessShopSubscriptionFragmentArgs
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelArgsModule {
+
+	@Provides
+	fun provideSuccessShopSubscriptionFragmentArgs(state: SavedStateHandle): SuccessShopSubscriptionFragmentArgs {
+		return SuccessShopSubscriptionFragmentArgs.fromBundle(state.asBundle())
+	}
 
 	@Provides
 	fun provideRateInAdvDialogFragmentArgs(state: SavedStateHandle): RateInAdvDialogFragmentArgs {
