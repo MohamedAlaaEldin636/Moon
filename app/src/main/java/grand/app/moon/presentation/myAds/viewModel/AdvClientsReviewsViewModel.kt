@@ -11,6 +11,7 @@ import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemReviewInAdvDetailsBinding
 import grand.app.moon.databinding.ItemReviewInClientsReviewsInAdvDetailsBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.shop.ResponseClientReviews
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrElseResNameBA
 import grand.app.moon.presentation.myAds.AdvClientsReviewsFragment
@@ -36,7 +37,7 @@ class AdvClientsReviewsViewModel @Inject constructor(
 
 	val reviews = repoShop.getClientsReviewsForAdv(args.advId)
 
-	val adapter = RVPagingItemCommonListUsage<ItemReviewInClientsReviewsInAdvDetailsBinding, ItemReviewInAdvDetails>(
+	val adapter = RVPagingItemCommonListUsage<ItemReviewInClientsReviewsInAdvDetailsBinding, ResponseClientReviews>(
 		R.layout.item_review_in_clients_reviews_in_adv_details,
 	) { binding, _, item ->
 		binding.nameTextView.text = item.user?.name.orEmpty()
