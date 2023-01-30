@@ -108,6 +108,8 @@
       android:layout_width="0dp"
       android:layout_height="13dp"
 
+      android:visibility="@{viewModel.progressFromZeroToHundred != 100}"
+
       app:cardElevation="0dp"
       app:cardMaxElevation="0dp"
 
@@ -165,6 +167,8 @@
     <androidx.appcompat.widget.AppCompatTextView
       android:layout_width="30dp"
       android:layout_height="22dp"
+
+      android:visibility="@{viewModel.progressFromZeroToHundred != 100}"
 
       style="@style/TextTajawalMedium14"
       android:textSize="10sp"
