@@ -47,8 +47,6 @@ class AdvClientsReviewsFragment : BaseFragment<FragmentAdvClientsReviewsBinding>
 
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 			viewModel.adapter.refresh()
-
-			// todo ...
 		}
 	}
 
