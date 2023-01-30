@@ -153,8 +153,6 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 					repositoryPackages.subscribeToBecomeShopPackage(response.value?.id.orZero())
 				}
 			) { successResponse ->
-				fragment.showMessage(fragment.getString(R.string.done_successfully))
-
 				val user = userLocalUseCase()
 				userLocalUseCase(user.copy(isStore = true))
 
