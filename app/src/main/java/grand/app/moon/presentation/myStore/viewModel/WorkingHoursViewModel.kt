@@ -136,7 +136,7 @@ class WorkingHoursViewModel @Inject constructor(
 			.build()
 
 		picker.addOnPositiveButtonClickListener {
-			onChange("${picker.hour}:${picker.minute}")
+			onChange("${picker.hour.toString().minLengthZerosPrefix(2)}:${picker.minute.toString().minLengthZerosPrefix(2)}")
 		}
 
 		picker.show(fragment.childFragmentManager, "Time")

@@ -4,6 +4,7 @@ import grand.app.moon.data.remote.BaseRemoteDataSource
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.minLengthZerosPrefix
 import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.toStringOrEmpty
@@ -55,8 +56,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		val map = mutableMapOf<String, RequestBody>()
 
 		for ((index, item) in list.withIndex()) {
-			map["working_hours[$index][from]"] = (if (item.from.isEmpty()) item.from else item.from.minLengthZerosPrefix(2)).toRequestBody()
-			map["working_hours[$index][to]"] = (if (item.to.isEmpty()) item.to else item.to.minLengthZerosPrefix(2)).toRequestBody()
+			map["working_hours[$index][from]"] = item.from.toRequestBody()
+			map["working_hours[$index][to]"] = item.to.toRequestBody()
 			map["working_hours[$index][status]"] = item.enabled.toString().toRequestBody()
 		}
 
