@@ -364,9 +364,291 @@
 
         app:layout_constraintStart_toEndOf="@id/line1View"
         app:layout_constraintBottom_toBottomOf="@id/line1View"/>
+      
+      <View
+        android:id="@+id/bar1View"
+
+        android:layout_width="9dp"
+        android:layout_height="0dp"
+
+        tools:layout_constraintHeight_max="150dp"
+        view_layoutConstraintHeightMaxByPercentage="@{data.saturdayPercent}"
+
+        android:background="@color/colorPrimary"
+
+        app:layout_constraintVertical_bias="1"
+        
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+
+        app:layout_constraintTop_toTopOf="@id/line7View"
+        app:layout_constraintBottom_toBottomOf="@id/line1View"
+        app:layout_constraintStart_toStartOf="@id/line7View"
+        app:layout_constraintEnd_toStartOf="@id/bar2View"/>
+      <View
+        android:id="@+id/bar2View"
+
+        android:layout_width="9dp"
+        android:layout_height="0dp"
+
+        tools:layout_constraintHeight_max="110dp"
+        view_layoutConstraintHeightMaxByPercentage="@{data.sundayPercent}"
+
+        android:background="@color/colorPrimary"
+
+        app:layout_constraintVertical_bias="1"
+
+        app:layout_constraintTop_toTopOf="@id/line7View"
+        app:layout_constraintBottom_toBottomOf="@id/line1View"
+        app:layout_constraintStart_toEndOf="@id/bar1View"
+        app:layout_constraintEnd_toStartOf="@id/bar3View"/>
+      <View
+        android:id="@+id/bar3View"
+
+        android:layout_width="9dp"
+        android:layout_height="0dp"
+
+        tools:layout_constraintHeight_max="200dp"
+        view_layoutConstraintHeightMaxByPercentage="@{data.mondayPercent}"
+
+        android:background="@color/colorPrimary"
+
+        app:layout_constraintVertical_bias="1"
+
+        app:layout_constraintTop_toTopOf="@id/line7View"
+        app:layout_constraintBottom_toBottomOf="@id/line1View"
+        app:layout_constraintStart_toEndOf="@id/bar2View"
+        app:layout_constraintEnd_toStartOf="@id/bar4View"/>
+      <View
+        android:id="@+id/bar4View"
+
+        android:layout_width="9dp"
+        android:layout_height="0dp"
+
+        tools:layout_constraintHeight_max="200dp"
+        view_layoutConstraintHeightMaxByPercentage="@{data.tuesdayPercent}"
+
+        android:background="@color/colorPrimary"
+
+        app:layout_constraintVertical_bias="1"
+
+        app:layout_constraintTop_toTopOf="@id/line7View"
+        app:layout_constraintBottom_toBottomOf="@id/line1View"
+        app:layout_constraintStart_toEndOf="@id/bar3View"
+        app:layout_constraintEnd_toStartOf="@id/bar5View"/>
+      <View
+        android:id="@+id/bar5View"
+
+        android:layout_width="9dp"
+        android:layout_height="0dp"
+
+        tools:layout_constraintHeight_max="200dp"
+        view_layoutConstraintHeightMaxByPercentage="@{data.wednesdayPercent}"
+
+        android:background="@color/colorPrimary"
+
+        app:layout_constraintVertical_bias="1"
+
+        app:layout_constraintTop_toTopOf="@id/line7View"
+        app:layout_constraintBottom_toBottomOf="@id/line1View"
+        app:layout_constraintStart_toEndOf="@id/bar4View"
+        app:layout_constraintEnd_toStartOf="@id/bar6View"/>
+      <View
+        android:id="@+id/bar6View"
+
+        android:layout_width="9dp"
+        android:layout_height="0dp"
+
+        tools:layout_constraintHeight_max="200dp"
+        view_layoutConstraintHeightMaxByPercentage="@{data.thursdayPercent}"
+
+        android:background="@color/colorPrimary"
+
+        app:layout_constraintVertical_bias="1"
+
+        app:layout_constraintTop_toTopOf="@id/line7View"
+        app:layout_constraintBottom_toBottomOf="@id/line1View"
+        app:layout_constraintStart_toEndOf="@id/bar5View"
+        app:layout_constraintEnd_toStartOf="@id/bar7View"/>
+      <View
+        android:id="@+id/bar7View"
+
+        android:layout_width="9dp"
+        android:layout_height="0dp"
+
+        tools:layout_constraintHeight_max="100dp"
+        view_layoutConstraintHeightMaxByPercentage="@{data.fridayPercent}"
+
+        android:background="@color/colorPrimary"
+
+        app:layout_constraintVertical_bias="1"
+
+        app:layout_constraintTop_toTopOf="@id/line7View"
+        app:layout_constraintBottom_toBottomOf="@id/line1View"
+        app:layout_constraintStart_toEndOf="@id/bar6View"
+        app:layout_constraintEnd_toEndOf="@id/line7View"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
   </FrameLayout>
 
 </layout>
+
+<!--
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintEnd_toEndOf="@id/line7View"
+        app:layout_constraintTop_toTopOf="@id/line7View"
+        app:layout_constraintStart_toStartOf="@id/line7View"
+        app:layout_constraintBottom_toBottomOf="@id/line1View">
+
+        <View
+          android:id="@+id/bar1View"
+
+          android:layout_width="9dp"
+          android:layout_height="0dp"
+
+          app:layout_constraintHeight_percent="0.3"
+
+          view_constraintPercentHeight="@{data.saturdayPercent}"
+
+          app:layout_constraintVertical_bias="1"
+
+          android:background="@color/colorPrimary"
+
+          app:layout_constraintHorizontal_chainStyle="spread_inside"
+
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toStartOf="@id/bar2View"/>
+
+        <View
+          android:id="@+id/bar2View"
+
+          view_constraintPercentHeight="@{data.sundayPercent}"
+
+          android:layout_width="9dp"
+          android:layout_height="0dp"
+
+          app:layout_constraintHeight_percent="0.3"
+
+          app:layout_constraintVertical_bias="1"
+
+          android:background="@color/colorPrimary"
+
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@id/bar1View"
+          app:layout_constraintEnd_toStartOf="@id/bar3View"/>
+
+        <View
+          android:id="@+id/bar3View"
+
+          view_constraintPercentHeight="@{data.mondayPercent}"
+
+          android:layout_width="9dp"
+          android:layout_height="0dp"
+
+          app:layout_constraintHeight_percent="0.3"
+
+          app:layout_constraintVertical_bias="1"
+
+          android:background="@color/colorPrimary"
+
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@id/bar2View"
+          app:layout_constraintEnd_toStartOf="@id/bar4View"/>
+
+        <View
+          android:id="@+id/bar4View"
+
+          view_constraintPercentHeight="@{data.tuesdayPercent}"
+
+          android:layout_width="9dp"
+          android:layout_height="0dp"
+
+          app:layout_constraintHeight_percent="0.3"
+
+          app:layout_constraintVertical_bias="1"
+
+          android:background="@color/colorPrimary"
+
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@id/bar3View"
+          app:layout_constraintEnd_toStartOf="@id/bar5View"/>
+
+        <View
+          android:id="@+id/bar5View"
+
+          view_constraintPercentHeight="@{data.wednesdayPercent}"
+
+          android:layout_width="9dp"
+          android:layout_height="0dp"
+
+          app:layout_constraintHeight_percent="0.3"
+
+          app:layout_constraintVertical_bias="1"
+
+          android:background="@color/colorPrimary"
+
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@id/bar4View"
+          app:layout_constraintEnd_toStartOf="@id/bar6View"/>
+
+        <View
+          android:id="@+id/bar6View"
+
+          view_constraintPercentHeight="@{data.thursdayPercent}"
+
+          android:layout_width="9dp"
+          android:layout_height="0dp"
+
+          app:layout_constraintHeight_percent="0.3"
+
+          app:layout_constraintVertical_bias="1"
+
+          android:background="@color/colorPrimary"
+
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@id/bar5View"
+          app:layout_constraintEnd_toStartOf="@id/bar7View"/>
+
+        <View
+          android:id="@+id/bar7View"
+
+          view_constraintPercentHeight="@{data.fridayPercent}"
+
+          android:layout_width="9dp"
+          android:layout_height="0dp"
+
+          app:layout_constraintHeight_percent="0.3"
+
+          app:layout_constraintVertical_bias="1"
+
+          android:background="@color/colorPrimary"
+
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@id/bar6View"
+          app:layout_constraintEnd_toEndOf="parent"/>
+
+<TextView
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+
+android:text="shaisuhaisuah"
+
+android:translationX="-30dp"
+
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintStart_toStartOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+-->

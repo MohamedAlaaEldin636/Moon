@@ -2,10 +2,12 @@ package grand.app.moon.domain.stats
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.FloatRange
+import grand.app.moon.R
 
 /**
  * @param percentage scale is 2 decimal places only.
  * @param saturdayPercent from 0.0 to 1.0 where 0 is zero and 1.0 represents max value [line7] isa.
+ * @param percentageIconRes [R.drawable.ic_positive_growth] || [R.drawable.ic_negative_growth]
  */
 data class ChartData(
 	val dataName: String,

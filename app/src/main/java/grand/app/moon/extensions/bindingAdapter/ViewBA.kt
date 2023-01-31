@@ -10,12 +10,39 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import grand.app.moon.extensions.orZero
+import kotlin.math.roundToInt
+
+@BindingAdapter("view_constraintPercentHeightToAnotherView")
+fun View.constraintPercentHeightToAnotherView(otherView: View?, @FloatRange(from = 0.0, to = 1.0) percentage: Float) {
+	otherView?.post {
+		val height = otherView.height
+
+		val params = layoutParams
+		params.height = (height.toFloat() * percentage).roundToInt()
+		layoutParams = params
+	}
+}
 
 @BindingAdapter("view_constraintPercentWidth")
 fun View.constraintPercentWidth(@FloatRange(from = 0.0, to = 1.0) value: Float?) {
 	val layoutParams = layoutParams as? ConstraintLayout.LayoutParams ?: return
 	layoutParams.matchConstraintPercentWidth = value.orZero()
 		.coerceAtLeast(0f).coerceAtMost(1f)
+	this.layoutParams = layoutParams
+}
+
+@BindingAdapter("view_constraintPercentHeight")
+fun View.constraintPercentHeight(@FloatRange(from = 0.0, to = 1.0) value: Float?) {
+	val layoutParams = layoutParams as? ConstraintLayout.LayoutParams ?: return
+	layoutParams.matchConstraintPercentHeight = value.orZero()
+		.coerceAtLeast(0f).coerceAtMost(1f)
+	this.layoutParams = layoutParams
+}
+
+@BindingAdapter("view_layoutConstraintHeightMaxByPercentage")
+fun View.layoutConstraintHeightMaxByPercentage(@FloatRange(from = 0.0, to = 1.0) value: Float?) {
+	val layoutParams = layoutParams as? ConstraintLayout.LayoutParams ?: return
+	layoutParams.matchConstraintMaxHeight = (layoutParams.matchConstraintDefaultHeight.toFloat() * (value ?: return)).roundToInt()
 	this.layoutParams = layoutParams
 }
 
