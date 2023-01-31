@@ -486,6 +486,176 @@
         app:layout_constraintBottom_toBottomOf="@id/line1View"
         app:layout_constraintStart_toEndOf="@id/bar6View"
         app:layout_constraintEnd_toEndOf="@id/line7View"/>
+      
+      <View
+        android:id="@+id/between1And2BarView"
+        
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        
+        app:layout_constraintStart_toStartOf="@id/bar1View"
+        app:layout_constraintEnd_toEndOf="@id/bar2View"
+        app:layout_constraintTop_toTopOf="@id/line7View"/>
+      <View
+        android:id="@+id/between6And7BarView"
+        
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        
+        app:layout_constraintStart_toStartOf="@id/bar6View"
+        app:layout_constraintEnd_toEndOf="@id/bar7View"
+        app:layout_constraintTop_toTopOf="@id/line7View"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/barName1TextView"
+        
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+
+        view_translateXByWholeWidthPercent="@{-1f}"
+
+        android:includeFontPadding="false"
+        app:autoSizeMinTextSize="3sp"
+        app:autoSizeMaxTextSize="9sp"
+        app:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="@string/saturday"
+        android:gravity="center"
+        style="@style/TextTajawalRegular12"
+        android:textSize="9sp"
+
+        app:layout_constraintTop_toBottomOf="@id/bar2View"
+        app:layout_constraintStart_toStartOf="@id/between1And2BarView"
+        app:layout_constraintEnd_toStartOf="@id/barName3TextView"/>
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/barName2TextView"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+
+        android:includeFontPadding="false"
+        app:autoSizeMinTextSize="3sp"
+        app:autoSizeMaxTextSize="9sp"
+        app:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="@string/sunday"
+        android:gravity="center"
+        style="@style/TextTajawalRegular12"
+        android:textSize="9sp"
+
+        app:layout_constraintTop_toBottomOf="@id/bar2View"
+        app:layout_constraintStart_toStartOf="@id/between1And2BarView"
+        app:layout_constraintEnd_toStartOf="@id/barName3TextView"/>
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/barName3TextView"
+        
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:includeFontPadding="false"
+        app:autoSizeMinTextSize="3sp"
+        app:autoSizeMaxTextSize="9sp"
+        app:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="@string/monday"
+        android:gravity="center"
+        style="@style/TextTajawalRegular12"
+        android:textSize="9sp"
+
+        app:layout_constraintTop_toTopOf="@id/barName2TextView"
+        app:layout_constraintStart_toEndOf="@id/barName2TextView"
+        app:layout_constraintEnd_toStartOf="@id/barName4TextView"/>
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/barName4TextView"
+        
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:includeFontPadding="false"
+        app:autoSizeMinTextSize="3sp"
+        app:autoSizeMaxTextSize="9sp"
+        app:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="@string/tuesday"
+        android:gravity="center"
+        style="@style/TextTajawalRegular12"
+        android:textSize="9sp"
+
+        app:layout_constraintTop_toTopOf="@id/barName2TextView"
+        app:layout_constraintStart_toEndOf="@id/barName3TextView"
+        app:layout_constraintEnd_toStartOf="@id/barName5TextView"/>
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/barName5TextView"
+        
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:includeFontPadding="false"
+        app:autoSizeMinTextSize="3sp"
+        app:autoSizeMaxTextSize="9sp"
+        app:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="@string/wednesday"
+        android:gravity="center"
+        style="@style/TextTajawalRegular12"
+        android:textSize="9sp"
+
+        app:layout_constraintTop_toTopOf="@id/barName2TextView"
+        app:layout_constraintStart_toEndOf="@id/barName4TextView"
+        app:layout_constraintEnd_toStartOf="@id/barName6TextView"/>
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/barName6TextView"
+        
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:includeFontPadding="false"
+        app:autoSizeMinTextSize="3sp"
+        app:autoSizeMaxTextSize="9sp"
+        app:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="@string/thursday"
+        android:gravity="center"
+        style="@style/TextTajawalRegular12"
+        android:textSize="9sp"
+
+        app:layout_constraintTop_toTopOf="@id/barName2TextView"
+        app:layout_constraintStart_toEndOf="@id/barName5TextView"
+        app:layout_constraintEnd_toEndOf="@id/between6And7BarView"/>
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/barName7TextView"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        view_translateXByWholeWidthPercent="@{1f}"
+
+        android:includeFontPadding="false"
+        app:autoSizeMinTextSize="3sp"
+        app:autoSizeMaxTextSize="9sp"
+        app:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="@string/friday"
+        android:gravity="center"
+        style="@style/TextTajawalRegular12"
+        android:textSize="9sp"
+
+        app:layout_constraintTop_toTopOf="@id/barName2TextView"
+        app:layout_constraintStart_toEndOf="@id/barName5TextView"
+        app:layout_constraintEnd_toEndOf="@id/between6And7BarView"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

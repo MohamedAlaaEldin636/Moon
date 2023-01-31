@@ -12,7 +12,16 @@ import androidx.databinding.BindingAdapter
 import grand.app.moon.extensions.orZero
 import kotlin.math.roundToInt
 
-@BindingAdapter("view_constraintPercentHeightToAnotherView")
+@BindingAdapter("view_translateXByWholeWidthPercent")
+fun View.translateXByWholeWidthPercent(@FloatRange(from = 0.0, to = 1.0) percentage: Float?) {
+	if (percentage == null) return
+
+	post {
+		translationX = width.toFloat() * percentage
+	}
+}
+
+/*@BindingAdapter("view_constraintPercentHeightToAnotherView")
 fun View.constraintPercentHeightToAnotherView(otherView: View?, @FloatRange(from = 0.0, to = 1.0) percentage: Float) {
 	otherView?.post {
 		val height = otherView.height
@@ -21,7 +30,7 @@ fun View.constraintPercentHeightToAnotherView(otherView: View?, @FloatRange(from
 		params.height = (height.toFloat() * percentage).roundToInt()
 		layoutParams = params
 	}
-}
+}*/
 
 @BindingAdapter("view_constraintPercentWidth")
 fun View.constraintPercentWidth(@FloatRange(from = 0.0, to = 1.0) value: Float?) {
