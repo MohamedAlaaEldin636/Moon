@@ -25,7 +25,9 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
 
-      android:clipToPadding="false">
+      android:clipToPadding="false"
+
+      android:background="#FBFBFB">
 
       <include
         android:id="@+id/toolbarCurve"
@@ -86,10 +88,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
 
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:paddingBottom="35dp"
+        android:paddingTop="0dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp"
+        android:paddingBottom="27dp"
         android:clipToPadding="false"
 
         android:scrollbars="vertical"

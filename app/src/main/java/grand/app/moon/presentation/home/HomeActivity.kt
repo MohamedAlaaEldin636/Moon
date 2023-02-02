@@ -97,6 +97,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.storyFragment,
         R.id.addStoreFragment,
         R.id.home_fragment,
+        R.id.dest_home2,
         R.id.settings_fragment,
 	      R.id.dest_more,
         R.id.myAccountFragment,
@@ -175,7 +176,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showTopBarControls()
           binding.imgHomeBottomBar.setImageResource(R.drawable.btn_add)
         }
-        R.id.home_fragment -> {
+        R.id.home_fragment, R.id.dest_home2 -> {
           binding.bottomNavigationView.show()
           showTopBarControls()
           setStoreImage(false)
@@ -374,7 +375,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
   }
 
   fun goHomePage(){
-    binding.bottomNavigationView.selectedItemId = R.id.home_fragment
+    binding.bottomNavigationView.selectedItemId = R.id.dest_home2//home_fragment
   }
 
   private fun setStoreImage(isActive: Boolean) {

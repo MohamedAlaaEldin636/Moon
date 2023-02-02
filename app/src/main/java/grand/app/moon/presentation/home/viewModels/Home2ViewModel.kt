@@ -40,6 +40,10 @@ class Home2ViewModel @Inject constructor(
 
 	private val dpToPx9 by lazy { app.dpToPx(9f).roundToInt() }
 
+	private val dpToPx8 by lazy { app.dpToPx(8f).roundToInt() }
+
+	private val dpToPx16 by lazy { app.dpToPx(16f).roundToInt() }
+
 	val adapter = RVItemCommonListUsage<ItemHomeRvBinding, ItemHomeRV>(
 		R.layout.item_home_rv,
 	) { binding, position, item ->
@@ -56,7 +60,12 @@ class Home2ViewModel @Inject constructor(
 					true,
 					1
 				) { layoutParams ->
-					layoutParams.width = width / 4
+					val number = 4
+					val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+					layoutParams.width = (totalWidth - dpToPx8) / number
 				}
 			}
 			ItemHomeRV.Type.CATEGORIES -> {
@@ -65,9 +74,12 @@ class Home2ViewModel @Inject constructor(
 					true,
 					1
 				) { layoutParams ->
-					val margin = layoutParams.marginStart + layoutParams.marginEnd
+					val number = 4
+					val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
-					layoutParams.width = (width / 4) + (/*context.dpToPx(13f).roundToInt()*/margin / 4)
+					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+					layoutParams.width = (totalWidth + layoutParams.marginEnd) / number
 				}
 			}
 			ItemHomeRV.Type.MOST_RATED_STORIES -> {
@@ -76,7 +88,12 @@ class Home2ViewModel @Inject constructor(
 					true,
 					1
 				) { layoutParams ->
-					layoutParams.width = width / 2
+					val number = 2
+					val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+					layoutParams.width = totalWidth / number
 				}
 			}
 			ItemHomeRV.Type.FOLLOWING_STORIES -> {
@@ -85,7 +102,12 @@ class Home2ViewModel @Inject constructor(
 					true,
 					1
 				) { layoutParams ->
-					layoutParams.width = width / 2
+					val number = 2
+					val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+					layoutParams.width = totalWidth / number
 				}
 			}
 			ItemHomeRV.Type.SUGGESTED_ADS -> {
@@ -94,9 +116,12 @@ class Home2ViewModel @Inject constructor(
 					true,
 					1
 				) { layoutParams ->
-					val margin = layoutParams.marginStart + layoutParams.marginEnd
+					val number = 2
+					val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
-					layoutParams.width = (width / 2) - ((margin + dpToPx9) / 2)
+					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+					layoutParams.width = totalWidth / number
 				}
 			}
 			ItemHomeRV.Type.MOST_POPULAR_ADS -> {
@@ -105,9 +130,12 @@ class Home2ViewModel @Inject constructor(
 					true,
 					1
 				) { layoutParams ->
-					val margin = layoutParams.marginStart + layoutParams.marginEnd
+					val number = 2
+					val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
-					layoutParams.width = (width / 2) - ((margin + dpToPx9) / 2)
+					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+					layoutParams.width = totalWidth / number
 				}
 			}
 			ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> {

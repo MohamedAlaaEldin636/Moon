@@ -47,7 +47,7 @@ data class ItemAdvertisementInResponseHome(
 	var country: Country?, // name
 	var city: City?, // name
 	var store: Store?, // stories, id, image, nicname
-	var price: Int?,
+	var price: Float?,
 	@SerializedName("is_negotiable") var negotiable: Int?,
 ) : ItemInResponseHome {
 

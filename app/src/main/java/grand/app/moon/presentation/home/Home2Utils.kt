@@ -8,6 +8,7 @@ import grand.app.moon.R
 import grand.app.moon.databinding.*
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.extensions.*
+import grand.app.moon.extensions.bindingAdapter.adjustInsideRV
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
@@ -58,7 +59,7 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 
 			val story = item.stories?.firstOrNull()
 
-			binding.storeLogoImageView.setupWithGlide {
+			binding.storyImageView.setupWithGlide {
 				load(story?.file)
 					.asVideoIfRequired(story?.isVideo.orFalse())
 					.error(R.drawable.splash)
@@ -162,9 +163,17 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 
 	binding.nameTextView.text = item.title
 
-	binding.timeTextView.text = item.createdAt
+	binding.timeTextView.adjustInsideRV(
+		item.createdAt.orEmpty(),
+		10f,
+		3f
+	)
 
-	binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
+	binding.placeTextView.adjustInsideRV(
+		"${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}",
+		10f,
+		3f
+	)
 
 	binding.storeImageImageView.setupWithGlide {
 		load(item.store?.image)
@@ -172,7 +181,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 
 	binding.storeTextView.text = item.store?.name
 
-	binding.priceTextView.text = "${item.price.orZero()} ${item.country?.currency.orEmpty()}"
+	binding.priceTextView.text = "${item.price?.round(2).orZero()} ${item.country?.currency.orEmpty()}"
 
 	binding.negotiableTextView.isVisible = item.isNegotiable
 }

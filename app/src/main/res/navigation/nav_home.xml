@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/nav_home"
   android:label="@string/more"
-  app:startDestination="@id/home_fragment">
+  app:startDestination="@id/dest_home2">
 
   <fragment
     android:id="@+id/home_fragment"
@@ -675,8 +675,8 @@
       app:destination="@id/dest_location_selection" />
     <action
       android:id="@+id/action_dest_location_selection_to_home_fragment_2"
-      app:destination="@id/home_fragment"
-      app:popUpTo="@id/home_fragment"
+      app:destination="@id/dest_home2"
+      app:popUpTo="@id/dest_home2"
       app:popUpToInclusive="false" />
     <argument
       android:name="jsonResponseMyAdvDetails"
@@ -713,8 +713,8 @@
       app:uri="fragment-dest://grand.app.moon.dest.location.selection.no.coordinates/{showBackButton}" />
     <action
       android:id="@+id/action_dest_location_selection_to_home_fragment"
-      app:destination="@id/home_fragment"
-      app:popUpTo="@id/home_fragment"
+      app:destination="@id/dest_home2"
+      app:popUpTo="@id/dest_home2"
       app:popUpToInclusive="false" />
   </fragment>
   <!--
@@ -898,5 +898,10 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.success.shop.subscription/{willGoToCreateShopNotMyPackage}" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_home2"
+    android:name="grand.app.moon.presentation.home.Home2Fragment"
+    android:label=""
+    tools:layout="@layout/fragment_home_2" />
 
 </navigation>
