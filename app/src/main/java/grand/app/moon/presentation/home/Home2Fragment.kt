@@ -98,6 +98,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 				list += ItemHomeRV(ItemHomeRV.Type.MOST_POPULAR_ADS, getString(R.string.most_popular_ads))
 			}
 
+			viewModel.adapterDynamicCategoryAdsStartIndex = list.size
 			if (dynamicCategoriesAds.isNotEmpty()) {
 				for (item in dynamicCategoriesAds) {
 					list += ItemHomeRV(ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS, item.name, item.adsCount)

@@ -195,14 +195,16 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent">
 
-      <androidx.appcompat.widget.AppCompatTextView
+      <TextView
         android:id="@+id/timeTextView"
 
-        app:autoSizeMaxTextSize="10sp"
-        app:autoSizeMinTextSize="3sp"
-        app:autoSizeTextType="none"
-        android:maxLines="1"
-        android:ellipsize="end"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        textView_setSelectedBA="@{true}"
 
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -219,14 +221,16 @@
 
         android:layout_marginEnd="3.75dp"/>
 
-      <androidx.appcompat.widget.AppCompatTextView
+      <TextView
         android:id="@+id/placeTextView"
 
-        app:autoSizeMaxTextSize="10sp"
-        app:autoSizeMinTextSize="3sp"
-        app:autoSizeTextType="none"
-        android:maxLines="1"
-        android:ellipsize="end"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        textView_setSelectedBA="@{true}"
 
         android:layout_width="0dp"
         android:layout_weight="1"

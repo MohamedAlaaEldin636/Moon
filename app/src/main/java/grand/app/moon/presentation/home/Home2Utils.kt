@@ -163,17 +163,9 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 
 	binding.nameTextView.text = item.title
 
-	binding.timeTextView.adjustInsideRV(
-		item.createdAt.orEmpty(),
-		10f,
-		3f
-	)
+	binding.timeTextView.text = item.createdAt.orEmpty()
 
-	binding.placeTextView.adjustInsideRV(
-		"${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}",
-		10f,
-		3f
-	)
+	binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
 	binding.storeImageImageView.setupWithGlide {
 		load(item.store?.image)

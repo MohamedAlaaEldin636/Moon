@@ -37,6 +37,7 @@ class Home2ViewModel @Inject constructor(
 	val adapterMostPopularAds by lazy { getAdapterForAds() }
 
 	var adapterDynamicCategoryAds = emptyList<RVItemCommonListUsage<ItemHomeRvAdvBinding, ItemAdvertisementInResponseHome>>()
+	var adapterDynamicCategoryAdsStartIndex = 0
 
 	private val dpToPx9 by lazy { app.dpToPx(9f).roundToInt() }
 
@@ -139,7 +140,20 @@ class Home2ViewModel @Inject constructor(
 				}
 			}
 			ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> {
+				val index = position - adapterDynamicCategoryAdsStartIndex
 
+				binding.recyclerView.setupWithRVItemCommonListUsage(
+					adapterDynamicCategoryAds[index],
+					true,
+					1
+				) { layoutParams ->
+					val number = 2
+					val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+					layoutParams.width = totalWidth / number
+				}
 			}
 		}
 	}
