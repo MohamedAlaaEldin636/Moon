@@ -2,10 +2,16 @@ package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.AndroidViewModel
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.dpToPx
+import grand.app.moon.core.extenstions.inflateLayout
 import grand.app.moon.data.home2.RepoHome2
 import grand.app.moon.databinding.ItemHomeRvAdvBinding
 import grand.app.moon.databinding.ItemHomeRvBinding
@@ -45,6 +51,19 @@ class Home2ViewModel @Inject constructor(
 
 	private val dpToPx16 by lazy { app.dpToPx(16f).roundToInt() }
 
+	private val dpToPx103 by lazy { app.dpToPx(103f).roundToInt() }
+
+	private fun RecyclerView.aaa() {
+		clearOnScrollListeners()
+		addOnScrollListener(object : OnScrollListener(){
+			override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+					post { isVisible = true }
+				}
+			}
+		})
+	}
+
 	val adapter = RVItemCommonListUsage<ItemHomeRvBinding, ItemHomeRV>(
 		R.layout.item_home_rv,
 	) { binding, position, item ->
@@ -53,6 +72,10 @@ class Home2ViewModel @Inject constructor(
 		binding.nameTextView.text = item.name
 
 		binding.countTextView.text = item.count.toStringOrEmpty()
+
+		binding.recyclerView.isVisible = false
+		binding.helperView.isVisible = true
+		// todo try adapter optimizations
 
 		when (item.type) {
 			ItemHomeRV.Type.STORIES -> {

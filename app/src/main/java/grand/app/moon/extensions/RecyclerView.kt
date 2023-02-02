@@ -6,11 +6,19 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
-fun LayoutManager?.setInitialPrefetchItemCount(count: Int) {
-	/*when (this) {
-		is GridLayoutManager -> initialPrefetchItemCount = count
-		is LinearLayoutManager -> initialPrefetchItemCount = count
-	}*/
+fun LayoutManager?.findFirstVisibleItemPosition(): Int? {
+	return when (this) {
+		is GridLayoutManager -> findFirstVisibleItemPosition()
+		is LinearLayoutManager -> findFirstVisibleItemPosition()
+		else -> null
+	}
+}
+fun LayoutManager?.findLastVisibleItemPosition(): Int? {
+	return when (this) {
+		is GridLayoutManager -> findLastVisibleItemPosition()
+		is LinearLayoutManager -> findLastVisibleItemPosition()
+		else -> null
+	}
 }
 
 fun RecyclerView.Adapter<*>.notifyItemsChanged(vararg ids: Int?) {
