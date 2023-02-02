@@ -181,7 +181,7 @@ class VHPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 
 class VHItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	private val adapter: RVItemCommonListUsage<VDB, Item>,
-	private val binding: VDB,
+	val binding: VDB,
 	private val onBind: (binding: VDB, position: Int, item: Item) -> Unit,
 	private val onItemClick: ((adapter: RVItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
 	additionalListenersSetups: ((adapter: RVItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,

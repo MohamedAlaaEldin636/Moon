@@ -86,6 +86,25 @@
       app:layout_constraintTop_toTopOf="@id/nameTextView"
       app:layout_constraintBottom_toBottomOf="@id/nameTextView"/>
 
+    <ImageView
+      android:id="@+id/helperView"
+
+      android:layout_width="104dp"
+      android:layout_height="119dp"
+
+      android:paddingStart="12dp"
+      android:paddingEnd="12dp"
+      android:paddingTop="8dp"
+      android:paddingBottom="8dp"
+
+      android:src="@drawable/ic_baseline_refresh_24"
+
+      android:scaleType="center"
+
+      app:layout_constraintTop_toBottomOf="@id/nameTextView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerView"
 
@@ -111,25 +130,6 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-      android:id="@+id/helperView"
-
-      android:layout_width="103dp"
-      android:layout_height="103dp"
-
-      android:paddingStart="12dp"
-      android:paddingEnd="12dp"
-      android:paddingTop="8dp"
-      android:paddingBottom="8dp"
-
-      android:src="@drawable/ic_baseline_refresh_24"
-
-      android:scaleType="center"
-
-      app:layout_constraintTop_toBottomOf="@id/nameTextView"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

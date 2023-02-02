@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentHome2Binding
-import grand.app.moon.extensions.findFirstVisibleItemPosition
-import grand.app.moon.extensions.findLastVisibleItemPosition
-import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
-import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.databinding.ItemHomeRvBinding
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.models.ItemHomeRV
 import grand.app.moon.presentation.home.models.ResponseStory
@@ -43,23 +41,29 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 		binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
 			override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-					binding.recyclerView.post {
-						val start = binding.recyclerView.layoutManager.findFirstVisibleItemPosition() ?: return@post
-						val end = binding.recyclerView.layoutManager.findLastVisibleItemPosition() ?: return@post
-
-						for (index in start..end) {
-							binding.recyclerView.findViewHolderForAdapterPosition(index)?.itemView?.also {
-								it.findViewById<View>(R.id.recyclerView)?.isVisible = true
-								it.findViewById<View>(R.id.helperView)?.isVisible = false
-							}
-						}
-					}
+					setupRvs()
 				}
 			}
 		})
 
 		// Called here to auto update in case of any change happens isa.
 		getWholeHomeData()
+	}
+
+	private fun setupRvs() {
+		binding.recyclerView.post {
+			val start = binding.recyclerView.layoutManager.findFirstVisibleItemPosition() ?: return@post
+			val end = binding.recyclerView.layoutManager.findLastVisibleItemPosition() ?: return@post
+
+			for (index in start..end) {
+				val viewHolder = binding.recyclerView.findViewHolderForAdapterPosition(index)
+				if (viewHolder is VHItemCommonListUsage<*, *>) {
+					val binding = viewHolder.binding as? ItemHomeRvBinding ?: continue
+
+					viewModel.setupRvs(binding, viewModel.adapter.list[index], index)
+				}
+			}
+		}
 	}
 
 	fun getWholeHomeData(showGlobalLoadingNotSwipeAbleOne: Boolean = true) {
@@ -129,8 +133,11 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 			}
 
 			viewModel.adapter.submitList(list)
+
+			setupRvs()
 		}
 	}
+
 
 }
 

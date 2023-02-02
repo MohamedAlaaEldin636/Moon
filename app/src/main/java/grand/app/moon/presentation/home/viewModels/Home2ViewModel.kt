@@ -53,6 +53,13 @@ class Home2ViewModel @Inject constructor(
 
 	private val dpToPx103 by lazy { app.dpToPx(103f).roundToInt() }
 
+	private val dpToPx104 by lazy { app.dpToPx(104f).roundToInt() }
+	private val dpToPx119 by lazy { app.dpToPx(119f).roundToInt() }
+	private val dpToPx281 by lazy { app.dpToPx(281f).roundToInt() }
+	private val dpToPx269 by lazy { app.dpToPx(269f).roundToInt() } // adv
+	private var heightStore = 0
+	private var heightAdv = 0
+
 	private fun RecyclerView.aaa() {
 		clearOnScrollListeners()
 		addOnScrollListener(object : OnScrollListener(){
@@ -73,9 +80,72 @@ class Home2ViewModel @Inject constructor(
 
 		binding.countTextView.text = item.count.toStringOrEmpty()
 
-		binding.recyclerView.isVisible = false
-		binding.helperView.isVisible = true
-		// todo try adapter optimizations
+		binding.recyclerView.adapter = null
+		binding.helperView.visibility = View.VISIBLE
+		val rv = binding.recyclerView
+		val layoutParams = binding.recyclerView.layoutParams as? ConstraintLayout.LayoutParams
+			?: return@RVItemCommonListUsage
+		val (width, height) = when (item.type) {
+			ItemHomeRV.Type.STORIES -> {
+				val number = 4
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = rv.width - rv.paddingStart - rv.paddingEnd - (number.dec() * itemMargins)
+
+				val width = (totalWidth - dpToPx8) / number
+
+				width to dpToPx119
+			}
+			ItemHomeRV.Type.CATEGORIES -> {
+				val number = 4
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = rv.width - rv.paddingStart - rv.paddingEnd - (number.dec() * itemMargins)
+
+				val width = (totalWidth + layoutParams.marginEnd) / number
+
+				width to dpToPx119
+			}
+			ItemHomeRV.Type.MOST_RATED_STORIES, ItemHomeRV.Type.FOLLOWING_STORIES -> {
+				val number = 2
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = rv.width - rv.paddingStart - rv.paddingEnd - (number.dec() * itemMargins)
+
+				val width = totalWidth / number
+
+				width to if (heightStore == 0) dpToPx281 else heightStore
+			}
+			else -> {
+				val number = 2
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = rv.width - rv.paddingStart - rv.paddingEnd - (number.dec() * itemMargins)
+
+				val width = totalWidth / number
+
+				width to if (heightAdv == 0) dpToPx269 else heightAdv
+			}
+		}
+		val helperLayoutParams = binding.helperView.layoutParams as? ConstraintLayout.LayoutParams
+			?: return@RVItemCommonListUsage
+		helperLayoutParams.width = width
+		helperLayoutParams.height = height
+		binding.helperView.layoutParams = helperLayoutParams
+	}
+
+	fun onRefreshWholeScreen(view: View) {
+		val fragment = view.findFragmentOrNull<Home2Fragment>() ?: return
+
+		fragment.getWholeHomeData(false)
+	}
+
+	fun goToSearch(view: View) {
+		TODO()
+	}
+
+	fun setupRvs(binding: ItemHomeRvBinding, item: ItemHomeRV, position: Int) {
+		binding.helperView.visibility = View.INVISIBLE
 
 		when (item.type) {
 			ItemHomeRV.Type.STORIES -> {
@@ -118,6 +188,8 @@ class Home2ViewModel @Inject constructor(
 					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
 					layoutParams.width = totalWidth / number
+
+					MyLogger.e("hhhhhhhhh -> ${layoutParams.height}")
 				}
 			}
 			ItemHomeRV.Type.FOLLOWING_STORIES -> {
@@ -179,16 +251,6 @@ class Home2ViewModel @Inject constructor(
 				}
 			}
 		}
-	}
-
-	fun onRefreshWholeScreen(view: View) {
-		val fragment = view.findFragmentOrNull<Home2Fragment>() ?: return
-
-		fragment.getWholeHomeData(false)
-	}
-
-	fun goToSearch(view: View) {
-		TODO()
 	}
 
 }
