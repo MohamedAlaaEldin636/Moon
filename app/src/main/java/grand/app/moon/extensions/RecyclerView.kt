@@ -1,6 +1,17 @@
 package grand.app.moon.extensions
 
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+
+fun LayoutManager?.setInitialPrefetchItemCount(count: Int) {
+	/*when (this) {
+		is GridLayoutManager -> initialPrefetchItemCount = count
+		is LinearLayoutManager -> initialPrefetchItemCount = count
+	}*/
+}
 
 fun RecyclerView.Adapter<*>.notifyItemsChanged(vararg ids: Int?) {
 	ids.filterNotNull().forEach {
