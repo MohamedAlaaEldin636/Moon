@@ -50,3 +50,7 @@
 
 ## Country Code Picker
 -keep class com.rilixtech.widget.countrycodepicker.* { *; }
+
+-dontwarn com.gowtham.library**
+-keep class com.gowtham.library** { *; }
+-keep interface com.gowtham.library** { *; }

@@ -655,7 +655,7 @@
         app:layout_constraintStart_toEndOf="@id/barName5TextView"
         app:layout_constraintEnd_toEndOf="@id/between6And7BarView"/>
 
-
+      <!--todo-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

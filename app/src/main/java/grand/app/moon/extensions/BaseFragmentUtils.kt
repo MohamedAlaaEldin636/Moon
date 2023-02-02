@@ -220,19 +220,22 @@ fun <T> MADialogFragment<*>.handleRetryAbleActionCancellableNullable(
 }
 
 fun <T> BaseFragment<*>.handleRetryAbleActionOrGoBack(
+	scope: CoroutineScope = lifecycleScope,
+	showLoadingCode: () -> Unit = { showLoading() },
+	hideLoadingCode: () -> Unit = { hideLoading() },
 	action: suspend () -> Resource<BaseResponse<T?>>,
 	onSuccess: (T) -> Unit
 ) {
 	handleRetryAbleAction(
-		showLoading = { showLoading() },
-		hideLoading = { hideLoading() },
-		lifecycleScope,
+		showLoading = { showLoadingCode() },
+		hideLoading = { hideLoadingCode() },
+		scope,
 		action,
 		onError = {
 			showRetryErrorDialogWithBackNegativeButton(
 				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
 			) {
-				handleRetryAbleActionOrGoBack(action, onSuccess)
+				handleRetryAbleActionOrGoBack(scope, showLoadingCode, hideLoadingCode, action, onSuccess)
 			}
 		},
 		onSuccess
@@ -252,7 +255,7 @@ fun <T> BaseFragment<*>.handleRetryAbleActionOrGoBackNullable(
 			showRetryErrorDialogWithBackNegativeButton(
 				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
 			) {
-				handleRetryAbleActionOrGoBack(action, onSuccess)
+				handleRetryAbleActionOrGoBackNullable(action, onSuccess)
 			}
 		},
 		onSuccess

@@ -420,4 +420,7 @@
   <string name="no_more_rem_explore_in_your_package">لا يوجد اكسبلور متبقي فى باقتك</string>
   <string name="story_add_label_desc">يمكنك ألان إرفاق إستوري لمتجرك صور متعددة او فيديوهات</string>
   <string name="upload_story">إرفاق ستوري</string>
+  <string name="story_addition">إضافة حالة</string>
+  <string name="most_rated_stores">أعلي المتاجر تقيماً</string>
+  <string name="following_stories">المتاجر التي تتابعها</string>
 </resources>

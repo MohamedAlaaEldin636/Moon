@@ -28,8 +28,10 @@
 
       android:background="@drawable/circle_of_primary_color"
 
-      app:shapeAppearance="@style/ShapeRound5"
-      app:shapeAppearanceOverlay="@style/ShapeRound5"
+      app:shapeAppearance="@style/ShapeCircle"
+      app:shapeAppearanceOverlay="@style/ShapeCircle"
+
+      android:scaleType="centerCrop"
 
       tools:src="@drawable/ic_default_user"
 

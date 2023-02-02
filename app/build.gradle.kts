@@ -48,6 +48,15 @@ android {
       buildConfigField("String", "API_BASE_URL", Config.Environments.debugBaseUrl)
       buildConfigField("String", "ROOM_DB", Config.Environments.roomDb)
       buildConfigField("String", "SERVER_CLIENT_ID", Config.Environments.SERVER_CLIENT_ID)
+
+	    //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+	    proguardFiles(
+		    getDefaultProguardFile("proguard-android.txt"),
+		    "proguard-rules.pro"
+			)
+	    /*
+	    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+	    * */
     }
 
     signingConfigs {
@@ -74,6 +83,11 @@ android {
 
       isMinifyEnabled = false
       isShrinkResources = false
+
+	    proguardFiles(
+		    getDefaultProguardFile("proguard-android.txt"),
+		    "proguard-rules.pro"
+	    )
 
 //      resValue("string", "google_api_key", gradleLocalProperties(rootDir).getProperty("GOOGLE_API_KEY"))
       manifestPlaceholders["appName"] = "@string/app_name"
@@ -114,6 +128,8 @@ android {
 }
 
 dependencies {
+	//implementation("com.github.a914-gowtham:android-video-trimmer:1.7.3")
+
 	implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
 	implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.1")
 

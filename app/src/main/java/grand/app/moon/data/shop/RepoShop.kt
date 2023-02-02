@@ -7,10 +7,10 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.map
 import grand.app.moon.domain.utils.toFailureStatus
+import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import okhttp3.MultipartBody
-import retrofit2.http.Part
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -186,18 +186,15 @@ class RepoShop @Inject constructor(
 						}
 					}
 				}else {
-					resourceSubCategories.mapToEmpty()
+					resourceCategories.mapToNullSuccess()
 				}
 			}else {
-				resourceCategories.mapToEmpty()
+				resourceCategories.mapToNullSuccess()
 			}
 		}else {
-			resourceCities.mapToEmpty()
+			resourceCities.mapToNullSuccess()
 		}
 	}
-
-	private fun <T> Resource<BaseResponse<T>>.mapToEmpty():  Resource<BaseResponse<CitiesAndStoreCategoriesAndSubCategories?>> =
-		mapSuccess { it.map { CitiesAndStoreCategoriesAndSubCategories() } }
 
 }
 

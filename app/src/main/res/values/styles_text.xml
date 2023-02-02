@@ -37,7 +37,7 @@
 
   <style name="ToolbarCurve">
     <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">26dp</item>
+    <item name="android:layout_height">33dp</item>
     <item name="android:src">@drawable/ic_curve_filter</item>
     <item name="android:scaleType">fitXY</item>
   </style>

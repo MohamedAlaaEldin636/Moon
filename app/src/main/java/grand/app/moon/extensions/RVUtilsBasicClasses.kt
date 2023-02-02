@@ -21,6 +21,7 @@ fun RecyclerView.setupWithRVItemCommonListUsage(
 	adapter: RecyclerView.Adapter<*>/*RVItemCommonListUsage<VDB, Item>*/,
 	isHorizontalNotVertical: Boolean,
 	spanCount: Int,
+	/** Ex. layoutParams.width = width / 3 */
 	onLayoutManager: LayoutManager.(RecyclerView.LayoutParams) -> Unit = {},
 ) {
 	layoutManager = if (spanCount == 1) {
@@ -261,3 +262,88 @@ class RVItemIconTextArrow(
 }
 
  */
+
+class VHItemCommonListUsageWithDifferentItems<Item : Any>(
+	private val adapter: RVItemCommonListUsageWithDifferentItems<Item>,
+	private val binding: ViewDataBinding,
+	private val onBind: (binding: ViewDataBinding, position: Int, item: Item) -> Unit,
+	private val onItemClick: ((adapter: RVItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
+	additionalListenersSetups: ((adapter: RVItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
+) : RecyclerView.ViewHolder(binding.root) {
+
+	init {
+		if (onItemClick != null) {
+			binding.root.setOnClickListener {
+				onItemClick.invoke(adapter, binding)
+			}
+		}
+
+		additionalListenersSetups?.invoke(adapter, binding)
+	}
+
+	fun bind(position: Int, item: Item) {
+		onBind(binding, position, item)
+	}
+
+}
+
+open class RVItemCommonListUsageWithDifferentItems<Item : Any>(
+	private val getLayoutRes: (position: Int) -> Int,
+	list: List<Item> = emptyList(),
+	private val onItemClick: ((adapter: RVItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
+	private val additionalListenersSetups: ((adapter: RVItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
+	private val onBind: (binding: ViewDataBinding, position: Int, item: Item) -> Unit,
+) : RecyclerView.Adapter<VHItemCommonListUsageWithDifferentItems<Item>>() {
+
+	var list = list
+		private set
+
+	override fun getItemCount(): Int = list.size
+
+	override fun getItemViewType(position: Int): Int {
+		return getLayoutRes(position)
+	}
+
+	override fun onCreateViewHolder(
+		parent: ViewGroup,
+		viewType: Int
+	): VHItemCommonListUsageWithDifferentItems<Item> {
+		return VHItemCommonListUsageWithDifferentItems(
+			this,
+			DataBindingUtil.inflate(parent.context.layoutInflater, viewType, parent, false),
+			onBind,
+			onItemClick,
+			additionalListenersSetups
+		)
+	}
+
+	override fun onBindViewHolder(holder: VHItemCommonListUsageWithDifferentItems<Item>, position: Int) {
+		holder.bind(position, list[position])
+	}
+
+	fun submitList(list: List<Item>) {
+		this.list = list
+		notifyDataSetChanged()
+	}
+
+	fun insertList(list: List<Item>) {
+		if (list.isEmpty()) return
+		if (this.list.isEmpty()) return submitList(list)
+
+		val start = this.list.size
+		this.list = this.list + list
+		notifyItemRangeInserted(start, list.size)
+	}
+
+	fun deleteAt(index: Int) {
+		if (index >= list.size) return
+
+		list = list.toMutableList().also {
+			it.removeAt(index)
+		}.toList()
+
+		notifyItemRemoved(index)
+	}
+
+}
+

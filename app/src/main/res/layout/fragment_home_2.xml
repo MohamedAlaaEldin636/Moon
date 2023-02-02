@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.home.Home2Fragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.home.viewModels.Home2ViewModel" />
+  </data>
+
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swipeRefreshLayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    swipeRefreshLayout_setOnRefreshListenerBA="@{v -> viewModel.onRefreshWholeScreen(v)}"
+
+    android:clipToPadding="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+
+      android:clipToPadding="false">
+
+      <include
+        android:id="@+id/toolbarCurve"
+
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+
+        layout="@layout/item_toolbar_curve"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/searchTextView"
+
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+
+        android:background="@drawable/dr_rect_10"
+
+        android:elevation="2dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:gravity="center_vertical"
+
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="6sp"
+        app:autoSizeMaxTextSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="12sp"
+        style="@style/TextTajawalMedium14"
+        android:textColor="#0D0633"
+
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="17.6dp"
+        android:paddingEnd="19dp"
+
+        android:drawablePadding="9.5dp"
+        app:drawableStartCompat="@drawable/search_home_1"
+        app:drawableEndCompat="@drawable/filter_home_1"
+
+        android:text="@string/search"
+
+        android:onClick="@{v -> viewModel.goToSearch(v)}"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingBottom="35dp"
+        android:clipToPadding="false"
+
+        android:scrollbars="vertical"
+        tools:itemCount="6"
+        app:spanCount="1"
+        tools:orientation="vertical"
+        tools:listitem="@layout/item_home_rv"
+        tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+        app:layout_constraintTop_toBottomOf="@id/searchTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+      <!--<TextView
+        android:id="@+id/showAll"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="12sp"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/show_all"
+
+        android:padding="16dp"
+
+        android:layout_marginTop="2dp"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</layout>

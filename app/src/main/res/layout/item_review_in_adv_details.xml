@@ -26,6 +26,8 @@
       android:layout_width="54dp"
       android:layout_height="54dp"
 
+      android:scaleType="centerCrop"
+
       android:background="@drawable/circle_of_primary_color"
 
       app:shapeAppearance="@style/ShapeCircle"

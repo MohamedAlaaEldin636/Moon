@@ -13,6 +13,7 @@ import dagger.hilt.components.SingletonComponent
 import grand.app.moon.data.ads.data_source.AdsServices
 import grand.app.moon.data.country.data_source.CountriesServices
 import grand.app.moon.data.explorer.data_source.ExploreServices
+import grand.app.moon.data.home2.Home2Services
 import grand.app.moon.data.map.data_source.MapServices
 import grand.app.moon.data.packages.PackagesServices
 import grand.app.moon.data.shop.ShopServices
@@ -78,6 +79,11 @@ object NetworkServicesModule {
   @Singleton
   fun provideShopServices(retrofit: Retrofit): ShopServices =
     retrofit.create(ShopServices::class.java)
+
+  @Provides
+  @Singleton
+  fun provideHome2Services(retrofit: Retrofit): Home2Services =
+    retrofit.create(Home2Services::class.java)
 
   @Provides
   @Singleton

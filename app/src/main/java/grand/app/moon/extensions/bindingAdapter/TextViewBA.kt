@@ -52,6 +52,11 @@ fun AppCompatTextView.adjustInsideRV(
 	}
 }
 
+@BindingAdapter("textView_setSelectedBA")
+fun TextView.setSelectedBA(value: Boolean?) {
+	isSelected = value ?: return
+}
+
 @BindingAdapter("editText_setHintWithRequiredAstrix")
 fun TextView.setHintWithRequiredAstrix(text: String?) {
 	val color = (context ?: return).let { ContextCompat.getColor(it, R.color.required_3) }
@@ -95,10 +100,10 @@ fun TextView.setTextColorResBA(@ColorRes res: Int?) {
 	requireAll = false
 )
 fun TextView.serDrawableCompatBA(
-	start: Drawable?,
-	top: Drawable?,
-	end: Drawable?,
-	bottom: Drawable?,
+	start: Drawable? = null,
+	top: Drawable? = null,
+	end: Drawable? = null,
+	bottom: Drawable? = null,
 ) {
 	setCompoundDrawablesRelativeWithIntrinsicBounds(start, top, end, bottom)
 }
