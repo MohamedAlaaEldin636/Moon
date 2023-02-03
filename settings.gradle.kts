@@ -14,3 +14,4 @@ rootDir
   .forEach {
     include(":${it.name}")
   }
+include(":trim_video_lib")

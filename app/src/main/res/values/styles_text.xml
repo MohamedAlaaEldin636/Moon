@@ -102,10 +102,15 @@
     <item name="android:background">@drawable/dr_rounded_5_text_field_with_bg_2</item>
 
     <item name="android:textColorHint">#545454</item>
+
+    <item name="android:inputType">text</item>
   </style>
   <style name="EditTextForAddStory.DropDown">
     <item name="android:drawablePadding">8dp</item>
     <item name="drawableEndCompat">@drawable/drop_down_for_add_story</item>
+
+    <item name="android:inputType">textNoSuggestions</item>
   </style>
+  <!--android:inputType="textNoSuggestions"-->
 
 </resources>

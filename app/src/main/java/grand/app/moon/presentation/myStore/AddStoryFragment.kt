@@ -1,7 +1,11 @@
 package grand.app.moon.presentation.myStore
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.viewModels
+import com.google.android.exoplayer2.source.ClippingMediaSource
+import com.google.android.exoplayer2.source.MediaSource
+import com.grand.trim_video_lib.registerForActivityResultTrimVideo
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentAddExploreBinding
@@ -15,6 +19,15 @@ import grand.app.moon.presentation.myStore.viewModel.AddStoryViewModel
 
 @AndroidEntryPoint
 class AddStoryFragment : BaseFragment<FragmentAddStoryBinding>() {
+
+	val launcherVideoTrimmer = registerForActivityResultTrimVideo {
+		Log.e("aaa", "aaaaaaaaaaa 111111111")
+
+		//val ms: MediaSource
+		//val q = ClippingMediaSource(ms, 1, 2)
+
+		viewModel.addStoryImmediately(this, it)
+	}
 
 	private val viewModel by viewModels<AddStoryViewModel>()
 

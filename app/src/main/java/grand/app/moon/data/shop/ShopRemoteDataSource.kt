@@ -174,11 +174,16 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		name: String?,
 		coverImage: MultipartBody.Part?,
 	) = safeApiCall {
+		val map = mutableMapOf<String, @JvmSuppressWildcards RequestBody>()
+		if (storyType == StoryType.HIGHLIGHT) {
+			map["highlight_name"] = name.orEmpty().toRequestBody()
+		}
+
 		apiService.addStory(
 			listOfNotNull(file, coverImage),
 			storyLink.apiValue,
 			storyType.apiValue,
-			name.orEmpty().toRequestBody()
+			map
 		)
 	}
 

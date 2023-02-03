@@ -14,14 +14,19 @@ import java.io.File
 import java.io.InputStream
 
 fun Uri.createMultipartBodyPart(context: Context, paramNameInApi: String): MultipartBody.Part? {
+	Log.e("aaa", "aaaaaaaaaaa 11 11 pre $paramNameInApi")
 	val byteArray = toBytesArray(context) ?: return null
+	Log.e("aaa", "aaaaaaaaaaa 11 22 pre $byteArray")
 	val extension = getMimeType(context) ?: return null
-	
+	Log.e("aaa", "aaaaaaaaaaa 11 33 pre $extension")
+
 	return MultipartBody.Part.createFormData(
 		paramNameInApi, "File.$extension", byteArray.toRequestBody()
 	)
 }
 
+//2023-02-02 16:09:22.396 10529-10529 aaa                     grand.app.moon                       E  aaaaaaaaaaa 11 pre
+// /storage/emulated/0/Android/data/grand.app.moon/files/TrimmedVideo/trimmed_video_2023_1_2_16_9_22.mp4
 private  val TAG = "Uri"
 private fun Uri.toBytesArray(context: Context): ByteArray? {
 	return try {

@@ -128,7 +128,7 @@ android {
 }
 
 dependencies {
-	//implementation("com.github.a914-gowtham:android-video-trimmer:1.7.3")
+	implementation(project(":trim_video_lib"))
 
 	implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
 	implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.1")

@@ -77,12 +77,16 @@
         <TextView
           style="@style/LabelTextForAddStory"
 
+          android:visibility="@{viewModel.showCover}"
+
           android:text="@string/story_name"/>
 
         <EditText
           style="@style/EditTextForAddStory"
 
           android:text="@={viewModel.name}"
+
+          android:visibility="@{viewModel.showCover}"
 
           android:hint="@string/story_name"/>
 

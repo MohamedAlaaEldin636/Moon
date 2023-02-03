@@ -2,11 +2,13 @@ package grand.app.moon.presentation.myStore.viewModel
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
+import com.grand.trim_video_lib.launchSafelyTrimVideo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.createMultipartBodyPart
@@ -90,12 +92,33 @@ class AddStoryViewModel @Inject constructor(
 	fun add(view: View) {
 		val fragment = view.findFragmentOrNull<AddStoryFragment>() ?: return
 
-		if (file.value == null || link.value == null || type.value == null || name.value.isNullOrEmpty()
-			|| (type.value == StoryType.HIGHLIGHT && coverImage.value == null)) {
+		if (file.value == null || link.value == null || type.value == null
+			|| (type.value == StoryType.HIGHLIGHT && coverImage.value == null)
+			|| (type.value == StoryType.HIGHLIGHT && name.value.isNullOrEmpty())) {
 			return fragment.showError(fragment.getString(R.string.all_fields_required))
 		}
 
-		val file = file.value?.getUris()?.firstOrNull()?.createMultipartBodyPart(app, "file") ?: return
+		val fileUri = file.value?.getUris()?.firstOrNull() ?: return
+
+		if (false && this.file.value is MAImagesOrVideo.Video) {
+			fragment.launchSafelyTrimVideo(
+				fileUri,
+				fragment.launcherVideoTrimmer
+			)
+		}else {
+			addStoryImmediately(fragment, fileUri)
+		}
+	}
+
+	fun addStoryImmediately(fragment: AddStoryFragment, fileUri: Uri) {
+		Log.e("aaa", "aaaaaaaaaaa 11 pre $fileUri")
+
+		// 2023-02-02 15:51:21.569  5572-5572  aaa                     grand.app.moon                       E  aaaaaaaaaaa 11 pre
+		// /storage/emulated/0/Android/data/grand.app.moon/files/TrimmedVideo/trimmed_video_2023_1_2_15_51_21.mp4
+
+		val file = fileUri.createMultipartBodyPart(app, "file") ?: return
+
+		Log.e("aaa", "aaaaaaaaaaa 12 pre $file")
 
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
@@ -106,7 +129,7 @@ class AddStoryViewModel @Inject constructor(
 					name.value.orEmpty(),
 					if (type.value != StoryType.HIGHLIGHT) null else {
 						coverImage.value?.createMultipartBodyPart(app, "highlight_cover")
-				  },
+					},
 				)
 			}
 		) {
