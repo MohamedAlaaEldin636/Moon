@@ -8,10 +8,24 @@ import android.webkit.MimeTypeMap
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
+
+private fun Uri.asFile() = if (path.isNullOrEmpty()) null else path?.let { File(it) }
+
+fun Uri.createMultipartBodyPartAsFile(context: Context, paramNameInApi: String): MultipartBody.Part? {
+	val file = asFile() ?: return null
+
+	val extension = getMimeType(context) ?: return null
+
+	return MultipartBody.Part.createFormData(
+		paramNameInApi, "File.$extension", file.asRequestBody()
+	)
+}
 
 fun Uri.createMultipartBodyPart(context: Context, paramNameInApi: String): MultipartBody.Part? {
 	Log.e("aaa", "aaaaaaaaaaa 11 11 pre $paramNameInApi")
@@ -25,8 +39,6 @@ fun Uri.createMultipartBodyPart(context: Context, paramNameInApi: String): Multi
 	)
 }
 
-//2023-02-02 16:09:22.396 10529-10529 aaa                     grand.app.moon                       E  aaaaaaaaaaa 11 pre
-// /storage/emulated/0/Android/data/grand.app.moon/files/TrimmedVideo/trimmed_video_2023_1_2_16_9_22.mp4
 private  val TAG = "Uri"
 private fun Uri.toBytesArray(context: Context): ByteArray? {
 	return try {

@@ -111,11 +111,11 @@ private fun showRetryErrorDialog(
 	binding.msgTextView.text = msg
 	binding.negativeButton.text = negativeButton
 	binding.negativeButton.setOnClickListener {
-		progressDialog.dismiss()
+		progressDialog.dismissSafely()
 		negativeButtonAction()
 	}
 	binding.positiveButton.setOnClickListener {
-		progressDialog.dismiss()
+		progressDialog.dismissSafely()
 		onRetry()
 	}
 
@@ -134,7 +134,7 @@ private fun showRetryErrorDialog(
 
 	progressDialog.setCancelable(false)
 	progressDialog.setCanceledOnTouchOutside(false)
-	progressDialog.show()
+	progressDialog.showSafely()
 }
 
 fun <T> BaseActivity<*>.handleRetryAbleActionCancellable(

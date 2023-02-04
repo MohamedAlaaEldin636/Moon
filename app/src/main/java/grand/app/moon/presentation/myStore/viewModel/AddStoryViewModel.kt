@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import com.grand.trim_video_lib.launchSafelyTrimVideo
@@ -17,10 +18,15 @@ import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.domain.shop.MAImagesOrVideo
 import grand.app.moon.domain.shop.StoryLink
 import grand.app.moon.domain.shop.StoryType
+import grand.app.moon.domain.utils.Resource
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myStore.AddStoryFragment
+import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -106,23 +112,16 @@ class AddStoryViewModel @Inject constructor(
 				fragment.launcherVideoTrimmer
 			)
 		}else {
-			addStoryImmediately(fragment, fileUri)
+			addStoryImmediately(fragment, fileUri.createMultipartBodyPart(app, "file") ?: return)
 		}
 	}
 
-	fun addStoryImmediately(fragment: AddStoryFragment, fileUri: Uri) {
-		Log.e("aaa", "aaaaaaaaaaa 11 pre $fileUri")
+	fun addStoryImmediately(fragment: AddStoryFragment, file: MultipartBody.Part, makeHugeChanges: Boolean = false) {
+		if (makeHugeChanges) {
+			fragment.activity?.lifecycleScope?.launch {
+				MyLogger.e("cccccccccccc -> 1")
 
-		// 2023-02-02 15:51:21.569  5572-5572  aaa                     grand.app.moon                       E  aaaaaaaaaaa 11 pre
-		// /storage/emulated/0/Android/data/grand.app.moon/files/TrimmedVideo/trimmed_video_2023_1_2_15_51_21.mp4
-
-		val file = fileUri.createMultipartBodyPart(app, "file") ?: return
-
-		Log.e("aaa", "aaaaaaaaaaa 12 pre $file")
-
-		fragment.handleRetryAbleActionCancellableNullable(
-			action = {
-				repoShop.addStory(
+				val resource = repoShop.addStory(
 					file,
 					link.value!!,
 					type.value!!,
@@ -131,13 +130,29 @@ class AddStoryViewModel @Inject constructor(
 						coverImage.value?.createMultipartBodyPart(app, "highlight_cover")
 					},
 				)
-			}
-		) {
-			fragment.showMessage(fragment.getString(R.string.done_successfully))
 
-			fragment.findNavController().navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
-				true // Done successfully
-			)
+				MyLogger.e("cccccccccccc -> 2  ${resource is Resource.Success} $resource")
+			}
+		}else {
+			fragment.handleRetryAbleActionCancellableNullable(
+				action = {
+					repoShop.addStory(
+						file,
+						link.value!!,
+						type.value!!,
+						name.value.orEmpty(),
+						if (type.value != StoryType.HIGHLIGHT) null else {
+							coverImage.value?.createMultipartBodyPart(app, "highlight_cover")
+						},
+					)
+				}
+			) {
+				fragment.showMessage(fragment.getString(R.string.done_successfully))
+
+				fragment.findNavController().navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
+					true // Done successfully
+				)
+			}
 		}
 	}
 

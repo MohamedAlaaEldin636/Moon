@@ -15,6 +15,8 @@ import android.widget.TextView
 import android.widget.Toast
 import grand.app.moon.R
 import com.tapadoo.alerter.Alerter
+import grand.app.moon.extensions.dismissSafely
+import grand.app.moon.extensions.showSafely
 
 fun showMessage(context: Context, message: String?) {
   Toast.makeText(
@@ -81,7 +83,7 @@ fun showLoadingDialog(activity: Activity?, hint: String?): Dialog? {
     return null
   }
   val progressDialog = Dialog(activity)
-  progressDialog.show()
+  //progressDialog.show()
   if (progressDialog.window != null) {
     progressDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
   }
@@ -96,14 +98,14 @@ fun showLoadingDialog(activity: Activity?, hint: String?): Dialog? {
 
   progressDialog.setCancelable(true)
   progressDialog.setCanceledOnTouchOutside(false)
-  progressDialog.show()
+  progressDialog.showSafely()
 
   return progressDialog
 }
 
 fun hideLoadingDialog(mProgressDialog: Dialog?, activity: Activity?) {
   if (activity != null && !activity.isFinishing && mProgressDialog != null && mProgressDialog.isShowing) {
-    mProgressDialog.dismiss()
+    mProgressDialog.dismissSafely()
   }
 }
 
