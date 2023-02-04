@@ -2,8 +2,10 @@ package grand.app.moon.presentation.myStore.viewModel
 
 import android.app.Application
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -107,17 +109,29 @@ class AddStoryViewModel @Inject constructor(
 		val fileUri = file.value?.getUris()?.firstOrNull() ?: return
 
 		if (false && this.file.value is MAImagesOrVideo.Video) {
-			fragment.launchSafelyTrimVideo(
+			/*
+Intent intent = new Intent(activity, ActVideoTrimmer.class);
+		Gson gson = new Gson();
+		Bundle bundle = new Bundle();
+		bundle.putString("trim_video_uri", this.videoUri);
+		bundle.putString("trim_video_option", gson.toJson(this.options));
+		intent.putExtras(bundle);
+		return intent;
+ */
+			fragment.launcherVideoTrimmer2.launch(fileUri)
+			/*fragment.launchSafelyTrimVideo(
 				fileUri,
-				fragment.launcherVideoTrimmer
-			)
+				fragment.launcherVideoTrimmer,
+			) {
+				getMAGson().toJson(it)
+			}*/
 		}else {
 			addStoryImmediately(fragment, fileUri.createMultipartBodyPart(app, "file") ?: return)
 		}
 	}
 
 	fun addStoryImmediately(fragment: AddStoryFragment, file: MultipartBody.Part, makeHugeChanges: Boolean = false) {
-		if (makeHugeChanges) {
+		if (false && makeHugeChanges) {
 			fragment.activity?.lifecycleScope?.launch {
 				MyLogger.e("cccccccccccc -> 1")
 

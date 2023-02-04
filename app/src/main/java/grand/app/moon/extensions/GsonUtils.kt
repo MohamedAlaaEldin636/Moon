@@ -30,6 +30,8 @@ internal val gson by lazy {
         .create()
 }
 
+fun getMAGson() = gson
+
 private object TypeAdapterLocalYearMonth : JsonSerializer<YearMonth>, JsonDeserializer<YearMonth> {
     override fun serialize(
         src: YearMonth?,

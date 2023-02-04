@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.exoplayer2.source.ClippingMediaSource
 import com.google.android.exoplayer2.source.MediaSource
+import com.grand.trim_video_lib.LoadingTrimActivity
+import com.grand.trim_video_lib.MAActivityResultContracts
 import com.grand.trim_video_lib.registerForActivityResultTrimVideo
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -14,10 +17,7 @@ import grand.app.moon.core.extenstions.createMultipartBodyPartAsFile
 import grand.app.moon.databinding.FragmentAddExploreBinding
 import grand.app.moon.databinding.FragmentAddStoryBinding
 import grand.app.moon.domain.shop.MAImagesOrVideo
-import grand.app.moon.extensions.MyLogger
-import grand.app.moon.extensions.PickImagesOrVideoHandler
-import grand.app.moon.extensions.app
-import grand.app.moon.extensions.handleRetryAbleActionCancellable
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.HomeActivity
@@ -27,16 +27,11 @@ import grand.app.moon.presentation.myStore.viewModel.AddStoryViewModel
 @AndroidEntryPoint
 class AddStoryFragment : BaseFragment<FragmentAddStoryBinding>() {
 
-	// todo this registration causes fragment to be not in activity dunno why walahii
-	val launcherVideoTrimmer = registerForActivityResultTrimVideo {
-		MyLogger.e("bbbbbbb $isDetached $isAdded $activity")
-
-		val app = context?.applicationContext ?: return@registerForActivityResultTrimVideo
-
-		val file = it.createMultipartBodyPartAsFile(app, "file")
-			?: return@registerForActivityResultTrimVideo
-
-		viewModel.addStoryImmediately(this, file, true)
+	val launcherVideoTrimmer2 = registerForActivityResult(
+		MAActivityResultContracts.StartTrim()
+	) { uri ->
+		//(activity as? HomeActivity)?.makeHugeChanges()
+		//launchSafelyTrimVideo
 	}
 
 	private val viewModel by viewModels<AddStoryViewModel>()

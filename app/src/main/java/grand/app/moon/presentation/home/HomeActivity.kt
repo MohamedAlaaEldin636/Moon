@@ -3,12 +3,16 @@ package grand.app.moon.presentation.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.webkit.ValueCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.os.postDelayed
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
@@ -30,9 +34,29 @@ import grand.app.moon.extensions.*
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
 import grand.app.moon.presentation.packages.BecomeShopPackagesFragmentDirections
 
+//private var CAUSE_NAV_UP = false
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
+
+	/*fun makeHugeChanges() {
+		MyLogger.e("gggggggggggggggggggggggggg -> 0")
+		MyLogger.e("gggggggggggggggggggggggggg -> 1 ${kotlin.runCatching { ::nav.isInitialized }.getOrNull()}")
+		MyLogger.e("gggggggggggggggggggggggggg -> 2 ${kotlin.runCatching { (supportFragmentManager.findFragmentById(R.id.fragment_host_container) as? NavHostFragment)?.navController }.getOrNull()}")
+
+		Handler(Looper.getMainLooper()).postDelayed(500) {
+			MyLogger.e("gggggggggggggggggggggggggg -> 0")
+			MyLogger.e("gggggggggggggggggggggggggg -> 1 ${kotlin.runCatching { ::nav.isInitialized }.getOrNull()}")
+			MyLogger.e("gggggggggggggggggggggggggg -> 2 ${kotlin.runCatching { (supportFragmentManager.findFragmentById(R.id.fragment_host_container) as? NavHostFragment)?.navController }.getOrElse { it }}")
+
+			MyLogger.e("gggggggggggggggggggggggggg -> 4 ${kotlin.runCatching { nav.navigateUp() }.getOrElse { it }}")
+
+			CAUSE_NAV_UP = true
+
+			MyLogger.e("gggggggggggggggggggggggggg -> 4 ${kotlin.runCatching { recreate() }.getOrElse { it }}")
+		}
+	}*/
+
   var filePath: ValueCallback<Array<Uri>>? = null
   private lateinit var appBarConfiguration: AppBarConfiguration
   lateinit var nav: NavController
@@ -56,13 +80,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 //      LocaleHelper.setLocale(this, Locale(lang))
 //    }
 
-    if (this::nav.isInitialized) {
+
+	  if (this::nav.isInitialized) {
       nav.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(Constants.BUNDLE)
         ?.observe(this) { result ->
           // Do something with the result.
           Log.d(TAG, "onCreate: DONE HERE")
         }
     }
+
+	  MyLogger.e("gggggggggggggggggggggggggg -> 5 ${kotlin.runCatching { nav.currentDestination?.id == R.id.dest_add_story }.getOrElse { it }}")
 //    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
 //      if(bundle.containsKey(Constants.SORT_BY)) {
 //        when(bundle.getInt(Constants.SORT_BY)){
@@ -92,7 +119,20 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     val navHostFragment =
       supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
     nav = navHostFragment.findNavController()
-    appBarConfiguration = AppBarConfiguration(
+	  /*if (CAUSE_NAV_UP && nav.currentDestination?.id == R.id.dest_add_story) {
+		  CAUSE_NAV_UP = false
+
+			Handler(Looper.getMainLooper()).post {
+				nav.navigateUp()
+
+				nav.navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.add.story"
+				)
+			}
+	  }
+	  MyLogger.e("gggggggggggggggggggggggggg -> 6 ${kotlin.runCatching { nav.currentDestination?.id == R.id.dest_add_story }.getOrElse { it }}")*/
+	  appBarConfiguration = AppBarConfiguration(
       setOf(
         R.id.storyFragment,
         R.id.addStoreFragment,
