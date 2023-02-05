@@ -433,4 +433,16 @@
   <string name="story_addition">إضافة حالة</string>
   <string name="most_rated_stores">أعلي المتاجر تقيماً</string>
   <string name="following_stories">المتاجر التي تتابعها</string>
+    <string name="current_week">الاسبوع الحالي</string>
+  <string name="prev_week">الاسبوع السابق</string>
+  <string name="view_ad">مشاهدة الإعلان</string>
+  <string name="share_ad">مشاركة الإعلان</string>
+  <string name="call_3">مكالمة</string>
+  <string name="chat_9">المحادثة</string>
+  <string name="whatsapp_call">محادثة الواتس اب</string>
+  <string name="whatsapp_calls">محادثات الواتس اب</string>
+  <string name="favourite_8">مفضلة</string>
+  <string name="search_about_an_adv">البحث عن الإعلان</string>
+  <string name="report_1">بلاغ</string>
+  <string name="reports_1">البلاغات</string>
 </resources>

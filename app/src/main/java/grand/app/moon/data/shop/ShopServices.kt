@@ -5,6 +5,7 @@ import grand.app.moon.core.di.module.RetrofitModule
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
+import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -141,5 +142,20 @@ interface ShopServices {
 		@Field("rate") rate: Int?,
 		@Field("review") review: String,
 	): BaseResponse<Any?>
+
+	@GET("v1/statistics/show")
+	suspend fun getMyAdvStats(
+		@Query("advertisement_id") advId: Int,
+		@Query("type") type: String,
+		@Query("statistics_type") statisticsType: String = "advertisement",
+	): BaseResponse<ResponseGeneralStats?>
+
+	@GET("v1/statistics/show")
+	suspend fun getMyAdvStatsUsers(
+		@Query("advertisement_id") advId: Int,
+		@Query("type") type: String,
+		@Query("page") page: Int,
+		@Query("statistics_type") statisticsType: String = "advertisement",
+	): MABaseResponse<ResponseGeneralStats?>
 
 }

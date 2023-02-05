@@ -9,6 +9,7 @@ import grand.app.moon.domain.utils.map
 import grand.app.moon.domain.utils.toFailureStatus
 import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -193,6 +194,22 @@ class RepoShop @Inject constructor(
 			}
 		}else {
 			resourceCities.mapToNullSuccess()
+		}
+	}
+
+	suspend fun getMyAdvStats(
+		advId: Int,
+		type: ItemStatsInAdvDetails.Type
+	) = remoteDataSource.getMyAdvStats(advId, type)
+
+	fun getMyAdvStatsUsers(
+		advId: Int,
+		type: ItemStatsInAdvDetails.Type,
+	) = BasePaging.createFlowViaPager {
+		remoteDataSource.getMyAdvStatsUsers(advId, type, it).mapImmediate { response ->
+			response.map { stats ->
+				stats?.users
+			}
 		}
 	}
 

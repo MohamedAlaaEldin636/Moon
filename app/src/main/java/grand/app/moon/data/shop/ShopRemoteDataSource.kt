@@ -9,6 +9,7 @@ import grand.app.moon.extensions.minLengthZerosPrefix
 import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -185,6 +186,21 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 			storyType.apiValue,
 			map
 		)
+	}
+
+	suspend fun getMyAdvStats(
+		advId: Int,
+		type: ItemStatsInAdvDetails.Type,
+	) = safeApiCall {
+		apiService.getMyAdvStats(advId, type.apiValue)
+	}
+
+	suspend fun getMyAdvStatsUsers(
+		advId: Int,
+		type: ItemStatsInAdvDetails.Type,
+		page: Int
+	) = safeApiCall2 {
+		apiService.getMyAdvStatsUsers(advId, type.apiValue, page)
 	}
 
 }

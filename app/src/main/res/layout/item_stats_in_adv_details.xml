@@ -8,10 +8,14 @@
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
     android:layout_margin="8dp"
+
+    android:layout_gravity="center"
 
     android:elevation="6dp"
     android:background="@drawable/dr_rect_7"
@@ -74,20 +78,23 @@
       app:layout_constraintTop_toBottomOf="@id/iconImageView"
       app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
       android:id="@+id/statsTextView"
 
-      app:autoSizeTextType="uniform"
-      app:autoSizeMaxTextSize="16sp"
-      app:autoSizeMinTextSize="8sp"
-      android:maxLines="1"
-      android:ellipsize="end"
+      android:singleLine="true"
+      android:ellipsize="marquee"
+      android:marqueeRepeatLimit ="marquee_forever"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:scrollHorizontally="true"
+      textView_setSelectedBA="@{true}"
+      android:includeFontPadding="false"
 
       android:layout_width="0dp"
       android:layout_height="wrap_content"
 
-      style="@style/TextTajawalBold14"
-      android:textSize="16sp"
+      style="@style/TextTajawalMedium14"
+      android:textSize="10sp"
       android:textColor="#727889"
 
       android:layout_marginStart="9dp"

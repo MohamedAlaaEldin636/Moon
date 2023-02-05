@@ -1,10 +1,12 @@
 package grand.app.moon.presentation.myAds.model
 
+import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.domain.ads.ItemProperty
 import grand.app.moon.extensions.orZero
 import java.math.BigDecimal
 import java.math.RoundingMode
+import grand.app.moon.R
 
 data class ResponseMyAdvertisements(
 	var advertisements: List<ResponseMyAdvDetails>?
@@ -168,14 +170,17 @@ data class ItemStatsInAdvDetails(
 
 	val type get() = Type.values().firstOrNull { it.apiValue == stringValueOfType }
 
-	enum class Type(val apiValue: String) {
-		VIEWS("views"),
-		SHARES("shares"),
-		CALLS("calls"),
-		CHATS("chats"),
-		WHATSAPP("whatsapp"),
-		FAVORITES("favorites"),
-		SEARCH("search"),
-		REPORTS("reports"),
+	/*
+	'followers','advertisements','stories','shares','calls','chats','whatsapps','reports','blocks','explores','views','ad_shares','ad_views','ad_reports', 'ad_searches'
+	 */
+	enum class Type(val apiValue: String, @StringRes val titlePluralRes: Int, @StringRes val titleSingularRes: Int) {
+		VIEWS("views", R.string.view_ad, R.string.view_921),
+		SHARES("shares", R.string.share_ad, R.string.share),
+		CALLS("calls", R.string.calls, R.string.call_3),
+		CHATS("chats", R.string.conversation, R.string.chat_9),
+		WHATSAPP("whatsapp", R.string.whatsapp_calls, R.string.whatsapp_call),
+		FAVORITES("favorites", R.string.favourite, R.string.favourite_8),
+		SEARCH("search", R.string.search_about_an_adv, R.string.search),
+		REPORTS("reports", R.string.reports_1, R.string.report_1),
 	}
 }

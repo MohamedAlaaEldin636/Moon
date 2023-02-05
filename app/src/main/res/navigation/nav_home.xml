@@ -903,5 +903,27 @@
     android:name="grand.app.moon.presentation.home.Home2Fragment"
     android:label=""
     tools:layout="@layout/fragment_home_2" />
+  <fragment
+    android:id="@+id/dest_general_stats"
+    android:name="grand.app.moon.presentation.stats.GeneralStatsFragment"
+    android:label="{titlePlural}"
+    tools:layout="@layout/fragment_general_stats">
+    <argument
+      android:name="titlePlural"
+      app:argType="string" />
+    <argument
+      android:name="titleSingular"
+      app:argType="string" />
+    <argument
+      android:name="advId"
+      app:argType="integer" />
+    <argument
+      android:name="type"
+      app:argType="grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails$Type" />
+    <deepLink
+      android:id="@+id/deep_link_dest_general_stats"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.general.stats/{titlePlural}/{titleSingular}/{advId}/{type}" />
+  </fragment>
 
 </navigation>

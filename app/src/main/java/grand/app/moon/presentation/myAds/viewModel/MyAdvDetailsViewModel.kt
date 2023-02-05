@@ -135,35 +135,46 @@ class MyAdvDetailsViewModel @Inject constructor(
 	val adapterStats = RVItemCommonListUsage<ItemStatsInAdvDetailsBinding, ItemStatsInAdvDetails>(
 		R.layout.item_stats_in_adv_details,
 		emptyList(),
-		onItemClick = { _, _ ->
-			General.TODO("Will be programmed later as it is only available for store account")
+		onItemClick = { adapter, binding ->
+			val context = binding.root.context ?: return@RVItemCommonListUsage
+
+			val item = (binding.constraintLayout.tag as? String).fromJsonInlinedOrNull<ItemStatsInAdvDetails>()
+				?: return@RVItemCommonListUsage
+
+			val type = item.type ?: return@RVItemCommonListUsage
+
+			val titlePlural = context.getString(type.titlePluralRes)
+			val titleSingular = context.getString(type.titleSingularRes)
+			binding.root.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.general.stats",
+				paths = arrayOf(titlePlural, titleSingular, response.value?.id.orZero().toString(), type.toString())
+			)
 		}
 	) { binding, _, item ->
 		val context = binding.root.context ?: return@RVItemCommonListUsage
+
+		binding.constraintLayout.tag = item.toJsonInlinedOrNull()
 
 		binding.titleTextView.text = item.name
 
 		binding.numberTextView.text = item.totalCount.orZero().toString()
 
 		binding.statsTextView.isVisible = isShop
-		binding.statsTextView.adjustInsideRV(
-			buildSpannedString {
-				val growthRate = item.growthRate
-				val isPositive = growthRate > 0.toBigDecimal()
-				val absGrowthRate = growthRate.abs()
+		binding.statsTextView.text = buildSpannedString {
+			val growthRate = item.growthRate
+			val isPositive = growthRate >= 0.toBigDecimal()
+			val absGrowthRate = growthRate.abs()
 
-				append("$absGrowthRate  ?  % ")
+			append("$absGrowthRate  ?  % ")
 
-				this[" ? "] = DrawableSpanKt(
-					if (isPositive || absGrowthRate == BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)) drawablePositiveGrowth else drawableNegativeGrowth,
-					makeHeightSameAsWidthIfPossible = true,
-				)
+			this[" ? "] = DrawableSpanKt(
+				if (isPositive || absGrowthRate == BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP)) drawablePositiveGrowth else drawableNegativeGrowth,
+				//makeHeightSameAsWidthIfPossible = true,
+			)
 
-				append(context.getString(R.string.comparedd_to_last_month))
-			},
-			16f,
-			8f
-		)
+			append(context.getString(R.string.comparedd_to_last_month))
+		}
 
 		val drawableRes = when (item.type) {
 			ItemStatsInAdvDetails.Type.VIEWS -> R.drawable.ic_views_stats
