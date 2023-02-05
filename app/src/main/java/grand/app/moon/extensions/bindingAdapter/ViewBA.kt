@@ -9,6 +9,7 @@ import androidx.annotation.FloatRange
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.orZero
 import kotlin.math.roundToInt
 
@@ -51,7 +52,9 @@ fun View.constraintPercentHeight(@FloatRange(from = 0.0, to = 1.0) value: Float?
 @BindingAdapter("view_layoutConstraintHeightMaxByPercentage")
 fun View.layoutConstraintHeightMaxByPercentage(@FloatRange(from = 0.0, to = 1.0) value: Float?) {
 	val layoutParams = layoutParams as? ConstraintLayout.LayoutParams ?: return
+	MyLogger.e("layoutConstraintHeightMaxByPercentage -> 0 -> ${layoutParams.matchConstraintDefaultHeight} ${layoutParams.matchConstraintMaxHeight} $value")
 	layoutParams.matchConstraintMaxHeight = (layoutParams.matchConstraintDefaultHeight.toFloat() * (value ?: return)).roundToInt()
+	MyLogger.e("layoutConstraintHeightMaxByPercentage -> 1 -> ${layoutParams.matchConstraintDefaultHeight} ${layoutParams.matchConstraintMaxHeight} $value")
 	this.layoutParams = layoutParams
 }
 

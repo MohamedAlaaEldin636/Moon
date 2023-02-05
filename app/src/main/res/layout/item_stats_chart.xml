@@ -373,6 +373,7 @@
 
         tools:layout_constraintHeight_max="150dp"
         view_layoutConstraintHeightMaxByPercentage="@{data.saturdayPercent}"
+        view_visibleOrInvisible="@{data.saturdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -392,6 +393,7 @@
 
         tools:layout_constraintHeight_max="110dp"
         view_layoutConstraintHeightMaxByPercentage="@{data.sundayPercent}"
+        view_visibleOrInvisible="@{data.sundayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -409,6 +411,7 @@
 
         tools:layout_constraintHeight_max="200dp"
         view_layoutConstraintHeightMaxByPercentage="@{data.mondayPercent}"
+        view_visibleOrInvisible="@{data.mondayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -426,6 +429,7 @@
 
         tools:layout_constraintHeight_max="200dp"
         view_layoutConstraintHeightMaxByPercentage="@{data.tuesdayPercent}"
+        view_visibleOrInvisible="@{data.tuesdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -443,6 +447,7 @@
 
         tools:layout_constraintHeight_max="200dp"
         view_layoutConstraintHeightMaxByPercentage="@{data.wednesdayPercent}"
+        view_visibleOrInvisible="@{data.wednesdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -460,6 +465,7 @@
 
         tools:layout_constraintHeight_max="200dp"
         view_layoutConstraintHeightMaxByPercentage="@{data.thursdayPercent}"
+        view_visibleOrInvisible="@{data.thursdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -477,6 +483,7 @@
 
         tools:layout_constraintHeight_max="100dp"
         view_layoutConstraintHeightMaxByPercentage="@{data.fridayPercent}"
+        view_visibleOrInvisible="@{data.fridayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
