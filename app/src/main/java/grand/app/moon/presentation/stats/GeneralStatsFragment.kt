@@ -9,6 +9,9 @@ import grand.app.moon.databinding.FragmentGeneralStatsBinding
 import grand.app.moon.domain.stats.toChartData
 import grand.app.moon.extensions.RetryAbleFlow
 import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
+import grand.app.moon.extensions.minLengthZerosPrefix
+import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.stats.viewModels.GeneralStatsViewModel
 
@@ -21,7 +24,6 @@ class GeneralStatsFragment : BaseFragment<FragmentGeneralStatsBinding>() {
 
 	private val viewModel by viewModels<GeneralStatsViewModel>()
 
-	// todo from to name
 	val retryAbleFlow by lazy {
 		RetryAbleFlow(
 			this,
@@ -29,6 +31,9 @@ class GeneralStatsFragment : BaseFragment<FragmentGeneralStatsBinding>() {
 				viewModel.repoShop.getMyAdvStatsUsers(
 					viewModel.args.advId,
 					viewModel.args.type,
+					viewModel.name.value,
+					viewModel.dateFrom.value?.fromUiToApiDate(),
+					viewModel.dateTo.value?.fromUiToApiDate(),
 				)
 			},
 			collectLatestAction = {
@@ -53,7 +58,9 @@ class GeneralStatsFragment : BaseFragment<FragmentGeneralStatsBinding>() {
 		) {
 			val context = context ?: return@handleRetryAbleActionOrGoBack
 
-			viewModel.data.value = it.toChartData(context, viewModel.args, true)
+			viewModel.response = it
+
+			viewModel.chart.value = it.toChartData(context, viewModel.args, true)
 		}
 	}
 
@@ -66,7 +73,25 @@ class GeneralStatsFragment : BaseFragment<FragmentGeneralStatsBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		binding.statsInclude.bar1View // todo setup clicks ba2a isa. bars & current week bs kda isa.
+		binding.recyclerView.setupWithRVItemCommonListUsage(
+			viewModel.adapter.withDefaultHeaderAndFooterAdapters(),
+			false,
+			1
+		)
+
+		retryAbleFlow.collectLatest()
+	}
+
+	private fun String.fromUiToApiDate(): String? {
+		val array = if (contains(" / ")) split(" / ") else return null
+
+		val day = array.getOrNull(0)?.toIntOrNull() ?: return null
+		val month = array.getOrNull(1)?.toIntOrNull() ?: return null
+		val year = array.getOrNull(2)?.toIntOrNull() ?: return null
+
+		return "${year.toString().minLengthZerosPrefix(4)}-" +
+			"${month.toString().minLengthZerosPrefix(2)}-" +
+			day.toString().minLengthZerosPrefix(2)
 	}
 
 }

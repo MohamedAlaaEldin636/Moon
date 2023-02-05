@@ -43,7 +43,7 @@
 
         android:layout_margin="8dp"
 
-        app:data="@{viewModel.data}"
+        app:viewModel="@{viewModel}"
 
         app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
         app:layout_constraintStart_toStartOf="parent"

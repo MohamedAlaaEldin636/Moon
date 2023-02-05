@@ -11,6 +11,7 @@ import grand.app.moon.presentation.stats.GeneralStatsFragmentArgs
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.time.DayOfWeek
 import kotlin.math.roundToInt
 
 fun ResponseGeneralStats.toChartData(
@@ -100,9 +101,21 @@ data class ChartData(
 	val thursdayTooltip get() = "$saturdayPercent $tooltipSuffix"
 	val fridayTooltip get() = "$saturdayPercent $tooltipSuffix"
 
+	fun performShowTooltip(day: DayOfWeek): ChartData = copy(
+		showSaturdayTooltip = day == DayOfWeek.SATURDAY,
+		showSundayTooltip = day == DayOfWeek.SUNDAY,
+		showMondayTooltip = day == DayOfWeek.MONDAY,
+		showTuesdayTooltip = day == DayOfWeek.TUESDAY,
+		showWednesdayTooltip = day == DayOfWeek.WEDNESDAY,
+		showThursdayTooltip = day == DayOfWeek.THURSDAY,
+		showFridayTooltip = day == DayOfWeek.FRIDAY,
+	)
+
 	companion object {
 		@JvmStatic
-		fun getValueAsString(value: Int): String {
+		fun getValueAsString(originalValue: Int?): String {
+			val value = originalValue.orZero()
+
 			return when {
 				value >= 1_000_000 -> "${value / 1_000_000} M"
 				value >= 1_000 -> "${value / 1_000} K"

@@ -155,6 +155,7 @@ interface ShopServices {
 		@Query("advertisement_id") advId: Int,
 		@Query("type") type: String,
 		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>,
 		@Query("statistics_type") statisticsType: String = "advertisement",
 	): MABaseResponse<ResponseGeneralStats?>
 

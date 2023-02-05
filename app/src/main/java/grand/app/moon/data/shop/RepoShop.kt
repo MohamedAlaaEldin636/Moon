@@ -205,8 +205,11 @@ class RepoShop @Inject constructor(
 	fun getMyAdvStatsUsers(
 		advId: Int,
 		type: ItemStatsInAdvDetails.Type,
+		query: String?,
+		from: String?,
+		to: String?,
 	) = BasePaging.createFlowViaPager {
-		remoteDataSource.getMyAdvStatsUsers(advId, type, it).mapImmediate { response ->
+		remoteDataSource.getMyAdvStatsUsers(advId, type, it, query, from, to).mapImmediate { response ->
 			response.map { stats ->
 				stats?.users
 			}

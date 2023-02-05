@@ -7,10 +7,10 @@
 
   <data>
     <import type="grand.app.moon.domain.stats.ChartData"/>
-
+    
     <variable
-      name="data"
-      type="grand.app.moon.domain.stats.ChartData" />
+      name="viewModel"
+      type="grand.app.moon.presentation.stats.viewModels.ItemStatsChartViewModel" />
   </data>
 
   <FrameLayout
@@ -42,7 +42,7 @@
         android:textSize="10sp"
         android:textColor="#727889"
         tools:text="Current Week"
-        android:text="@{data.weekName}"
+        android:text="@{viewModel.chart.weekName}"
 
         android:layout_marginTop="14.5dp"
         android:layout_marginEnd="27.5dp"
@@ -55,6 +55,8 @@
 
         android:drawablePadding="5dp"
         app:drawableStartCompat="@drawable/arrow_down_1a"
+
+        android:onClick="@{() -> viewModel.toggleWeek()}"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -69,7 +71,7 @@
         android:textSize="13sp"
         android:textColor="#727889"
         tools:text="Views"
-        android:text="@{data.dataName}"
+        android:text="@{viewModel.chart.dataName}"
 
         android:layout_marginTop="25dp"
         android:layout_marginStart="18dp"
@@ -89,7 +91,7 @@
         android:textSize="11sp"
         android:textColor="#727889"
         tools:text="100.00"
-        android:text="@{data.percentage}"
+        android:text="@{viewModel.chart.percentage}"
 
         android:layout_marginStart="18dp"
 
@@ -107,7 +109,7 @@
         android:layout_height="8.8dp"
 
         android:src="@drawable/ic_positive_growth"
-        imageView_setupWithGlideResIdOrSplashBA="@{data.percentageIconRes}"
+        imageView_setupWithGlideResIdOrSplashBA="@{viewModel.chart.percentageIconRes}"
 
         android:layout_marginStart="2dp"
 
@@ -156,7 +158,7 @@
         android:layout_height="wrap_content"
 
         tools:text="150k"
-        android:text="@{ChartData.getValueAsString(data.line7)}"
+        android:text="@{ChartData.getValueAsString(viewModel.chart.line7)}"
 
         android:layout_marginStart="13dp"
 
@@ -189,7 +191,7 @@
         android:layout_height="wrap_content"
 
         tools:text="150k"
-        android:text="@{ChartData.getValueAsString(data.line6)}"
+        android:text="@{ChartData.getValueAsString(viewModel.chart.line6)}"
 
         android:layout_marginStart="13dp"
 
@@ -222,7 +224,7 @@
         android:layout_height="wrap_content"
 
         tools:text="150k"
-        android:text="@{ChartData.getValueAsString(data.line5)}"
+        android:text="@{ChartData.getValueAsString(viewModel.chart.line5)}"
 
         android:layout_marginStart="13dp"
 
@@ -255,7 +257,7 @@
         android:layout_height="wrap_content"
 
         tools:text="150k"
-        android:text="@{ChartData.getValueAsString(data.line4)}"
+        android:text="@{ChartData.getValueAsString(viewModel.chart.line4)}"
 
         android:layout_marginStart="13dp"
 
@@ -288,7 +290,7 @@
         android:layout_height="wrap_content"
 
         tools:text="150k"
-        android:text="@{ChartData.getValueAsString(data.line3)}"
+        android:text="@{ChartData.getValueAsString(viewModel.chart.line3)}"
 
         android:layout_marginStart="13dp"
 
@@ -321,7 +323,7 @@
         android:layout_height="wrap_content"
 
         tools:text="150k"
-        android:text="@{ChartData.getValueAsString(data.line2)}"
+        android:text="@{ChartData.getValueAsString(viewModel.chart.line2)}"
 
         android:layout_marginStart="13dp"
 
@@ -354,7 +356,7 @@
         android:layout_height="wrap_content"
 
         tools:text="150k"
-        android:text="@{ChartData.getValueAsString(data.line1)}"
+        android:text="@{ChartData.getValueAsString(viewModel.chart.line1)}"
 
         android:layout_marginStart="13dp"
 
@@ -372,8 +374,10 @@
         android:layout_height="0dp"
 
         tools:layout_constraintHeight_max="150dp"
-        view_layoutConstraintHeightMaxByPercentage="@{data.saturdayPercent}"
-        view_visibleOrInvisible="@{data.saturdayPercent != 0f}"
+        view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.saturdayPercent}"
+        view_visibleOrInvisible="@{viewModel.chart.saturdayPercent != 0f}"
+
+        android:onClick="@{v -> viewModel.showDayTooltip(v)}"
 
         android:background="@color/colorPrimary"
 
@@ -391,9 +395,11 @@
         android:layout_width="9dp"
         android:layout_height="0dp"
 
+        android:onClick="@{v -> viewModel.showDayTooltip(v)}"
+
         tools:layout_constraintHeight_max="110dp"
-        view_layoutConstraintHeightMaxByPercentage="@{data.sundayPercent}"
-        view_visibleOrInvisible="@{data.sundayPercent != 0f}"
+        view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.sundayPercent}"
+        view_visibleOrInvisible="@{viewModel.chart.sundayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -409,9 +415,11 @@
         android:layout_width="9dp"
         android:layout_height="0dp"
 
+        android:onClick="@{v -> viewModel.showDayTooltip(v)}"
+
         tools:layout_constraintHeight_max="200dp"
-        view_layoutConstraintHeightMaxByPercentage="@{data.mondayPercent}"
-        view_visibleOrInvisible="@{data.mondayPercent != 0f}"
+        view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.mondayPercent}"
+        view_visibleOrInvisible="@{viewModel.chart.mondayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -427,9 +435,11 @@
         android:layout_width="9dp"
         android:layout_height="0dp"
 
+        android:onClick="@{v -> viewModel.showDayTooltip(v)}"
+
         tools:layout_constraintHeight_max="200dp"
-        view_layoutConstraintHeightMaxByPercentage="@{data.tuesdayPercent}"
-        view_visibleOrInvisible="@{data.tuesdayPercent != 0f}"
+        view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.tuesdayPercent}"
+        view_visibleOrInvisible="@{viewModel.chart.tuesdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -445,9 +455,11 @@
         android:layout_width="9dp"
         android:layout_height="0dp"
 
+        android:onClick="@{v -> viewModel.showDayTooltip(v)}"
+
         tools:layout_constraintHeight_max="200dp"
-        view_layoutConstraintHeightMaxByPercentage="@{data.wednesdayPercent}"
-        view_visibleOrInvisible="@{data.wednesdayPercent != 0f}"
+        view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.wednesdayPercent}"
+        view_visibleOrInvisible="@{viewModel.chart.wednesdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -463,9 +475,11 @@
         android:layout_width="9dp"
         android:layout_height="0dp"
 
+        android:onClick="@{v -> viewModel.showDayTooltip(v)}"
+
         tools:layout_constraintHeight_max="200dp"
-        view_layoutConstraintHeightMaxByPercentage="@{data.thursdayPercent}"
-        view_visibleOrInvisible="@{data.thursdayPercent != 0f}"
+        view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.thursdayPercent}"
+        view_visibleOrInvisible="@{viewModel.chart.thursdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -481,9 +495,11 @@
         android:layout_width="9dp"
         android:layout_height="0dp"
 
+        android:onClick="@{v -> viewModel.showDayTooltip(v)}"
+
         tools:layout_constraintHeight_max="100dp"
-        view_layoutConstraintHeightMaxByPercentage="@{data.fridayPercent}"
-        view_visibleOrInvisible="@{data.fridayPercent != 0f}"
+        view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.fridayPercent}"
+        view_visibleOrInvisible="@{viewModel.chart.fridayPercent != 0f}"
 
         android:background="@color/colorPrimary"
 
@@ -670,7 +686,7 @@
 
         android:src="@drawable/triangle_stats"
         
-        android:visibility="@{data.showSaturdayTooltip}"
+        android:visibility="@{viewModel.chart.showSaturdayTooltip}"
 
         app:layout_constraintBottom_toTopOf="@id/bar1View"
         app:layout_constraintStart_toStartOf="@id/bar1View"
@@ -679,12 +695,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:visibility="@{data.showSaturdayTooltip}"
+        android:visibility="@{viewModel.chart.showSaturdayTooltip}"
 
         style="@style/TextTajawalMedium14"
         android:textSize="10sp"
         android:textColor="#FEFEFE"
-        android:text="@{data.saturdayTooltip}"
+        android:text="@{viewModel.chart.saturdayTooltip}"
         tools:text="50 متابع"
 
         android:gravity="center"
@@ -711,7 +727,7 @@
 
         android:src="@drawable/triangle_stats"
         
-        android:visibility="@{data.showSundayTooltip}"
+        android:visibility="@{viewModel.chart.showSundayTooltip}"
 
         app:layout_constraintBottom_toTopOf="@id/bar2View"
         app:layout_constraintStart_toStartOf="@id/bar2View"
@@ -720,12 +736,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:visibility="@{data.showSundayTooltip}"
+        android:visibility="@{viewModel.chart.showSundayTooltip}"
 
         style="@style/TextTajawalMedium14"
         android:textSize="10sp"
         android:textColor="#FEFEFE"
-        android:text="@{data.sundayTooltip}"
+        android:text="@{viewModel.chart.sundayTooltip}"
         tools:text="50 متابع"
 
         android:gravity="center"
@@ -752,7 +768,7 @@
 
         android:src="@drawable/triangle_stats"
         
-        android:visibility="@{data.showMondayTooltip}"
+        android:visibility="@{viewModel.chart.showMondayTooltip}"
 
         app:layout_constraintBottom_toTopOf="@id/bar3View"
         app:layout_constraintStart_toStartOf="@id/bar3View"
@@ -761,12 +777,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:visibility="@{data.showMondayTooltip}"
+        android:visibility="@{viewModel.chart.showMondayTooltip}"
 
         style="@style/TextTajawalMedium14"
         android:textSize="10sp"
         android:textColor="#FEFEFE"
-        android:text="@{data.mondayTooltip}"
+        android:text="@{viewModel.chart.mondayTooltip}"
         tools:text="50 متابع"
 
         android:gravity="center"
@@ -809,7 +825,7 @@
 
           app:layout_constraintHeight_percent="0.3"
 
-          view_constraintPercentHeight="@{data.saturdayPercent}"
+          view_constraintPercentHeight="@{viewModel.chart.saturdayPercent}"
 
           app:layout_constraintVertical_bias="1"
 
@@ -825,7 +841,7 @@
         <View
           android:id="@+id/bar2View"
 
-          view_constraintPercentHeight="@{data.sundayPercent}"
+          view_constraintPercentHeight="@{viewModel.chart.sundayPercent}"
 
           android:layout_width="9dp"
           android:layout_height="0dp"
@@ -844,7 +860,7 @@
         <View
           android:id="@+id/bar3View"
 
-          view_constraintPercentHeight="@{data.mondayPercent}"
+          view_constraintPercentHeight="@{viewModel.chart.mondayPercent}"
 
           android:layout_width="9dp"
           android:layout_height="0dp"
@@ -863,7 +879,7 @@
         <View
           android:id="@+id/bar4View"
 
-          view_constraintPercentHeight="@{data.tuesdayPercent}"
+          view_constraintPercentHeight="@{viewModel.chart.tuesdayPercent}"
 
           android:layout_width="9dp"
           android:layout_height="0dp"
@@ -882,7 +898,7 @@
         <View
           android:id="@+id/bar5View"
 
-          view_constraintPercentHeight="@{data.wednesdayPercent}"
+          view_constraintPercentHeight="@{viewModel.chart.wednesdayPercent}"
 
           android:layout_width="9dp"
           android:layout_height="0dp"
@@ -901,7 +917,7 @@
         <View
           android:id="@+id/bar6View"
 
-          view_constraintPercentHeight="@{data.thursdayPercent}"
+          view_constraintPercentHeight="@{viewModel.chart.thursdayPercent}"
 
           android:layout_width="9dp"
           android:layout_height="0dp"
@@ -920,7 +936,7 @@
         <View
           android:id="@+id/bar7View"
 
-          view_constraintPercentHeight="@{data.fridayPercent}"
+          view_constraintPercentHeight="@{viewModel.chart.fridayPercent}"
 
           android:layout_width="9dp"
           android:layout_height="0dp"

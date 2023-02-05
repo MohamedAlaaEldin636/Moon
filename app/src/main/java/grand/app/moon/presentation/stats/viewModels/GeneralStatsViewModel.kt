@@ -12,9 +12,11 @@ import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemUserInStatsBinding
 import grand.app.moon.domain.stats.ChartData
+import grand.app.moon.domain.stats.toChartData
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.stats.GeneralStatsFragment
 import grand.app.moon.presentation.stats.GeneralStatsFragmentArgs
+import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import grand.app.moon.presentation.stats.models.ResponseUserInGeneralStats
 import java.time.Instant
 import java.time.LocalDateTime
@@ -26,9 +28,9 @@ class GeneralStatsViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop,
 	val args: GeneralStatsFragmentArgs,
-) : AndroidViewModel(application) {
+) : ItemStatsChartViewModel(application) {
 
-	val data = MutableLiveData(ChartData())
+	var response: ResponseGeneralStats? = null
 
 	val name = MutableLiveData("")
 
@@ -67,6 +69,24 @@ class GeneralStatsViewModel @Inject constructor(
 		binding.phoneValueTextView.text = "${item.countryCode} ${item.phone}"
 
 		binding.dateTextView.text = item.createdAt
+	}
+
+	override fun toggleWeek() {
+		val response = response ?: return
+		val oldChart = chart.value ?: return
+		chart.value = response.toChartData(
+			app,
+			args,
+			oldChart.weekName != app.getString(R.string.current_week)
+		).copy(
+			showSaturdayTooltip = oldChart.showSaturdayTooltip,
+			showSundayTooltip = oldChart.showSundayTooltip,
+			showMondayTooltip = oldChart.showMondayTooltip,
+			showTuesdayTooltip = oldChart.showTuesdayTooltip,
+			showWednesdayTooltip = oldChart.showWednesdayTooltip,
+			showThursdayTooltip = oldChart.showThursdayTooltip,
+			showFridayTooltip = oldChart.showFridayTooltip,
+		)
 	}
 
 	fun pickDate(view: View, isFromNotTo: Boolean) {
