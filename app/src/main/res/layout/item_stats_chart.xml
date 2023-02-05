@@ -27,7 +27,7 @@
       android:layout_height="match_parent"
 
       android:background="@drawable/dr_rect_7"
-      android:elevation="4dp"
+      android:elevation="2dp"
 
       android:paddingBottom="31dp"
       android:clipToPadding="false">
@@ -366,6 +366,18 @@
 
         app:layout_constraintStart_toEndOf="@id/line1View"
         app:layout_constraintBottom_toBottomOf="@id/line1View"/>
+
+      <View
+        android:id="@+id/placeholderBar1View"
+
+        android:layout_width="9dp"
+        android:layout_height="0dp"
+
+        android:visibility="invisible"
+
+        app:layout_constraintTop_toTopOf="@id/line7View"
+        app:layout_constraintBottom_toBottomOf="@id/line1View"
+        app:layout_constraintStart_toStartOf="@id/line7View"/>
       
       <View
         android:id="@+id/bar1View"
@@ -375,6 +387,7 @@
 
         tools:layout_constraintHeight_max="150dp"
         view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.saturdayPercent}"
+        view_layoutConstraintHeightMaxByPercentage_refView="@{placeholderBar1View}"
         view_visibleOrInvisible="@{viewModel.chart.saturdayPercent != 0f}"
 
         android:onClick="@{v -> viewModel.showDayTooltip(v)}"
@@ -399,6 +412,7 @@
 
         tools:layout_constraintHeight_max="110dp"
         view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.sundayPercent}"
+        view_layoutConstraintHeightMaxByPercentage_refView="@{placeholderBar1View}"
         view_visibleOrInvisible="@{viewModel.chart.sundayPercent != 0f}"
 
         android:background="@color/colorPrimary"
@@ -419,6 +433,7 @@
 
         tools:layout_constraintHeight_max="200dp"
         view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.mondayPercent}"
+        view_layoutConstraintHeightMaxByPercentage_refView="@{placeholderBar1View}"
         view_visibleOrInvisible="@{viewModel.chart.mondayPercent != 0f}"
 
         android:background="@color/colorPrimary"
@@ -439,6 +454,7 @@
 
         tools:layout_constraintHeight_max="200dp"
         view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.tuesdayPercent}"
+        view_layoutConstraintHeightMaxByPercentage_refView="@{placeholderBar1View}"
         view_visibleOrInvisible="@{viewModel.chart.tuesdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
@@ -459,6 +475,7 @@
 
         tools:layout_constraintHeight_max="200dp"
         view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.wednesdayPercent}"
+        view_layoutConstraintHeightMaxByPercentage_refView="@{placeholderBar1View}"
         view_visibleOrInvisible="@{viewModel.chart.wednesdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
@@ -479,6 +496,7 @@
 
         tools:layout_constraintHeight_max="200dp"
         view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.thursdayPercent}"
+        view_layoutConstraintHeightMaxByPercentage_refView="@{placeholderBar1View}"
         view_visibleOrInvisible="@{viewModel.chart.thursdayPercent != 0f}"
 
         android:background="@color/colorPrimary"
@@ -499,6 +517,7 @@
 
         tools:layout_constraintHeight_max="100dp"
         view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.fridayPercent}"
+        view_layoutConstraintHeightMaxByPercentage_refView="@{placeholderBar1View}"
         view_visibleOrInvisible="@{viewModel.chart.fridayPercent != 0f}"
 
         android:background="@color/colorPrimary"
@@ -800,6 +819,170 @@
         app:layout_constraintBottom_toTopOf="@id/triBar3"
         app:layout_constraintStart_toStartOf="@id/bar3View"
         app:layout_constraintEnd_toEndOf="@id/bar3View"/>
+
+      <ImageView
+        android:id="@+id/triBar4"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/triangle_stats"
+        
+        android:visibility="@{viewModel.chart.showTuesdayTooltip}"
+
+        app:layout_constraintBottom_toTopOf="@id/bar4View"
+        app:layout_constraintStart_toStartOf="@id/bar4View"
+        app:layout_constraintEnd_toEndOf="@id/bar4View"/>
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="@{viewModel.chart.showTuesdayTooltip}"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+        android:textColor="#FEFEFE"
+        android:text="@{viewModel.chart.tuesdayTooltip}"
+        tools:text="50 متابع"
+
+        android:gravity="center"
+
+        android:paddingStart="7dp"
+        android:paddingEnd="7dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="3dp"
+
+        android:includeFontPadding="false"
+
+        android:background="@drawable/dr_rect_1"
+        android:backgroundTint="#e89028"
+
+        app:layout_constraintBottom_toTopOf="@id/triBar4"
+        app:layout_constraintStart_toStartOf="@id/bar4View"
+        app:layout_constraintEnd_toEndOf="@id/bar4View"/>
+
+      <ImageView
+        android:id="@+id/triBar5"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/triangle_stats"
+        
+        android:visibility="@{viewModel.chart.showWednesdayTooltip}"
+
+        app:layout_constraintBottom_toTopOf="@id/bar5View"
+        app:layout_constraintStart_toStartOf="@id/bar5View"
+        app:layout_constraintEnd_toEndOf="@id/bar5View"/>
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="@{viewModel.chart.showWednesdayTooltip}"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+        android:textColor="#FEFEFE"
+        android:text="@{viewModel.chart.wednesdayTooltip}"
+        tools:text="50 متابع"
+
+        android:gravity="center"
+
+        android:paddingStart="7dp"
+        android:paddingEnd="7dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="3dp"
+
+        android:includeFontPadding="false"
+
+        android:background="@drawable/dr_rect_1"
+        android:backgroundTint="#e89028"
+
+        app:layout_constraintBottom_toTopOf="@id/triBar5"
+        app:layout_constraintStart_toStartOf="@id/bar5View"
+        app:layout_constraintEnd_toEndOf="@id/bar5View"/>
+
+      <ImageView
+        android:id="@+id/triBar6"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/triangle_stats"
+        
+        android:visibility="@{viewModel.chart.showThursdayTooltip}"
+
+        app:layout_constraintBottom_toTopOf="@id/bar6View"
+        app:layout_constraintStart_toStartOf="@id/bar6View"
+        app:layout_constraintEnd_toEndOf="@id/bar6View"/>
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="@{viewModel.chart.showThursdayTooltip}"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+        android:textColor="#FEFEFE"
+        android:text="@{viewModel.chart.thursdayTooltip}"
+        tools:text="50 متابع"
+
+        android:gravity="center"
+
+        android:paddingStart="7dp"
+        android:paddingEnd="7dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="3dp"
+
+        android:includeFontPadding="false"
+
+        android:background="@drawable/dr_rect_1"
+        android:backgroundTint="#e89028"
+
+        app:layout_constraintBottom_toTopOf="@id/triBar6"
+        app:layout_constraintStart_toStartOf="@id/bar6View"
+        app:layout_constraintEnd_toEndOf="@id/bar6View"/>
+
+      <ImageView
+        android:id="@+id/triBar7"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/triangle_stats"
+        
+        android:visibility="@{viewModel.chart.showFridayTooltip}"
+
+        app:layout_constraintBottom_toTopOf="@id/bar7View"
+        app:layout_constraintStart_toStartOf="@id/bar7View"
+        app:layout_constraintEnd_toEndOf="@id/bar7View"/>
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="@{viewModel.chart.showFridayTooltip}"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+        android:textColor="#FEFEFE"
+        android:text="@{viewModel.chart.fridayTooltip}"
+        tools:text="50 متابع"
+
+        android:gravity="center"
+
+        android:paddingStart="7dp"
+        android:paddingEnd="7dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="3dp"
+
+        android:includeFontPadding="false"
+
+        android:background="@drawable/dr_rect_1"
+        android:backgroundTint="#e89028"
+
+        app:layout_constraintBottom_toTopOf="@id/triBar7"
+        app:layout_constraintStart_toStartOf="@id/bar7View"
+        app:layout_constraintEnd_toEndOf="@id/bar7View"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

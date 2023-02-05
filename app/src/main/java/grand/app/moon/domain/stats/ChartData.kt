@@ -21,9 +21,11 @@ fun ResponseGeneralStats.toChartData(
 ): ChartData {
 	val percentage = if (isCurrentWeek) growthRateCurrentWeek else growthRatePreviousWeek
 
-	val week = (if (isCurrentWeek) currentWeek else previousWeek).orEmpty()
+	val week = (if (isCurrentWeek) currentWeek else previousWeek).orEmpty()/*.mapIndexed { index, int ->
+		if (isCurrentWeek) index else 6 - index
+	}*/
 	val maxWeekLineValue = week.maxOf { it }.coerceAtLeast(6) // 7 lines where line 1 is always 0 isa.
-	MyLogger.e("toChartData -> maxWeekLineValue -> $maxWeekLineValue")
+	MyLogger.e("toChartData -> maxWeekLineValue -> $maxWeekLineValue, week $week")
 
 	val line1 = 0
 	val step = ((maxWeekLineValue.toFloat() - line1.toFloat()) / 6f).roundToInt()
@@ -35,14 +37,27 @@ fun ResponseGeneralStats.toChartData(
 	val line7 = line6 + step
 	MyLogger.e("toChartData -> lines -> $line7 $line6 $line5 $line4 $line3 $line2 $line1 ==== step -> $step")
 
-	val saturdayPercent = week.getOrNull(0).orZero().toFloat() / line7.toFloat() * 100f
+	val saturdayValue = week.getOrNull(0).orZero()
+	val sundayValue = week.getOrNull(1).orZero()
+	val mondayValue = week.getOrNull(2).orZero()
+	val tuesdayValue = week.getOrNull(3).orZero()
+	val wednesdayValue = week.getOrNull(4).orZero()
+	val thursdayValue = week.getOrNull(5).orZero()
+	val fridayValue = week.getOrNull(6).orZero()
+
+	MyLogger.e("toChartData -> saturdayValue -> $saturdayValue $sundayValue $mondayValue $tuesdayValue ...")
+
+	val saturdayPercent = saturdayValue.toFloat() / line7.toFloat() * 100f
 	MyLogger.e("toChartData -> saturdayPercent -> ${week.getOrNull(0)} ${line7.toFloat()} $saturdayPercent")
-	val sundayPercent = week.getOrNull(1).orZero().toFloat() / line7.toFloat() * 100f
-	val mondayPercent = week.getOrNull(2).orZero().toFloat() / line7.toFloat() * 100f
-	val tuesdayPercent = week.getOrNull(3).orZero().toFloat() / line7.toFloat() * 100f
-	val wednesdayPercent = week.getOrNull(4).orZero().toFloat() / line7.toFloat() * 100f
-	val thursdayPercent = week.getOrNull(5).orZero().toFloat() / line7.toFloat() * 100f
-	val fridayPercent = week.getOrNull(6).orZero().toFloat() / line7.toFloat() * 100f
+	val sundayPercent = sundayValue.toFloat() / line7.toFloat() * 100f
+	MyLogger.e("toChartData -> sundayPercent -> ${week.getOrNull(1)} ${line7.toFloat()} $sundayPercent")
+	val mondayPercent = mondayValue.toFloat() / line7.toFloat() * 100f
+	MyLogger.e("toChartData -> mondayPercent -> ${week.getOrNull(2)} ${line7.toFloat()} $mondayPercent")
+	val tuesdayPercent = tuesdayValue.toFloat() / line7.toFloat() * 100f
+	val wednesdayPercent = wednesdayValue.toFloat() / line7.toFloat() * 100f
+	val thursdayPercent = thursdayValue.toFloat() / line7.toFloat() * 100f
+	val fridayPercent = fridayValue.toFloat() / line7.toFloat() * 100f
+	MyLogger.e("toChartData -> fridayPercent -> ${week.getOrNull(6)} ${line7.toFloat()} $fridayPercent")
 
 	return ChartData(
 		args.titlePlural,
@@ -51,6 +66,7 @@ fun ResponseGeneralStats.toChartData(
 		if (percentage >= 0.toBigDecimal()) R.drawable.ic_positive_growth else R.drawable.ic_negative_growth,
 		args.titleSingular,
 		line7, line6, line5, line4, line3, line2, line1,
+		saturdayValue, sundayValue, mondayValue, tuesdayValue, wednesdayValue, thursdayValue, fridayValue,
 		saturdayPercent, sundayPercent, mondayPercent, tuesdayPercent, wednesdayPercent, thursdayPercent, fridayPercent
 	)
 }
@@ -76,13 +92,21 @@ data class ChartData(
 	val line2: Int = 0,
 	val line1: Int = 0,
 
-	@FloatRange(from = 0.0, to = 1.0) val saturdayPercent: Float = 0f,
-	@FloatRange(from = 0.0, to = 1.0) val sundayPercent: Float = 0f,
-	@FloatRange(from = 0.0, to = 1.0) val mondayPercent: Float = 0f,
-	@FloatRange(from = 0.0, to = 1.0) val tuesdayPercent: Float = 0f,
-	@FloatRange(from = 0.0, to = 1.0) val wednesdayPercent: Float = 0f,
-	@FloatRange(from = 0.0, to = 1.0) val thursdayPercent: Float = 0f,
-	@FloatRange(from = 0.0, to = 1.0) val fridayPercent: Float = 0f,
+	val saturdayValue: Int = 0,
+	val sundayValue: Int = 0,
+	val mondayValue: Int = 0,
+	val tuesdayValue: Int = 0,
+	val wednesdayValue: Int = 0,
+	val thursdayValue: Int = 0,
+	val fridayValue: Int = 0,
+
+	@FloatRange(from = 0.0, to = 100.0) val saturdayPercent: Float = 0f,
+	@FloatRange(from = 0.0, to = 100.0) val sundayPercent: Float = 0f,
+	@FloatRange(from = 0.0, to = 100.0) val mondayPercent: Float = 0f,
+	@FloatRange(from = 0.0, to = 100.0) val tuesdayPercent: Float = 0f,
+	@FloatRange(from = 0.0, to = 100.0) val wednesdayPercent: Float = 0f,
+	@FloatRange(from = 0.0, to = 100.0) val thursdayPercent: Float = 0f,
+	@FloatRange(from = 0.0, to = 100.0) val fridayPercent: Float = 0f,
 
 	val showSaturdayTooltip: Boolean = false,
 	val showSundayTooltip: Boolean = false,
@@ -93,13 +117,13 @@ data class ChartData(
 	val showFridayTooltip: Boolean = false,
 ) {
 
-	val saturdayTooltip get() = "$saturdayPercent $tooltipSuffix"
-	val sundayTooltip get() = "$saturdayPercent $tooltipSuffix"
-	val mondayTooltip get() = "$saturdayPercent $tooltipSuffix"
-	val tuesdayTooltip get() = "$saturdayPercent $tooltipSuffix"
-	val wednesdayTooltip get() = "$saturdayPercent $tooltipSuffix"
-	val thursdayTooltip get() = "$saturdayPercent $tooltipSuffix"
-	val fridayTooltip get() = "$saturdayPercent $tooltipSuffix"
+	val saturdayTooltip get() = "$saturdayValue $tooltipSuffix"
+	val sundayTooltip get() = "$sundayValue $tooltipSuffix"
+	val mondayTooltip get() = "$mondayValue $tooltipSuffix"
+	val tuesdayTooltip get() = "$tuesdayValue $tooltipSuffix"
+	val wednesdayTooltip get() = "$wednesdayValue $tooltipSuffix"
+	val thursdayTooltip get() = "$thursdayValue $tooltipSuffix"
+	val fridayTooltip get() = "$fridayValue $tooltipSuffix"
 
 	fun performShowTooltip(day: DayOfWeek): ChartData = copy(
 		showSaturdayTooltip = day == DayOfWeek.SATURDAY,

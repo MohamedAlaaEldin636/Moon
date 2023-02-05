@@ -49,13 +49,36 @@ fun View.constraintPercentHeight(@FloatRange(from = 0.0, to = 1.0) value: Float?
 	this.layoutParams = layoutParams
 }
 
-@BindingAdapter("view_layoutConstraintHeightMaxByPercentage")
-fun View.layoutConstraintHeightMaxByPercentage(@FloatRange(from = 0.0, to = 1.0) value: Float?) {
-	val layoutParams = layoutParams as? ConstraintLayout.LayoutParams ?: return
-	MyLogger.e("layoutConstraintHeightMaxByPercentage -> 0 -> ${layoutParams.matchConstraintDefaultHeight} ${layoutParams.matchConstraintMaxHeight} $value")
-	layoutParams.matchConstraintMaxHeight = (layoutParams.matchConstraintDefaultHeight.toFloat() * (value ?: return)).roundToInt()
-	MyLogger.e("layoutConstraintHeightMaxByPercentage -> 1 -> ${layoutParams.matchConstraintDefaultHeight} ${layoutParams.matchConstraintMaxHeight} $value")
-	this.layoutParams = layoutParams
+@BindingAdapter(
+	"view_layoutConstraintHeightMaxByPercentage",
+	"view_layoutConstraintHeightMaxByPercentage_refView",
+	requireAll = true
+)
+fun View.layoutConstraintHeightMaxByPercentage(
+	@FloatRange(from = 0.0, to = 100.0) valueHundred: Float?,
+	refView: View?
+) {
+	if (refView == null || valueHundred == null) return
+
+	val value = valueHundred / 100f
+
+	if (refView.height > 0) {
+		val layoutParams = layoutParams as? ConstraintLayout.LayoutParams ?: return
+		MyLogger.e("layoutConstraintHeightMaxByPercentage -> 0 -> $value ${refView.height} ${layoutParams.matchConstraintMaxHeight}")
+		layoutParams.matchConstraintMaxHeight = (refView.height.toFloat() * value).roundToInt()
+		MyLogger.e("layoutConstraintHeightMaxByPercentage -> 1 -> $value ${refView.height} ${layoutParams.matchConstraintMaxHeight}")
+		this.layoutParams = layoutParams
+	}else {
+		refView.post {
+			kotlin.runCatching {
+				val layoutParams = layoutParams as? ConstraintLayout.LayoutParams ?: return@runCatching
+				MyLogger.e("layoutConstraintHeightMaxByPercentage -> 000000 ${refView.height} ${layoutParams.matchConstraintMaxHeight}")
+				layoutParams.matchConstraintMaxHeight = (refView.height.toFloat() * value).roundToInt()
+				MyLogger.e("layoutConstraintHeightMaxByPercentage -> 11111 ${refView.height} ${layoutParams.matchConstraintMaxHeight}")
+				this.layoutParams = layoutParams
+			}
+		}
+	}
 }
 
 @BindingAdapter("view_layoutConstraintHorizontalBias")
