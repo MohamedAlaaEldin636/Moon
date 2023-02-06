@@ -216,6 +216,17 @@ class RepoShop @Inject constructor(
 		}
 	}
 
+	suspend fun getReviewsForAdv(advertisementId: Int) =
+		remoteDataSource.getReviewsForAdv(advertisementId, 1).toResource()
+
+	fun getReviewsForAdvPaging(advertisementId: Int) = BasePaging.createFlowViaPager {
+		remoteDataSource.getReviewsForAdv(advertisementId, 1).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { response ->
+				response?.reviews
+			}
+		}
+	}
+
 }
 
 data class CitiesAndStoreCategoriesAndSubCategories(

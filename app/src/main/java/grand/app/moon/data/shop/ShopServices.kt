@@ -90,6 +90,13 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>,
 	): MABaseResponse<MABasePaging<ResponseClientReviews>>
 
+	// todo save store_id ba2a isa. shof f el login kda ba2a isa.
+	@GET("v1/profile/reviews")
+	suspend fun getShopClientsReviews(
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>,
+	): MABaseResponse<MABasePaging<ResponseReviewsWithStats>>
+
 	@Multipart
 	@POST("v1/profile/explores")
 	suspend fun addExplore(
@@ -139,8 +146,8 @@ interface ShopServices {
 	@POST("v1/review")
 	suspend fun addReviewForAdv(
 		@Field("advertisement_id") advertisement_id: Int,
-		@Field("rate") rate: Int?,
 		@Field("review") review: String,
+		@FieldMap map: Map<String, String>,
 	): BaseResponse<Any?>
 
 	@GET("v1/statistics/show")
@@ -158,5 +165,17 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>,
 		@Query("statistics_type") statisticsType: String = "advertisement",
 	): MABaseResponse<ResponseGeneralStats?>
+
+	@GET("v1/reviews")
+	suspend fun getReviewsForAdv(
+		@Query("advertisement_id") advertisementId: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<ResponseReviewsWithStats>
+
+	@GET("v1/reviews")
+	suspend fun getReviewsForStore(
+		@Query("store_id") storeId: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<ResponseReviewsWithStats>
 
 }

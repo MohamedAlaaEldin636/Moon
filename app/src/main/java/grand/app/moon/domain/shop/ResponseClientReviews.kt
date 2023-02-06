@@ -1,6 +1,18 @@
 package grand.app.moon.domain.shop
 
 import com.google.gson.annotations.SerializedName
+import grand.app.moon.helpers.paging.MABasePaging
+
+data class ResponseReviewsWithStats(
+	@SerializedName("5_star_count") var countStar5: Int?,
+	@SerializedName("4_star_count") var countStar4: Int?,
+	@SerializedName("3_star_count") var countStar3: Int?,
+	@SerializedName("2_star_count") var countStar2: Int?,
+	@SerializedName("1_star_count") var countStar1: Int?,
+	@SerializedName("average_rate") var averageRate: Float?,
+	@SerializedName("rate_count") var rateCount: Int?,
+	var reviews: MABasePaging<ResponseClientReviews>
+)
 
 /**
  * @param date Ex. 2023-01-18

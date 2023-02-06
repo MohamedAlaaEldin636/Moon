@@ -9,6 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentAdvClientsReviewsBinding
+import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
 import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
@@ -21,6 +22,18 @@ import kotlinx.coroutines.launch
 class AdvClientsReviewsFragment : BaseFragment<FragmentAdvClientsReviewsBinding>() {
 
 	private val viewModel by viewModels<AdvClientsReviewsViewModel>()
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		handleRetryAbleActionOrGoBack(
+			action = {
+				viewModel.repoShop.getReviewsForAdv(viewModel.args.advId)
+			}
+		) {
+			viewModel.response.value = it
+		}
+	}
 
 	override fun getLayoutId(): Int = R.layout.fragment_adv_clients_reviews
 

@@ -445,4 +445,6 @@
   <string name="search_about_an_adv">البحث عن الإعلان</string>
   <string name="report_1">بلاغ</string>
   <string name="reports_1">البلاغات</string>
+    <string name="average_rate">متوسط التقيم</string>
+  <string name="rate_count">عدد التقيمات</string>
 </resources>

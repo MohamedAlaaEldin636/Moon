@@ -1,5 +1,32 @@
 package grand.app.moon.helpers.paging
 
+import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.domain.utils.FailureStatus
+import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.orZero
+
+fun <T> MAResult.Immediate<MABaseResponse<T>>.toResource(): Resource<BaseResponse<T?>> {
+	return when (this) {
+		is MAResult.Success -> Resource.Success(BaseResponse(value.data, value.message, value.code.orZero()))
+		is MAResult.Failure -> Resource.Failure(
+			failureStatus.toFailureStatus(),
+			code.orZero(),
+			message.orEmpty()
+		)
+	}
+}
+
+fun MAResult.Failure.Status.toFailureStatus(): FailureStatus {
+	return when (this) {
+		MAResult.Failure.Status.ERROR -> FailureStatus.OTHER
+		MAResult.Failure.Status.TOKEN_EXPIRED -> FailureStatus.TOKEN_EXPIRED
+		MAResult.Failure.Status.ACTIVATION_NOT_VERIFIED -> FailureStatus.NOT_ACTIVE
+		MAResult.Failure.Status.SERVER_ERROR -> FailureStatus.API_FAIL
+		MAResult.Failure.Status.NO_INTERNET -> FailureStatus.NO_INTERNET
+		MAResult.Failure.Status.OTHER -> FailureStatus.OTHER
+	}
+}
+
 /**
  * - a [MAResult] can be [Loading], [Success] OR [Failure], However an [Immediate] result can only be
  * either [Success] OR [Failure], that's why I created this interface isa.
