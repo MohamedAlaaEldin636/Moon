@@ -22,7 +22,7 @@ import java.lang.ref.WeakReference
 class VHPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any>(
 	private val adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>,
 	private val binding: VDB,
-	private val onBind: (binding: VDB, position: Int, item: Item, viewHolder: VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>) -> Unit,
+	private val onBind: (binding: VDB, position: Int, item: Item, viewHolder: VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>, adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>) -> Unit,
 	private val onItemClick: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
 	additionalListenersSetups: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -42,7 +42,7 @@ class VHPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 	}
 
 	fun bind(position: Int, item: Item) {
-		onBind(binding, position, item, this)
+		onBind(binding, position, item, this, adapter)
 	}
 
 	fun releasePlayer() {
@@ -61,7 +61,7 @@ class RVPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 	private val onViewRecycledAction: (VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>) -> Unit = {},
 	private val onItemClick: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
 	private val additionalListenersSetups: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
-	private val onBind: (binding: VDB, position: Int, item: Item, viewHolder: VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>) -> Unit,
+	private val onBind: (binding: VDB, position: Int, item: Item, viewHolder: VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>, adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>) -> Unit,
 ) : PagingDataAdapter<Item, VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>>(
 	object : DiffUtil.ItemCallback<Item>() {
 		override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean =

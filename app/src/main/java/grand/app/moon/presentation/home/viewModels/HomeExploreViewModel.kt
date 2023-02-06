@@ -4,6 +4,7 @@ import android.app.Application
 import android.view.View
 import android.widget.ImageView
 import androidx.core.view.isVisible
+import androidx.core.view.postDelayed
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -45,7 +46,7 @@ class HomeExploreViewModel @Inject constructor(
 		onViewRecycledAction = {
 			it.itemView.findViewById<ImageView>(R.id.imageImageView).clearWithGlide()
 		}
-	) { binding, position, item, viewHolder ->
+	) { binding, position, item, viewHolder, adapter ->
 		val context = binding.root.context ?: return@RVPagingItemCommonListUsageWithExoPlayer
 
 		binding.constraintLayout.tag = item.toJsonInlinedOrNull()
