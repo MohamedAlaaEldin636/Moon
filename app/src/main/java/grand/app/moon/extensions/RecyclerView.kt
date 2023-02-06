@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 fun LayoutManager?.findFirstVisibleItemPosition(): Int? {
 	return when (this) {
+		is StaggeredGridLayoutManager -> findFirstVisibleItemPositions(IntArray(spanCount)).min()
 		is GridLayoutManager -> findFirstVisibleItemPosition()
 		is LinearLayoutManager -> findFirstVisibleItemPosition()
 		else -> null
@@ -15,6 +16,7 @@ fun LayoutManager?.findFirstVisibleItemPosition(): Int? {
 }
 fun LayoutManager?.findLastVisibleItemPosition(): Int? {
 	return when (this) {
+		is StaggeredGridLayoutManager -> findLastVisibleItemPositions(IntArray(spanCount)).max()
 		is GridLayoutManager -> findLastVisibleItemPosition()
 		is LinearLayoutManager -> findLastVisibleItemPosition()
 		else -> null

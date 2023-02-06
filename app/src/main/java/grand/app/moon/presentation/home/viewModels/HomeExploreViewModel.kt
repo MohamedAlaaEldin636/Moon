@@ -14,11 +14,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeExploreBinding
+import grand.app.moon.databinding.ItemHomeRvBinding
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.home.HomeExploreFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
+import grand.app.moon.presentation.home.models.ItemHomeRV
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +29,7 @@ class HomeExploreViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop,
 	val homeUseCase: HomeUseCase,
+	val userLocalUseCase: UserLocalUseCase
 ) : AndroidViewModel(application) {
 
 	val explores = repoShop.getHomeExplores()
@@ -51,7 +55,7 @@ class HomeExploreViewModel @Inject constructor(
 		viewHolder.releasePlayer()
 		binding.playerView.player = null
 		binding.playerView.isVisible = false
-		binding.imageImageView.isVisible = true
+		binding.imageImageView.isVisible = false
 
 		binding.indicatorImageView.setImageResource(
 			when {
@@ -65,7 +69,7 @@ class HomeExploreViewModel @Inject constructor(
 
 		binding.chatTextView.text = item.commentsCount.orZero().toString()
 
-		if (isVideo) {
+		/*if (isVideo) {
 			binding.imageImageView.setupWithGlide {
 				load(item.files?.firstOrNull()).asVideo()
 			}
@@ -96,11 +100,20 @@ class HomeExploreViewModel @Inject constructor(
 			binding.imageImageView.setupWithGlide {
 				load(item.files?.firstOrNull())
 			}
-		}
+		}*/
 	}
 
 	fun goToAddExplore(view: View) {
 		val fragment = view.findFragmentOrNull<HomeExploreFragment>() ?: return
+
+		if (userLocalUseCase().isStore.orFalse().not()) {
+			fragment.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.my.become.shop.package"
+			)
+
+			return
+		}
 
 		fragment.handleRetryAbleActionCancellable(
 			action = {
@@ -119,6 +132,53 @@ class HomeExploreViewModel @Inject constructor(
 					"fragment-dest",
 					"grand.app.moon.dest.my.become.shop.package"
 				)
+			}
+		}
+	}
+
+	fun setupRvs(
+		binding: ItemHomeExploreBinding,
+		item: ItemHomeExplore,
+		position: Int,
+		viewHolder: VHPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>
+	) {
+		binding.imageImageView.isVisible = true
+
+		val context = binding.root.context ?: return
+
+		val isVideo = item.isVideo
+
+		if (isVideo) {
+			binding.imageImageView.setupWithGlide {
+				load(item.files?.firstOrNull()).asVideo()
+			}
+
+			val videoLink = item.files?.firstOrNull()
+			if (false && videoLink != null && videoLink.isNotEmpty()) {
+				viewHolder.player = ExoPlayer.Builder(context).build().also { exoPlayer ->
+					val mediaItem = MediaItem.fromUri(videoLink)
+					exoPlayer.setMediaItem(mediaItem)
+
+					exoPlayer.addListener(object : Player.Listener {
+						override fun onPlaybackStateChanged(playbackState: Int) {
+							if (playbackState == ExoPlayer.STATE_READY) {
+								viewHolder.getBindingOrNull()?.imageImageView?.isVisible = false
+								viewHolder.getBindingOrNull()?.playerView?.isVisible = true
+								viewHolder.getBindingOrNull()?.playerView?.player = viewHolder.player
+							}else if (playbackState == ExoPlayer.STATE_ENDED) {
+								viewHolder.player?.seekTo(0L)
+							}
+						}
+					})
+
+					exoPlayer.volume = 0f
+					exoPlayer.playWhenReady = true
+					exoPlayer.prepare()
+				}
+			}
+		}else {
+			binding.imageImageView.setupWithGlide {
+				load(item.files?.firstOrNull())
 			}
 		}
 	}
