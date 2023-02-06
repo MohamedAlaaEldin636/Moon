@@ -44,7 +44,9 @@ class HomeExploreViewModel @Inject constructor(
 
 		val isVideo = item.isVideo
 
-		binding.playerView.isVisible = isVideo
+		viewHolder.releasePlayer()
+		binding.playerView.player = null
+		binding.playerView.isVisible = false
 		binding.imageImageView.isVisible = true
 
 		binding.indicatorImageView.setImageResource(
@@ -59,14 +61,13 @@ class HomeExploreViewModel @Inject constructor(
 
 		binding.chatTextView.text = item.commentsCount.orZero().toString()
 
-		viewHolder.releasePlayer()
 		if (isVideo) {
 			binding.imageImageView.setupWithGlide {
 				load(item.files?.firstOrNull()).asVideo()
 			}
 
 			val videoLink = item.files?.firstOrNull()
-			if (videoLink != null && videoLink.isNotEmpty()) {
+			if (false && videoLink != null && videoLink.isNotEmpty()) {
 				viewHolder.player = ExoPlayer.Builder(context).build().also { exoPlayer ->
 					val mediaItem = MediaItem.fromUri(videoLink)
 					exoPlayer.setMediaItem(mediaItem)

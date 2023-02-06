@@ -3,10 +3,12 @@ package grand.app.moon.presentation.home
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -49,6 +51,14 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 			viewModel.adapter.refresh()
 		}
+	}
+
+	override fun onDestroyView() {
+		lifecycleScope.launch {
+			viewModel.adapter.submitData(PagingData.empty())
+		}
+
+		super.onDestroyView()
 	}
 
 }
