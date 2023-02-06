@@ -138,6 +138,43 @@ class MyAdvDetailsFragment : BaseFragment<FragmentMyAdvDetailsBinding>() {
 				viewModel.afterBecamePremium(this)
 			}
 		}
+
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(AppConsts.KEY_BOOLEAN_1) {
+			// Changed reviews
+			handleRetryAbleActionOrGoBack(
+				action = {
+					viewModel.adsUseCase.getMyAdvertisementDetails(viewModel.args.id)
+				}
+			) {
+				viewModel.response.value = it
+
+				val reviews = if (it.reviews.isNullOrEmpty()) {
+					listOf(
+						ItemReviewInAdvDetails(
+							ItemUserInReviewsInAdvDetails(
+								viewModel.userId,
+								null,
+								null,
+								viewModel.user.name.orEmpty(),
+								null,
+								null,
+								null,
+								viewModel.user.image.orEmpty(),
+								null,
+							),
+							0,
+							getString(R.string.add_rate_2),
+							""
+						)
+					)
+				}else {
+					it.reviews.orEmpty().take(3)
+				}
+				viewModel.adapterReviews.submitList(
+					reviews
+				)
+			}
+		}
 	}
 
 }

@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.findFragmentOrNull
 import grand.app.moon.extensions.getString
 import grand.app.moon.extensions.navigateSafely
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class AddAdvertisementViewModel @Inject constructor(
 	application: Application,
 	args: AddAdvertisementFragmentArgs,
+	val homeUseCase: HomeUseCase
 ) : AndroidViewModel(application) {
 
 	val currentlySelectedTypeIsFree = MutableLiveData(args.availableNumOfAdvertisements > 0)

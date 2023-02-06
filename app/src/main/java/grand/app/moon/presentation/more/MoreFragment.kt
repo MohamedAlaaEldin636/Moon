@@ -41,9 +41,12 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 
 			checkRestDaysInPackage()
 		}
+
+		viewModel.user.value = viewModel.userLocalUseCase()
 	}
 
 	private fun checkRestDaysInPackage() {
+		MyLogger.e("requireContext().isLogin() && viewModel.user.value?.isStore.orFalse() ${requireContext().isLogin()} ${viewModel.user.value?.isStore.orFalse()}")
 		if (requireContext().isLogin() && viewModel.user.value?.isStore.orFalse()) {
 			handleRetryAbleActionOrGoBack(
 				action = {

@@ -126,7 +126,7 @@ open class BaseRemoteDataSource @Inject constructor() {
 	    MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> ${(apiResponse as? BaseResponse<*>)?.code}")
       when ((apiResponse as BaseResponse<*>).code) {
         403 -> {
-          return Resource.Failure(FailureStatus.TOKEN_EXPIRED)
+          return Resource.Failure(FailureStatus.TOKEN_EXPIRED, (apiResponse as BaseResponse<*>).code, (apiResponse as BaseResponse<*>).message)
         }
         200 -> {
           return Resource.Success(apiResponse)

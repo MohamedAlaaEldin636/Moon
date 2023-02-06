@@ -6,12 +6,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentAdvClientsReviewsBinding
-import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
-import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
-import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.myAds.viewModel.AdvClientsReviewsViewModel
@@ -60,6 +59,8 @@ class AdvClientsReviewsFragment : BaseFragment<FragmentAdvClientsReviewsBinding>
 
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 			viewModel.adapter.refresh()
+
+			findNavController().setResultInPreviousBackStackEntrySavedStateHandleViaGson(true, AppConsts.KEY_BOOLEAN_1)
 		}
 	}
 

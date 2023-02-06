@@ -346,10 +346,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 						    observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(nav) {
 							    nav.currentBackStackEntry?.savedStateHandle?.remove<String>(AppConsts.NavController.GSON_KEY)
 
-							    nav.navigateDeepLinkWithOptions(
-								    "fragment-dest",
-								    "grand.app.moon.dest.add.adv.categories.list"
-							    )
+							    handleRetryAbleActionCancellable(
+								    action = {
+									    viewModel.homeUseCase.checkAvailableAdvertisements()
+								    }
+							    ) { availableCount ->
+								    if (availableCount > 0) {
+									    nav.navigateDeepLinkWithOptions(
+										    "fragment-dest",
+										    "grand.app.moon.dest.add.adv.categories.list"
+									    )
+								    }else {
+									    nav.navigateDeepLinkWithOptions(
+										    "fragment-dest",
+										    "grand.app.moon.dest.my.become.shop.package"
+									    )
+								    }
+							    }
 						    }
 
 						    nav.navigateDeepLinkWithOptions(

@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentAddAdvertisementBinding
 import grand.app.moon.databinding.FragmentMyAdsBinding
+import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
 import grand.app.moon.extensions.navigateDeepLinkWithOptions
 import grand.app.moon.extensions.navigateSafely
 import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
@@ -30,14 +31,27 @@ class AddAdvertisementFragment : BaseFragment<FragmentAddAdvertisementBinding>()
 
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 			if (it) {
-				val navController = findNavController()
+				handleRetryAbleActionOrGoBack(
+					action = {
+						viewModel.homeUseCase.checkAvailableAdvertisements()
+					}
+				) { availableCount ->
+					val navController = findNavController()
 
-				navController.navigateUp()
+					navController.navigateUp()
 
-				navController.navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.add.adv.categories.list"
-				)
+					if (availableCount > 0) {
+						navController.navigateDeepLinkWithOptions(
+							"fragment-dest",
+							"grand.app.moon.dest.add.adv.categories.list"
+						)
+					}else {
+						navController.navigateDeepLinkWithOptions(
+							"fragment-dest",
+							"grand.app.moon.dest.my.become.shop.package"
+						)
+					}
+				}
 			}
 		}
 	}
