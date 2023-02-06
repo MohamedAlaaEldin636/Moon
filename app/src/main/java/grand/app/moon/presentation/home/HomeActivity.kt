@@ -360,7 +360,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 								    }else {
 									    nav.navigateDeepLinkWithOptions(
 										    "fragment-dest",
-										    "grand.app.moon.dest.become.shop.package"
+										    "grand.app.moon.dest.become.shop.packages"
 									    )
 								    }
 							    }
