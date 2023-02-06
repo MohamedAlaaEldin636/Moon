@@ -143,6 +143,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         R.id.myAccountFragment,
         //R.id.mapFragment,
         R.id.dest_my_ads,
+        R.id.dest_home_explore,
         R.id.exploreFragment
       )
     )
@@ -245,7 +246,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showTopBarControls()
           showText()
         }
-        R.id.exploreFragment, R.id.dest_my_ads -> {
+        R.id.exploreFragment, R.id.dest_my_ads, R.id.dest_home_explore -> {
           showTopBarControls()
           setStoreImage(false)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
@@ -265,7 +266,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           showText()
 //          binding.toolbar.hide()
         }
-        R.id.settings_fragment, R.id.discoverFragment, R.id.nav_settings, R.id.dest_more -> {
+        R.id.settings_fragment, R.id.discoverFragment/*, R.id.dest_home_explore*/, R.id.nav_settings, R.id.dest_more -> {
           setStoreImage(false)
 //          binding.imgHomeBottomBar.setImageResource(R.drawable.ic_home_circle_active)
           binding.tvHomeTitle.text = destination.label

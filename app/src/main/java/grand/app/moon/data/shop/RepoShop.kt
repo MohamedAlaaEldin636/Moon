@@ -242,6 +242,10 @@ class RepoShop @Inject constructor(
 		}
 	}
 
+	fun getHomeExplores() = BasePaging.createFlowViaPager {
+		remoteDataSource.getHomeExplores(it)
+	}
+
 }
 
 data class CitiesAndStoreCategoriesAndSubCategories(

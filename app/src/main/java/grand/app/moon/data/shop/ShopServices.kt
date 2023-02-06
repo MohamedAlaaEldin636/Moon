@@ -5,6 +5,7 @@ import grand.app.moon.core.di.module.RetrofitModule
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
+import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -176,5 +177,10 @@ interface ShopServices {
 		@Query("store_id") storeId: Int,
 		@Query("page") page: Int,
 	): MABaseResponse<ResponseReviewsWithStats>
+
+	@GET("v1/explores")
+	suspend fun getHomeExplores(
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ItemHomeExplore>>
 
 }

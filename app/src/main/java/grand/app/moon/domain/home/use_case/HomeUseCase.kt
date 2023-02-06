@@ -84,6 +84,8 @@ class HomeUseCase @Inject constructor(
 
 	suspend fun checkAvailableAdvertisements() = homeRepository.getCheckAvailability(Availability.ADVERTISEMENT.apiValue)
 
+	suspend fun checkAvailableExplore() = homeRepository.getCheckAvailability(Availability.EXPLORE.apiValue)
+
 	suspend fun getCheckAvailabilityForPremiumAds() = homeRepository.getCheckAvailabilityForPremiumAds()
 
 	/**

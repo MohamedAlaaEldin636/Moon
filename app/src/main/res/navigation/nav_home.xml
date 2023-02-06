@@ -925,5 +925,10 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.general.stats/{titlePlural}/{titleSingular}/{advId}/{type}" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_home_explore"
+    android:name="grand.app.moon.presentation.home.HomeExploreFragment"
+    android:label="@string/discover"
+    tools:layout="@layout/fragment_home_explore" />
 
 </navigation>
