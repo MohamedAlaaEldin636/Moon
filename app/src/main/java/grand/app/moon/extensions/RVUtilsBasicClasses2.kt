@@ -58,6 +58,7 @@ class RVPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 	@LayoutRes private val layoutRes: Int,
 	areItemsTheSameComparison: (oldItem: Item, newItem: Item) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSameComparison: (oldItem: Item, newItem: Item) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	private val onViewRecycledAction: (VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>) -> Unit = {},
 	private val onItemClick: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
 	private val additionalListenersSetups: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
 	private val onBind: (binding: VDB, position: Int, item: Item, viewHolder: VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>) -> Unit,
@@ -95,6 +96,8 @@ class RVPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 
 	override fun onViewRecycled(holder: VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>) {
 		holder.releasePlayer()
+
+		onViewRecycledAction(holder)
 
 		super.onViewRecycled(holder)
 	}

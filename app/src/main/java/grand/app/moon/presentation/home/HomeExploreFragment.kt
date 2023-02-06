@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.home
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -51,6 +52,22 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 			viewModel.adapter.refresh()
 		}
+	}
+
+	override fun onPause() {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+			kotlin.runCatching { viewModel.adapter.releaseAllPlayers(binding.recyclerView) }
+		}
+
+		super.onPause()
+	}
+
+	override fun onStop() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			kotlin.runCatching { viewModel.adapter.releaseAllPlayers(binding.recyclerView) }
+		}
+
+		super.onStop()
 	}
 
 	override fun onDestroyView() {

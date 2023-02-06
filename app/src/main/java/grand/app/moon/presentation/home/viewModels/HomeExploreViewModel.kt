@@ -2,6 +2,7 @@ package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
 import android.view.View
+import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.fragment.findNavController
@@ -36,6 +37,9 @@ class HomeExploreViewModel @Inject constructor(
 			val item = (binding.constraintLayout.tag as? String).fromJsonInlinedOrNull<ItemHomeExplore>()
 
 			General.TODO("not programmed yet isa. ${item?.isVideo}")
+		},
+		onViewRecycledAction = {
+			it.itemView.findViewById<ImageView>(R.id.imageImageView).clearWithGlide()
 		}
 	) { binding, position, item, viewHolder ->
 		val context = binding.root.context ?: return@RVPagingItemCommonListUsageWithExoPlayer

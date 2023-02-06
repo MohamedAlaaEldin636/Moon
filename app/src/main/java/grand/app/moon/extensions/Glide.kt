@@ -14,6 +14,11 @@ import com.bumptech.glide.request.target.Target
 import grand.app.moon.R
 import kotlin.coroutines.suspendCoroutine
 
+fun ImageView.clearWithGlide() {
+	Glide.with(this)
+		.clear(this)
+}
+
 fun <TranscodeType> ImageView.setupWithGlide(
 	modifications: RequestManager.() -> RequestBuilder<TranscodeType>
 ) {
