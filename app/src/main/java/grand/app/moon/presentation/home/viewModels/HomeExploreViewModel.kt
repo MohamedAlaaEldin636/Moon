@@ -54,8 +54,8 @@ class HomeExploreViewModel @Inject constructor(
 
 		viewHolder.releasePlayer()
 		binding.playerView.player = null
-		binding.playerView.isVisible = false
-		binding.imageImageView.isVisible = false
+		binding.playerView.isVisible = isVideo
+		binding.imageImageView.isVisible = isVideo.not()
 
 		binding.indicatorImageView.setImageResource(
 			when {
@@ -69,22 +69,16 @@ class HomeExploreViewModel @Inject constructor(
 
 		binding.chatTextView.text = item.commentsCount.orZero().toString()
 
-		/*if (isVideo) {
-			binding.imageImageView.setupWithGlide {
-				load(item.files?.firstOrNull()).asVideo()
-			}
-
+		if (isVideo) {
 			val videoLink = item.files?.firstOrNull()
-			if (false && videoLink != null && videoLink.isNotEmpty()) {
+			if (videoLink != null && videoLink.isNotEmpty()) {
 				viewHolder.player = ExoPlayer.Builder(context).build().also { exoPlayer ->
 					val mediaItem = MediaItem.fromUri(videoLink)
 					exoPlayer.setMediaItem(mediaItem)
 
 					exoPlayer.addListener(object : Player.Listener {
 						override fun onPlaybackStateChanged(playbackState: Int) {
-							if (playbackState == ExoPlayer.STATE_READY) {
-								viewHolder.getBindingOrNull()?.imageImageView?.isVisible = false
-							}else if (playbackState == ExoPlayer.STATE_ENDED) {
+							if (playbackState == ExoPlayer.STATE_ENDED) {
 								viewHolder.player?.seekTo(0L)
 							}
 						}
@@ -94,13 +88,14 @@ class HomeExploreViewModel @Inject constructor(
 					exoPlayer.playWhenReady = true
 					exoPlayer.prepare()
 				}
+
 				binding.playerView.player = viewHolder.player
 			}
 		}else {
 			binding.imageImageView.setupWithGlide {
 				load(item.files?.firstOrNull())
 			}
-		}*/
+		}
 	}
 
 	fun goToAddExplore(view: View) {
@@ -136,7 +131,7 @@ class HomeExploreViewModel @Inject constructor(
 		}
 	}
 
-	fun setupRvs(
+	/*fun setupRvs(
 		binding: ItemHomeExploreBinding,
 		item: ItemHomeExplore,
 		position: Int,
@@ -149,23 +144,15 @@ class HomeExploreViewModel @Inject constructor(
 		val isVideo = item.isVideo
 
 		if (isVideo) {
-			binding.imageImageView.setupWithGlide {
-				load(item.files?.firstOrNull()).asVideo()
-			}
-
 			val videoLink = item.files?.firstOrNull()
-			if (false && videoLink != null && videoLink.isNotEmpty()) {
+			if (videoLink != null && videoLink.isNotEmpty()) {
 				viewHolder.player = ExoPlayer.Builder(context).build().also { exoPlayer ->
 					val mediaItem = MediaItem.fromUri(videoLink)
 					exoPlayer.setMediaItem(mediaItem)
 
 					exoPlayer.addListener(object : Player.Listener {
 						override fun onPlaybackStateChanged(playbackState: Int) {
-							if (playbackState == ExoPlayer.STATE_READY) {
-								viewHolder.getBindingOrNull()?.imageImageView?.isVisible = false
-								viewHolder.getBindingOrNull()?.playerView?.isVisible = true
-								viewHolder.getBindingOrNull()?.playerView?.player = viewHolder.player
-							}else if (playbackState == ExoPlayer.STATE_ENDED) {
+							if (playbackState == ExoPlayer.STATE_ENDED) {
 								viewHolder.player?.seekTo(0L)
 							}
 						}
@@ -175,12 +162,16 @@ class HomeExploreViewModel @Inject constructor(
 					exoPlayer.playWhenReady = true
 					exoPlayer.prepare()
 				}
+
+				binding.imageImageView.isVisible = false
+				binding.playerView.isVisible = true
+				binding.playerView.player = viewHolder.player
 			}
 		}else {
 			binding.imageImageView.setupWithGlide {
 				load(item.files?.firstOrNull())
 			}
 		}
-	}
+	}*/
 
 }

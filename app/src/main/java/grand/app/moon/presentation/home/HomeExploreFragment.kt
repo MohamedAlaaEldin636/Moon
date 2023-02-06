@@ -35,7 +35,7 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 
 	private val viewModel by viewModels<HomeExploreViewModel>()
 
-	private val listener: ((CombinedLoadStates) -> Unit)? = null
+	//private val listener: ((CombinedLoadStates) -> Unit)? = null
 
 	override fun getLayoutId(): Int = R.layout.fragment_home_explore
 
@@ -57,7 +57,7 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 			}
 		}
 
-		binding.recyclerView.clearOnScrollListeners()
+		/*binding.recyclerView.clearOnScrollListeners()
 		binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
 			override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -76,14 +76,14 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 				viewModel.adapter.removeLoadStateListener(listener)
 			}
 		}
-		viewModel.adapter.addLoadStateListener(listener)
+		viewModel.adapter.addLoadStateListener(listener)*/
 
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 			viewModel.adapter.refresh()
 		}
 	}
 
-	private fun setupRvs() {
+	/*private fun setupRvs() {
 		binding.recyclerView.post {
 			MyLogger.e("hello zzzzzzzzzzzzzz 0")
 
@@ -107,7 +107,7 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 			}
 		}
 	}
-
+*/
 	override fun onPause() {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
 			kotlin.runCatching { viewModel.adapter.releaseAllPlayers(binding.recyclerView) }
