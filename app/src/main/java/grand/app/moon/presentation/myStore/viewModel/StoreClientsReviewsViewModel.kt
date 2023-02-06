@@ -4,6 +4,7 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +12,7 @@ import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemStoreClientsReviewsBinding
 import grand.app.moon.domain.shop.ResponseClientReviews
+import grand.app.moon.domain.shop.ResponseReviewsWithStats
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrElseResNameBA
 import grand.app.moon.presentation.myStore.StoreClientsReviewsFragment
@@ -24,6 +26,17 @@ class StoreClientsReviewsViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop
 ) : AndroidViewModel(application) {
+
+	val response = MutableLiveData<ResponseReviewsWithStats?>()
+
+	val textAverageRate = response.map { "${app.getString(R.string.average_rate)} ( ${it?.averageRate.orZero()} )" }
+	val textRateCount = response.map { "${app.getString(R.string.rate_count)} ${it?.rateCount.orZero()}" }
+
+	val textStar5 = response.map { "${it?.countStar5.orZero()} ${app.getString(R.string.user)}" }
+	val textStar4 = response.map { "${it?.countStar4.orZero()} ${app.getString(R.string.user)}" }
+	val textStar3 = response.map { "${it?.countStar3.orZero()} ${app.getString(R.string.user)}" }
+	val textStar2 = response.map { "${it?.countStar2.orZero()} ${app.getString(R.string.user)}" }
+	val textStar1 = response.map { "${it?.countStar1.orZero()} ${app.getString(R.string.user)}" }
 
 	val name = MutableLiveData("")
 

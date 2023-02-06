@@ -90,12 +90,11 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>,
 	): MABaseResponse<MABasePaging<ResponseClientReviews>>
 
-	// todo save store_id ba2a isa. shof f el login kda ba2a isa.
 	@GET("v1/profile/reviews")
 	suspend fun getShopClientsReviews(
 		@Query("page") page: Int,
 		@QueryMap map: Map<String, String>,
-	): MABaseResponse<MABasePaging<ResponseReviewsWithStats>>
+	): MABaseResponse<ResponseReviewsWithStats>
 
 	@Multipart
 	@POST("v1/profile/explores")

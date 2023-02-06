@@ -144,6 +144,21 @@ class RepoShop @Inject constructor(
 		page: Int,
 	) = remoteDataSource.getClientsReviews(query, from, to, page)
 
+	suspend fun getShopClientsReviews() = remoteDataSource.getShopClientsReviews(
+		null, null, null, 1
+	).toResource()
+	fun getShopClientsReviewsPaging(
+		query: String?,
+		from: String?,
+		to: String?,
+	) = BasePaging.createFlowViaPager {
+		remoteDataSource.getShopClientsReviews(query, from, to, it).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { response ->
+				response?.reviews
+			}
+		}
+	}
+
 	suspend fun addExplore(files: List<MultipartBody.Part>) = remoteDataSource.addExplore(files)
 
 	suspend fun deleteExplore(id: Int) = remoteDataSource.deleteExplore(id)

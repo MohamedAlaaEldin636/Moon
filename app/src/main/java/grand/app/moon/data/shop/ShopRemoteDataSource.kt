@@ -98,6 +98,21 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getClientsReviews(page, map)
 	}
 
+	suspend fun getShopClientsReviews(
+		query: String?,
+		from: String?,
+		to: String?,
+		page: Int
+	) = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+
+		if (!query.isNullOrEmpty()) map["search"] = query
+		if (!from.isNullOrEmpty()) map["from"] = from
+		if (!to.isNullOrEmpty()) map["to"] = to
+
+		apiService.getShopClientsReviews(page, map)
+	}
+
 	suspend fun getClientsReviewsForAdv(advertisementId: Int, page: Int) = safeApiCall2 {
 		apiService.getClientsReviewsForAdv(advertisementId, page)
 	}

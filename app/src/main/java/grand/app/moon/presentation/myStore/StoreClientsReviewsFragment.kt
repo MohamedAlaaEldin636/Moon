@@ -8,10 +8,7 @@ import grand.app.moon.R
 import grand.app.moon.databinding.FragmentStoreClientsReviewsBinding
 import grand.app.moon.databinding.FragmentStoreSocialMediaBinding
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
-import grand.app.moon.extensions.RetryAbleFlow
-import grand.app.moon.extensions.handleRetryAbleActionOrGoBackNullable
-import grand.app.moon.extensions.minLengthZerosPrefix
-import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.myStore.viewModel.StoreClientsReviewsViewModel
@@ -26,7 +23,7 @@ class StoreClientsReviewsFragment : BaseFragment<FragmentStoreClientsReviewsBind
 		RetryAbleFlow(
 			this,
 			getFlow = {
-				viewModel.repoShop.getClientsReviews(
+				viewModel.repoShop.getShopClientsReviewsPaging(
 					viewModel.name.value,
 					viewModel.dateFrom.value?.fromUiToApiDate(),
 					viewModel.dateTo.value?.fromUiToApiDate(),
@@ -39,6 +36,18 @@ class StoreClientsReviewsFragment : BaseFragment<FragmentStoreClientsReviewsBind
 				viewModel.adapter.refresh()
 			}
 		)
+	}
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		handleRetryAbleActionOrGoBack(
+			action = {
+				viewModel.repoShop.getShopClientsReviews()
+			}
+		) {
+			viewModel.response.value = it
+		}
 	}
 
 	override fun getLayoutId(): Int = R.layout.fragment_store_clients_reviews
