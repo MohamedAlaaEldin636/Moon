@@ -109,7 +109,7 @@ class HomeExploreViewModel @Inject constructor(
 		if (userLocalUseCase().isStore.orFalse().not()) {
 			fragment.findNavController().navigateDeepLinkWithOptions(
 				"fragment-dest",
-				"grand.app.moon.dest.my.become.shop.package"
+				"grand.app.moon.dest.become.shop.package"
 			)
 
 			return
@@ -130,7 +130,7 @@ class HomeExploreViewModel @Inject constructor(
 
 				fragment.findNavController().navigateDeepLinkWithOptions(
 					"fragment-dest",
-					"grand.app.moon.dest.my.become.shop.package"
+					"grand.app.moon.dest.become.shop.package"
 				)
 			}
 		}
