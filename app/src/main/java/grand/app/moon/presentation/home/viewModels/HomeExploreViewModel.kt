@@ -7,6 +7,8 @@ import androidx.core.view.isVisible
 import androidx.core.view.postDelayed
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.fragment.findNavController
+import coil.imageLoader
+import coil.load
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -23,6 +25,8 @@ import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.home.HomeExploreFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.home.models.ItemHomeRV
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,8 +59,8 @@ class HomeExploreViewModel @Inject constructor(
 
 		viewHolder.releasePlayer()
 		binding.playerView.player = null
-		binding.playerView.isVisible = isVideo
-		binding.imageImageView.isVisible = isVideo.not()
+		binding.playerView.isVisible = /*false*/isVideo
+		binding.imageImageView.isVisible = /*true*/isVideo.not()
 
 		binding.indicatorImageView.setImageResource(
 			when {
@@ -71,6 +75,7 @@ class HomeExploreViewModel @Inject constructor(
 		binding.chatTextView.text = item.commentsCount.orZero().toString()
 
 		if (isVideo) {
+			//binding.imageImageView.loadAsVideo(item.files?.firstOrNull())
 			val videoLink = item.files?.firstOrNull()
 			if (videoLink != null && videoLink.isNotEmpty()) {
 				viewHolder.player = ExoPlayer.Builder(context).build().also { exoPlayer ->

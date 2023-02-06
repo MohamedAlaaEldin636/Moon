@@ -37,6 +37,8 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 
 	//private val listener: ((CombinedLoadStates) -> Unit)? = null
 
+	// todo if still lagging use global loading and view above rv then scroll rv a little down then a little back up garabha kda isa.
+
 	override fun getLayoutId(): Int = R.layout.fragment_home_explore
 
 	override fun setBindingVariables() {
