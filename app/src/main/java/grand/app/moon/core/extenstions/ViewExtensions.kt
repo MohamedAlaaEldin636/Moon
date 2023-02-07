@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.load
+import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
@@ -554,7 +555,7 @@ fun ImageView.loadCircleImage(imageUrl: String?, progressBar: ProgressBar?) {
           setImageDrawable(result)
         }
       )
-      .listener(onError = { request: ImageRequest, _: Throwable ->
+      .listener(onError = { request: ImageRequest, _: ErrorResult ->
         progressBar?.hide()
         setImageDrawable(request.error)
       })
@@ -597,7 +598,7 @@ fun ImageView.loadRoundImage(imageUrl: String?, progressBar: ProgressBar?) {
           setImageDrawable(result)
         }
       )
-      .listener(onError = { request: ImageRequest, _: Throwable ->
+      .listener(onError = { request: ImageRequest, _: ErrorResult ->
         progressBar?.hide()
         setImageDrawable(request.error)
       })

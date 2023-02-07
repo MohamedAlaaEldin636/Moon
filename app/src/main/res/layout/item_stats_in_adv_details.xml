@@ -17,7 +17,7 @@
 
     android:layout_gravity="center"
 
-    android:elevation="6dp"
+    android:elevation="3dp"
     android:background="@drawable/dr_rect_7"
 
     android:paddingBottom="5dp"
@@ -41,6 +41,14 @@
 
       android:layout_width="0dp"
       android:layout_height="wrap_content"
+
+      android:singleLine="true"
+      android:ellipsize="marquee"
+      android:marqueeRepeatLimit ="marquee_forever"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:scrollHorizontally="true"
+      textView_setSelectedBA="@{true}"
 
       android:textColor="#727889"
       style="@style/TextTajawalBold14"

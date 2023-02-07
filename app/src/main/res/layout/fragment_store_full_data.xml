@@ -19,7 +19,7 @@
 
     android:orientation="vertical"
 
-    android:background="#FBFBFB"
+    android:background="@color/all_screens_background"
     tools:backgroundTint="#EFECEC">
 
     <include

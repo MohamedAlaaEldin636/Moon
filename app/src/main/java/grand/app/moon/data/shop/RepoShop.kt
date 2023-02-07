@@ -11,6 +11,7 @@ import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
+import grand.app.moon.presentation.stats.models.ItemStoreStats
 import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -244,6 +245,34 @@ class RepoShop @Inject constructor(
 
 	fun getHomeExplores() = BasePaging.createFlowViaPager {
 		remoteDataSource.getHomeExplores(it)
+	}
+
+	suspend fun getStoreStats(
+		from: String?,
+		to: String?
+	) = remoteDataSource.getStoreStats(from, to)
+
+	suspend fun getGeneralStatsForStoreStats(
+		type: ItemStoreStats.Type,
+	) = remoteDataSource.getGeneralStatsForStoreStats(type)
+
+	fun getGeneralStatsForStoreStatsUsers(
+		type: ItemStoreStats.Type,
+		query: String?,
+		from: String?,
+		to: String?,
+	) = BasePaging.createFlowViaPager {
+		remoteDataSource.getGeneralStatsForStoreStatsUsers(
+			type,
+			it,
+			query,
+			from,
+			to
+		).mapImmediate { response ->
+			response.map { stats ->
+				stats?.users
+			}
+		}
 	}
 
 }

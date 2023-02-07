@@ -136,6 +136,10 @@ class MyAdvDetailsViewModel @Inject constructor(
 		R.layout.item_stats_in_adv_details,
 		emptyList(),
 		onItemClick = { adapter, binding ->
+			if (userLocalUseCase().isStore.orFalse().not()) {
+				return@RVItemCommonListUsage
+			}
+
 			val context = binding.root.context ?: return@RVItemCommonListUsage
 
 			val item = (binding.constraintLayout.tag as? String).fromJsonInlinedOrNull<ItemStatsInAdvDetails>()

@@ -17,7 +17,7 @@
 
     android:fillViewport="true"
 
-    android:background="#FBFBFB"
+    android:background="@color/all_screens_background"
     android:padding="16dp"
     android:clipToPadding="false">
 

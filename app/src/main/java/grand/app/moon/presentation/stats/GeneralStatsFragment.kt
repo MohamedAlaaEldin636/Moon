@@ -28,13 +28,22 @@ class GeneralStatsFragment : BaseFragment<FragmentGeneralStatsBinding>() {
 		RetryAbleFlow(
 			this,
 			getFlow = {
-				viewModel.repoShop.getMyAdvStatsUsers(
-					viewModel.args.advId,
-					viewModel.args.type,
-					viewModel.name.value,
-					viewModel.dateFrom.value?.fromUiToApiDate(),
-					viewModel.dateTo.value?.fromUiToApiDate(),
-				)
+				if (viewModel.args.useAdvNotStoreType) {
+					viewModel.repoShop.getMyAdvStatsUsers(
+						viewModel.args.advId,
+						viewModel.args.type,
+						viewModel.name.value,
+						viewModel.dateFrom.value?.fromUiToApiDate(),
+						viewModel.dateTo.value?.fromUiToApiDate(),
+					)
+				}else {
+					viewModel.repoShop.getGeneralStatsForStoreStatsUsers(
+						viewModel.args.storeType,
+						viewModel.name.value,
+						viewModel.dateFrom.value?.fromUiToApiDate(),
+						viewModel.dateTo.value?.fromUiToApiDate(),
+					)
+				}
 			},
 			collectLatestAction = {
 				viewModel.adapter.submitData(it)
@@ -50,17 +59,23 @@ class GeneralStatsFragment : BaseFragment<FragmentGeneralStatsBinding>() {
 
 		handleRetryAbleActionOrGoBack(
 			action = {
-				viewModel.repoShop.getMyAdvStats(
-					viewModel.args.advId,
-					viewModel.args.type,
-				)
+				if (viewModel.args.useAdvNotStoreType) {
+					viewModel.repoShop.getMyAdvStats(
+						viewModel.args.advId,
+						viewModel.args.type,
+					)
+				}else {
+					viewModel.repoShop.getGeneralStatsForStoreStats(
+						viewModel.args.storeType
+					)
+				}
 			}
 		) {
 			val context = context ?: return@handleRetryAbleActionOrGoBack
 
 			viewModel.response = it
 
-			viewModel.chart.value = it.toChartData(context, viewModel.args, true)
+			viewModel.chart.value = it.toChartData(context, viewModel.args.titlePlural, viewModel.args.titleSingular, true)
 		}
 	}
 

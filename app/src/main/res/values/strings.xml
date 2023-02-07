@@ -448,4 +448,27 @@
     <string name="average_rate">متوسط التقيم</string>
   <string name="rate_count">عدد التقيمات</string>
   <string name="add_explore_8">أضف اكسبلور</string>
+  <string name="stats_last_7_days">الإحصائيات أخر سبع أيام</string>
+    <string name="stats">الإحصائيات</string>
+  <string name="latest_special_ads">اخر الاعلانات المميزة</string>
+  <string name="highest_viewed_ads">أعلي الإعلانات مشاهدة</string>
+  <string name="recently_added_ads">الإعلانات المضافة موخرا</string>
+  <string name="followers_2">متابعون</string>
+  <string name="follower">متابع</string>
+  <string name="advertisements_8">الإعلانات</string>
+  <string name="story">استوري</string>
+  <string name="stories_8">الاستوري</string>
+  <string name="store_shares">مشاركات المتجر</string>
+  <string name="store_block">حظر المتجر</string>
+  <string name="block">حظر</string>
+  <string name="explore_files">ملفات الإكسبلور</string>
+  <string name="file_2">ملف</string>
+  <string name="store_views">مشاهدات المتجر</string>
+  <string name="ad_views">مشاهدات الإعلانات</string>
+  <string name="shares_ad">مشاركات الإعلانات</string>
+  <string name="reports_ads">إعلانات تم التبليغ عنها</string>
+  <string name="reports_store">بلاغات المتجر</string>
+  <string name="search_about_an_advertisements">البحث عن الإعلانات</string>
+    <string name="fav_ads">الإعلانات المفضلة</string>
+  <string name="advertisement_66">إعلان</string>
 </resources>

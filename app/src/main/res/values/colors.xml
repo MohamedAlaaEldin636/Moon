@@ -75,4 +75,10 @@
   <color name="color707070">#707070</color>
   <color name="colorF7AB00">#F7AB00</color>
 
+  <color name="special_color_3">#7A7777</color>
+
+  <!--#F3F3F3 Darker #ECECEC was 251 -->
+  <color name="all_screens_background">#F7F7F7</color>
+  <color name="original_all_screens_background">#FBFBFB</color>
+
 </resources>

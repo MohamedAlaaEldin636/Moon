@@ -58,7 +58,7 @@ fun RecyclerView.setupWithRVItemCommonListUsage(
 	this.adapter = adapter
 }
 
-class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
+open class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	@LayoutRes private val layoutRes: Int,
 	list: List<Item> = emptyList(),
 	private val onItemClick: ((adapter: RVItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,

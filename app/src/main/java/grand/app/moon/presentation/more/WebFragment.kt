@@ -5,11 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ProgressBar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import grand.app.moon.R
@@ -35,10 +36,20 @@ class WebFragment : BottomSheetDialogFragment() {
     binding = DataBindingUtil.inflate(inflater, R.layout.fragment_web, container, false)
     binding.viewModel = viewModel
     binding.viewModel = viewModel
-    binding.webview.webViewClient = WebViewClient()
     if (!args.url.contains("snapchat"))
       binding.webview.settings.javaScriptEnabled = true
-    binding.webview.webViewClient = AppWebViewClients(binding.progress)
+    binding.webview.webViewClient = object : WebViewClient() {
+	    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+		    findNavController().navigateUp()
+
+		    return true
+	    }
+
+	    override fun onPageFinished(view: WebView?, url: String?) {
+		    binding.progress.hide()
+	    }
+    }
+	  binding.progress.show()
     Log.d(TAG, "onCreateView: ${args.url}")
     binding.webview.loadUrl(args.url)
     return binding.root
@@ -61,28 +72,20 @@ class WebFragment : BottomSheetDialogFragment() {
 
   private val TAG = "WebFragment"
 
-  override fun onStop() {
-    super.onStop()
-  }
-
-
-  class AppWebViewClients(val progressBar: ProgressBar) : WebViewClient() {
+  /*class AppWebViewClients(val progressBar: ProgressBar) : WebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-      // TODO Auto-generated method stub
       view.loadUrl(url)
       return true
     }
 
     override fun onPageFinished(view: WebView, url: String) {
-      // TODO Auto-generated method stub
-      super.onPageFinished(view, url)
       progressBar.hide()
     }
 
     init {
       progressBar.show()
     }
-  }
+  }*/
 
   override fun onResume() {
     super.onResume()
@@ -93,6 +96,6 @@ class WebFragment : BottomSheetDialogFragment() {
   }
 
   override fun getTheme(): Int {
-    return R.style.CustomBottomSheetDialogTheme;
+    return R.style.CustomBottomSheetDialogTheme
   }
 }

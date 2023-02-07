@@ -56,7 +56,7 @@
         android:drawablePadding="5dp"
         app:drawableStartCompat="@drawable/arrow_down_1a"
 
-        android:onClick="@{() -> viewModel.toggleWeek()}"
+        android:onClick="@{v -> viewModel.toggleWeek(v)}"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -142,7 +142,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
 
-        android:background="#FAFAFA"
+        android:background="#DEDEDE"
         tools:backgroundTint="@color/red"
 
         android:layout_marginTop="28dp"
@@ -175,7 +175,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
 
-        android:background="#FAFAFA"
+        android:background="#DEDEDE"
         tools:backgroundTint="@color/red"
 
         android:layout_marginTop="35dp"
@@ -208,7 +208,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
 
-        android:background="#FAFAFA"
+        android:background="#DEDEDE"
         tools:backgroundTint="@color/red"
 
         android:layout_marginTop="35dp"
@@ -241,7 +241,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
 
-        android:background="#FAFAFA"
+        android:background="#DEDEDE"
         tools:backgroundTint="@color/red"
 
         android:layout_marginTop="35dp"
@@ -274,7 +274,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
 
-        android:background="#FAFAFA"
+        android:background="#DEDEDE"
         tools:backgroundTint="@color/red"
 
         android:layout_marginTop="35dp"
@@ -307,7 +307,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
 
-        android:background="#FAFAFA"
+        android:background="#DEDEDE"
         tools:backgroundTint="@color/red"
 
         android:layout_marginTop="35dp"
@@ -340,7 +340,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
 
-        android:background="#FAFAFA"
+        android:background="#DEDEDE"
         tools:backgroundTint="@color/red"
 
         android:layout_marginTop="35dp"
@@ -389,6 +389,7 @@
         view_layoutConstraintHeightMaxByPercentage="@{viewModel.chart.saturdayPercent}"
         view_layoutConstraintHeightMaxByPercentage_refView="@{placeholderBar1View}"
         view_visibleOrInvisible="@{viewModel.chart.saturdayPercent != 0f}"
+        android:visibility="invisible"
 
         android:onClick="@{v -> viewModel.showDayTooltip(v)}"
 
@@ -705,7 +706,7 @@
 
         android:src="@drawable/triangle_stats"
         
-        android:visibility="@{viewModel.chart.showSaturdayTooltip}"
+        android:visibility="@{viewModel.chart.showSaturdayTooltip,default=gone}"
 
         app:layout_constraintBottom_toTopOf="@id/bar1View"
         app:layout_constraintStart_toStartOf="@id/bar1View"
@@ -714,7 +715,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:visibility="@{viewModel.chart.showSaturdayTooltip}"
+        android:visibility="@{viewModel.chart.showSaturdayTooltip,default=gone}"
 
         style="@style/TextTajawalMedium14"
         android:textSize="10sp"

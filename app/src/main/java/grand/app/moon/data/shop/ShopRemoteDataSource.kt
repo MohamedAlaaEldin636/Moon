@@ -11,6 +11,7 @@ import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
+import grand.app.moon.presentation.stats.models.ItemStoreStats
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -237,5 +238,41 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	}
 
 	suspend fun getHomeExplores(page: Int) = safeApiCall2 { apiService.getHomeExplores(page) }
+
+	suspend fun getStoreStats(
+		from: String?,
+		to: String?,
+	) = safeApiCall {
+		val map = mutableMapOf<String, String>()
+
+		if (!from.isNullOrEmpty()) map["from"] = from
+		if (!to.isNullOrEmpty()) map["to"] = to
+
+		apiService.getStoreStats(map)
+	}
+
+	suspend fun getGeneralStatsForStoreStats(type: ItemStoreStats.Type) = safeApiCall {
+		apiService.getGeneralStatsForStoreStats(type.apiValue)
+	}
+
+	suspend fun getGeneralStatsForStoreStatsUsers(
+		type: ItemStoreStats.Type,
+		page: Int,
+		query: String?,
+		from: String?,
+		to: String?,
+	) = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+
+		if (!query.isNullOrEmpty()) map["name"] = query
+		if (!from.isNullOrEmpty()) map["from"] = from
+		if (!to.isNullOrEmpty()) map["to"] = to
+
+		apiService.getGeneralStatsForStoreStatsUsers(
+			type.apiValue,
+			page,
+			map
+		)
+	}
 
 }

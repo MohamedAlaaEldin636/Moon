@@ -7,6 +7,7 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
 import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
+import grand.app.moon.presentation.stats.models.ResponseStoreStats
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -182,5 +183,23 @@ interface ShopServices {
 	suspend fun getHomeExplores(
 		@Query("page") page: Int,
 	): MABaseResponse<MABasePaging<ItemHomeExplore>>
+
+	@GET("v1/profile/statistics")
+	suspend fun getStoreStats(
+		@QueryMap map: Map<String, String>,
+		@Query("statistics_type") statisticsType: String = "store",
+	): BaseResponse<ResponseStoreStats?>
+	@GET("v1/profile/statistics")
+	suspend fun getGeneralStatsForStoreStats(
+		@Query("type") type: String,
+		@Query("statistics_type") statisticsType: String = "store",
+	): BaseResponse<ResponseGeneralStats?>
+	@GET("v1/profile/statistics")
+	suspend fun getGeneralStatsForStoreStatsUsers(
+		@Query("type") type: String,
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>,
+		@Query("statistics_type") statisticsType: String = "store",
+	): MABaseResponse<ResponseGeneralStats?>
 
 }

@@ -8,20 +8,31 @@ import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.presentation.stats.GeneralStatsFragmentArgs
+import grand.app.moon.presentation.stats.models.ItemStoreStats
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.DayOfWeek
 import kotlin.math.roundToInt
 
+private fun List<Int>.forceSize(size: Int): List<Int> {
+	return when {
+		this.size == size -> this
+		this.size > size -> take(size)
+		else -> this + List(size - this.size) { 0 }
+	}
+}
+
 fun ResponseGeneralStats.toChartData(
 	context: Context,
-	args: GeneralStatsFragmentArgs,
+	titlePlural: String,
+	titleSingular: String,
 	isCurrentWeek: Boolean,
 ): ChartData {
 	val percentage = if (isCurrentWeek) growthRateCurrentWeek else growthRatePreviousWeek
 
-	val week = (if (isCurrentWeek) currentWeek else previousWeek).orEmpty()/*.mapIndexed { index, int ->
+	MyLogger.e("currentWeek else previousWeek $currentWeek else $previousWeek")
+	val week = ((if (isCurrentWeek) currentWeek else previousWeek).orEmpty()).forceSize(7)/*.mapIndexed { index, int ->
 		if (isCurrentWeek) index else 6 - index
 	}*/
 	val maxWeekLineValue = week.maxOf { it }.coerceAtLeast(6) // 7 lines where line 1 is always 0 isa.
@@ -60,11 +71,11 @@ fun ResponseGeneralStats.toChartData(
 	MyLogger.e("toChartData -> fridayPercent -> ${week.getOrNull(6)} ${line7.toFloat()} $fridayPercent")
 
 	return ChartData(
-		args.titlePlural,
+		titlePlural,
 		if (isCurrentWeek) context.getString(R.string.current_week) else context.getString(R.string.prev_week),
 		percentage.toString(),
 		if (percentage >= 0.toBigDecimal()) R.drawable.ic_positive_growth else R.drawable.ic_negative_growth,
-		args.titleSingular,
+		titleSingular,
 		line7, line6, line5, line4, line3, line2, line1,
 		saturdayValue, sundayValue, mondayValue, tuesdayValue, wednesdayValue, thursdayValue, fridayValue,
 		saturdayPercent, sundayPercent, mondayPercent, tuesdayPercent, wednesdayPercent, thursdayPercent, fridayPercent

@@ -607,7 +607,12 @@
     android:id="@+id/dest_my_ads"
     android:name="grand.app.moon.presentation.myAds.MyAdsFragment"
     android:label="@string/my_ads_2"
-    tools:layout="@layout/fragment_my_ads" />
+    tools:layout="@layout/fragment_my_ads">
+    <deepLink
+      android:id="@+id/deep_link_dest_my_ads"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.my.ads" />
+  </fragment>
   <fragment
     android:id="@+id/dest_add_advertisement"
     android:name="grand.app.moon.presentation.myAds.AddAdvertisementFragment"
@@ -916,19 +921,43 @@
       app:argType="string" />
     <argument
       android:name="advId"
-      app:argType="integer" />
+      app:argType="integer"
+      android:defaultValue="0"/>
     <argument
       android:name="type"
-      app:argType="grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails$Type" />
+      app:argType="grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails$Type"
+      android:defaultValue="VIEWS" />
     <deepLink
       android:id="@+id/deep_link_dest_general_stats"
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.general.stats/{titlePlural}/{titleSingular}/{advId}/{type}" />
+    <argument
+      android:name="storeType"
+      app:argType="grand.app.moon.presentation.stats.models.ItemStoreStats$Type"
+      android:defaultValue="FOLLLOWERS" />
+    <argument
+      android:name="useAdvNotStoreType"
+      app:argType="boolean"
+      android:defaultValue="true" />
+    <deepLink
+      android:id="@+id/deep_link_dest_general_stats_store"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.general.stats.store/{titlePlural}/{titleSingular}/{storeType}/{useAdvNotStoreType}" />
   </fragment>
   <fragment
     android:id="@+id/dest_home_explore"
     android:name="grand.app.moon.presentation.home.HomeExploreFragment"
     android:label="@string/discover"
     tools:layout="@layout/fragment_home_explore" />
+  <fragment
+    android:id="@+id/dest_store_clients_stats"
+    android:name="grand.app.moon.presentation.myStore.StoreClientsStatsFragment"
+    android:label="@string/clients_stats"
+    tools:layout="@layout/fragment_store_clients_stats">
+    <deepLink
+      android:id="@+id/deep_link_dest_store_clients_stats"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.store.clients.stats" />
+  </fragment>
 
 </navigation>

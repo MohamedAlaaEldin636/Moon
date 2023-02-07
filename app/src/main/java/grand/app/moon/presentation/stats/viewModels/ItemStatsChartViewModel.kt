@@ -12,11 +12,15 @@ abstract class ItemStatsChartViewModel(
 	application: Application,
 ) : AndroidViewModel(application) {
 
-	val chart = MutableLiveData(ChartData())
+	open val initialChart = ChartData()
 
-	abstract fun toggleWeek()
+	val chart by lazy {
+		MutableLiveData(initialChart)
+	}
 
-	fun showDayTooltip(view: View) {
+	abstract fun toggleWeek(view: View)
+
+	open fun showDayTooltip(view: View) {
 		val chart = chart.value ?: return
 
 		val day = when (view.id) {

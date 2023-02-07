@@ -71,12 +71,13 @@ class GeneralStatsViewModel @Inject constructor(
 		binding.dateTextView.text = item.createdAt
 	}
 
-	override fun toggleWeek() {
+	override fun toggleWeek(view: View) {
 		val response = response ?: return
 		val oldChart = chart.value ?: return
 		chart.value = response.toChartData(
 			app,
-			args,
+			args.titlePlural,
+			args.titleSingular,
 			oldChart.weekName != app.getString(R.string.current_week)
 		).copy(
 			showSaturdayTooltip = oldChart.showSaturdayTooltip,
