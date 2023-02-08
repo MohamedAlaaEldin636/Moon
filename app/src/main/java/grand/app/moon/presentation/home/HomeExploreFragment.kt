@@ -45,6 +45,11 @@ Once that's all wired up, it might "just work", although note that many devices 
 https://github.com/google/ExoPlayer/issues/2855
 
 maybe 1 player instance to do all the work isa.
+
+for images to appear immediately u can usee the glide cache ability keep the BasePaging
+source suspended till get all images as bitmap using intoBitmap used in a map screen before
+which is loaded via glide and just leave it don't use the bitmap it shouold be already loaded w
+bs kda isa.
  */
 @AndroidEntryPoint
 class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
