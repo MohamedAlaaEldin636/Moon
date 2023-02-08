@@ -2,6 +2,7 @@
 
 package grand.app.moon.extensions
 
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -17,7 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import grand.app.moon.core.extenstions.layoutInflater
+import grand.app.moon.presentation.home.models.ItemHomeExplore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
 import java.lang.ref.WeakReference
@@ -49,6 +53,28 @@ class VHPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 	fun releasePlayer() {
 		player?.release()
 		player = null
+	}
+
+	fun playVideo(context: Context, videoLink: String): Player? {
+		releasePlayer()
+		player = ExoPlayer.Builder(context).build().also { exoPlayer ->
+			val mediaItem = MediaItem.fromUri(videoLink)
+			exoPlayer.setMediaItem(mediaItem)
+
+			exoPlayer.addListener(object : Player.Listener {
+				override fun onPlaybackStateChanged(playbackState: Int) {
+					if (playbackState == ExoPlayer.STATE_ENDED) {
+						player?.seekTo(0L)
+					}
+				}
+			})
+
+			exoPlayer.volume = 0f
+			exoPlayer.playWhenReady = true
+			exoPlayer.prepare()
+		}
+
+		return player
 	}
 
 }

@@ -18,4 +18,17 @@ inline fun <reified P : ViewGroup> View.firstParentWithId(@IdRes id: Int): P? {
 	return null
 }
 
+inline fun <reified P : ViewGroup> View.firstParentInstance(): P? {
+	var parent = parent
+	while (true) {
+		if (parent is P) {
+			return parent
+		}
+
+		parent = (parent as? View)?.parent ?: break
+	}
+
+	return null
+}
+
 fun ViewGroup.getOrNull(index: Int) = kotlin.runCatching { get(index) }.getOrNull()

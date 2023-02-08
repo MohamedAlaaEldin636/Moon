@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.request.videoFramePercent
 import com.google.android.exoplayer2.ExoPlayer
@@ -36,6 +37,16 @@ class HomeExploreViewModel @Inject constructor(
 
 	val explores = repoShop.getHomeExplores()
 
+	private var _playedVideoFromOnBindBefore = false
+	@Synchronized
+	fun getPlayedVideoFromOnBindBefore(): Boolean {
+		if (_playedVideoFromOnBindBefore) return true
+
+		_playedVideoFromOnBindBefore = true
+
+		return false
+	}
+
 	// todo share of inner screen is share of file link ex. video or image isa.
 	val adapter = RVPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>(
 		R.layout.item_home_explore,
@@ -45,7 +56,7 @@ class HomeExploreViewModel @Inject constructor(
 			General.TODO("not programmed yet isa. ${item?.isVideo} ${item?.page} ${adapter.snapshot().items.lastOrNull()?.page}")
 		},
 		onViewRecycledAction = {
-			it.itemView.findViewById<ImageView>(R.id.imageImageView).clearWithGlide()
+			//it.itemView.findViewById<ImageView>(R.id.imageImageView).clearWithGlide()
 		}
 	) { binding, _, item, viewHolder, _ ->
 		val context = binding.root.context ?: return@RVPagingItemCommonListUsageWithExoPlayer
@@ -56,8 +67,8 @@ class HomeExploreViewModel @Inject constructor(
 
 		viewHolder.releasePlayer()
 		binding.playerView.player = null
-		binding.playerView.isVisible = isVideo
-		binding.imageImageView.isVisible = isVideo.not()
+		binding.playerView.isVisible = false
+		//binding.imageImageView.isVisible = isVideo.not()
 		binding.imageImageView.setImageResource(0)
 
 		binding.indicatorImageView.setImageResource(
@@ -76,7 +87,19 @@ class HomeExploreViewModel @Inject constructor(
 			//binding.imageImageView.loadVideoFrame(item.files?.firstOrNull().orEmpty())
 			val videoLink = item.files?.firstOrNull()
 			if (videoLink != null && videoLink.isNotEmpty()) {
-				viewHolder.player = ExoPlayer.Builder(context).build().also { exoPlayer ->
+				binding.imageImageView.setupWithGlide {
+					load(item.files?.firstOrNull()).asVideo()
+				}
+			}
+
+			/*if (getPlayedVideoFromOnBindBefore().not()) {
+				binding.constraintLayout.firstParentInstance<RecyclerView>()?.apply {
+					post {
+						onScrollStateChanged(RecyclerView.SCROLL_STATE_IDLE)
+					}
+				}
+			}*/
+				/*viewHolder.player = ExoPlayer.Builder(context).build().also { exoPlayer ->
 					val mediaItem = MediaItem.fromUri(videoLink)
 					exoPlayer.setMediaItem(mediaItem)
 
@@ -94,7 +117,7 @@ class HomeExploreViewModel @Inject constructor(
 				}
 
 				binding.playerView.player = viewHolder.player
-			}
+			}*/
 		}else {
 			binding.imageImageView.setupWithGlide {
 				load(item.files?.firstOrNull())

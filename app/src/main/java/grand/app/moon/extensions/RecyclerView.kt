@@ -1,10 +1,34 @@
 package grand.app.moon.extensions
 
+import androidx.core.view.children
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+
+inline fun <reified VH : RecyclerView.ViewHolder> RecyclerView.getAllViewHolders(): List<VH> {
+	return children.toList().mapNotNull { view ->
+		getChildViewHolder(view) as? VH
+	}
+}
+
+fun LayoutManager?.findFirstCompletelyVisibleItemPosition(): Int? {
+	return when (this) {
+		is StaggeredGridLayoutManager -> findFirstCompletelyVisibleItemPositions(IntArray(spanCount)).min()
+		is GridLayoutManager -> findFirstCompletelyVisibleItemPosition()
+		is LinearLayoutManager -> findFirstCompletelyVisibleItemPosition()
+		else -> null
+	}
+}
+fun LayoutManager?.findLastCompletelyVisibleItemPosition(): Int? {
+	return when (this) {
+		is StaggeredGridLayoutManager -> findLastCompletelyVisibleItemPositions(IntArray(spanCount)).max()
+		is GridLayoutManager -> findLastCompletelyVisibleItemPosition()
+		is LinearLayoutManager -> findLastCompletelyVisibleItemPosition()
+		else -> null
+	}
+}
 
 fun LayoutManager?.findFirstVisibleItemPosition(): Int? {
 	return when (this) {
