@@ -19,6 +19,7 @@ import grand.app.moon.databinding.ItemStoreFullDataBinding
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.extensions.*
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.myStore.model.ItemStoreInfo
 import javax.inject.Inject
@@ -69,6 +70,8 @@ class MoreViewModel @Inject constructor(
 			ItemStoreInfo.complete(R.drawable.ic_help_settings, R.string.general_settings),
 		),
 		onItemClick = { _, binding ->
+			val fragment = binding.root.findFragmentOrNull<MoreFragment>() ?: return@RVItemCommonListUsage
+
 			val navController = binding.root.findNavController()
 
 			when (binding.constraintLayout.tag as? Int) {
@@ -106,7 +109,8 @@ class MoreViewModel @Inject constructor(
 					)
 				}
 				R.drawable.ic_chat_with_app_managers -> {
-					General.TODO("will be programmed after comet chat starts to work properly so later isa.")
+					// will be programmed after comet chat starts to work properly so later isa.
+					fragment.showMessage("غير مفعلة حالياً")
 				}
 				R.drawable.ic_contact_settings -> {
 					navController.navigateDeepLinkWithOptions(

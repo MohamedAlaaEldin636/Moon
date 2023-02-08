@@ -1,6 +1,11 @@
 package grand.app.moon.presentation.myAds.viewModel
 
 import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.core.content.getSystemService
+import androidx.core.view.postDelayed
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +25,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.showError
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.firstChildInstance
 import grand.app.moon.extensions.toJsonInlinedOrNull
 import grand.app.moon.presentation.myAds.LocationSelectionFragment
 import grand.app.moon.presentation.myAds.LocationSelectionFragmentArgs
@@ -92,6 +98,9 @@ class LocationSelectionViewModel @Inject constructor(
                 showMapNotSearchResults.postValue(true)
             }
         })
+
+      val editText = (autocompleteSupportFragment.view as? ViewGroup)?.firstChildInstance<EditText>()
+	    editText?.performClick()
     }
 
     fun moveToCurrentLocation(view: View) {

@@ -3,6 +3,7 @@ package grand.app.moon.extensions
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.core.view.children
 import androidx.core.view.get
 
 inline fun <reified P : ViewGroup> View.firstParentWithId(@IdRes id: Int): P? {
@@ -26,6 +27,24 @@ inline fun <reified P : ViewGroup> View.firstParentInstance(): P? {
 		}
 
 		parent = (parent as? View)?.parent ?: break
+	}
+
+	return null
+}
+inline fun <reified P : View> ViewGroup.firstChildInstance(): P? {
+	val parents = mutableListOf(this)
+	while (parents.isNotEmpty()) {
+		val parent = parents.getOrNull(0)
+		parents.removeAt(0)
+		if (parent != null) {
+			for (view in parent.children) {
+				if (view is P) {
+					return view
+				}else if (view is ViewGroup) {
+					parents.add(view)
+				}
+			}
+		}
 	}
 
 	return null
