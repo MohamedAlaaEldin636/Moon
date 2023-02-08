@@ -20,8 +20,20 @@ class StoreFullDataFragment : BaseFragment<FragmentStoreFullDataBinding>() {
 
 	private val viewModel by viewModels<StoreFullDataViewModel>()
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	override fun getLayoutId(): Int = R.layout.fragment_store_full_data
+
+	override fun setBindingVariables() {
+		binding.viewModel = viewModel
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+
+		binding.recyclerView.setupWithRVItemCommonListUsage(
+			viewModel.adapter,
+			false,
+			1
+		)
 
 		// TO-DO If later required always load when enter another fragment then make all fragments entered
 		// from here call setPrevResult to true and observe here and if tru re-call api isa.
@@ -44,22 +56,6 @@ class StoreFullDataFragment : BaseFragment<FragmentStoreFullDataBinding>() {
 			}
 			viewModel.adapter.submitList(list)
 		}
-	}
-
-	override fun getLayoutId(): Int = R.layout.fragment_store_full_data
-
-	override fun setBindingVariables() {
-		binding.viewModel = viewModel
-	}
-
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
-
-		binding.recyclerView.setupWithRVItemCommonListUsage(
-			viewModel.adapter,
-			false,
-			1
-		)
 	}
 
 }
