@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.AndroidViewModel
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -141,7 +142,10 @@ class Home2ViewModel @Inject constructor(
 	}
 
 	fun goToSearch(view: View) {
-		TODO()
+		view.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.search.suggestions"
+		)
 	}
 
 	fun setupRvs(binding: ItemHomeRvBinding, item: ItemHomeRV, position: Int) {

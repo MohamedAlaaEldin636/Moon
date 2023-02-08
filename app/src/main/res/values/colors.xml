@@ -81,4 +81,6 @@
   <color name="all_screens_background">#F7F7F7</color>
   <color name="original_all_screens_background">#FBFBFB</color>
 
+  <color name="search_screen_divider">#707070</color>
+
 </resources>

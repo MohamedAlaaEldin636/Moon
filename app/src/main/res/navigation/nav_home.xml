@@ -959,5 +959,15 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.store.clients.stats" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_search_suggestions"
+    android:name="grand.app.moon.presentation.home.SearchSuggestionsFragment"
+    android:label="fragment_search_suggestions"
+    tools:layout="@layout/fragment_search_suggestions">
+    <deepLink
+      android:id="@+id/deep_link_dest_search_suggestions"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.search.suggestions" />
+  </fragment>
 
 </navigation>

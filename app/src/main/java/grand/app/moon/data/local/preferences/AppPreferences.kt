@@ -132,7 +132,19 @@ class AppPreferences @Inject constructor(private val context: Context) {
 			MyLogger.e("nthTime -> json 2 -> $this")
 		}.fromJsonInlinedOrNull<ResponseAnnouncement>()
   }.firstOrNull()
-  private suspend fun saveAnnouncementCount(count: Int) {
+
+
+	suspend fun getSearchSuggestions() = context.dataStore.data.map {
+		it[SEARCH_SUGGESTIONS].orEmpty().fromJsonInlinedOrNull<List<String>>()
+  }.firstOrNull().orEmpty()
+
+	suspend fun setSearchSuggestions(list: List<String>) {
+		context.dataStore.edit {
+			it[SEARCH_SUGGESTIONS] = list.toJsonInlinedOrNull().orEmpty()
+		}
+	}
+
+	private suspend fun saveAnnouncementCount(count: Int) {
     context.dataStore.edit {
       it[ANNOUNCEMENT_COUNT] = count
     }
@@ -160,6 +172,7 @@ class AppPreferences @Inject constructor(private val context: Context) {
     const val APP_PREFERENCES_NAME = "APP-NAME-Cache"
     private const val SESSION_PREFERENCES_NAME = "APP-NAME-UserCache"
     const val MODE = Context.MODE_PRIVATE
+	  val SEARCH_SUGGESTIONS = stringPreferencesKey("SEARCH_SUGGESTIONS")
   }
 
   private val appPreferences: SharedPreferences =

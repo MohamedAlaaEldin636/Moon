@@ -95,8 +95,7 @@ class MADividerItemDecoration(
 			(parent.layoutManager as? GridLayoutManager)?.orientation == GridLayoutManager.VERTICAL
 
 		if (isVerticalOrientation) {
-			//drawVertical(c, parent)
-			TODO("Didn't program drawing for vertical dir")
+			drawVertical(canvas, parent)
 		}else {
 			drawHorizontal(canvas, parent)
 		}
@@ -130,5 +129,60 @@ class MADividerItemDecoration(
 		}
 		canvas.restore()
 	}
-	
+	private fun drawVertical(canvas: Canvas, parent: RecyclerView) {
+		canvas.save()
+		val left: Int
+		val right: Int
+		if (parent.clipToPadding) {
+			left = parent.paddingLeft
+			right = parent.width - parent.paddingRight
+			canvas.clipRect(
+				left, parent.paddingTop, right,
+				parent.height - parent.paddingBottom
+			)
+		} else {
+			left = 0
+			right = parent.width
+		}
+		val childCount = parent.childCount
+		for (i in 0 until childCount) {
+			val child = parent.getChildAt(i)
+			parent.layoutManager?.getDecoratedBoundsWithMargins(child, bounds) // or just parent.
+			val bottom: Int = bounds.bottom + child.translationY.roundToInt()
+			val top: Int = bottom - verticalSpacing
+			drawable.setBounds(left, top, right, bottom)
+			drawable.draw(canvas)
+		}
+		canvas.restore()
+	}
+
+	private fun drawVertical3(canvas: Canvas, parent: RecyclerView) {
+		canvas.save()
+		val top: Int
+		val bottom: Int
+		//noinspection AndroidLintNewApi - NewApi lint fails to handle overrides.
+		if (parent.clipToPadding) {
+			top = parent.paddingTop
+			bottom = parent.height - parent.paddingBottom
+			canvas.clipRect(
+				parent.paddingLeft, top,
+				parent.width - parent.paddingRight, bottom
+			)
+		} else {
+			top = 0
+			bottom = parent.height
+		}
+
+		val childCount: Int = parent.childCount
+		for (i in 0 until childCount) {
+			val child: View = parent.getChildAt(i)
+			parent.layoutManager?.getDecoratedBoundsWithMargins(child, bounds)
+			val right: Int = bounds.right + child.translationX.roundToInt()
+			val left: Int = right - horizontalSpacing//(if (i == 0) horizontalSpacing / 2 else horizontalSpacing)
+			drawable.setBounds(left, top, right, bottom)
+			drawable.draw(canvas)
+		}
+		canvas.restore()
+	}
+
 }

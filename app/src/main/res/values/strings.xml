@@ -471,4 +471,6 @@
   <string name="search_about_an_advertisements">البحث عن الإعلانات</string>
     <string name="fav_ads">الإعلانات المفضلة</string>
   <string name="advertisement_66">إعلان</string>
+  <string name="no_search_msg">لا يوجد نتائج للبحث , حاول مره أخري</string>
+  <string name="at_least_1_type_char">على الأقل إكتب حرف واحد</string>
 </resources>
