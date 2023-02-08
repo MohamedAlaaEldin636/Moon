@@ -34,49 +34,12 @@ class HomeExploreViewModel @Inject constructor(
 	val userLocalUseCase: UserLocalUseCase
 ) : AndroidViewModel(application) {
 
-	/*private val mapHandlers = mutableMapOf<Int, Runnable>()
-
-	private val handler by lazy {
-		Handler(Looper.getMainLooper())
-	}*/
-
 	val explores = repoShop.getHomeExplores()
-
-	private fun ImageView.loadImageWithPossibleLoop(videoUrl: String, framePercent: Double, itemId: Int, viewHolder: VHPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>) {
-		if (itemId != getTag(R.id.check_same_item) as? Int) {
-			setImageResource(0)
-		}
-
-		load(videoUrl, MACoil.videoImageLoader(this.context ?: return)) {
-			videoFramePercent(framePercent)
-
-			/*listener(
-				onSuccess = { request, result ->
-					viewHolder.runnable = Runnable {
-						MyLogger.e("aaaaaaaaaaaaaaaaa start of runnable")
-						MyLogger.e("aaaaaaaaaaaaaaaaa inside runnable $itemId ${getTag(R.id.check_same_item)}")
-						if (itemId == getTag(R.id.check_same_item) as? Int) {
-							kotlin.runCatching {
-								loadImageWithPossibleLoop(videoUrl, (framePercent + 0.2).let { if (it > 1.0) 0.0 else it }, itemId, viewHolder)
-							}.getOrElse {
-								MyLogger.e("aaaaaaaaaaaaaaaaa inside runnable $it")
-							}
-						}
-					}
-					val message = Message()
-					message.what = viewHolder.specialTag
-					message.obj = viewHolder.runnable
-					val result = viewHolder.handler.sendMessageDelayed(message, 1_000)
-					MyLogger.e("aaaaaaaaaaaaaaaaa ch before send msg result $result")
-				}
-			)*/
-		}
-	}
 
 	// todo share of inner screen is share of file link ex. video or image isa.
 	val adapter = RVPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>(
 		R.layout.item_home_explore,
-		onItemClick = { adapter, binding ->
+		onItemClick = { _, binding ->
 			val item = (binding.constraintLayout.tag as? String).fromJsonInlinedOrNull<ItemHomeExplore>()
 
 			General.TODO("not programmed yet isa. ${item?.isVideo}")
@@ -84,7 +47,7 @@ class HomeExploreViewModel @Inject constructor(
 		onViewRecycledAction = {
 			it.itemView.findViewById<ImageView>(R.id.imageImageView).clearWithGlide()
 		}
-	) { binding, position, item, viewHolder, adapter ->
+	) { binding, _, item, viewHolder, _ ->
 		val context = binding.root.context ?: return@RVPagingItemCommonListUsageWithExoPlayer
 
 		binding.constraintLayout.tag = item.toJsonInlinedOrNull()

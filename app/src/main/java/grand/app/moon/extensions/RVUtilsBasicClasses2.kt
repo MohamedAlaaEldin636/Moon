@@ -24,29 +24,13 @@ import java.lang.ref.WeakReference
 
 class VHPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any>(
 	private val adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>,
-	private val binding: VDB,
+	val binding: VDB,
 	private val onBind: (binding: VDB, position: Int, item: Item, viewHolder: VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>, adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>) -> Unit,
 	private val onItemClick: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
 	additionalListenersSetups: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
-	val specialTag: Int,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-	var framePercent = 0.0
-
 	var player: ExoPlayer? = null
-
-	val handler by lazy {
-		object : Handler(Looper.getMainLooper()) {
-			override fun handleMessage(msg: Message) {
-				MyLogger.e("aaaaaaaaaaaaaaaaa ch handle message ${msg.what} ${msg.obj is Runnable}")
-				(msg.obj as? Runnable)?.run()
-			}
-		}
-	}
-
-	var runnable: Runnable? = null
-
-	private val weakRefBinding = WeakReference(binding)
 
 	init {
 		if (onItemClick != null) {
@@ -66,8 +50,6 @@ class VHPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 		player?.release()
 		player = null
 	}
-
-	fun getBindingOrNull() = weakRefBinding.get()
 
 }
 
@@ -94,14 +76,6 @@ class RVPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 			snapshot().isEmpty()
 	}
 
-	var specialtag = 1
-
-	@Synchronized
-	private fun getSpecialTag(): Int {
-		specialtag = specialtag.inc()
-		return specialtag
-	}
-
 	override fun onCreateViewHolder(
 		parent: ViewGroup,
 		viewType: Int
@@ -112,7 +86,6 @@ class RVPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 			onBind,
 			onItemClick,
 			additionalListenersSetups,
-			getSpecialTag()
 		)
 	}
 
