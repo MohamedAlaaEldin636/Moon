@@ -1,15 +1,16 @@
 package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.View
 import android.widget.ImageView
 import androidx.core.view.isVisible
-import androidx.core.view.postDelayed
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.fragment.findNavController
-import coil.imageLoader
 import coil.load
-import com.bumptech.glide.Glide
+import coil.request.videoFramePercent
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
@@ -17,16 +18,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeExploreBinding
-import grand.app.moon.databinding.ItemHomeRvBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.home.HomeExploreFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
-import grand.app.moon.presentation.home.models.ItemHomeRV
-import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,7 +34,44 @@ class HomeExploreViewModel @Inject constructor(
 	val userLocalUseCase: UserLocalUseCase
 ) : AndroidViewModel(application) {
 
+	/*private val mapHandlers = mutableMapOf<Int, Runnable>()
+
+	private val handler by lazy {
+		Handler(Looper.getMainLooper())
+	}*/
+
 	val explores = repoShop.getHomeExplores()
+
+	private fun ImageView.loadImageWithPossibleLoop(videoUrl: String, framePercent: Double, itemId: Int, viewHolder: VHPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>) {
+		if (itemId != getTag(R.id.check_same_item) as? Int) {
+			setImageResource(0)
+		}
+
+		load(videoUrl, MACoil.videoImageLoader(this.context ?: return)) {
+			videoFramePercent(framePercent)
+
+			/*listener(
+				onSuccess = { request, result ->
+					viewHolder.runnable = Runnable {
+						MyLogger.e("aaaaaaaaaaaaaaaaa start of runnable")
+						MyLogger.e("aaaaaaaaaaaaaaaaa inside runnable $itemId ${getTag(R.id.check_same_item)}")
+						if (itemId == getTag(R.id.check_same_item) as? Int) {
+							kotlin.runCatching {
+								loadImageWithPossibleLoop(videoUrl, (framePercent + 0.2).let { if (it > 1.0) 0.0 else it }, itemId, viewHolder)
+							}.getOrElse {
+								MyLogger.e("aaaaaaaaaaaaaaaaa inside runnable $it")
+							}
+						}
+					}
+					val message = Message()
+					message.what = viewHolder.specialTag
+					message.obj = viewHolder.runnable
+					val result = viewHolder.handler.sendMessageDelayed(message, 1_000)
+					MyLogger.e("aaaaaaaaaaaaaaaaa ch before send msg result $result")
+				}
+			)*/
+		}
+	}
 
 	// todo share of inner screen is share of file link ex. video or image isa.
 	val adapter = RVPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>(
@@ -59,8 +93,9 @@ class HomeExploreViewModel @Inject constructor(
 
 		viewHolder.releasePlayer()
 		binding.playerView.player = null
-		binding.playerView.isVisible = false//isVideo
-		binding.imageImageView.isVisible = true//isVideo.not()
+		binding.playerView.isVisible = isVideo
+		binding.imageImageView.isVisible = isVideo.not()
+		binding.imageImageView.setImageResource(0)
 
 		binding.indicatorImageView.setImageResource(
 			when {
@@ -75,8 +110,8 @@ class HomeExploreViewModel @Inject constructor(
 		binding.chatTextView.text = item.commentsCount.orZero().toString()
 
 		if (isVideo) {
-			binding.imageImageView.loadVideoFrame(item.files?.firstOrNull().orEmpty())
-			/*val videoLink = item.files?.firstOrNull()
+			//binding.imageImageView.loadVideoFrame(item.files?.firstOrNull().orEmpty())
+			val videoLink = item.files?.firstOrNull()
 			if (videoLink != null && videoLink.isNotEmpty()) {
 				viewHolder.player = ExoPlayer.Builder(context).build().also { exoPlayer ->
 					val mediaItem = MediaItem.fromUri(videoLink)
@@ -96,7 +131,7 @@ class HomeExploreViewModel @Inject constructor(
 				}
 
 				binding.playerView.player = viewHolder.player
-			}*/
+			}
 		}else {
 			binding.imageImageView.setupWithGlide {
 				load(item.files?.firstOrNull())

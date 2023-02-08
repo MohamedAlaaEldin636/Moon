@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="check_same_item" type="id" />
+  <item name="frame_percent" type="id" />
+  <item name="runnable_action" type="id" />
+</resources>

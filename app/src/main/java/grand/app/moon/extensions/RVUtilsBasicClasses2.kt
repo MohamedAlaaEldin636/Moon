@@ -2,6 +2,9 @@
 
 package grand.app.moon.extensions
 
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -25,9 +28,23 @@ class VHPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 	private val onBind: (binding: VDB, position: Int, item: Item, viewHolder: VHPagingItemCommonListUsageWithExoPlayer<VDB, Item>, adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>) -> Unit,
 	private val onItemClick: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
 	additionalListenersSetups: ((adapter: RVPagingItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
+	val specialTag: Int,
 ) : RecyclerView.ViewHolder(binding.root) {
 
+	var framePercent = 0.0
+
 	var player: ExoPlayer? = null
+
+	val handler by lazy {
+		object : Handler(Looper.getMainLooper()) {
+			override fun handleMessage(msg: Message) {
+				MyLogger.e("aaaaaaaaaaaaaaaaa ch handle message ${msg.what} ${msg.obj is Runnable}")
+				(msg.obj as? Runnable)?.run()
+			}
+		}
+	}
+
+	var runnable: Runnable? = null
 
 	private val weakRefBinding = WeakReference(binding)
 
@@ -77,6 +94,14 @@ class RVPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 			snapshot().isEmpty()
 	}
 
+	var specialtag = 1
+
+	@Synchronized
+	private fun getSpecialTag(): Int {
+		specialtag = specialtag.inc()
+		return specialtag
+	}
+
 	override fun onCreateViewHolder(
 		parent: ViewGroup,
 		viewType: Int
@@ -86,7 +111,8 @@ class RVPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 			DataBindingUtil.inflate(parent.context.layoutInflater, layoutRes, parent, false),
 			onBind,
 			onItemClick,
-			additionalListenersSetups
+			additionalListenersSetups,
+			getSpecialTag()
 		)
 	}
 
