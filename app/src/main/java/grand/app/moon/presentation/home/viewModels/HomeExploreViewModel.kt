@@ -39,10 +39,10 @@ class HomeExploreViewModel @Inject constructor(
 	// todo share of inner screen is share of file link ex. video or image isa.
 	val adapter = RVPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>(
 		R.layout.item_home_explore,
-		onItemClick = { _, binding ->
+		onItemClick = { adapter, binding ->
 			val item = (binding.constraintLayout.tag as? String).fromJsonInlinedOrNull<ItemHomeExplore>()
 
-			General.TODO("not programmed yet isa. ${item?.isVideo}")
+			General.TODO("not programmed yet isa. ${item?.isVideo} ${item?.page} ${adapter.snapshot().items.lastOrNull()?.page}")
 		},
 		onViewRecycledAction = {
 			it.itemView.findViewById<ImageView>(R.id.imageImageView).clearWithGlide()

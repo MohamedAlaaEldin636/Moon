@@ -3,6 +3,7 @@ package grand.app.moon.presentation.home.models
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.extensions.AppConsts
 import grand.app.moon.extensions.orFalse
+import grand.app.moon.helpers.paging.BasePaging
 
 data class ItemHomeExplore(
 	var id: Int?,
@@ -15,8 +16,15 @@ data class ItemHomeExplore(
 	@SerializedName("is_liked") var isLiked: Boolean?,
 	@SerializedName("created_at") var createdAt: String?,
 	var store: ItemStoreInHomeExplore?
-) {
+) : BasePaging.Listener {
 	val isVideo get() = mimeType?.contains(AppConsts.Files.MIME_TYPE_PREFIX_VIDEO).orFalse()
+
+	@JvmField
+	var page: Int? = null
+
+	override fun setPage(page: Int) {
+		this.page = page
+	}
 }
 
 data class ItemStoreInHomeExplore(

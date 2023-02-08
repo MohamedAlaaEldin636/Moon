@@ -68,7 +68,7 @@ class BasePaging<T : Any>(
 		
 		return when (val result = fetchPage(pageNumber)) {
 			is MAResult.Success -> LoadResult.Page(
-				result.value.data?.data.orEmpty(),
+				result.value.data?.data.orEmpty().onEach { if (it is Listener) it.setPage(pageNumber) },
 				if (pageNumber == 1) null else pageNumber.dec(),
 				if (result.value.data?.links?.next.isNullOrEmpty()) null else pageNumber.inc()
 			)
@@ -81,6 +81,10 @@ class BasePaging<T : Any>(
 			val anchorPage = state.closestPageToPosition(anchorPosition)
 			anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
 		}
+	}
+
+	interface Listener {
+		fun setPage(page: Int)
 	}
 	
 }
