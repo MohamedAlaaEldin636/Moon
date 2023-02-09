@@ -13,6 +13,7 @@ import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.databinding.FragmentSearchSuggestionsBinding
 import grand.app.moon.extensions.MADividerItemDecoration
 import grand.app.moon.extensions.addUniqueTypeItemDecoration
+import grand.app.moon.extensions.setOnEditorActionListenerBA
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.viewModels.SearchSuggestionsViewModel
@@ -54,6 +55,8 @@ class SearchSuggestionsFragment : BaseFragment<FragmentSearchSuggestionsBinding>
 				viewModel.allSuggestions.value = viewModel.appPreferences.getSearchSuggestions()
 			}
 		}
+
+		binding.editText.setOnEditorActionListenerBA(viewModel.getOnEditorListener())
 	}
 
 }
