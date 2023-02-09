@@ -473,4 +473,7 @@
   <string name="advertisement_66">إعلان</string>
   <string name="no_search_msg">لا يوجد نتائج للبحث , حاول مره أخري</string>
   <string name="at_least_1_type_char">على الأقل إكتب حرف واحد</string>
+    <string name="nickname_2819">اسم الشهرة</string>
+  <string name="call_3829">اتصال</string>
+  <string name="chat_3829">محادثة</string>
 </resources>

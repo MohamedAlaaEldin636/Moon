@@ -9,6 +9,7 @@ import grand.app.moon.domain.utils.map
 import grand.app.moon.domain.utils.toFailureStatus
 import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import grand.app.moon.presentation.stats.models.ItemStoreStats
@@ -273,6 +274,10 @@ class RepoShop @Inject constructor(
 				stats?.users
 			}
 		}
+	}
+
+	fun getSearchResults(search: String, type: TypeSearchResult) = BasePaging.createFlowViaPager {
+		remoteDataSource.getSearchResults(search, type, it)
 	}
 
 }

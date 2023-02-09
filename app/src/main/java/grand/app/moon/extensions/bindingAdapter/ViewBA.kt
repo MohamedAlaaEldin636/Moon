@@ -1,17 +1,33 @@
 package grand.app.moon.extensions.bindingAdapter
 
+import android.content.res.ColorStateList
 import android.graphics.Outline
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.FloatRange
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.orZero
 import kotlin.math.roundToInt
+
+@BindingAdapter("view_setBackgroundTintRes")
+fun View.setBackgroundTintRes(@ColorRes res: Int?) {
+	backgroundTintList = ColorStateList.valueOf(
+		ContextCompat.getColor(context ?: return, res ?: return)
+	)
+}
+
+@BindingAdapter("view_setBackgroundTintColorInt")
+fun View.setBackgroundTintColorInt(@ColorInt color: Int?) {
+	backgroundTintList = ColorStateList.valueOf(color ?: return)
+}
 
 @BindingAdapter("view_translateXByWholeWidthPercent")
 fun View.translateXByWholeWidthPercent(@FloatRange(from = 0.0, to = 1.0) percentage: Float?) {

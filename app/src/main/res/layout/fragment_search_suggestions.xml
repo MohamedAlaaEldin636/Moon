@@ -65,7 +65,7 @@
       android:inputType="text"
       android:imeOptions="actionSearch"
 
-      editText_setOnEditorActionListenerBA="@{viewModel/}"
+      editText_setOnEditorActionListenerBA="@{viewModel.onEditorListener}"
 
       app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
       app:layout_constraintStart_toStartOf="parent"

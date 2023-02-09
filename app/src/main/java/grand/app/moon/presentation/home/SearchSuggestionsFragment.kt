@@ -54,12 +54,6 @@ class SearchSuggestionsFragment : BaseFragment<FragmentSearchSuggestionsBinding>
 				viewModel.allSuggestions.value = viewModel.appPreferences.getSearchSuggestions()
 			}
 		}
-
-		binding.editText.setOnEditorActionListener { v, actionId, event ->
-
-
-			false
-		}
 	}
 
 }

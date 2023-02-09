@@ -59,6 +59,7 @@ data class ItemAdvertisementInResponseHome(
 		var id: Int?,
 		var name: String?,
 		var currency: String?,
+		@SerializedName("country_code") var countryCode: String?,
 	)
 
 	data class City(

@@ -136,6 +136,9 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 		binding.storeImageImageView.setOnClickListener {
 			General.TODO("ch 2")
 		}
+		binding.favImageView.setOnClickListener {
+			General.TODO("ch 2")
+		}
 
 		binding.whatsAppImageView.setOnClickListener {
 			General.TODO("ch 2")
@@ -153,6 +156,10 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 	}
 
 	binding.premiumImageView.isVisible = item.isPremium
+
+	binding.favImageView.setImageResource(
+		if (item.isFavorite.orFalse()) R.drawable.item_adv_fav_med_cropped else R.drawable.item_adv_fav_cropped
+	)
 
 	binding.ratingTextView.text = "( ${item.averageRate?.round(1).orZero()
 		.toIntIfNoFractionsOrThisFloat().toStringOrEmpty()} )"

@@ -962,12 +962,25 @@
   <fragment
     android:id="@+id/dest_search_suggestions"
     android:name="grand.app.moon.presentation.home.SearchSuggestionsFragment"
-    android:label="fragment_search_suggestions"
+    android:label="@string/search"
     tools:layout="@layout/fragment_search_suggestions">
     <deepLink
       android:id="@+id/deep_link_dest_search_suggestions"
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.search.suggestions" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_search_results"
+    android:name="grand.app.moon.presentation.home.SearchResultsFragment"
+    android:label="@string/search"
+    tools:layout="@layout/fragment_search_results">
+    <argument
+      android:name="search"
+      app:argType="string" />
+    <deepLink
+      android:id="@+id/deep_link_dest_search_results"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.search.results/{search}" />
   </fragment>
 
 </navigation>

@@ -9,6 +9,7 @@ import grand.app.moon.extensions.minLengthZerosPrefix
 import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import grand.app.moon.presentation.stats.models.ItemStoreStats
@@ -273,6 +274,14 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 			page,
 			map
 		)
+	}
+
+	suspend fun getSearchResults(
+		search: String,
+		type: TypeSearchResult,
+		page: Int
+	) = safeApiCall2 {
+		apiService.getSearchResults(search, type.apiValue, page)
 	}
 
 }
