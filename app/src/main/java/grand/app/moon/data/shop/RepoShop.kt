@@ -280,6 +280,28 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getSearchResults(search, type, it)
 	}
 
+	suspend fun getComplainsAndSuggestionsTypes() = remoteDataSource.getComplainsAndSuggestionsTypes()
+
+	suspend fun getContactUsTypes() = remoteDataSource.getContactUsTypes()
+
+	suspend fun setComplainsAndSuggestionsSettings(
+		name: String,
+		reasonId: Int,
+		message: String,
+		phone: String,
+		image: MultipartBody.Part?,
+	) = remoteDataSource.setComplainsAndSuggestionsSettings(name, reasonId, message, phone, image)
+
+	suspend fun setContactUsSettings(
+		name: String,
+		reasonId: Int,
+		message: String,
+		phone: String,
+		image: MultipartBody.Part?,
+	) = remoteDataSource.setContactUsSettings(name, reasonId, message, phone, image)
+
+	suspend fun getContactUsData() = remoteDataSource.getContactUsData()
+
 }
 
 data class CitiesAndStoreCategoriesAndSubCategories(

@@ -475,5 +475,11 @@
   <string name="at_least_1_type_char">على الأقل إكتب حرف واحد</string>
     <string name="nickname_2819">اسم الشهرة</string>
   <string name="call_3829">اتصال</string>
-  <string name="chat_3829">محادثة</string>
+  <string name="chat_3829">Conversation</string>
+  <string name="complains_and_suggestions_hint">او يمكنك ملأ البيانات التاليه وسنتوصل معك</string>
+  <string name="please_select_complaint_or_suggestion_type">برجاء اختيار نوع الشكوي او الإقتراح</string>
+  <string name="add_img">إضافة صورة</string>
+  <string name="send_890">ارسال</string>
+  <string name="hint_msg_complains_and_suggestions">محتوي الشكوي أو الاقتراح</string>
+  <string name="phone_num_is_invalid">رقم الهاتف غير صحيح</string>
 </resources>

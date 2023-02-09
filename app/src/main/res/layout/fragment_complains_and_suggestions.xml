@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.home.ComplainsAndSuggestionsFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.home.viewModels.ComplainsAndSuggestionsViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+      android:id="@+id/toolbarCurve"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      layout="@layout/item_toolbar_curve"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/labelTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalBold14"
+      android:textSize="16sp"
+      android:textDirection="locale"
+
+      android:text="@string/complains_and_suggestions_hint"
+
+      android:layout_marginTop="34.4dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+
+      app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+      android:id="@+id/nameEditText"
+
+      android:text="@={viewModel.name}"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalRegular14"
+      android:textDirection="locale"
+      android:includeFontPadding="false"
+
+      android:paddingTop="20dp"
+      android:paddingStart="20dp"
+      android:paddingEnd="20dp"
+      android:paddingBottom="14dp"
+
+      android:hint="@string/name_2"
+      android:inputType="text"
+      android:imeOptions="actionDone"
+
+      android:background="@drawable/dr_rect_5"
+
+      android:layout_marginTop="11dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+
+      app:layout_constraintTop_toBottomOf="@id/labelTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+      android:id="@+id/phoneLinearLayout"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:orientation="horizontal"
+
+      android:background="@drawable/dr_rect_5"
+
+      android:gravity="center_vertical"
+
+      android:paddingTop="12dp"
+      android:paddingBottom="12dp"
+      android:paddingEnd="20dp"
+      android:clipToPadding="false"
+
+      android:layout_margin="16dp"
+
+      app:layout_constraintTop_toBottomOf="@id/nameEditText"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent">
+
+      <com.hbb20.CountryCodePicker
+        android:id="@+id/countryCodePicker"
+
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+
+        android:layout_gravity="center"
+        android:gravity="center"
+
+        android:layoutDirection="ltr"
+
+        app:ccpDialog_backgroundColor="@color/colorWhite"
+        app:ccpDialog_fastScroller_bubbleColor="@color/colorPrimary"
+        app:ccpDialog_searchEditTextTint="@color/colorWhite"
+        app:ccpDialog_textColor="@color/colorPrimary"
+        app:ccpDialog_showTitle="false"
+        app:ccpDialog_rippleEnable="true"
+
+        app:ccp_textSize="@dimen/text_size14"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_areaCodeDetectedCountry="true"
+        app:ccp_autoDetectLanguage="true"
+        app:ccp_countryAutoDetectionPref="LOCALE_NETWORK"
+        app:ccp_arrowColor="@color/colorPrimary"
+        app:ccp_contentColor="@color/colorPrimary"
+        app:ccp_useDummyEmojiForPreview="true"/>
+
+      <FrameLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+
+        android:background="@android:color/transparent"
+
+        app:layout_constraintTop_toBottomOf="@id/labelTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+          android:id="@+id/phoneEditText"
+
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+
+          android:text="@={viewModel.phone}"
+
+          style="@style/TextTajawalRegular14"
+          android:textDirection="locale"
+          android:gravity="start|center_vertical"
+          android:layoutDirection="locale"
+          android:textAlignment="viewStart"
+
+          android:paddingStart="0dp"
+          android:paddingEnd="9dp"
+
+          android:hint="@string/phone_2"
+          android:inputType="phone"
+          android:imeOptions="actionDone"
+
+          android:background="@android:color/transparent"
+
+          android:layout_gravity="start"
+
+          app:layout_constraintTop_toBottomOf="@id/labelTextView"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"/>
+
+      </FrameLayout>
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="@{viewModel.showValidPhoneNum}"
+
+        android:src="@drawable/text_input_correct"/>
+
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/typeTextView"
+
+      android:text="@{viewModel.type}"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalRegular14"
+      android:textDirection="locale"
+      android:includeFontPadding="false"
+
+      android:hint="@string/please_select_complaint_or_suggestion_type"
+
+      android:paddingTop="20dp"
+      android:paddingStart="20dp"
+      android:paddingEnd="20dp"
+      android:paddingBottom="14dp"
+
+      android:background="@drawable/dr_rect_5"
+
+      android:layout_margin="16dp"
+
+      app:drawableEndCompat="@drawable/complains_and_suggestions_arrow"
+      android:drawablePadding="10dp"
+
+      android:onClick="@{v -> viewModel.pickType(v)}"
+
+      app:layout_constraintTop_toBottomOf="@id/phoneLinearLayout"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/imageTextView"
+
+      android:background="@drawable/dr_rect_5"
+
+      android:layout_margin="16dp"
+
+      tools:visibility="visible"
+
+      style="@style/EditTextForAddStory.DropDown"
+
+      app:drawableEndCompat="@drawable/ic_link_31"
+
+      android:text="@{viewModel.textImage}"
+
+      android:visibility="@{viewModel.showImage}"
+
+      android:onClick="@{v -> viewModel.pickImage(v)}"
+
+      android:hint="@string/add_img"
+
+      app:layout_constraintTop_toBottomOf="@id/typeTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/buttonTextView"
+
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:layout_marginBottom="18dp"
+      android:layout_marginStart="24dp"
+      android:layout_marginEnd="24dp"
+
+      android:padding="16dp"
+
+      style="@style/TextTajawalMedium14"
+      android:gravity="center"
+      android:textColor="@color/white"
+      android:text="@string/send_890"
+
+      android:onClick="@{v -> viewModel.send(v)}"
+
+      android:background="@drawable/dr_rounded_5_button"
+
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+      android:id="@+id/messageTextView"
+
+      android:text="@={viewModel.message}"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      style="@style/TextTajawalRegular14"
+      android:textDirection="locale"
+      android:includeFontPadding="false"
+      android:gravity="top"
+
+      android:hint="@string/hint_msg_complains_and_suggestions"
+      android:inputType="text"
+      android:imeOptions="actionDone"
+
+      android:paddingTop="20dp"
+      android:paddingStart="20dp"
+      android:paddingEnd="20dp"
+      android:paddingBottom="14dp"
+
+      android:background="@drawable/dr_rect_5"
+
+      android:layout_marginTop="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="24dp"
+
+      app:layout_constraintTop_toBottomOf="@id/imageTextView"
+      app:layout_constraintBottom_toTopOf="@id/buttonTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

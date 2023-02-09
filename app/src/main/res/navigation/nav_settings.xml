@@ -409,5 +409,15 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.story.in.shop.info" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_complains_and_suggestions"
+    android:name="grand.app.moon.presentation.home.ComplainsAndSuggestionsFragment"
+    android:label="@string/complains_and_suggestions"
+    tools:layout="@layout/fragment_complains_and_suggestions">
+    <deepLink
+      android:id="@+id/deep_link_dest_complains_and_suggestions"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.complains.and.suggestions" />
+  </fragment>
 
 </navigation>

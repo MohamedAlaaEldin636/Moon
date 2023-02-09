@@ -60,6 +60,7 @@ class SearchResultsViewModel @Inject constructor(
 		type?.let { app.getString(it.stringRes) }.orEmpty()
 	}
 
+	// todo only on double click and color not hangedsasla; ?!?!?
 	private fun getAdapter() = RVPagingItemCommonListUsage<ItemSearchResultBinding, ResponseSearchResult>(
 		R.layout.item_search_result,
 		onItemClick = { adapter, binding ->

@@ -284,4 +284,48 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getSearchResults(search, type.apiValue, page)
 	}
 
+	suspend fun getComplainsAndSuggestionsTypes() = safeApiCall {
+		apiService.getSettingsTypes(22)
+	}
+	suspend fun getContactUsTypes() = safeApiCall {
+		apiService.getSettingsTypes(2)
+	}
+
+	suspend fun setComplainsAndSuggestionsSettings(
+		name: String,
+		reasonId: Int,
+		message: String,
+		phone: String,
+		image: MultipartBody.Part?,
+	) = safeApiCall {
+		apiService.setSettings(
+			name.toRequestBody(),
+			reasonId,
+			message.toRequestBody(),
+			phone.toRequestBody(),
+			listOfNotNull(image),
+			3
+		)
+	}
+	suspend fun setContactUsSettings(
+		name: String,
+		reasonId: Int,
+		message: String,
+		phone: String,
+		image: MultipartBody.Part?,
+	) = safeApiCall {
+		apiService.setSettings(
+			name.toRequestBody(),
+			reasonId,
+			message.toRequestBody(),
+			phone.toRequestBody(),
+			listOfNotNull(image),
+			1
+		)
+	}
+
+	suspend fun getContactUsData() = safeApiCall {
+		apiService.getContactUsData()
+	}
+
 }

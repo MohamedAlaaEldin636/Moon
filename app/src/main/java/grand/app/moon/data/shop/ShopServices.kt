@@ -6,7 +6,9 @@ import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
 import grand.app.moon.presentation.home.models.ItemHomeExplore
+import grand.app.moon.presentation.home.models.ResponseContactUsData
 import grand.app.moon.presentation.home.models.ResponseSearchResult
+import grand.app.moon.presentation.home.models.ResponseSettings
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import grand.app.moon.presentation.stats.models.ResponseStoreStats
 import okhttp3.MultipartBody
@@ -209,5 +211,24 @@ interface ShopServices {
 		@Query("type") type: String,
 		@Query("page") page: Int,
 	): MABaseResponse<MABasePaging<ResponseSearchResult>>
+
+	@GET("v1/settings")
+	suspend fun getSettingsTypes(
+		@Query("type") type: Int,
+	): BaseResponse<List<ResponseSettings>?>
+
+	@Multipart
+	@POST("v1/contact-us")
+	suspend fun setSettings(
+		@Part("name") name: RequestBody,
+		@Part("reason_id") reasonId: Int,
+		@Part("message") message: RequestBody,
+		@Part("phone") phone: RequestBody,
+		@Part file: List<MultipartBody.Part>,
+		@Part("contact_type") type: Int,
+	): BaseResponse<Any?>
+
+	@GET("v1/settings?type=13")
+	suspend fun getContactUsData(): BaseResponse<List<ResponseContactUsData>?>
 
 }

@@ -119,7 +119,10 @@ class MoreViewModel @Inject constructor(
 					)
 				}
 				R.drawable.ic_complains_and_suggestions -> {
-					General.TODO("will be programmed in the next sprint isa.")
+					navController.navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.complains.and.suggestions",
+					)
 				}
 				R.drawable.ic_terms_settings -> {
 					navController.navigateDeepLinkWithOptions(
