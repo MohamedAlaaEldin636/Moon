@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_margin="8dp"
+
+    android:layout_gravity="center"
+
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="20dp"
+    android:clipToPadding="false"
+
+    android:background="@drawable/dr_rect_10">
+
+    <View
+      android:id="@+id/helperView"
+
+      android:layout_width="83dp"
+      android:layout_height="83dp"
+
+      android:background="@drawable/dr_rect_10"
+      android:backgroundTint="#F6F6F6"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+      android:id="@+id/imageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      tools:src="@drawable/contact_us_msg"
+
+      app:layout_constraintTop_toTopOf="@id/helperView"
+      app:layout_constraintBottom_toBottomOf="@id/helperView"
+      app:layout_constraintStart_toStartOf="@id/helperView"
+      app:layout_constraintEnd_toEndOf="@id/helperView"/>
+
+    <TextView
+      android:id="@+id/nameTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:singleLine="true"
+      android:ellipsize="marquee"
+      android:marqueeRepeatLimit ="marquee_forever"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:scrollHorizontally="true"
+      textView_setSelectedBA="@{true}"
+
+      style="@style/TextTajawalBold14"
+      android:textSize="16sp"
+
+      android:layout_marginStart="20dp"
+      android:layout_marginEnd="20dp"
+
+      tools:text="hdsiahd adjsoasd"
+
+      app:layout_constraintTop_toTopOf="@id/helperView"
+      app:layout_constraintStart_toEndOf="@id/helperView"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="2dp"
+      android:layout_marginStart="20dp"
+      android:layout_marginEnd="20dp"
+
+      android:paddingTop="2.5dp"
+      android:paddingBottom="2.5dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="vertical"
+      tools:itemCount="2"
+      app:spanCount="1"
+      tools:orientation="vertical"
+      tools:listitem="@layout/item_inside_item_contact_us"
+      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+      app:layout_constraintTop_toBottomOf="@id/nameTextView"
+      app:layout_constraintStart_toEndOf="@id/helperView"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

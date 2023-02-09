@@ -472,4 +472,7 @@
   <string name="send_890">ارسال</string>
   <string name="hint_msg_complains_and_suggestions">محتوي الشكوي أو الاقتراح</string>
   <string name="phone_num_is_invalid">رقم الهاتف غير صحيح</string>
+  <string name="contact_us_2_hint">او يمكنك ملأ البيانات التاليه وسنتوصل معك</string>
+  <string name="contact_us_hint">اختر طريقة التواصل من هنا او قم بملأ البيانات بالاسفل</string>
+  <string name="communication_reason">سبب التواصل</string>
 </resources>

@@ -115,7 +115,7 @@ class MoreViewModel @Inject constructor(
 				R.drawable.ic_contact_settings -> {
 					navController.navigateDeepLinkWithOptions(
 						"fragment-dest",
-						"grand.app.moon.dest.contactUsFragment"
+						"grand.app.moon.dest.contact.us.two"
 					)
 				}
 				R.drawable.ic_complains_and_suggestions -> {

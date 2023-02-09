@@ -2,10 +2,12 @@ package grand.app.moon.extensions
 
 import android.content.*
 import android.net.Uri
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.getSystemService
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.showError
 import grand.app.moon.presentation.base.utils.showMessage
+
 
 fun Intent.createChooserMA(title: CharSequence) = Intent.createChooser(this, title)
 
@@ -26,6 +28,23 @@ fun Context.launchTelegram() {
 fun Context.launchDialNumber(phoneNumber: String) {
 	val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${phoneNumber.trim()}"))
 	
+	launchActivitySafely {
+		startActivity(intent.wrapInChooser(getString(R.string.pick_app)))
+	}
+}
+
+fun Context.launchSendEMail(email: String, subject: String? = null, text: String? = null) {
+	val intent = Intent(Intent.ACTION_SENDTO).also { intent ->
+		intent.data = Uri.parse("mailto:"); // only email apps should handle this
+		intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email));
+		if (subject.isNullOrEmpty().not()) {
+			intent.putExtra(Intent.EXTRA_SUBJECT, subject.orEmpty())
+		}
+		if (text.isNullOrEmpty().not()) {
+			intent.putExtra(Intent.EXTRA_TEXT, text.orEmpty())
+		}
+	}
+
 	launchActivitySafely {
 		startActivity(intent.wrapInChooser(getString(R.string.pick_app)))
 	}
