@@ -11,6 +11,7 @@ import androidx.lifecycle.map
 import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.showError
 import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.data.shop.RepoShop
@@ -33,6 +34,10 @@ class SearchResultsViewModel @Inject constructor(
 	val args: SearchResultsFragmentArgs,
 	val userLocalUseCase: UserLocalUseCase
 ) : AndroidViewModel(application) {
+
+	val myOwnId by lazy {
+		if (app.isLogin()) userLocalUseCase().id else null
+	}
 
 	val advertisements = repoShop.getSearchResults(args.search, TypeSearchResult.ADVERTISEMENT)
 	val stories = repoShop.getSearchResults(args.search, TypeSearchResult.STORE)
@@ -61,7 +66,15 @@ class SearchResultsViewModel @Inject constructor(
 			val item = (binding.constraintLayout.tag as? String)?.fromJsonInlinedOrNull<ResponseSearchResult>()
 				?: return@RVPagingItemCommonListUsage
 
-			General.TODO("ch 1 ${item.storeId} ${item.store?.id} ${userLocalUseCase().id}")
+			if (myOwnId == item.storeId) {
+				binding.root.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.presentation.myAds.dest.my.adv.details.id",
+					paths = arrayOf(item.id.orZero().toString())
+				)
+			}else {
+				General.TODO("ch 1 ${item.storeId} ${item.store?.id} ${userLocalUseCase().id}")
+			}
 		},
 		additionalListenersSetups = { adapter, binding ->
 			binding.storeImageImageView.setOnClickListener {

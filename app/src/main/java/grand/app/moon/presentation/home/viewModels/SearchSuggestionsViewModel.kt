@@ -27,7 +27,9 @@ class SearchSuggestionsViewModel @Inject constructor(
 
 	val availableSuggestions = switchMapMultiple2(allSuggestions, searchQuery) {
 		val query = searchQuery.value.orEmpty()
-		allSuggestions.value.orEmpty().filter { it.contains(query) }
+		if (query.isEmpty()) allSuggestions.value.orEmpty() else {
+			allSuggestions.value.orEmpty().filter { it.contains(query) }
+		}
 	}
 	val showEmptyView = availableSuggestions.map {
 		it.isEmpty()

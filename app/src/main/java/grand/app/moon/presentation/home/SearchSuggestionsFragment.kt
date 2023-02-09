@@ -36,7 +36,7 @@ class SearchSuggestionsFragment : BaseFragment<FragmentSearchSuggestionsBinding>
 
 		binding.recyclerView.setupWithRVItemCommonListUsage(
 			viewModel.adapter,
-			true,
+			false,
 			1
 		)
 		binding.recyclerView.addUniqueTypeItemDecoration(
