@@ -23,7 +23,7 @@
 
     android:layout_gravity="center"
 
-    android:background="@drawable/dr_rect_10_with_border_1">
+    android:background="@drawable/dr_rect_10">
     
     <com.google.android.material.imageview.ShapeableImageView
       android:id="@+id/imageImageView"

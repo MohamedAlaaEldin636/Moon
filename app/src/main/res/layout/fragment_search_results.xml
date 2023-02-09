@@ -88,8 +88,6 @@
       android:scrollHorizontally="true"
       textView_setSelectedBA="@{true}"
 
-      android:onClick="@{() -> viewModel.changeFilter(TypeSearchResult.ADVERTISEMENT)}"
-
       android:background="@drawable/dr_rect_10"
       android:backgroundTint="@color/colorPrimary"
       view_setBackgroundTintColorInt="@{viewModel.filterAdvertisementsIsSelected ? @color/star_enabled : @color/colorPrimary}"
@@ -103,8 +101,6 @@
       app:layout_constraintEnd_toStartOf="@id/filterStoresTextView"/>
     <TextView
       android:id="@+id/filterStoresTextView"
-
-      android:onClick="@{() -> viewModel.changeFilter(TypeSearchResult.STORE)}"
 
       android:text="@string/stores"
 
@@ -140,8 +136,6 @@
     <TextView
       android:id="@+id/filterNicknamesTextView"
 
-      android:onClick="@{() -> viewModel.changeFilter(TypeSearchResult.NICKNAME)}"
-
       android:text="@string/nickname_2819"
 
       android:layout_width="0dp"
@@ -175,8 +169,6 @@
       app:layout_constraintEnd_toStartOf="@id/filterCategoriesTextView"/>
     <TextView
       android:id="@+id/filterCategoriesTextView"
-
-      android:onClick="@{() -> viewModel.changeFilter(TypeSearchResult.CATEGORY)}"
 
       android:text="@string/departments"
 
@@ -251,6 +243,51 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:elevation="9dp"
+      android:onClick="@{v -> viewModel.changeFilter(v, TypeSearchResult.ADVERTISEMENT)}"
+
+      app:layout_constraintTop_toTopOf="@id/filterAdvertisementsTextView"
+      app:layout_constraintBottom_toBottomOf="@id/filterAdvertisementsTextView"
+      app:layout_constraintStart_toStartOf="@id/filterAdvertisementsTextView"
+      app:layout_constraintEnd_toEndOf="@id/filterAdvertisementsTextView"/>
+    <View
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:elevation="9dp"
+      android:onClick="@{v -> viewModel.changeFilter(v, TypeSearchResult.STORE)}"
+
+      app:layout_constraintTop_toTopOf="@id/filterStoresTextView"
+      app:layout_constraintBottom_toBottomOf="@id/filterStoresTextView"
+      app:layout_constraintStart_toStartOf="@id/filterStoresTextView"
+      app:layout_constraintEnd_toEndOf="@id/filterStoresTextView"/>
+    <View
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:elevation="9dp"
+      android:onClick="@{v -> viewModel.changeFilter(v, TypeSearchResult.NICKNAME)}"
+
+      app:layout_constraintTop_toTopOf="@id/filterNicknamesTextView"
+      app:layout_constraintBottom_toBottomOf="@id/filterNicknamesTextView"
+      app:layout_constraintStart_toStartOf="@id/filterNicknamesTextView"
+      app:layout_constraintEnd_toEndOf="@id/filterNicknamesTextView"/>
+    <View
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:elevation="9dp"
+      android:onClick="@{v -> viewModel.changeFilter(v, TypeSearchResult.CATEGORY)}"
+
+      app:layout_constraintTop_toTopOf="@id/filterCategoriesTextView"
+      app:layout_constraintBottom_toBottomOf="@id/filterCategoriesTextView"
+      app:layout_constraintStart_toStartOf="@id/filterCategoriesTextView"
+      app:layout_constraintEnd_toEndOf="@id/filterCategoriesTextView"/>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

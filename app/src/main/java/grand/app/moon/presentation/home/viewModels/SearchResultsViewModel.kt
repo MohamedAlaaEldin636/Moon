@@ -44,11 +44,6 @@ class SearchResultsViewModel @Inject constructor(
 	val nicknames = repoShop.getSearchResults(args.search, TypeSearchResult.NICKNAME)
 	val categories = repoShop.getSearchResults(args.search, TypeSearchResult.CATEGORY)
 
-	val filterAdvertisementsIsSelected = MutableLiveData(true)
-	val filterStoresIsSelected = MutableLiveData(false)
-	val filterNicknamesIsSelected = MutableLiveData(false)
-	val filterCategoriesIsSelected = MutableLiveData(false)
-
 	val adapterAdvertisements = getAdapter()
 	val adapterStories = getAdapter()
 	val adapterNicknames = getAdapter()
@@ -56,11 +51,23 @@ class SearchResultsViewModel @Inject constructor(
 
 	val filterType = MutableLiveData(TypeSearchResult.ADVERTISEMENT)
 
+	val filterAdvertisementsIsSelected = filterType.map {
+		it == TypeSearchResult.ADVERTISEMENT
+	}
+	val filterStoresIsSelected = filterType.map {
+		it == TypeSearchResult.STORE
+	}
+	val filterNicknamesIsSelected = filterType.map {
+		it == TypeSearchResult.NICKNAME
+	}
+	val filterCategoriesIsSelected = filterType.map {
+		it == TypeSearchResult.CATEGORY
+	}
+
 	val label = filterType.map { type ->
 		type?.let { app.getString(it.stringRes) }.orEmpty()
 	}
 
-	// todo only on double click and color not hangedsasla; ?!?!?
 	private fun getAdapter() = RVPagingItemCommonListUsage<ItemSearchResultBinding, ResponseSearchResult>(
 		R.layout.item_search_result,
 		onItemClick = { adapter, binding ->
@@ -137,8 +144,9 @@ class SearchResultsViewModel @Inject constructor(
 		view.findNavController().navigateUp()
 	}
 
-	fun changeFilter(filter: TypeSearchResult) {
-		filterType.value = filter
+	fun changeFilter(view: View, filter: TypeSearchResult) {
+		//MyLogger.e("changeFilter $view $filter oldOne ${this.filterType.value}")
+		filterType.postValue(filter)
 	}
 
 }
