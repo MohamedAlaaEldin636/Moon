@@ -429,5 +429,15 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.contact.us.two" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_social_media_2"
+    android:name="grand.app.moon.presentation.home.SocialMedia2Fragment"
+    android:label="@string/social_media_links"
+    tools:layout="@layout/fragment_social_media_2">
+    <deepLink
+      android:id="@+id/deep_link_dest_social_media_2"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.social.media.two" />
+  </fragment>
 
 </navigation>

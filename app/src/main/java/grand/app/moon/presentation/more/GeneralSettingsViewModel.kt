@@ -80,11 +80,11 @@ class GeneralSettingsViewModel @Inject constructor(
 				R.drawable.ic_social_settings -> {
 					navController.navigateDeepLinkWithOptions(
 						"fragment-dest",
-						"grand.app.moon.dest.socialFragment",
+						"grand.app.moon.dest.social.media.two"//"grand.app.moon.dest.socialFragment",
 					)
 				}
 				R.drawable.ic_night_mode_999999999999 -> {
-					General.TODO("Will be programmed in next sprint isa.")
+					//General.TODO("Will be programmed in next sprint isa.")
 				}
 				R.drawable.ic_share_settings -> {
 					val intent = Intent(Intent.ACTION_SEND)

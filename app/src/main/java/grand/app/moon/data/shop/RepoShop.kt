@@ -302,6 +302,8 @@ class RepoShop @Inject constructor(
 
 	suspend fun getContactUsData() = remoteDataSource.getContactUsData()
 
+	suspend fun getAppSocialMedia() = remoteDataSource.getAppSocialMedia()
+
 }
 
 data class CitiesAndStoreCategoriesAndSubCategories(

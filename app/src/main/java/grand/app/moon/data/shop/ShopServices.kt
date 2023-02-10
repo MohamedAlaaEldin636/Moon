@@ -5,10 +5,7 @@ import grand.app.moon.core.di.module.RetrofitModule
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
-import grand.app.moon.presentation.home.models.ItemHomeExplore
-import grand.app.moon.presentation.home.models.ResponseContactUsData
-import grand.app.moon.presentation.home.models.ResponseSearchResult
-import grand.app.moon.presentation.home.models.ResponseSettings
+import grand.app.moon.presentation.home.models.*
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import grand.app.moon.presentation.stats.models.ResponseStoreStats
 import okhttp3.MultipartBody
@@ -230,5 +227,8 @@ interface ShopServices {
 
 	@GET("v1/settings?type=13")
 	suspend fun getContactUsData(): BaseResponse<List<ResponseContactUsData>?>
+
+	@GET("v1/settings?type=3")
+	suspend fun getAppSocialMedia(): BaseResponse<List<ResponseSocialMedia>?>
 
 }

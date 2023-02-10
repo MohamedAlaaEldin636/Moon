@@ -328,4 +328,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getContactUsData()
 	}
 
+	suspend fun getAppSocialMedia() = safeApiCall {
+		apiService.getAppSocialMedia()
+	}
+
 }
