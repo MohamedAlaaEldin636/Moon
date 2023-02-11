@@ -3,6 +3,7 @@ package grand.app.moon.domain.story.entity
 
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import grand.app.moon.domain.shop.StoryLink
 import java.io.Serializable
 
 @Keep
@@ -26,4 +27,5 @@ data class StoryItem(
   @SerializedName("name")
   val name: String = "",
   var isFirst: Boolean = false,
+  @SerializedName("story_link_type") var storyLinkType: Int? = StoryLink.CALL.apiValue,
 ) : Serializable

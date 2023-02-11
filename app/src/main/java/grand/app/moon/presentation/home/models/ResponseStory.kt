@@ -1,8 +1,12 @@
 package grand.app.moon.presentation.home.models
 
 import com.google.gson.annotations.SerializedName
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.shop.StoryLink
+import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.orZero
+import grand.app.moon.extensions.toArrayList
 import grand.app.moon.presentation.base.utils.Constants
 
 /**
@@ -42,6 +46,7 @@ data class ResponseStory(
 	data class Story(
 		var id: Int?,
 		@SerializedName("mime_type") var mimeType: String?,
+		@SerializedName("share_link") var shareLink: String?,
 		@SerializedName("story_link_type") var storyLinkType: Int?,
 		@SerializedName("is_liked") var isLiked: Boolean?,
 		@SerializedName("is_seen") var isSeen: Boolean?,
@@ -117,3 +122,27 @@ data class ResponseStory(
                     }
                 },
  */
+
+fun ResponseStory.toStore(): Store {
+	// id of store, name, image, premium, nickname,
+	// stories{is_liked, id, seen, isFirst, file, shareLink},
+	return Store(
+		id = id,
+		nickname = nickname,
+		name = name,
+		image = image,
+		premium = premium,
+		stories = stories?.map { story ->
+			StoryItem(
+				id = story.id.orZero(),
+				is_liked = story.isLiked.orFalse(),
+				isSeen = story.isSeen.orFalse(),
+				//isFirst = story.isf, // story_link_type // StoryLink
+				file = story.file.orEmpty(),
+				shareLink = story.shareLink.orEmpty(),
+				mimeType = story.mimeType.orEmpty(),
+				storyLinkType = story.storyLinkType
+			)
+		}?.toArrayList()
+	)
+}

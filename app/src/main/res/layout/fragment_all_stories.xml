@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.home.AllStoriesFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.home.viewModels.AllStoriesViewModel" />
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <include
+      android:id="@+id/toolbarCurve"
+
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      layout="@layout/item_toolbar_curve"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:visibility="@{viewModel.showFollowingStories}"
+
+      style="@style/TextTajawalBold14"
+      android:textSize="18sp"
+      android:textColor="@color/colorPrimary"
+      android:text="@string/following_stories_3"
+
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="22.4dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerViewFollowing"
+
+      android:visibility="@{viewModel.showFollowingStories}"
+
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:padding="12dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="horizontal"
+      tools:itemCount="6"
+      tools:spanCount="1"
+      tools:orientation="horizontal"
+      tools:listitem="@layout/item_home_rv_story_actual"
+      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+      app:layout_constraintTop_toBottomOf="@id/searchTextView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalBold14"
+      android:textSize="18sp"
+      android:textColor="@color/colorPrimary"
+      android:text="@string/all_stories"
+
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerViewOther"
+
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+
+      android:paddingTop="13.5dp"
+      android:paddingBottom="13.5dp"
+      android:paddingStart="9.5dp"
+      android:paddingEnd="9.5dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="vertical"
+      tools:itemCount="6"
+      tools:spanCount="2"
+      tools:orientation="vertical"
+      tools:listitem="@layout/item_home_rv_story_actual"
+      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+      app:layout_constraintTop_toBottomOf="@id/searchTextView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  </LinearLayout>
+
+</layout>

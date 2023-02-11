@@ -93,23 +93,23 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 
 
   private fun observe() {
-    viewModel.clickEvent.observe(this, {
-      when (it) {
-        Constants.EXIT -> findNavController().navigateUp()
-        Constants.STORE_DETAILS -> {
-          when (viewModel.fromStore) {
-            true -> findNavController().navigateUp()
-            else -> findNavController().navigate(
-              R.id.nav_store,
-              bundleOf(
-                "id" to viewModel.store.get()!!.id,
-                "type" to 3
-              ), Constants.NAVIGATION_OPTIONS
-            )
-          }
-        }
-      }
-    })
+    viewModel.clickEvent.observe(this) {
+	    when (it) {
+		    Constants.EXIT -> findNavController().navigateUp()
+		    Constants.STORE_DETAILS -> {
+			    when (viewModel.fromStore) {
+				    true -> findNavController().navigateUp()
+				    else -> findNavController().navigate(
+					    R.id.nav_store,
+					    bundleOf(
+						    "id" to viewModel.store.get()!!.id,
+						    "type" to 3
+					    ), Constants.NAVIGATION_OPTIONS
+				    )
+			    }
+		    }
+	    }
+    }
   }
 
   fun pause() {

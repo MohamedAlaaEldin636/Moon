@@ -231,4 +231,9 @@ interface ShopServices {
 	@GET("v1/settings?type=3")
 	suspend fun getAppSocialMedia(): BaseResponse<List<ResponseSocialMedia>?>
 
+	@GET("v1/stories?all=1")
+	suspend fun getAllStories(
+		@Query("page") page: Int,
+	): MABaseResponse<ResponseAllStories>
+
 }

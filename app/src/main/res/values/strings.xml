@@ -486,4 +486,7 @@
   <string name="contact_us_hint">اختر طريقة التواصل من هنا او قم بملأ البيانات بالاسفل</string>
   <string name="communication_reason">سبب التواصل</string>
   <string name="social_media_links">مواقع التواصل الاجتماعي</string>
+  <string name="all_stories">كل الحالات</string>
+  <string name="following_stories_3">حالات المتابعين</string>
+  <string name="stories_82">الحالات</string>
 </resources>

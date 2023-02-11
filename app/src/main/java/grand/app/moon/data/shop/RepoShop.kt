@@ -304,6 +304,22 @@ class RepoShop @Inject constructor(
 
 	suspend fun getAppSocialMedia() = remoteDataSource.getAppSocialMedia()
 
+	fun getAllStoriesFollowing() = BasePaging.createFlowViaPager {
+		remoteDataSource.getAllStories(it).mapImmediate { baseResponse ->
+			baseResponse.map { response ->
+				response?.followedStoresStories
+			}
+		}
+	}
+
+	fun getAllStoriesOther() = BasePaging.createFlowViaPager {
+		remoteDataSource.getAllStories(it).mapImmediate { baseResponse ->
+			baseResponse.map { response ->
+				response?.stories
+			}
+		}
+	}
+
 }
 
 data class CitiesAndStoreCategoriesAndSubCategories(

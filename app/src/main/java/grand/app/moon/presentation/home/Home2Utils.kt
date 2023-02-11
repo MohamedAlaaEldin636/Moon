@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import grand.app.moon.R
 import grand.app.moon.databinding.*
 import grand.app.moon.domain.categories.entity.ItemCategory
+import grand.app.moon.domain.home.models.StoreModel
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.adjustInsideRV
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
@@ -14,6 +15,7 @@ import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
 import grand.app.moon.presentation.home.models.ResponseStory
+import grand.app.moon.presentation.home.models.toStore
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
 import kotlin.math.roundToInt
 
@@ -43,11 +45,27 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 				}
 			}
 			is ItemHomeRvStoryActualBinding -> {
-				General.TODO("Not programmed yet")
+				val newList = adapter.list.drop(1)
+
+				val position = binding.root.tag as? Int ?: return@RVItemCommonListUsageWithDifferentItems
+
+				val storyModel = StoreModel()
+				storyModel.list.addAll(newList.map { it.toStore() })
+				storyModel.position = position - 1
+
+				fragment.findNavController()
+					.navigateSafely(Home2FragmentDirections.actionDestHome2ToStoryFragment(storyModel))
+				/*
+
+            R.id.home_fragment -> holder.itemLayoutBinding.shapeableImageView.findFragment<HomeFragment>()
+              .navigateSafe(HomeFragmentDirections.actionHomeFragmentToStoryFragment(storyModel))
+				 */
 			}
 		}
 	}
 ) { binding, position, item ->
+	binding.root.tag = position
+
 	when (binding) {
 		is ItemHomeRvStoryActualBinding -> {
 			binding.storeNameTextView.text = item.name

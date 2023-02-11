@@ -74,8 +74,33 @@ class Home2ViewModel @Inject constructor(
 
 	val adapter = RVItemCommonListUsage<ItemHomeRvBinding, ItemHomeRV>(
 		R.layout.item_home_rv,
+		additionalListenersSetups = { adapter, binding ->
+			binding.showAllTextView.setOnClickListener { view ->
+				val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemHomeRV>()
+					?: return@setOnClickListener
+
+				val navController = view.findNavController()
+
+				when (item.type) {
+					ItemHomeRV.Type.STORIES -> {
+						navController.navigateDeepLinkWithOptions(
+							"fragment-dest",
+							"grand.app.moon.dest.all.stories"
+						)
+					}
+					ItemHomeRV.Type.CATEGORIES -> TODO()
+					ItemHomeRV.Type.MOST_RATED_STORIES -> TODO()
+					ItemHomeRV.Type.FOLLOWING_STORIES -> TODO()
+					ItemHomeRV.Type.SUGGESTED_ADS -> TODO()
+					ItemHomeRV.Type.MOST_POPULAR_ADS -> TODO()
+					ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> TODO()
+				}
+			}
+		}
 	) { binding, position, item ->
 		val context = binding.root.context ?: return@RVItemCommonListUsage
+
+		binding.root.tag = item.toJsonInlinedOrNull()
 
 		binding.nameTextView.text = item.name
 
