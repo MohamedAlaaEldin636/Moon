@@ -130,6 +130,8 @@ android {
 dependencies {
 	implementation(project(":trim_video_lib"))
 
+	implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.20")
+
 	implementation("io.coil-kt:coil-video:2.2.2")
 
 	implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")

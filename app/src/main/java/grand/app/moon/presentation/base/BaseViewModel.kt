@@ -62,7 +62,6 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.ContextCompat.startActivity
 import grand.app.moon.extensions.MyLogger
 
-
 open class BaseViewModel : ViewModel(), Observable {
   private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
   val show = ObservableBoolean(false)

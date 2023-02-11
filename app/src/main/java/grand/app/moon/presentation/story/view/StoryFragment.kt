@@ -3,6 +3,8 @@ package grand.app.moon.presentation.story.view
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.GestureDetector
+import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -39,9 +41,9 @@ import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.databinding.FragmentNotificationBinding
 import grand.app.moon.databinding.FragmentStoryBinding
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.domain.shop.StoryLink
 import grand.app.moon.domain.story.entity.StoryItem
-import grand.app.moon.extensions.orFalse
-import grand.app.moon.extensions.orZero
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.base.utils.SwipeToDeleteCallback
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
@@ -53,15 +55,43 @@ import kotlinx.android.synthetic.main.fragment_ads_list.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collect
+import pt.tornelas.segmentedprogressbar.SegmentedProgressBar
 import pt.tornelas.segmentedprogressbar.SegmentedProgressBarListener
+import kotlin.reflect.KMutableProperty
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.jvm.isAccessible
 
-//myStoryHERE
 @AndroidEntryPoint
 class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   SegmentedProgressBarListener {
   private val viewModel: StoryDisplayViewModel by viewModels()
 
   private val TAG = "StoryFragment"
+
+	private val listener: SimpleOnGestureListener = object : SimpleOnGestureListener() {
+		override fun onFling(
+			e1: MotionEvent,
+			e2: MotionEvent,
+			velocityX: Float,
+			velocityY: Float
+		): Boolean {
+			if (velocityY < 0) {
+				// Swipe Up
+				when (viewModel.storyLink.value) {
+					StoryLink.WHATSAPP -> context?.launchWhatsApp(viewModel.phone.value.orEmpty())
+					StoryLink.CALL -> context?.launchDialNumber(viewModel.phone.value.orEmpty())
+					StoryLink.CHAT -> viewModel.chat(binding.edtLoginPhone)
+					null -> {}
+				}
+			}
+
+			return super.onFling(e1, e2, velocityX, velocityY)
+		}
+	}
+
+	private val gestureDetector by lazy {
+		GestureDetector(context ?: return@lazy null, listener)
+	}
 
   override
   fun getLayoutId() = R.layout.fragment_story
@@ -149,20 +179,19 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
 
     binding.image.setOnTouchListener(object : View.OnTouchListener {
       override fun onTouch(p0: View?, event: MotionEvent?): Boolean {
-
         when (event?.action) {
           MotionEvent.ACTION_DOWN -> pause()
           MotionEvent.ACTION_UP -> resume()
         }
+	      if (event != null) {
+		      gestureDetector?.onTouchEvent(event)
+	      }
+
         return true
       }
-
     })
-
   }
 
-  //
-//
   fun loadImage() {
     Log.d(TAG, "loadImage: here")
     Log.d(TAG, "loadImage: ${viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.file.orEmpty()}")
@@ -216,11 +245,21 @@ class StoryFragment : BaseFragment<FragmentStoryBinding>(),
   }
 
   override fun onPage(oldPageIndex: Int, newPageIndex: Int) {
+	  //MyLogger.e("sijdaoisdjoa $oldPageIndex $newPageIndex") -1, 0, 1, etc...
+	  /*if (newPageIndex == 0) {
+		  binding.progress.setDeclaredMemberProperty("timePerSegmentMs", 40_000L)
+	  }else {
+		  binding.progress.setDeclaredMemberProperty("timePerSegmentMs", 3_000L)
+	  }*/
     Log.d(TAG, "onPage: $oldPageIndex , withNew $newPageIndex")
     viewModel.pos = newPageIndex
     viewModel.storyRequest.story_id = viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.id.orZero()
     viewModel.isLike.set(viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.is_liked.orFalse())
     viewModel.storyRequest.type = 1
+	  viewModel.storyLink.value = StoryLink.values().firstOrNull {
+			it.apiValue == viewModel.store.get()?.stories?.getOrNull(viewModel.pos)?.storyLinkType
+	  }
+	  viewModel.phone.value = viewModel.store.get()?.phone
     if (binding.root.context.isLogin()) {
       viewModel.callService()
     }

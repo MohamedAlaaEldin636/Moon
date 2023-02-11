@@ -193,5 +193,37 @@
       app:layout_constraintStart_toEndOf="@+id/img_store"
       app:layout_constraintTop_toBottomOf="@+id/tv_store_name" />
 
+    <TextView
+      android:id="@+id/swipIndicationTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginBottom="13dp"
+
+      android:visibility="@{viewModel.storyLink != null}"
+
+      android:background="@drawable/dr_rect_15"
+
+      android:paddingTop="6dp"
+      android:paddingBottom="6dp"
+      android:paddingStart="15dp"
+      android:paddingEnd="15dp"
+
+      style="@style/TextTajawalMedium16"
+      android:textSize="15sp"
+      android:textColor="@color/white"
+
+      tools:drawableStartCompat="@drawable/story_whatsapp"
+      android:drawablePadding="8.5dp"
+      textView_serDrawableCompatBA_drawableStart="@{viewModel.drawableOfStoryLink}"
+
+      android:text="@{viewModel.textOfStoryLink}"
+      tools:text="@string/whatsapp_3"
+
+      app:layout_constraintBottom_toTopOf="@id/edt_login_phone"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

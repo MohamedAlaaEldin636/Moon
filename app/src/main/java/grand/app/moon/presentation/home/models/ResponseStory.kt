@@ -132,6 +132,7 @@ fun ResponseStory.toStore(): Store {
 		name = name,
 		image = image,
 		premium = premium,
+		phone = phone,
 		stories = stories?.map { story ->
 			StoryItem(
 				id = story.id.orZero(),
