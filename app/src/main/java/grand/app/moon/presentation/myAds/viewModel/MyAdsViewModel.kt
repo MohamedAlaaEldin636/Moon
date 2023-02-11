@@ -2,6 +2,7 @@ package grand.app.moon.presentation.myAds.viewModel
 
 import androidx.core.text.set
 import android.app.Application
+import android.content.res.ColorStateList
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -19,6 +20,11 @@ import grand.app.moon.domain.ads.use_case.AdsUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrEmptyBA
 import grand.app.moon.core.extenstions.showPopup
+import grand.app.moon.data.shop.RepoShop
+import grand.app.moon.databinding.ItemStoreCategoryInMyAdsBinding
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.shop.IdAndName
+import grand.app.moon.domain.shop.ResponseStoreSubCategory
 import grand.app.moon.presentation.myAds.MyAdsFragment
 import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
 import grand.app.moon.presentation.myAds.model.TypeOfAd
@@ -31,7 +37,97 @@ import javax.inject.Inject
 class MyAdsViewModel @Inject constructor(
 	application: Application,
 	private val adsUseCase: AdsUseCase,
+	val repoShop: RepoShop,
+	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
+
+	val allCategories = MutableLiveData<List<IdAndName>?>()
+	val allSubCategories = MutableLiveData<List<ResponseStoreSubCategory>?>()
+
+	private val selectedCategory = MutableLiveData<IdAndName?>()
+	val shownSubCategories = switchMapMultiple2(allCategories, selectedCategory) {
+		val selectedCategory = selectedCategory.value
+		val allSubCategories = allSubCategories.value.orEmpty()
+
+		if (selectedCategory == null) allSubCategories else {
+			listOf(ResponseStoreSubCategory(null, getString(R.string.all), null)) +
+				allSubCategories.filter { it.parentId == selectedCategory.id }
+		}
+	}
+	private val selectedSubCategory = MutableLiveData<ResponseStoreSubCategory?>()
+
+	val additionalFilter = switchMapMultiple2(selectedCategory, selectedSubCategory) {
+			selectedCategory.value to selectedSubCategory.value
+	}
+
+	val showStoreData = MutableLiveData(false)
+
+	private var currentMyAdsNonCategoriesFilter = emptyList<ResponseMyAdvDetails>()
+
+	val adapterCategories = RVItemCommonListUsage<ItemStoreCategoryInMyAdsBinding, IdAndName>(
+		R.layout.item_store_category_in_my_ads,
+		onItemClick = { adapter, binding ->
+			val item = (binding.root.tag as? String).fromJsonInlinedOrNull<IdAndName>() ?: return@RVItemCommonListUsage
+			val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@RVItemCommonListUsage
+
+			val oldSelectionPosition = if (selectedCategory.value == null) 0 else {
+				adapter.list.indexOfOrNull(selectedCategory.value)
+			}
+
+			val newSelection = if (position == 0) null else item
+			if (selectedCategory.value?.id != newSelection?.id) {
+				selectedCategory.value = newSelection
+				selectedSubCategory.value = null
+
+				adapter.notifyItemsChanged(oldSelectionPosition, position)
+			}
+		}
+	) { binding, position, item ->
+		val context = binding.root.context ?: return@RVItemCommonListUsage
+
+		binding.root.tag = item.toJsonInlinedOrNull()
+		binding.root.setTag(R.id.position_tag, position)
+
+		binding.textView.text = item.name
+
+		val isSelected = (position == 0 && selectedCategory.value == null)
+			|| selectedCategory.value?.id == item.id
+		binding.textView.backgroundTintList = ColorStateList.valueOf(
+			ContextCompat.getColor(context, if (isSelected) R.color.star_enabled else R.color.colorPrimary)
+		)
+	}
+
+	val adapterSubCategories = RVItemCommonListUsage<ItemStoreCategoryInMyAdsBinding, ResponseStoreSubCategory>(
+		R.layout.item_store_category_in_my_ads,
+		onItemClick = { adapter, binding ->
+			val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ResponseStoreSubCategory>() ?: return@RVItemCommonListUsage
+			val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@RVItemCommonListUsage
+
+			val oldSelectionPosition = if (selectedSubCategory.value == null) 0 else {
+				adapter.list.indexOfOrNull(selectedSubCategory.value)
+			}
+
+			val newSelection = if (position == 0) null else item
+			if (selectedSubCategory.value?.id != newSelection?.id) {
+				selectedSubCategory.value = newSelection
+
+				adapter.notifyItemsChanged(oldSelectionPosition, position)
+			}
+		}
+	) { binding, position, item ->
+		val context = binding.root.context ?: return@RVItemCommonListUsage
+
+		binding.root.tag = item.toJsonInlinedOrNull()
+		binding.root.setTag(R.id.position_tag, position)
+
+		binding.textView.text = item.name
+
+		val isSelected = (position == 0 && selectedSubCategory.value == null)
+			|| selectedSubCategory.value?.id == item.id
+		binding.textView.backgroundTintList = ColorStateList.valueOf(
+			ContextCompat.getColor(context, if (isSelected) R.color.star_enabled else R.color.colorPrimary)
+		)
+	}
 
 	val title = MutableLiveData("")
 	private val typeOfAd = MutableLiveData(TypeOfAd.ALL)
@@ -176,13 +272,6 @@ class MyAdsViewModel @Inject constructor(
 	}
 
 	fun searchNow(view: View) {
-		/*filter.value = MyAdsFilter(
-			title.value.orEmpty(),
-			typeOfAd.value,
-			dateFrom.value?.fromUiToApiDate(),
-			dateTo.value?.fromUiToApiDate(),
-		)*/
-
 		val fragment = view.findFragmentOrNull<MyAdsFragment>() ?: return
 
 		searchNow(fragment)
@@ -198,9 +287,30 @@ class MyAdsViewModel @Inject constructor(
 				)
 			}
 		) { response ->
-			showRecyclerViewNotEmptyView.value = response.advertisements.isNullOrEmpty().not()
-			adapter.submitList(response.advertisements.orEmpty())
+			currentMyAdsNonCategoriesFilter = response.advertisements.orEmpty()
+			performAdditionalFiltering(selectedCategory.value, selectedSubCategory.value)
+			showRecyclerViewNotEmptyView.value = adapter.list.isNotEmpty()
 		}
+	}
+
+	fun performAdditionalFiltering(
+		selectedCategory: IdAndName?, selectedSubCategory: ResponseStoreSubCategory?
+	) {
+		val list = if (selectedCategory == null && selectedSubCategory == null) {
+			currentMyAdsNonCategoriesFilter
+		}else {
+			val baseList = currentMyAdsNonCategoriesFilter.filter {
+				it.storeCategoryId == selectedCategory?.id
+			}
+
+			if (selectedSubCategory == null) baseList else {
+				baseList.filter {
+					it.storeSubCategoryId == selectedSubCategory.id
+				}
+			}
+		}
+
+		adapter.submitList(list)
 	}
 
 	private fun String.fromUiToApiDate(): String? {

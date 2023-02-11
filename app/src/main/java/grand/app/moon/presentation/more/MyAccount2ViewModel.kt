@@ -99,7 +99,7 @@ class MyAccount2ViewModel @Inject constructor(
 					}
 				}
 				R.drawable.ic_del_acc_permenently -> {
-					General.TODO("Wasn't programmed before.")
+					//General.TODO("Wasn't programmed before.")
 				}
 			}
 		}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <TextView
+    android:id="@+id/textView"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    tools:text="All"
+
+    style="@style/TextTajawalMedium16"
+    android:textSize="12sp"
+    android:textColor="@color/white"
+
+    android:background="@drawable/dr_rect_3"
+
+    android:layout_margin="4dp"
+
+    android:includeFontPadding="false"
+    android:paddingStart="20dp"
+    android:paddingTop="11dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="7dp"/>
+
+</layout>

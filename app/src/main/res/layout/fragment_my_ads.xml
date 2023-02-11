@@ -299,6 +299,51 @@
       app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerViewStoreCategories"
+
+      android:visibility="@{viewModel.showStoreData}"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:padding="4dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="horizontal"
+      tools:itemCount="6"
+      app:spanCount="1"
+      tools:orientation="horizontal"
+      tools:listitem="@layout/item_store_category_in_my_ads"
+      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+      app:layout_constraintTop_toBottomOf="@id/materialButton"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerViewStoreSubCategories"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:paddingStart="4dp"
+      android:paddingEnd="4dp"
+      android:clipToPadding="false"
+
+      android:visibility="@{viewModel.showStoreData}"
+
+      android:scrollbars="horizontal"
+      tools:itemCount="6"
+      app:spanCount="1"
+      tools:orientation="horizontal"
+      tools:listitem="@layout/item_store_category_in_my_ads"
+      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+      app:layout_constraintTop_toBottomOf="@id/recyclerViewStoreCategories"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerView"
 
       android:layout_width="0dp"
@@ -320,7 +365,7 @@
       tools:listitem="@layout/item_in_my_ads"
       tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
 
-      app:layout_constraintTop_toBottomOf="@id/materialButton"
+      app:layout_constraintTop_toBottomOf="@id/recyclerViewStoreSubCategories"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
@@ -343,7 +388,7 @@
 
       android:text="@string/no_data_found"
 
-      app:layout_constraintTop_toBottomOf="@id/materialButton"
+      app:layout_constraintTop_toBottomOf="@id/recyclerViewStoreSubCategories"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
 

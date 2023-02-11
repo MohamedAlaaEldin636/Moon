@@ -1,5 +1,9 @@
 package grand.app.moon.extensions
 
+inline fun <reified T> List<T>.indexOfOrNull(element: T) = indexOf(element).let {
+	if (it == -1) null else it
+}
+
 inline fun <reified T> List<T>.toArrayList(): ArrayList<T> = arrayListOf(*this.toTypedArray())
 
 inline fun <T> List<T>.indexOfFirstOrNull(predicate: (T) -> Boolean): Int? {

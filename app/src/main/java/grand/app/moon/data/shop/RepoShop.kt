@@ -74,6 +74,33 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getMySubCategoriesWithParentId(parentId, it)
 	}
 
+	suspend fun getMyStoreCategoriesAndSubCategoriesAllPaginationPages(): Resource<BaseResponse<Pair<List<IdAndName>, List<ResponseStoreSubCategory>>?>> {
+		val allCategories = BasePaging.getAllPages {
+			remoteDataSource.getMyCategories(it)
+		}
+
+		if (allCategories is Resource.Success) {
+			val allSubCategories = BasePaging.getAllPages {
+				remoteDataSource.getMySubCategories(it)
+			}
+
+			if (allSubCategories is Resource.Success) {
+				return allCategories.mapSuccess { baseResponse ->
+					baseResponse.map { list ->
+						Pair(
+							list.orEmpty(),
+							allSubCategories.value.data.orEmpty()
+						)
+					}
+				}
+			}
+
+			return allSubCategories.mapToNullSuccess()
+		}
+
+		return allCategories.mapToNullSuccess()
+	}
+
 	suspend fun getWorkingHours() = remoteDataSource.getWorkingHours()
 
 	suspend fun saveWorkingHours(list: List<ItemWorkingHours2>) = remoteDataSource.saveWorkingHours(list)
