@@ -134,6 +134,8 @@ dependencies {
 
 	implementation("io.coil-kt:coil-video:2.2.2")
 
+	implementation("com.github.yuriy-budiyev:code-scanner:2.3.2")
+
 	implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
 	implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.1")
 

@@ -197,6 +197,7 @@
           android:layout_marginTop="@dimen/dimen10"
           android:visibility="@{viewModel.storeAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
           app:layout_constraintTop_toBottomOf="@+id/tv_top_stores"
+          tools:itemCount="1"
           tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
           tools:listitem="@layout/item_store" />
 
@@ -243,6 +244,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/dimen10"
+          tools:itemCount="1"
           android:visibility="@{viewModel.followingsStoresAdapter.differ.currentList.size() > 0 ? View.VISIBLE : View.GONE }"
           app:layout_constraintTop_toBottomOf="@+id/tv_followed_stores_all"
           tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

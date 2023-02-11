@@ -9,6 +9,7 @@ import android.util.Log
 import android.webkit.ValueCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.os.postDelayed
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
@@ -32,6 +33,7 @@ import com.onesignal.OneSignal
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
+import grand.app.moon.presentation.base.utils.showMessage
 import grand.app.moon.presentation.packages.BecomeShopPackagesFragmentDirections
 
 //private var CAUSE_NAV_UP = false
@@ -107,6 +109,32 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       val actionId = result.action.actionId
       Log.d(TAG, "setUpViews: $actionId")
     }
+
+	  /*observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<String>(nav, QRCodeScannerFragment::class.java.name) {
+		  MyLogger.e("uuuuuuuuuuuuuuuuuu -> captured -> $it")
+
+			nav.navigate(
+				R.id.nav_store,
+				bundleOf(
+					"id" to kotlin.runCatching {
+						it.substring(it.lastIndexOf("/")).toInt()
+					}.getOrElse { throwable ->
+						MyLogger.e("uuuuuuuuuuuuuuuuuu -> $it -======- $throwable")
+
+						0
+					}
+				),
+				Constants.NAVIGATION_OPTIONS
+			)
+		  *//*
+		  v.findNavController().navigate(
+      R.id.nav_store,
+      bundleOf(
+        "id" to store.id,
+        "type" to type
+      ),Constants.NAVIGATION_OPTIONS)
+		   *//*
+	  }*/
   }
 
   private fun setUpBottomNavigationWithGraphs() {
@@ -186,8 +214,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
 
 	  nav.addOnDestinationChangedListener { controller, destination, arguments ->
+		  viewModel.showBarCode.value = destination.id == R.id.storeListFragment
 
-      resetTexts()
+		  resetTexts()
       binding.icNotificationFilter.hide()
       when (destination.id) {
         R.id.storyFragment -> {
@@ -280,7 +309,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
           hideTopBarControls()
           hideAllToolbar()
         }
-
         else -> {
           Log.d(TAG, "setUpBottomNavigationWithGraphs: ${destination.label}")
           binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite))

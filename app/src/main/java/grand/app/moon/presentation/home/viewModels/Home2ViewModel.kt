@@ -88,9 +88,25 @@ class Home2ViewModel @Inject constructor(
 							"grand.app.moon.dest.all.stories"
 						)
 					}
-					ItemHomeRV.Type.CATEGORIES -> TODO()
-					ItemHomeRV.Type.MOST_RATED_STORIES -> TODO()
-					ItemHomeRV.Type.FOLLOWING_STORIES -> TODO()
+					ItemHomeRV.Type.CATEGORIES -> {
+						navController.navigateSafely(
+							Home2FragmentDirections.actionDestHomeToDepartmentListFragment()
+						)
+					}
+					ItemHomeRV.Type.MOST_RATED_STORIES -> {
+						navController.navigateSafely(
+							Home2FragmentDirections.actionDestHomeFragmentToStoreListFragment(
+								view.resources.getString(R.string.top_stores_rated),
+								3
+							)
+						)
+					}
+					ItemHomeRV.Type.FOLLOWING_STORIES -> {
+						navController.navigateDeepLinkWithOptions(
+							"store",
+							"grand.app.moon.store.followed"
+						)
+					}
 					ItemHomeRV.Type.SUGGESTED_ADS -> TODO()
 					ItemHomeRV.Type.MOST_POPULAR_ADS -> TODO()
 					ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> TODO()

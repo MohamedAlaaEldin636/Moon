@@ -98,6 +98,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/qrCodeImageView"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_marginStart="50dp"
+        android:onClick="@{v -> viewModel.openBarCode(v)}"
+        android:src="@drawable/barcode"
+        android:visibility="@{viewModel.showBarCode}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgMoonLogo"
         style="@style/mediumFont"
         android:layout_width="@dimen/dimen100"

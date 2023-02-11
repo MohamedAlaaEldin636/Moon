@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDeepLinkRequest
@@ -17,16 +18,19 @@ import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.ListHelper
 import grand.app.moon.data.packages.RepositoryPackages
+import grand.app.moon.databinding.ActivityHomeBinding
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.home.models.*
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
+import grand.app.moon.extensions.navigateDeepLinkWithOptions
 import grand.app.moon.presentation.addStore.BrowserHelper
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter
+import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.home.HomeFragmentDirections
 import grand.app.moon.presentation.story.adapter.StoriesAdapter
 import grand.app.moon.presentation.store.adapter.StoreAdapter
@@ -237,6 +241,17 @@ class HomeViewModel @Inject constructor(
       clickEvent.value = Constants.CHAT_LIST
     }*/
   }
+
+	val showBarCode = MutableLiveData(false)
+
+	fun openBarCode(view: View) {
+		val binding = DataBindingUtil.findBinding<ActivityHomeBinding>(view) ?: return
+		val activity = binding.lifecycleOwner as? HomeActivity ?: return
+		activity.nav.navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.qr.code",
+		)
+	}
 
   private val TAG = "HomeViewModel"
   fun updateList(data: HomeResponse) {

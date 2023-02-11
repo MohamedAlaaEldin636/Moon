@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +21,10 @@ import grand.app.moon.presentation.base.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentStoreListBinding
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
+import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.home.QRCodeScannerFragment
 import grand.app.moon.presentation.store.viewModels.StoreListViewModel
 
 @AndroidEntryPoint
@@ -81,6 +86,32 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
       }
 
     }
+
+	  observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<String>(QRCodeScannerFragment::class.java.name) {
+		  MyLogger.e("uuuuuuuuuuuuuuuuuu -> captured -> $it")
+
+		  findNavController().navigate(
+			  R.id.nav_store,
+			  bundleOf(
+				  "id" to kotlin.runCatching {
+					  it.substring(it.lastIndexOf("/")).toInt()
+				  }.getOrElse { throwable ->
+					  MyLogger.e("uuuuuuuuuuuuuuuuuu -> $it -======- $throwable")
+
+					  0
+				  }
+			  ),
+			  Constants.NAVIGATION_OPTIONS
+		  )
+		  /*
+		  v.findNavController().navigate(
+      R.id.nav_store,
+      bundleOf(
+        "id" to store.id,
+        "type" to type
+      ),Constants.NAVIGATION_OPTIONS)
+		   */
+	  }
 
   }
 
