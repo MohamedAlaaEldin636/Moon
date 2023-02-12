@@ -189,12 +189,12 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>,
 		@Query("statistics_type") statisticsType: String = "store",
 	): BaseResponse<ResponseStoreStats?>
-	@GET("v1/profile/statistics")
+	@GET("v1/statistics/show")
 	suspend fun getGeneralStatsForStoreStats(
 		@Query("type") type: String,
 		@Query("statistics_type") statisticsType: String = "store",
 	): BaseResponse<ResponseGeneralStats?>
-	@GET("v1/profile/statistics")
+	@GET("v1/statistics/show")
 	suspend fun getGeneralStatsForStoreStatsUsers(
 		@Query("type") type: String,
 		@Query("page") page: Int,
@@ -202,7 +202,7 @@ interface ShopServices {
 		@Query("statistics_type") statisticsType: String = "store",
 	): MABaseResponse<ResponseGeneralStats?>
 
-	@GET("v1/search") // ?type=advertisement&search=بيج
+	@GET("v1/search")
 	suspend fun getSearchResults(
 		@Query("search") search: String,
 		@Query("type") type: String,

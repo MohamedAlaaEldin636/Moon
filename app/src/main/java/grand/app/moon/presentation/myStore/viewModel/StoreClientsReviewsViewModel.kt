@@ -68,7 +68,7 @@ class StoreClientsReviewsViewModel @Inject constructor(
 
 		binding.dateTextView.text = item.date.orEmpty()
 
-		binding.ratingBar.setProgressBA(item.rate.orZero() * 20)
+		binding.ratingBar.setProgressBAFloat(item.rate.orZero() * 20f)
 
 		binding.commentTextView.text = item.review.orEmpty()
 	}

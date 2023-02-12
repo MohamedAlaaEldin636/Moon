@@ -18,7 +18,7 @@ data class ResponseReviewsWithStats(
  * @param date Ex. 2023-01-18
  */
 data class ResponseClientReviews(
-	var rate: Int?,
+	var rate: Float?,
 	var review: String?,
 	var date: String?,
 	var user: ItemUserInClientReviews?,

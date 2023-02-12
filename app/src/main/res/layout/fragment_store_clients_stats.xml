@@ -353,6 +353,8 @@
 
         android:visibility="@{viewModel.showLatestSpecialAds}"
 
+        android:onClick="@{v -> viewModel.goToShowAllLatestSpecialAds(v)}"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -426,6 +428,8 @@
 
         android:visibility="@{viewModel.showHighestViewedAds}"
 
+        android:onClick="@{v -> viewModel.goToShowAllHighestViewedAds(v)}"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -496,6 +500,8 @@
         app:layout_constraintTop_toBottomOf="@id/recyclerViewHighestViewedAds"/>
       <TextView
         android:id="@+id/recentlyAddedAdsShowAllTextView"
+
+        android:onClick="@{v -> viewModel.goToShowAllRecentlyAdded(v)}"
 
         android:visibility="@{viewModel.showRecentlyAddedAds}"
 
