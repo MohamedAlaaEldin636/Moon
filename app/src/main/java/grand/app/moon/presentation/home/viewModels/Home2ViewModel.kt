@@ -3,6 +3,7 @@ package grand.app.moon.presentation.home.viewModels
 import android.app.Application
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.AndroidViewModel
@@ -18,6 +19,7 @@ import grand.app.moon.databinding.ItemHomeRvAdvBinding
 import grand.app.moon.databinding.ItemHomeRvBinding
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.*
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ItemHomeRV
@@ -107,9 +109,36 @@ class Home2ViewModel @Inject constructor(
 							"grand.app.moon.store.followed"
 						)
 					}
-					ItemHomeRV.Type.SUGGESTED_ADS -> TODO()
-					ItemHomeRV.Type.MOST_POPULAR_ADS -> TODO()
-					ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> TODO()
+					ItemHomeRV.Type.SUGGESTED_ADS -> {
+						/*navController.navigate(
+							R.id.nav_category_list_ads,
+							bundleOf(
+								"category_id" to -1,
+								"tabBarText" to category.name,
+								"type" to category.type
+							), Constants.NAVIGATION_OPTIONS
+						)*/
+					}
+					ItemHomeRV.Type.MOST_POPULAR_ADS -> {
+						/*navController.navigate(
+							R.id.nav_category_list_ads,
+							bundleOf(
+								"category_id" to -1,
+								"tabBarText" to category.name,
+								"type" to category.type
+							), Constants.NAVIGATION_OPTIONS
+						)*/
+					}
+					ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> {
+						/*navController.navigate(
+							R.id.nav_category_list_ads,
+							bundleOf(
+								"category_id" to -1,
+								"tabBarText" to category.name,
+								"type" to category.type
+							), Constants.NAVIGATION_OPTIONS
+						)*/
+					}
 				}
 			}
 		}
