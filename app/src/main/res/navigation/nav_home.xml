@@ -11,6 +11,12 @@
     android:name="grand.app.moon.presentation.home.HomeFragment"
     android:label=""
     tools:layout="@layout/fragment_home">
+
+    <deepLink
+      android:id="@+id/deep_link_dest_old_home"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.old.home" />
+
     <action
       android:id="@+id/action_home_fragment_to_departmentListFragment"
       app:destination="@id/departmentListFragment"

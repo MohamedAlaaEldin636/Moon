@@ -220,6 +220,13 @@ class Home2ViewModel @Inject constructor(
 		)
 	}
 
+	fun goToFilter(view: View) {
+		view.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.old.home"
+		)
+	}
+
 	fun setupRvs(binding: ItemHomeRvBinding, item: ItemHomeRV, position: Int) {
 		binding.helperView.visibility = View.INVISIBLE
 

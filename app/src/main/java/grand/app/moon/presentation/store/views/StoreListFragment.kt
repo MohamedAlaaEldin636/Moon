@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentStoreListBinding
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.navigateDeepLinkWithOptions
 import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.QRCodeScannerFragment
@@ -88,21 +89,37 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
     }
 
 	  observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<String>(QRCodeScannerFragment::class.java.name) {
-		  MyLogger.e("uuuuuuuuuuuuuuuuuu -> captured -> $it")
+		  // Example -> https://eg.sooqmoon.net/ar/shop/9852/m1006mmm
+		  val endIndex = it.lastIndexOf("/")
+		  MyLogger.e("uuuuuuuuuuuuuuuuuu -> captured -> $it ==== index $endIndex")
+		  val id = if (endIndex.dec() < 0) null else {
+				val index = it.lastIndexOf("/", startIndex = endIndex.dec())
+			  MyLogger.e("uuuuuuuuuuuuuuuuuu -> captured -> $it ==== index $index ${it.substring(index.inc(), endIndex)}")
+			  if (index.inc() < 0) null else it.substring(index.inc(), endIndex).toIntOrNull()
+		  }
+		  if (id == null) {
+				showMessage(getString(R.string.something_went_wrong_please_try_again))
 
-		  findNavController().navigate(
-			  R.id.nav_store,
-			  bundleOf(
-				  "id" to kotlin.runCatching {
-					  it.substring(it.lastIndexOf("/")).toInt()
-				  }.getOrElse { throwable ->
-					  MyLogger.e("uuuuuuuuuuuuuuuuuu -> $it -======- $throwable")
+			  return@observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
+		  }
 
-					  0
-				  }
-			  ),
-			  Constants.NAVIGATION_OPTIONS
-		  )
+		  if (id == viewModel.userLocalUseCase().id) {
+			  findNavController().navigateDeepLinkWithOptions(
+				  "fragment-dest",
+				  "grand.app.moon.dest.create.store"
+			  )
+		  }else {
+			  findNavController().navigate(
+				  R.id.nav_store,
+				  bundleOf(
+					  "id" to id,
+					  "type" to 3
+				  ),
+				  Constants.NAVIGATION_OPTIONS
+			  )
+		  }
+
+
 		  /*
 		  v.findNavController().navigate(
       R.id.nav_store,
