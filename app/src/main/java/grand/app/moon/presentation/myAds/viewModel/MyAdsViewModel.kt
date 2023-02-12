@@ -25,9 +25,13 @@ import grand.app.moon.databinding.ItemStoreCategoryInMyAdsBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.domain.shop.ResponseStoreSubCategory
+import grand.app.moon.domain.stats.toChartData
 import grand.app.moon.presentation.myAds.MyAdsFragment
+import grand.app.moon.presentation.myAds.MyAdsFragmentArgs
 import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
 import grand.app.moon.presentation.myAds.model.TypeOfAd
+import grand.app.moon.presentation.stats.models.ResponseGeneralStats
+import grand.app.moon.presentation.stats.viewModels.ItemStatsChartViewModel
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -39,7 +43,31 @@ class MyAdsViewModel @Inject constructor(
 	private val adsUseCase: AdsUseCase,
 	val repoShop: RepoShop,
 	val userLocalUseCase: UserLocalUseCase,
-) : AndroidViewModel(application) {
+	val args: MyAdsFragmentArgs,
+) : ItemStatsChartViewModel(application) {
+
+	val showStats = MutableLiveData(args.titlePlural != app.getString(R.string.def_value_string))
+
+	var response: ResponseGeneralStats? = null
+
+	override fun toggleWeek(view: View) {
+		val response = response ?: return
+		val oldChart = chart.value ?: return
+		chart.value = response.toChartData(
+			app,
+			args.titlePlural,
+			args.titleSingular,
+			oldChart.weekName != app.getString(R.string.current_week)
+		).copy(
+			showSaturdayTooltip = oldChart.showSaturdayTooltip,
+			showSundayTooltip = oldChart.showSundayTooltip,
+			showMondayTooltip = oldChart.showMondayTooltip,
+			showTuesdayTooltip = oldChart.showTuesdayTooltip,
+			showWednesdayTooltip = oldChart.showWednesdayTooltip,
+			showThursdayTooltip = oldChart.showThursdayTooltip,
+			showFridayTooltip = oldChart.showFridayTooltip,
+		)
+	}
 
 	val allCategories = MutableLiveData<List<IdAndName>?>()
 	val allSubCategories = MutableLiveData<List<ResponseStoreSubCategory>?>()
@@ -130,7 +158,7 @@ class MyAdsViewModel @Inject constructor(
 	}
 
 	val title = MutableLiveData("")
-	private val typeOfAd = MutableLiveData(TypeOfAd.ALL)
+	val typeOfAd = MutableLiveData(TypeOfAd.ALL)
 	val adType = typeOfAd.map {
 		app.getString(it?.stringRes ?: R.string.all_ads_3)
 	}
@@ -284,6 +312,7 @@ class MyAdsViewModel @Inject constructor(
 					typeOfAd.value,
 					dateFrom.value?.fromUiToApiDate(),
 					dateTo.value?.fromUiToApiDate(),
+					args.additionalFilter
 				)
 			}
 		) { response ->

@@ -25,6 +25,11 @@ import grand.app.moon.presentation.stats.GeneralStatsFragmentArgs
 object ViewModelArgsModule {
 
 	@Provides
+	fun provideMyAdsFragmentArgs(state: SavedStateHandle): MyAdsFragmentArgs {
+		return MyAdsFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
 	fun provideStoryInShopInfoFragmentArgs(state: SavedStateHandle): StoryInShopInfoFragmentArgs {
 		return StoryInShopInfoFragmentArgs.fromBundle(state.asBundle())
 	}

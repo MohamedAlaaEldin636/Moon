@@ -127,7 +127,9 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
     progressDialog = showLoadingDialog(requireActivity(), hint)
   }
 
-  fun hideLoading() = hideLoadingDialog(progressDialog, requireActivity())
+  fun hideLoading(): Unit = kotlin.runCatching {
+	  hideLoadingDialog(progressDialog, requireActivity())
+  }.getOrElse {}
 
   fun setLanguage(language: String) {
     (requireActivity() as BaseActivity<*>).updateLocale(language)

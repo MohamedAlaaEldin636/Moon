@@ -608,10 +608,26 @@
     android:name="grand.app.moon.presentation.myAds.MyAdsFragment"
     android:label="@string/my_ads_2"
     tools:layout="@layout/fragment_my_ads">
+    <argument
+      android:name="titlePlural"
+      app:argType="string"
+      android:defaultValue="def value stringggggggggggggggggggggggggggggggg"/>
+    <argument
+      android:name="titleSingular"
+      app:argType="string"
+      android:defaultValue="def value stringggggggggggggggggggggggggggggggg"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_my_ads_with_stats"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.my.ads.with.stats/{titlePlural}/{titleSingular}/{additionalFilter}" />
     <deepLink
       android:id="@+id/deep_link_dest_my_ads"
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.my.ads" />
+    <argument
+      android:name="additionalFilter"
+      app:argType="grand.app.moon.presentation.myAds.MyAdsFragment$InitialFilter"
+      android:defaultValue="RECENTLY_ADDED" />
   </fragment>
   <fragment
     android:id="@+id/dest_add_advertisement"

@@ -11,6 +11,7 @@ import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.presentation.myAds.MyAdsFragment
 import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
 import grand.app.moon.presentation.myAds.model.ResponseMyAdvertisements
 import grand.app.moon.presentation.myAds.model.TypeOfAd
@@ -140,7 +141,8 @@ class AdsRepositoryImpl @Inject constructor(
 		typeOfAd: TypeOfAd?,
 		fromDate: String?,
 		toDate: String?,
+		initialFilter: MyAdsFragment.InitialFilter,
 	): Resource<BaseResponse<ResponseMyAdvertisements?>> =
-		remoteDataSource.getMyAdvertisements(title, typeOfAd, fromDate, toDate)
+		remoteDataSource.getMyAdvertisements(title, typeOfAd, fromDate, toDate, initialFilter)
 
 }

@@ -11,6 +11,7 @@ import grand.app.moon.domain.home.models.Property
 import grand.app.moon.domain.home.models.review.ReviewRequest
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.filter.FILTER_TYPE
+import grand.app.moon.presentation.myAds.MyAdsFragment
 import grand.app.moon.presentation.myAds.model.TypeOfAd
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -255,6 +256,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		typeOfAd: TypeOfAd?,
 		fromDate: String?,
 		toDate: String?,
+		initialFilter: MyAdsFragment.InitialFilter,
 	) = safeApiCall {
 		val map = mutableMapOf<String, String>()
 
@@ -273,6 +275,10 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		val premium = typeOfAd?.apiValue
 		if (premium != null) {
 			map["premium"] = premium.toString()
+		}
+
+		if (initialFilter == MyAdsFragment.InitialFilter.HIGHEST_VIEWED) {
+			map["most_viewed"] = 1.toString()
 		}
 
 		apiService.getMyAdvertisements(map)

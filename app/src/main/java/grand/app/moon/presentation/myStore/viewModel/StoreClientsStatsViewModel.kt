@@ -25,6 +25,7 @@ import grand.app.moon.domain.stats.ChartData
 import grand.app.moon.domain.stats.toChartData
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrEmptyBA
+import grand.app.moon.presentation.myAds.MyAdsFragment
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
 import grand.app.moon.presentation.myStore.ExploreInShopInfoFragment
@@ -81,7 +82,8 @@ class StoreClientsStatsViewModel @Inject constructor(
 				ItemStoreStats.Type.ADVERTISEMENTS -> {
 					binding.root.findNavController().navigateDeepLinkWithOptions(
 						"fragment-dest",
-						"grand.app.moon.dest.my.ads", // todo with filters in mind isa.
+						"grand.app.moon.dest.my.ads.with.stats",
+						paths = arrayOf(titlePlural, titleSingular, MyAdsFragment.InitialFilter.RECENTLY_ADDED.toString())
 					)
 				}
 				ItemStoreStats.Type.EXPLORES -> {
@@ -267,18 +269,33 @@ class StoreClientsStatsViewModel @Inject constructor(
 	}
 
 	fun goToShowAllLatestSpecialAds(view: View) {
-		// todo 5o4 3ala e3lanate bs b el filter...
+		val defValueString = app.getString(R.string.def_value_string)
 
-		// todo go to my ads in new apis but special params either none or premium or most viewed isa.
-		TODO()
+		view.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.my.ads.with.stats",
+			paths = arrayOf(defValueString, defValueString, MyAdsFragment.InitialFilter.LATEST_SPECIAL.toString())
+		)
 	}
 
 	fun goToShowAllHighestViewedAds(view: View) {
-		TODO()
+		val defValueString = app.getString(R.string.def_value_string)
+
+		view.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.my.ads.with.stats",
+			paths = arrayOf(defValueString, defValueString, MyAdsFragment.InitialFilter.HIGHEST_VIEWED.toString())
+		)
 	}
 
 	fun goToShowAllRecentlyAdded(view: View) {
-		TODO() // todo these rvs take(4) bs isa.
+		val defValueString = app.getString(R.string.def_value_string)
+
+		view.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.my.ads.with.stats",
+			paths = arrayOf(defValueString, defValueString, MyAdsFragment.InitialFilter.RECENTLY_ADDED.toString())
+		)
 	}
 
 	private fun String.fromUiToApiDate(): String? {

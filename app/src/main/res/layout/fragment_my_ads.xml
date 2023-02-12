@@ -6,6 +6,8 @@
   tools:ignore="SmallSp,Autofill">
 
   <data>
+    <import type="android.view.View"/>
+
     <variable
       name="viewModel"
       type="grand.app.moon.presentation.myAds.viewModel.MyAdsViewModel" />
@@ -29,6 +31,24 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"/>
 
+    <include
+      android:id="@+id/statsInclude"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      layout="@layout/item_stats_chart"
+
+      android:layout_margin="8dp"
+
+      android:visibility="@{viewModel.showStats ? View.VISIBLE : View.GONE}"
+
+      app:viewModel="@{viewModel}"
+
+      app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
     <TextView
       android:id="@+id/labelFilteringResultsTextView"
 
@@ -44,7 +64,7 @@
       android:textColor="#0D0633"
       android:text="@string/filtering_results"
 
-      app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
+      app:layout_constraintTop_toBottomOf="@id/statsInclude"
       app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
