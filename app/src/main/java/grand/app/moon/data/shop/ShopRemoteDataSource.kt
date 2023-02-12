@@ -18,6 +18,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.http.Part
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 import javax.inject.Inject
 
 class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServices) : BaseRemoteDataSource() {
@@ -334,6 +335,26 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun getAllStories(page: Int) = safeApiCall2 {
 		apiService.getAllStories(page)
+	}
+
+	suspend fun getStatusUsersHistory(
+		type: String,
+		userId: Int,
+		advId: Int?,
+		page: Int
+	) = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+		if (advId != null) {
+			map["advertisement_id"] = advId.toString()
+		}
+
+		apiService.getStatusUsersHistory(
+			type,
+			if (advId == null) "store" else "advertisement",
+			userId,
+			page,
+			map
+		)
 	}
 
 }

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.findNavController
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,13 +43,26 @@ class GeneralStatsViewModel @Inject constructor(
 	val adapter = RVPagingItemCommonListUsage<ItemUserInStatsBinding, ResponseUserInGeneralStats>(
 		R.layout.item_user_in_stats,
 		onItemClick = { adapter, binding ->
-			General.TODO("waiting sth from backend")
-		},
-		additionalListenersSetups = { _, binding ->
 			val item = (binding.constraintLayout.tag as? String).fromJsonInlinedOrNull<ResponseUserInGeneralStats>()
 				?: return@RVPagingItemCommonListUsage
 
+			val (type, advId) = if (args.useAdvNotStoreType) {
+				args.type.apiValue to args.advId
+			}else {
+				args.storeType.apiValue to -1
+			}
+
+			binding.root.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.stats.users.history",
+				paths = arrayOf(item.name.orEmpty(), type, item.id.orZero().toString(), advId.toString())
+			)
+		},
+		additionalListenersSetups = { _, binding ->
 			binding.whatsappImageView.setOnClickListener { view ->
+				val item = (binding.constraintLayout.tag as? String).fromJsonInlinedOrNull<ResponseUserInGeneralStats>()
+					?: return@setOnClickListener
+
 				view.context?.launchWhatsApp(item.countryCode.orEmpty() + item.phone.orEmpty())
 			}
 		}

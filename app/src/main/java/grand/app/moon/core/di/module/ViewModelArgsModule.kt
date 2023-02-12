@@ -19,10 +19,16 @@ import grand.app.moon.presentation.myStore.ShowImagesOrVideoDialogFragmentArgs
 import grand.app.moon.presentation.myStore.StoryInShopInfoFragmentArgs
 import grand.app.moon.presentation.packages.SuccessShopSubscriptionFragmentArgs
 import grand.app.moon.presentation.stats.GeneralStatsFragmentArgs
+import grand.app.moon.presentation.stats.StatsUsersHistoryFragmentArgs
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelArgsModule {
+
+	@Provides
+	fun provideStatsUsersHistoryFragmentArgs(state: SavedStateHandle): StatsUsersHistoryFragmentArgs {
+		return StatsUsersHistoryFragmentArgs.fromBundle(state.asBundle())
+	}
 
 	@Provides
 	fun provideMyAdsFragmentArgs(state: SavedStateHandle): MyAdsFragmentArgs {

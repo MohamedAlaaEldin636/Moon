@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.stats.StatsUsersHistoryFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.stats.viewModels.StatsUsersHistoryViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+      android:id="@+id/toolbarCurve"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      layout="@layout/item_toolbar_curve"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:paddingBottom="4dp"
+      android:paddingTop="4dp"
+      android:paddingStart="8dp"
+      android:paddingEnd="8dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="vertical"
+      tools:itemCount="2"
+      app:spanCount="1"
+      tools:orientation="vertical"
+      tools:listitem="@layout/item_user_in_stats"
+      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+      app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

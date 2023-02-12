@@ -347,6 +347,14 @@ class RepoShop @Inject constructor(
 		}
 	}
 
+	fun getStatusUsersHistory(
+		type: String,
+		userId: Int,
+		advId: Int?,
+	) = BasePaging.createFlowViaPager {
+		remoteDataSource.getStatusUsersHistory(type, userId, advId, it)
+	}
+
 }
 
 data class CitiesAndStoreCategoriesAndSubCategories(

@@ -8,6 +8,7 @@ import grand.app.moon.helpers.paging.MABasePaging
 import grand.app.moon.presentation.home.models.*
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import grand.app.moon.presentation.stats.models.ResponseStoreStats
+import grand.app.moon.presentation.stats.models.ResponseUserInGeneralStats
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -235,5 +236,17 @@ interface ShopServices {
 	suspend fun getAllStories(
 		@Query("page") page: Int,
 	): MABaseResponse<ResponseAllStories>
+
+	//{{MoonTest}}/api/v1/statistics/user-history?type=views&advertisement_id=37797&statistics_type=advertisement&user_id=9797s
+	//{{MoonTest}}/api/v1/statistics/user-history?type=views&statistics_type=store&user_id=9797s
+	// pass type as string, statistics_type na hagebha isa., pass user_id, pass advId
+	@GET("v1/statistics/user-history")
+	suspend fun getStatusUsersHistory(
+		@Query("type") type: String,
+		@Query("statistics_type") statisticsType: String,
+		@Query("user_id") userId: Int,
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>
+	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
 
 }

@@ -1047,5 +1047,27 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.qr.code" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_stats_users_history"
+    android:name="grand.app.moon.presentation.stats.StatsUsersHistoryFragment"
+    android:label="{title}"
+    tools:layout="@layout/fragment_stats_users_history">
+    <argument
+      android:name="title"
+      app:argType="string" />
+    <argument
+      android:name="type"
+      app:argType="string" />
+    <argument
+      android:name="userId"
+      app:argType="integer" />
+    <argument
+      android:name="advId"
+      app:argType="integer" />
+    <deepLink
+      android:id="@+id/deep_link_dest_stats_users_history"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.stats.users.history/{title}/{type}/{userId}/{advId}" />
+  </fragment>
 
 </navigation>
