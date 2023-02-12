@@ -46,7 +46,7 @@ class SearchResultsViewModel @Inject constructor(
 
 	val adapterAdvertisements = getAdapter()
 	val adapterStories = getAdapter() // todo stores
-	val adapterNicknames = getAdapter()
+	val adapterNicknames = getAdapter() // todo stores
 	val adapterCategories = getAdapter() // todo categories isa.
 
 	val filterType = MutableLiveData(TypeSearchResult.ADVERTISEMENT)
