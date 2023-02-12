@@ -299,8 +299,8 @@ class MyAdsViewModel @Inject constructor(
 		val list = if (selectedCategory == null && selectedSubCategory == null) {
 			currentMyAdsNonCategoriesFilter
 		}else {
-			val baseList = currentMyAdsNonCategoriesFilter.filter {
-				it.storeCategoryId == selectedCategory?.id
+			val baseList = if (selectedCategory == null) currentMyAdsNonCategoriesFilter else currentMyAdsNonCategoriesFilter.filter {
+				it.storeCategoryId == selectedCategory.id
 			}
 
 			if (selectedSubCategory == null) baseList else {

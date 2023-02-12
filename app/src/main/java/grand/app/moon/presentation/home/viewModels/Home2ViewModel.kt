@@ -17,6 +17,7 @@ import grand.app.moon.core.extenstions.inflateLayout
 import grand.app.moon.data.home2.RepoHome2
 import grand.app.moon.databinding.ItemHomeRvAdvBinding
 import grand.app.moon.databinding.ItemHomeRvBinding
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
@@ -31,6 +32,7 @@ class Home2ViewModel @Inject constructor(
 	application: Application,
 	val repoHome2: RepoHome2,
 	val repoHome: HomeUseCase,
+	val userLocalUseCase: UserLocalUseCase
 ) : AndroidViewModel(application) {
 
 	val adapterStories by lazy { getAdapterStories() }

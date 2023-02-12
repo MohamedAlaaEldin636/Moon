@@ -1,7 +1,9 @@
 package grand.app.moon.presentation.home
 
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import grand.app.moon.R
@@ -148,13 +150,35 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBinding, ItemAdvertisementInResponseHome>(
 	R.layout.item_home_rv_adv,
 	onItemClick = { adapter, binding ->
+		val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemAdvertisementInResponseHome>()
+			?: return@RVItemCommonListUsage
+
+		if (item.store?.id == userLocalUseCase().id) {
+			kotlin.runCatching {
+				binding.root.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.presentation.myAds.dest.my.adv.details.id",
+					paths = arrayOf(item.id.orZero().toString())
+				)
+			}
+			// my ad
+			// "fragment-dest:///{id}" />
+		}else {
+
+		}
 		/*
 		R.id.nav_ads, bundleOf(
 				        "id" to data.id,
 				        "type" to type
 			        )
 		 */
-		General.TODO("ch 1")
+		//General.TODO("ch 1")
+		/*binding.root.findNavController().navigate(
+			R.id.nav_ads, bundleOf(
+				"id" to data.id,
+				"type" to type
+			)
+		)*/
 	},
 	additionalListenersSetups = { adapter, binding ->
 		binding.storeImageImageView.setOnClickListener {
@@ -175,6 +199,8 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 		}
 	}
 ) { binding, position, item ->
+	binding.root.tag = item.toJsonInlinedOrNull()
+
 	binding.imageImageView.setupWithGlide {
 		load(item.image)
 	}
