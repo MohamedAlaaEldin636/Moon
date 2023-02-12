@@ -41,7 +41,7 @@ class GeneralSettingsViewModel @Inject constructor(
 			ItemStoreInfo.complete(R.drawable.ic_language_settings, R.string.change_language),
 			ItemStoreInfo.complete(R.drawable.ic_country_settings, R.string.change_country),
 			ItemStoreInfo.complete(R.drawable.ic_social_settings, R.string.social_media_2),
-			ItemStoreInfo.complete(R.drawable.ic_night_mode_999999999999, R.string.night_mode),
+			//ItemStoreInfo.complete(R.drawable.ic_night_mode_999999999999, R.string.night_mode),
 			ItemStoreInfo.complete(R.drawable.ic_share_settings, R.string.share_app),
 			ItemStoreInfo.complete(R.drawable.ic_rate_app, R.string.rate_app),
 		),
