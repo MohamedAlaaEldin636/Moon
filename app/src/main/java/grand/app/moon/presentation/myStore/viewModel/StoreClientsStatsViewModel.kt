@@ -74,19 +74,37 @@ class StoreClientsStatsViewModel @Inject constructor(
 
 			val type = item.type ?: return@RVItemCommonListUsage
 
-			if (type == ItemStoreStats.Type.ADVERTISEMENTS) {
-				binding.root.findNavController().navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.my.ads", // todo with filters in mind isa.
-				)
-			}else { // todo if explore or story go there and view stats isa.
-				val titlePlural = context.getString(type.titlePluralRes)
-				val titleSingular = context.getString(type.titleSingularRes)
-				binding.root.findNavController().navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.general.stats.store",
-					paths = arrayOf(titlePlural, titleSingular, type.toString(), false.toString())
-				)
+			val titlePlural = context.getString(type.titlePluralRes)
+			val titleSingular = context.getString(type.titleSingularRes)
+
+			when (type) {
+				ItemStoreStats.Type.ADVERTISEMENTS -> {
+					binding.root.findNavController().navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.my.ads", // todo with filters in mind isa.
+					)
+				}
+				ItemStoreStats.Type.EXPLORES -> {
+					binding.root.findNavController().navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.explore.in.shop.info.with.stats",
+						paths = arrayOf(titlePlural, titleSingular)
+					)
+				}
+				ItemStoreStats.Type.STORIES -> {
+					binding.root.findNavController().navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.story.in.shop.info.with.stats",
+						paths = arrayOf(titlePlural, titleSingular)
+					)
+				}
+				else -> { // todo if explore or story go there and view stats isa.
+					binding.root.findNavController().navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.general.stats.store",
+						paths = arrayOf(titlePlural, titleSingular, type.toString(), false.toString())
+					)
+				}
 			}
 		}
 	) { binding, _, item ->

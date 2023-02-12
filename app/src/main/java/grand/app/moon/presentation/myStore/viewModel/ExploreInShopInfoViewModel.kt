@@ -28,8 +28,10 @@ import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.myStore.ExploreInShopInfoFragment
+import grand.app.moon.presentation.myStore.ExploreInShopInfoFragmentArgs
 import grand.app.moon.presentation.myStore.StoreClientsReviewsFragment
 import grand.app.moon.presentation.myStore.StoryInShopInfoFragment
+import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import grand.app.moon.presentation.stats.viewModels.ItemStatsChartViewModel
 import java.time.Instant
 import java.time.LocalDateTime
@@ -41,9 +43,14 @@ import kotlin.math.roundToInt
 class ExploreInShopInfoViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop,
-) : AndroidViewModel(application) {
+	val args: ExploreInShopInfoFragmentArgs
+) : ItemStatsChartViewModel(application) {
 
-	/*override fun toggleWeek(view: View) {
+	val showStats = MutableLiveData(args.titlePlural != app.getString(R.string.def_value_string))
+
+	var response: ResponseGeneralStats? = null
+
+	override fun toggleWeek(view: View) {
 		val response = response ?: return
 		val oldChart = chart.value ?: return
 		chart.value = response.toChartData(
@@ -60,7 +67,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 			showThursdayTooltip = oldChart.showThursdayTooltip,
 			showFridayTooltip = oldChart.showFridayTooltip,
 		)
-	}*/
+	}
 
 	/** Day / Month / Year -> 3 / 11 / 2023 */
 	val dateFrom = MutableLiveData("")

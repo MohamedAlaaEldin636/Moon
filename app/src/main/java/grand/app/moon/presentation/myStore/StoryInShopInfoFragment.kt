@@ -12,11 +12,13 @@ import grand.app.moon.R
 import grand.app.moon.databinding.FragmentExploreInShopInfoBinding
 import grand.app.moon.databinding.FragmentStoryInShopInfoBinding
 import grand.app.moon.databinding.ItemLottieAppWarningBinding
+import grand.app.moon.domain.stats.toChartData
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.myStore.viewModel.ExploreInShopInfoViewModel
 import grand.app.moon.presentation.myStore.viewModel.StoryInShopInfoViewModel
+import grand.app.moon.presentation.stats.models.ItemStoreStats
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -50,9 +52,30 @@ class StoryInShopInfoFragment : BaseFragment<FragmentStoryInShopInfoBinding>() {
 		handleRetryAbleActionOrGoBack(
 			action = {
 				viewModel.repoShop.getStoriesRemainingCount()
+			},
+			hideLoadingCode = {
+				if (viewModel.showStats.value.orFalse().not()) {
+					hideLoading()
+				}
 			}
 		) {
 			viewModel.remainingCount.value = it
+
+			if (viewModel.showStats.value.orFalse()) {
+				handleRetryAbleActionOrGoBack(
+					action = {
+						viewModel.repoShop.getGeneralStatsForStoreStats(
+							ItemStoreStats.Type.STORIES
+						)
+					}
+				) goBack@ { response ->
+					val context = context ?: return@goBack
+
+					viewModel.response = response
+
+					viewModel.chart.value = response.toChartData(context, viewModel.args.titlePlural, viewModel.args.titleSingular, true)
+				}
+			}
 		}
 	}
 

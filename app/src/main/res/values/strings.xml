@@ -491,4 +491,5 @@
   <string name="stories_82">الحالات</string>
   <string name="whatsapp_3">واتس اب</string>
     <string name="qr_code_scanner">ماسح رمز الاستجابة السريعة</string>
+  <string name="def_value_string" translatable="false">def value stringggggggggggggggggggggggggggggggg</string>
 </resources>

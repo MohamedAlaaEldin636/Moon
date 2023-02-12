@@ -20,10 +20,14 @@ import grand.app.moon.databinding.ItemStoryInShopInfoBinding
 import grand.app.moon.domain.shop.ItemExploreInShopInfo
 import grand.app.moon.domain.shop.ItemStoryInShopInfo
 import grand.app.moon.domain.shop.StoryType
+import grand.app.moon.domain.stats.toChartData
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myStore.StoryInShopInfoFragment
+import grand.app.moon.presentation.myStore.StoryInShopInfoFragmentArgs
+import grand.app.moon.presentation.stats.models.ResponseGeneralStats
+import grand.app.moon.presentation.stats.viewModels.ItemStatsChartViewModel
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -33,7 +37,31 @@ import javax.inject.Inject
 class StoryInShopInfoViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop,
-) : AndroidViewModel(application) {
+	val args: StoryInShopInfoFragmentArgs,
+) : ItemStatsChartViewModel(application) {
+
+	val showStats = MutableLiveData(args.titlePlural != app.getString(R.string.def_value_string))
+
+	var response: ResponseGeneralStats? = null
+
+	override fun toggleWeek(view: View) {
+		val response = response ?: return
+		val oldChart = chart.value ?: return
+		chart.value = response.toChartData(
+			app,
+			args.titlePlural,
+			args.titleSingular,
+			oldChart.weekName != app.getString(R.string.current_week)
+		).copy(
+			showSaturdayTooltip = oldChart.showSaturdayTooltip,
+			showSundayTooltip = oldChart.showSundayTooltip,
+			showMondayTooltip = oldChart.showMondayTooltip,
+			showTuesdayTooltip = oldChart.showTuesdayTooltip,
+			showWednesdayTooltip = oldChart.showWednesdayTooltip,
+			showThursdayTooltip = oldChart.showThursdayTooltip,
+			showFridayTooltip = oldChart.showFridayTooltip,
+		)
+	}
 
 	val type = MutableLiveData<StoryType?>()
 

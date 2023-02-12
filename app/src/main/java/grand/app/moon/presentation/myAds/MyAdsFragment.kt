@@ -47,7 +47,8 @@ class MyAdsFragment : BaseFragment<FragmentMyAdsBinding>()  {
 			handleRetryAbleActionOrGoBack(
 				action = {
 					viewModel.repoShop.getMyStoreCategoriesAndSubCategoriesAllPaginationPages()
-				}
+				},
+				hideLoadingCode = {}
 			) { pair ->
 				viewModel.allCategories.value = listOf(IdAndName(null, getString(R.string.all))) + pair.first
 				viewModel.allSubCategories.value = listOf(ResponseStoreSubCategory(null, getString(R.string.all), null)) + pair.second

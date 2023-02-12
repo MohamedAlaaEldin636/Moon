@@ -14,13 +14,25 @@ import grand.app.moon.presentation.home.SearchResultsFragmentArgs
 import grand.app.moon.presentation.myAds.*
 import grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragmentArgs
 import grand.app.moon.presentation.myStore.AddOrEditStoreSubCategoryFragmentArgs
+import grand.app.moon.presentation.myStore.ExploreInShopInfoFragmentArgs
 import grand.app.moon.presentation.myStore.ShowImagesOrVideoDialogFragmentArgs
+import grand.app.moon.presentation.myStore.StoryInShopInfoFragmentArgs
 import grand.app.moon.presentation.packages.SuccessShopSubscriptionFragmentArgs
 import grand.app.moon.presentation.stats.GeneralStatsFragmentArgs
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelArgsModule {
+
+	@Provides
+	fun provideStoryInShopInfoFragmentArgs(state: SavedStateHandle): StoryInShopInfoFragmentArgs {
+		return StoryInShopInfoFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
+	fun provideExploreInShopInfoFragmentArgs(state: SavedStateHandle): ExploreInShopInfoFragmentArgs {
+		return ExploreInShopInfoFragmentArgs.fromBundle(state.asBundle())
+	}
 
 	@Provides
 	fun provideSearchResultsFragmentArgs(state: SavedStateHandle): SearchResultsFragmentArgs {
