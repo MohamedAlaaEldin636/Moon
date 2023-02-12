@@ -19,6 +19,7 @@ import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemExploreInShopInfoBinding
 import grand.app.moon.domain.shop.ItemExploreInShopInfo
+import grand.app.moon.domain.stats.toChartData
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideWithDefaultsPlaceholderAndError
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideWithDefaultsPlaceholderAndErrorListImagesOrVideo
@@ -29,6 +30,7 @@ import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.myStore.ExploreInShopInfoFragment
 import grand.app.moon.presentation.myStore.StoreClientsReviewsFragment
 import grand.app.moon.presentation.myStore.StoryInShopInfoFragment
+import grand.app.moon.presentation.stats.viewModels.ItemStatsChartViewModel
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -40,6 +42,25 @@ class ExploreInShopInfoViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop,
 ) : AndroidViewModel(application) {
+
+	/*override fun toggleWeek(view: View) {
+		val response = response ?: return
+		val oldChart = chart.value ?: return
+		chart.value = response.toChartData(
+			app,
+			args.titlePlural,
+			args.titleSingular,
+			oldChart.weekName != app.getString(R.string.current_week)
+		).copy(
+			showSaturdayTooltip = oldChart.showSaturdayTooltip,
+			showSundayTooltip = oldChart.showSundayTooltip,
+			showMondayTooltip = oldChart.showMondayTooltip,
+			showTuesdayTooltip = oldChart.showTuesdayTooltip,
+			showWednesdayTooltip = oldChart.showWednesdayTooltip,
+			showThursdayTooltip = oldChart.showThursdayTooltip,
+			showFridayTooltip = oldChart.showFridayTooltip,
+		)
+	}*/
 
 	/** Day / Month / Year -> 3 / 11 / 2023 */
 	val dateFrom = MutableLiveData("")

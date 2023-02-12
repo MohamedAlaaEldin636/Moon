@@ -31,6 +31,22 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!--<include
+      android:id="@+id/statsInclude"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      layout="@layout/item_stats_chart"
+
+      android:layout_margin="8dp"
+
+      app:viewModel="@{viewModel}"
+
+      app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>-->
+
     <TextView
       android:id="@+id/labelFilteringResultsTextView"
 
