@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
+import android.os.Bundle
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
@@ -18,6 +19,7 @@ import grand.app.moon.data.home2.RepoHome2
 import grand.app.moon.databinding.ItemHomeRvAdvBinding
 import grand.app.moon.databinding.ItemHomeRvBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
@@ -221,10 +223,47 @@ class Home2ViewModel @Inject constructor(
 	}
 
 	fun goToFilter(view: View) {
-		view.findNavController().navigateDeepLinkWithOptions(
-			"fragment-dest",
-			"grand.app.moon.dest.old.home"
-		)
+		if (true) {
+			view.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.old.home"
+			)
+
+			return
+		}
+
+		toFilter(view)
+	}
+
+	fun toFilter(
+		v: View, category_id: Int? = -1, category_name: String? = null, sub_category_id: Int? = -1,
+		sub_category_name: String? = null, allow_change_category: Boolean = true, store_id: Int = -1,
+		store: Store? = Store()
+	) {
+		val bundle = Bundle()
+
+		category_id?.let { bundle.putInt("category_id", it) }
+		if (sub_category_id != null) {
+			bundle.putInt("sub_category_id", sub_category_id)
+		}
+		bundle.putInt("store_id", store_id)
+		bundle.putBoolean("allow_change_category", allow_change_category)
+
+		category_name?.let {
+			bundle.putString("category_name", it)
+		}
+
+		sub_category_name?.let {
+			bundle.putString("sub_category_name", it)
+		}
+
+		store?.let {
+			bundle.putSerializable("store", it)
+		}
+
+
+		v.findNavController()
+			.navigate(R.id.to_filter, bundle, Constants.NAVIGATION_OPTIONS)
 	}
 
 	fun setupRvs(binding: ItemHomeRvBinding, item: ItemHomeRV, position: Int) {
