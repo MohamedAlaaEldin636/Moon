@@ -39,7 +39,7 @@ data class ItemStoreStats(
 		SHARES("shares", R.string.store_shares, R.string.share),
 		CALLS("calls", R.string.calls, R.string.call_3),
 		CHATS("chats", R.string.conversation, R.string.chat_9),
-		WHATSAPP("whatsapp"/*s*/, R.string.whatsapp_calls, R.string.whatsapp_call),
+		WHATSAPP("whatsapps"/*s*/, R.string.whatsapp_calls, R.string.whatsapp_call),
 		REPORTS("reports", R.string.reports_store, R.string.report_1),
 		BLOCKS("blocks", R.string.store_block, R.string.block),
 		EXPLORES("explores", R.string.explore_files, R.string.file_2),

@@ -35,6 +35,18 @@ data class ResponseUserInGeneralStats(
 	@SerializedName("total_shares") var totalShares: Int?,
 	@SerializedName("total_calls") var totalCalls: Int?,
 	@SerializedName("total_whatsapp") var totalWhatsapp: Int?,
+	@SerializedName("total_whatsapps") var totalWhatsapps: Int?,
+	@SerializedName("total_chats") var totalChats: Int?,
+	//@SerializedName("total_favorites") var totalFavorites: Int?,
+	@SerializedName("total_search") var totalSearch: Int?,
+	@SerializedName("total_reports") var totalReports: Int?,
+	@SerializedName("total_blocks") var totalBlocks: Int?,
+	@SerializedName("total_ad_shares") var totalAdShares: Int?,
+	@SerializedName("total_ad_views") var totalAdViews: Int?,
+	@SerializedName("total_ad_reports") var totalAdReports: Int?,
+	@SerializedName("total_ad_searches") var totalAdSearches: Int?,
+	//@SerializedName("total_ad_favorites") var totalReports: Int?,
+
 	var id: Int?,
 	var verified: Int?,
 	@SerializedName("is_shop") var isShop: Boolean?,
@@ -45,8 +57,10 @@ data class ResponseUserInGeneralStats(
 	var image: String?,
 	@SerializedName("created_at") var createdAt: String?,
 ) {
-	val count get() = maxOfMA(totalViews, totalShares, totalCalls, totalWhatsapp)
-	// todo na2es el search + chats + store so many stats
+	val count get() = maxOfMA(
+		totalViews, totalShares, totalCalls, totalWhatsapp, totalChats, totalSearch, totalReports, totalWhatsapps,
+		totalBlocks, totalAdShares, totalAdViews, totalAdReports, totalAdSearches
+	)
 }
 
 fun maxOfMA(vararg values: Int?): Int? {
@@ -58,60 +72,3 @@ fun maxOfMA(vararg values: Int?): Int? {
 	}
 	return max
 }
-
-/*
-{
-    "code": 200,
-    "message": "success",
-    "data": {
-        "users": {
-            "data": [
-                {
-                    "id": 9797,
-                    "verified": 1,
-                    "total_views": 3,
-                    "is_shop": false,
-                    "name": "emma",
-                    "email": "emma@test.com",
-                    "phone": "1205577044",
-                    "country_code": "+20",
-                    "image": "https://sooqmoon.net/storage/users/1674465665AqczN.webp",
-                    "token": null
-                }
-            ],
-            "links": {
-                "first": "http://sooqmoon.net/api/v1/my-advertisements/statistics/37797?page=1",
-                "last": "http://sooqmoon.net/api/v1/my-advertisements/statistics/37797?page=1",
-                "prev": null,
-                "next": null
-            },
-            "meta": {
-                "current_page": 1,
-                "from": 1,
-                "last_page": 1,
-                "links": [
-                    {
-                        "url": null,
-                        "label": "pagination.previous",
-                        "active": false
-                    },
-                    {
-                        "url": "http://sooqmoon.net/api/v1/my-advertisements/statistics/37797?page=1",
-                        "label": "1",
-                        "active": true
-                    },
-                    {
-                        "url": null,
-                        "label": "pagination.next",
-                        "active": false
-                    }
-                ],
-                "path": "http://sooqmoon.net/api/v1/my-advertisements/statistics/37797",
-                "per_page": 15,
-                "to": 1,
-                "total": 1
-            }
-        }
-    }
-}
- */

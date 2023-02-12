@@ -19,7 +19,7 @@ data class ResponseMyAdvDetails(
 	var latitude: String?,
 	var longitude: String?,
 	var address: String?,
-	var price: Int?,
+	var price: Float?,
 	var premium: Int?,
 	@SerializedName("created_at") var createdAt: String?,
 	@SerializedName("date") var dateInMs: Long?,
