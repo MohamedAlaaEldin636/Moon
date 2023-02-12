@@ -13,7 +13,6 @@
 
     <action
       android:id="@+id/action_exploreFragment_to_exploreListFragment"
-
       app:destination="@id/exploreListFragment"
       app:enterAnim="@anim/anim_slide_in_right"
       app:exitAnim="@anim/anim_slide_out_left"

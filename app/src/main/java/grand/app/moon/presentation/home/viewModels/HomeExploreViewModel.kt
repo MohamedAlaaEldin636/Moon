@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -20,11 +21,15 @@ import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeExploreBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.explore.entity.Explore
+import grand.app.moon.domain.explore.entity.ExploreListPaginateData
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.home.HomeExploreFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
+import grand.app.moon.presentation.home.models.toExplore
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,13 +52,25 @@ class HomeExploreViewModel @Inject constructor(
 		return false
 	}
 
-	// todo share of inner screen is share of file link ex. video or image isa.
 	val adapter = RVPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>(
 		R.layout.item_home_explore,
 		onItemClick = { adapter, binding ->
 			val item = (binding.constraintLayout.tag as? String).fromJsonInlinedOrNull<ItemHomeExplore>()
+				?: return@RVPagingItemCommonListUsageWithExoPlayer
 
-			General.TODO("not programmed yet isa. ${item?.isVideo} ${item?.page} ${adapter.snapshot().items.lastOrNull()?.page}")
+			// Share of inner screen is share of file link ex. video or image isa.
+			val list = adapter.snapshot().items.map {
+				it.toExplore()
+			}.toMutableList().also { mutableList ->
+				mutableList.removeIf { it.id == item.id }
+				mutableList.add(0, item.toExplore())
+			}.toList().toArrayList()
+
+			binding.root.findNavController().navigateDeepLinkWithOptions(
+				"explore",
+				"grand.app.moon.explore.list",
+				paths = arrayOf(/*ExploreListPaginateData(list)*/list.toJsonInlinedOrNull())
+			)
 		},
 		onViewRecycledAction = {
 			//it.itemView.findViewById<ImageView>(R.id.imageImageView).clearWithGlide()

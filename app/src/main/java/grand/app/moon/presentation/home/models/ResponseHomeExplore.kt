@@ -1,9 +1,33 @@
 package grand.app.moon.presentation.home.models
 
 import com.google.gson.annotations.SerializedName
+import grand.app.moon.domain.explore.entity.Explore
+import grand.app.moon.domain.home.models.Store
 import grand.app.moon.extensions.AppConsts
 import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.orZero
 import grand.app.moon.helpers.paging.BasePaging
+
+fun ItemHomeExplore.toExplore(): Explore {
+	return Explore(
+		id.orZero(),
+		createdAt.orEmpty(),
+		files,
+		mimeType.orEmpty(),
+		likesCount.orZero(),
+		sharesCount.orZero(),
+		commentsCount.orZero(),
+		isLiked.orFalse(),
+		Store(
+			id = store?.id,
+			image = store?.logo,
+			name = store?.name,
+			share = store?.shareLink,
+			isFollowing = store?.isFollowing,
+			premium = store?.premium,
+		)
+	)
+}
 
 data class ItemHomeExplore(
 	var id: Int?,
