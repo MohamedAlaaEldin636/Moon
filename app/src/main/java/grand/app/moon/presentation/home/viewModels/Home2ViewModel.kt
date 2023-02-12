@@ -114,34 +114,33 @@ class Home2ViewModel @Inject constructor(
 						)
 					}
 					ItemHomeRV.Type.SUGGESTED_ADS -> {
-						/*navController.navigate(
+						navController.navigate(
 							R.id.nav_category_list_ads,
 							bundleOf(
 								"category_id" to -1,
-								"tabBarText" to category.name,
-								"type" to category.type
+								"tabBarText" to item.name.orEmpty(),
+								"type" to 1
 							), Constants.NAVIGATION_OPTIONS
-						)*/
+						)
 					}
 					ItemHomeRV.Type.MOST_POPULAR_ADS -> {
-						/*navController.navigate(
+						navController.navigate(
 							R.id.nav_category_list_ads,
 							bundleOf(
 								"category_id" to -1,
-								"tabBarText" to category.name,
-								"type" to category.type
+								"tabBarText" to item.name.orEmpty(),
+								"type" to 2
 							), Constants.NAVIGATION_OPTIONS
-						)*/
+						)
 					}
 					ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> {
-						/*navController.navigate(
+						navController.navigate(
 							R.id.nav_category_list_ads,
 							bundleOf(
-								"category_id" to -1,
-								"tabBarText" to category.name,
-								"type" to category.type
+								"category_id" to item.dynamicCategoriesAdsId.orZero(),
+								"tabBarText" to item.name.orEmpty()
 							), Constants.NAVIGATION_OPTIONS
-						)*/
+						)
 					}
 				}
 			}
@@ -223,14 +222,14 @@ class Home2ViewModel @Inject constructor(
 	}
 
 	fun goToFilter(view: View) {
-		if (true) {
+		/*if (true) {
 			view.findNavController().navigateDeepLinkWithOptions(
 				"fragment-dest",
 				"grand.app.moon.dest.old.home"
 			)
 
 			return
-		}
+		}*/
 
 		toFilter(view)
 	}

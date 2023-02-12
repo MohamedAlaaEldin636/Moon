@@ -6,6 +6,7 @@ data class ItemHomeRV(
 	val type: Type,
 	val name: String?,
 	val count: Int? = null,
+	val dynamicCategoriesAdsId: Int? = null,
 ) {
 	enum class Type(val apiValue: String) {
 		STORIES("stories"),

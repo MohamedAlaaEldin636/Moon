@@ -9,6 +9,7 @@ import grand.app.moon.NavCategoryListAdsArgs
 import grand.app.moon.R
 import grand.app.moon.domain.ads.repository.AdsRepository
 import grand.app.moon.domain.home.models.CategoryAdvertisement
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
@@ -31,6 +32,7 @@ class ItemAdsHomeViewModel(val category: CategoryAdvertisement, adsRepository: A
 //    val builder = NavCategoryListAdsArgs.Builder()
 //    builder.tabBarText = category.name
     if(category.type != -1) {
+			MyLogger.e("abcdefefreefre 1 ${category.type}")
       Log.d(TAG, "showAll: HERERERERERER")
 //      builder.isSub = false
 //      builder.type = category.type
@@ -48,6 +50,7 @@ class ItemAdsHomeViewModel(val category: CategoryAdvertisement, adsRepository: A
         ), Constants.NAVIGATION_OPTIONS
       )
     }else{
+	    MyLogger.e("abcdefefreefre 2")
 //      builder.categoryId = category.id
       v.findNavController().navigate(
         R.id.nav_category_list_ads,

@@ -128,7 +128,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 			viewModel.adapterDynamicCategoryAdsStartIndex = list.size
 			if (dynamicCategoriesAds.isNotEmpty()) {
 				for (item in dynamicCategoriesAds) {
-					list += ItemHomeRV(ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS, item.name, item.adsCount)
+					list += ItemHomeRV(ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS, item.name, item.adsCount, item.id)
 				}
 			}
 

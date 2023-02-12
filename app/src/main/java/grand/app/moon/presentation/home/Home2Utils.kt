@@ -177,31 +177,20 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 			?: return@RVItemCommonListUsage
 
 		if (item.store?.id == userLocalUseCase().id) {
-			kotlin.runCatching {
-				binding.root.findNavController().navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.presentation.myAds.dest.my.adv.details.id",
-					paths = arrayOf(item.id.orZero().toString())
-				)
-			}
-			// my ad
-			// "fragment-dest:///{id}" />
-		}else {
-
-		}
-		/*
-		R.id.nav_ads, bundleOf(
-				        "id" to data.id,
-				        "type" to type
-			        )
-		 */
-		//General.TODO("ch 1")
-		/*binding.root.findNavController().navigate(
-			R.id.nav_ads, bundleOf(
-				"id" to data.id,
-				"type" to type
+			binding.root.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.presentation.myAds.dest.my.adv.details.id",
+				paths = arrayOf(item.id.orZero().toString())
 			)
-		)*/
+		}else {
+			binding.root.findNavController().navigate(
+				R.id.nav_ads, bundleOf(
+					"id" to item.id.orZero(),
+					"type" to 2,
+					"from_store" to false
+				)
+			)
+		}
 	},
 	additionalListenersSetups = { adapter, binding ->
 		binding.storeImageImageView.setOnClickListener {
