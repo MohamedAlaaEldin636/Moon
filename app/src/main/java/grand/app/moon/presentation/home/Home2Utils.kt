@@ -3,6 +3,7 @@ package grand.app.moon.presentation.home
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.databinding.ViewDataBinding
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
@@ -117,7 +118,16 @@ fun Home2ViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCate
 fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStoreBinding, ItemStoreInResponseHome>(
 	R.layout.item_home_rv_store,
 	onItemClick = { adapter, binding ->
-		General.TODO("ch 1")
+		val item = binding.getUsingRootViaJson<ItemStoreInResponseHome>() ?: return@RVItemCommonListUsage
+
+		binding.root.findNavController().navigate(
+			R.id.nav_store,
+			bundleOf(
+				"id" to item.id.orZero(),
+				"type" to 3
+			),
+			Constants.NAVIGATION_OPTIONS
+		)
 	},
 	additionalListenersSetups = { adapter, binding ->
 		binding.followingButtonView.setOnClickListener {
@@ -125,6 +135,8 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 		}
 	}
 ) { binding, position, item ->
+	binding.setUsingRootViaJson(item)
+
 	val context = binding.root.context ?: return@RVItemCommonListUsage
 
 	binding.imageImageView.setupWithGlide {
