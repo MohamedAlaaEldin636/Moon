@@ -65,6 +65,8 @@ fun BaseFragment<*>.showRetryErrorDialogWithBackNegativeButton(
 		if (findNavController().graph.startDestinationId == findNavController().currentDestination?.id) {
 			activity?.onBackPressed()
 		}else {
+			hideLoading()
+
 			findNavController().navigateUp()
 		}
 	},

@@ -98,7 +98,7 @@ class StoreClientsStatsViewModel @Inject constructor(
 						paths = arrayOf(titlePlural, titleSingular)
 					)
 				}
-				else -> { // todo if explore or story go there and view stats isa.
+				else -> {
 					binding.root.findNavController().navigateDeepLinkWithOptions(
 						"fragment-dest",
 						"grand.app.moon.dest.general.stats.store",
