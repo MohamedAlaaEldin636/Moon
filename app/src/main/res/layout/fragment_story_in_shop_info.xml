@@ -15,408 +15,418 @@
       type="grand.app.moon.presentation.myStore.viewModel.StoryInShopInfoViewModel" />
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="#FBFBFB">
+    android:fillViewport="true">
 
-    <include
-      android:id="@+id/toolbarCurve"
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
 
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
+      android:background="#FBFBFB">
 
-      layout="@layout/item_toolbar_curve"
+      <include
+        android:id="@+id/toolbarCurve"
 
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
-
-    <include
-      android:id="@+id/statsInclude"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      layout="@layout/item_stats_chart"
-
-      android:layout_margin="8dp"
-
-      android:visibility="@{viewModel.showStats ? View.VISIBLE : View.GONE}"
-
-      app:viewModel="@{viewModel}"
-
-      app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-      android:id="@+id/labelFilteringResultsTextView"
-
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-
-      android:layout_marginTop="23dp"
-      android:layout_marginStart="16dp"
-
-      android:textDirection="locale"
-      style="@style/TextTajawalBold14"
-      android:textSize="15sp"
-      android:textColor="#0D0633"
-      android:text="@string/filtering_results"
-
-      app:layout_constraintTop_toBottomOf="@id/statsInclude"
-      app:layout_constraintStart_toStartOf="parent"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/labelStoryTypeFromTextView"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      android:layout_marginTop="16dp"
-      android:layout_marginStart="16dp"
-      android:layout_marginEnd="5dp"
-
-      android:textDirection="locale"
-      style="@style/TextTajawalMedium14"
-      android:textSize="12sp"
-      android:textColor="#212121"
-      android:text="@string/story_type"
-
-      android:maxLines="1"
-      android:ellipsize="end"
-      app:autoSizeTextType="uniform"
-      app:autoSizeMaxTextSize="12sp"
-      app:autoSizeMinTextSize="6sp"
-
-      app:layout_constraintTop_toBottomOf="@id/labelFilteringResultsTextView"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/storyTypeTextView"
-
-      android:maxLines="1"
-      android:ellipsize="end"
-      app:autoSizeTextType="uniform"
-      app:autoSizeMaxTextSize="10sp"
-      app:autoSizeMinTextSize="6sp"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      android:background="@drawable/dr_round_7_white_with_stroke"
-
-      android:layout_marginTop="13dp"
-      android:layout_marginEnd="16dp"
-
-      android:padding="13dp"
-
-      style="@style/TextTajawalMedium14"
-      android:textSize="10sp"
-      android:textDirection="locale"
-
-      android:text="@{viewModel.typeValue}"
-
-      android:onClick="@{v -> viewModel.pickStoryType(v)}"
-
-      android:hint="@string/story_type"
-      android:textColorHint="#727889"
-
-      android:drawablePadding="6dp"
-      app:drawableEndCompat="@drawable/ic_arrow_down_d303"
-      android:gravity="center_vertical"
-
-      app:layout_constraintTop_toBottomOf="@id/labelStoryTypeFromTextView"
-      app:layout_constraintStart_toStartOf="@id/labelDateFromTextView"
-      app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-      android:id="@+id/searchButton"
-
-      android:layout_width="wrap_content"
-      android:layout_height="0dp"
-
-      android:background="@drawable/dr_round_7_with_stroke"
-      android:backgroundTint="@color/colorPrimary"
-
-      android:onClick="@{v -> viewModel.search(v)}"
-
-      android:layout_marginStart="4.75dp"
-      android:layout_marginEnd="16dp"
-
-      android:paddingTop="10dp"
-      android:paddingBottom="10dp"
-      android:paddingStart="28dp"
-      android:paddingEnd="28dp"
-
-      android:gravity="center"
-      android:text="@string/search"
-      android:textColor="@color/white"
-      style="@style/TextTajawalMedium14"
-
-      app:layout_constraintTop_toTopOf="@id/dateFromTextView"
-      app:layout_constraintBottom_toBottomOf="@id/dateFromTextView"
-      app:layout_constraintStart_toEndOf="@id/dateToTextView"
-      app:layout_constraintEnd_toEndOf="parent"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/labelDateFromTextView"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      android:layout_marginTop="16dp"
-      android:layout_marginStart="16dp"
-      android:layout_marginEnd="5dp"
-
-      android:textDirection="locale"
-      style="@style/TextTajawalMedium14"
-      android:textSize="12sp"
-      android:textColor="#212121"
-      android:text="@string/date_from"
-
-      android:maxLines="1"
-      android:ellipsize="end"
-      app:autoSizeTextType="uniform"
-      app:autoSizeMaxTextSize="12sp"
-      app:autoSizeMinTextSize="6sp"
-
-      app:layout_constraintTop_toBottomOf="@id/storyTypeTextView"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toStartOf="@id/labelDateToTextView"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/labelDateToTextView"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      android:layout_marginTop="16dp"
-      android:layout_marginStart="5dp"
-      android:layout_marginEnd="4.75dp"
-
-      android:textDirection="locale"
-      style="@style/TextTajawalMedium14"
-      android:textSize="12sp"
-      android:textColor="#212121"
-      android:text="@string/date_to"
-
-      android:maxLines="1"
-      android:ellipsize="end"
-      app:autoSizeTextType="uniform"
-      app:autoSizeMaxTextSize="12sp"
-      app:autoSizeMinTextSize="6sp"
-
-      app:layout_constraintTop_toBottomOf="@id/storyTypeTextView"
-      app:layout_constraintStart_toEndOf="@id/labelDateFromTextView"
-      app:layout_constraintEnd_toStartOf="@id/searchButton"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/dateFromTextView"
-
-      android:maxLines="1"
-      android:ellipsize="end"
-      app:autoSizeTextType="uniform"
-      app:autoSizeMaxTextSize="10sp"
-      app:autoSizeMinTextSize="6sp"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      android:background="@drawable/dr_round_7_white_with_stroke"
-
-      android:layout_marginTop="13dp"
-      android:layout_marginEnd="6.5dp"
-
-      android:padding="13dp"
-
-      style="@style/TextTajawalMedium14"
-      android:textSize="10sp"
-      android:textDirection="locale"
-
-      android:text="@{viewModel.dateFrom}"
-
-      android:onClick="@{v -> viewModel.pickDate(v, true)}"
-
-      android:hint="@string/date_hint"
-      android:textColorHint="#727889"
-
-      android:drawablePadding="6dp"
-      app:drawableStartCompat="@drawable/ic_baseline_calendar_month_24"
-      app:drawableTint="#727889"
-      android:gravity="center_vertical"
-
-      app:layout_constraintTop_toBottomOf="@id/labelDateFromTextView"
-      app:layout_constraintStart_toStartOf="@id/labelDateFromTextView"
-      app:layout_constraintEnd_toStartOf="@id/dateToTextView"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/dateToTextView"
-
-      android:maxLines="1"
-      android:ellipsize="end"
-      app:autoSizeTextType="uniform"
-      app:autoSizeMaxTextSize="10sp"
-      app:autoSizeMinTextSize="6sp"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      android:text="@{viewModel.dateTo}"
-
-      android:onClick="@{v -> viewModel.pickDate(v, false)}"
-
-      android:background="@drawable/dr_round_7_white_with_stroke"
-
-      android:layout_marginTop="13dp"
-      android:layout_marginStart="6.5dp"
-      android:layout_marginEnd="4.75dp"
-
-      android:padding="13dp"
-
-      style="@style/TextTajawalMedium14"
-      android:textSize="10sp"
-      android:textDirection="locale"
-
-      android:hint="@string/date_hint"
-      android:textColorHint="#727889"
-
-      android:drawablePadding="6dp"
-      app:drawableStartCompat="@drawable/ic_baseline_calendar_month_24"
-      app:drawableTint="#727889"
-      android:gravity="center_vertical"
-
-      app:layout_constraintTop_toBottomOf="@id/labelDateToTextView"
-      app:layout_constraintStart_toEndOf="@id/dateFromTextView"
-      app:layout_constraintEnd_toStartOf="@id/searchButton" />
-
-    <LinearLayout
-      android:id="@+id/remCountLinearLayout"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      android:orientation="horizontal"
-
-      android:layout_marginTop="9dp"
-      android:layout_marginStart="16dp"
-      android:layout_marginEnd="16dp"
-
-      android:background="@drawable/dr_rect_5"
-
-      android:padding="9dp"
-
-      android:gravity="center_vertical"
-
-      app:layout_constraintTop_toBottomOf="@id/searchButton"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent">
-
-      <FrameLayout
-        android:id="@+id/lottieFrameLayout"
-
-        android:layout_width="25dp"
-        android:layout_height="25dp">
-
-        <!--<com.airbnb.lottie.LottieAnimationView
-          android:id="@+id/lottieAnimationView"
-
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-
-          app:lottie_autoPlay="true"
-          app:lottie_fileName="app_warning.json"
-          app:lottie_loop="true"/>-->
-
-      </FrameLayout>
-
-      <TextView
-        android:id="@+id/remCountTextView"
-
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        style="@style/TextTajawalMedium14"
-        android:textSize="12sp"
-        android:textDirection="locale"
-        android:textColor="#212121"
+        layout="@layout/item_toolbar_curve"
 
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-
-        tools:text="عدد اكسبلور المتبقي ( 5 )"
-        android:text="@{viewModel.textRemainingCount}"
-
-        android:background="@drawable/dr_rect_5"
-
-        app:layout_constraintTop_toBottomOf="@id/searchButton"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    </LinearLayout>
+      <include
+        android:id="@+id/statsInclude"
 
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recyclerView"
-
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-
-      android:padding="8dp"
-      android:clipToPadding="false"
-
-      android:scrollbars="vertical"
-      tools:itemCount="6"
-      app:spanCount="1"
-      tools:orientation="vertical"
-      tools:listitem="@layout/item_story_in_shop_info"
-      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-
-      app:layout_constraintTop_toBottomOf="@id/remCountLinearLayout"
-      app:layout_constraintBottom_toTopOf="@id/buttonFrameLayout"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
-    
-    <FrameLayout
-      android:id="@+id/buttonFrameLayout"
-
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-
-      android:background="@color/white"
-
-      android:paddingStart="22dp"
-      android:paddingEnd="22dp"
-      android:paddingTop="11dp"
-      android:paddingBottom="11dp"
-
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent">
-
-      <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:background="@drawable/dr_rounded_5_button"
+        layout="@layout/item_stats_chart"
 
-        android:padding="16dp"
+        android:layout_margin="8dp"
+
+        android:visibility="@{viewModel.showStats ? View.VISIBLE : View.GONE}"
+
+        app:viewModel="@{viewModel}"
+
+        app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <TextView
+        android:id="@+id/labelFilteringResultsTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="23dp"
+        android:layout_marginStart="16dp"
+
+        android:textDirection="locale"
+        style="@style/TextTajawalBold14"
+        android:textSize="15sp"
+        android:textColor="#0D0633"
+        android:text="@string/filtering_results"
+
+        app:layout_constraintTop_toBottomOf="@id/statsInclude"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelStoryTypeFromTextView"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="5dp"
+
+        android:textDirection="locale"
+        style="@style/TextTajawalMedium14"
+        android:textSize="12sp"
+        android:textColor="#212121"
+        android:text="@string/story_type"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="12sp"
+        app:autoSizeMinTextSize="6sp"
+
+        app:layout_constraintTop_toBottomOf="@id/labelFilteringResultsTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/storyTypeTextView"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="10sp"
+        app:autoSizeMinTextSize="6sp"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/dr_round_7_white_with_stroke"
+
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
+
+        android:padding="13dp"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+        android:textDirection="locale"
+
+        android:text="@{viewModel.typeValue}"
+
+        android:onClick="@{v -> viewModel.pickStoryType(v)}"
+
+        android:hint="@string/story_type"
+        android:textColorHint="#727889"
+
+        android:drawablePadding="6dp"
+        app:drawableEndCompat="@drawable/ic_arrow_down_d303"
+        android:gravity="center_vertical"
+
+        app:layout_constraintTop_toBottomOf="@id/labelStoryTypeFromTextView"
+        app:layout_constraintStart_toStartOf="@id/labelDateFromTextView"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <TextView
+        android:id="@+id/searchButton"
+
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+
+        android:background="@drawable/dr_round_7_with_stroke"
+        android:backgroundTint="@color/colorPrimary"
+
+        android:onClick="@{v -> viewModel.search(v)}"
+
+        android:layout_marginStart="4.75dp"
+        android:layout_marginEnd="16dp"
+
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
 
         android:gravity="center"
-        style="@style/TextTajawalMedium14"
-        android:textDirection="locale"
+        android:text="@string/search"
         android:textColor="@color/white"
+        style="@style/TextTajawalMedium14"
 
-        android:text="@string/add_story_9"
+        app:layout_constraintTop_toTopOf="@id/dateFromTextView"
+        app:layout_constraintBottom_toBottomOf="@id/dateFromTextView"
+        app:layout_constraintStart_toEndOf="@id/dateToTextView"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        android:onClick="@{v -> viewModel.goToAddStory(v)}"/>
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelDateFromTextView"
 
-    </FrameLayout>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="5dp"
+
+        android:textDirection="locale"
+        style="@style/TextTajawalMedium14"
+        android:textSize="12sp"
+        android:textColor="#212121"
+        android:text="@string/date_from"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="12sp"
+        app:autoSizeMinTextSize="6sp"
+
+        app:layout_constraintTop_toBottomOf="@id/storyTypeTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/labelDateToTextView"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelDateToTextView"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="4.75dp"
+
+        android:textDirection="locale"
+        style="@style/TextTajawalMedium14"
+        android:textSize="12sp"
+        android:textColor="#212121"
+        android:text="@string/date_to"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="12sp"
+        app:autoSizeMinTextSize="6sp"
+
+        app:layout_constraintTop_toBottomOf="@id/storyTypeTextView"
+        app:layout_constraintStart_toEndOf="@id/labelDateFromTextView"
+        app:layout_constraintEnd_toStartOf="@id/searchButton"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dateFromTextView"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="10sp"
+        app:autoSizeMinTextSize="6sp"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/dr_round_7_white_with_stroke"
+
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="6.5dp"
+
+        android:padding="13dp"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+        android:textDirection="locale"
+
+        android:text="@{viewModel.dateFrom}"
+
+        android:onClick="@{v -> viewModel.pickDate(v, true)}"
+
+        android:hint="@string/date_hint"
+        android:textColorHint="#727889"
+
+        android:drawablePadding="6dp"
+        app:drawableStartCompat="@drawable/ic_baseline_calendar_month_24"
+        app:drawableTint="#727889"
+        android:gravity="center_vertical"
+
+        app:layout_constraintTop_toBottomOf="@id/labelDateFromTextView"
+        app:layout_constraintStart_toStartOf="@id/labelDateFromTextView"
+        app:layout_constraintEnd_toStartOf="@id/dateToTextView"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dateToTextView"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="10sp"
+        app:autoSizeMinTextSize="6sp"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="@{viewModel.dateTo}"
+
+        android:onClick="@{v -> viewModel.pickDate(v, false)}"
+
+        android:background="@drawable/dr_round_7_white_with_stroke"
+
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="6.5dp"
+        android:layout_marginEnd="4.75dp"
+
+        android:padding="13dp"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+        android:textDirection="locale"
+
+        android:hint="@string/date_hint"
+        android:textColorHint="#727889"
+
+        android:drawablePadding="6dp"
+        app:drawableStartCompat="@drawable/ic_baseline_calendar_month_24"
+        app:drawableTint="#727889"
+        android:gravity="center_vertical"
+
+        app:layout_constraintTop_toBottomOf="@id/labelDateToTextView"
+        app:layout_constraintStart_toEndOf="@id/dateFromTextView"
+        app:layout_constraintEnd_toStartOf="@id/searchButton" />
+
+      <LinearLayout
+        android:id="@+id/remCountLinearLayout"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:layout_marginTop="9dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:background="@drawable/dr_rect_5"
+
+        android:padding="9dp"
+
+        android:gravity="center_vertical"
+
+        app:layout_constraintTop_toBottomOf="@id/searchButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <FrameLayout
+          android:id="@+id/lottieFrameLayout"
+
+          android:layout_width="25dp"
+          android:layout_height="25dp">
+
+          <!--<com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="app_warning.json"
+            app:lottie_loop="true"/>-->
+
+        </FrameLayout>
+
+        <TextView
+          android:id="@+id/remCountTextView"
+
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+
+          style="@style/TextTajawalMedium14"
+          android:textSize="12sp"
+          android:textDirection="locale"
+          android:textColor="#212121"
+
+          android:layout_marginTop="2dp"
+          android:layout_marginBottom="2dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginEnd="8dp"
+
+          tools:text="عدد اكسبلور المتبقي ( 5 )"
+          android:text="@{viewModel.textRemainingCount}"
+
+          android:background="@drawable/dr_rect_5"
+
+          app:layout_constraintTop_toBottomOf="@id/searchButton"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"/>
+
+      </LinearLayout>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintHeight_max="400dp"
+
+        android:padding="8dp"
+        android:clipToPadding="false"
+
+        android:scrollbars="vertical"
+        tools:itemCount="6"
+        app:spanCount="1"
+        tools:orientation="vertical"
+        tools:listitem="@layout/item_story_in_shop_info"
+        tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+        app:layout_constraintTop_toBottomOf="@id/remCountLinearLayout"
+        app:layout_constraintBottom_toTopOf="@id/buttonFrameLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+      <FrameLayout
+        android:id="@+id/buttonFrameLayout"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:background="@color/white"
+
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+
+          android:background="@drawable/dr_rounded_5_button"
+
+          android:padding="16dp"
+
+          android:gravity="center"
+          style="@style/TextTajawalMedium14"
+          android:textDirection="locale"
+          android:textColor="@color/white"
+
+          android:text="@string/add_story_9"
+
+          android:onClick="@{v -> viewModel.goToAddStory(v)}"/>
+
+      </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.core.widget.NestedScrollView>
 
 </layout>
