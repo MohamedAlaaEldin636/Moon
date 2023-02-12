@@ -10,6 +10,7 @@ import grand.app.moon.NavCategoryListAdsArgs
 import grand.app.moon.R
 import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.story.entity.StoryItem
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.view.CategoryDetailsFragmentDirections
@@ -23,8 +24,11 @@ class ItemCategoryViewModel constructor(val category: CategoryItem, var percenta
   }
 
   fun submit(v: View) {
+	  MyLogger.e("abcde 1")
     if (category.total == null) {
+	    MyLogger.e("abcde 2")
       if (category.subCategories != null) {
+	      MyLogger.e("abcde 3")
         Log.d(TAG, "submit: category id")
         v.findNavController().navigate(
           R.id.categoryDetailsFragment,
@@ -34,6 +38,7 @@ class ItemCategoryViewModel constructor(val category: CategoryItem, var percenta
           ), Constants.NAVIGATION_OPTIONS
         )
       } else {
+	      MyLogger.e("abcde 4")
         Log.d(TAG, "submit: sub_category id")
         v.findNavController().navigate(
           R.id.nav_category_list_ads,
@@ -45,6 +50,7 @@ class ItemCategoryViewModel constructor(val category: CategoryItem, var percenta
         )
       }
     } else {
+	    MyLogger.e("abcde 5")
 
 
 //      CategoryDetailsFragmentDirections

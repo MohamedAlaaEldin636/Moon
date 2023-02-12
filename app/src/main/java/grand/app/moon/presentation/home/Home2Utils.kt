@@ -14,6 +14,7 @@ import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.adjustInsideRV
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.presentation.base.extensions.showError
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
 import grand.app.moon.presentation.home.models.ResponseStory
@@ -91,9 +92,19 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 fun Home2ViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCategoryBinding, ItemCategory>(
 	R.layout.item_home_rv_category,
 	onItemClick = { adapter, binding ->
-		General.TODO("not programmed yet")
+		val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemCategory>()
+			?: return@RVItemCommonListUsage
+
+		binding.root.findNavController().navigate(
+			R.id.categoryDetailsFragment,
+			bundleOf(
+				"category_id" to item.id.orZero(),
+				"tabBarText" to item.name.orEmpty()
+			), Constants.NAVIGATION_OPTIONS
+		)
 	}
 ) { binding, position, item ->
+	binding.root.tag = item.toJsonInlinedOrNull()
 
 	binding.textTextView.text = item.name
 
