@@ -148,6 +148,12 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBinding, ItemAdvertisementInResponseHome>(
 	R.layout.item_home_rv_adv,
 	onItemClick = { adapter, binding ->
+		/*
+		R.id.nav_ads, bundleOf(
+				        "id" to data.id,
+				        "type" to type
+			        )
+		 */
 		General.TODO("ch 1")
 	},
 	additionalListenersSetups = { adapter, binding ->
