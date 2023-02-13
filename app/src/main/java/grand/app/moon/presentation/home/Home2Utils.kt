@@ -139,6 +139,7 @@ fun Home2ViewModel.getAdapterForStores(isTopRatedNotFollowed: Boolean) = RVItemC
 			if (context.isLoginWithOpenAuth()) {
 				if (isTopRatedNotFollowed) {
 					//repoShop.followStore() todo ...
+					// change in UI then call activity viewModel . scope . run el code w hwa ma3a nfso isa.
 				}else {
 
 				}

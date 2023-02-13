@@ -32,25 +32,21 @@ class MyApplication : LocaleAwareApplication() {
   fun attachBaseContext(base: Context) {
     super.attachBaseContext(base)
     MultiDex.install(this)
-
-
-
   }
 
   override
   fun onCreate() {
-
     super.onCreate()
-    initChat()
-    updateAndroidSecurityProvider()
-    initStoryViewer()
+    //initChat()
+	  //updateAndroidSecurityProvider()
+	  //initStoryViewer()
     instance = this
 
     // Logging set to help debug issues, remove before releasing your app.
-    OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
+	  //OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
     // OneSignal Initialization
-    OneSignal.initWithContext(this)
-    OneSignal.setAppId(Constants.ONESIGNAL_APP_ID)
+	  //OneSignal.initWithContext(this)
+	  //OneSignal.setAppId(Constants.ONESIGNAL_APP_ID)
   }
 
   private fun initStoryViewer() {

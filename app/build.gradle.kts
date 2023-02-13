@@ -20,6 +20,7 @@ plugins {
   id(Config.Plugins.hilt)
   id(Config.Plugins.google_services)
   id ("com.onesignal.androidsdk.onesignal-gradle-plugin")
+//	id("org.jetbrains.kotlin.android")
 }
 
 android {

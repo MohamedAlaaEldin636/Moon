@@ -1,13 +1,11 @@
-<resources
-  xmlns:tools="http://schemas.android.com/tools"
-  tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name_debug">SouqMoon | سوق مون</string>
   <string name="app_name">SouqMoon | سوق مون</string>
-  <string name="fb_login_protocol_scheme"  translatable="false">Fb802733460697057</string>
-  <string name="facebook_app_id"  translatable="false">802733460697057</string>
+  <string name="fb_login_protocol_scheme" translatable="false">Fb802733460697057</string>
+  <string name="facebook_app_id" translatable="false">802733460697057</string>
   <string name="facebook_client_token">80b99f338097c575f40acb5b3a0be4a9</string>
 
-  <string name="google_direction_api"  translatable="false">AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM</string>
+  <string name="google_direction_api" translatable="false">AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM</string>
   <string name="moon_info">أول منصة تجارية إجتماعية فى الشرق الأوسط</string>
 
   <string name="discover">Discover</string>
@@ -176,12 +174,12 @@
   <string name="no_data_found">No Data Found</string>
   <string name="total_ads_count">Total Advertisements %s advertisement</string>
   <string name="advertisements_had_been_viewd">%s advertisements had been viewed</string>
-    <string name="additional_features">Additional Features</string>
+  <string name="additional_features">Additional Features</string>
   <string name="user">User</string>
   <string name="member_of">Member of</string>
   <string name="new_notification">New notice from SouqMoon</string>
-    <string name="submit">Submit</string>
-    <string name="camera">Camera</string>
+  <string name="submit">Submit</string>
+  <string name="camera">Camera</string>
   <string name="gallery">Gallery</string>
   <string name="please_choose_main_section">Please Choose Main Section</string>
   <string name="you_didn_t_accept_permission">You didn\'t Accept Permission</string>
@@ -195,20 +193,20 @@
   <string name="highest_rate">Top Rated</string>
   <string name="connected_now">Connected</string>
   <string name="offline_now">Offline</string>
-    <string name="area">Area</string>
+  <string name="area">Area</string>
   <string name="please_choose_your_city">Please Choose Your City</string>
   <string name="my_store">My Project</string>
-    <string name="multiple_images">Multiple Images</string>
-    <string name="my_ads_2">My Ads</string>
-    <string name="add_advertisement">Add Ad</string>
+  <string name="multiple_images">Multiple Images</string>
+  <string name="my_ads_2">My Ads</string>
+  <string name="add_advertisement">Add Ad</string>
   <string name="advertisement_type">Advertisement Type</string>
-    <string name="what_do_you_offer">What do you offer</string>
+  <string name="what_do_you_offer">What do you offer</string>
   <string name="advertisement_addition">Advertisement Addition</string>
-    <string name="please_complete_login">Please Complete Login</string>
+  <string name="please_complete_login">Please Complete Login</string>
   <string name="please_complete_login_2">Please fill your data for the first time to login only</string>
   <string name="please_enter_your_name_2">Please enter your Name</string>
   <string name="phone_2">phone</string>
-    <string name="pick_adv_type_1">Choose type of Advertisement that suits you</string>
+  <string name="pick_adv_type_1">Choose type of Advertisement that suits you</string>
   <string name="ad_benefit_5">You can view advertisements statistics</string>
   <string name="ad_benefit_4">You can make internal categories in your Store</string>
   <string name="ad_benefit_3">You can add Explore</string>
@@ -223,12 +221,12 @@
   <string name="ad_benefit_1_paid">Large number of Ads for each package</string>
   <string name="address_advertisement">Address Advertisement</string>
   <string name="price">Price</string>
-    <string name="your_store_category">القسم الرئيسي بمتجرك</string>
+  <string name="your_store_category">القسم الرئيسي بمتجرك</string>
   <string name="description">Description</string>
-  <string name="empty_string"/>
+  <string name="empty_string" />
   <string name="no_cities_found">No Cities found to Choose</string>
   <string name="brand">Brand</string>
-    <string name="addition_12">Add</string>
+  <string name="addition_12">Add</string>
   <string name="no_app_can_handle_this_action">No App can handle this Action</string>
   <string name="allow_location_permission">Allow Permission</string>
   <!--للحصول على هذه الخاصية يجب الموافقة على الاذن-->
@@ -274,7 +272,7 @@
   <string name="date_to">Date to</string>
   <string name="price_8789">Price :</string>
   <string name="category_8789">Category :</string>
-    <string name="pick_siutable_package_for_yourself">Pick suitable Package</string>
+  <string name="pick_siutable_package_for_yourself">Pick suitable Package</string>
   <string name="packages_898">Packages</string>
   <string name="days">Days</string>
   <string name="months">Months</string>
@@ -310,7 +308,7 @@
   <string name="renew_and_subscribe_in_another_package">Renew and subscribe in another Package</string>
   <string name="renew_package">Renew Package</string>
   <string name="promote_and_pay_var_var">Promote &amp; Pay %1$s %2$s</string>
-    <string name="remaining_ads_number">Remaining Ads Count</string>
+  <string name="remaining_ads_number">Remaining Ads Count</string>
   <string name="remaining_stories_number">Remaining Stories Count</string>
   <string name="remaining_explore_number">Remaining Explore Count</string>
   <string name="ads">Ads</string>
@@ -356,7 +354,7 @@
   <string name="create_main_category_firstly">Create Main Category firstly</string>
   <string name="pick_main_category_firstly">Pick Main Category firstly</string>
   <string name="add_rate_2">Add Rating</string>
-    <string name="working_hours_2">Working Hours</string>
+  <string name="working_hours_2">Working Hours</string>
   <string name="working_hours_hint">hour \\ min \\ am</string>
   <string name="select_time">Pick Time</string>
   <string name="working_hours_value_am">%1$d \\ %2$d \\ AM</string>
@@ -410,13 +408,13 @@
   <string name="call_2">رقم الهاتف</string>
   <string name="chat_2">الدردشة</string>
   <string name="image_has_been_added">تم إضافة الصورة</string>
-    <string name="price_before_discount">السعر قبل الخصم ( في حالة وجود خصم )</string>
+  <string name="price_before_discount">السعر قبل الخصم ( في حالة وجود خصم )</string>
   <string name="no_store_categories_found">لا يوجد اقسام رشيسية بمتجرك</string>
   <string name="no_store_sub_categories_found">لا يوجد اقسام فرعية بمتجرك</string>
   <string name="your_store_sub_category">القسم الفرعي بمتجرك</string>
   <string name="pick_main_category_firstly_2">Pick Main Category firstly</string>
-    <string name="rate_ad">تقيم الاعلان</string>
-    <string name="percentage_sign">%</string>
+  <string name="rate_ad">تقيم الاعلان</string>
+  <string name="percentage_sign">%</string>
   <string name="checking_statistics">View the statistics</string>
   <string name="nick_name">Nickname</string>
   <string name="price_before_and_after_check">السعر قبل الخصم يجب ان يكون اكبر من ما بعد الخصم</string>
@@ -433,7 +431,7 @@
   <string name="story_addition">إضافة حالة</string>
   <string name="most_rated_stores">أعلي المتاجر تقيماً</string>
   <string name="following_stories">المتاجر التي تتابعها</string>
-    <string name="current_week">الاسبوع الحالي</string>
+  <string name="current_week">الاسبوع الحالي</string>
   <string name="prev_week">الاسبوع السابق</string>
   <string name="view_ad">مشاهدة الإعلان</string>
   <string name="share_ad">مشاركة الإعلان</string>
@@ -445,11 +443,11 @@
   <string name="search_about_an_adv">البحث عن الإعلان</string>
   <string name="report_1">بلاغ</string>
   <string name="reports_1">البلاغات</string>
-    <string name="average_rate">متوسط التقيم</string>
+  <string name="average_rate">متوسط التقيم</string>
   <string name="rate_count">عدد التقيمات</string>
   <string name="add_explore_8">أضف اكسبلور</string>
   <string name="stats_last_7_days">الإحصائيات أخر سبع أيام</string>
-    <string name="stats">الإحصائيات</string>
+  <string name="stats">الإحصائيات</string>
   <string name="latest_special_ads">اخر الاعلانات المميزة</string>
   <string name="highest_viewed_ads">أعلي الإعلانات مشاهدة</string>
   <string name="recently_added_ads">الإعلانات المضافة موخرا</string>
@@ -469,11 +467,11 @@
   <string name="reports_ads">إعلانات تم التبليغ عنها</string>
   <string name="reports_store">بلاغات المتجر</string>
   <string name="search_about_an_advertisements">البحث عن الإعلانات</string>
-    <string name="fav_ads">الإعلانات المفضلة</string>
+  <string name="fav_ads">الإعلانات المفضلة</string>
   <string name="advertisement_66">إعلان</string>
   <string name="no_search_msg">لا يوجد نتائج للبحث , حاول مره أخري</string>
   <string name="at_least_1_type_char">على الأقل إكتب حرف واحد</string>
-    <string name="nickname_2819">اسم الشهرة</string>
+  <string name="nickname_2819">اسم الشهرة</string>
   <string name="call_3829">اتصال</string>
   <string name="chat_3829">Conversation</string>
   <string name="complains_and_suggestions_hint">او يمكنك ملأ البيانات التاليه وسنتوصل معك</string>
@@ -490,6 +488,6 @@
   <string name="following_stories_3">حالات المتابعين</string>
   <string name="stories_82">الحالات</string>
   <string name="whatsapp_3">واتس اب</string>
-    <string name="qr_code_scanner">ماسح رمز الاستجابة السريعة</string>
+  <string name="qr_code_scanner">ماسح رمز الاستجابة السريعة</string>
   <string name="def_value_string" translatable="false">def value stringggggggggggggggggggggggggggggggg</string>
 </resources>
