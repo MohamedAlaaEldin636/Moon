@@ -21,7 +21,6 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 
 	private val viewModel by viewModels<Home2ViewModel>()
 
-	/** todo search on click go to screen empty screen lottie else local cache of previous clicked or keyboard search clicks isa. */
 	override fun getLayoutId(): Int = R.layout.fragment_home_2
 
 	override fun setBindingVariables() {

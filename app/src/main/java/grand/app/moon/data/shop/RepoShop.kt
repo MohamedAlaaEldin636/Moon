@@ -355,6 +355,8 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getStatusUsersHistory(type, userId, advId, it)
 	}
 
+	suspend fun followStore(storeId: Int) = remoteDataSource.followStore(storeId)
+
 }
 
 data class CitiesAndStoreCategoriesAndSubCategories(

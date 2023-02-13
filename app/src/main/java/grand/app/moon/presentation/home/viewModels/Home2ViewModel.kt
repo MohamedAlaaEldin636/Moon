@@ -16,6 +16,7 @@ import grand.app.moon.R
 import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.core.extenstions.inflateLayout
 import grand.app.moon.data.home2.RepoHome2
+import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeRvAdvBinding
 import grand.app.moon.databinding.ItemHomeRvBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
@@ -34,6 +35,7 @@ class Home2ViewModel @Inject constructor(
 	application: Application,
 	val repoHome2: RepoHome2,
 	val repoHome: HomeUseCase,
+	val repoShop: RepoShop,
 	val userLocalUseCase: UserLocalUseCase
 ) : AndroidViewModel(application) {
 
@@ -41,9 +43,9 @@ class Home2ViewModel @Inject constructor(
 
 	val adapterCategories by lazy { getAdapterCategories() }
 
-	val adapterMostRatedStore by lazy { getAdapterForStores() }
+	val adapterMostRatedStore by lazy { getAdapterForStores(true) }
 
-	val adapterFollowingsStores by lazy { getAdapterForStores() }
+	val adapterFollowingsStores by lazy { getAdapterForStores(false) }
 
 	val adapterSuggestedAds by lazy { getAdapterForAds() }
 

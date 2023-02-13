@@ -357,4 +357,6 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		)
 	}
 
+	suspend fun followStore(storeId: Int) = safeApiCall { apiService.followStore(storeId) }
+
 }

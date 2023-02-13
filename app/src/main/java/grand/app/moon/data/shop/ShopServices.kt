@@ -1,5 +1,6 @@
 package grand.app.moon.data.shop
 
+import com.google.gson.annotations.SerializedName
 import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.core.di.module.RetrofitModule
 import grand.app.moon.domain.shop.*
@@ -248,5 +249,11 @@ interface ShopServices {
 		@Query("page") page: Int,
 		@QueryMap map: Map<String, String>
 	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
+
+	@FormUrlEncoded
+	@POST("v1/follow")
+	suspend fun followStore(
+		@Field("store_id") storeId: Int
+	): BaseResponse<Any?>
 
 }

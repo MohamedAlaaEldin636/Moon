@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.databinding.*
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.home.models.StoreModel
@@ -115,7 +116,7 @@ fun Home2ViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCate
 
 }
 
-fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStoreBinding, ItemStoreInResponseHome>(
+fun Home2ViewModel.getAdapterForStores(isTopRatedNotFollowed: Boolean) = RVItemCommonListUsage<ItemHomeRvStoreBinding, ItemStoreInResponseHome>(
 	R.layout.item_home_rv_store,
 	onItemClick = { adapter, binding ->
 		val item = binding.getUsingRootViaJson<ItemStoreInResponseHome>() ?: return@RVItemCommonListUsage
@@ -130,8 +131,31 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 		)
 	},
 	additionalListenersSetups = { adapter, binding ->
-		binding.followingButtonView.setOnClickListener {
-			General.TODO("ch 2")
+		binding.followingButtonView.setOnClickListener { view ->
+			val context = view.context ?: return@setOnClickListener
+
+			val item = binding.getUsingRootViaJson<ItemStoreInResponseHome>() ?: return@setOnClickListener
+
+			if (context.isLoginWithOpenAuth()) {
+				if (isTopRatedNotFollowed) {
+					//repoShop.followStore() todo ...
+				}else {
+
+				}
+				/*
+				val fragment = v.findFragment<HomeFragment>()
+          if(adapterType == -1) {//top rated stores
+            fragment.viewModel.storeAdapter.position = position
+            fragment.viewModel.follow()
+          }else { // following Adapter
+            fragment.viewModel.followingsStoresAdapter.position = position
+            fragment.viewModel.followingsStores()
+          }
+				 */
+			}
+
+			// todo if isLogin not go login else if store can follow ...
+			// todo also ui of it isa. so change and use notifyitemchanged isa.
 		}
 	}
 ) { binding, position, item ->
