@@ -12,6 +12,7 @@ import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.extensions.indexOfFirstOrNull
 import grand.app.moon.presentation.auth.countries.adapters.CountriesAdapter
 import grand.app.moon.presentation.auth.language.LanguageFragmentArgs
 import grand.app.moon.presentation.auth.language.LanguageFragmentDirections
@@ -33,6 +34,8 @@ class LanguagesViewModel @Inject constructor(
   @Bindable
   var lang : String = accountRepository.getKeyFromLocal(Constants.LANGUAGE)
 
+	var oldSetLang : String = accountRepository.getKeyFromLocal(Constants.LANGUAGE)
+
   var languageNavArgs: LanguageFragmentArgs? = null
   private  val TAG = "LanguagesViewModel"
   init {
@@ -43,6 +46,12 @@ class LanguagesViewModel @Inject constructor(
     languages.add(Country(name = "عربى" ,lang = "ar",active = if(lang == "ar") 1 else 0))
     Log.d(TAG, "language: "+languages[0].active)
     Log.d(TAG, "language: "+languages[1].active)
+	  languages.indexOfFirstOrNull { it.active == 1 }?.also { index ->
+			adapter.lastPosition = index
+			adapter.lastSelected = languages[index].id
+		  //this.lang = languages[index].lang
+		  //oldSetLang = languages[index].lang
+	  }
     updateAdapter(languages)
   }
   fun updateAdapter(countries: List<Country>) {
@@ -56,14 +65,29 @@ class LanguagesViewModel @Inject constructor(
     notifyPropertyChanged(BR.lang)
   }
 
+	fun updateLanguageWithoutLocalSave(lang: String) {
+		this.lang = lang
+		notifyPropertyChanged(BR.lang)
+	}
+	fun updateLanguageLocalSave(lang: String) {
+		accountRepository.saveKeyToLocal(Constants.LANGUAGE,lang)
+	}
+
   fun next(v : View){
     Log.d(TAG, "next: ")
     languageNavArgs?.type?.let {
       Log.d(TAG, "next: $it")
-      if(it == Constants.SPLASH)
-        v.findNavController().navigate(LanguageFragmentDirections.actionLanguageFragmentToCountriesFragment2())
-      else
-        clickEvent.value = Constants.BACK
+      if(it == Constants.SPLASH) {
+	      if (this.lang == oldSetLang) {
+		      v.findNavController().navigate(LanguageFragmentDirections.actionLanguageFragmentToCountriesFragment2())
+	      }else {
+		      accountRepository.saveKeyToLocal(Constants.LANGUAGE_SELECTED_ON_APP_LAUNCH_BEFORE, true.toString())
+
+		      clickEvent.value = Constants.BACK
+	      }
+			} else {
+	      clickEvent.value = Constants.BACK
+      }
     }
   }
   fun back(v: View){

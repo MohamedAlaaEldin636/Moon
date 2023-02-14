@@ -1,5 +1,7 @@
 package grand.app.moon.presentation.auth.countries
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -11,6 +13,7 @@ import grand.app.moon.databinding.FragmentCountriesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.extensions.*
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.splash.SplashActivity
 import kotlinx.coroutines.flow.collect
 
@@ -28,6 +31,12 @@ class CountriesFragment : BaseFragment<FragmentCountriesBinding>() {
     viewModel.countriesFragmentArgs = countriesFragmentArgs
     binding.viewModel = viewModel
   }
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+
+		viewModel.accountRepository.saveKeyToLocal(Constants.LANGUAGE_SELECTED_ON_APP_LAUNCH_BEFORE, false.toString())
+	}
 
   override
   fun setupObservers() {

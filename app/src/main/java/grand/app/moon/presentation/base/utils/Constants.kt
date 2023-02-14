@@ -150,5 +150,6 @@ object Constants {
   const val LOCATION: String = "location"
   const val PHONE: String = "phone"
 
+	const val LANGUAGE_SELECTED_ON_APP_LAUNCH_BEFORE: String = "LANGUAGE_SELECTED_ON_APP_LAUNCH_BEFORE"
 
 }

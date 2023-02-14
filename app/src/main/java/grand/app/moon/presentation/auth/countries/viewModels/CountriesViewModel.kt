@@ -30,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CountriesViewModel @Inject constructor(
   private val countriesUseCase: CountriesUseCase,
-  private val accountRepository: AccountRepository
+  val accountRepository: AccountRepository
 ) :
   BaseViewModel() {
   private val _countriesPasswordResponse =
