@@ -47,6 +47,8 @@ class LogInViewModel @Inject constructor(
 //  lateinit var btnFacebook: LoginButton
 //  var callbackManager: CallbackManager? = null
 
+	val showValidPhoneNum = MutableLiveData(false)
+
 	val phone = MutableLiveData("")
 
   lateinit var socialRequest: SocialRequest
