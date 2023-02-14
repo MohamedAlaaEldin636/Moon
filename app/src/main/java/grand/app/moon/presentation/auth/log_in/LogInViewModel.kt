@@ -29,9 +29,12 @@ import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.showError
+import grand.app.moon.extensions.findFragmentOrNull
+import grand.app.moon.extensions.orFalse
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import grand.app.moon.helpers.login.SocialRequest
+import grand.app.moon.presentation.base.extensions.showError
 import org.json.JSONException
 import org.json.JSONObject
 import kotlin.math.log
@@ -69,6 +72,12 @@ class LogInViewModel @Inject constructor(
 
   private  val TAG = "LogInViewModel"
   fun onLogInClicked(v: View) {
+	  val fragment = v.findFragmentOrNull<LogInFragment>() ?: return
+
+	  if (showValidPhoneNum.value.orFalse().not()) {
+		  return fragment.showError(fragment.getString(R.string.phone_num_is_invalid))
+	  }
+
     Log.d(TAG, "onLogInClicked: login")
     if (request.phone.trim().isEmpty()) {
       showError(v.context, v.context.getString(R.string.please_enter_your_phone));

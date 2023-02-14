@@ -3,10 +3,14 @@ package grand.app.moon.presentation.auth.log_in
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -39,6 +43,30 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
 
   override
   fun getLayoutId() = R.layout.fragment_log_in
+
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		return super.onCreateView(inflater, container, savedInstanceState)?.also {
+			binding.ccp.registerCarrierNumberEditText(binding.edtLoginPhone)
+		}
+	}
+
+	/*override fun onDestroyView() {
+		binding.ccp.deregisterCarrierNumberEditText()
+
+		super.onDestroyView()
+	}*/
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+
+		viewModel.phone.observe(viewLifecycleOwner) {
+			viewModel.showValidPhoneNum.value = binding.ccp.isValidFullNumber
+		}
+	}
 
   override
   fun setBindingVariables() {

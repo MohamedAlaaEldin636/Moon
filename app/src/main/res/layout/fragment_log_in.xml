@@ -123,7 +123,7 @@
         android:layout_marginTop="@dimen/dimen30"
         android:layout_marginEnd="@dimen/dimen12"
         android:background="@drawable/corner_primary"
-        android:enabled="@{viewModel.phone != null &amp;&amp; viewModel.phone.length() > 0}"
+        android:enabled="@{viewModel.phone != null &amp;&amp; viewModel.phone.length() > 0 &amp;&amp; viewModel.showValidPhoneNum}"
         android:onClick="@{(v)-> viewModel.onLogInClicked(v)}"
         android:text="@string/log_in"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
