@@ -6,10 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeRvStoryActualBinding
 import grand.app.moon.domain.home.models.StoreModel
 import grand.app.moon.extensions.*
+import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
 import grand.app.moon.presentation.home.AllStoriesFragment
 import grand.app.moon.presentation.home.AllStoriesFragmentDirections
 import grand.app.moon.presentation.home.Home2FragmentDirections
@@ -37,20 +39,24 @@ class AllStoriesViewModel @Inject constructor(
 		R.layout.item_home_rv_story_actual,
 		onItemClick = { adapter, binding ->
 			val fragment = binding.root.findFragmentOrNull<AllStoriesFragment>() ?: return@RVPagingItemCommonListUsage
-
-			val newList = adapter.snapshot().items.drop(1)
+			//val context = fragment.context ?: return@RVPagingItemCommonListUsage
 
 			val position = binding.root.tag as? Int ?: return@RVPagingItemCommonListUsage
 
 			val storyModel = StoreModel()
-			storyModel.list.addAll(newList.map { it.toStore() })
-			storyModel.position = position - 1
+			storyModel.list.addAll(adapter.snapshot().items.map { it.toStore() })
+			storyModel.position = position
 
 			fragment.findNavController()
 				.navigateSafely(AllStoriesFragmentDirections.actionDestAllStoriesToStoryFragment(storyModel))
 		}
 	) { binding, position, item ->
+		MyLogger.e("aaaaaaaa $position")
 		binding.root.tag = position
+
+		binding.seenCircleView.visibleOrInvisible(
+			item.stories?.firstOrNull()?.isSeen.orFalse().not()
+		)
 
 		binding.storeNameTextView.text = item.name
 

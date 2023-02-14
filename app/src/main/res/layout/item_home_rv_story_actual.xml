@@ -67,13 +67,26 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.google.android.material.imageview.ShapeableImageView
-      android:id="@+id/storeLogoImageView"
+    <View
+      android:id="@+id/seenCircleView"
 
       android:layout_width="25dp"
       android:layout_height="25dp"
 
       android:layout_margin="5dp"
+
+      android:background="@drawable/dr_circle_25_border_1"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/storeLogoImageView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:padding="1dp"
 
       app:shapeAppearance="@style/ShapeCircle"
       app:shapeAppearanceOverlay="@style/ShapeCircle"
@@ -82,8 +95,10 @@
 
       tools:src="@drawable/splash"
 
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintStart_toStartOf="parent"/>
+      app:layout_constraintTop_toTopOf="@id/seenCircleView"
+      app:layout_constraintStart_toStartOf="@id/seenCircleView"
+      app:layout_constraintBottom_toBottomOf="@id/seenCircleView"
+      app:layout_constraintEnd_toEndOf="@id/seenCircleView"/>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

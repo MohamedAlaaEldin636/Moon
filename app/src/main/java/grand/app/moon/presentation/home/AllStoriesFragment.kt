@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.map
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.dpToPx

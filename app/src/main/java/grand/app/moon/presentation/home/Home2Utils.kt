@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.databinding.*
 import grand.app.moon.domain.categories.entity.ItemCategory
@@ -15,6 +16,7 @@ import grand.app.moon.domain.home.models.StoreModel
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.adjustInsideRV
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
+import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
@@ -31,6 +33,7 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 	onItemClick = { adapter, binding ->
 		val fragment = binding.root.findFragmentOrNull<Home2Fragment>()
 			?: return@RVItemCommonListUsageWithDifferentItems
+		val context = fragment.context ?: return@RVItemCommonListUsageWithDifferentItems
 
 		when (binding) {
 			is ItemHomeRvStoryAdditionBinding -> {
@@ -58,6 +61,17 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 				storyModel.list.addAll(newList.map { it.toStore() })
 				storyModel.position = position - 1
 
+				val item = adapter.list[position]
+				if (context.isLogin() && item.stories?.firstOrNull()?.isSeen.orFalse().not()) {
+					item.stories?.firstOrNull()?.isSeen = true
+
+					val updatedList = adapter.list.toMutableList()
+					val updatedItem = updatedList.removeAt(position)
+					updatedList += updatedItem
+
+					adapter.submitList(updatedList)
+				}
+
 				fragment.findNavController()
 					.navigateSafely(Home2FragmentDirections.actionDestHome2ToStoryFragment(storyModel))
 				/*
@@ -74,6 +88,10 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 	when (binding) {
 		is ItemHomeRvStoryActualBinding -> {
 			binding.storeNameTextView.text = item.name
+
+			binding.seenCircleView.visibleOrInvisible(
+				item.stories?.firstOrNull()?.isSeen.orFalse().not()
+			)
 
 			binding.storeLogoImageView.setupWithGlide {
 				load(item.image)
