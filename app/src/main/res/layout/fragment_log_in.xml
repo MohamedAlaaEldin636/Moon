@@ -86,7 +86,8 @@
 
         <androidx.appcompat.widget.AppCompatEditText
           android:id="@+id/edt_login_phone"
-          android:layout_width="match_parent"
+          android:layout_width="0dp"
+          android:layout_weight="1"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/dimen6"
           android:minHeight="@dimen/dimen50"
@@ -100,6 +101,17 @@
           android:textColor="@color/colorPrimaryDark"
           android:textColorHint="@color/gray" />
 
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+
+          android:visibility="@{viewModel.showValidPhoneNum}"
+
+          android:layout_gravity="center"
+
+          android:src="@drawable/text_input_correct"
+
+          android:layout_marginEnd="8dp"/>
 
       </LinearLayout>
 

@@ -12,6 +12,7 @@ import grand.app.moon.presentation.stats.models.ResponseStoreStats
 import grand.app.moon.presentation.stats.models.ResponseUserInGeneralStats
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface ShopServices {
@@ -102,10 +103,10 @@ interface ShopServices {
 
 	@Multipart
 	@POST("v1/profile/explores")
-	suspend fun addExplore(
+	fun addExplore(
 		@Part files: List<MultipartBody.Part>,
 		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString(),
-	): BaseResponse<Any?>
+	): Call<BaseResponse<Any?>>
 
 	@GET("v1/profile/explores")
 	suspend fun getExplores(
@@ -255,5 +256,8 @@ interface ShopServices {
 	suspend fun followStore(
 		@Field("store_id") storeId: Int
 	): BaseResponse<Any?>
+
+	@POST("v1/auth/delete")
+	suspend fun deleteAccountPermanently(): BaseResponse<Any?>
 
 }

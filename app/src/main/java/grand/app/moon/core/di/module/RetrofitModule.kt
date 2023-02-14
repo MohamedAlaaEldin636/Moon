@@ -19,12 +19,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import grand.app.moon.core.MyApplication
+import grand.app.moon.core.di.module.qualifiers.BaseInterceptor
+import grand.app.moon.core.di.module.qualifiers.ProgressInterceptor22
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.utils.Constants
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
+import okio.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -50,6 +51,7 @@ object RetrofitModule {
 
   @Provides
   @Singleton
+  @BaseInterceptor
   fun provideHeadersInterceptor(appPreferences: AppPreferences): Interceptor = run {
 
 //    var userToken = appPreferences.getLocal(Constants.TOKEN)
@@ -149,10 +151,89 @@ object RetrofitModule {
 //    }
 //  }
 
+	@Provides
+	@Singleton
+	@ProgressInterceptor22
+	fun provideProgressInterceptor(): Interceptor {
+		return object : Interceptor {
+			private var progressListener: (Long, Long, Boolean) -> Unit = { a, b, c ->
+				MyLogger.e("feowifjewohiiiiiiiiiii $a $b $c")
+			}
+
+			fun addProgressListener(listener: (Long, Long, Boolean) -> Unit) {
+				progressListener = listener
+			}
+
+			override fun intercept(chain: Interceptor.Chain): Response {
+				val originalResponse = chain.proceed(chain.request())
+				return originalResponse.newBuilder()
+					.body(ProgressResponseBody(originalResponse.body!!, progressListener))
+					.build()
+			}
+		}
+	}
+
+	class ProgressInterceptor : Interceptor {
+		private var progressListener: (Long, Long, Boolean) -> Unit = { a, b, c ->
+			MyLogger.e("hiiiiiiiiiii $a $b $c")
+		}
+
+		fun addProgressListener(listener: (Long, Long, Boolean) -> Unit) {
+			progressListener = listener
+		}
+
+		override fun intercept(chain: Interceptor.Chain): Response {
+			val originalResponse = chain.proceed(chain.request())
+			return originalResponse.newBuilder()
+				.body(ProgressResponseBody(originalResponse.body!!, progressListener))
+				.build()
+			}
+	}
+
+	/*import okhttp3.MediaType
+	import okhttp3.ResponseBody
+	import okio.**/
+
+	class ProgressResponseBody(
+		private val responseBody: ResponseBody,
+		private val progressListener: (Long, Long, Boolean) -> Unit
+	) : ResponseBody() {
+
+		private var bufferedSource: BufferedSource? = null
+
+		override fun contentType(): MediaType? = responseBody.contentType()
+
+		override fun contentLength(): Long = responseBody.contentLength()
+
+		override fun source(): BufferedSource {
+			if (bufferedSource == null) {
+				bufferedSource = source(responseBody.source()).buffer()
+			}
+			MyLogger.e("yabooooooy MMMMMMMMMMMMMMMMMMMMMMMM")
+			return bufferedSource!!
+		}
+
+		private fun source(source: Source): Source {
+			return object : ForwardingSource(source) {
+				var totalBytesRead = 0L
+
+				override fun read(sink: Buffer, byteCount: Long): Long {
+					MyLogger.e("yabooooooy ${System.currentTimeMillis()}")
+					val bytesRead = super.read(sink, byteCount)
+					totalBytesRead += if (bytesRead != -1L) bytesRead else 0
+					//                float percent = bytesRead == -1 ? 100f : (((float)totalBytesRead / (float) responseBody.contentLength()) * 100);
+					progressListener(totalBytesRead, kotlin.runCatching { responseBody.contentLength() }.getOrElse { 1L }, bytesRead == -1L)
+					return bytesRead
+				}
+			}
+		}
+	}
+
   @Provides
   @Singleton
   fun provideOkHttpClient(
-    headersInterceptor: Interceptor,
+	  @BaseInterceptor headersInterceptor: Interceptor,
+	  @ProgressInterceptor22 progressInterceptor22: Interceptor,
     logging: HttpLoggingInterceptor,
 //    requestInterceptor: RequestInterceptor,
     @ApplicationContext context: Context
@@ -165,6 +246,7 @@ object RetrofitModule {
         .writeTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .addInterceptor(logging)
         .addInterceptor(headersInterceptor)
+	      .addInterceptor(progressInterceptor22)
         //.addInterceptor(ChuckInterceptor(context))
 //        .addInterceptor(requestInterceptor)
         .build()
@@ -175,6 +257,7 @@ object RetrofitModule {
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .writeTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .addInterceptor(headersInterceptor)
+	      .addInterceptor(progressInterceptor22)
 //        .addInterceptor(requestInterceptor)
         .build()
     }
@@ -205,6 +288,7 @@ object RetrofitModule {
   fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create(gson))
+	  //.addCallAdapterFactory(CoroutineCallAdapterFactory())
     .baseUrl(BuildConfig.API_BASE_URL)
     .build()
 }

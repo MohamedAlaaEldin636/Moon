@@ -16,10 +16,14 @@ import grand.app.moon.presentation.stats.models.ItemStoreStats
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Part
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServices) : BaseRemoteDataSource() {
 
@@ -174,7 +178,28 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		}
 	}
 
-	suspend fun addExplore(files: List<MultipartBody.Part>) = safeApiCall { apiService.addExplore(files) }
+	suspend fun addExplore(files: List<MultipartBody.Part>): Resource<BaseResponse<Any?>> = safeApiCall {
+		suspendCoroutine {
+			apiService.addExplore(files).enqueue(object : retrofit2.Callback<BaseResponse<Any?>> {
+				override fun onResponse(
+					call: Call<BaseResponse<Any?>>,
+					response: Response<BaseResponse<Any?>>
+				) {
+					MyLogger.e("feowifjewohiiiiiiiiiii BEFOOOOOOOOOOOOOOOOOOOOORE")
+					kotlin.runCatching {
+						it.resume(response.body() ?: BaseResponse(null, "dd", 200))
+					}
+				}
+
+				override fun onFailure(call: Call<BaseResponse<Any?>>, t: Throwable) {
+					MyLogger.e("feowifjewohiiiiiiiiiii EEEEEEEEEEEEEEEEEEEEEE")
+					kotlin.runCatching {
+						it.resume(BaseResponse(null, "dd", 200))
+					}
+				}
+			})
+		}
+	}
 
 	suspend fun deleteExplore(id: Int) = safeApiCall { apiService.deleteExplore(id) }
 
@@ -358,5 +383,7 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	}
 
 	suspend fun followStore(storeId: Int) = safeApiCall { apiService.followStore(storeId) }
+
+	suspend fun deleteAccountPermanently() = safeApiCall { apiService.deleteAccountPermanently() }
 
 }

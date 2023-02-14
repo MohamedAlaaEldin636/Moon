@@ -357,6 +357,8 @@ class RepoShop @Inject constructor(
 
 	suspend fun followStore(storeId: Int) = remoteDataSource.followStore(storeId)
 
+	suspend fun deleteAccountPermanently() = remoteDataSource.deleteAccountPermanently()
+
 }
 
 data class CitiesAndStoreCategoriesAndSubCategories(

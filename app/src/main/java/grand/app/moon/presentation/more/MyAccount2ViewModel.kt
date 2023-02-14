@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.data.packages.RepositoryPackages
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemStoreFullDataBinding
@@ -15,7 +17,9 @@ import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.logout
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.HomeActivity
+import grand.app.moon.presentation.myAds.MyAdsFragment
 import grand.app.moon.presentation.myStore.model.ItemStoreInfo
 import javax.inject.Inject
 
@@ -99,7 +103,24 @@ class MyAccount2ViewModel @Inject constructor(
 					}
 				}
 				R.drawable.ic_del_acc_permenently -> {
-					//General.TODO("Wasn't programmed before.")
+					fragment.showCustomYesNoWarningDialog(
+						fragment.getString(R.string.confirm_deletion),
+						fragment.getString(R.string.are_you_sure_del_account)
+					) { dialog ->
+						fragment.handleRetryAbleActionCancellableNullable(
+							action = {
+								repoShop.deleteAccountPermanently()
+							}
+						) {
+							fragment.logout()
+
+							dialog.dismiss()
+
+							fragment.showMessage(fragment.getString(R.string.done_successfully))
+
+							fragment.openActivityAndClearStack(HomeActivity::class.java)
+						}
+					}
 				}
 			}
 		}
