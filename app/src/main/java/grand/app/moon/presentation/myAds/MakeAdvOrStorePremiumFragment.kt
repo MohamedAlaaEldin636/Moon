@@ -2,14 +2,17 @@ package grand.app.moon.presentation.myAds
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentMakeAdvOrStorePremiumBinding
-import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.extensions.*
+import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.myAds.viewModel.MakeAdvOrStorePremiumViewModel
@@ -31,7 +34,7 @@ class MakeAdvOrStorePremiumFragment : BaseFragment<FragmentMakeAdvOrStorePremium
 		super.onViewCreated(view, savedInstanceState)
 
 		binding.recyclerView.setupWithRVItemCommonListUsage(
-			viewModel.getCurrentlyUsedAdapter(),
+			viewModel.getCurrentlyUsedAdapter().withDefaultHeaderAndFooterAdapters(),
 			true,
 			1
 		) { layoutParams ->
@@ -51,6 +54,31 @@ class MakeAdvOrStorePremiumFragment : BaseFragment<FragmentMakeAdvOrStorePremium
 						viewModel.adapterForShops.submitData(it)
 					}
 				}
+			}
+		}
+
+		observeAdapterOnDataFirstLoadedOnceUsingViewLifecycle(viewModel.adapterForAds) {
+			val list = viewModel.adapterForAds.snapshot()
+			val id = list.firstOrNull {
+				it?.isSubscribed.orFalse()
+			}?.id ?: list.firstOrNull()?.id ?: return@observeAdapterOnDataFirstLoadedOnceUsingViewLifecycle
+			val index = list.indexOfFirst { it?.id == id }
+
+			viewModel.selectedAdsPackageId.value = id
+			if (index != -1) {
+				viewModel.adapterForAds.notifyItemChanged(index)
+			}
+		}
+		observeAdapterOnDataFirstLoadedOnceUsingViewLifecycle(viewModel.adapterForShops) {
+			val list = viewModel.adapterForShops.snapshot()
+			val id = list.firstOrNull {
+				it?.isSubscribed.orFalse()
+			}?.id ?: list.firstOrNull()?.id ?: return@observeAdapterOnDataFirstLoadedOnceUsingViewLifecycle
+			val index = list.indexOfFirst { it?.id == id }
+
+			viewModel.selectedShopsPackageId.value = id
+			if (index != -1) {
+				viewModel.adapterForShops.notifyItemChanged(index)
 			}
 		}
 

@@ -40,8 +40,8 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 
 	val adsNotStoresAreSelected = MutableLiveData(true)
 
-	private val selectedAdsPackageId = MutableLiveData<Int?>()
-	private val selectedShopsPackageId = MutableLiveData<Int?>()
+	val selectedAdsPackageId = MutableLiveData<Int?>()
+	val selectedShopsPackageId = MutableLiveData<Int?>()
 
 	val adsToggleTextColorRes = adsNotStoresAreSelected.map {
 		if (it == true) R.color.white else R.color.colorPrimary
