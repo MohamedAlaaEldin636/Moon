@@ -481,5 +481,5 @@
   <string name="stories_82">الحالات</string>
   <string name="whatsapp_3">واتس اب</string>
     <string name="qr_code_scanner">ماسح رمز الاستجابة السريعة</string>
-  <string name="are_you_sure_del_account">هل أنت متأكد من حذف الحساب نهائياً و عدم إستعادته أبداً</string>
+  <string name="are_you_sure_del_account">سيتم حذف بيناتك ولا يوجد طريقة لإستعادتها</string>
 </resources>
