@@ -243,6 +243,7 @@ class HomeViewModel @Inject constructor(
   }
 
 	val showBarCode = MutableLiveData(false)
+	val showExploreSubsectionSearch = MutableLiveData(false)
 
 	fun openBarCode(view: View) {
 		val binding = DataBindingUtil.findBinding<ActivityHomeBinding>(view) ?: return
@@ -250,6 +251,14 @@ class HomeViewModel @Inject constructor(
 		activity.nav.navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.qr.code",
+		)
+	}
+	fun openSearchCycleInHome(view: View) {
+		val binding = DataBindingUtil.findBinding<ActivityHomeBinding>(view) ?: return
+		val activity = binding.lifecycleOwner as? HomeActivity ?: return
+		activity.nav.navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.search.suggestions",
 		)
 	}
 

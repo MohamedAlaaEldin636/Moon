@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
+import androidx.paging.insertHeaderItem
 import androidx.paging.map
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -94,6 +95,7 @@ class AllStoriesFragment : BaseFragment<FragmentAllStoriesBinding>() {
 
 				launch {
 					viewModel.storiesOther.collectLatest {
+						//it.insertHeaderItem() // starting page // or base page bs kda
 						viewModel.adapterOther.submitData(it)
 					}
 				}

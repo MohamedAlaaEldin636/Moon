@@ -119,6 +119,7 @@ open class RVPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	areItemsTheSameComparison: (oldItem: Item, newItem: Item) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	areContentsTheSameComparison: (oldItem: Item, newItem: Item) -> Boolean = { oldItem, newItem -> oldItem == newItem },
 	private val onItemClick: ((adapter: RVPagingItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
+	private val onViewRecycledAction: (VHPagingItemCommonListUsage<VDB, Item>) -> Unit = {},
 	private val additionalListenersSetups: ((adapter: RVPagingItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
 	private val onBind: (binding: VDB, position: Int, item: Item) -> Unit,
 ) : PagingDataAdapter<Item, VHPagingItemCommonListUsage<VDB, Item>>(
@@ -153,11 +154,17 @@ open class RVPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 		holder.bind(position, getItem(position) ?: return)
 	}
 
+	override fun onViewRecycled(holder: VHPagingItemCommonListUsage<VDB, Item>) {
+		onViewRecycledAction(holder)
+
+		super.onViewRecycled(holder)
+	}
+
 }
 
 class VHPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	private val adapter: RVPagingItemCommonListUsage<VDB, Item>,
-	private val binding: VDB,
+	val binding: VDB,
 	private val onBind: (binding: VDB, position: Int, item: Item) -> Unit,
 	private val onItemClick: ((adapter: RVPagingItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
 	additionalListenersSetups: ((adapter: RVPagingItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,

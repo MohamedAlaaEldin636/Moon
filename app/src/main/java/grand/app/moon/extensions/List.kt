@@ -1,5 +1,13 @@
 package grand.app.moon.extensions
 
+fun <T> MutableList<T>.swap(firstPosition: Int, secondPosition: Int) {
+	if (firstPosition == secondPosition) return
+
+	val tmp = this[firstPosition]
+	this[firstPosition] = this[secondPosition]
+	this[secondPosition] = tmp
+}
+
 inline fun <reified T> List<T>.indexOfOrNull(element: T) = indexOf(element).let {
 	if (it == -1) null else it
 }

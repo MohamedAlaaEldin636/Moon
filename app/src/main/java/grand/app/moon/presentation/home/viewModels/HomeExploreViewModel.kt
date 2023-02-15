@@ -30,6 +30,7 @@ import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.home.HomeExploreFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.home.models.toExplore
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,14 +53,33 @@ class HomeExploreViewModel @Inject constructor(
 		return false
 	}
 
+	var maxPageReached = 0
+
 	val adapter = RVPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>(
 		R.layout.item_home_explore,
 		onItemClick = { adapter, binding ->
 			val item = (binding.constraintLayout.tag as? String).fromJsonInlinedOrNull<ItemHomeExplore>()
 				?: return@RVPagingItemCommonListUsageWithExoPlayer
 
+			val position = binding.indicatorImageView.tag as? Int
+				?: return@RVPagingItemCommonListUsageWithExoPlayer
+
+			MyLogger.e("djasdakskdash 1 -> ${item.files}")
+
+			val list = adapter.snapshot().items.toMutableList().also {
+				it.swap(0, position)
+			}.toList()
+
+			MyLogger.e("djasdakskdash 2 -> ${list.firstOrNull()?.files}")
+
+			binding.root.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.home.explore.subsection",
+				paths = arrayOf(list.toJsonInlinedOrNull(), maxPageReached.toString())
+			)
+
 			// Share of inner screen is share of file link ex. video or image isa.
-			val list = adapter.snapshot().items.map {
+			/*val list = adapter.snapshot().items.map {
 				it.toExplore()
 			}.toMutableList().also { mutableList ->
 				mutableList.removeIf { it.id == item.id }
@@ -69,16 +89,17 @@ class HomeExploreViewModel @Inject constructor(
 			binding.root.findNavController().navigateDeepLinkWithOptions(
 				"explore",
 				"grand.app.moon.explore.list",
-				paths = arrayOf(/*ExploreListPaginateData(list)*/list.toJsonInlinedOrNull())
-			)
+				paths = arrayOf(*//*ExploreListPaginateData(list)*//*list.toJsonInlinedOrNull())
+			)*/
 		},
 		onViewRecycledAction = {
 			//it.itemView.findViewById<ImageView>(R.id.imageImageView).clearWithGlide()
 		}
-	) { binding, _, item, viewHolder, _ ->
+	) { binding, position, item, viewHolder, _ ->
 		val context = binding.root.context ?: return@RVPagingItemCommonListUsageWithExoPlayer
 
 		binding.constraintLayout.tag = item.toJsonInlinedOrNull()
+		binding.indicatorImageView.tag = position
 
 		val isVideo = item.isVideo
 

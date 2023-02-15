@@ -33,6 +33,7 @@ import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.home.viewModels.HomeExploreViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
+import kotlin.math.max
 
 /*
 This is a pretty advanced use case :). We don't provide a way to synchronize SimpleExoPlayer (or ExoPlayer) instances. With a bit of work, however, you might manage to get all of the streams playing at once inside a single instance. You'll need to touch a few components, but at a high level you'll need to do something like:
@@ -104,6 +105,12 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 					}
 				}
 			}
+		}
+
+		getOnPageChangeForAdapterUsingViewLifecycle(
+			viewModel.adapter
+		) {
+			viewModel.maxPageReached = max(viewModel.maxPageReached, it)
 		}
 	}
 

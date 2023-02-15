@@ -1075,5 +1075,21 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.stats.users.history/{title}/{type}/{userId}/{advId}" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_home_explore_subsection"
+    android:name="grand.app.moon.presentation.home.HomeExploreSubsectionFragment"
+    android:label="@string/discover"
+    tools:layout="@layout/fragment_home_explore_subsection">
+    <argument
+      android:name="jsonOfListOfItemHomeExplore"
+      app:argType="string" />
+    <argument
+      android:name="maxPageReached"
+      app:argType="integer" />
+    <deepLink
+      android:id="@+id/deep_link_dest_home_explore_subsection"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.home.explore.subsection/{jsonOfListOfItemHomeExplore}/{maxPageReached}" />
+  </fragment>
 
 </navigation>

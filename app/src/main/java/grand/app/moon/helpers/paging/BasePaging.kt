@@ -46,17 +46,19 @@ suspend fun <T : Any> BasePaging.Companion.getAllPages(
 }
 
 class BasePaging<T : Any>(
-	private val fetchPage: suspend (Int) -> MAResult.Immediate<MABaseResponse<MABasePaging<T>>>
+	private val minimumPageNumber: Int = 1,
+	private val fetchPage: suspend (Int) -> MAResult.Immediate<MABaseResponse<MABasePaging<T>>>,
 ) : PagingSource<Int, T>() {
 	
 	companion object {
 		fun <T : Any> createFlowViaPager(
-			fetchPage: suspend (Int) -> MAResult.Immediate<MABaseResponse<MABasePaging<T>>>
+			minimumPageNumber: Int = 1,
+			fetchPage: suspend (Int) -> MAResult.Immediate<MABaseResponse<MABasePaging<T>>>,
 		): Flow<PagingData<T>> {
 			return Pager(
 				PagingConfig(10, enablePlaceholders = false)
 			) {
-				BasePaging {
+				BasePaging(minimumPageNumber.coerceAtLeast(1)) {
 					fetchPage(it)
 				}
 			}.flow
@@ -64,12 +66,12 @@ class BasePaging<T : Any>(
 	}
 	
 	override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
-		val pageNumber = params.key ?: 1 // As 1 is the minimum page number.
-		
+		val pageNumber = params.key ?: minimumPageNumber // As 1 is the minimum page number.
+
 		return when (val result = fetchPage(pageNumber)) {
 			is MAResult.Success -> LoadResult.Page(
 				result.value.data?.data.orEmpty().onEach { if (it is Listener) it.setPage(pageNumber) },
-				if (pageNumber == 1) null else pageNumber.dec(),
+				if (pageNumber == minimumPageNumber) null else pageNumber.dec(),
 				if (result.value.data?.links?.next.isNullOrEmpty()) null else pageNumber.inc()
 			)
 			is MAResult.Failure -> LoadResult.Error(MAPagingException(result))

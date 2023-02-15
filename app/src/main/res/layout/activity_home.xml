@@ -110,6 +110,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/exploreSearchImageView"
+        android:layout_width="@dimen/dimen30"
+        android:layout_height="@dimen/dimen30"
+        android:layout_marginStart="50dp"
+        android:onClick="@{v -> viewModel.openSearchCycleInHome(v)}"
+        android:src="@drawable/explore_subsection_search"
+        android:visibility="@{viewModel.showExploreSubsectionSearch}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgMoonLogo"
         style="@style/mediumFont"
         android:layout_width="@dimen/dimen100"

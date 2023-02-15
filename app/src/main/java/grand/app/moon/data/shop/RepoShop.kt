@@ -271,7 +271,13 @@ class RepoShop @Inject constructor(
 		}
 	}
 
-	fun getHomeExplores() = BasePaging.createFlowViaPager {
+	/*fun getHomeExplores() = BasePaging.createFlowViaPager {
+		remoteDataSource.getHomeExplores(it)
+	}*/
+
+	fun getHomeExplores(
+		minimumPageNumber: Int = 1,
+	) = BasePaging.createFlowViaPager(minimumPageNumber) {
 		remoteDataSource.getHomeExplores(it)
 	}
 
@@ -359,6 +365,18 @@ class RepoShop @Inject constructor(
 
 	suspend fun deleteAccountPermanently() = remoteDataSource.deleteAccountPermanently()
 
+	suspend fun likeExplore(exploreId: Int) = remoteDataSource.setExploreActionInteractive(
+		exploreId, ExploreInteractions.LIKE.apiValue
+	)
+
+	suspend fun shareExplore(exploreId: Int) = remoteDataSource.setExploreActionInteractive(
+		exploreId, ExploreInteractions.SHARE.apiValue
+	)
+
+}
+
+enum class ExploreInteractions(val apiValue: Int) {
+	LIKE(1), SHARE(2)
 }
 
 data class CitiesAndStoreCategoriesAndSubCategories(

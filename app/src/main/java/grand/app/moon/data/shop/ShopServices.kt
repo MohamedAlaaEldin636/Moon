@@ -260,4 +260,11 @@ interface ShopServices {
 	@POST("v1/auth/delete")
 	suspend fun deleteAccountPermanently(): BaseResponse<Any?>
 
+	@FormUrlEncoded
+	@POST("v1/explores")
+	suspend fun setExploreActionInteractive(
+		@Field("explore_id") exploreId: Int,
+		@Field("type") type: Int,
+	): BaseResponse<Any?>
+
 }

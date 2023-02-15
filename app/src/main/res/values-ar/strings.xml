@@ -482,4 +482,6 @@
   <string name="whatsapp_3">واتس اب</string>
     <string name="qr_code_scanner">ماسح رمز الاستجابة السريعة</string>
   <string name="are_you_sure_del_account">سيتم حذف بيناتك ولا يوجد طريقة لإستعادتها</string>
+  <string name="show_all_var_comments">عرض جميع %1$s تعليق</string>
+  <string name="add_your_comment_8">أضف تعليقك</string>
 </resources>

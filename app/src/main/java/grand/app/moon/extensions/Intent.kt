@@ -67,6 +67,25 @@ fun Context.launchWhatsApp(phoneNumber: String) {
 	}
 }
 
+/*
+val intent = Intent(Intent.ACTION_SEND)
+    /*This will be the actual content you wish you share.*/
+    /*This will be the actual content you wish you share.*/
+//    val shareBody = message
+    /*The type of the content is text, obviously.*/
+    /*The type of the content is text, obviously.*/intent.type = "text/plain"
+    /*Applying information Subject and Body.*/
+    /*Applying information Subject and Body.*/intent.putExtra(
+      Intent.EXTRA_SUBJECT,
+      context.getString(R.string.app_name)
+    )
+    intent.putExtra(Intent.EXTRA_TEXT, title + "\n" + message)
+    /*Fire!*/
+    context.startActivity(Intent.createChooser(intent, context.getString(R.string.share)))
+ */
+
+fun Context.launchShareText(title: String, msg: String) = launchShareText("$title\n$msg")
+
 fun Context.launchShareText(text: String) {
 	val intent = Intent(Intent.ACTION_SEND).also {
 		it.type = "text/plain"

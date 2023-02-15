@@ -215,6 +215,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
 	  nav.addOnDestinationChangedListener { controller, destination, arguments ->
 		  viewModel.showBarCode.value = destination.id == R.id.storeListFragment
+		  viewModel.showExploreSubsectionSearch.value = destination.id == R.id.dest_home_explore_subsection
 
 		  resetTexts()
       binding.icNotificationFilter.hide()

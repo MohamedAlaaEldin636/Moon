@@ -18,6 +18,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Field
 import retrofit2.http.Part
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
@@ -385,5 +386,12 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	suspend fun followStore(storeId: Int) = safeApiCall { apiService.followStore(storeId) }
 
 	suspend fun deleteAccountPermanently() = safeApiCall { apiService.deleteAccountPermanently() }
+
+	suspend fun setExploreActionInteractive(
+		exploreId: Int,
+		type: Int,
+	) = safeApiCall {
+		apiService.setExploreActionInteractive(exploreId, type)
+	}
 
 }

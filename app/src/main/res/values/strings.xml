@@ -491,4 +491,6 @@
   <string name="qr_code_scanner">ماسح رمز الاستجابة السريعة</string>
   <string name="def_value_string" translatable="false">def value stringggggggggggggggggggggggggggggggg</string>
   <string name="are_you_sure_del_account">هل أنت متأكد من حذف الحساب نهائياً و عدم إستعادته أبداً</string>
+  <string name="show_all_var_comments">عرض جميع %1$s تعليق</string>
+  <string name="add_your_comment_8">أضف تعليقك</string>
 </resources>

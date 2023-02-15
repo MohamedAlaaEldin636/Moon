@@ -14,12 +14,37 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+fun <T : Any> Fragment.getOnPageChangeForAdapterUsingViewLifecycle(
+	adapter: PagingDataAdapter<T, *>,
+	minimumPageNumber: Int = 1,
+	onPageChange: (page: Int) -> Unit = {},
+) {
+	var list: List<T>? = null
+	var page: Int? = null
+
+	viewLifecycleOwner.lifecycleScope.launch {
+		viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+			adapter.loadStateFlow.collectLatest {
+				val newList = adapter.snapshot().items
+
+				if (newList != list && newList.isNotEmpty()) {
+					list = newList
+
+					page = if (page == null) minimumPageNumber else page
+					onPageChange(page.orZero())
+					page = page.orZero().inc()
+				}
+			}
+		}
+	}
+}
+
 fun <T : Any> Fragment.performListTransformationAndGetOnDistinctChangeForAdapterUsingViewLifecycle(
 	adapter: PagingDataAdapter<T, *>,
 	transformation: (List<T>) -> List<T> = { it },
 	onChange: (newList: List<T>) -> Unit = {},
 ) {
-	var list = emptyList<T>()
+	var list: List<T>? = null
 
 	viewLifecycleOwner.lifecycleScope.launch {
 		viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -29,9 +54,9 @@ fun <T : Any> Fragment.performListTransformationAndGetOnDistinctChangeForAdapter
 				if (newList != list) {
 					list = newList
 
-					adapter.submitData(PagingData.from(list))
+					adapter.submitData(PagingData.from(list.orEmpty()))
 
-					onChange(list)
+					onChange(list.orEmpty())
 				}
 			}
 		}
@@ -47,6 +72,25 @@ fun Fragment.observeAdapterOnDataFirstLoadedOnceUsingViewLifecycle(
 		viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 			adapter.loadStateFlow.collectLatest { state ->
 				if (state.refresh is LoadState.NotLoading) {
+					job?.cancel()
+					job = null
+
+					action()
+				}
+			}
+		}
+	}
+}
+
+fun Fragment.observeAdapterOnDataFirstLoadedOnceHaveDataUsingViewLifecycle(
+	adapter: PagingDataAdapter<*, *>,
+	action: () -> Unit,
+) {
+	var job: Job? = null
+	job = viewLifecycleOwner.lifecycleScope.launch {
+		viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+			adapter.loadStateFlow.collectLatest {
+				if (adapter.snapshot().items.isNotEmpty()) {
 					job?.cancel()
 					job = null
 

@@ -17,6 +17,9 @@ import com.onesignal.OneSignal
 import com.zeugmasolutions.localehelper.LocaleAwareApplication
 import dagger.hilt.android.HiltAndroidApp
 import grand.app.moon.presentation.base.utils.Constants
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import javax.net.ssl.SSLContext
@@ -27,6 +30,9 @@ class MyApplication : LocaleAwareApplication() {
 
 	var checkedAppGlobalAnnouncement = false
 	var showedAppGlobalAnnouncement = false
+
+	private val supervisorJob = SupervisorJob()
+	val applicationScope = CoroutineScope(Dispatchers.IO + supervisorJob)
 
   override
   fun attachBaseContext(base: Context) {

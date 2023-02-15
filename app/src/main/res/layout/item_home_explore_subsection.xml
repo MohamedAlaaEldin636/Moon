@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_gravity="center"
+
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
+    android:clipToPadding="false">
+
+    <TextView
+      android:id="@+id/followButtonTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginEnd="16dp"
+
+      android:paddingStart="9dp"
+      android:paddingEnd="9dp"
+      android:paddingBottom="9dp"
+      android:paddingTop="9dp"
+
+      android:gravity="center"
+
+      style="@style/TextTajawalMedium14"
+      android:textColor="@color/white"
+
+      android:background="@drawable/dr_rect_5"
+      android:backgroundTint="@color/colorPrimary"
+
+      android:text="@string/follow"
+      android:drawablePadding="9dp"
+      app:drawableStartCompat="@drawable/follow_add"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/storeImageView"
+
+      android:layout_width="25dp"
+      android:layout_height="25dp"
+
+      app:shapeAppearanceOverlay="@style/ShapeCircle"
+      app:shapeAppearance="@style/ShapeCircle"
+
+      android:layout_marginStart="16dp"
+
+      app:layout_constraintTop_toTopOf="@id/followButtonTextView"
+      app:layout_constraintBottom_toBottomOf="@id/followButtonTextView"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+      android:id="@+id/storeTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:maxLines="1"
+      android:ellipsize="end"
+
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+
+      style="@style/TextTajawalBold14"
+      android:textColor="@color/colorPrimary"
+      android:textDirection="locale"
+
+      app:layout_constraintTop_toTopOf="@id/followButtonTextView"
+      app:layout_constraintBottom_toBottomOf="@id/followButtonTextView"
+      app:layout_constraintStart_toEndOf="@id/storeImageView"
+      app:layout_constraintEnd_toStartOf="@id/followButtonTextView"/>
+
+    <com.smarteist.autoimageslider.SliderView
+      android:id="@+id/sliderView"
+
+      android:layout_width="0dp"
+      android:layout_height="389dp"
+
+      app:sliderAnimationDuration="600"
+      app:sliderAutoCycleDirection="back_and_forth"
+      app:sliderAutoCycleEnabled="false"
+      app:sliderIndicatorAnimationDuration="600"
+      app:sliderIndicatorGravity="center_horizontal|bottom"
+      app:sliderIndicatorOrientation="horizontal"
+      app:sliderIndicatorPadding="3dp"
+      app:sliderIndicatorRadius="2dp"
+      app:sliderIndicatorMarginBottom="6dp"
+      app:sliderIndicatorSelectedColor="#E89028"
+      app:sliderIndicatorUnselectedColor="@color/white"
+      app:sliderScrollTimeInSec="3"
+      app:sliderStartAutoCycle="false"
+
+      android:layout_marginTop="16dp"
+
+      tools:background="#5C2EDA"
+
+      app:layout_constraintTop_toBottomOf="@id/followButtonTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.exoplayer2.ui.PlayerView
+      android:id="@+id/playerView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      app:use_controller="false"
+
+      app:layout_constraintTop_toTopOf="@id/sliderView"
+      app:layout_constraintBottom_toBottomOf="@id/sliderView"
+      app:layout_constraintStart_toStartOf="@id/sliderView"
+      app:layout_constraintEnd_toEndOf="@id/sliderView"/>
+    
+    <ImageView
+      android:id="@+id/favImageView"
+
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+
+      android:layout_margin="16dp"
+
+      tools:src="@drawable/explore_subsection_is_fav"
+
+      app:layout_constraintTop_toBottomOf="@id/sliderView"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+      android:id="@+id/chatImageView"
+
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+
+      android:src="@drawable/explore_subsection_msg"
+
+      android:layout_marginStart="10dp"
+
+      app:layout_constraintTop_toTopOf="@id/favImageView"
+      app:layout_constraintStart_toEndOf="@id/favImageView"/>
+
+    <ImageView
+      android:id="@+id/shareImageView"
+
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+
+      android:src="@drawable/explore_subsection_share"
+
+      android:layout_marginStart="10dp"
+
+      app:layout_constraintTop_toTopOf="@id/chatImageView"
+      app:layout_constraintStart_toEndOf="@id/chatImageView"/>
+
+    <TextView
+      android:id="@+id/likesCountTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalMedium14"
+      android:textColor="@color/colorPrimary"
+      android:text="@string/like"
+
+      android:layout_marginTop="15dp"
+      android:layout_marginStart="16dp"
+
+      app:layout_constraintTop_toBottomOf="@id/favImageView"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+      android:id="@+id/sharesCountTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalMedium14"
+      android:textColor="@color/colorPrimary"
+      android:text="@string/share"
+
+      android:layout_marginTop="15dp"
+      android:layout_marginStart="10dp"
+
+      app:layout_constraintTop_toBottomOf="@id/favImageView"
+      app:layout_constraintStart_toEndOf="@id/likesCountTextView"/>
+
+    <TextView
+      android:id="@+id/commentsCountTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalMedium14"
+      android:textColor="@color/colorPrimary"
+      tools:text="@string/show_all_var_comments"
+
+      android:layout_marginTop="18dp"
+      android:layout_marginStart="10dp"
+
+      app:layout_constraintTop_toBottomOf="@id/likesCountTextView"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <LinearLayout
+      android:id="@+id/addCommentLinearLayout"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:background="@drawable/dr_rect_5"
+      android:backgroundTint="#F2F2F2"
+
+      android:orientation="horizontal"
+
+      android:gravity="center_vertical"
+
+      android:layout_marginTop="18dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+
+      android:paddingTop="9dp"
+      android:paddingBottom="9dp"
+      android:clipToPadding="false"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/commentsCountTextView">
+
+      <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/myOwnImageView"
+
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+
+        app:shapeAppearance="@style/ShapeRound5"
+        app:shapeAppearanceOverlay="@style/ShapeRound5"
+
+        android:src="@drawable/ic_default_user"
+
+        android:layout_marginStart="10dp"/>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:includeFontPadding="false"
+        style="@style/TextTajawalRegular12"
+        android:textColor="#AFAFAF"
+
+        android:text="@string/add_your_comment_8"
+
+        android:textDirection="locale"
+
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="10dp"/>
+
+    </LinearLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
