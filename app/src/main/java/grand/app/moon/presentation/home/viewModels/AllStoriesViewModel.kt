@@ -55,7 +55,7 @@ class AllStoriesViewModel @Inject constructor(
 		binding.root.tag = position
 
 		binding.seenCircleView.visibleOrInvisible(
-			item.stories?.firstOrNull()?.isSeen.orFalse().not()
+			item.isSeen.not()
 		)
 
 		binding.storeNameTextView.text = item.name

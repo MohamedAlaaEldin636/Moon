@@ -62,14 +62,16 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 				storyModel.position = position - 1
 
 				val item = adapter.list[position]
-				if (context.isLogin() && item.stories?.firstOrNull()?.isSeen.orFalse().not()) {
+				if (context.isLogin() && item.isSeen.not()) {
 					item.stories?.firstOrNull()?.isSeen = true
 
-					val updatedList = adapter.list.toMutableList()
-					val updatedItem = updatedList.removeAt(position)
-					updatedList += updatedItem
+					if (item.isSeen) {
+						val updatedList = adapter.list.toMutableList()
+						val updatedItem = updatedList.removeAt(position)
+						updatedList += updatedItem
 
-					adapter.submitList(updatedList)
+						adapter.submitList(updatedList)
+					}
 				}
 
 				fragment.findNavController()
@@ -90,7 +92,7 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 			binding.storeNameTextView.text = item.name
 
 			binding.seenCircleView.visibleOrInvisible(
-				item.stories?.firstOrNull()?.isSeen.orFalse().not()
+				item.isSeen.not()
 			)
 
 			binding.storeLogoImageView.setupWithGlide {

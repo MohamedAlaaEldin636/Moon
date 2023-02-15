@@ -41,6 +41,9 @@ data class ResponseStory(
 	//@SerializedName("social_media_links") var socialMediaLinks: String?,
 	//@SerializedName("working_hours") var workingHours: String?,
 ) {
+
+	val isSeen get() = stories.orEmpty().all { it.isSeen.orFalse() }
+
 	val isPremium get() = premium == 1
 
 	data class Story(

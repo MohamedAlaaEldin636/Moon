@@ -88,7 +88,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 		) { data ->
 			// 1st item just used for addition isa.
 			viewModel.adapterStories.submitList(listOf(ResponseStory()) + data.stories.sortedBy {
-				if (it.stories?.firstOrNull()?.isSeen.orFalse()) 1 else 0
+				if (it.isSeen) 1 else 0
 			})
 
 			viewModel.adapterCategories.submitList(data.categories)

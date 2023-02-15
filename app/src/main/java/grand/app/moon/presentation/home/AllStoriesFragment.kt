@@ -6,14 +6,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
 import androidx.paging.map
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.databinding.FragmentAllStoriesBinding
-import grand.app.moon.extensions.app
-import grand.app.moon.extensions.orZero
-import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.viewModels.AllStoriesViewModel
@@ -84,8 +84,6 @@ class AllStoriesFragment : BaseFragment<FragmentAllStoriesBinding>() {
 			layoutParams.height = dpToPx188
 		}
 
-		binding.recyclerViewOther
-
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 				launch {
@@ -105,6 +103,24 @@ class AllStoriesFragment : BaseFragment<FragmentAllStoriesBinding>() {
 						viewModel.showFollowingStories.value = it.not()
 					}
 				}
+
+				performListTransformationAndGetOnDistinctChangeForAdapterUsingViewLifecycle(
+					viewModel.adapterFollowing,
+					transformation = { list ->
+						list.sortedBy {
+							if (it.isSeen) 1 else 0
+						}
+					}
+				)
+
+				performListTransformationAndGetOnDistinctChangeForAdapterUsingViewLifecycle(
+					viewModel.adapterOther,
+					transformation = { list ->
+						list.sortedBy {
+							if (it.isSeen) 1 else 0
+						}
+					}
+				)
 			}
 		}
 	}
