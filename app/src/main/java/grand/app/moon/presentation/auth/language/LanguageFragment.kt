@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
 import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentLanguageBinding
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.auth.language.viewModels.LanguagesViewModel
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.presentation.base.extensions.*
@@ -32,6 +33,12 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>() {
   val languageFragmentArgs : LanguageFragmentArgs by navArgs()
 
   private val viewModel: LanguagesViewModel by viewModels()
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		showMessage("heeeeeeeeeeeeeey")
+
+		super.onCreate(savedInstanceState)
+	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)

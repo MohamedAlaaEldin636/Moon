@@ -1,5 +1,6 @@
 package grand.app.moon.core
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.multidex.MultiDex
@@ -20,13 +21,19 @@ import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import javax.net.ssl.SSLContext
 
+fun Context?.getMyApplication() = this?.applicationContext as? MyApplication
+
+fun Context?.makeAppInitializations() {
+	getMyApplication()?.performAllInitializations()
+}
 
 @HiltAndroidApp
-class MyApplication : LocaleAwareApplication() {
+class MyApplication : Application() {
 
 	var checkedAppGlobalAnnouncement = false
 	var showedAppGlobalAnnouncement = false
@@ -43,17 +50,31 @@ class MyApplication : LocaleAwareApplication() {
   override
   fun onCreate() {
     super.onCreate()
-    initChat()
-    updateAndroidSecurityProvider()
-    initStoryViewer()
+	  //initChat()
+    //updateAndroidSecurityProvider()
+	  //initStoryViewer()
     instance = this
 
     // Logging set to help debug issues, remove before releasing your app.
-    OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
+	  //OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
     // OneSignal Initialization
-    OneSignal.initWithContext(this)
-    OneSignal.setAppId(Constants.ONESIGNAL_APP_ID)
+	  //OneSignal.initWithContext(this)
+	  //OneSignal.setAppId(Constants.ONESIGNAL_APP_ID)
   }
+
+	fun performAllInitializations() {
+		applicationScope.launch {
+			initChat()
+			updateAndroidSecurityProvider()
+			//initStoryViewer() todo this makes a problem for now restarting activity isa.
+
+			// Logging set to help debug issues, remove before releasing your app.
+			//OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
+			// OneSignal Initialization
+			OneSignal.initWithContext(this@MyApplication)
+			OneSignal.setAppId(Constants.ONESIGNAL_APP_ID)
+		}
+	}
 
   private fun initStoryViewer() {
     val leastRecentlyUsedCacheEvictor = LeastRecentlyUsedCacheEvictor(90 * 1024 * 1024)
@@ -66,7 +87,8 @@ class MyApplication : LocaleAwareApplication() {
 
   companion object {
     var simpleCache: SimpleCache? = null
-      lateinit var instance : MyApplication
+
+	  lateinit var instance : MyApplication
   }
 
   private fun initChat() {

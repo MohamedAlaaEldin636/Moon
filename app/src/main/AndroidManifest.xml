@@ -98,6 +98,7 @@ package="grand.app.moon">
   <activity
     android:name="grand.app.moon.presentation.splash.MASplash2Activity"
     android:exported="true"
+    android:configChanges="locale|layoutDirection"
     android:screenOrientation="portrait"
     android:theme="@style/Theme.AppTheme">
     <meta-data
