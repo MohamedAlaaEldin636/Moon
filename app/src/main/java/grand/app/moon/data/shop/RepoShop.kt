@@ -373,6 +373,10 @@ class RepoShop @Inject constructor(
 		exploreId, ExploreInteractions.SHARE.apiValue
 	)
 
+	fun getSimpleUsersOfExploreLikes(id: Int) = BasePaging.createFlowViaPager {
+		remoteDataSource.getSimpleUsersOfExploreLikes(id, it)
+	}
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

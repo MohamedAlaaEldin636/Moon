@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.core.di.module.RetrofitModule
 import grand.app.moon.domain.shop.*
+import grand.app.moon.domain.user.entity.UserListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
 import grand.app.moon.presentation.home.models.*
@@ -266,5 +267,11 @@ interface ShopServices {
 		@Field("explore_id") exploreId: Int,
 		@Field("type") type: Int,
 	): BaseResponse<Any?>
+
+	@GET("v1/explores/{id}/likes")
+	suspend fun getSimpleUsersOfExploreLikes(
+		@Path("id") id: Int,
+		@Query("page") page: Int)
+	: MABaseResponse<MABasePaging<ResponseSimpleUserData>>
 
 }

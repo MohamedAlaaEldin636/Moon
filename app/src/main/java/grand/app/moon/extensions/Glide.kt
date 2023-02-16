@@ -9,6 +9,7 @@ import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.Downsampler
@@ -20,6 +21,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import grand.app.moon.R
 import java.lang.ref.WeakReference
+
+fun <TranscodeType> RequestBuilder<TranscodeType>.saveDiskCacheStrategyAll(): RequestBuilder<TranscodeType> =
+	apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
 
 fun ImageView.clearWithGlide() {
 	Glide.with(this)

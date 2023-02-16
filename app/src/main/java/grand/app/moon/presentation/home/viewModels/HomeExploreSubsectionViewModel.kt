@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -22,6 +23,7 @@ import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
 import grand.app.moon.presentation.home.HomeExploreSubsectionFragmentArgs
+import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.myAds.adapter.RVSliderImageFull
 import kotlinx.coroutines.launch
@@ -129,18 +131,26 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 			binding.commentsCountTextView.setOnClickListener(listener)
 			binding.chatImageView.setOnClickListener(listener)
 
-			binding.likesCountTextView.setOnClickListener {
-				// todo ...
-				/*
-				v.findNavController().navigate(
-      R.id.userListFragment,
-      bundleOf(
-        "explore_id" to model.id,
-        "title" to v.resources.getString(R.string.this_was_liked_by_users, model.likes),
-        Constants.TabBarText to v.resources.getString(R.string.likes)
-      ), Constants.NAVIGATION_OPTIONS
-    )
-				 */
+			binding.likesCountTextView.setOnClickListener { view ->
+				val context = view.context ?: return@setOnClickListener
+				//val applicationScope = context.applicationScope ?: return@setOnClickListener
+
+				val position = binding.followButtonTextView.tag as? Int ?: return@setOnClickListener
+
+				val item = adapter.snapshot().items.getOrNull(position) ?: return@setOnClickListener
+
+				val dataTitle = context.getString(R.string.got_likes_of_var_users, item.likesCount.orZero().toString())
+
+				view.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.simple.user.list.of.interactions",
+					paths = arrayOf(
+						context.getString(R.string.likes),
+						dataTitle,
+						SimpleUserListOfInteractionsFragment.Type.EXPLORE_LIKES.toString(),
+						item.id.orZero().toString()
+					)
+				)
 			}
 		},
 	) { binding, position, item ->

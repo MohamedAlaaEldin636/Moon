@@ -394,4 +394,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.setExploreActionInteractive(exploreId, type)
 	}
 
+	suspend fun getSimpleUsersOfExploreLikes(id: Int, page: Int) = safeApiCall2 {
+		apiService.getSimpleUsersOfExploreLikes(id, page)
+	}
+
 }
