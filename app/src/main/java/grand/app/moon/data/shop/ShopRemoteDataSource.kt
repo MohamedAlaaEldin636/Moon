@@ -398,4 +398,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getSimpleUsersOfExploreLikes(id, page)
 	}
 
+	suspend fun getAllAppCategoriesWithSubcategoriesAndBrands() = safeApiCall {
+		apiService.getAllAppCategoriesWithSubcategoriesAndBrands()
+	}
+
 }

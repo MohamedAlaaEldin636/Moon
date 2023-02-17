@@ -1,5 +1,9 @@
 package grand.app.moon.data.shop
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import grand.app.moon.core.extenstions.setCategoriesWithSubCategoriesAndBrands
+import grand.app.moon.core.extenstions.setInitialAppLaunch
 import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.domain.shop.*
@@ -21,6 +25,7 @@ import javax.inject.Singleton
 class RepoShop @Inject constructor(
 	private val remoteDataSource: ShopRemoteDataSource,
 	private val useCaseCountries: CountriesUseCase,
+	@ApplicationContext private val appContext: Context
 ) {
 
 	fun getMyCategories() = BasePaging.createFlowViaPager {
@@ -376,6 +381,24 @@ class RepoShop @Inject constructor(
 	fun getSimpleUsersOfExploreLikes(id: Int) = BasePaging.createFlowViaPager {
 		remoteDataSource.getSimpleUsersOfExploreLikes(id, it)
 	}
+
+	/**
+	 * - Might not be cached (saved locally) due to error in the background thread isa.
+	 */
+	suspend fun fetchAllCategoriesAndSaveThemLocallyIfPossible(retries: Int = 1) {
+		repeat(retries.coerceAtLeast(0).inc()) {
+			val resource = getAllAppCategoriesWithSubcategoriesAndBrands()
+
+			if (resource is Resource.Success) {
+				appContext.setCategoriesWithSubCategoriesAndBrands(resource.value.data)
+
+				return
+			}
+		}
+	}
+
+	private suspend fun getAllAppCategoriesWithSubcategoriesAndBrands() = remoteDataSource
+		.getAllAppCategoriesWithSubcategoriesAndBrands()
 
 }
 

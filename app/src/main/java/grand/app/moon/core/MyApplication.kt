@@ -60,13 +60,15 @@ class MyApplication : Application() {
     // OneSignal Initialization
 	  //OneSignal.initWithContext(this)
 	  //OneSignal.setAppId(Constants.ONESIGNAL_APP_ID)
+
+	  //performAllInitializations()
   }
 
 	fun performAllInitializations() {
 		applicationScope.launch {
 			initChat()
 			updateAndroidSecurityProvider()
-			//initStoryViewer() todo this makes a problem for now restarting activity isa.
+			//initStoryViewer() //todo this makes a problem for now restarting activity isa.
 
 			// Logging set to help debug issues, remove before releasing your app.
 			//OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)

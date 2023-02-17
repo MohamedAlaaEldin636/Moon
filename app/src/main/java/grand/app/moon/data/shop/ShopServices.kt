@@ -3,6 +3,7 @@ package grand.app.moon.data.shop
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.core.di.module.RetrofitModule
+import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.user.entity.UserListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
@@ -273,5 +274,8 @@ interface ShopServices {
 		@Path("id") id: Int,
 		@Query("page") page: Int)
 	: MABaseResponse<MABasePaging<ResponseSimpleUserData>>
+
+	@GET("v1/categories")
+	suspend fun getAllAppCategoriesWithSubcategoriesAndBrands(): BaseResponse<List<ItemCategory>?>
 
 }

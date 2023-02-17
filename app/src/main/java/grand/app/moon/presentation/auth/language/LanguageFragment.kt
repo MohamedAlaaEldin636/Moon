@@ -19,8 +19,10 @@ import grand.app.moon.databinding.FragmentCountriesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
 import grand.app.moon.core.MyApplication
+import grand.app.moon.core.extenstions.getSelectedLangBeforeThenReset
 import grand.app.moon.databinding.FragmentLanguageBinding
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.navigateSafely
 import grand.app.moon.presentation.auth.language.viewModels.LanguagesViewModel
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.presentation.base.extensions.*
@@ -35,22 +37,30 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>() {
   private val viewModel: LanguagesViewModel by viewModels()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
-		showMessage("heeeeeeeeeeeeeey")
-
 		super.onCreate(savedInstanceState)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		if (viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE_SELECTED_ON_APP_LAUNCH_BEFORE).toBooleanStrictOrNull() == true) {
+		/*if (requireContext().getSelectedLangBeforeThenReset()) {
+			if (viewModel.languageNavArgs?.type == Constants.SPLASH) {
+				findNavController().navigateSafely(
+					LanguageFragmentDirections.actionLanguageFragmentToCountriesFragment2()
+				)
+			}else {
+				activity?.openActivityAndClearStack(SplashActivity::class.java)
+			}
+		}*/
+
+		/*if (viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE_SELECTED_ON_APP_LAUNCH_BEFORE).toBooleanStrictOrNull() == true) {
 			viewModel.accountRepository.saveKeyToLocal(Constants.LANGUAGE_SELECTED_ON_APP_LAUNCH_BEFORE, false.toString())
 
 			// Shows language bs ha3mel eh ya3ne... m7tag more debugging which will take time isa.
 			binding.root.post {
 				findNavController().navigate(LanguageFragmentDirections.actionLanguageFragmentToCountriesFragment2())
 			}
-		}
+		}*/
 	}
 
   override

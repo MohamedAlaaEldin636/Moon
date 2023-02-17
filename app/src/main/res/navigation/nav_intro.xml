@@ -46,7 +46,8 @@
   <fragment
     android:id="@+id/languageFragment"
     android:name="grand.app.moon.presentation.auth.language.LanguageFragment"
-    android:label="LanguageFragment" >
+    android:label="LanguageFragment"
+    tools:layout="@layout/fragment_language">
     <argument
       android:name="type"
       app:argType="string"
