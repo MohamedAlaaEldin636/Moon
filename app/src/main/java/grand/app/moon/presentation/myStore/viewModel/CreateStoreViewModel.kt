@@ -118,7 +118,7 @@ class CreateStoreViewModel @Inject constructor(
 				if (newSelectedCity?.id != selectedCity.value?.id) {
 					selectedCity.value = newSelectedCity
 
-					areas.value = newSelectedCity?.areas
+					areas.value = newSelectedCity?.areas.orEmpty()
 					selectedArea.value = null
 				}
 			}

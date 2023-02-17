@@ -34,6 +34,12 @@ public class LanguagesHelper {
         editor.putString(Constants.LANGUAGE, language);
         editor.commit();
     }
+    public static void setLanguage(Context context, String language) {
+       SharedPreferences userDetails = context.getSharedPreferences(Constants.LANGUAGE_DATA, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = userDetails.edit();
+        editor.putString(Constants.LANGUAGE, language);
+        editor.commit();
+    }
 
     public static String getCurrentLanguage() {
         SharedPreferences preferences = MyApplication.instance.getApplicationContext().getSharedPreferences(Constants.LANGUAGE_DATA, Context.MODE_PRIVATE);
@@ -41,6 +47,15 @@ public class LanguagesHelper {
             return preferences.getString(Constants.LANGUAGE, Constants.DEFAULT_LANGUAGE);
         } else {
             setLanguage(Constants.DEFAULT_LANGUAGE);
+            return Constants.DEFAULT_LANGUAGE;
+        }
+    }
+    public static String getCurrentLanguage(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(Constants.LANGUAGE_DATA, Context.MODE_PRIVATE);
+        if (preferences.getString(Constants.LANGUAGE, "").length() > 0) {
+            return preferences.getString(Constants.LANGUAGE, Constants.DEFAULT_LANGUAGE);
+        } else {
+            setLanguage(context, Constants.DEFAULT_LANGUAGE);
             return Constants.DEFAULT_LANGUAGE;
         }
     }

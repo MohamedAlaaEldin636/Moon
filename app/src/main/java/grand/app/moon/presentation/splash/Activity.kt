@@ -1,6 +1,8 @@
 package grand.app.moon.presentation.splash
 
 import android.app.Activity
+import android.app.Application
+import android.app.Dialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
@@ -12,6 +14,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import grand.app.moon.appMoonHelper.language.LanguagesHelper
 import grand.app.moon.appMoonHelper.language.MyContextWrapper
+import grand.app.moon.presentation.base.utils.hideLoadingDialog
+import grand.app.moon.presentation.base.utils.showLoadingDialog
 import java.util.*
 
 /**
@@ -19,17 +23,20 @@ import java.util.*
  */
 fun Activity.isSameAsCurrentLocale(language: String) = LanguagesHelper.getCurrentLanguage() == language
 
-fun Activity.setCurrentLocale(language: String) {
+fun Activity.setCurrentLocale(language: String, recreateActivity: Boolean = true) {
 	LanguagesHelper.setLanguage(language)
 
-	recreate()
+	if (recreateActivity) {
+		recreate()
+	}
 }
 
 @Suppress("unused")
-fun Activity.getCurrentLocale(): String = LanguagesHelper.getCurrentLanguage()
+fun Context.getCurrentLocale(forcedContext: Context? = null): String =
+	if (forcedContext == null) LanguagesHelper.getCurrentLanguage() else LanguagesHelper.getCurrentLanguage(forcedContext)
 
-fun Activity.getContextForLocaleMA(lang: String): Context {
-	val resources = applicationContext.resources
+fun Context.getContextForLocaleMA(lang: String, forcedContext: Context? = null): Context {
+	val resources = (forcedContext ?: applicationContext).resources
 
 	/*if (lang == Locale.getDefault().language && lang == resources.configuration.currentLocale.language) {
 		return
@@ -44,10 +51,10 @@ fun Activity.getContextForLocaleMA(lang: String): Context {
 
 	val displayMetrics = resources.displayMetrics
 	return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-		applicationContext.createConfigurationContext(configuration)
+		(forcedContext ?: applicationContext).createConfigurationContext(configuration)
 	}else {
 		resources.updateConfiguration(configuration, displayMetrics)
-		applicationContext
+		(forcedContext ?: applicationContext)
 	}
 
 	//LanguagesHelper.setLanguage(lang)
@@ -60,18 +67,36 @@ abstract class MABaseActivity<VDB : ViewDataBinding> : AppCompatActivity() {
 	lateinit var binding: VDB
 		private set
 
+	private var progressDialog: Dialog? = null
+
+	fun showLoading() {
+		hideLoading()
+		kotlin.runCatching {
+			progressDialog = showLoadingDialog(this, null)
+		}
+	}
+
+	fun hideLoading() {
+		kotlin.runCatching {
+			hideLoadingDialog(progressDialog, this)
+		}
+	}
+
 	@CallSuper
 	override fun createConfigurationContext(overrideConfiguration: Configuration): Context {
-		return getContextForLocaleMA(LanguagesHelper.getCurrentLanguage()) // "ar"
+		return super.createConfigurationContext(onConfigurationChangedMA(overrideConfiguration))
+
+		//getContextForLocaleMA(LanguagesHelper.getCurrentLanguage())
 	}
 
 	@CallSuper
 	override fun attachBaseContext(newBase: Context?) {
-		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1 && newBase != null) {
+		super.attachBaseContext(attachBaseContextMA(newBase))
+		/*if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1 && newBase != null) {
 			super.attachBaseContext(MyContextWrapper.wrap(newBase, getCurrentLocale()))
 		}else {
 			super.attachBaseContext(newBase)
-		}
+		}*/
 	}
 
 	@CallSuper

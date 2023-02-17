@@ -23,6 +23,7 @@ import grand.app.moon.core.di.module.qualifiers.BaseInterceptor
 import grand.app.moon.core.di.module.qualifiers.ProgressInterceptor22
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.splash.getCurrentLangFromSharedPrefs
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.*
@@ -52,7 +53,9 @@ object RetrofitModule {
   @Provides
   @Singleton
   @BaseInterceptor
-  fun provideHeadersInterceptor(appPreferences: AppPreferences): Interceptor = run {
+  fun provideHeadersInterceptor(
+	  appPreferences: AppPreferences
+  ): Interceptor = run {
 
 //    var userToken = appPreferences.getLocal(Constants.TOKEN)
 //    var token2 = appPreferences.getUser().token
@@ -78,8 +81,8 @@ object RetrofitModule {
     Log.d(TAG, "provideHeadersInterceptor-language: ${AppPreferences.LANGUAGE}")
     Log.d(TAG, "intercept-userToken-here: ${appPreferences.getUserToken()}")
 //    var lang = AppPreferences.LANGUAGE
-    if(appPreferences.getLocal(Constants.LANGUAGE).isEmpty())
-      appPreferences.setLocal(Constants.LANGUAGE,Constants.DEFAULT_LANGUAGE)
+    /*if(appPreferences.getLocal(Constants.LANGUAGE).isEmpty())
+      appPreferences.setLocal(Constants.LANGUAGE,Constants.DEFAULT_LANGUAGE)*/
 
 //    Log.d(TAG, "provideHeadersInterceptor: $lang")
 //    Log.d(TAG, "provideHeadersInterceptor: ${appPreferences.getLocal(Constants.LANGUAGE)}")
@@ -102,7 +105,8 @@ object RetrofitModule {
 	      MyLogger.e("HttpLoggingInterceptor -> Authorization Bearer -> $token")
 	      request.addHeader("Authorization", "Bearer $token")
       }
-      request.addHeader("language", appPreferences.getLocal(Constants.LANGUAGE))
+	    MyLogger.e("HttpLoggingInterceptor -> language -> ${appPreferences.context.getCurrentLangFromSharedPrefs()}")
+      request.addHeader("language", appPreferences.context.getCurrentLangFromSharedPrefs())
       request.addHeader("platform", "1")
       request.addHeader("Accept", "application/json")
       request.addHeader("countryId", appPreferences.getLocal(Constants.COUNTRY_ID))

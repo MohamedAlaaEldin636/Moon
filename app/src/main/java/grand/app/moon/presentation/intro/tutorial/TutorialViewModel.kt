@@ -54,12 +54,18 @@ class TutorialViewModel @Inject constructor(
   }
 
   fun next(){
-    position.set(position.get()+1)
+	  if (position.get().inc() >= data.size) {
+		  submitEvent.value = Constants.SKIP
+	  }else {
+		  position.set(position.get()+1)
+		  updateIntro()
+	  }
+    /*position.set(position.get()+1)
     if(position.get() < data.size)
       updateIntro()
     else{
       submitEvent.value = Constants.SKIP
-    }
+    }*/
   }
 
   fun skip(){

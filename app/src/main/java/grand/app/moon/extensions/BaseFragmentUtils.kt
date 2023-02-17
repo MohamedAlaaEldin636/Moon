@@ -29,6 +29,7 @@ import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.MADialogFragment
 import grand.app.moon.presentation.base.utils.showLoadingDialog
+import grand.app.moon.presentation.splash.MABaseActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -137,6 +138,26 @@ private fun showRetryErrorDialog(
 	progressDialog.setCancelable(false)
 	progressDialog.setCanceledOnTouchOutside(false)
 	progressDialog.showSafely()
+}
+
+fun <T> MABaseActivity<*>.handleRetryAbleActionCancellable(
+	action: suspend () -> Resource<BaseResponse<T?>>,
+	onSuccess: (T) -> Unit
+) {
+	handleRetryAbleAction(
+		showLoading = { showLoading() },
+		hideLoading = { hideLoading() },
+		lifecycleScope,
+		action,
+		onError = {
+			showRetryErrorDialogWithCancelNegativeButton(
+				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+			) {
+				handleRetryAbleActionCancellable(action, onSuccess)
+			}
+		},
+		onSuccess
+	)
 }
 
 fun <T> BaseActivity<*>.handleRetryAbleActionCancellable(

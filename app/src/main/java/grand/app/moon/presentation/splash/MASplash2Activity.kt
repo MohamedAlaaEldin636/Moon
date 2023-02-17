@@ -1,6 +1,8 @@
 package grand.app.moon.presentation.splash
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -11,6 +13,7 @@ import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ActivityMaSplash2Binding
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
+import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.intro.IntroActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,15 +28,15 @@ import javax.inject.Inject
  * 3. check app state and decide next screen which will either be intro activity or home one.
  */
 @AndroidEntryPoint
-class MASplash2Activity : MABaseActivity<ActivityMaSplash2Binding>() {
+class MASplash2Activity : AppCompatActivity() {
 
 	@Inject
 	lateinit var repoShop: RepoShop
 
-	override fun getLayoutId(): Int = R.layout.activity_ma_splash_2
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+
+		val binding = DataBindingUtil.setContentView<ActivityMaSplash2Binding>(this, R.layout.activity_ma_splash_2)
 
 		binding.splashImageView.setupWithGlide {
 			load(R.drawable.aaaa).saveDiskCacheStrategyAll()
@@ -41,11 +44,11 @@ class MASplash2Activity : MABaseActivity<ActivityMaSplash2Binding>() {
 
 		binding.root.post {
 			lifecycleScope.launch {
-				delay(500)
+				delay(250)
 
 				makeAppInitializations()
 
-				delay(500)
+				delay(250)
 
 				applicationScope?.launch {
 					repoShop.fetchAllCategoriesAndSaveThemLocallyIfPossible()
@@ -53,7 +56,7 @@ class MASplash2Activity : MABaseActivity<ActivityMaSplash2Binding>() {
 
 				val jClass = when (getInitialAppLaunch()) {
 					InitialAppLaunch.SHOW_WELCOMING_SCREENS -> IntroActivity::class.java
-					InitialAppLaunch.SHOW_HOME -> IntroActivity::class.java
+					InitialAppLaunch.SHOW_HOME -> HomeActivity::class.java
 				}
 
 				openActivityAndClearStack(jClass)

@@ -18,6 +18,8 @@ import grand.app.moon.presentation.base.extensions.handleApiError
 import grand.app.moon.presentation.base.extensions.hideKeyboard
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.core.extenstions.InitialAppLaunch
+import grand.app.moon.core.extenstions.setInitialAppLaunch
 import grand.app.moon.databinding.FragmentTutorialBinding
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.HomeActivity
@@ -114,6 +116,7 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding>() {
 
   private fun homePage() {
     viewModel.setFirstTime(false)
+	  context?.setInitialAppLaunch(InitialAppLaunch.SHOW_HOME)
     openActivityAndClearStack(HomeActivity::class.java)
   }
 }

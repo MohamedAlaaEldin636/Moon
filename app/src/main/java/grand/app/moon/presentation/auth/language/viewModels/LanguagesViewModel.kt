@@ -25,9 +25,8 @@ import grand.app.moon.presentation.auth.language.LanguageFragmentArgs
 import grand.app.moon.presentation.auth.language.LanguageFragmentDirections
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.splash.SplashActivity
-import grand.app.moon.presentation.splash.isSameAsCurrentLocale
-import grand.app.moon.presentation.splash.setCurrentLocale
+import grand.app.moon.presentation.intro.IntroActivity
+import grand.app.moon.presentation.splash.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -93,11 +92,24 @@ class LanguagesViewModel @Inject constructor(
 			  LanguageFragmentDirections.actionLanguageFragmentToCountriesFragment2()
 		  )
 	  }else {
-		  fragment.findNavController().navigateUp()
+		  //fragment.findNavController().navigateUp()
 	  }
 
-	  if (activity.isSameAsCurrentLocale(lang).not()) {
-		  activity.setCurrentLocale(lang)
+	  if (true || activity.isSameAsCurrentLocale(lang).not()) {
+		  activity.setCurrentLangFromSharedPrefs(lang)
+
+		  //activity.setCurrentLocale(lang, autoRecreate)
+
+		  if (activity is IntroActivity) {
+			  activity.recreate()
+		  }else {
+			  activity.openActivityAndClearStack(MASplash2Activity::class.java)
+		  }
+
+		  //activity.getContextForLocaleMA(lang)
+
+		  //activity.recreate()
+		  //activity.openActivityAndClearStack(activity.javaClass/*MASplash2Activity::class.java*/)
 	  }
 
     /*Log.d(TAG, "next: ")

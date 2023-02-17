@@ -20,7 +20,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class AppPreferences @Inject constructor(private val context: Context) {
+class AppPreferences @Inject constructor(
+	val context: Context
+) {
 
   private val STORE_NAME = "app_data_store"
   private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = STORE_NAME)

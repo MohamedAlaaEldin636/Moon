@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.home
 
 import android.content.Intent
+import android.content.IntentSender
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -17,6 +18,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
+import com.facebook.FacebookSdk
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import grand.app.moon.R
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.databinding.ActivityHomeBinding
@@ -35,106 +39,64 @@ import grand.app.moon.extensions.*
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
 import grand.app.moon.presentation.base.utils.showMessage
 import grand.app.moon.presentation.packages.BecomeShopPackagesFragmentDirections
+import grand.app.moon.presentation.splash.MABaseActivity
 
 //private var CAUSE_NAV_UP = false
 
 @AndroidEntryPoint
-class HomeActivity : BaseActivity<ActivityHomeBinding>() {
-
-	/*fun makeHugeChanges() {
-		MyLogger.e("gggggggggggggggggggggggggg -> 0")
-		MyLogger.e("gggggggggggggggggggggggggg -> 1 ${kotlin.runCatching { ::nav.isInitialized }.getOrNull()}")
-		MyLogger.e("gggggggggggggggggggggggggg -> 2 ${kotlin.runCatching { (supportFragmentManager.findFragmentById(R.id.fragment_host_container) as? NavHostFragment)?.navController }.getOrNull()}")
-
-		Handler(Looper.getMainLooper()).postDelayed(500) {
-			MyLogger.e("gggggggggggggggggggggggggg -> 0")
-			MyLogger.e("gggggggggggggggggggggggggg -> 1 ${kotlin.runCatching { ::nav.isInitialized }.getOrNull()}")
-			MyLogger.e("gggggggggggggggggggggggggg -> 2 ${kotlin.runCatching { (supportFragmentManager.findFragmentById(R.id.fragment_host_container) as? NavHostFragment)?.navController }.getOrElse { it }}")
-
-			MyLogger.e("gggggggggggggggggggggggggg -> 4 ${kotlin.runCatching { nav.navigateUp() }.getOrElse { it }}")
-
-			CAUSE_NAV_UP = true
-
-			MyLogger.e("gggggggggggggggggggggggggg -> 4 ${kotlin.runCatching { recreate() }.getOrElse { it }}")
-		}
-	}*/
+class HomeActivity : MABaseActivity<ActivityHomeBinding>() {
 
   var filePath: ValueCallback<Array<Uri>>? = null
   private lateinit var appBarConfiguration: AppBarConfiguration
   lateinit var nav: NavController
   private val viewModel: HomeViewModel by viewModels()
 
-  override
-  fun getLayoutId() = R.layout.activity_home
+	var immediateUpdateActivity: ImmediateUpdateActivity? = null
 
-  override
-  fun setUpBottomNavigation() {
-    setUpBottomNavigationWithGraphs()
-  }
+  override fun getLayoutId() = R.layout.activity_home
 
-  var immediateUpdateActivity: ImmediateUpdateActivity? = null
-
-  override fun onCreate(savedInstanceState: Bundle?) {
+	override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    immediateUpdateActivity = ImmediateUpdateActivity(this)
-//    val lang = viewModel.accountRepository.getKeyFromLocal(Constants.LANGUAGE)
-//    if (lang.isEmpty()) {
-//      LocaleHelper.setLocale(this, Locale(lang))
-//    }
 
+	  if (savedInstanceState == null) {
+		  setUpBottomNavigation()
+		  //setUpNavigationDrawer()
+	  }
+	  initFacebook()
+	  //setUpViews()
+
+    immediateUpdateActivity = ImmediateUpdateActivity(this)
 
 	  if (this::nav.isInitialized) {
       nav.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(Constants.BUNDLE)
         ?.observe(this) { result ->
-          // Do something with the result.
           Log.d(TAG, "onCreate: DONE HERE")
         }
     }
 
 	  MyLogger.e("gggggggggggggggggggggggggg -> 5 ${kotlin.runCatching { nav.currentDestination?.id == R.id.dest_add_story }.getOrElse { it }}")
-//    setFragmentResultListener(Constants.BUNDLE){ requestKey, bundle ->
-//      if(bundle.containsKey(Constants.SORT_BY)) {
-//        when(bundle.getInt(Constants.SORT_BY)){
-//          1 -> activityViewModel.toChatList(binding.root)
-//          else -> activityViewModel.toWhatsappList(binding.root)
-//        }
-//      }
-//    }
   }
 
-  override fun setUpViews() {
-    super.setUpViews()
+	private fun initFacebook() {
+		if (!FacebookSdk.isInitialized()) {
+			FacebookSdk.setApplicationId("802733460697057")
+			FacebookSdk.sdkInitialize(applicationContext)
+			//setAutoLogAppEventsEnabled(true)
+			FacebookSdk.fullyInitialize()
+			FacebookSdk.setAutoInitEnabled(true)
+			FacebookSdk.setAdvertiserIDCollectionEnabled(true)
+		}
+	}
 
+	fun setUpBottomNavigation() {
+		setUpBottomNavigationWithGraphs()
+	}
+
+  fun setUpViews() {
     OneSignal.setNotificationOpenedHandler { result ->
       val actionId = result.action.actionId
       Log.d(TAG, "setUpViews: $actionId")
     }
-
-	  /*observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<String>(nav, QRCodeScannerFragment::class.java.name) {
-		  MyLogger.e("uuuuuuuuuuuuuuuuuu -> captured -> $it")
-
-			nav.navigate(
-				R.id.nav_store,
-				bundleOf(
-					"id" to kotlin.runCatching {
-						it.substring(it.lastIndexOf("/")).toInt()
-					}.getOrElse { throwable ->
-						MyLogger.e("uuuuuuuuuuuuuuuuuu -> $it -======- $throwable")
-
-						0
-					}
-				),
-				Constants.NAVIGATION_OPTIONS
-			)
-		  *//*
-		  v.findNavController().navigate(
-      R.id.nav_store,
-      bundleOf(
-        "id" to store.id,
-        "type" to type
-      ),Constants.NAVIGATION_OPTIONS)
-		   *//*
-	  }*/
   }
 
   private fun setUpBottomNavigationWithGraphs() {
@@ -147,19 +109,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     val navHostFragment =
       supportFragmentManager.findFragmentById(R.id.fragment_host_container) as NavHostFragment
     nav = navHostFragment.findNavController()
-	  /*if (CAUSE_NAV_UP && nav.currentDestination?.id == R.id.dest_add_story) {
-		  CAUSE_NAV_UP = false
 
-			Handler(Looper.getMainLooper()).post {
-				nav.navigateUp()
-
-				nav.navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.add.story"
-				)
-			}
-	  }
-	  MyLogger.e("gggggggggggggggggggggggggg -> 6 ${kotlin.runCatching { nav.currentDestination?.id == R.id.dest_add_story }.getOrElse { it }}")*/
 	  appBarConfiguration = AppBarConfiguration(
       setOf(
         R.id.storyFragment,
@@ -538,7 +488,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
     override fun onResume() {
       super.onResume()
+
       updateAuto(immediateUpdateActivity!!)
     }
 
-  }
+	fun updateAuto(immediateUpdateActivity: ImmediateUpdateActivity){
+		immediateUpdateActivity.getAppUpdateManager()!!.appUpdateInfo.addOnSuccessListener { it ->
+			if (it.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+				try {
+					immediateUpdateActivity.getAppUpdateManager()!!
+						.startUpdateFlowForResult(it, AppUpdateType.IMMEDIATE, this, 381)
+				} catch (e: IntentSender.SendIntentException) {
+					e.printStackTrace()
+				}
+			}
+		}
+	}
+
+}

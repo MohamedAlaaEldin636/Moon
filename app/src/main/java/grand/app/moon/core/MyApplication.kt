@@ -2,6 +2,8 @@ package grand.app.moon.core
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Configuration
+import android.os.Build
 import android.util.Log
 import androidx.multidex.MultiDex
 import com.cometchat.pro.core.AppSettings
@@ -16,8 +18,11 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
 import com.onesignal.OneSignal
 import com.zeugmasolutions.localehelper.LocaleAwareApplication
+import com.zeugmasolutions.localehelper.LocaleHelper
 import dagger.hilt.android.HiltAndroidApp
+import grand.app.moon.appMoonHelper.language.MyContextWrapper
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.splash.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -33,7 +38,7 @@ fun Context?.makeAppInitializations() {
 }
 
 @HiltAndroidApp
-class MyApplication : Application() {
+class MyApplication : /*LocaleAwareApplication*/Application() {
 
 	var checkedAppGlobalAnnouncement = false
 	var showedAppGlobalAnnouncement = false
@@ -41,11 +46,23 @@ class MyApplication : Application() {
 	private val supervisorJob = SupervisorJob()
 	val applicationScope = CoroutineScope(Dispatchers.IO + supervisorJob)
 
-  override
-  fun attachBaseContext(base: Context) {
-    super.attachBaseContext(base)
-    MultiDex.install(this)
-  }
+	override fun getApplicationContext(): Context {
+		return getApplicationContextMA(/*getCurrentLocale(this)*/)//getContextForLocaleMA("ar", this)
+	}
+
+	override fun onConfigurationChanged(newConfig: Configuration) {
+		super.onConfigurationChanged(onConfigurationChangedMA(newConfig))
+	}
+
+	override fun createConfigurationContext(overrideConfiguration: Configuration): Context {
+		return super.createConfigurationContext(onConfigurationChangedMA(overrideConfiguration))
+	}
+
+	override fun attachBaseContext(base: Context?) {
+		super.attachBaseContext(attachBaseContextMA(base))
+
+		MultiDex.install(this)
+	}
 
   override
   fun onCreate() {
