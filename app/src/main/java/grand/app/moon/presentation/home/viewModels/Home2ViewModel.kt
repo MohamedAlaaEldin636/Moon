@@ -27,6 +27,7 @@ import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.*
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ItemHomeRV
+import grand.app.moon.presentation.splash.postWithReceiverAndRunCatching
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -34,7 +35,6 @@ import kotlin.math.roundToInt
 class Home2ViewModel @Inject constructor(
 	application: Application,
 	val repoHome2: RepoHome2,
-	val repoHome: HomeUseCase,
 	val repoShop: RepoShop,
 	val userLocalUseCase: UserLocalUseCase
 ) : AndroidViewModel(application) {
@@ -54,31 +54,7 @@ class Home2ViewModel @Inject constructor(
 	var adapterDynamicCategoryAds = emptyList<RVItemCommonListUsage<ItemHomeRvAdvBinding, ItemAdvertisementInResponseHome>>()
 	var adapterDynamicCategoryAdsStartIndex = 0
 
-	private val dpToPx9 by lazy { app.dpToPx(9f).roundToInt() }
-
 	private val dpToPx8 by lazy { app.dpToPx(8f).roundToInt() }
-
-	private val dpToPx16 by lazy { app.dpToPx(16f).roundToInt() }
-
-	private val dpToPx103 by lazy { app.dpToPx(103f).roundToInt() }
-
-	private val dpToPx104 by lazy { app.dpToPx(104f).roundToInt() }
-	private val dpToPx119 by lazy { app.dpToPx(119f).roundToInt() }
-	private val dpToPx281 by lazy { app.dpToPx(281f).roundToInt() }
-	private val dpToPx269 by lazy { app.dpToPx(269f).roundToInt() } // adv
-	private var heightStore = 0
-	private var heightAdv = 0
-
-	private fun RecyclerView.aaa() {
-		clearOnScrollListeners()
-		addOnScrollListener(object : OnScrollListener(){
-			override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-					post { isVisible = true }
-				}
-			}
-		})
-	}
 
 	val adapter = RVItemCommonListUsage<ItemHomeRvBinding, ItemHomeRV>(
 		R.layout.item_home_rv,
@@ -148,7 +124,8 @@ class Home2ViewModel @Inject constructor(
 			}
 		}
 	) { binding, position, item ->
-		val context = binding.root.context ?: return@RVItemCommonListUsage
+		MyLogger.e("bindding pos $position")
+		//val context = binding.root.context ?: return@RVItemCommonListUsage
 
 		binding.root.tag = item.toJsonInlinedOrNull()
 
@@ -156,58 +133,95 @@ class Home2ViewModel @Inject constructor(
 
 		binding.countTextView.text = item.count.toStringOrEmpty()
 
-		binding.recyclerView.adapter = null
-		binding.helperView.visibility = View.VISIBLE
-		val rv = binding.recyclerView
-		val layoutParams = binding.recyclerView.layoutParams as? ConstraintLayout.LayoutParams
-			?: return@RVItemCommonListUsage
-		val (width, height) = when (item.type) {
+		when (item.type) {
 			ItemHomeRV.Type.STORIES -> {
-				val number = 4
-				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+				if (binding.recyclerView.adapter !== adapterStories) {
+					binding.recyclerView.postWithReceiverAndRunCatching {
+						setupWithRVItemCommonListUsage(
+							adapterStories,
+							true,
+							1
+						) { layoutParams ->
+							val number = 4
+							val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
-				val totalWidth = rv.width - rv.paddingStart - rv.paddingEnd - (number.dec() * itemMargins)
+							val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
-				val width = (totalWidth - dpToPx8) / number
-
-				width to dpToPx119
+							layoutParams.width = (totalWidth - dpToPx8) / number
+						}
+					}
+				}
 			}
 			ItemHomeRV.Type.CATEGORIES -> {
-				val number = 4
-				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+				if (binding.recyclerView.adapter !== adapterCategories) {
+					binding.recyclerView.postWithReceiverAndRunCatching {
+						setupWithRVItemCommonListUsage(
+							adapterCategories,
+							true,
+							1
+						) { layoutParams ->
+							val number = 4
+							val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
-				val totalWidth = rv.width - rv.paddingStart - rv.paddingEnd - (number.dec() * itemMargins)
+							val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
-				val width = (totalWidth + layoutParams.marginEnd) / number
-
-				width to dpToPx119
+							layoutParams.width = (totalWidth + layoutParams.marginEnd) / number
+						}
+					}
+				}
 			}
 			ItemHomeRV.Type.MOST_RATED_STORIES, ItemHomeRV.Type.FOLLOWING_STORIES -> {
-				val number = 2
-				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+				val toBeUsedAdapter = when (item.type) {
+					ItemHomeRV.Type.MOST_RATED_STORIES -> adapterMostRatedStore
+					else /*ItemHomeRV.Type.FOLLOWING_STORIES*/ -> adapterFollowingsStores
+				}
 
-				val totalWidth = rv.width - rv.paddingStart - rv.paddingEnd - (number.dec() * itemMargins)
+				if (binding.recyclerView.adapter !== toBeUsedAdapter) {
+					binding.recyclerView.postWithReceiverAndRunCatching {
+						setupWithRVItemCommonListUsage(
+							toBeUsedAdapter,
+							true,
+							1
+						) { layoutParams ->
+							val number = 2
+							val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
-				val width = totalWidth / number
+							val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
-				width to if (heightStore == 0) dpToPx281 else heightStore
+							layoutParams.width = totalWidth / number
+
+							MyLogger.e("hhhhhhhhh -> ${layoutParams.height}")
+						}
+					}
+				}
 			}
 			else -> {
-				val number = 2
-				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+				val index = position - adapterDynamicCategoryAdsStartIndex
 
-				val totalWidth = rv.width - rv.paddingStart - rv.paddingEnd - (number.dec() * itemMargins)
+				val toBeUsedAdapter = when (item.type) {
+					ItemHomeRV.Type.SUGGESTED_ADS -> adapterSuggestedAds
+					ItemHomeRV.Type.MOST_POPULAR_ADS -> adapterMostPopularAds
+					else /*ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS*/ -> adapterDynamicCategoryAds[index]
+				}
 
-				val width = totalWidth / number
+				if (binding.recyclerView.adapter !== toBeUsedAdapter) {
+					binding.recyclerView.postWithReceiverAndRunCatching {
+						binding.recyclerView.setupWithRVItemCommonListUsage(
+							toBeUsedAdapter,
+							true,
+							1
+						) { layoutParams ->
+							val number = 2
+							val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
-				width to if (heightAdv == 0) dpToPx269 else heightAdv
+							val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+							layoutParams.width = totalWidth / number
+						}
+					}
+				}
 			}
 		}
-		val helperLayoutParams = binding.helperView.layoutParams as? ConstraintLayout.LayoutParams
-			?: return@RVItemCommonListUsage
-		helperLayoutParams.width = width
-		helperLayoutParams.height = height
-		binding.helperView.layoutParams = helperLayoutParams
 	}
 
 	fun onRefreshWholeScreen(view: View) {
@@ -268,11 +282,11 @@ class Home2ViewModel @Inject constructor(
 	}
 
 	fun setupRvs(binding: ItemHomeRvBinding, item: ItemHomeRV, position: Int) {
-		binding.helperView.visibility = View.INVISIBLE
+		//binding.helperView.visibility = View.INVISIBLE
 
 		when (item.type) {
 			ItemHomeRV.Type.STORIES -> {
-				binding.recyclerView.setupWithRVItemCommonListUsage(
+				/*binding.recyclerView.setupWithRVItemCommonListUsage(
 					adapterStories,
 					true,
 					1
@@ -283,10 +297,10 @@ class Home2ViewModel @Inject constructor(
 					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
 					layoutParams.width = (totalWidth - dpToPx8) / number
-				}
+				}*/
 			}
 			ItemHomeRV.Type.CATEGORIES -> {
-				binding.recyclerView.setupWithRVItemCommonListUsage(
+				/*binding.recyclerView.setupWithRVItemCommonListUsage(
 					adapterCategories,
 					true,
 					1
@@ -297,10 +311,10 @@ class Home2ViewModel @Inject constructor(
 					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
 					layoutParams.width = (totalWidth + layoutParams.marginEnd) / number
-				}
+				}*/
 			}
 			ItemHomeRV.Type.MOST_RATED_STORIES -> {
-				binding.recyclerView.setupWithRVItemCommonListUsage(
+				/*binding.recyclerView.setupWithRVItemCommonListUsage(
 					adapterMostRatedStore,
 					true,
 					1
@@ -313,10 +327,10 @@ class Home2ViewModel @Inject constructor(
 					layoutParams.width = totalWidth / number
 
 					MyLogger.e("hhhhhhhhh -> ${layoutParams.height}")
-				}
+				}*/
 			}
 			ItemHomeRV.Type.FOLLOWING_STORIES -> {
-				binding.recyclerView.setupWithRVItemCommonListUsage(
+				/*binding.recyclerView.setupWithRVItemCommonListUsage(
 					adapterFollowingsStores,
 					true,
 					1
@@ -327,10 +341,10 @@ class Home2ViewModel @Inject constructor(
 					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
 					layoutParams.width = totalWidth / number
-				}
+				}*/
 			}
 			ItemHomeRV.Type.SUGGESTED_ADS -> {
-				binding.recyclerView.setupWithRVItemCommonListUsage(
+				/*binding.recyclerView.setupWithRVItemCommonListUsage(
 					adapterSuggestedAds,
 					true,
 					1
@@ -341,10 +355,10 @@ class Home2ViewModel @Inject constructor(
 					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
 					layoutParams.width = totalWidth / number
-				}
+				}*/
 			}
 			ItemHomeRV.Type.MOST_POPULAR_ADS -> {
-				binding.recyclerView.setupWithRVItemCommonListUsage(
+				/*binding.recyclerView.setupWithRVItemCommonListUsage(
 					adapterMostPopularAds,
 					true,
 					1
@@ -355,10 +369,10 @@ class Home2ViewModel @Inject constructor(
 					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
 					layoutParams.width = totalWidth / number
-				}
+				}*/
 			}
 			ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> {
-				val index = position - adapterDynamicCategoryAdsStartIndex
+				/*val index = position - adapterDynamicCategoryAdsStartIndex
 
 				binding.recyclerView.setupWithRVItemCommonListUsage(
 					adapterDynamicCategoryAds[index],
@@ -371,7 +385,7 @@ class Home2ViewModel @Inject constructor(
 					val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
 					layoutParams.width = totalWidth / number
-				}
+				}*/
 			}
 		}
 	}
