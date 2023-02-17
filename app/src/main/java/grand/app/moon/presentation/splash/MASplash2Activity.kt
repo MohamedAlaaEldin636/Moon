@@ -48,7 +48,7 @@ class MASplash2Activity : AppCompatActivity() {
 
 				makeAppInitializations()
 
-				delay(250)
+				delay(50)
 
 				applicationScope?.launch {
 					repoShop.fetchAllCategoriesAndSaveThemLocallyIfPossible()

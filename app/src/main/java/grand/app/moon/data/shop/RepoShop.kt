@@ -2,8 +2,10 @@ package grand.app.moon.data.shop
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import grand.app.moon.core.extenstions.getCategoriesWithSubCategoriesAndBrands
 import grand.app.moon.core.extenstions.setCategoriesWithSubCategoriesAndBrands
 import grand.app.moon.core.extenstions.setInitialAppLaunch
+import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.domain.shop.*
@@ -397,8 +399,12 @@ class RepoShop @Inject constructor(
 		}
 	}
 
-	private suspend fun getAllAppCategoriesWithSubcategoriesAndBrands() = remoteDataSource
+	fun getCategoriesWithSubCategoriesAndBrands() = appContext.getCategoriesWithSubCategoriesAndBrands()
+
+	suspend fun getAllAppCategoriesWithSubcategoriesAndBrands() = remoteDataSource
 		.getAllAppCategoriesWithSubcategoriesAndBrands()
+
+	fun saveAllAppCategoriesWithSubcategoriesAndBrandsLocally(list: List<ItemCategory>) = appContext.setCategoriesWithSubCategoriesAndBrands(list)
 
 }
 

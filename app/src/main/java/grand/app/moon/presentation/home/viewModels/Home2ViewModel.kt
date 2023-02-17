@@ -213,7 +213,7 @@ class Home2ViewModel @Inject constructor(
 	fun onRefreshWholeScreen(view: View) {
 		val fragment = view.findFragmentOrNull<Home2Fragment>() ?: return
 
-		fragment.getWholeHomeData(false)
+		fragment.loadStoriesAndPossiblyAds(showLoading = true, loadAds = false)
 	}
 
 	fun goToSearch(view: View) {

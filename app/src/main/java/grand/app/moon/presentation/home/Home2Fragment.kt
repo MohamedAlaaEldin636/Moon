@@ -21,6 +21,27 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 
 	private val viewModel by viewModels<Home2ViewModel>()
 
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		if (viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands().isEmpty()) {
+			handleRetryAbleActionOrGoBack(
+				action = {
+					viewModel.repoShop.getAllAppCategoriesWithSubcategoriesAndBrands()
+				},
+				hideLoadingCode = {}
+			) { list ->
+				viewModel.repoShop.saveAllAppCategoriesWithSubcategoriesAndBrandsLocally(list)
+
+				viewModel.adapterCategories.submitList(list)
+
+				loadStoriesAndPossiblyAds(showLoading = false, loadAds = true)
+			}
+		}else {
+			loadStoriesAndPossiblyAds(showLoading = true, loadAds = true)
+		}
+	}
+
 	override fun getLayoutId(): Int = R.layout.fragment_home_2
 
 	override fun setBindingVariables() {
@@ -45,8 +66,84 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 			}
 		})
 
-		// Called here to auto update in case of any change happens isa.
-		getWholeHomeData()
+		viewModel.adapterCategories.submitList(viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands())
+	}
+
+	fun loadStoriesAndPossiblyAds(showLoading: Boolean, loadAds: Boolean) {
+		handleRetryAbleActionOrGoBack(
+			action = {
+				viewModel.repoHome2.getNotAllStories()
+			},
+			hideLoadingCode = {
+				if (loadAds.not()) {
+					_binding?.swipeRefreshLayout?.isRefreshing = false
+				}
+			},
+			showLoadingCode = {
+				if (showLoading && loadAds) showLoading()
+
+				if (loadAds.not()) {
+					_binding?.swipeRefreshLayout?.isRefreshing = true
+				}
+			}
+		) { stories ->
+			viewModel.adapterStories.submitList(listOf(ResponseStory()) + stories.sortedBy {
+				if (it.isSeen) 1 else 0
+			})
+
+			if (loadAds) {
+				handleRetryAbleActionOrGoBack(
+					action = {
+						viewModel.repoHome2.getHome()
+					},
+					showLoadingCode = {}
+				) { responseHome ->
+					viewModel.adapterMostRatedStore.submitList(responseHome.mostRatedStores.orEmpty())
+
+					viewModel.adapterFollowingsStores.submitList(responseHome.followingsStores.orEmpty())
+
+					viewModel.adapterSuggestedAds.submitList(responseHome.suggestedAds.orEmpty())
+
+					viewModel.adapterMostPopularAds.submitList(responseHome.mostPopularAds.orEmpty())
+
+					val dynamicCategoriesAds = responseHome.dynamicCategoriesAds.orEmpty().filter {
+						it.advertisements.isNullOrEmpty().not()
+					}
+					viewModel.adapterDynamicCategoryAds = dynamicCategoriesAds.map { category ->
+						viewModel.getAdapterForAds().also { it.submitList(category.advertisements.orEmpty()) }
+					}
+
+					val list = mutableListOf(
+						ItemHomeRV(ItemHomeRV.Type.STORIES, null),
+						ItemHomeRV(ItemHomeRV.Type.CATEGORIES, getString(R.string.departments)),
+					)
+
+					if (viewModel.adapterMostRatedStore.itemCount > 0) {
+						list += ItemHomeRV(ItemHomeRV.Type.MOST_RATED_STORIES, getString(R.string.most_rated_stores))
+					}
+					if (viewModel.adapterFollowingsStores.itemCount > 0) {
+						list += ItemHomeRV(ItemHomeRV.Type.FOLLOWING_STORIES, getString(R.string.following_stories))
+					}
+					if (viewModel.adapterSuggestedAds.itemCount > 0) {
+						list += ItemHomeRV(ItemHomeRV.Type.SUGGESTED_ADS, getString(R.string.suggestions_ads_for_you))
+					}
+					if (viewModel.adapterMostPopularAds.itemCount > 0) {
+						list += ItemHomeRV(ItemHomeRV.Type.MOST_POPULAR_ADS, getString(R.string.most_popular_ads))
+					}
+
+					viewModel.adapterDynamicCategoryAdsStartIndex = list.size
+					if (dynamicCategoriesAds.isNotEmpty()) {
+						for (item in dynamicCategoriesAds) {
+							list += ItemHomeRV(ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS, item.name, item.adsCount, item.id)
+						}
+					}
+
+					viewModel.adapter.submitList(list)
+
+					setupRvs()
+				}
+			}
+		}
 	}
 
 	private fun setupRvs() {
@@ -65,7 +162,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 		}
 	}
 
-	fun getWholeHomeData(showGlobalLoadingNotSwipeAbleOne: Boolean = true) {
+	/*fun getWholeHomeData(showGlobalLoadingNotSwipeAbleOne: Boolean = true) {
 		handleRetryAbleActionOrGoBack(
 			scope = viewLifecycleOwner.lifecycleScope,
 			action = {
@@ -137,8 +234,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 
 			setupRvs()
 		}
-	}
-
+	}*/
 
 }
 
