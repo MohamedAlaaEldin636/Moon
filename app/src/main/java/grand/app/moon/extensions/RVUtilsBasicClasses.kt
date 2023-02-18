@@ -275,7 +275,7 @@ class RVItemIconTextArrow(
 
 class VHItemCommonListUsageWithDifferentItems<Item : Any>(
 	private val adapter: RVItemCommonListUsageWithDifferentItems<Item>,
-	private val binding: ViewDataBinding,
+	val binding: ViewDataBinding,
 	private val onBind: (binding: ViewDataBinding, position: Int, item: Item) -> Unit,
 	private val onItemClick: ((adapter: RVItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
 	additionalListenersSetups: ((adapter: RVItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
