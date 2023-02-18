@@ -105,7 +105,7 @@
         android:paddingTop="0dp"
         android:paddingEnd="0dp"
         android:paddingStart="0dp"
-        android:paddingBottom="70dp"
+        android:paddingBottom="24dp"
         android:clipToPadding="false"
 
         android:scrollbars="vertical"

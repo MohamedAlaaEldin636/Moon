@@ -2,9 +2,12 @@ package grand.app.moon.presentation.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -16,6 +19,8 @@ import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.models.ItemHomeRV
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
@@ -52,15 +57,15 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		if (binding.recyclerView.adapter == null) {
+		if (binding.rvLikeLinearLayout.childCount == 0) {
 			//binding.recyclerView.recycledViewPool.setMaxRecycledViews(0, Int.MAX_VALUE)
 
-			viewModel.adapter2.setHasStableIds(true)
+			/*viewModel.adapter2.setHasStableIds(true)
 			binding.recyclerView.setupWithRVItemCommonListUsage(
 				viewModel.adapter2,
 				false,
 				1
-			)
+			)*/
 		}
 
 		viewModel.adapterCategories.submitList(viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands())
@@ -89,11 +94,13 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 			})
 
 			if (loadAds) {
+				binding.rvLikeLinearLayout.removeAllViews()
+
 				handleRetryAbleActionOrGoBack(
 					action = {
 						viewModel.repoHome2.getHome()
 					},
-					showLoadingCode = {}
+					showLoadingCode = {},
 				) { responseHome ->
 					viewModel.listOfMostRatedStore = responseHome.mostRatedStores.orEmpty()
 					viewModel.adapterMostRatedStore.submitList(responseHome.mostRatedStores.orEmpty())
@@ -137,9 +144,124 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 						}
 					}
 
-					viewModel.adapter2.submitList(list)
+					lifecycleScope.launch {
+						for ((position, item) in list.withIndex()) {
+							val binding = DataBindingUtil.inflate<ItemHomeRvBinding>(
+								layoutInflater, R.layout.item_home_rv, binding.rvLikeLinearLayout, false
+							)
+
+							binding.nameTextView.text = item.name
+
+							binding.countTextView.text = item.count.toStringOrEmpty()
+
+							binding.recyclerView.setupInnerRvs(position, item.type)
+
+							this@Home2Fragment.binding.rvLikeLinearLayout.addView(
+								binding.root,
+								LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+							)
+
+							if (position.inc() % 3 == 0) {
+								delay(500)
+							}
+						}
+					}
 				}
 			}
 		}
 	}
+
+	private fun RecyclerView.setupInnerRvs(position: Int, type: ItemHomeRV.Type) {
+		when (type) {
+			ItemHomeRV.Type.STORIES -> setupWithRVItemCommonListUsage(
+				viewModel.adapterStories,
+				true,
+				1
+			) { layoutParams ->
+				val number = 4
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+				layoutParams.width = (totalWidth - viewModel.dpToPx8) / number
+			}
+			ItemHomeRV.Type.CATEGORIES -> setupWithRVItemCommonListUsage(
+				viewModel.adapterCategories,
+				true,
+				1
+			) { layoutParams ->
+				val number = 4
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+				layoutParams.width = (totalWidth + layoutParams.marginEnd) / number
+			}
+			ItemHomeRV.Type.MOST_RATED_STORIES -> setupWithRVItemCommonListUsage(
+				viewModel.adapterMostRatedStore,
+				true,
+				1
+			) { layoutParams ->
+				val number = 2
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+				layoutParams.width = totalWidth / number
+
+				MyLogger.e("hhhhhhhhh -> ${layoutParams.height}")
+			}
+			ItemHomeRV.Type.FOLLOWING_STORIES -> setupWithRVItemCommonListUsage(
+				viewModel.adapterFollowingsStores,
+				true,
+				1
+			) { layoutParams ->
+				val number = 2
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+				layoutParams.width = totalWidth / number
+
+				MyLogger.e("hhhhhhhhh -> ${layoutParams.height}")
+			}
+			ItemHomeRV.Type.SUGGESTED_ADS -> setupWithRVItemCommonListUsage(
+				viewModel.adapterSuggestedAds,
+				true,
+				1
+			) { layoutParams ->
+				val number = 2
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+				layoutParams.width = totalWidth / number
+			}
+			ItemHomeRV.Type.MOST_POPULAR_ADS -> setupWithRVItemCommonListUsage(
+				viewModel.adapterMostPopularAds,
+				true,
+				1
+			) { layoutParams ->
+				val number = 2
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+				layoutParams.width = totalWidth / number
+			}
+			ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> setupWithRVItemCommonListUsage(
+				viewModel.adapterDynamicCategoryAds[position - viewModel.adapterDynamicCategoryAdsStartIndex],
+				true,
+				1
+			) { layoutParams ->
+				val number = 2
+				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
+
+				val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
+
+				layoutParams.width = totalWidth / number
+			}
+		}
+	}
+
 }
