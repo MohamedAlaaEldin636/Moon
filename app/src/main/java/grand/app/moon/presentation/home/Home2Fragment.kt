@@ -55,8 +55,9 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 		if (binding.recyclerView.adapter == null) {
 			//binding.recyclerView.recycledViewPool.setMaxRecycledViews(0, Int.MAX_VALUE)
 
+			viewModel.adapter2.setHasStableIds(true)
 			binding.recyclerView.setupWithRVItemCommonListUsage(
-				viewModel.adapter,
+				viewModel.adapter2,
 				false,
 				1
 			)
@@ -94,8 +95,10 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 					},
 					showLoadingCode = {}
 				) { responseHome ->
+					viewModel.listOfMostRatedStore = responseHome.mostRatedStores.orEmpty()
 					viewModel.adapterMostRatedStore.submitList(responseHome.mostRatedStores.orEmpty())
 
+					viewModel.listOfFollowingsStores = responseHome.followingsStores.orEmpty()
 					viewModel.adapterFollowingsStores.submitList(responseHome.followingsStores.orEmpty())
 
 					viewModel.adapterSuggestedAds.submitList(responseHome.suggestedAds.orEmpty())
@@ -134,7 +137,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 						}
 					}
 
-					viewModel.adapter.submitList(list)
+					viewModel.adapter2.submitList(list)
 				}
 			}
 		}

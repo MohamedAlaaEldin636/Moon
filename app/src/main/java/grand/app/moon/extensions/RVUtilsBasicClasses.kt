@@ -63,6 +63,7 @@ open class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	list: List<Item> = emptyList(),
 	private val onItemClick: ((adapter: RVItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
 	private val additionalListenersSetups: ((adapter: RVItemCommonListUsage<VDB, Item>, binding: VDB) -> Unit)? = null,
+	private val afterOnCreateViewHolder: ((viewHolder: VHItemCommonListUsage<VDB, Item>, layoutRes: Int) -> Unit)? = null,
 	private val onBind: (binding: VDB, position: Int, item: Item) -> Unit,
 ) : RecyclerView.Adapter<VHItemCommonListUsage<VDB, Item>>() {
 
@@ -81,7 +82,9 @@ open class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 			onBind,
 			onItemClick,
 			additionalListenersSetups
-		)
+		).also {
+			afterOnCreateViewHolder?.invoke(it, viewType)
+		}
 	}
 
 	override fun onBindViewHolder(holder: VHItemCommonListUsage<VDB, Item>, position: Int) {
@@ -295,10 +298,12 @@ class VHItemCommonListUsageWithDifferentItems<Item : Any>(
 }
 
 open class RVItemCommonListUsageWithDifferentItems<Item : Any>(
-	private val getLayoutRes: (position: Int) -> Int,
+	private val getLayoutRes: RVItemCommonListUsageWithDifferentItems<Item>.(position: Int) -> Int,
 	list: List<Item> = emptyList(),
 	private val onItemClick: ((adapter: RVItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
 	private val additionalListenersSetups: ((adapter: RVItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
+	private val afterOnCreateViewHolder: ((viewHolder: VHItemCommonListUsageWithDifferentItems<Item>, layoutRes: Int, binding: ViewDataBinding) -> Unit)? = null,
+	private val getItemIdBlock: ((position: Int) -> Long)? = null,
 	private val onBind: (binding: ViewDataBinding, position: Int, item: Item) -> Unit,
 ) : RecyclerView.Adapter<VHItemCommonListUsageWithDifferentItems<Item>>() {
 
@@ -306,6 +311,10 @@ open class RVItemCommonListUsageWithDifferentItems<Item : Any>(
 		private set
 
 	override fun getItemCount(): Int = list.size
+
+	override fun getItemId(position: Int): Long {
+		return getItemIdBlock?.invoke(position) ?: super.getItemId(position)
+	}
 
 	override fun getItemViewType(position: Int): Int {
 		return getLayoutRes(position)
@@ -315,13 +324,19 @@ open class RVItemCommonListUsageWithDifferentItems<Item : Any>(
 		parent: ViewGroup,
 		viewType: Int
 	): VHItemCommonListUsageWithDifferentItems<Item> {
+		val binding = DataBindingUtil.inflate<ViewDataBinding>(
+			parent.context.layoutInflater, viewType, parent, false
+		)
+
 		return VHItemCommonListUsageWithDifferentItems(
 			this,
-			DataBindingUtil.inflate(parent.context.layoutInflater, viewType, parent, false),
+			binding,
 			onBind,
 			onItemClick,
 			additionalListenersSetups
-		)
+		).also {
+			afterOnCreateViewHolder?.invoke(it, viewType, binding)
+		}
 	}
 
 	override fun onBindViewHolder(holder: VHItemCommonListUsageWithDifferentItems<Item>, position: Int) {

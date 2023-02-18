@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:padding="0dp"
+    android:clipToPadding="false"
+
+    android:layout_gravity="center">
+
+    <TextView
+      android:id="@+id/nameTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:textSize="18sp"
+      style="@style/TextTajawalBold14"
+      android:textColor="@color/colorPrimary"
+
+      tools:text="الأقسام"
+
+      android:layout_marginTop="8dp"
+      android:layout_marginStart="16dp"
+
+      android:maxLines="1"
+      android:ellipsize="end"
+
+      app:layout_constraintWidth_default="wrap"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintHorizontal_chainStyle="packed"
+
+      app:layout_constraintEnd_toStartOf="@id/countTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+      android:id="@+id/showAllTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:textSize="12sp"
+      style="@style/TextTajawalMedium14"
+      android:textColor="@color/colorPrimary"
+      android:text="@string/show_all"
+
+      android:paddingTop="4dp"
+      android:paddingBottom="4dp"
+      android:paddingStart="5dp"
+      android:paddingEnd="16dp"
+
+      app:drawableEndCompat="@drawable/ic_arrow_home_1"
+      android:drawablePadding="6.5dp"
+
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="@id/nameTextView"
+      app:layout_constraintBottom_toBottomOf="@id/nameTextView"/>
+
+    <TextView
+      android:id="@+id/countTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:textSize="12sp"
+      style="@style/TextTajawalMedium14"
+      android:textColor="#C1C1C1"
+      tools:text="( 435 )"
+
+      android:paddingEnd="5dp"
+      android:paddingStart="5dp"
+
+      app:layout_constraintHorizontal_bias="0"
+
+      app:layout_constraintEnd_toStartOf="@id/showAllTextView"
+      app:layout_constraintStart_toEndOf="@id/nameTextView"
+      app:layout_constraintTop_toTopOf="@id/nameTextView"
+      app:layout_constraintBottom_toBottomOf="@id/nameTextView"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:paddingStart="12dp"
+      android:paddingEnd="12dp"
+      android:paddingTop="8dp"
+      android:paddingBottom="8dp"
+      android:clipToPadding="false"
+
+      tools:visibility="visible"
+
+      android:scrollbars="none"
+      tools:itemCount="6"
+      tools:spanCount="1"
+      tools:orientation="horizontal"
+      tools:listitem="@layout/item_home_rv_story_actual"
+      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+      app:layout_constraintTop_toBottomOf="@id/nameTextView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

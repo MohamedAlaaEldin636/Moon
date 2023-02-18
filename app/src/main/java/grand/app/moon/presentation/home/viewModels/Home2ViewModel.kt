@@ -27,6 +27,7 @@ import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.*
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ItemHomeRV
+import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
 import grand.app.moon.presentation.splash.postWithReceiverAndRunCatching
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -43,6 +44,12 @@ class Home2ViewModel @Inject constructor(
 
 	val adapterCategories by lazy { getAdapterCategories() }
 
+	var listOfMostRatedStore = emptyList<ItemStoreInResponseHome>()
+	var listOfFollowingsStores = emptyList<ItemStoreInResponseHome>()
+
+	val adapterOfStores by lazy { getAdapterForStores(true) }
+	val adapterOfAds by lazy { getAdapterForAds() }
+
 	val adapterMostRatedStore by lazy { getAdapterForStores(true) }
 
 	val adapterFollowingsStores by lazy { getAdapterForStores(false) }
@@ -54,8 +61,9 @@ class Home2ViewModel @Inject constructor(
 	var adapterDynamicCategoryAds = emptyList<RVItemCommonListUsage<ItemHomeRvAdvBinding, ItemAdvertisementInResponseHome>>()
 	var adapterDynamicCategoryAdsStartIndex = 0
 
-	private val dpToPx8 by lazy { app.dpToPx(8f).roundToInt() }
+	val dpToPx8 by lazy { app.dpToPx(8f).roundToInt() }
 
+	val adapter2 = getMainAdapter()
 	val adapter = RVItemCommonListUsage<ItemHomeRvBinding, ItemHomeRV>(
 		R.layout.item_home_rv,
 		additionalListenersSetups = { adapter, binding ->
