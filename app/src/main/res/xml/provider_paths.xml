@@ -11,6 +11,10 @@
   /storage/emulated/0/Android/data/grand.app.moon/files/TrimmedVideo/trimmed_video_2023_1_2_15_51_21.mp4
   -->
   <files-path
+    name="/camera_photos"
+    path="." />
+
+  <files-path
     name="camera_photos"
     path="." />
 

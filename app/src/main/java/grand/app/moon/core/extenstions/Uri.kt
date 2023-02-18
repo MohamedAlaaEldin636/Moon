@@ -2,18 +2,58 @@ package grand.app.moon.core.extenstions
 
 import android.content.ContentResolver
 import android.content.Context
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.util.Log
 import android.webkit.MimeTypeMap
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
+import grand.app.moon.extensions.orZero
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
+
+/*
+val contentUri = Uri.parse("content://com.example.provider/myfile")
+val inputStream = context.contentResolver.openInputStream(contentUri)
+val file = File(context.cacheDir, "myfile")
+val outputStream = FileOutputStream(file)
+
+inputStream?.use { input ->
+    outputStream.use { output ->
+        input.copyTo(output)
+    }
+}
+
+val fileUri = Uri.fromFile(file)
+ */
+fun Uri.ssssssssssss(context: Context): Uri {
+	//scheme == ContentResolver.SCHEME_CONTENT
+
+	val inputStream = context.contentResolver.openInputStream(this)
+	val file = File(context.dataDir, "file_${System.currentTimeMillis()}")
+	val outputStream = FileOutputStream(file)
+
+	inputStream?.use { input ->
+		outputStream.use { output ->
+			input.copyTo(output)
+		}
+	}
+
+	return Uri.fromFile(file)
+}
+
+fun Uri.getVideoLength(context: Context): Long {
+	val retriever = MediaMetadataRetriever()
+	retriever.setDataSource(context, this)
+	val duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+	val videoDuration = duration?.toLongOrNull().orZero()
+	retriever.release()
+
+	return videoDuration
+}
 
 private fun Uri.asFile() = if (path.isNullOrEmpty()) null else path?.let { File(it) }
 

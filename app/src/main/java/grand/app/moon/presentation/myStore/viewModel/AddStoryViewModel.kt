@@ -15,7 +15,9 @@ import com.grand.trim_video_lib.launchSafelyTrimVideo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.createMultipartBodyPart
+import grand.app.moon.core.extenstions.getVideoLength
 import grand.app.moon.core.extenstions.showPopup
+import grand.app.moon.core.extenstions.ssssssssssss
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.domain.shop.MAImagesOrVideo
 import grand.app.moon.domain.shop.StoryLink
@@ -108,7 +110,7 @@ class AddStoryViewModel @Inject constructor(
 
 		val fileUri = file.value?.getUris()?.firstOrNull() ?: return
 
-		if (false && this.file.value is MAImagesOrVideo.Video) {
+		if (/*false && */this.file.value is MAImagesOrVideo.Video) {
 			/*
 Intent intent = new Intent(activity, ActVideoTrimmer.class);
 		Gson gson = new Gson();
@@ -118,7 +120,15 @@ Intent intent = new Intent(activity, ActVideoTrimmer.class);
 		intent.putExtras(bundle);
 		return intent;
  */
-			fragment.launcherVideoTrimmer2.launch(fileUri)
+			val length = fileUri.getVideoLength(fragment.requireContext())
+
+			MyLogger.e("lennnnnnnnnn $length")
+
+			Log.e("aa", "dofkpsdofk 1 $fileUri")
+
+			fragment.launcherTrimVideo3.launch(fileUri/*.ssssssssssss(fragment.requireContext()).also {
+				Log.e("aa", "dofkpsdofk 1 $it")
+			}*/)
 			/*fragment.launchSafelyTrimVideo(
 				fileUri,
 				fragment.launcherVideoTrimmer,

@@ -31,11 +31,19 @@ android {
 	kotlinOptions {
 		jvmTarget = "11"
 	}
+
+	buildFeatures {
+		viewBinding = true
+		dataBinding = true
+	}
+
 }
 
 dependencies {
 	implementation("com.github.a914-gowtham:android-video-trimmer:1.7.3")
 	implementation("com.google.code.gson:gson:2.10.1")
+
+	implementation("com.deep.videotrimmer:videotrimmer:1.0")
 
 	implementation("androidx.core:core-ktx:1.7.0")
 	implementation("androidx.appcompat:appcompat:1.6.0")

@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 
-	private val viewModel by viewModels<Home2ViewModel>()
+	val viewModel by viewModels<Home2ViewModel>()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

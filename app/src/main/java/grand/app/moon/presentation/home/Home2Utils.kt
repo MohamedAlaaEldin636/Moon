@@ -37,18 +37,27 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 
 		when (binding) {
 			is ItemHomeRvStoryAdditionBinding -> {
-				fragment.handleRetryAbleActionCancellable(
-					action = {
-						repoHome2.checkAvailabilityForStories()
-					}
-				) { count ->
-					if (count > 0) {
+				if (fragment.context?.isLoginWithOpenAuth().orFalse()) {
+					if (fragment.viewModel.userLocalUseCase().isStore.orFalse()) {
+						fragment.handleRetryAbleActionCancellable(
+							action = {
+								repoHome2.checkAvailabilityForStories()
+							}
+						) { count ->
+							if (count > 0) {
+								fragment.findNavController().navigateDeepLinkWithOptions(
+									"fragment-dest",
+									"grand.app.moon.dest.add.story"
+								)
+							}else {
+								fragment.showError(fragment.getString(R.string.no_more_rem_stories_in_your_package))
+							}
+						}
+					}else {
 						fragment.findNavController().navigateDeepLinkWithOptions(
 							"fragment-dest",
-							"grand.app.moon.dest.add.story"
+							"grand.app.moon.dest.become.shop.packages"
 						)
-					}else {
-						fragment.showError(fragment.getString(R.string.no_more_rem_stories_in_your_package))
 					}
 				}
 			}

@@ -124,9 +124,9 @@ interface ShopServices {
 	@Multipart
 	@POST("v1/profile/stories")
 	suspend fun addStory(
+		@Part("story_link_type") storyLinkType: RequestBody,
+		@Part("highlight") storyType: RequestBody,
 		@Part file: List<MultipartBody.Part>,
-		@Part("story_link_type") storyLinkType: Int,
-		@Part("highlight") storyType: Int,
 		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>,
 		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString(),
 	): BaseResponse<Any?>

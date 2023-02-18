@@ -230,9 +230,9 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		}
 
 		apiService.addStory(
+			storyLink.apiValue.toString().toRequestBody(),
+			storyType.apiValue.toString().toRequestBody(),
 			listOfNotNull(file, coverImage),
-			storyLink.apiValue,
-			storyType.apiValue,
 			map
 		)
 	}
