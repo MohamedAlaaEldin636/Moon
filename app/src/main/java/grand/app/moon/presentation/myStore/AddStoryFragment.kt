@@ -164,6 +164,7 @@ content://grand.app.moon.fileprovider/camera_photos/P4_20230218_203853.mp4 false
 
 		val file7 = u6?.createMultipartBodyPart(viewModel.app, "file")
 		val file8 = u6?.createMultipartBodyPartAsFile(viewModel.app, "file")
+		//file:///data/user/0/grand.app.moon/ss.mp4
 
 		binding.root.postDelayed(250) {
 			if (file8/*file6_1*/ != null) {
