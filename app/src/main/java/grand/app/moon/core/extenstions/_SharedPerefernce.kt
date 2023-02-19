@@ -11,10 +11,10 @@ import com.google.gson.Gson
 import grand.app.moon.R
 import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.auth.entity.model.User
+import grand.app.moon.domain.categories.entity.CategoryItem
 import grand.app.moon.domain.categories.entity.ItemCategory
-import grand.app.moon.extensions.fromJsonInlinedOrNull
-import grand.app.moon.extensions.orFalse
-import grand.app.moon.extensions.toJsonInlinedOrNull
+import grand.app.moon.domain.utils.BaseResponse
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.Constants
 
@@ -42,8 +42,35 @@ enum class InitialAppLaunch {
 }
 
 fun Context.setCategoriesWithSubCategoriesAndBrands(
-	value: List<ItemCategory>?
-) = getDefAppPrefs().setUsingJson(value.orEmpty(), SHARED_PREFS_CATEGORIES_WITH_SUB_CATEGORIES_AND_BRANDS)
+	value: List<ItemCategory>?,
+	appPreferences: AppPreferences,// fun saveCategories
+): Boolean {
+	appPreferences.saveCategories(BaseResponse(
+		value?.map {
+			CategoryItem(
+				it.id,
+				it.image,
+				it.name.orEmpty(),
+				it.subCategories?.map { itemSubCategory ->
+					CategoryItem(
+						itemSubCategory.id,
+						itemSubCategory.image,
+						itemSubCategory.name.orEmpty(),
+						arrayListOf(),
+						it.id,
+						0
+					)
+				}.orEmpty().toArrayList(),
+				0,
+				it.subCategories?.size.orZero()
+			)
+		}.orEmpty().toArrayList(),
+		"Done",
+		200
+	))
+
+	return getDefAppPrefs().setUsingJson(value.orEmpty(), SHARED_PREFS_CATEGORIES_WITH_SUB_CATEGORIES_AND_BRANDS)
+}
 fun Context.getCategoriesWithSubCategoriesAndBrands(
 	defValue: List<ItemCategory> = emptyList()
 ) = getDefAppPrefs().getUsingJson(defValue, SHARED_PREFS_CATEGORIES_WITH_SUB_CATEGORIES_AND_BRANDS)

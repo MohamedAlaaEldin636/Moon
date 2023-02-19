@@ -16,5 +16,5 @@ data class CategoryItem(
     val subCategories: ArrayList<CategoryItem>?,
     @SerializedName("category_id")
     var categoryId: Int? = 0,
-    var total: Int?,
+    var total: Int? = 0,
 )

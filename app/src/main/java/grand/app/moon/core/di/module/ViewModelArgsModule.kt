@@ -8,10 +8,7 @@ import dagger.hilt.android.components.ViewModelComponent
 import grand.app.moon.extensions.asBundle
 import grand.app.moon.presentation.auth.completeLogin.CompleteLoginFragmentArgs
 import grand.app.moon.presentation.categories.AddAdvSubCategoriesListFragmentArgs
-import grand.app.moon.presentation.home.AnnouncementDialogFragmentArgs
-import grand.app.moon.presentation.home.AppGlobalAnnouncementDialogFragmentArgs
-import grand.app.moon.presentation.home.HomeExploreSubsectionFragmentArgs
-import grand.app.moon.presentation.home.SearchResultsFragmentArgs
+import grand.app.moon.presentation.home.*
 import grand.app.moon.presentation.myAds.*
 import grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragmentArgs
 import grand.app.moon.presentation.myStore.AddOrEditStoreSubCategoryFragmentArgs
@@ -25,6 +22,11 @@ import grand.app.moon.presentation.stats.StatsUsersHistoryFragmentArgs
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelArgsModule {
+
+	@Provides
+	fun provideStoryPlayerFragmentArgs(state: SavedStateHandle): StoryPlayerFragmentArgs {
+		return StoryPlayerFragmentArgs.fromBundle(state.asBundle())
+	}
 
 	@Provides
 	fun provideHomeExploreSubsectionFragmentArgs(state: SavedStateHandle): HomeExploreSubsectionFragmentArgs {

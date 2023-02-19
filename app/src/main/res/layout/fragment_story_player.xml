@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.home.StoryPlayerFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.home.viewModels.StoryPlayerViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/black">
+
+    <ImageView
+      android:id="@+id/imageView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:visibility="@{viewModel.showImageNotVideo}"
+
+      imageView_setupWithGlideWithDefaultImage_value="@{viewModel.file}"
+      imageView_setupWithGlideWithDefaultImage_ignore="@{!viewModel.showImageNotVideo}"
+
+      tools:src="@drawable/ic_defaulf_image"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+    <!--app:resize_mode="fill"-->
+    <com.google.android.exoplayer2.ui.PlayerView
+      android:id="@+id/playerView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      app:use_controller="false"
+
+      android:visibility="@{!viewModel.showImageNotVideo}"
+      tools:visibility="gone"
+
+      exoPlayer_changeVideoLinkOrPause_exoPlayer="@{viewModel.player}"
+      exoPlayer_changeVideoLinkOrPause_value="@{viewModel.file}"
+      exoPlayer_changeVideoLinkOrPause_pause="@{viewModel.showImageNotVideo}"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="50dp"
+
+      android:layout_marginStart="9dp"
+      android:layout_marginEnd="9dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="none"
+      tools:scrollbars="none"
+      tools:orientation="horizontal"
+      tools:itemCount="5"
+      tools:spanCount="1"
+      tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      tools:listitem="@layout/item_segment"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

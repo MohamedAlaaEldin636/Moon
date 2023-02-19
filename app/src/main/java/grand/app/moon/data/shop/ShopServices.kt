@@ -278,4 +278,11 @@ interface ShopServices {
 	@GET("v1/categories")
 	suspend fun getAllAppCategoriesWithSubcategoriesAndBrands(): BaseResponse<List<ItemCategory>?>
 
+	@FormUrlEncoded
+	@POST("v1/stories")
+	suspend fun storyInteractions(
+		@Field("story_id") storyId: Int,
+		@Field("type") interactionType: Int
+	): BaseResponse<Any?>
+
 }

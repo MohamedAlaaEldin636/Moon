@@ -66,6 +66,9 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 
 				val position = binding.root.tag as? Int ?: return@RVItemCommonListUsageWithDifferentItems
 
+				val toBeUsedListJson = newList.toJsonInlinedOrNull().orEmpty()
+				val toBeUsedPosition = position - 1
+
 				val storyModel = StoreModel()
 				storyModel.list.addAll(newList.map { it.toStore() })
 				storyModel.position = position - 1
@@ -83,8 +86,18 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 					}
 				}
 
-				fragment.findNavController()
-					.navigateSafely(Home2FragmentDirections.actionDestHome2ToStoryFragment(storyModel))
+				// fragment-dest://grand.app.moon.dest.story.player/{jsonOfAllStoresWithStories}/{position}
+
+				if (true) {
+					fragment.findNavController().navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.story.player",
+						paths = arrayOf(toBeUsedListJson, toBeUsedPosition.toString())
+					)
+				}else {
+					fragment.findNavController()
+						.navigateSafely(Home2FragmentDirections.actionDestHome2ToStoryFragment(storyModel))
+				}
 				/*
 
             R.id.home_fragment -> holder.itemLayoutBinding.shapeableImageView.findFragment<HomeFragment>()

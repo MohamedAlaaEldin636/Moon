@@ -32,6 +32,63 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+/*
+val inputStream: InputStream = // your input stream of application/octet-stream data
+val outputFile: File = // your output file
+
+// Create a MediaExtractor to extract the media data from the input stream
+val extractor = MediaExtractor()
+extractor.setDataSource(inputStream)
+
+// Find the first track of the desired type (video)
+var trackIndex = -1
+for (i in 0 until extractor.trackCount) {
+    val format = extractor.getTrackFormat(i)
+    val mime = format.getString(MediaFormat.KEY_MIME)
+    if (mime.startsWith("video/")) {
+        extractor.selectTrack(i)
+        trackIndex = i
+        break
+    }
+}
+
+if (trackIndex == -1) {
+    // No video track found
+    return
+}
+
+// Create a MediaMuxer to write the media data to the output file in the desired format (video/mp4)
+val muxer = MediaMuxer(outputFile.absolutePath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4)
+
+// Add the video track to the MediaMuxer
+val trackFormat = extractor.getTrackFormat(trackIndex)
+val muxerTrackIndex = muxer.addTrack(trackFormat)
+muxer.start()
+
+// Write the video data to the output file
+val bufferInfo = MediaCodec.BufferInfo()
+val buffer = ByteBuffer.allocate(1024 * 1024)
+while (true) {
+    val sampleSize = extractor.readSampleData(buffer, 0)
+    if (sampleSize < 0) {
+        break
+    }
+
+    bufferInfo.presentationTimeUs = extractor.sampleTime
+    bufferInfo.flags = extractor.sampleFlags
+
+    muxer.writeSampleData(muxerTrackIndex, buffer, bufferInfo)
+
+    extractor.advance()
+}
+
+// Release the resources
+extractor.release()
+muxer.stop()
+muxer.release()
+
+ */
+
 @HiltViewModel
 class LanguagesViewModel @Inject constructor(
   val accountRepository: AccountRepository
@@ -86,6 +143,8 @@ class LanguagesViewModel @Inject constructor(
   fun next(v : View) {
 	  val fragment = v.findFragmentOrNull<LanguageFragment>() ?: return
 	  val activity = fragment.activity ?: return
+
+	  accountRepository.saveKeyToLocal(Constants.LANGUAGE, lang)
 
 	  if (languageNavArgs?.type == Constants.SPLASH) {
 		  fragment.findNavController().navigateSafely(

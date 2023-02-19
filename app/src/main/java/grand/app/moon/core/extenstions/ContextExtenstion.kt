@@ -20,6 +20,7 @@ import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.presentation.splash.MASplash2Activity
 import grand.app.moon.presentation.splash.SplashActivity
 
 fun Context.dpToPx(value: Float): Float {
@@ -92,7 +93,7 @@ fun Context.loginPage(){
   Handler(Looper.getMainLooper()).postDelayed({
     MyApplication.instance.baseContext.showInfo(MyApplication.instance.baseContext.getString(R.string.please_login_agin))
   }, 100)
-  Intent(this, SplashActivity::class.java).apply {
+  Intent(this, MASplash2Activity::class.java).apply {
     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(this)
   }

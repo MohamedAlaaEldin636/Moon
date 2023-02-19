@@ -1114,5 +1114,20 @@
       android:name="exploreId"
       app:argType="integer" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_story_player"
+    android:name="grand.app.moon.presentation.home.StoryPlayerFragment"
+    tools:layout="@layout/fragment_story_player">
+    <argument
+      android:name="jsonOfAllStoresWithStories"
+      app:argType="string" />
+    <argument
+      android:name="position"
+      app:argType="integer" />
+    <deepLink
+      android:id="@+id/deep_link_dest_story_player"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.story.player/{jsonOfAllStoresWithStories}/{position}" />
+  </fragment>
 
 </navigation>

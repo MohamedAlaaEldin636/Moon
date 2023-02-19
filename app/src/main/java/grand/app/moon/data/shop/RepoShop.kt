@@ -5,6 +5,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import grand.app.moon.core.extenstions.getCategoriesWithSubCategoriesAndBrands
 import grand.app.moon.core.extenstions.setCategoriesWithSubCategoriesAndBrands
 import grand.app.moon.core.extenstions.setInitialAppLaunch
+import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
@@ -15,6 +16,7 @@ import grand.app.moon.domain.utils.map
 import grand.app.moon.domain.utils.toFailureStatus
 import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.home.models.Interaction
 import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
@@ -27,7 +29,8 @@ import javax.inject.Singleton
 class RepoShop @Inject constructor(
 	private val remoteDataSource: ShopRemoteDataSource,
 	private val useCaseCountries: CountriesUseCase,
-	@ApplicationContext private val appContext: Context
+	@ApplicationContext private val appContext: Context,
+	private val appPreferences: AppPreferences,
 ) {
 
 	fun getMyCategories() = BasePaging.createFlowViaPager {
@@ -392,7 +395,7 @@ class RepoShop @Inject constructor(
 			val resource = getAllAppCategoriesWithSubcategoriesAndBrands()
 
 			if (resource is Resource.Success) {
-				appContext.setCategoriesWithSubCategoriesAndBrands(resource.value.data)
+				appContext.setCategoriesWithSubCategoriesAndBrands(resource.value.data, appPreferences)
 
 				return
 			}
@@ -404,7 +407,20 @@ class RepoShop @Inject constructor(
 	suspend fun getAllAppCategoriesWithSubcategoriesAndBrands() = remoteDataSource
 		.getAllAppCategoriesWithSubcategoriesAndBrands()
 
-	fun saveAllAppCategoriesWithSubcategoriesAndBrandsLocally(list: List<ItemCategory>) = appContext.setCategoriesWithSubCategoriesAndBrands(list)
+	fun saveAllAppCategoriesWithSubcategoriesAndBrandsLocally(list: List<ItemCategory>) = appContext.setCategoriesWithSubCategoriesAndBrands(list, appPreferences)
+
+	suspend fun viewStoryInteractions(storyId: Int) = remoteDataSource.storyInteractions(
+		storyId,
+		Interaction.Story.VIEW
+	)
+	suspend fun shareStoryInteractions(storyId: Int) = remoteDataSource.storyInteractions(
+		storyId,
+		Interaction.Story.SHARE
+	)
+	suspend fun likeStoryInteractions(storyId: Int) = remoteDataSource.storyInteractions(
+		storyId,
+		Interaction.Story.LIKE
+	)
 
 }
 

@@ -73,7 +73,7 @@ class AddStoryFragment : BaseFragment<FragmentAddStoryBinding>() {
 					return outputUri
 				}
 			}
-		} catch (e: Exception) {
+		} catch (e: Throwable) {
 			Log.e("TAG", "Error copying file scheme Uri to content scheme Uri", e)
 		}
 		return null
@@ -109,6 +109,9 @@ class AddStoryFragment : BaseFragment<FragmentAddStoryBinding>() {
 	val launcherTrimVideo3 = registerForActivityResult(
 		TrimmingVideoNum2Activity.StartTrim()
 	) { uri ->
+
+		if (uri == null) return@registerForActivityResult
+
 //		MediaScannerConnection.scanFile(
 //			viewModel.app,
 //			arrayOf(trimmedFilePath),

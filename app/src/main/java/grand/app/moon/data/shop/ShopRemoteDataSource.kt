@@ -9,6 +9,7 @@ import grand.app.moon.extensions.minLengthZerosPrefix
 import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.home.models.Interaction
 import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
@@ -400,6 +401,13 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun getAllAppCategoriesWithSubcategoriesAndBrands() = safeApiCall {
 		apiService.getAllAppCategoriesWithSubcategoriesAndBrands()
+	}
+
+	suspend fun storyInteractions(
+		storyId: Int,
+		interaction: Interaction.Story
+	) = safeApiCall {
+		apiService.storyInteractions(storyId, interaction.apiValue)
 	}
 
 }

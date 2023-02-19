@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.splash.MASplash2Activity
 import grand.app.moon.presentation.splash.SplashActivity
 import kotlinx.coroutines.flow.collect
 
@@ -67,7 +68,7 @@ class CountriesFragment : BaseFragment<FragmentCountriesBinding>() {
 
 
 	  viewModel.clickEvent.observe(viewLifecycleOwner) {
-		  openActivityAndClearStack(SplashActivity::class.java)
+		  openActivityAndClearStack(MASplash2Activity::class.java)
 	  }
   }
 

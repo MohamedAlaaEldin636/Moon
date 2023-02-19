@@ -117,6 +117,65 @@ open class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 
 }
 
+abstract class RVItemCommonListUsage2<VDB : ViewDataBinding, Item : Any>(
+	@LayoutRes private val layoutRes: Int,
+	list: List<Item> = emptyList(),
+	private val onItemClick: ((adapter: RVItemCommonListUsage2<VDB, Item>, binding: VDB) -> Unit)? = null,
+	private val additionalListenersSetups: ((adapter: RVItemCommonListUsage2<VDB, Item>, binding: VDB) -> Unit)? = null,
+	private val afterOnCreateViewHolder: ((viewHolder: VHItemCommonListUsage2<VDB, Item>, layoutRes: Int) -> Unit)? = null,
+) : RecyclerView.Adapter<VHItemCommonListUsage2<VDB, Item>>() {
+
+	var list = list
+		private set
+
+	abstract fun onBind(binding: VDB, position: Int, item: Item)
+
+	override fun getItemCount(): Int = list.size
+
+	override fun onCreateViewHolder(
+		parent: ViewGroup,
+		viewType: Int
+	): VHItemCommonListUsage2<VDB, Item> {
+		return VHItemCommonListUsage2(
+			this,
+			DataBindingUtil.inflate(parent.context.layoutInflater, layoutRes, parent, false),
+			onItemClick,
+			additionalListenersSetups
+		).also {
+			afterOnCreateViewHolder?.invoke(it, viewType)
+		}
+	}
+
+	override fun onBindViewHolder(holder: VHItemCommonListUsage2<VDB, Item>, position: Int) {
+		holder.bind(position, list[position])
+	}
+
+	fun submitList(list: List<Item>) {
+		this.list = list
+		notifyDataSetChanged()
+	}
+
+	fun insertList(list: List<Item>) {
+		if (list.isEmpty()) return
+		if (this.list.isEmpty()) return submitList(list)
+
+		val start = this.list.size
+		this.list = this.list + list
+		notifyItemRangeInserted(start, list.size)
+	}
+
+	fun deleteAt(index: Int) {
+		if (index >= list.size) return
+
+		list = list.toMutableList().also {
+			it.removeAt(index)
+		}.toList()
+
+		notifyItemRemoved(index)
+	}
+
+}
+
 open class RVPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	@LayoutRes private val layoutRes: Int,
 	areItemsTheSameComparison: (oldItem: Item, newItem: Item) -> Boolean = { oldItem, newItem -> oldItem == newItem },
@@ -209,6 +268,29 @@ class VHItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 
 	fun bind(position: Int, item: Item) {
 		onBind(binding, position, item)
+	}
+
+}
+
+class VHItemCommonListUsage2<VDB : ViewDataBinding, Item : Any>(
+	private val adapter: RVItemCommonListUsage2<VDB, Item>,
+	val binding: VDB,
+	private val onItemClick: ((adapter: RVItemCommonListUsage2<VDB, Item>, binding: VDB) -> Unit)? = null,
+	additionalListenersSetups: ((adapter: RVItemCommonListUsage2<VDB, Item>, binding: VDB) -> Unit)? = null,
+) : RecyclerView.ViewHolder(binding.root) {
+
+	init {
+		if (onItemClick != null) {
+			binding.root.setOnClickListener {
+				onItemClick.invoke(adapter, binding)
+			}
+		}
+
+		additionalListenersSetups?.invoke(adapter, binding)
+	}
+
+	fun bind(position: Int, item: Item) {
+		adapter.onBind(binding, position, item)
 	}
 
 }

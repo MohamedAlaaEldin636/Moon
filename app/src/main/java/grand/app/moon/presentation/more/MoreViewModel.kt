@@ -104,7 +104,10 @@ class MoreViewModel @Inject constructor(
 						"grand.app.moon.dest.webFragment",
 						paths = arrayOf(
 							binding.textTextView.text.toStringOrEmpty(),
-							"https://${countryIso}.souqmoon.com/${lang}/mobile/about"
+							//BuildConfig.API_BASE_URL // net // com // sooqmoon.net // souqmoon.com
+							"https://${countryIso}.souqmoon.com/${lang}/mobile/about".also {
+								MyLogger.e("hiiiiiiiiiiiii $it")
+							}
 						)
 					)
 				}

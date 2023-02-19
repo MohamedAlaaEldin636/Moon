@@ -12,7 +12,23 @@ import com.bumptech.glide.request.RequestOptions
 import grand.app.moon.R
 import grand.app.moon.domain.shop.MAImagesOrVideo
 import grand.app.moon.extensions.compose.GlideImageViaXmlModel
+import grand.app.moon.extensions.orFalse
 import grand.app.moon.extensions.orZero
+import grand.app.moon.extensions.saveDiskCacheStrategyAll
+import grand.app.moon.extensions.setupWithGlide
+
+@BindingAdapter(
+	"imageView_setupWithGlideWithDefaultImage_value",
+	"imageView_setupWithGlideWithDefaultImage_ignore",
+	requireAll = true
+)
+fun ImageView.setupWithGlideWithDefaultImage(value: String?, ignore: Boolean?) {
+	if (ignore?.not().orFalse()) {
+		setupWithGlide {
+			load(value).saveDiskCacheStrategyAll()
+		}
+	}
+}
 
 @BindingAdapter("imageView_setupWithGlideWithDefaultsPlaceholderAndError")
 fun ImageView.setupWithGlideWithDefaultsPlaceholderAndError(url: String?) {

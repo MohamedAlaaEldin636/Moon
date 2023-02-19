@@ -26,6 +26,7 @@ import grand.app.moon.extensions.navigateSafely
 import grand.app.moon.presentation.auth.language.viewModels.LanguagesViewModel
 import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.presentation.base.extensions.*
+import grand.app.moon.presentation.splash.MASplash2Activity
 import grand.app.moon.presentation.splash.SplashActivity
 import kotlinx.coroutines.flow.collect
 
@@ -49,7 +50,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>() {
 					LanguageFragmentDirections.actionLanguageFragmentToCountriesFragment2()
 				)
 			}else {
-				activity?.openActivityAndClearStack(SplashActivity::class.java)
+				activity?.openActivityAndClearStack(MASplash2Activity::class.java)
 			}
 		}*/
 
@@ -94,7 +95,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>() {
 			  LanguagesHelper.changeLanguage(MyApplication.instance, viewModel.lang)
 			  LanguagesHelper.changeLanguage(MyApplication.instance.baseContext, viewModel.lang)
 
-			  openActivityAndClearStack(SplashActivity::class.java)
+			  openActivityAndClearStack(MASplash2Activity::class.java)
 
 			  return@observe
 		  }

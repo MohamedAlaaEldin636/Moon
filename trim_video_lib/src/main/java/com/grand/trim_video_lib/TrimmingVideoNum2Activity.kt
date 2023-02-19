@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.postDelayed
 import androidx.core.view.postDelayed
 import androidx.databinding.DataBindingUtil
+import com.deep.videotrimmer.DeepVideoTrimmer
 import com.deep.videotrimmer.interfaces.OnTrimVideoListener
 import com.deep.videotrimmer.utils.FileUtils
 import com.grand.trim_video_lib.databinding.ActivityTrimmingVideoNum2Binding
@@ -45,6 +46,7 @@ class TrimmingVideoNum2Activity : AppCompatActivity() {
 		val destPath = "${Environment.getExternalStorageDirectory()}/MyApp/videos"
 		//videoTrimmer.setDestinationPath(destPath)
 		// destPath
+		val outputFile = File(filesDir, "trimmed_video.mp4")
 		binding.deepVideoTrimmer.setDestinationPath(filesDir.absolutePath/*filesDir.absolutePath*/)
 		binding.deepVideoTrimmer.setOnTrimVideoListener(object : OnTrimVideoListener {
 			override fun getResult(uri: Uri?) {

@@ -17,6 +17,10 @@ import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.orZero
 import kotlin.math.roundToInt
 
+/*fun View.setWidthPercentOfConstraintLayoutParent(percentage: Float?) {
+
+}*/
+
 @BindingAdapter("view_setBackgroundTintRes")
 fun View.setBackgroundTintRes(@ColorRes res: Int?) {
 	backgroundTintList = ColorStateList.valueOf(
