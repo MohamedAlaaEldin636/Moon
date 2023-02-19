@@ -3,6 +3,7 @@ package grand.app.moon.presentation.myStore
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,11 +17,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.createMultipartBodyPart
 import grand.app.moon.core.extenstions.createMultipartBodyPartAsFile
+import grand.app.moon.core.extenstions.eeeeeeeeeeeee
 import grand.app.moon.databinding.FragmentAddStoryBinding
 import grand.app.moon.domain.shop.MAImagesOrVideo
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.myStore.viewModel.AddStoryViewModel
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -75,7 +82,7 @@ class AddStoryFragment : BaseFragment<FragmentAddStoryBinding>() {
 	private fun createNewContentSchemeUri(context: Context): Uri {
 		val resolver = context.contentResolver
 		val contentValues = ContentValues().apply {
-			put(MediaStore.MediaColumns.DISPLAY_NAME, "temp_file")
+			put(MediaStore.MediaColumns.DISPLAY_NAME, "abc${System.currentTimeMillis()}aa.mp4")
 			put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4"/*"application/octet-stream"*/)
 		}
 		return resolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, contentValues)!!
@@ -102,6 +109,17 @@ class AddStoryFragment : BaseFragment<FragmentAddStoryBinding>() {
 	val launcherTrimVideo3 = registerForActivityResult(
 		TrimmingVideoNum2Activity.StartTrim()
 	) { uri ->
+//		MediaScannerConnection.scanFile(
+//			viewModel.app,
+//			arrayOf(trimmedFilePath),
+//			arrayOf("video/*"),
+//			null
+//		)
+		val videoFile = File(/*requireContext().filesDir.absolutePath + "/" + */uri?.path.orEmpty())
+		val rf = videoFile.asRequestBody(/*"video/mp4".toMediaType()*//*MediaType.parse("")*/)
+		//val requestFile = RequestBody.create(MediaType.parse("video/mp4"), videoFile)
+		val requestBody = MultipartBody.Part.createFormData("file", videoFile.name, rf)
+
 		MyLogger.e("${TrimmingVideoNum2Activity::class.java.name} -> hereeeeeeeee -> $uri")
 		///data/user/0/grand.app.moon/filesMP4_20230218_203853.mp4
 
@@ -166,11 +184,18 @@ content://grand.app.moon.fileprovider/camera_photos/P4_20230218_203853.mp4 false
 		val file8 = u6?.createMultipartBodyPartAsFile(viewModel.app, "file")
 		//file:///data/user/0/grand.app.moon/ss.mp4
 
+		val qwe = File(uri.path.orEmpty()).eeeeeeeeeeeee("file")
+
+		val f1 = File(uri?.path.orEmpty()).renameFile("ssAAaA${System.currentTimeMillis()}.mp4")
+
+		MyLogger.e("diaosjdoaisjoajds $qwe ${File(uri.path.orEmpty())} \n" +
+			"$f1 ${f1?.eeeeeeeeeeeee("file")}")
+
 		binding.root.postDelayed(250) {
-			if (file8/*file6_1*/ != null) {
+			if (/*file8*/file6_1/*qwe*//*requestBody*/ != null) {
 				viewModel.addStoryImmediately(
 					this,
-					file8/*file6_1*/,
+					/*file8*/file6_1/*qwe*//*requestBody*/,
 					true
 				)
 			} // todo in splash start getting ads and after getting stories in home check ads in sync with retrieving one isa.

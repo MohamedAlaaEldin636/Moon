@@ -6,6 +6,7 @@ import android.content.Intent
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -41,7 +42,10 @@ class TrimmingVideoNum2Activity : AppCompatActivity() {
 		Log.e("aa", "dofkpsdofk 2 $uri")
 		val path = FileUtils.getPath(this, uri/*.ssssssssssss(this)*/)
 		binding.deepVideoTrimmer.setVideoURI(Uri.parse(path)/*uri.ssssssssssss(this)*//*Uri.parse(path)*//*.ssssssssssss(this)*/)
-		binding.deepVideoTrimmer.setDestinationPath(filesDir.absolutePath)
+		val destPath = "${Environment.getExternalStorageDirectory()}/MyApp/videos"
+		//videoTrimmer.setDestinationPath(destPath)
+		// destPath
+		binding.deepVideoTrimmer.setDestinationPath(filesDir.absolutePath/*filesDir.absolutePath*/)
 		binding.deepVideoTrimmer.setOnTrimVideoListener(object : OnTrimVideoListener {
 			override fun getResult(uri: Uri?) {
 				Log.e("abc", "diaosjdoaisjoajds ${TrimmingVideoNum2Activity::class.java.name} -> $uri")

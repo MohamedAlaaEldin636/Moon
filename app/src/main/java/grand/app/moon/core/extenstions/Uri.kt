@@ -10,10 +10,43 @@ import grand.app.moon.extensions.orZero
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
+import java.io.*
+
+/*
+Log.e("aaa", "aaaaaaaaaaa 11 11 pre $paramNameInApi")
+	val byteArray = toBytesArray(context) ?: return null
+	Log.e("aaa", "aaaaaaaaaaa 11 22 pre $byteArray")
+	val extension = getMimeType(context) ?: return null
+	Log.e("aaa", "aaaaaaaaaaa 11 33 pre $extension")
+
+	return MultipartBody.Part.createFormData(
+		paramNameInApi, "File.$extension", byteArray.toRequestBody()
+	)
+ */
+
+fun File.eeeeeeeeeeeee(paramNameInApi: String): MultipartBody.Part? {
+	val byteArray = convertFileToByteArray() ?: return null
+	val mimeType = getFileMimeType() ?: return null
+
+	return MultipartBody.Part.createFormData(
+		paramNameInApi, "File.$extension", byteArray.toRequestBody()
+	)
+}
+
+fun File.getFileMimeType(): String? {
+	val extension = MimeTypeMap.getFileExtensionFromUrl(path)
+	return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+}
+
+fun File.convertFileToByteArray(): ByteArray? {
+	return kotlin.runCatching {
+		val fis = FileInputStream(this)
+		val byteArray = ByteArray(length().toInt())
+		fis.read(byteArray)
+		fis.close()
+		byteArray
+	}.getOrNull()
+}
 
 /*
 val contentUri = Uri.parse("content://com.example.provider/myfile")
