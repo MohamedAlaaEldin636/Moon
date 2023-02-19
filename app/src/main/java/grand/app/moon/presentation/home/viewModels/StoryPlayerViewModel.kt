@@ -32,12 +32,12 @@ class StoryPlayerViewModel @Inject constructor(
 	val player by lazy {
 		app.createExoPlayer(
 			onBufferingVideo = {
-				pause()
+				this@StoryPlayerViewModel.pause()
 
 				viewModelScope.launch {
 					awaitReady()
 
-					resume()
+					this@StoryPlayerViewModel.resume()
 				}
 			}
 		) {
@@ -113,11 +113,22 @@ class StoryPlayerViewModel @Inject constructor(
 		adapterSegments.resume()
 	}
 
-	private fun goToNextStory() {
+	fun goToNextStory() {
 		if (currentIndexOfStory.value.orZero() < currentStoreWithStories.value?.stories.orEmpty().lastIndex) {
 			currentIndexOfStory.value = currentIndexOfStory.value.orZero().inc()
 		}else if (currentIndexOfStoreWithStories.value.orZero() < allStoresWithStories.lastIndex) {
 			currentIndexOfStoreWithStories.value = currentIndexOfStoreWithStories.value.orZero().inc()
+			currentIndexOfStory.value = 0
+		}else {
+			finishFragment.value = true
+		}
+	}
+
+	fun goToPrevStory() {
+		if (currentIndexOfStory.value.orZero() > 0) {
+			currentIndexOfStory.value = currentIndexOfStory.value.orZero().dec()
+		}else if (currentIndexOfStoreWithStories.value.orZero() > 0) {
+			currentIndexOfStoreWithStories.value = currentIndexOfStoreWithStories.value.orZero().dec()
 			currentIndexOfStory.value = 0
 		}else {
 			finishFragment.value = true

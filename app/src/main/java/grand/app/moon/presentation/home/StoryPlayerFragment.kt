@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +62,25 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 
 		override fun onSingleTapUp(e: MotionEvent): Boolean {
 			MyLogger.e("aaaidosjdoiasjdaaaa onSingleTapUp")
+			/*val touchX = e.x
+			val viewWidth = _binding?.constraintLayout?.width.orZero()
+			if (viewWidth > 0) {
+				val isRtl = context?.resources?.getBoolean(R.bool.is_rtl).orFalse()
+				val goToNextStory = if (touchX < viewWidth / 2) {
+					// Touch is on the left side of the view
+					 isRtl
+				}else {
+					// Touch is on the right side of the view
+					isRtl.not()
+				}
+
+				if (goToNextStory) {
+					viewModel.goToNextStory()
+				}else {
+					viewModel.goToPrevStory()
+				}
+			}*/
+
 			return super.onSingleTapUp(e)
 		}
 
@@ -77,11 +97,15 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 	override fun onResume() {
 		super.onResume()
 
+		viewModel.resume()
+
 		makeStatusBarTransparentWithWhiteIcons()
 	}
 
 	override fun onPause() {
 		makeStatusBarToPrimaryDarkWithWhiteIcons()
+
+		viewModel.pause()
 
 		super.onPause()
 	}
@@ -127,14 +151,18 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 				it.isSeen = true
 			}
 
-			viewModel.adapterSegments.setSegments(viewModel.currentStoreWithStories.value?.stories?.size.orZero())
-			viewModel.adapterSegments.setCurrentSegment(viewModel.currentIndexOfStory.value.orZero())
+			binding.recyclerView.post {
+				viewModel.adapterSegments.setSegments(viewModel.currentStoreWithStories.value?.stories?.size.orZero())
+				viewModel.adapterSegments.setCurrentSegment(viewModel.currentIndexOfStory.value.orZero())
+			}
 		}
 
 		viewModel.currentDuration.observe(viewLifecycleOwner) {
 			MyLogger.e("udhewihdiewh ch 3")
 
-			viewModel.adapterSegments.playCurrentSegment(it.orZero())
+			binding.recyclerView.post {
+				viewModel.adapterSegments.playCurrentSegment(it.orZero())
+			}
 		}
 
 		@Suppress("ObjectLiteralToLambda")
