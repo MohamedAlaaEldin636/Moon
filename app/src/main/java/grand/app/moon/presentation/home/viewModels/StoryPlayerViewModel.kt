@@ -41,7 +41,7 @@ class StoryPlayerViewModel @Inject constructor(
 				}
 			}
 		) {
-			goToNextStory()
+			//goToNextStory()
 		}
 	}
 
@@ -114,6 +114,10 @@ class StoryPlayerViewModel @Inject constructor(
 	}
 
 	fun goToNextStory() {
+	  pause()
+
+		MyLogger.e("currentIndexOfStory.value.orZero() < currentStoreWithStories.value?.stories.orEmpty().lastIndex " +
+			"${currentIndexOfStory.value.orZero()} ${currentStoreWithStories.value?.stories.orEmpty().lastIndex}")
 		if (currentIndexOfStory.value.orZero() < currentStoreWithStories.value?.stories.orEmpty().lastIndex) {
 			currentIndexOfStory.value = currentIndexOfStory.value.orZero().inc()
 		}else if (currentIndexOfStoreWithStories.value.orZero() < allStoresWithStories.lastIndex) {
@@ -125,6 +129,8 @@ class StoryPlayerViewModel @Inject constructor(
 	}
 
 	fun goToPrevStory() {
+		pause()
+
 		if (currentIndexOfStory.value.orZero() > 0) {
 			currentIndexOfStory.value = currentIndexOfStory.value.orZero().dec()
 		}else if (currentIndexOfStoreWithStories.value.orZero() > 0) {
@@ -133,6 +139,12 @@ class StoryPlayerViewModel @Inject constructor(
 		}else {
 			finishFragment.value = true
 		}
+	}
+
+	fun releaseResources() {
+		pause()
+
+		player.release()
 	}
 
 	class AdapterSegments(
@@ -151,6 +163,7 @@ class StoryPlayerViewModel @Inject constructor(
 			)
 
 			if (item == currentSegment && play) {
+				animator?.removeAllListeners()
 				animator?.cancel()
 				animator = ValueAnimator.ofFloat(0f, 1f)
 				animator?.duration = currentDurationOfAnimationInMs.orZero().coerceAtLeast(300)

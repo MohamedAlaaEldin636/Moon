@@ -62,7 +62,7 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 
 		override fun onSingleTapUp(e: MotionEvent): Boolean {
 			MyLogger.e("aaaidosjdoiasjdaaaa onSingleTapUp")
-			/*val touchX = e.x
+			val touchX = e.x
 			val viewWidth = _binding?.constraintLayout?.width.orZero()
 			if (viewWidth > 0) {
 				val isRtl = context?.resources?.getBoolean(R.bool.is_rtl).orFalse()
@@ -79,7 +79,7 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 				}else {
 					viewModel.goToPrevStory()
 				}
-			}*/
+			}
 
 			return super.onSingleTapUp(e)
 		}
@@ -119,71 +119,73 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		binding.recyclerView.setupWithRVItemCommonListUsage(
-			viewModel.adapterSegments,
-			true,
-			1
-		) { layoutParams ->
-			layoutParams.width = width / viewModel.currentStoreWithStories.value?.stories?.size.orZero()
-				.coerceAtLeast(1)
-		}
-
-		viewModel.finishFragment.observe(viewLifecycleOwner) {
-			MyLogger.e("udhewihdiewh ch 1")
-
-			if (it.orFalse()) {
-				viewModel.finishFragment.value = false
+		if (binding.recyclerView.adapter == null) {
+			binding.recyclerView.setupWithRVItemCommonListUsage(
+				viewModel.adapterSegments,
+				true,
+				1
+			) { layoutParams ->
+				layoutParams.width = width / viewModel.currentStoreWithStories.value?.stories?.size.orZero()
+					.coerceAtLeast(1)
 			}
 
-			if (it == true) {
-				findNavController().navigateUp()
-			}
-		}
+			viewModel.finishFragment.observe(viewLifecycleOwner) {
+				MyLogger.e("udhewihdiewh ch 1")
 
-		viewModel.currentStory.observe(viewLifecycleOwner) {
-			MyLogger.e("udhewihdiewh ch 2")
-
-			if (it != null && it.isSeen.orFalse().not() && context?.isLogin() == true) {
-				context?.applicationScope?.launch {
-					viewModel.repoShop.viewStoryInteractions(it.id.orZero())
+				if (it.orFalse()) {
+					viewModel.finishFragment.value = false
 				}
 
-				it.isSeen = true
+				if (it == true) {
+					viewModel.releaseResources()
+
+					findNavController().navigateUp()
+				}
 			}
 
-			binding.recyclerView.post {
+			viewModel.currentStory.observe(viewLifecycleOwner) {
+				MyLogger.e("udhewihdiewh ch 2")
+
+				if (it != null && it.isSeen.orFalse().not() && context?.isLogin() == true) {
+					context?.applicationScope?.launch {
+						viewModel.repoShop.viewStoryInteractions(it.id.orZero())
+					}
+
+					it.isSeen = true
+				}
+
+				binding.recyclerView.adapter = null
 				viewModel.adapterSegments.setSegments(viewModel.currentStoreWithStories.value?.stories?.size.orZero())
 				viewModel.adapterSegments.setCurrentSegment(viewModel.currentIndexOfStory.value.orZero())
+				binding.recyclerView.adapter = viewModel.adapterSegments
 			}
-		}
 
-		viewModel.currentDuration.observe(viewLifecycleOwner) {
-			MyLogger.e("udhewihdiewh ch 3")
+			viewModel.currentDuration.observe(viewLifecycleOwner) {
+				MyLogger.e("udhewihdiewh ch 3")
 
-			binding.recyclerView.post {
 				viewModel.adapterSegments.playCurrentSegment(it.orZero())
 			}
+
+			@Suppress("ObjectLiteralToLambda")
+			binding.constraintLayout.setOnTouchListener(object : View.OnTouchListener {
+				@SuppressLint("ClickableViewAccessibility")
+				override fun onTouch(p0: View?, event: MotionEvent?): Boolean {
+					when (event?.action) {
+						MotionEvent.ACTION_DOWN -> {
+							viewModel.pause()
+						}
+						MotionEvent.ACTION_UP -> {
+							viewModel.resume()
+						}
+					}
+					if (event != null) {
+						gestureDetector?.onTouchEvent(event)
+					}
+
+					return true
+				}
+			})
 		}
-
-		@Suppress("ObjectLiteralToLambda")
-		binding.constraintLayout.setOnTouchListener(object : View.OnTouchListener {
-			@SuppressLint("ClickableViewAccessibility")
-			override fun onTouch(p0: View?, event: MotionEvent?): Boolean {
-				when (event?.action) {
-					MotionEvent.ACTION_DOWN -> {
-						viewModel.pause()
-					}
-					MotionEvent.ACTION_UP -> {
-						viewModel.resume()
-					}
-				}
-				if (event != null) {
-					gestureDetector?.onTouchEvent(event)
-				}
-
-				return true
-			}
-		})
 	}
 
 }
