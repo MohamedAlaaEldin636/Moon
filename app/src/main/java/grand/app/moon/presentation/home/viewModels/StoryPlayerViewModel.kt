@@ -3,12 +3,19 @@ package grand.app.moon.presentation.home.viewModels
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.app.Application
+import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.*
 import com.google.android.exoplayer2.Player
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.isLoginWithOpenAuth
+import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemSegmentBinding
+import grand.app.moon.domain.shop.StoryLink
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.constraintPercentWidth
 import grand.app.moon.presentation.home.StoryPlayerFragmentArgs
@@ -62,6 +69,34 @@ class StoryPlayerViewModel @Inject constructor(
 
 	val storyLink = currentStory.map {
 		it?.linkType
+	}
+
+	val drawableOfStoryLink = storyLink.map {
+		val drawableRes = when (it) {
+			StoryLink.WHATSAPP -> R.drawable.story_whatsapp
+			StoryLink.CALL -> R.drawable.story_call
+			StoryLink.CHAT -> R.drawable.story_chat
+			null -> return@map null
+		}
+
+		ContextCompat.getDrawable(application, drawableRes)
+	}
+
+	val textOfStoryLink = storyLink.map {
+		val textRes = when (it) {
+			StoryLink.WHATSAPP -> R.string.whatsapp_3
+			StoryLink.CALL -> R.string.chat_3829
+			StoryLink.CHAT -> R.string.call
+			null -> return@map null
+		}
+
+		application.getString(textRes)
+	}
+
+	val drawableOfLikeIcon = currentStory.mapToMutableLiveData {
+		val drawableRes = if (it?.isLiked.orFalse()) R.drawable.ic_like_fill else R.drawable.like
+
+		ContextCompat.getDrawable(application, drawableRes)
 	}
 
 	val phone = currentStoreWithStories.map {
@@ -145,6 +180,52 @@ class StoryPlayerViewModel @Inject constructor(
 		pause()
 
 		player.release()
+	}
+
+	fun share(view: View) {
+		val context = view.context ?: return
+
+		context.launchShareText(
+			currentStoreWithStories.value?.name.orEmpty(),
+			currentStory.value?.shareLink.orEmpty()
+		)
+
+		context.applicationScope?.launch {
+			repoShop.shareStoryInteractions(currentStory.value?.id ?: return@launch)
+		}
+	}
+
+	fun like(view: View) {
+		val context = view.context ?: return
+
+		if (context.isLoginWithOpenAuth()) {
+			val currentStoreId = currentStoreWithStories.value?.id.orZero()
+			val currentStoryId = currentStory.value?.id.orZero()
+			val newIsLiked = currentStory.value?.isLiked.orFalse().not()
+
+			allStoresWithStories.firstOrNull { it.id == currentStoreId }?.stories
+				?.firstOrNull { it.id == currentStoryId }?.isLiked = newIsLiked
+			currentStoreWithStories.value?.stories
+				?.firstOrNull { it.id == currentStoryId }?.isLiked = newIsLiked
+			currentStory.value?.isLiked = newIsLiked
+			drawableOfLikeIcon.value = (if (newIsLiked) R.drawable.ic_like_fill else R.drawable.like).let {
+				ContextCompat.getDrawable(app, it)
+			}
+
+			context.applicationScope?.launch {
+				repoShop.likeStoryInteractions(currentStoryId)
+			}
+		}
+	}
+
+	fun chat(view: View) {
+		val context = view.context ?: return
+
+		if (context.isLoginWithOpenAuth()) {
+			currentStoreWithStories.value?.also {
+				context.openChatStore(view, it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
+			}
+		}
 	}
 
 	class AdapterSegments(

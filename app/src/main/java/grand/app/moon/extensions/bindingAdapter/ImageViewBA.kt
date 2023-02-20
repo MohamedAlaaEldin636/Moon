@@ -2,6 +2,7 @@ package grand.app.moon.extensions.bindingAdapter
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.widget.ImageView
 import androidx.annotation.ColorRes
@@ -16,6 +17,11 @@ import grand.app.moon.extensions.orFalse
 import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.saveDiskCacheStrategyAll
 import grand.app.moon.extensions.setupWithGlide
+
+@BindingAdapter("imageView_setImageDrawableBA")
+fun ImageView.setImageDrawableBA(drawable: Drawable?) {
+	setImageDrawable(drawable)
+}
 
 @BindingAdapter(
 	"imageView_setupWithGlideWithDefaultImage_value",

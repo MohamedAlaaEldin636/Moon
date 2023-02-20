@@ -485,4 +485,5 @@
   <string name="show_all_var_comments">عرض جميع %1$s تعليق</string>
   <string name="add_your_comment_8">أضف تعليقك</string>
   <string name="got_likes_of_var_users">حاذ هذا علي اعجاب %1$s مستخدم</string>
+    <string name="add_comment_78">أضف تعليق</string>
 </resources>

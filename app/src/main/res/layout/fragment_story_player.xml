@@ -99,6 +99,102 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"/>-->
 
+    <ImageView
+      android:id="@+id/shareImageView"
+
+      android:onClick="@{v -> viewModel.share(v)}"
+
+      android:layout_width="49dp"
+      android:layout_height="49dp"
+
+      android:src="@drawable/share_of_story"
+
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="21dp"
+
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+      android:id="@+id/likeImageView"
+
+      android:layout_width="49dp"
+      android:layout_height="49dp"
+
+      android:src="@drawable/like"
+      tools:src="@drawable/ic_like_fill"
+
+      imageView_setImageDrawableBA="@{viewModel.drawableOfLikeIcon}"
+
+      android:layout_marginEnd="8dp"
+
+      android:onClick="@{v -> viewModel.like(v)}"
+
+      app:layout_constraintEnd_toStartOf="@id/shareImageView"
+      app:layout_constraintBottom_toBottomOf="@id/shareImageView"/>
+
+    <TextView
+      android:id="@+id/chatTextView"
+
+      android:onClick="@{v -> viewModel.chat(v)}"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:background="@drawable/dr_rect_5_with_border_5"
+
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="16dp"
+
+      android:paddingStart="20dp"
+      android:paddingEnd="20dp"
+
+      android:gravity="center_vertical"
+
+      style="@style/TextTajawalMedium16"
+      android:textColor="@color/white"
+      android:textDirection="locale"
+      android:textSize="16dp"
+
+      android:text="@string/add_comment_78"
+
+      app:layout_constraintTop_toTopOf="@id/shareImageView"
+      app:layout_constraintBottom_toBottomOf="@id/shareImageView"
+      app:layout_constraintEnd_toStartOf="@id/likeImageView"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+      android:id="@+id/swipIndicationTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginBottom="13dp"
+
+      android:visibility="@{viewModel.storyLink != null}"
+
+      android:background="@drawable/dr_rect_15"
+
+      android:paddingTop="6dp"
+      android:paddingBottom="6dp"
+      android:paddingStart="15dp"
+      android:paddingEnd="15dp"
+
+      style="@style/TextTajawalMedium16"
+      android:textSize="15sp"
+      android:textColor="@color/white"
+
+      tools:drawableStartCompat="@drawable/story_whatsapp"
+      android:drawablePadding="8.5dp"
+      textView_serDrawableCompatBA_drawableStart="@{viewModel.drawableOfStoryLink}"
+
+      android:text="@{viewModel.textOfStoryLink}"
+      tools:text="@string/whatsapp_3"
+
+      app:layout_constraintBottom_toTopOf="@id/likeImageView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

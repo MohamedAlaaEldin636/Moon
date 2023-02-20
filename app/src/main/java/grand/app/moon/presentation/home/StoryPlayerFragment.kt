@@ -17,6 +17,7 @@ import grand.app.moon.databinding.FragmentStoryPlayerBinding
 import grand.app.moon.domain.shop.StoryLink
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.viewModels.StoryPlayerViewModel
 import kotlinx.coroutines.launch
 
@@ -41,13 +42,7 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 				when (viewModel.storyLink.value) {
 					StoryLink.WHATSAPP -> context.launchWhatsApp(viewModel.phone.value.orEmpty())
 					StoryLink.CALL -> context.launchDialNumber(viewModel.phone.value.orEmpty())
-					StoryLink.CHAT -> {
-						if (context.isLoginWithOpenAuth()) {
-							viewModel.currentStoreWithStories.value?.also {
-								context.openChatStore(binding.root, it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
-							}
-						}
-					}
+					StoryLink.CHAT -> viewModel.chat(binding.chatTextView)
 					null -> {}
 				}
 			}
