@@ -69,44 +69,45 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
   override fun setupObservers() {
 
-    viewModel.categoriesAdapter.clickEvent.observe(this, { category ->
-      viewModel.stores.clear()
-      when (viewModel.type) {
-        Constants.ADVERTISEMENT_TEXT -> {
-          viewModel.propertyId = category.id.toString()
-        }
-        else -> {
-          viewModel.categoryId = category.id.toString()
-        }
-      }
-      viewModel.showAdvertisement.set(false)
-      viewModel.callService()
-      Log.d(TAG, "setupObservers: ${viewModel.stores.size}")
-      loadMarkers()
-    })
-    viewModel.subCategoriesAdapter.clickEvent.observe(this, { category ->
-      Log.d(TAG, "setupObservers: ${viewModel.subCategoriesAdapter.selected}")
-      viewModel.stores.clear()
-      Log.d(TAG, "setupObservers: ${viewModel.subCategoryId}")
-      when (viewModel.type) {
-        Constants.ADVERTISEMENT_TEXT -> {
-          viewModel.propertyId = category.id.toString()
-        }
-        else -> {
-          viewModel.subCategoryId = category.id.toString()
-        }
-      }
-      if(viewModel.subCategoriesAdapter.selected != 0)
-        viewModel.subCategoryId = viewModel.subCategoriesAdapter.differ.currentList[viewModel.subCategoriesAdapter.selected].id.toString()
-      else
-        viewModel.subCategoryId = null
-      viewModel.showAdvertisement.set(false)
-      viewModel.callService()
+    viewModel.categoriesAdapter.clickEvent.observe(this) { category ->
+	    viewModel.stores.clear()
+	    when (viewModel.type) {
+		    Constants.ADVERTISEMENT_TEXT -> {
+			    viewModel.propertyId = category.id.toString()
+		    }
+		    else -> {
+			    viewModel.categoryId = category.id.toString()
+		    }
+	    }
+	    viewModel.showAdvertisement.set(false)
+	    viewModel.callService()
+	    Log.d(TAG, "setupObservers: ${viewModel.stores.size}")
+	    loadMarkers()
+    }
+	  viewModel.subCategoriesAdapter.clickEvent.observe(this) { category ->
+		  Log.d(TAG, "setupObservers: ${viewModel.subCategoriesAdapter.selected}")
+		  viewModel.stores.clear()
+		  Log.d(TAG, "setupObservers: ${viewModel.subCategoryId}")
+		  when (viewModel.type) {
+			  Constants.ADVERTISEMENT_TEXT -> {
+				  viewModel.propertyId = category.id.toString()
+			  }
+			  else -> {
+				  viewModel.subCategoryId = category.id.toString()
+			  }
+		  }
+		  if (viewModel.subCategoriesAdapter.selected != 0)
+			  viewModel.subCategoryId =
+				  viewModel.subCategoriesAdapter.differ.currentList[viewModel.subCategoriesAdapter.selected].id.toString()
+		  else
+			  viewModel.subCategoryId = null
+		  viewModel.showAdvertisement.set(false)
+		  viewModel.callService()
 //      Log.d(TAG, "setupObservers: ${viewModel.stores.size}")
-      loadMarkers()
-    })
+		  loadMarkers()
+	  }
 
-    lifecycleScope.launchWhenResumed {
+	  lifecycleScope.launchWhenResumed {
       viewModel.responseStores.collect {
         Log.d(TAG, "setupObservers: HERE")
         when (it) {
