@@ -10,6 +10,7 @@ import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.exoplayer2.Player
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLogin
@@ -21,15 +22,16 @@ import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.viewModels.StoryPlayerViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-// todo icon white opacity 5% isa.
-// todo on end of story leh bta5od wa2t 3ala ma tgeb el store elle ba3do kda isa ?!
 @AndroidEntryPoint
 class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 
 	private val viewModel by viewModels<StoryPlayerViewModel>()
+
+	var job: Job? = null
 
 	private val listener: GestureDetector.SimpleOnGestureListener = object : GestureDetector.SimpleOnGestureListener() {
 		override fun onFling(
@@ -150,13 +152,6 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 			val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
 			layoutParams.width = (totalWidth.toFloat() / number.toFloat()).toInt()
-
-			// 684.0 8.0 86
-			/*MyLogger.e("ushdiasuhdiushdai ${width.toFloat()} ${viewModel.currentStoreWithStories.value?.stories?.size.orZero()
-				.coerceAtLeast(1).toFloat()} ${(width.toFloat() / viewModel.currentStoreWithStories.value?.stories?.size.orZero()
-				.coerceAtLeast(1).toFloat()).toInt()}")
-			layoutParams.width = (width.toFloat() / viewModel.currentStoreWithStories.value?.stories?.size.orZero()
-				.coerceAtLeast(1).toFloat()).toInt()*/
 		}
 
 		viewModel.finishFragment.observe(viewLifecycleOwner) {
@@ -176,6 +171,8 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 		}
 
 		viewModel.currentStory.observe(viewLifecycleOwner) {
+			job?.cancel()
+
 			MyLogger.e("udhewihdiewh ch 2")
 
 			if (it != null && it.isSeen.orFalse().not() && context?.isLogin() == true) {
@@ -190,12 +187,22 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 			viewModel.adapterSegments.setSegments(viewModel.currentStoreWithStories.value?.stories?.size.orZero())
 			viewModel.adapterSegments.setCurrentSegment(viewModel.currentIndexOfStory.value.orZero())
 			binding.recyclerView.adapter = viewModel.adapterSegments
-		}
 
-		viewModel.currentDuration.observe(viewLifecycleOwner) {
-			MyLogger.e("udhewihdiewh ch 3")
+			job = lifecycleScope.launch {
+				val duration = if (it?.isVideo.orFalse()) {
+					viewModel.player?.changeVideoLink(it?.file.orEmpty(), 0L)
 
-			lifecycleScope.launch {
+					while (viewModel.player?.playbackState != Player.STATE_READY) {
+						viewModel.player?.awaitReady()
+					}
+
+					MyLogger.e("durationnnnnnnn ${viewModel.player?.duration} ==== ${viewModel.player?.totalBufferedDuration}")
+
+					viewModel.player?.duration ?: 10_000L
+				}else {
+					10_000L
+				}
+
 				if (viewModel.currentStory.value?.isVideo.orFalse()) {
 					MyLogger.e("udhewihdiewh ch 3.1")
 					viewModel.player?.awaitPlaying()
@@ -204,7 +211,7 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 					viewModel.player?.pause()
 				}
 				MyLogger.e("udhewihdiewh ch 3.4")
-				viewModel.adapterSegments.playCurrentSegment(it.orZero(), viewModel.currentIndexOfStory.value.orZero())
+				viewModel.adapterSegments.playCurrentSegment(duration, viewModel.currentIndexOfStory.value.orZero())
 				MyLogger.e("udhewihdiewh ch 3.5")
 			}
 		}
@@ -232,6 +239,9 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 
 	override fun onDestroyView() {
 		MyLogger.e("sahduiashdi onDestroyView")
+
+		viewModel.finishFragment.removeObservers(viewLifecycleOwner)
+		viewModel.currentStory.removeObservers(viewLifecycleOwner)
 
 		viewModel.pause()
 		viewModel.releaseResources()

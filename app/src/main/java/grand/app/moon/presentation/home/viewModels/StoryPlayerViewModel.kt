@@ -28,6 +28,7 @@ import grand.app.moon.presentation.home.StoryPlayerFragmentArgs
 import grand.app.moon.presentation.home.models.ResponseStory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -95,22 +96,6 @@ class StoryPlayerViewModel @Inject constructor(
 	val phone = currentStoreWithStories.map {
 		it?.phone
 	}
-
-	val currentDuration = currentStory.asFlow().map {
-		if (it?.isVideo.orFalse()) {
-			player?.changeVideoLink(it?.file.orEmpty(), 0L)
-
-			while (player?.playbackState != Player.STATE_READY) {
-				player?.awaitReady()
-			}
-
-			MyLogger.e("durationnnnnnnn ${player?.duration} ==== ${player?.totalBufferedDuration}")
-
-			player?.duration ?: 10_000L
-		}else {
-			10_000L
-		}
-	}.asLiveData()
 
 	val showImageNotVideo = currentStory.map {
 		it?.isVideo.orFalse().not()
@@ -284,6 +269,7 @@ class StoryPlayerViewModel @Inject constructor(
 				animator?.addListener(object : Animator.AnimatorListener {
 					override fun onAnimationStart(animation: Animator) {}
 					override fun onAnimationEnd(animation: Animator) {
+						MyLogger.e("udhewihdiewh ch 5 anim end")
 						play = false
 						onAnimationEnd()
 					}
@@ -311,8 +297,9 @@ class StoryPlayerViewModel @Inject constructor(
 			MyLogger.e("udhewihdiewh ch 4 ${this.currentSegment} $currentSegment")
 			play = true
 			this.currentDurationOfAnimationInMs = currentDurationOfAnimationInMs
+			val set = setOf(this.currentSegment, currentSegment)
 			this.currentSegment = currentSegment
-			notifyItemChanged(currentSegment)
+			notifyItemsChanged(*set.toTypedArray())
 		}
 
 		fun pause() {

@@ -7,6 +7,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView
 import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -21,7 +22,7 @@ fun ExoPlayer.setPlayWhenReadyIfNotSet() {
 	}
 }
 
-suspend fun ExoPlayer.awaitPlaying() = suspendCoroutine { continuation ->
+suspend fun ExoPlayer.awaitPlaying() = suspendCancellableCoroutine { continuation ->
 	val listener = object : Player.Listener {
 		override fun onPlaybackSuppressionReasonChanged(playbackSuppressionReason: Int) {
 			if (playbackSuppressionReason == Player.PLAYBACK_SUPPRESSION_REASON_NONE && playbackState == Player.STATE_READY) {
@@ -49,6 +50,10 @@ suspend fun ExoPlayer.awaitPlaying() = suspendCoroutine { continuation ->
 		continuation.resume(Unit)
 	}else {
 		addListener(listener)
+	}
+
+	continuation.invokeOnCancellation {
+		kotlin.runCatching { removeListener(listener) }
 	}
 }
 
