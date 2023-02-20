@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.home
 
 import android.annotation.SuppressLint
+import android.media.session.PlaybackState
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -181,6 +182,12 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 				}
 			})
 		}
+	}
+
+	override fun onDestroyView() {
+		viewModel.releaseResources()
+
+		super.onDestroyView()
 	}
 
 }

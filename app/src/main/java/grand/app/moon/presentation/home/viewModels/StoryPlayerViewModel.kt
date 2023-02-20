@@ -273,6 +273,7 @@ class StoryPlayerViewModel @Inject constructor(
 		}
 
 		fun setCurrentSegment(index: Int) {
+			play = false
 			currentSegment = index
 			notifyDataSetChanged()
 		}
@@ -284,10 +285,12 @@ class StoryPlayerViewModel @Inject constructor(
 		}
 
 		fun pause() {
+			//play = false
 			animator?.pause()
 		}
 
 		fun resume() {
+			//play = true
 			animator?.resume()
 		}
 
