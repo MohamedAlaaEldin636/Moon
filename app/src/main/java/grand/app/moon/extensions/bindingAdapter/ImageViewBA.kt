@@ -23,6 +23,17 @@ fun ImageView.setImageDrawableBA(drawable: Drawable?) {
 	setImageDrawable(drawable)
 }
 
+@BindingAdapter("imageView_setupWithGlideOrDefaultUserBA")
+fun ImageView.setupWithGlideOrDefaultUserBA(value: String?) {
+	if (value.isNullOrEmpty().not()) {
+		setupWithGlide {
+			load(value).saveDiskCacheStrategyAll()
+		}
+	}else {
+		setImageResource(R.drawable.ic_default_user)
+	}
+}
+
 @BindingAdapter(
 	"imageView_setupWithGlideWithDefaultImage_value",
 	"imageView_setupWithGlideWithDefaultImage_ignore",

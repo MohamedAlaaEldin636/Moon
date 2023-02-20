@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -21,6 +22,7 @@ import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.viewModels.StoryPlayerViewModel
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 // todo icon white opacity 5% isa.
 // todo on end of story leh bta5od wa2t 3ala ma tgeb el store elle ba3do kda isa ?!
@@ -41,8 +43,20 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 			if (velocityY < 0 && context != null) {
 				// Swipe Up
 				when (viewModel.storyLink.value) {
-					StoryLink.WHATSAPP -> context.launchWhatsApp(viewModel.phone.value.orEmpty())
-					StoryLink.CALL -> context.launchDialNumber(viewModel.phone.value.orEmpty())
+					StoryLink.WHATSAPP -> {
+						if (viewModel.phone.value.isNullOrEmpty()) {
+							showMessage(getString(R.string.no_ph_743))
+						}else {
+							context.launchWhatsApp(viewModel.phone.value.orEmpty())
+						}
+					}
+					StoryLink.CALL -> {
+						if (viewModel.phone.value.isNullOrEmpty()) {
+							showMessage(getString(R.string.no_ph_743))
+						}else {
+							context.launchDialNumber(viewModel.phone.value.orEmpty())
+						}
+					}
 					StoryLink.CHAT -> viewModel.chat(binding.chatTextView)
 					null -> {}
 				}
@@ -93,15 +107,15 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 	override fun onResume() {
 		super.onResume()
 
-		viewModel.resume()
-
 		makeStatusBarTransparentWithWhiteIcons()
+
+		viewModel.resume()
 	}
 
 	override fun onPause() {
-		makeStatusBarToPrimaryDarkWithWhiteIcons()
-
 		viewModel.pause()
+
+		makeStatusBarToPrimaryDarkWithWhiteIcons()
 
 		super.onPause()
 	}
@@ -113,79 +127,115 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		MyLogger.e("sahduiashdi onViewCreated")
+
 		super.onViewCreated(view, savedInstanceState)
 
-		if (binding.recyclerView.adapter == null) {
-			binding.recyclerView.setupWithRVItemCommonListUsage(
-				viewModel.adapterSegments,
-				true,
-				1
-			) { layoutParams ->
-				layoutParams.width = width / viewModel.currentStoreWithStories.value?.stories?.size.orZero()
-					.coerceAtLeast(1)
+		viewModel.player = viewModel.app.createExoPlayer(
+			viewModel.currentStory.value?.let {
+				if (it.isVideo) it.file.orEmpty() else null
 			}
+		)
+		binding.playerView.player = viewModel.player
 
-			viewModel.finishFragment.observe(viewLifecycleOwner) {
-				MyLogger.e("udhewihdiewh ch 1")
+		binding.recyclerView.setupWithRVItemCommonListUsage(
+			viewModel.adapterSegments,
+			true,
+			1
+		) { layoutParams ->
+			val number = viewModel.currentStoreWithStories.value?.stories?.size.orZero()
+				.coerceAtLeast(1)
+			val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
-				if (it.orFalse()) {
-					viewModel.finishFragment.value = false
-				}
+			val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
-				if (it == true) {
-					viewModel.releaseResources()
+			layoutParams.width = (totalWidth.toFloat() / number.toFloat()).toInt()
 
-					findNavController().navigateUp()
-				}
-			}
-
-			viewModel.currentStory.observe(viewLifecycleOwner) {
-				MyLogger.e("udhewihdiewh ch 2")
-
-				if (it != null && it.isSeen.orFalse().not() && context?.isLogin() == true) {
-					context?.applicationScope?.launch {
-						viewModel.repoShop.viewStoryInteractions(it.id.orZero())
-					}
-
-					it.isSeen = true
-				}
-
-				binding.recyclerView.adapter = null
-				viewModel.adapterSegments.setSegments(viewModel.currentStoreWithStories.value?.stories?.size.orZero())
-				viewModel.adapterSegments.setCurrentSegment(viewModel.currentIndexOfStory.value.orZero())
-				binding.recyclerView.adapter = viewModel.adapterSegments
-			}
-
-			viewModel.currentDuration.observe(viewLifecycleOwner) {
-				MyLogger.e("udhewihdiewh ch 3")
-
-				viewModel.adapterSegments.playCurrentSegment(it.orZero())
-			}
-
-			@Suppress("ObjectLiteralToLambda")
-			binding.constraintLayout.setOnTouchListener(object : View.OnTouchListener {
-				@SuppressLint("ClickableViewAccessibility")
-				override fun onTouch(p0: View?, event: MotionEvent?): Boolean {
-					when (event?.action) {
-						MotionEvent.ACTION_DOWN -> {
-							viewModel.pause()
-						}
-						MotionEvent.ACTION_UP -> {
-							viewModel.resume()
-						}
-					}
-					if (event != null) {
-						gestureDetector?.onTouchEvent(event)
-					}
-
-					return true
-				}
-			})
+			// 684.0 8.0 86
+			/*MyLogger.e("ushdiasuhdiushdai ${width.toFloat()} ${viewModel.currentStoreWithStories.value?.stories?.size.orZero()
+				.coerceAtLeast(1).toFloat()} ${(width.toFloat() / viewModel.currentStoreWithStories.value?.stories?.size.orZero()
+				.coerceAtLeast(1).toFloat()).toInt()}")
+			layoutParams.width = (width.toFloat() / viewModel.currentStoreWithStories.value?.stories?.size.orZero()
+				.coerceAtLeast(1).toFloat()).toInt()*/
 		}
+
+		viewModel.finishFragment.observe(viewLifecycleOwner) {
+			MyLogger.e("udhewihdiewh ch 1")
+
+			if (it.orFalse()) {
+				viewModel.finishFragment.value = false
+			}
+
+			if (it == true) {
+				viewModel.pause()
+				viewModel.releaseResources()
+				viewModel.player = null
+
+				findNavController().navigateUp()
+			}
+		}
+
+		viewModel.currentStory.observe(viewLifecycleOwner) {
+			MyLogger.e("udhewihdiewh ch 2")
+
+			if (it != null && it.isSeen.orFalse().not() && context?.isLogin() == true) {
+				context?.applicationScope?.launch {
+					viewModel.repoShop.viewStoryInteractions(it.id.orZero())
+				}
+
+				it.isSeen = true
+			}
+
+			binding.recyclerView.adapter = null
+			viewModel.adapterSegments.setSegments(viewModel.currentStoreWithStories.value?.stories?.size.orZero())
+			viewModel.adapterSegments.setCurrentSegment(viewModel.currentIndexOfStory.value.orZero())
+			binding.recyclerView.adapter = viewModel.adapterSegments
+		}
+
+		viewModel.currentDuration.observe(viewLifecycleOwner) {
+			MyLogger.e("udhewihdiewh ch 3")
+
+			lifecycleScope.launch {
+				if (viewModel.currentStory.value?.isVideo.orFalse()) {
+					MyLogger.e("udhewihdiewh ch 3.1")
+					viewModel.player?.awaitPlaying()
+					MyLogger.e("udhewihdiewh ch 3.3")
+				}else {
+					viewModel.player?.pause()
+				}
+				MyLogger.e("udhewihdiewh ch 3.4")
+				viewModel.adapterSegments.playCurrentSegment(it.orZero(), viewModel.currentIndexOfStory.value.orZero())
+				MyLogger.e("udhewihdiewh ch 3.5")
+			}
+		}
+
+		@Suppress("ObjectLiteralToLambda")
+		binding.constraintLayout.setOnTouchListener(object : View.OnTouchListener {
+			@SuppressLint("ClickableViewAccessibility")
+			override fun onTouch(p0: View?, event: MotionEvent?): Boolean {
+				when (event?.action) {
+					MotionEvent.ACTION_DOWN -> {
+						viewModel.pause()
+					}
+					MotionEvent.ACTION_UP -> {
+						viewModel.resume()
+					}
+				}
+				if (event != null) {
+					gestureDetector?.onTouchEvent(event)
+				}
+
+				return true
+			}
+		})
 	}
 
 	override fun onDestroyView() {
+		MyLogger.e("sahduiashdi onDestroyView")
+
+		viewModel.pause()
 		viewModel.releaseResources()
+		viewModel.player = null
 
 		super.onDestroyView()
 	}

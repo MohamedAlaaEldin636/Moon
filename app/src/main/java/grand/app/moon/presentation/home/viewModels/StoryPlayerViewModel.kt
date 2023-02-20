@@ -5,9 +5,13 @@ import android.animation.ValueAnimator
 import android.app.Application
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.*
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
@@ -15,9 +19,11 @@ import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemSegmentBinding
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.shop.StoryLink
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.constraintPercentWidth
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.StoryPlayerFragmentArgs
 import grand.app.moon.presentation.home.models.ResponseStory
 import kotlinx.coroutines.delay
@@ -30,27 +36,14 @@ class StoryPlayerViewModel @Inject constructor(
 	application: Application,
 	val args: StoryPlayerFragmentArgs,
 	val repoShop: RepoShop,
+	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
 
 	val adapterSegments = AdapterSegments {
 		goToNextStory()
 	}
 
-	val player by lazy {
-		app.createExoPlayer(
-			onBufferingVideo = {
-				this@StoryPlayerViewModel.pause()
-
-				viewModelScope.launch {
-					awaitReady()
-
-					this@StoryPlayerViewModel.resume()
-				}
-			}
-		) {
-			//goToNextStory()
-		}
-	}
+	var player: ExoPlayer? = null
 
 	private val allStoresWithStories = args.jsonOfAllStoresWithStories
 		.fromJsonInlinedOrNull<List<ResponseStory>>().orEmpty()
@@ -105,21 +98,15 @@ class StoryPlayerViewModel @Inject constructor(
 
 	val currentDuration = currentStory.asFlow().map {
 		if (it?.isVideo.orFalse()) {
-			var currentLink = player.currentMediaItem?.localConfiguration?.uri?.toString().orEmpty()
-			val toBePlayedLink = it?.file.orEmpty()
-			while (currentLink != toBePlayedLink) {
-				delay(17)
+			player?.changeVideoLink(it?.file.orEmpty(), 0L)
 
-				currentLink = player.currentMediaItem?.localConfiguration?.uri?.toString().orEmpty()
+			while (player?.playbackState != Player.STATE_READY) {
+				player?.awaitReady()
 			}
 
-			while (player.playbackState != Player.STATE_READY) {
-				player.awaitReady()
-			}
+			MyLogger.e("durationnnnnnnn ${player?.duration} ==== ${player?.totalBufferedDuration}")
 
-			MyLogger.e("durationnnnnnnn ${player.duration} ==== ${player.totalBufferedDuration}")
-
-			player.duration
+			player?.duration ?: 10_000L
 		}else {
 			10_000L
 		}
@@ -135,15 +122,31 @@ class StoryPlayerViewModel @Inject constructor(
 
 	val finishFragment = MutableLiveData(false)
 
+	val storeLogoImage = currentStoreWithStories.map {
+		it?.image.orEmpty()
+	}
+
+	val storeName = currentStoreWithStories.map {
+		it?.name.orEmpty()
+	}
+
+	val storeDate = currentStoreWithStories.map {
+		it?.createdAt.orEmpty()
+	}
+
+	val storeNickName = currentStoreWithStories.map {
+		"( ${it?.nickname.orEmpty()} )"
+	}
+
 	fun pause() {
 		if (showImageNotVideo.value.orFalse().not()) {
-			player.pause()
+			player?.pause()
 		}
 		adapterSegments.pause()
 	}
 	fun resume() {
 		if (showImageNotVideo.value.orFalse().not()) {
-			player.play()
+			player?.play()
 		}
 		adapterSegments.resume()
 	}
@@ -176,10 +179,14 @@ class StoryPlayerViewModel @Inject constructor(
 		}
 	}
 
+	fun goToPrevScreen() {
+		finishFragment.value = true
+	}
+
 	fun releaseResources() {
 		pause()
 
-		player.release()
+		player?.release()
 	}
 
 	fun share(view: View) {
@@ -228,6 +235,25 @@ class StoryPlayerViewModel @Inject constructor(
 		}
 	}
 
+	fun goToStore(view: View) {
+		if (currentStoreWithStories.value?.id.orZero() == userLocalUseCase().id) {
+			// My Store
+			view.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.create.store"
+			)
+		}else {
+			// Other stores
+			view.findNavController().navigate(
+				R.id.nav_store,
+				bundleOf(
+					"id" to currentStoreWithStories.value?.id.orZero(),
+					"type" to 3
+				), Constants.NAVIGATION_OPTIONS
+			)
+		}
+	}
+
 	class AdapterSegments(
 		private val onAnimationEnd: () -> Unit
 	) : RVItemCommonListUsage2<ItemSegmentBinding, Int>(R.layout.item_segment) {
@@ -243,6 +269,7 @@ class StoryPlayerViewModel @Inject constructor(
 				if (item < currentSegment) 1f else 0f
 			)
 
+			MyLogger.e("udhewihdiewh ch 5 $item == $currentSegment && $play $position")
 			if (item == currentSegment && play) {
 				animator?.removeAllListeners()
 				animator?.cancel()
@@ -273,14 +300,18 @@ class StoryPlayerViewModel @Inject constructor(
 		}
 
 		fun setCurrentSegment(index: Int) {
+			animator?.removeAllListeners()
+			animator?.cancel()
 			play = false
 			currentSegment = index
 			notifyDataSetChanged()
 		}
 
-		fun playCurrentSegment(currentDurationOfAnimationInMs: Long) {
+		fun playCurrentSegment(currentDurationOfAnimationInMs: Long, currentSegment: Int = this.currentSegment) {
+			MyLogger.e("udhewihdiewh ch 4 ${this.currentSegment} $currentSegment")
 			play = true
 			this.currentDurationOfAnimationInMs = currentDurationOfAnimationInMs
+			this.currentSegment = currentSegment
 			notifyItemChanged(currentSegment)
 		}
 

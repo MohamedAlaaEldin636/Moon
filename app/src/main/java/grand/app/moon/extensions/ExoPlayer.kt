@@ -7,21 +7,72 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView
 import kotlinx.coroutines.CancellableContinuation
+import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+fun <T> Continuation<T>.resumeSafely(value: T) {
+	kotlin.runCatching { resume(value) }
+}
+
+fun ExoPlayer.setPlayWhenReadyIfNotSet() {
+	if (playWhenReady.not()) {
+		play()
+	}
+}
+
+suspend fun ExoPlayer.awaitPlaying() = suspendCoroutine { continuation ->
+	val listener = object : Player.Listener {
+		override fun onPlaybackSuppressionReasonChanged(playbackSuppressionReason: Int) {
+			if (playbackSuppressionReason == Player.PLAYBACK_SUPPRESSION_REASON_NONE && playbackState == Player.STATE_READY) {
+				setPlayWhenReadyIfNotSet()
+
+				removeListener(this)
+
+				continuation.resumeSafely(Unit)
+			}
+		}
+
+		override fun onPlaybackStateChanged(playbackState: Int) {
+			if (playbackState == Player.STATE_READY && playbackSuppressionReason == Player.PLAYBACK_SUPPRESSION_REASON_NONE) {
+				setPlayWhenReadyIfNotSet()
+
+				removeListener(this)
+
+				continuation.resumeSafely(Unit)
+			}
+		}
+	}
+
+	setPlayWhenReadyIfNotSet()
+	if (isPlaying) {
+		continuation.resume(Unit)
+	}else {
+		addListener(listener)
+	}
+}
 
 suspend fun ExoPlayer.awaitReady() = suspendCoroutine { continuation ->
 	val listener = object : Player.Listener {
 		override fun onPlaybackStateChanged(playbackState: Int) {
 			if (playbackState == Player.STATE_READY) {
 				removeListener(this)
-				//continuation.invokeOnCancellation { removeListener(listener) }
+
 				continuation.resume(Unit)
 			}
 		}
 	}
-	addListener(listener)
-	//continuation.invokeOnCancellation { removeListener(listener) }
+
+	if (playbackState == Player.STATE_READY) {
+		continuation.resume(Unit)
+	}else {
+		addListener(listener)
+	}
+}
+
+@BindingAdapter("exoPlayer_setPlayerBA")
+fun PlayerView.setPlayerBA(exoPlayer: ExoPlayer?) {
+	player = exoPlayer
 }
 
 @BindingAdapter(
@@ -44,8 +95,18 @@ fun PlayerView.changeVideoLinkOrPause(exoPlayer: ExoPlayer?, value: String?, pau
 	}
 }
 
-fun ExoPlayer.changeVideoLink(newVideoLink: String) {
-	pause()
+fun ExoPlayer.changeVideoLink(newVideoLink: String, seekToIfSameLink: Long? = null) {
+	val currentLink = currentMediaItem?.localConfiguration?.uri?.toString().orEmpty()
+
+	if (currentLink == newVideoLink) {
+		if (seekToIfSameLink != null) {
+			seekTo(seekToIfSameLink)
+		}
+
+		return
+	}
+
+	stop()
 
 	if (newVideoLink.isEmpty()) return
 
@@ -58,8 +119,9 @@ fun ExoPlayer.changeVideoLink(newVideoLink: String) {
 fun Context.createExoPlayer(
 	videoLink: String? = null,
 	mute: Boolean = false,
-	onBufferingVideo: ExoPlayer.() -> Unit = {},
-	onFinishedPayingVideo: ExoPlayer.() -> Unit = { seekTo(0L) }
+	onBufferingVideo: (ExoPlayer.() -> Unit)? = null /*{}*/,
+	onNotReadyVideo: (ExoPlayer.() -> Unit)? = null /*{}*/,
+	onFinishedPayingVideo: (ExoPlayer.() -> Unit)? = null /*{ seekTo(0L) }*/
 ): ExoPlayer {
 	return ExoPlayer.Builder(this).build().also { exoPlayer ->
 		if (!videoLink.isNullOrEmpty()) {
@@ -67,25 +129,32 @@ fun Context.createExoPlayer(
 			exoPlayer.setMediaItem(mediaItem)
 		}
 
-		exoPlayer.addListener(object : Player.Listener {
-			override fun onPlaybackStateChanged(playbackState: Int) {
-				when (playbackState) {
-					ExoPlayer.STATE_ENDED -> {
-						exoPlayer.onFinishedPayingVideo()
+		if (onBufferingVideo != null || onNotReadyVideo != null || onFinishedPayingVideo != null) {
+			exoPlayer.addListener(object : Player.Listener {
+				override fun onPlaybackStateChanged(playbackState: Int) {
+					if (playbackState != ExoPlayer.STATE_READY) {
+						onNotReadyVideo?.invoke(exoPlayer)
 					}
-					ExoPlayer.STATE_BUFFERING -> {
-						exoPlayer.onBufferingVideo()
+
+					when (playbackState) {
+						ExoPlayer.STATE_ENDED -> {
+							onFinishedPayingVideo?.invoke(exoPlayer)
+						}
+						ExoPlayer.STATE_BUFFERING -> {
+							onBufferingVideo?.invoke(exoPlayer)
+						}
 					}
 				}
-			}
-		})
+			})
+		}
 
 		if (mute) {
 			exoPlayer.volume = 0f
 		}
-		exoPlayer.playWhenReady = true
 
 		if (!videoLink.isNullOrEmpty()) {
+			exoPlayer.playWhenReady = true
+
 			exoPlayer.prepare()
 		}
 	}

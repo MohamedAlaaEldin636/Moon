@@ -46,6 +46,6 @@ object Config {
     const val roomDb = "\"moon_db\""
     const val SERVER_CLIENT_ID = "\"AIzaSyApcEA5RXncL4762cObXGeBaE1x-nEZpOM\""
     const val debugBaseUrl = "\"http://sooqmoon.net/api/\""//"\"http://sooqmoon.net/\""
-    const val releaseBaseUrl = "\"https://souqmoon.com/api/\""
+    const val releaseBaseUrl = /*"\"http://sooqmoon.net/api/\""*/"\"https://souqmoon.com/api/\""
   }
 }

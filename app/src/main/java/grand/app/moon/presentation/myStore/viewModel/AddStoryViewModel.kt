@@ -110,7 +110,7 @@ class AddStoryViewModel @Inject constructor(
 
 		val fileUri = file.value?.getUris()?.firstOrNull() ?: return
 
-		if (this.file.value is MAImagesOrVideo.Video) {
+		if (false && this.file.value is MAImagesOrVideo.Video) {
 			/*
 Intent intent = new Intent(activity, ActVideoTrimmer.class);
 		Gson gson = new Gson();
