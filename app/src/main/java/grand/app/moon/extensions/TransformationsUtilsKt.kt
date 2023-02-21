@@ -31,12 +31,12 @@ inline fun <Y> switchMapMultiple2(
 	MutableLiveData(transform())
 }
 
-fun <T> LiveData<T>.ignoreFirstTimeChanged(): LiveData<T> {
-	val mediatorLiveData = MediatorLiveData<T>()
-	mediatorLiveData.addSource(this, object : Observer<T> {
+fun <T> LiveData<T?>.ignoreFirstTimeChanged(): LiveData<T?> {
+	val mediatorLiveData = MediatorLiveData<T?>()
+	mediatorLiveData.addSource(this, object : Observer<T?> {
 		var isFirstTime = true
 
-		override fun onChanged(t: T) {
+		override fun onChanged(t: T?) {
 			if (isFirstTime) {
 				isFirstTime = false
 			}else {
