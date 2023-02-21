@@ -35,6 +35,7 @@ import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.core.extenstions.inflateLayout
 import grand.app.moon.databinding.FragmentMapOfDataBinding
 import grand.app.moon.databinding.ItemMapClusterBinding
+import grand.app.moon.databinding.ItemMapImageAdvBinding
 import grand.app.moon.databinding.ItemMapImageStoreBinding
 import grand.app.moon.databinding.ItemMapImageStoryBinding
 import grand.app.moon.extensions.*
@@ -189,7 +190,29 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 									binding.root.toBitmap(dataLayoutSize).orDefaultPlaceBitmap(context)
 								}
 							}
-							Type.ADVERTISEMENT -> TODO()
+							Type.ADVERTISEMENT -> {
+								// todo for on click isa.
+								//val q = viewModel.clusterManager?.algorithm?.items.orEmpty().filterNotNull()
+
+								val binding = ItemMapImageAdvBinding.bind(
+									context.inflateLayout(R.layout.item_map_image_adv)
+								)
+
+								val isSelected = viewModel.selectedMapData.value?.id == item.id
+
+								binding.constraintLayout.background = ContextCompat.getDrawable(
+									context,
+									if (isSelected) R.drawable.dr_rect_5_border_2_star else R.drawable.dr_rect_5
+								)
+
+								binding.textView.setTextColor(
+									ContextCompat.getColor(context, if (isSelected) R.color.white else R.color.black)
+								)
+
+								binding.root.toBitmapUsingIconGenerator(
+									context.createRectangleShape(5f, null, R.color.white)
+								).orDefaultClusterBitmap(context)
+							}
 						}
 					}
 				}
@@ -381,24 +404,33 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 		val list = viewModel.getFilteredDataList()
 
 		viewModel.clusterManager?.clearItems()
-		viewModel.clusterManager?.addItems(
-			list.map {
-				MAClusterItem(
-					it.id.orZero(),
-					it.latitude.orZero(),
-					it.longitude.orZero()
-				)
-			}
-		)
-
-		viewModel.googleMap?.animateCamera(
-			CameraUpdateFactory.newLatLngBounds(
+		if (list.isNotEmpty()) {
+			viewModel.clusterManager?.addItems(
 				list.map {
-					LatLng(it.latitude.orZero(), it.longitude.orZero())
-				}.toLatLngBounds(),
-				spacingBetweenDataItemsOnMapsAndScreenBorder
+					MAClusterItem(
+						it.id.orZero(),
+						it.latitude.orZero(),
+						it.longitude.orZero()
+					)
+				}
 			)
-		)
+
+			viewModel.googleMap?.animateCamera(
+				CameraUpdateFactory.newLatLngBounds(
+					list.map {
+						LatLng(it.latitude.orZero(), it.longitude.orZero())
+					}.toLatLngBounds(),
+					spacingBetweenDataItemsOnMapsAndScreenBorder
+				)
+			)
+		}else {
+			val msg = when (viewModel.args.type) {
+				Type.STORE -> getString(R.string.no_stores_found)
+				Type.ADVERTISEMENT -> getString(R.string.no_ads_found)
+			}
+
+			showMessage(msg)
+		}
 
 		// Must be called after adding, updating or removing items isa.
 		viewModel.clusterManager?.cluster()

@@ -497,4 +497,6 @@
   <string name="add_comment_78">أضف تعليق</string>
   <string name="no_ph_743">لا يوجد هاتف مسجل</string>
     <string name="something_went_wrong_in_detecting_locations">حدث خطأ ما فى تحديد المواقع</string>
+    <string name="no_stores_found">لا توجد متاجر</string>
+  <string name="no_ads_found">لا توجد إعلانات</string>
 </resources>

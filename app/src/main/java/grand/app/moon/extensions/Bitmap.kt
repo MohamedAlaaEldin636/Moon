@@ -19,18 +19,24 @@ import grand.app.moon.core.extenstions.dpToPx
 import kotlin.math.roundToInt
 
 fun Context.createRectangleShape(
-	cornerInDp: Float,
-	sizeInDp: Float,
-	@ColorRes colorRes: Int
+	cornerInDp: Float? = null,
+	sizeInDp: Float? = null,
+	@ColorRes colorRes: Int? = null
 ): GradientDrawable {
-	val corner = dpToPx(cornerInDp)
-	val size = dpToPx(sizeInDp).roundToInt()
+	val corner = cornerInDp?.let { dpToPx(cornerInDp) }
+	val size = sizeInDp?.let { dpToPx(sizeInDp).roundToInt() }
 
 	val shape = GradientDrawable()
 	shape.shape = GradientDrawable.RECTANGLE
-	shape.cornerRadius = corner
-	shape.setSize(size, size)
-	shape.setColor(ContextCompat.getColor(this, colorRes))
+	if (corner != null) {
+		shape.cornerRadius = corner
+	}
+	if (size != null) {
+		shape.setSize(size, size)
+	}
+	if (colorRes != null) {
+		shape.setColor(ContextCompat.getColor(this, colorRes))
+	}
 	return shape
 }
 

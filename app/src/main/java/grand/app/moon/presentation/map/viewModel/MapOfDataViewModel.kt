@@ -29,6 +29,8 @@ class MapOfDataViewModel @Inject constructor(
 	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
 
+	val selectedMapData = MutableLiveData<ResponseMapData>()
+
 	var myCurrentLocation: LatLng? = null
 
 	/** [Map.Entry.key] represents id */

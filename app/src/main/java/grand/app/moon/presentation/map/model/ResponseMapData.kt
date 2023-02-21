@@ -3,6 +3,7 @@ package grand.app.moon.presentation.map.model
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ResponseStory
+import grand.app.moon.presentation.myStore.model.ResponseCity
 
 fun ResponseMapDataForStore.toResponseMapData(): ResponseMapData {
 	return ResponseMapData(
@@ -82,3 +83,13 @@ data class ItemCategoryInResponseMapData(
 	var name: String?,
 	var image: String?,
 )
+
+/*data class ItemCountryInResponseMapData(
+	var id: Int?,
+	var name: String?,
+	var currency: String?,
+	@SerializedName("country_code") var countryCode: String?,
+	@SerializedName("iso_code") var isoCode: String?,
+	var image: String?,
+	var cities: List<ResponseCity>?,
+)*/
