@@ -11,6 +11,7 @@ import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.home.models.Interaction
 import grand.app.moon.presentation.home.models.TypeSearchResult
+import grand.app.moon.presentation.map.MapOfDataFragment
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import grand.app.moon.presentation.stats.models.ItemStoreStats
@@ -408,6 +409,33 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		interaction: Interaction.Story
 	) = safeApiCall {
 		apiService.storyInteractions(storyId, interaction.apiValue)
+	}
+
+	suspend fun getMapDataForStore(
+		categoryId: Int?,
+		subCategoryId: Int?,
+		propertyId: Int?,
+	) = safeApiCall {
+		val map = buildMap {
+			if (categoryId != null && categoryId != -1) this["category_id"] = categoryId.toString()
+			if (subCategoryId != null && subCategoryId != -1) this["sub_category_id"] = subCategoryId.toString()
+			if (propertyId != null && propertyId != -1) this["property_id"] = propertyId.toString()
+		}
+
+		apiService.getMapDataForStore(MapOfDataFragment.Type.STORE.apiValue, map)
+	}
+	suspend fun getMapDataForAdv(
+		categoryId: Int?,
+		subCategoryId: Int?,
+		propertyId: Int?,
+	) = safeApiCall {
+		val map = buildMap {
+			if (categoryId != null && categoryId != -1) this["category_id"] = categoryId.toString()
+			if (subCategoryId != null && subCategoryId != -1) this["sub_category_id"] = subCategoryId.toString()
+			if (propertyId != null && propertyId != -1) this["property_id"] = propertyId.toString()
+		}
+
+		apiService.getMapDataForAdv(MapOfDataFragment.Type.ADVERTISEMENT.apiValue, map)
 	}
 
 }

@@ -9,6 +9,9 @@ import grand.app.moon.domain.user.entity.UserListPaginateData
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABasePaging
 import grand.app.moon.presentation.home.models.*
+import grand.app.moon.presentation.map.model.ResponseMapData
+import grand.app.moon.presentation.map.model.ResponseMapDataForAdv
+import grand.app.moon.presentation.map.model.ResponseMapDataForStore
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import grand.app.moon.presentation.stats.models.ResponseStoreStats
 import grand.app.moon.presentation.stats.models.ResponseUserInGeneralStats
@@ -284,5 +287,16 @@ interface ShopServices {
 		@Field("story_id") storyId: Int,
 		@Field("type") interactionType: Int
 	): BaseResponse<Any?>
+
+	@GET("v1/map")
+	suspend fun getMapDataForStore(
+		@Query("type") type: String,
+		@QueryMap map: Map<String, String>,
+	): BaseResponse<List<ResponseMapDataForStore>?>
+	@GET("v1/map")
+	suspend fun getMapDataForAdv(
+		@Query("type") type: String,
+		@QueryMap map: Map<String, String>,
+	): BaseResponse<List<ResponseMapDataForAdv>?>
 
 }

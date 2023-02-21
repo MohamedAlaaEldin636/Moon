@@ -1,7 +1,9 @@
 package grand.app.moon.domain.categories.entity
 
+import android.content.Context
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import grand.app.moon.R
 
 // List<ItemCategory>? -> BaseResponse
 
@@ -9,14 +11,20 @@ sealed interface ItemRelatedToCategories
 
 @Keep
 data class ItemCategory(
-	var id: Int?,
-	var name: String?,
-	var image: String?,
+	var id: Int? = null,
+	var name: String? = null,
+	var image: String? = null,
 	//var ads_count: Int?,
 	//var order_by_no: Int?,
-	@SerializedName("sub-categories") var subCategories: List<ItemSubCategory>?,
-	var brands: List<ItemSubCategory>?,
-) : ItemRelatedToCategories
+	@SerializedName("sub-categories") var subCategories: List<ItemSubCategory>? = null,
+	var brands: List<ItemSubCategory>? = null,
+) : ItemRelatedToCategories {
+
+	companion object {
+		fun createAllItem(context: Context) = ItemCategory(name = context.getString(R.string.all))
+	}
+
+}
 
 @Keep
 data class ItemSubCategory(

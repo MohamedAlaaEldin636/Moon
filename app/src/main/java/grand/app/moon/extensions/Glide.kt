@@ -1,8 +1,10 @@
 package grand.app.moon.extensions
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.postDelayed
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
@@ -18,9 +20,44 @@ import com.bumptech.glide.load.resource.bitmap.VideoBitmapDecoder
 import com.bumptech.glide.load.resource.bitmap.VideoDecoder
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import grand.app.moon.R
 import java.lang.ref.WeakReference
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+
+suspend fun RequestBuilder<Bitmap>.intoBitmap(): Bitmap? {
+	return suspendCoroutine { continuation ->
+		into(object : CustomTarget<Bitmap>() {
+			override fun onResourceReady(
+				resource: Bitmap,
+				transition: Transition<in Bitmap>?
+			) {
+				kotlin.runCatching {
+					continuation.resume(resource)
+				}.getOrElse {
+					kotlin.runCatching {
+						continuation.resume(null)
+					}
+				}
+			}
+
+			override fun onLoadFailed(errorDrawable: Drawable?) {
+				kotlin.runCatching {
+					continuation.resume(null)
+				}
+			}
+
+			override fun onLoadCleared(placeholder: Drawable?) {
+				kotlin.runCatching {
+					continuation.resume(placeholder?.toBitmap())
+				}
+			}
+		})
+	}
+}
 
 fun <TranscodeType> RequestBuilder<TranscodeType>.saveDiskCacheStrategyAll(): RequestBuilder<TranscodeType> =
 	apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))

@@ -38,7 +38,7 @@ data class ItemStoreInResponseHome(
 data class ItemAdvertisementInResponseHome(
 	var id: Int?,
 	@SerializedName("is_favorite") var isFavorite: Boolean?,
-	var premium: Int,
+	var premium: Int?,
 	var image: String?,
 	@SerializedName("favorite_count") var favoriteCount: Int?,
 	@SerializedName("views_count") var viewsCount: Int?,

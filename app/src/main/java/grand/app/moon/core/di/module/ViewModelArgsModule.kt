@@ -9,6 +9,7 @@ import grand.app.moon.extensions.asBundle
 import grand.app.moon.presentation.auth.completeLogin.CompleteLoginFragmentArgs
 import grand.app.moon.presentation.categories.AddAdvSubCategoriesListFragmentArgs
 import grand.app.moon.presentation.home.*
+import grand.app.moon.presentation.map.MapOfDataFragmentArgs
 import grand.app.moon.presentation.myAds.*
 import grand.app.moon.presentation.myStore.AddOrEditStoreCategoryFragmentArgs
 import grand.app.moon.presentation.myStore.AddOrEditStoreSubCategoryFragmentArgs
@@ -22,6 +23,11 @@ import grand.app.moon.presentation.stats.StatsUsersHistoryFragmentArgs
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelArgsModule {
+
+	@Provides
+	fun provideMapOfDataFragmentArgs(state: SavedStateHandle): MapOfDataFragmentArgs {
+		return MapOfDataFragmentArgs.fromBundle(state.asBundle())
+	}
 
 	@Provides
 	fun provideStoryPlayerFragmentArgs(state: SavedStateHandle): StoryPlayerFragmentArgs {

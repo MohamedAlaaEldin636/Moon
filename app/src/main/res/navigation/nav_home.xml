@@ -1129,5 +1129,30 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.story.player/{jsonOfAllStoresWithStories}/{position}" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_map_of_data"
+    android:label="@string/map"
+    android:name="grand.app.moon.presentation.map.MapOfDataFragment"
+    tools:layout="@layout/fragment_map_of_data">
+    <argument
+      android:name="type"
+      app:argType="grand.app.moon.presentation.map.MapOfDataFragment$Type" />
+    <argument
+      android:name="categoryId"
+      app:argType="integer"
+      android:defaultValue="-1"/>
+    <argument
+      android:name="subCategoryId"
+      app:argType="integer"
+      android:defaultValue="-1" />
+    <argument
+      android:name="propertyId"
+      app:argType="integer"
+      android:defaultValue="-1" />
+    <deepLink
+      android:id="@+id/deep_link_dest_map_of_data"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.story.map.of.data/{type}/{categoryId}/{subCategoryId}/{propertyId}" />
+  </fragment>
 
 </navigation>

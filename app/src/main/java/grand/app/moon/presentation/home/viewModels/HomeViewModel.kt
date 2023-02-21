@@ -32,6 +32,7 @@ import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.category.adapter.CategoriesAdapter
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.home.HomeFragmentDirections
+import grand.app.moon.presentation.map.MapOfDataFragment
 import grand.app.moon.presentation.story.adapter.StoriesAdapter
 import grand.app.moon.presentation.store.adapter.StoreAdapter
 import grand.app.moon.presentation.story.adapter.StoriesAllAdapter
@@ -234,8 +235,13 @@ class HomeViewModel @Inject constructor(
     }
   }
 
-  fun goToMap(v: View) {
-	  clickEvent.value = Constants.GO_TO_MAP
+  fun goToMap(view: View) {
+	  val binding = DataBindingUtil.findBinding<ActivityHomeBinding>(view) ?: return
+	  val activity = binding.lifecycleOwner as? HomeActivity ?: return
+		MapOfDataFragment.goToThisScreenForStores(
+			activity.nav
+		)
+	  //clickEvent.value = Constants.GO_TO_MAP
     /*if (!isLoggin) clickEvent.value = Constants.LOGIN_REQUIRED
     else {
       clickEvent.value = Constants.CHAT_LIST

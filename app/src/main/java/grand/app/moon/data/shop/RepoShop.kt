@@ -18,6 +18,9 @@ import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.home.models.Interaction
 import grand.app.moon.presentation.home.models.TypeSearchResult
+import grand.app.moon.presentation.map.MapOfDataFragment
+import grand.app.moon.presentation.map.model.ResponseMapData
+import grand.app.moon.presentation.map.model.toResponseMapData
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import grand.app.moon.presentation.stats.models.ItemStoreStats
@@ -421,6 +424,30 @@ class RepoShop @Inject constructor(
 		storyId,
 		Interaction.Story.LIKE
 	)
+
+	suspend fun getMapData(
+		type: MapOfDataFragment.Type,
+		categoryId: Int?,
+		subCategoryId: Int?,
+		propertyId: Int?,
+	): Resource<BaseResponse<List<ResponseMapData>?>> {
+		return when (type) {
+			MapOfDataFragment.Type.STORE -> {
+				remoteDataSource.getMapDataForStore(categoryId, subCategoryId, propertyId).mapSuccess { baseResponse ->
+					baseResponse.map { list ->
+						list?.map { it.toResponseMapData() }
+					}
+				}
+			}
+			MapOfDataFragment.Type.ADVERTISEMENT -> {
+				remoteDataSource.getMapDataForAdv(categoryId, subCategoryId, propertyId).mapSuccess { baseResponse ->
+					baseResponse.map { list ->
+						list?.map { it.toResponseMapData() }
+					}
+				}
+			}
+		}
+	}
 
 }
 

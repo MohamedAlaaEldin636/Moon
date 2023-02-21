@@ -63,7 +63,9 @@ fun BaseFragment<*>.showRetryErrorDialogWithBackNegativeButton(
 	msg: String = getString(R.string.something_went_wrong_please_try_again),
 	negativeButton: String = getString(R.string.back),
 	negativeButtonAction: () -> Unit = {
-		if (findNavController().graph.startDestinationId == findNavController().currentDestination?.id) {
+		if (false && findNavController().graph.id == R.id.nav_home && findNavController().graph.startDestinationId == findNavController().currentDestination?.id) {
+			hideLoading()
+
 			activity?.onBackPressed()
 		}else {
 			hideLoading()
@@ -246,6 +248,7 @@ fun <T> BaseFragment<*>.handleRetryAbleActionOrGoBack(
 	scope: CoroutineScope = lifecycleScope,
 	showLoadingCode: () -> Unit = { showLoading() },
 	hideLoadingCode: () -> Unit = { hideLoading() },
+	onErrorCode: ((failure: Resource.Failure, selfBlock: () -> Unit) -> Unit)? = null,
 	action: suspend () -> Resource<BaseResponse<T?>>,
 	onSuccess: (T) -> Unit
 ) {
@@ -255,10 +258,16 @@ fun <T> BaseFragment<*>.handleRetryAbleActionOrGoBack(
 		scope,
 		action,
 		onError = {
-			showRetryErrorDialogWithBackNegativeButton(
-				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
-			) {
-				handleRetryAbleActionOrGoBack(scope, showLoadingCode, hideLoadingCode, action, onSuccess)
+			if (onErrorCode != null) {
+				onErrorCode(it) {
+					handleRetryAbleActionOrGoBack(scope, showLoadingCode, hideLoadingCode, onErrorCode, action, onSuccess)
+				}
+			}else {
+				showRetryErrorDialogWithBackNegativeButton(
+					it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+				) {
+					handleRetryAbleActionOrGoBack(scope, showLoadingCode, hideLoadingCode, null, action, onSuccess)
+				}
 			}
 		},
 		onSuccess

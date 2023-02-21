@@ -267,6 +267,7 @@ dependencies {
   implementation("com.google.maps:google-maps-services:0.2.5")
   implementation("com.google.android.libraries.places:places:2.6.0")
   implementation("com.google.maps.android:android-maps-utils:2.3.0")
+  implementation("com.google.maps.android:maps-utils-ktx:3.4.0")
 
   //firebase - signIn
   // Import the BoM for the Firebase platform

@@ -3,11 +3,13 @@ package grand.app.moon.presentation.home
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -104,6 +106,15 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 						viewModel.repoHome2.getHome()
 					},
 					showLoadingCode = {},
+					onErrorCode = { failure, selfBlock ->
+						showLoading()
+
+						showRetryErrorDialogWithBackNegativeButton(
+							failure.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+						) {
+							selfBlock()
+						}
+					}
 				) { responseHome ->
 					viewModel.listOfMostRatedStore = responseHome.mostRatedStores.orEmpty()
 					viewModel.adapterMostRatedStore.submitList(responseHome.mostRatedStores.orEmpty())
@@ -159,6 +170,8 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 
 							binding.recyclerView.setupInnerRvs(position, item.type)
 
+							binding.showAllTextView.setupInnerShowAll(item.type)
+
 							this@Home2Fragment.binding.rvLikeLinearLayout.addView(
 								binding.root,
 								LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -171,6 +184,23 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 					}
 				}
 			}
+		}
+	}
+
+	private fun TextView.setupInnerShowAll(type: ItemHomeRV.Type) {
+		when (type) {
+			ItemHomeRV.Type.STORIES -> {
+				findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.all.stories"
+				)
+			}
+			ItemHomeRV.Type.CATEGORIES -> TODO()
+			ItemHomeRV.Type.MOST_RATED_STORIES -> TODO()
+			ItemHomeRV.Type.FOLLOWING_STORIES -> TODO()
+			ItemHomeRV.Type.SUGGESTED_ADS -> TODO()
+			ItemHomeRV.Type.MOST_POPULAR_ADS -> TODO()
+			ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> TODO()
 		}
 	}
 
