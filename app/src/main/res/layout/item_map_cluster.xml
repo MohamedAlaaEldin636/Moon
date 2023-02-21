@@ -7,21 +7,33 @@
 
   </data>
 
-  <TextView
-    android:id="@+id/textView"
+  <FrameLayout
+    android:id="@+id/frameLayout"
 
     android:layout_width="48dp"
     android:layout_height="48dp"
 
-    android:background="@drawable/dr_rect_5"
-    android:backgroundTint="@color/colorPrimary"
-
-    style="@style/TextTajawalMedium16"
-    android:textColor="@color/white"
-    android:textSize="16dp"
+    android:layout_gravity="center"
     android:gravity="center"
-    android:textAlignment="center"
-    android:textDirection="locale"
-    tools:text="+20"/>
+
+    android:background="@drawable/dr_rect_5_size_48">
+
+    <TextView
+      android:id="@+id/textView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_gravity="center"
+      android:gravity="center"
+
+      style="@style/TextTajawalMedium16"
+      android:textColor="@color/white"
+      android:textSize="16dp"
+      android:textAlignment="center"
+      android:textDirection="locale"
+      tools:text="+20"/>
+
+  </FrameLayout>
 
 </layout>

@@ -75,8 +75,16 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 
 	private val viewModel by viewModels<MapOfDataViewModel>()
 
-	private val dpToPx16 by lazy {
-		context?.dpToPx(16f)?.roundToInt().orZero()
+	private val spacingBetweenDataItemsOnMapsAndScreenBorder by lazy {
+		context?.dpToPx(48f)?.roundToInt().orZero()
+	}
+
+	private val clusterLayoutBackground by lazy {
+		context?.createRectangleShape(5f, 48f, R.color.colorPrimary).orTransparent()
+	}
+
+	private val dataLayoutSize by lazy {
+		context?.dpToPx(44f)?.roundToInt().orZero()
 	}
 
 	private lateinit var locationHandler: LocationHandler
@@ -144,12 +152,10 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 								if (item.stories.isNullOrEmpty()) {
 									val image = item.image.orEmpty()
 
-									val size = context.dpToPx(44f).roundToInt().orZero()
-
 									val bitmap = Glide.with(this@MapOfDataFragment)
 										.asBitmap()
 										.load(image)
-										.apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).override(size, size))
+										.apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).override(dataLayoutSize, dataLayoutSize))
 										.intoBitmap()
 
 									val binding = ItemMapImageStoreBinding.bind(
@@ -160,16 +166,14 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 
 									ContextCompat.getDrawable(context, R.drawable.ic_baseline_location_on_24).orTransparent().toBitmap()
 
-									binding.root.toBitmap(size).orDefaultPlaceBitmap(context)
+									binding.root.toBitmap(dataLayoutSize).orDefaultPlaceBitmap(context)
 								}else {
 									val image = item.stories?.firstOrNull()?.file.orEmpty()
-
-									val size = context.dpToPx(44f).roundToInt().orZero()
 
 									val bitmap = Glide.with(this@MapOfDataFragment)
 										.asBitmap()
 										.load(image)
-										.apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).override(size, size))
+										.apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL).override(dataLayoutSize, dataLayoutSize))
 										.intoBitmap()
 
 									val binding = ItemMapImageStoryBinding.bind(
@@ -180,7 +184,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 
 									ContextCompat.getDrawable(context, R.drawable.ic_baseline_location_on_24).orTransparent().toBitmap()
 
-									binding.root.toBitmap(size).orDefaultPlaceBitmap(context)
+									binding.root.toBitmap(dataLayoutSize).orDefaultPlaceBitmap(context)
 								}
 							}
 							Type.ADVERTISEMENT -> TODO()
@@ -256,6 +260,9 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 			override fun onClusterItemUpdated(item: MAClusterItem, marker: Marker) {
 				marker.drawDataItem(item)
 			}
+			override fun onClusterItemRendered(item: MAClusterItem, marker: Marker) {
+				marker.drawDataItem(item)
+			}
 
 			override fun onBeforeClusterRendered(
 				cluster: Cluster<MAClusterItem>,
@@ -264,6 +271,9 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 				markerOptions.drawCluster(cluster)
 			}
 			override fun onClusterUpdated(cluster: Cluster<MAClusterItem>, marker: Marker) {
+				marker.drawCluster(cluster)
+			}
+			override fun onClusterRendered(cluster: Cluster<MAClusterItem>, marker: Marker) {
 				marker.drawCluster(cluster)
 			}
 		}
@@ -386,7 +396,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 				list.map {
 					LatLng(it.latitude.orZero(), it.longitude.orZero())
 				}.toLatLngBounds(),
-				dpToPx16
+				spacingBetweenDataItemsOnMapsAndScreenBorder
 			)
 		)
 
@@ -430,7 +440,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 
 			binding.textView.text = if (size > maxVisibleCount) "+$maxVisibleCount" else "$size"
 
-			binding.root.toBitmap(size)
+			binding.root.toBitmapUsingIconGenerator(clusterLayoutBackground)
 		}).orDefaultClusterBitmap(this)
 	}
 
