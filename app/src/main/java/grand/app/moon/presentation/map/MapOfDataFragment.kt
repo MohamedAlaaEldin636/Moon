@@ -138,6 +138,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 					viewModel.args.propertyId,
 				)
 			},
+			showLoadingCode = {},
 			hideLoadingCode = {}
 		) { list ->
 			val context = context ?: return@handleRetryAbleActionOrGoBack
@@ -216,7 +217,9 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 		savedInstanceState: Bundle?
 	): View? {
 		return super.onCreateView(inflater, container, savedInstanceState).also {
-			locationHandler.requestCurrentLocation(true)
+			showLoading()
+
+			locationHandler.requestCurrentLocation(false)
 		}
 	}
 
@@ -230,7 +233,6 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 		)
 
 		viewModel.selectedCategory.distinctUntilChanged().ignoreFirstTimeChanged().observe(viewLifecycleOwner) {
-			MyLogger.e("djoewijwojdojewidjwoejidiwoejd dd $it")
 			updateDataToMapThenAnimateCamera()
 		}
 	}
@@ -337,7 +339,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 				viewModel.googleMap?.animateCamera(
 					CameraUpdateFactory.newLatLngZoom(
 						cluster.position,
-						viewModel.googleMap?.cameraPosition?.zoom.orZero().inc()
+						viewModel.googleMap?.cameraPosition?.zoom.orZero().inc().inc()
 					)
 				)
 			}
@@ -347,7 +349,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 			Return true if click has been handled
 			Return false and the click will dispatched to the next listener
 			 */
-			false
+			true
 		}
 
 		googleMap.setOnCameraIdleListener {
@@ -445,6 +447,9 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 	}
 
 	override fun onDestroyView() {
+		viewModel.clusterManager?.clearItems()
+		viewModel.clusterManager?.cluster()
+
 		viewModel.googleMap = null
 
 		viewModel.clusterManager = null
