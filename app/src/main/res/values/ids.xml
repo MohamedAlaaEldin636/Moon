@@ -4,4 +4,5 @@
   <item name="frame_percent" type="id" />
   <item name="runnable_action" type="id" />
   <item name="position_tag" type="id" />
+  <item name="marker_tag" type="id" />
 </resources>

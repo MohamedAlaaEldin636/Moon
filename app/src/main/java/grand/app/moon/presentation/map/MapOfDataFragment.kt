@@ -39,6 +39,7 @@ import grand.app.moon.databinding.ItemMapImageStoreBinding
 import grand.app.moon.databinding.ItemMapImageStoryBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.map.model.MAClusterItem
@@ -251,7 +252,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 						context, R.drawable.my_current_location_pin
 					).orTransparent().toBitmap()
 				))
-		)
+		)?.tag = R.id.marker_tag
 
 		val clusterManager = ClusterManager<MAClusterItem>(context, googleMap)
 		viewModel.clusterManager = clusterManager
@@ -332,7 +333,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 			false otherwise (i.e. the default behavior should occur).
 			The default behavior is for the camera to move to the marker and an info window to appear.
 			 */
-			false
+			true
 		}
 		viewModel.clusterManager?.setOnClusterClickListener { cluster ->
 			if (cluster != null) {
@@ -352,10 +353,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 			true
 		}
 
-		googleMap.setOnCameraIdleListener {
-			viewModel.clusterManager?.onCameraIdle()
-			viewModel.clusterManager?.cluster()
-		}
+		googleMap.setOnCameraIdleListener(viewModel.clusterManager)
 		googleMap.setOnMarkerClickListener(viewModel.clusterManager)
 
 		addFirstTimeDataToMapThenAnimateCamera()

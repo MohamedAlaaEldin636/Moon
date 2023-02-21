@@ -188,19 +188,21 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 	}
 
 	private fun TextView.setupInnerShowAll(type: ItemHomeRV.Type) {
-		when (type) {
-			ItemHomeRV.Type.STORIES -> {
-				findNavController().navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.all.stories"
-				)
+		setOnClickListener {
+			when (type) {
+				ItemHomeRV.Type.STORIES -> {
+					findNavController().navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.all.stories"
+					)
+				}
+				ItemHomeRV.Type.CATEGORIES -> TODO()
+				ItemHomeRV.Type.MOST_RATED_STORIES -> TODO()
+				ItemHomeRV.Type.FOLLOWING_STORIES -> TODO()
+				ItemHomeRV.Type.SUGGESTED_ADS -> TODO()
+				ItemHomeRV.Type.MOST_POPULAR_ADS -> TODO()
+				ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> TODO()
 			}
-			ItemHomeRV.Type.CATEGORIES -> TODO()
-			ItemHomeRV.Type.MOST_RATED_STORIES -> TODO()
-			ItemHomeRV.Type.FOLLOWING_STORIES -> TODO()
-			ItemHomeRV.Type.SUGGESTED_ADS -> TODO()
-			ItemHomeRV.Type.MOST_POPULAR_ADS -> TODO()
-			ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> TODO()
 		}
 	}
 
