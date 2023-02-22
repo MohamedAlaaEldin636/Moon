@@ -360,22 +360,12 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 							it.id == newItem.id
 						}
 
-						val list = viewModel.clusterManager?.algorithm?.items?.filterNotNull().orEmpty()
+						//val list = viewModel.clusterManager?.algorithm?.items?.filterNotNull().orEmpty()
 						if (oldItem?.id != null) {
 							viewModel.bitmapsDataMap[oldItem.id.orZero()] = context.createAdvItemBitmap(oldItem)
-
-							list.firstOrNull { it.id == oldItem.id }?.also {
-								viewModel.clusterManager?.removeItem(it)
-								viewModel.clusterManager?.addItem(it)
-							}
 						}
 
 						viewModel.bitmapsDataMap[newItem.id.orZero()] = context.createAdvItemBitmap(newItem)
-
-						list.firstOrNull { it.id == newItem.id }?.also {
-							viewModel.clusterManager?.removeItem(it)
-							viewModel.clusterManager?.addItem(it)
-						}
 
 						viewModel.clusterManager?.cluster()
 

@@ -63,7 +63,7 @@ fun BaseFragment<*>.showRetryErrorDialogWithBackNegativeButton(
 	msg: String = getString(R.string.something_went_wrong_please_try_again),
 	negativeButton: String = getString(R.string.back),
 	negativeButtonAction: () -> Unit = {
-		if (false && findNavController().graph.id == R.id.nav_home && findNavController().graph.startDestinationId == findNavController().currentDestination?.id) {
+		if (findNavController().graph.id == R.id.nav_home && findNavController().graph.startDestinationId == findNavController().currentDestination?.id) {
 			hideLoading()
 
 			activity?.onBackPressed()
