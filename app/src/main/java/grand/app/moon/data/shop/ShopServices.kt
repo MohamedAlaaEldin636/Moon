@@ -299,4 +299,10 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>,
 	): BaseResponse<List<ResponseMapDataForAdv>?>
 
+	@FormUrlEncoded
+	@POST("v1/favorite")
+	suspend fun favOrUnFavAdv(
+		@Field("advertisement_id") advId: Int,
+	): BaseResponse<Any?>
+
 }

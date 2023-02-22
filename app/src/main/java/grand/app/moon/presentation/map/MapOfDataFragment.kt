@@ -191,9 +191,6 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 								}
 							}
 							Type.ADVERTISEMENT -> {
-								// todo for on click isa.
-								//val q = viewModel.clusterManager?.algorithm?.items.orEmpty().filterNotNull()
-
 								val binding = ItemMapImageAdvBinding.bind(
 									context.inflateLayout(R.layout.item_map_image_adv)
 								)
@@ -210,8 +207,10 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 								)
 
 								binding.root.toBitmapUsingIconGenerator(
-									context.createRectangleShape(5f, null, R.color.white)
+									context.createRectangleShape(
+										if (isSelected) 5f else 25f, null, R.color.white)
 								).orDefaultClusterBitmap(context)
+								//binding.root.toBitmap().orDefaultPlaceBitmap(context)
 							}
 						}
 					}
@@ -332,7 +331,8 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 								name = mapData.name,
 								createdAt = mapData.createdAt,
 								nickname = mapData.nickname,
-								id = mapData.id
+								id = mapData.id,
+								countryCode = mapData.country?.countryCode
 							)
 
 							findNavController().navigateDeepLinkWithOptions(
@@ -346,7 +346,28 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 						}
 					}
 					Type.ADVERTISEMENT -> {
-						TODO() // todo render both whole cluster + cluster item isa.
+						val oldSelectionId = viewModel.selectedMapData.value?.id
+						val newSelectionId = maClusterItem?.id
+
+						if (oldSelectionId == newSelectionId) return@also
+
+						viewModel.selectedMapData.value = viewModel.allDataList?.firstOrNull {
+							it.id == newSelectionId
+						}
+
+						val list = viewModel.clusterManager?.algorithm?.items?.filterNotNull().orEmpty()
+						if (oldSelectionId != null) {
+							list.firstOrNull { it.id == oldSelectionId }?.also {
+								viewModel.clusterManager?.removeItem(it)
+								viewModel.clusterManager?.addItem(it)
+							}
+						}
+						list.firstOrNull { it.id == newSelectionId }?.also {
+							viewModel.clusterManager?.removeItem(it)
+							viewModel.clusterManager?.addItem(it)
+						}
+
+						viewModel.clusterManager?.cluster()
 					}
 				}
 			}

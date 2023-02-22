@@ -238,7 +238,7 @@ class HomeViewModel @Inject constructor(
   fun goToMap(view: View) {
 	  val binding = DataBindingUtil.findBinding<ActivityHomeBinding>(view) ?: return
 	  val activity = binding.lifecycleOwner as? HomeActivity ?: return
-		MapOfDataFragment.goToThisScreenForStores(
+		MapOfDataFragment.goToThisScreenForAds( // todo
 			activity.nav
 		)
 	  //clickEvent.value = Constants.GO_TO_MAP

@@ -449,6 +449,8 @@ class RepoShop @Inject constructor(
 		}
 	}
 
+	suspend fun favOrUnFavAdv(advId: Int) = remoteDataSource.favOrUnFavAdv(advId)
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

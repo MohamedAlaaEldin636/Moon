@@ -7,13 +7,14 @@ import grand.app.moon.presentation.myStore.model.ResponseCity
 
 fun ResponseMapDataForStore.toResponseMapData(): ResponseMapData {
 	return ResponseMapData(
-		id, name, image, stories, category, latitude, longitude,
+		id, name, image, stories, category, latitude, longitude, phone = phone, nickname = nickname, country = country
 	)
 }
 fun ResponseMapDataForAdv.toResponseMapData(): ResponseMapData {
 	return ResponseMapData(
-		null, null, null, null, category?.let { listOf(it) }, latitude, longitude, title, isFavorite,
-		premium, favoriteCount, viewsCount, averageRate, createdAt, country, city, store, price, negotiable
+		id, null, image, null, category?.let { listOf(it) }, latitude, longitude, title, isFavorite,
+		premium, favoriteCount, viewsCount, averageRate, createdAt, country, city, store, price, negotiable,
+		priceBefore = priceBefore, phone = phone
 	)
 }
 
@@ -25,6 +26,10 @@ data class ResponseMapDataForStore(
 	var stories: List<ResponseStory.Story>?,
 	var latitude: Double?,
 	var longitude: Double?,
+
+	var phone: String? = null,
+	var nickname: String? = null,
+	var country: ItemAdvertisementInResponseHome.Country? = null,
 )
 
 data class ResponseMapDataForAdv(
@@ -43,6 +48,10 @@ data class ResponseMapDataForAdv(
 	@SerializedName("is_negotiable") var negotiable: Int?,
 	var latitude: Double?,
 	var longitude: Double?,
+	@SerializedName("price_before") var priceBefore: Float? = null,
+	var phone: String?,
+	var id: Int?,
+	var image: String?,
 )
 
 /**
@@ -76,7 +85,10 @@ data class ResponseMapData(
 
 	var phone: String? = null,
 	var nickname: String? = null,
-)
+	var priceBefore: Float? = null,
+) {
+	val isNegotiable get() = negotiable == 1
+}
 
 data class ItemCategoryInResponseMapData(
 	var id: Int?,

@@ -438,4 +438,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getMapDataForAdv(MapOfDataFragment.Type.ADVERTISEMENT.apiValue, map)
 	}
 
+	suspend fun favOrUnFavAdv(advId: Int) = safeApiCall {
+		apiService.favOrUnFavAdv(advId)
+	}
+
 }
