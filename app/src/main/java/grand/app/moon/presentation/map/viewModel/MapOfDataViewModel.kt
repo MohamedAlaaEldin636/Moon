@@ -130,7 +130,7 @@ class MapOfDataViewModel @Inject constructor(
 	var myCurrentLocation: LatLng? = null
 
 	/** [Map.Entry.key] represents id */
-	var bitmapsDataMap = emptyMap<Int, Bitmap>()
+	var bitmapsDataMap = mutableMapOf<Int, Bitmap>()
 	/** [Map.Entry.key] represents count */
 	var bitmapsClustersMap = emptyMap<Int, Bitmap>()
 

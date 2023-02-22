@@ -44,6 +44,7 @@ import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.map.model.MAClusterItem
+import grand.app.moon.presentation.map.model.ResponseMapData
 import grand.app.moon.presentation.map.viewModel.MapOfDataViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -148,6 +149,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 			viewModel.allDataList = list
 
 			viewLifecycleOwner.lifecycleScope.launch {
+				viewModel.bitmapsDataMap.clear()
 				viewModel.bitmapsDataMap = buildMap {
 					for (item in viewModel.allDataList.orEmpty()) {
 						this[item.id.orZero()] = when (viewModel.args.type) {
@@ -191,32 +193,35 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 								}
 							}
 							Type.ADVERTISEMENT -> {
-								val binding = ItemMapImageAdvBinding.bind(
-									context.inflateLayout(R.layout.item_map_image_adv)
-								)
-
-								val isSelected = viewModel.selectedMapData.value?.id == item.id
-
-								binding.constraintLayout.background = ContextCompat.getDrawable(
-									context,
-									if (isSelected) R.drawable.dr_rect_5_border_2_star else R.drawable.dr_rect_5
-								)
-
-								binding.textView.setTextColor(
-									ContextCompat.getColor(context, if (isSelected) R.color.white else R.color.black)
-								)
-
-								binding.root.toBitmapUsingIconGenerator(
-									context.createRectangleShape(
-										if (isSelected) 5f else 25f, null, R.color.white)
-								).orDefaultClusterBitmap(context)
-								//binding.root.toBitmap().orDefaultPlaceBitmap(context)
+								context.createAdvItemBitmap(item)
 							}
 						}
 					}
-				}
+				}.toMutableMap()
 			}
 		}
+	}
+
+	private fun Context.createAdvItemBitmap(item: ResponseMapData): Bitmap {
+		val binding = ItemMapImageAdvBinding.bind(
+			inflateLayout(R.layout.item_map_image_adv)
+		)
+
+		val isSelected = viewModel.selectedMapData.value?.id == item.id
+
+		binding.constraintLayout.background = ContextCompat.getDrawable(
+			this,
+			if (isSelected) R.drawable.dr_rect_5_border_2_star else R.drawable.dr_rect_5
+		)
+
+		binding.textView.text = "${item.price.orZero()} ${item.country?.currency.orEmpty()}"
+		binding.textView.setTextColor(
+			ContextCompat.getColor(this, if (isSelected) R.color.white else R.color.black)
+		)
+
+		return binding.root.toBitmapUsingIconGenerator(
+			binding.constraintLayout.background
+		).orDefaultClusterBitmap(this)
 	}
 
 	private fun Bitmap?.orDefaultPlaceBitmap(context: Context): Bitmap {
@@ -346,28 +351,39 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 						}
 					}
 					Type.ADVERTISEMENT -> {
-						val oldSelectionId = viewModel.selectedMapData.value?.id
-						val newSelectionId = maClusterItem?.id
+						val oldItem = viewModel.selectedMapData.value
+						val newItem = viewModel.allDataList?.firstOrNull { it.id == maClusterItem?.id }
 
-						if (oldSelectionId == newSelectionId) return@also
+						if (newItem == null || oldItem?.id == newItem.id) return@also
 
 						viewModel.selectedMapData.value = viewModel.allDataList?.firstOrNull {
-							it.id == newSelectionId
+							it.id == newItem.id
 						}
 
 						val list = viewModel.clusterManager?.algorithm?.items?.filterNotNull().orEmpty()
-						if (oldSelectionId != null) {
-							list.firstOrNull { it.id == oldSelectionId }?.also {
+						if (oldItem?.id != null) {
+							viewModel.bitmapsDataMap[oldItem.id.orZero()] = context.createAdvItemBitmap(oldItem)
+
+							list.firstOrNull { it.id == oldItem.id }?.also {
 								viewModel.clusterManager?.removeItem(it)
 								viewModel.clusterManager?.addItem(it)
 							}
 						}
-						list.firstOrNull { it.id == newSelectionId }?.also {
+
+						viewModel.bitmapsDataMap[newItem.id.orZero()] = context.createAdvItemBitmap(newItem)
+
+						list.firstOrNull { it.id == newItem.id }?.also {
 							viewModel.clusterManager?.removeItem(it)
 							viewModel.clusterManager?.addItem(it)
 						}
 
 						viewModel.clusterManager?.cluster()
+
+						maClusterItem?.also {
+							viewModel.googleMap?.animateCamera(
+								CameraUpdateFactory.newLatLng(it.position)
+							)
+						}
 					}
 				}
 			}
