@@ -119,7 +119,9 @@ class FilterResults2ViewModel @Inject constructor(
 		binding.linearLayout.tag = position
 
 		binding.imageImageView.setupWithGlide {
-			load(item.image)
+			//MyLogger.e("aaaaaaaaaaa ${item.title} ${item.image}")
+
+			load(item.image).saveDiskCacheStrategyAll()
 		}
 
 		binding.premiumImageView.isVisible = item.isPremium

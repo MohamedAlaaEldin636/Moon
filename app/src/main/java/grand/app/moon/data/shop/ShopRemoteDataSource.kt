@@ -466,8 +466,16 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		var index = 0
 		filter.properties.forEach { item ->
 			val (id, from, to) = when (item) {
-				is DynamicFilterProperty.Checked -> item.id to null triple null
-				is DynamicFilterProperty.RangedText -> item.id to item.from triple item.to
+				is DynamicFilterProperty.Checked -> if (item.isSelected) {
+					item.id to null triple null
+				}else {
+					return@forEach
+				}
+				is DynamicFilterProperty.RangedText -> if (item.from.isNotEmpty() && item.to.isNotEmpty()) {
+					item.id to item.from triple item.to
+				}else {
+					return@forEach
+				}
 				is DynamicFilterProperty.Selection -> {
 					item.selectedData.forEach { (id, _) ->
 						id.ifNotNull { map["properties[${index++}][id]"] = it.toString() }
@@ -475,7 +483,11 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 					return@forEach
 				}
-				is DynamicFilterProperty.Text -> item.id to item.value triple item.value
+				is DynamicFilterProperty.Text -> if (item.value.isNotEmpty()) {
+					item.id to item.value triple item.value
+				}else {
+					return@forEach
+				}
 			}
 
 			map["properties[$index][id]"] = id.toString()
