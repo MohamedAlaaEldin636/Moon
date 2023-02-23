@@ -14,8 +14,10 @@ import grand.app.moon.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.core.extenstions.setInitialAppLaunch
 import grand.app.moon.core.extenstions.setSelectedLangBefore
+import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.countries.entity.Country
+import grand.app.moon.extensions.applicationScope
 import grand.app.moon.extensions.findFragmentOrNull
 import grand.app.moon.extensions.indexOfFirstOrNull
 import grand.app.moon.extensions.navigateSafely
@@ -30,6 +32,7 @@ import grand.app.moon.presentation.splash.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /*
@@ -91,8 +94,8 @@ muxer.release()
 
 @HiltViewModel
 class LanguagesViewModel @Inject constructor(
-  val accountRepository: AccountRepository
-
+  val accountRepository: AccountRepository,
+  val repoShop: RepoShop
 ) : BaseViewModel() {
 
   val languages = arrayListOf<Country>()
@@ -156,6 +159,10 @@ class LanguagesViewModel @Inject constructor(
 
 	  if (true || activity.isSameAsCurrentLocale(lang).not()) {
 		  activity.setCurrentLangFromSharedPrefs(lang)
+
+		  activity.applicationScope?.launch {
+			  repoShop.fetchAllCategoriesAndSaveThemLocallyIfPossible()
+		  }
 
 		  //activity.setCurrentLocale(lang, autoRecreate)
 
