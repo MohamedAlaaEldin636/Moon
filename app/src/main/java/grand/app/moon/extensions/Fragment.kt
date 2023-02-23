@@ -1,9 +1,9 @@
 package grand.app.moon.extensions
 
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.postDelayed
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
+import androidx.fragment.app.*
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -13,6 +13,34 @@ import androidx.paging.PagingDataAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
+inline fun <reified T> Fragment.setFragmentResultListenerUsingJson(
+	key: String,
+	crossinline onResult: (value: T) -> Unit
+) {
+	setFragmentResultListener(key) { _, bundle ->
+		val value = bundle.getString(AppConsts.NavController.GSON_KEY).fromJsonInlinedOrNull<T>()
+
+		if (value != null) {
+			clearFragmentResultListener(key)
+
+			onResult(value)
+		}
+	}
+}
+inline fun <reified T> Fragment.setFragmentResultUsingJson(key: String, value: T) {
+	setFragmentResult(
+		key,
+		bundleOf(AppConsts.NavController.GSON_KEY to value.toJsonInlinedOrNull().orEmpty())
+	)
+}
+
+/*
+fragment.setFragmentResult("aaa", Bundle.EMPTY)
+		fragment.setFragmentResultListener("Aaa") { requestKey, bundle ->
+			fragment.clearFragmentResultListener("aaa")
+		}
+ */
 
 fun <T : Any> Fragment.getOnPageChangeForAdapterUsingViewLifecycle(
 	adapter: PagingDataAdapter<T, *>,

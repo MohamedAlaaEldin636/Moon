@@ -42,13 +42,13 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 			viewModel.adapter.submitList(it?.properties.orEmpty())
 		}
 
-		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<IdAndName>(SingleOrMultiSelectionFragment.KEY_RESULT_SINGLE_SELECTION) {
+		/*observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<IdAndName>(SingleOrMultiSelectionFragment.KEY_RESULT_SINGLE_SELECTION) {
 			viewModel.changeSelectedCity(it.id.orZero())
 		}
 
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<List<IdAndName>>(SingleOrMultiSelectionFragment.KEY_RESULT_MULTI_SELECTION) { list ->
 			viewModel.changeSelectedAreas(list.map { it.id.orZero() })
-		}
+		}*/
 	}
 
 	enum class SortBy(val apiValue: Int) {

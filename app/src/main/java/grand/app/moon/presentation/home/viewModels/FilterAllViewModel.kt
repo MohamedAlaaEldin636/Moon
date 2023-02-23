@@ -2,6 +2,7 @@ package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
 import android.view.View
+import androidx.core.view.postDelayed
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
@@ -25,8 +26,10 @@ import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsEnd
+import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.FilterAllFragment
+import grand.app.moon.presentation.home.SingleOrMultiSelectionFragment
 import grand.app.moon.presentation.myStore.model.ResponseArea
 import grand.app.moon.presentation.myStore.model.ResponseCity
 import javax.inject.Inject
@@ -110,32 +113,33 @@ class FilterAllViewModel @Inject constructor(
 						fragment,
 						item.id.toString()
 					) { list ->
-						adapter.updateItem(
-							position,
-							item.copy(selectedData = list)
-						)
+						responseFilterProperties.value = responseFilterProperties.value?.let {
+							it.copy(
+								properties = it.properties.copyUpdateItem(position, item.copy(selectedData = list))
+							)
+						}
 					}
 				}
 				binding is ItemDynamicFilterTextBinding && item is DynamicFilterProperty.Text -> {}
 				binding is ItemDynamicFilterRangedTextBinding && item is DynamicFilterProperty.RangedText -> {}
 			}
 		},
-		additionalListenersSetups = { adapter, binding ->
+		additionalListenersSetups = { _, binding ->
 			val position = binding.root.tag as? Int ?: return@RVItemCommonListUsageWithDifferentItems
 
 			when (binding) {
 				is ItemDynamicFilterTextBinding -> {
 					binding.editText.doAfterTextChanged {
-						(adapter.list[position] as? DynamicFilterProperty.Text)?.value = it.toStringOrEmpty()
+						//(currentFilter[position] as? DynamicFilterProperty.Text)?.value = it.toStringOrEmpty()
 					}
 				}
 				is ItemDynamicFilterRangedTextBinding -> {
 					binding.fromEditText.doAfterTextChanged {
-						(adapter.list[position] as? DynamicFilterProperty.RangedText)?.from = it.toStringOrEmpty()
+						//(currentFilter[position] as? DynamicFilterProperty.RangedText)?.from = it.toStringOrEmpty()
 					}
 
 					binding.fromEditText.doAfterTextChanged {
-						(adapter.list[position] as? DynamicFilterProperty.RangedText)?.to = it.toStringOrEmpty()
+						//(currentFilter[position] as? DynamicFilterProperty.RangedText)?.to = it.toStringOrEmpty()
 					}
 				}
 				else -> {}
@@ -242,8 +246,6 @@ class FilterAllViewModel @Inject constructor(
 						}
 					) {
 						responseFilterProperties.value = it
-
-						adapter.submitList(it.properties)
 					}
 				}
 			}
@@ -272,8 +274,6 @@ class FilterAllViewModel @Inject constructor(
 						}
 					) {
 						responseFilterProperties.value = it
-
-						adapter.submitList(it.properties)
 					}
 				}
 			}
@@ -285,13 +285,20 @@ class FilterAllViewModel @Inject constructor(
 			IdAndName(it.id, it.name)
 		}
 
+		val fragment = view.findFragmentOrNull<FilterAllFragment>() ?: return
+
+		fragment.setFragmentResultListenerUsingJson<IdAndName>(SingleOrMultiSelectionFragment.KEY_RESULT_SINGLE_SELECTION) {
+			changeSelectedCity(it.id.orZero())
+		}
+
 		view.findNavController().navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.single.or.multi.selection",
 			paths = arrayOf(
 				true.toString(),
 				listOfIdAndName.toJsonInlinedOrNull(),
-				listOfNotNull(selectedCity.value).toJsonInlinedOrNull()
+				listOfNotNull(selectedCity.value).toJsonInlinedOrNull(),
+				SingleOrMultiSelectionFragment.KEY_RESULT_SINGLE_SELECTION
 			)
 		)
 	}
@@ -309,13 +316,18 @@ class FilterAllViewModel @Inject constructor(
 			IdAndName(it.id, it.name)
 		}
 
+		fragment.setFragmentResultListenerUsingJson<List<IdAndName>>(SingleOrMultiSelectionFragment.KEY_RESULT_MULTI_SELECTION) { list ->
+			changeSelectedAreas(list.map { it.id.orZero() })
+		}
+
 		view.findNavController().navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.single.or.multi.selection",
 			paths = arrayOf(
 				false.toString(),
 				listOfIdAndName.toJsonInlinedOrNull(),
-				selectedAreas.value.orEmpty().map { IdAndName(it.id, it.name) }.toJsonInlinedOrNull()
+				selectedAreas.value.orEmpty().map { IdAndName(it.id, it.name) }.toJsonInlinedOrNull(),
+				SingleOrMultiSelectionFragment.KEY_RESULT_MULTI_SELECTION
 			)
 		)
 	}
@@ -328,14 +340,14 @@ class FilterAllViewModel @Inject constructor(
 		selectedAdType.value = adType
 	}
 
-	fun changeSelectedCity(id: Int) {
+	private fun changeSelectedCity(id: Int) {
 		if (selectedCity.value?.id != id) {
 			selectedCity.value = citiesWithAreas.firstOrNull { it.id == id }
 			selectedAreas.value = null
 		}
 	}
 
-	fun changeSelectedAreas(ids: List<Int>) {
+	private fun changeSelectedAreas(ids: List<Int>) {
 		selectedAreas.value = selectedCity.value?.areas.orEmpty().filter { it.id in ids }
 	}
 
@@ -389,17 +401,28 @@ class FilterAllViewModel @Inject constructor(
 		key: String,
 		onSelection: (List<IdAndName>) -> Unit
 	) {
+		if (isSingleNotMultiSelection) {
+			fragment.setFragmentResultListenerUsingJson<IdAndName>(key) {
+				onSelection(listOf(it))
+			}
+		}else {
+			fragment.setFragmentResultListenerUsingJson<List<IdAndName>>(key) { list ->
+				onSelection(list)
+			}
+		}
+
 		navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.single.or.multi.selection",
 			paths = arrayOf(
 				isSingleNotMultiSelection.toString(),
 				wholeData.toJsonInlinedOrNull().orEmpty(),
-				currentlySelectedData.toJsonInlinedOrNull().orEmpty()
+				currentlySelectedData.toJsonInlinedOrNull().orEmpty(),
+				key
 			)
 		)
 
-		if (isSingleNotMultiSelection) {
+		/*if (isSingleNotMultiSelection) {
 			fragment.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNullOnlyOnce<IdAndName>(key) {
 				onSelection(listOf(it))
 			}
@@ -408,6 +431,17 @@ class FilterAllViewModel @Inject constructor(
 				onSelection(it)
 			}
 		}
+
+		navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.single.or.multi.selection",
+			paths = arrayOf(
+				isSingleNotMultiSelection.toString(),
+				wholeData.toJsonInlinedOrNull().orEmpty(),
+				currentlySelectedData.toJsonInlinedOrNull().orEmpty(),
+				key
+			)
+		)*/
 	}
 
 }

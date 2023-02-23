@@ -1168,10 +1168,13 @@
     <argument
       android:name="jsonOfCurrentlySelectedIdAndNameList"
       app:argType="string"/>
+    <argument
+      android:name="keyForResult"
+      app:argType="string"/>
     <deepLink
       android:id="@+id/deep_link_dest_single_or_multi_selection"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.single.or.multi.selection/{isSingleNotMultiSelection}/{jsonOfIdAndNameList}/{jsonOfCurrentlySelectedIdAndNameList}" />
+      app:uri="fragment-dest://grand.app.moon.dest.single.or.multi.selection/{isSingleNotMultiSelection}/{jsonOfIdAndNameList}/{jsonOfCurrentlySelectedIdAndNameList}/{keyForResult}" />
   </fragment>
   <fragment
     android:id="@+id/dest_filter_all"

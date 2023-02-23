@@ -455,7 +455,7 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		val map = mutableMapOf<String, String>()
 
 		filter.search.ifNotNullNorEmpty { map["search"] = it }
-		filter.categoryId.ifNotNull { map["sub_category_id"] = it.toString() }
+		filter.categoryId.ifNotNull { map["category_id"] = it.toString() }
 		filter.subCategoryId.ifNotNull { map["sub_category_id"] = it.toString() }
 		filter.minPrice.ifNotNull { map["min_price"] = it.toString() }
 		filter.maxPrice.ifNotNull { map["max_price"] = it.toString() }

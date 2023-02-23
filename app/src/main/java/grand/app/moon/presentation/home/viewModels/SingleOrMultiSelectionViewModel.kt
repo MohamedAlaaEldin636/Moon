@@ -1,7 +1,11 @@
 package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
+import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.clearFragmentResultListener
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -85,14 +89,19 @@ class SingleOrMultiSelectionViewModel @Inject constructor(
 			return fragment.showMessage(fragment.getString(R.string.perform_selection_firstly))
 		}
 
-		fragment.findNavController().navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
-			if (args.isSingleNotMultiSelection) selectedItems.first() else selectedItems,
-			if (args.isSingleNotMultiSelection) {
-				SingleOrMultiSelectionFragment.KEY_RESULT_SINGLE_SELECTION
-			}else {
-				SingleOrMultiSelectionFragment.KEY_RESULT_MULTI_SELECTION
-			}
-		)
+		if (args.isSingleNotMultiSelection) {
+			fragment.setFragmentResultUsingJson(
+				args.keyForResult,
+				selectedItems.first()
+			)
+		}else {
+			fragment.setFragmentResultUsingJson(
+				args.keyForResult,
+				selectedItems
+			)
+		}
+
+		fragment.findNavController().navigateUp()
 	}
 
 }

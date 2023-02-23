@@ -1,5 +1,11 @@
 package grand.app.moon.extensions
 
+fun <T> List<T>.copyUpdateItem(index: Int, item: T): List<T> {
+	return toMutableList().also {
+		it[index] = item
+	}.toList()
+}
+
 fun <T> MutableList<T>.swap(firstPosition: Int, secondPosition: Int) {
 	if (firstPosition == secondPosition) return
 
