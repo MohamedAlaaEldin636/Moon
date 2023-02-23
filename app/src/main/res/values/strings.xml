@@ -499,4 +499,13 @@
     <string name="something_went_wrong_in_detecting_locations">حدث خطأ ما فى تحديد المواقع</string>
     <string name="no_stores_found">لا توجد متاجر</string>
   <string name="no_ads_found">لا توجد إعلانات</string>
+    <string name="order_by">Order by</string>
+  <string name="least_price_first">السعر الأقل اولا</string>
+  <string name="most_price_first">السعر الاعلي اولاً</string>
+  <string name="no_sub_categories_found">لا يوجد اقسام فرعية</string>
+  <string name="perform_selection_firstly">قم بالإختيار أولا</string>
+  <string name="pick">إختر</string>
+  <string name="select_city_firslty_4">قم بإختيار المدينة أولاً</string>
+  <string name="warning_of_price_range">السعر الأقصى يجب ان يكون اكبر من او يساوى السعر الأدنى</string>
+  <string name="filter_search_4">فلتر البحث</string>
 </resources>

@@ -2,10 +2,11 @@ package grand.app.moon.data.shop
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
-import grand.app.moon.core.extenstions.getCategoriesWithSubCategoriesAndBrands
-import grand.app.moon.core.extenstions.setCategoriesWithSubCategoriesAndBrands
-import grand.app.moon.core.extenstions.setInitialAppLaunch
+import grand.app.moon.core.extenstions.*
 import grand.app.moon.data.local.preferences.AppPreferences
+import grand.app.moon.domain.ads.DynamicFilterProperty
+import grand.app.moon.domain.ads.ResponseFilterProperties
+import grand.app.moon.domain.ads.toResponseFilterProperties
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
@@ -16,6 +17,7 @@ import grand.app.moon.domain.utils.map
 import grand.app.moon.domain.utils.toFailureStatus
 import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.home.FilterAllFragment
 import grand.app.moon.presentation.home.models.Interaction
 import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.map.MapOfDataFragment
@@ -23,6 +25,7 @@ import grand.app.moon.presentation.map.model.ResponseMapData
 import grand.app.moon.presentation.map.model.toResponseMapData
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
+import grand.app.moon.presentation.myStore.model.ResponseCountry
 import grand.app.moon.presentation.stats.models.ItemStoreStats
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -450,6 +453,33 @@ class RepoShop @Inject constructor(
 	}
 
 	suspend fun favOrUnFavAdv(advId: Int) = remoteDataSource.favOrUnFavAdv(advId)
+
+	fun getCountriesWithCitiesWithAreas() = appContext.getCountriesWithCitiesWithAreas()
+	fun setCountriesWithCitiesWithAreas(
+		value: List<ResponseCountry>
+	) = appContext.setCountriesWithCitiesWithAreas(value)
+
+	fun getSelectedCountry() = appContext.getSelectedCountry()
+	fun setSelectedCountry(value: ResponseCountry) = appContext.setSelectedCountry(value)
+
+	suspend fun getFilterProperties(
+		categoryId: Int?,
+		subCategoryId: Int?,
+	): Resource<BaseResponse<ResponseFilterProperties?>> {
+		return if (categoryId == null) {
+			Resource.Success(BaseResponse(ResponseFilterProperties(), "", 200))
+		}else {
+			remoteDataSource.getDynamicFilterProperties(categoryId, subCategoryId).mapSuccess { baseResponse ->
+				baseResponse.map {
+					it?.toResponseFilterProperties()
+				}
+			}
+		}
+	}
+
+	fun getFilterResults(filter: FilterAllFragment.Filter) = BasePaging.createFlowViaPager {
+		remoteDataSource.getFilterResults(it, filter)
+	}
 
 }
 

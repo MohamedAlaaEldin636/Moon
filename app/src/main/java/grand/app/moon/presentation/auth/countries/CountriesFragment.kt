@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.myStore.model.toResponseCountry
 import grand.app.moon.presentation.splash.MASplash2Activity
 import grand.app.moon.presentation.splash.SplashActivity
 import kotlinx.coroutines.flow.collect
@@ -52,6 +53,11 @@ class CountriesFragment : BaseFragment<FragmentCountriesBinding>() {
           is Resource.Success -> {
             hideLoading()
             viewModel.updateAdapter(it.value)
+	          viewModel.repoShop.setCountriesWithCitiesWithAreas(
+		          viewModel.adapter.differ.currentList.filterNotNull().map { country ->
+			          country.toResponseCountry()
+							}
+	          )
           }
           is Resource.Failure -> {
             hideLoading()

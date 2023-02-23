@@ -3,6 +3,7 @@ package grand.app.moon.data.shop
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.core.di.module.RetrofitModule
+import grand.app.moon.domain.ads.ResponseFilterDetails
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.user.entity.UserListPaginateData
@@ -304,5 +305,18 @@ interface ShopServices {
 	suspend fun favOrUnFavAdv(
 		@Field("advertisement_id") advId: Int,
 	): BaseResponse<Any?>
+
+	@GET("v1/filter/details")
+	suspend fun getDynamicFilterProperties(
+		@Query("category_id") categoryId: Int,
+		//@Query("sub_category_id") subCategoryId: String,
+		@QueryMap map: Map<String, String>
+	): BaseResponse<ResponseFilterDetails?>
+
+	@GET("v1/filter/results")
+	suspend fun getFilterResults(
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>
+	): MABaseResponse<MABasePaging<ItemAdvertisementInResponseHome>>
 
 }

@@ -17,9 +17,12 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.auth.AuthActivity
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.myStore.model.ResponseCountry
 
 private const val SHARED_PREFS_CATEGORIES_WITH_SUB_CATEGORIES_AND_BRANDS = "SHARED_PREFS_CATEGORIES_WITH_SUB_CATEGORIES_AND_BRANDS"
 private const val SHARED_PREFS_SELECTED_LANG_BEFORE = "SHARED_PREFS_SELECTED_LANG_BEFORE"
+private const val SHARED_PREFS_COUNTRIES_WITH_CITIES_WITH_AREAS = "SHARED_PREFS_COUNTRIES_WITH_CITIES_WITH_AREAS"
+private const val SHARED_PREFS_SELECTED_COUNTRY = "SHARED_PREFS_SELECTED_COUNTRY"
 
 fun Context.getSelectedLangBeforeThenReset(): Boolean {
 	val selectedBefore =  getDefAppPrefs()?.getBoolean(
@@ -40,6 +43,16 @@ enum class InitialAppLaunch {
 	SHOW_WELCOMING_SCREENS,
 	SHOW_HOME
 }
+
+fun Context.getCountriesWithCitiesWithAreas() =
+	getDefAppPrefs().getUsingJson(emptyList<ResponseCountry>(), SHARED_PREFS_CATEGORIES_WITH_SUB_CATEGORIES_AND_BRANDS)
+fun Context.setCountriesWithCitiesWithAreas(value: List<ResponseCountry>) =
+	getDefAppPrefs().setUsingJson(value, SHARED_PREFS_COUNTRIES_WITH_CITIES_WITH_AREAS)
+
+fun Context.getSelectedCountry() =
+	getDefAppPrefs().getUsingJson<ResponseCountry?>(null, SHARED_PREFS_SELECTED_COUNTRY)
+fun Context.setSelectedCountry(value: ResponseCountry?) =
+	getDefAppPrefs().setUsingJson(value, SHARED_PREFS_SELECTED_COUNTRY)
 
 fun Context.setCategoriesWithSubCategoriesAndBrands(
 	value: List<ItemCategory>?,

@@ -1,6 +1,46 @@
 package grand.app.moon.presentation.myStore.model
 
 import com.google.gson.annotations.SerializedName
+import grand.app.moon.domain.countries.entity.Country
+
+fun Country?.toResponseCountry(): ResponseCountry {
+	return ResponseCountry(
+		this?.id,
+		this?.name,
+		this?.currency,
+		this?.countryCode,
+		this?.isoCode,
+		this?.image,
+		this?.cities?.map {
+			it.toResponseCity()
+		}
+	)
+}
+
+fun Country?.toResponseCity(): ResponseCity {
+	return ResponseCity(
+		this?.id,
+		this?.name,
+		this?.currency,
+		this?.countryCode,
+		this?.isoCode,
+		this?.image,
+		this?.areas?.map {
+			it.toResponseArea()
+		},
+	)
+}
+
+fun Country?.toResponseArea(): ResponseArea {
+	return ResponseArea(
+		this?.id,
+		this?.name,
+		this?.currency,
+		this?.countryCode,
+		this?.isoCode,
+		this?.image,
+	)
+}
 
 data class ResponseCountry(
 	var id: Int?,

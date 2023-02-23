@@ -169,6 +169,17 @@ inline fun <reified T> AppCompatActivity.observeBackStackEntrySavedStateHandleLi
 	}
 }
 
+inline fun <reified T> Fragment.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNullOnlyOnce(
+	key: String,
+	noinline onNotNullResult: (T) -> Unit
+) {
+	observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<T>(key) {
+		onNotNullResult(it)
+
+		findNavController().currentBackStackEntry?.savedStateHandle?.remove<String>(key)
+	}
+}
+
 inline fun <reified T> Fragment.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull(
 	key: String = AppConsts.NavController.GSON_KEY,
 	noinline onNotNullResult: (T) -> Unit

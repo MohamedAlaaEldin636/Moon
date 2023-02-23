@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.home.FilterResults2Fragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.home.viewModels.FilterResults2ViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:padding="4dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="vertical"
+      tools:itemCount="5"
+      tools:spanCount="2"
+      tools:orientation="vertical"
+      tools:listitem="@layout/item_home_rv_adv"
+      tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

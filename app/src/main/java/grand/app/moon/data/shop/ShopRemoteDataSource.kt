@@ -1,14 +1,13 @@
 package grand.app.moon.data.shop
 
 import grand.app.moon.data.remote.BaseRemoteDataSource
+import grand.app.moon.domain.ads.DynamicFilterProperty
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
-import grand.app.moon.extensions.MyLogger
-import grand.app.moon.extensions.minLengthZerosPrefix
-import grand.app.moon.extensions.orZero
-import grand.app.moon.extensions.toStringOrEmpty
+import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.home.FilterAllFragment
 import grand.app.moon.presentation.home.models.Interaction
 import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.map.MapOfDataFragment
@@ -440,6 +439,58 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun favOrUnFavAdv(advId: Int) = safeApiCall {
 		apiService.favOrUnFavAdv(advId)
+	}
+
+	suspend fun getDynamicFilterProperties(categoryId: Int, subCategoryId: Int?) = safeApiCall {
+		val map = mutableMapOf<String, String>()
+		if (subCategoryId != null) map["sub_category_id"] = subCategoryId.toString()
+
+		apiService.getDynamicFilterProperties(categoryId, map)
+	}
+
+	suspend fun getFilterResults(
+		page: Int,
+		filter: FilterAllFragment.Filter,
+	) = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+
+		filter.search.ifNotNullNorEmpty { map["search"] = it }
+		filter.categoryId.ifNotNull { map["sub_category_id"] = it.toString() }
+		filter.subCategoryId.ifNotNull { map["sub_category_id"] = it.toString() }
+		filter.minPrice.ifNotNull { map["min_price"] = it.toString() }
+		filter.maxPrice.ifNotNull { map["max_price"] = it.toString() }
+		filter.cityId.ifNotNull { map["city_ids[0]"] = it.toString() }
+		filter.areasIds?.forEachIndexed { index, id ->
+			map["area_ids[$index]"] = id.toString()
+		}
+		var index = 0
+		filter.properties.forEach { item ->
+			val (id, from, to) = when (item) {
+				is DynamicFilterProperty.Checked -> item.id to null triple null
+				is DynamicFilterProperty.RangedText -> item.id to item.from triple item.to
+				is DynamicFilterProperty.Selection -> {
+					item.selectedData.forEach { (id, _) ->
+						id.ifNotNull { map["properties[${index++}][id]"] = it.toString() }
+					}
+
+					return@forEach
+				}
+				is DynamicFilterProperty.Text -> item.id to item.value triple item.value
+			}
+
+			map["properties[$index][id]"] = id.toString()
+			from.ifNotNullNorEmpty { map["properties[$index][from]"] = from.toString() }
+			from.ifNotNullNorEmpty { map["properties[$index][to]"] = to.toString() }
+			index++
+		}
+		filter.sortBy.ifNotNull { map["order_by"] = it.apiValue.toString() }
+		filter.adType.ifNotNull { map["other_options"] = it.apiValue.toString() }
+		filter.rating.ifNotNull {
+			map["min_rate"] = it.toString()
+			map["max_rate"] = 5.toString()
+		}
+
+		apiService.getFilterResults(page, map)
 	}
 
 }

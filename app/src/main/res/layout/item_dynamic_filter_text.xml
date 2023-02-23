@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:clipToPadding="false">
+
+    <EditText
+      android:id="@+id/editText"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:inputType="text"
+      android:imeOptions="actionDone"
+
+      android:background="@drawable/dr_rect_5"
+      android:elevation="5dp"
+
+      style="@style/TextTajawalRegular14"
+      android:textColor="@color/black"
+      android:textColorHint="#4A4A4A"
+      android:gravity="center_vertical"
+      android:textDirection="locale"
+
+      android:layout_marginStart="4.5dp"
+
+      android:paddingTop="14dp"
+      android:paddingBottom="14dp"
+      android:paddingStart="10dp"
+      android:paddingEnd="20dp"
+
+      tools:hint="Title"
+
+      android:drawablePadding="0dp"
+      app:drawableEndCompat="@drawable/ic_baseline_check_box_outline_blank_24"
+      tools:drawableEndCompat="@drawable/ic_baseline_check_box_outline_blank_24"
+      app:drawableTint="@color/transparent"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

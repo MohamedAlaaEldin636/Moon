@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -254,8 +255,12 @@ class Home2ViewModel @Inject constructor(
 
 			return
 		}*/
+		view.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.filter.all"
+		)
 
-		toFilter(view)
+		//toFilter(view)
 	}
 
 	fun toFilter(

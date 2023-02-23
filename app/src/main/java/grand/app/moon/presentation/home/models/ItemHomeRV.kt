@@ -50,6 +50,7 @@ data class ItemAdvertisementInResponseHome(
 	var store: Store?, // stories, id, image, nicname
 	var price: Float?,
 	@SerializedName("is_negotiable") var negotiable: Int?,
+	var phone: String?,
 ) : ItemInResponseHome {
 
 	val isNegotiable get() = negotiable == 1

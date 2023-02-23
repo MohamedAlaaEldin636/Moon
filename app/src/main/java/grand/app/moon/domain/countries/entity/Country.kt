@@ -34,4 +34,5 @@ data class Country(
   @SerializedName("areas")
   @Expose
   val areas : List<Country> = arrayListOf(),
+  @SerializedName("country_code") var countryCode: String? = null,
 )

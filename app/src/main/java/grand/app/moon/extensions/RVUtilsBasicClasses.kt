@@ -222,6 +222,11 @@ open class RVPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 		super.onViewRecycled(holder)
 	}
 
+	fun updateItem(position: Int, adjustmentsAction: (Item) -> Unit) {
+		adjustmentsAction(snapshot().items[position])
+		notifyItemChanged(position)
+	}
+
 }
 
 class VHPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
@@ -428,6 +433,13 @@ open class RVItemCommonListUsageWithDifferentItems<Item : Any>(
 	fun submitList(list: List<Item>) {
 		this.list = list
 		notifyDataSetChanged()
+	}
+
+	fun updateItem(position: Int, item: Item) {
+		this.list = this.list.toMutableList().also {
+			it[position] = item
+		}.toList()
+		notifyItemChanged(position)
 	}
 
 	fun insertList(list: List<Item>) {

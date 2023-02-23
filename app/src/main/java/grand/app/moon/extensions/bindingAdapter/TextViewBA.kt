@@ -22,6 +22,10 @@ import grand.app.moon.core.extenstions.spToPx
 import grand.app.moon.extensions.orZero
 import kotlin.math.roundToInt
 
+fun TextView.setCompoundDrawablesRelativeWithIntrinsicBoundsEnd(@DrawableRes res: Int) {
+	setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, res, 0)
+}
+
 fun AppCompatTextView.adjustInsideRV(
 	text: CharSequence,
 	maxTextSizeInSpUsedInAutoSizing: Float = context.pxToSp(

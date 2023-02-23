@@ -1,6 +1,7 @@
 package grand.app.moon.domain.ads.use_case
 
 import android.util.Log
+import grand.app.moon.domain.ads.DynamicFilterProperty
 import grand.app.moon.domain.ads.ResponseFilterDetails
 import grand.app.moon.domain.ads.entity.AddFavouriteAdsRequest
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
@@ -110,6 +111,13 @@ class AdsUseCase @Inject constructor(
   }.flowOn(Dispatchers.IO)
 
 	suspend fun getFilterDetails2Suspend(categoryId: Int, subCategoryId: Int) = repo.getFilterDetails2(categoryId, subCategoryId)
+	/*
+	list of DynamicFilterProperty (hmmm) -> id, name, type, is_range, {min, max fokkak}, children
+		.Selection(singleNotMultiSelection, //no id just send selected ids// selectedIds{1 in case of single else more in case of multi})
+		.RangedText(id, from, to)
+		.Text(id, value)
+		.Boolean(id, isTrue) if true send id else don't send
+	 */
 
 	suspend fun addAdvertisement(
 		isStore: Boolean,

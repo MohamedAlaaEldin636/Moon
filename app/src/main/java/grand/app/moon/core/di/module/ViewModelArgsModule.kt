@@ -25,6 +25,11 @@ import grand.app.moon.presentation.stats.StatsUsersHistoryFragmentArgs
 object ViewModelArgsModule {
 
 	@Provides
+	fun provideSingleOrMultiSelectionFragmentArgs(state: SavedStateHandle): SingleOrMultiSelectionFragmentArgs {
+		return SingleOrMultiSelectionFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
 	fun provideMapOfDataFragmentArgs(state: SavedStateHandle): MapOfDataFragmentArgs {
 		return MapOfDataFragmentArgs.fromBundle(state.asBundle())
 	}
