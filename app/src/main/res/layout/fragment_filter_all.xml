@@ -36,17 +36,31 @@
 
         android:orientation="vertical"
 
-        android:paddingTop="24dp"
+        android:paddingTop="0dp"
         android:paddingBottom="0dp"
         android:paddingStart="0dp"
         android:paddingEnd="0dp"
         android:clipToPadding="false">
+
+        <include
+          android:id="@+id/toolbarCurve"
+
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+
+          layout="@layout/item_toolbar_curve"
+
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"/>
 
         <EditText
           android:id="@+id/searchEditText"
 
           android:layout_marginStart="16dp"
           android:layout_marginEnd="16dp"
+
+          android:layout_marginTop="24dp"
 
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -75,7 +89,7 @@
           android:drawablePadding="9.5dp"
           app:drawableStartCompat="@drawable/search_home_1"
 
-          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"/>
 
