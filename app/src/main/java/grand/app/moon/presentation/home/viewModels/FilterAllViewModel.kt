@@ -103,7 +103,11 @@ class FilterAllViewModel @Inject constructor(
 
 			when {
 				binding is ItemDynamicFilterBooleanBinding && item is DynamicFilterProperty.Checked -> {
-					adapter.updateItem(position, item.copy(isSelected = item.isSelected.not()))
+					responseFilterProperties.value = responseFilterProperties.value?.let {
+						it.copy(
+							properties = it.properties.copyUpdateItem(position, item.copy(isSelected = item.isSelected.not()))
+						)
+					}
 				}
 				binding is ItemDynamicFilterSelectionBinding && item is DynamicFilterProperty.Selection -> {
 					binding.root.findNavController().observeOnceForSelection(
@@ -129,17 +133,20 @@ class FilterAllViewModel @Inject constructor(
 
 			when (binding) {
 				is ItemDynamicFilterTextBinding -> {
-					binding.editText.doAfterTextChanged {
-						//(currentFilter[position] as? DynamicFilterProperty.Text)?.value = it.toStringOrEmpty()
+					binding.editText.doAfterTextChanged { newText ->
+						(responseFilterProperties.value?.properties?.getOrNull(position) as? DynamicFilterProperty.Text)
+							?.value = newText.toStringOrEmpty()
 					}
 				}
 				is ItemDynamicFilterRangedTextBinding -> {
-					binding.fromEditText.doAfterTextChanged {
-						//(currentFilter[position] as? DynamicFilterProperty.RangedText)?.from = it.toStringOrEmpty()
+					binding.fromEditText.doAfterTextChanged { newText ->
+						(responseFilterProperties.value?.properties?.getOrNull(position) as? DynamicFilterProperty.RangedText)
+							?.from = newText.toStringOrEmpty()
 					}
 
-					binding.fromEditText.doAfterTextChanged {
-						//(currentFilter[position] as? DynamicFilterProperty.RangedText)?.to = it.toStringOrEmpty()
+					binding.fromEditText.doAfterTextChanged { newText ->
+						(responseFilterProperties.value?.properties?.getOrNull(position) as? DynamicFilterProperty.RangedText)
+							?.to = newText.toStringOrEmpty()
 					}
 				}
 				else -> {}
