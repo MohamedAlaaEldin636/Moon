@@ -103,8 +103,7 @@
           android:paddingStart="10dp"
           android:paddingEnd="20dp"
 
-          android:text="@{viewModel.mainCategory}"
-          tools:text="@string/main_section"
+          android:text="@{viewModel.mainCategory,default=@string/main_section}"
 
           android:onClick="@{v -> viewModel.pickMainCategory(v)}"
 
@@ -140,7 +139,7 @@
           android:paddingStart="10dp"
           android:paddingEnd="20dp"
 
-          android:text="@{viewModel.subCategory}"
+          android:text="@{viewModel.subCategory,default=@string/sub_section}"
           tools:text="@string/sub_section"
 
           android:onClick="@{v -> viewModel.pickSubCategory(v)}"
@@ -177,7 +176,7 @@
           android:paddingStart="10dp"
           android:paddingEnd="20dp"
 
-          android:text="@{viewModel.city}"
+          android:text="@{viewModel.city,default=@string/city}"
           tools:text="@string/city"
 
           android:onClick="@{v -> viewModel.pickCity(v)}"
@@ -214,7 +213,7 @@
           android:paddingStart="10dp"
           android:paddingEnd="20dp"
 
-          android:text="@{viewModel.area}"
+          android:text="@{viewModel.area,default=@string/area}"
           tools:text="@string/area"
 
           android:onClick="@{v -> viewModel.pickArea(v)}"

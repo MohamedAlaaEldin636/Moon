@@ -44,21 +44,21 @@ class FilterAllViewModel @Inject constructor(
 
 	val searchQuery = MutableLiveData("")
 
-	private val selectedCategory = MutableLiveData<ItemCategory?>()
-	private val selectedSubCategory = MutableLiveData<ItemSubCategory?>()
+	private val selectedCategory = MutableLiveData<ItemCategory?>(null)
+	private val selectedSubCategory = MutableLiveData<ItemSubCategory?>(null)
 	val mainCategory = selectedCategory.map {
-		it?.name ?: app.getString(R.string.main_section)
+		it?.name.letIfNullOrEmpty { app.getString(R.string.main_section) }
 	}
 	val subCategory = selectedSubCategory.map {
 		it?.name ?: app.getString(R.string.sub_section)
 	}
 
-	private val selectedCity = MutableLiveData<ResponseCity?>()
+	private val selectedCity = MutableLiveData<ResponseCity?>(null)
 	val city = selectedCity.map {
 		it?.name ?: app.getString(R.string.city)
 	}
 
-	private val selectedAreas = MutableLiveData<List<ResponseArea>?>()
+	private val selectedAreas = MutableLiveData<List<ResponseArea>?>(null)
 	val area = selectedAreas.map { list ->
 		if (list.isNullOrEmpty()) {
 			app.getString(R.string.area)

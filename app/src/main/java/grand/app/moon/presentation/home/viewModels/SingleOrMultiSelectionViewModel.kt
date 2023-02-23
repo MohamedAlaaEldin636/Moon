@@ -64,9 +64,9 @@ class SingleOrMultiSelectionViewModel @Inject constructor(
 		val isSelected = selectedItems.any { it.id == item.id }
 
 		val iconRes = if (args.isSingleNotMultiSelection) {
-			if (isSelected) R.drawable.ic_baseline_check_box_24 else R.drawable.ic_baseline_check_box_outline_blank_24
-		}else {
 			if (isSelected) R.drawable.ic_baseline_radio_button_checked_24 else R.drawable.ic_baseline_radio_button_unchecked_24
+		}else {
+			if (isSelected) R.drawable.ic_baseline_check_box_24 else R.drawable.ic_baseline_check_box_outline_blank_24
 		}
 
 		binding.textView.text = item.name

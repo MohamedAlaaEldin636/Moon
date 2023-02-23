@@ -12,6 +12,20 @@ fun String?.ifNotNullNorEmpty(action: (String) -> Unit) {
 	}
 }
 
+fun String?.ifNullOrEmpty(action: () -> Unit) {
+	if (isNullOrEmpty()) {
+		action()
+	}
+}
+
+fun String?.letIfNullOrEmpty(action: () -> String): String {
+	return if (isNullOrEmpty()) {
+		action()
+	}else {
+		this
+	}
+}
+
 fun String.ifNotEmpty(action: (String) -> Unit) {
 	if (isNotEmpty()) {
 		action(this)
