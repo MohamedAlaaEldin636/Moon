@@ -104,6 +104,29 @@ fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 	}
 }
 
+fun UserLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+	context: Context,
+	navController: NavController,
+	id: Int?
+) {
+	if (context.isLogin() && id == this().id) {
+		// My Store
+		navController.navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.create.store"
+		)
+	}else {
+		// Other stores
+		navController.navigate(
+			R.id.nav_store,
+			bundleOf(
+				"id" to id.orZero(),
+				"type" to 3
+			), Constants.NAVIGATION_OPTIONS
+		)
+	}
+}
+
 fun UserLocalUseCase.goToAdvDetailsCheckIfMyAdv(
 	context: Context,
 	navController: NavController,

@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.databinding.FragmentStoreListBinding
 import grand.app.moon.domain.filter.entitiy.FilterResultRequest
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.goToStoreDetailsIgnoringStoriesCheckIfMyStore
 import grand.app.moon.extensions.navigateDeepLinkWithOptions
 import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 import grand.app.moon.presentation.base.utils.Constants
@@ -103,19 +104,11 @@ class StoreListFragment : BaseFragment<FragmentStoreListBinding>() {
 			  return@observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
 		  }
 
-		  if (id == viewModel.userLocalUseCase().id) {
-			  findNavController().navigateDeepLinkWithOptions(
-				  "fragment-dest",
-				  "grand.app.moon.dest.create.store"
-			  )
-		  }else {
-			  findNavController().navigate(
-				  R.id.nav_store,
-				  bundleOf(
-					  "id" to id,
-					  "type" to 3
-				  ),
-				  Constants.NAVIGATION_OPTIONS
+		  context?.also { context ->
+			  viewModel.userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+				  context,
+				  findNavController(),
+				  id
 			  )
 		  }
 
