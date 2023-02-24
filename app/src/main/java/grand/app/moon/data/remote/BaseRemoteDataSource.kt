@@ -258,10 +258,13 @@ open class BaseRemoteDataSource @Inject constructor() {
   ): MAResult.Immediate<MABaseResponse<T>> = withContext(Dispatchers.IO) {
     try {
 
+			MyLogger.e("jsadkjash ch 1")
 
       val response = apiCall()
 
-      val errorStatus = when (response.code) {
+	    MyLogger.e("jsadkjash ch 2 $response")
+
+	    val errorStatus = when (response.code) {
         200 -> {
           return@withContext MAResult.Success(response)
         }
@@ -287,7 +290,7 @@ open class BaseRemoteDataSource @Inject constructor() {
 
       MAResult.Failure(errorStatus, response.code, response.message)
     }catch (throwable: Throwable) {
-      Log.d(TAG, "iduaosiudaso eeeeeeeeeeeeeee")
+      Log.d(TAG, "iduaosiudaso eeeeeeeeeeeeeee $throwable")
 
       when (throwable) {
         is HttpException -> {
