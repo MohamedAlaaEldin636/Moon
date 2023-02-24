@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.home
 
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -8,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
+import grand.app.moon.core.extenstions.launchCometChat
 import grand.app.moon.databinding.*
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.home.models.StoreModel
@@ -16,11 +18,9 @@ import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
-import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
-import grand.app.moon.presentation.home.models.ResponseStory
-import grand.app.moon.presentation.home.models.toStore
+import grand.app.moon.presentation.home.models.*
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 fun Home2ViewModel.getAdapterStories(): RVItemCommonListUsageWithDifferentItems<ResponseStory> = RVItemCommonListUsageWithDifferentItems(
@@ -118,9 +118,10 @@ fun Home2ViewModel.getAdapterStories(): RVItemCommonListUsageWithDifferentItems<
 	}
 }
 
+@Suppress("unused")
 fun Home2ViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCategoryBinding, ItemCategory>(
 	R.layout.item_home_rv_category,
-	onItemClick = { adapter, binding ->
+	onItemClick = { _, binding ->
 		val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemCategory>()
 			?: return@RVItemCommonListUsage
 
@@ -132,7 +133,7 @@ fun Home2ViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCate
 			), Constants.NAVIGATION_OPTIONS
 		)
 	}
-) { binding, position, item ->
+) { binding, _, item ->
 	binding.root.tag = item.toJsonInlinedOrNull()
 
 	binding.textTextView.text = item.name
@@ -143,51 +144,41 @@ fun Home2ViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCate
 
 }
 
-fun Home2ViewModel.getAdapterForStores(isTopRatedNotFollowed: Boolean) = RVItemCommonListUsage<ItemHomeRvStoreBinding, ItemStoreInResponseHome>(
+fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStoreBinding, ItemStoreInResponseHome>(
 	R.layout.item_home_rv_store,
-	onItemClick = { adapter, binding ->
-		val item = binding.getUsingRootViaJson<ItemStoreInResponseHome>() ?: return@RVItemCommonListUsage
+	onItemClick = { _, binding ->
+		val context = binding.root.context ?: return@RVItemCommonListUsage
 
-		binding.root.findNavController().navigate(
-			R.id.nav_store,
-			bundleOf(
-				"id" to item.id.orZero(),
-				"type" to 3
-			),
-			Constants.NAVIGATION_OPTIONS
+		val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@RVItemCommonListUsage
+
+		userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+			context,
+			binding.root.findNavController(),
+			item.id
 		)
 	},
 	additionalListenersSetups = { adapter, binding ->
 		binding.followingButtonView.setOnClickListener { view ->
 			val context = view.context ?: return@setOnClickListener
 
-			val item = binding.getUsingRootViaJson<ItemStoreInResponseHome>() ?: return@setOnClickListener
+			val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@setOnClickListener
+			val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
 
 			if (context.isLoginWithOpenAuth()) {
-				if (isTopRatedNotFollowed) {
-					//repoShop.followStore() todo ...
-					// change in UI then call activity viewModel . scope . run el code w hwa ma3a nfso isa.
-				}else {
-
+				context.applicationScope?.launch {
+					repoShop.followStore(item.id.orZero())
 				}
-				/*
-				val fragment = v.findFragment<HomeFragment>()
-          if(adapterType == -1) {//top rated stores
-            fragment.viewModel.storeAdapter.position = position
-            fragment.viewModel.follow()
-          }else { // following Adapter
-            fragment.viewModel.followingsStoresAdapter.position = position
-            fragment.viewModel.followingsStores()
-          }
-				 */
-			}
 
-			// todo if isLogin not go login else if store can follow ...
-			// todo also ui of it isa. so change and use notifyitemchanged isa.
+				adapter.updateItem(
+					position,
+					item.copy(isFollowing = item.isFollowing.orFalse().not())
+				)
+			}
 		}
 	}
 ) { binding, position, item ->
-	binding.setUsingRootViaJson(item)
+	binding.root.tag = item.toJsonInlinedOrNull()
+	binding.root.setTag(R.id.position_tag, position)
 
 	val context = binding.root.context ?: return@RVItemCommonListUsage
 
@@ -224,46 +215,87 @@ fun Home2ViewModel.getAdapterForStores(isTopRatedNotFollowed: Boolean) = RVItemC
 
 fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBinding, ItemAdvertisementInResponseHome>(
 	R.layout.item_home_rv_adv,
-	onItemClick = { adapter, binding ->
-		val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemAdvertisementInResponseHome>()
+	onItemClick = { _, binding ->
+		val context = binding.root.context ?: return@RVItemCommonListUsage
+
+		val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 			?: return@RVItemCommonListUsage
 
-		if (item.store?.id == userLocalUseCase().id) {
-			binding.root.findNavController().navigateDeepLinkWithOptions(
-				"fragment-dest",
-				"grand.app.moon.presentation.myAds.dest.my.adv.details.id",
-				paths = arrayOf(item.id.orZero().toString())
-			)
-		}else {
-			binding.root.findNavController().navigate(
-				R.id.nav_ads, bundleOf(
-					"id" to item.id.orZero(),
-					"type" to 2,
-					"from_store" to false
-				)
-			)
-		}
+		userLocalUseCase.goToAdvDetailsCheckIfMyAdv(
+			context,
+			binding.root.findNavController(),
+			item
+		)
 	},
 	additionalListenersSetups = { adapter, binding ->
-		binding.storeImageImageView.setOnClickListener {
-			General.TODO("ch 2")
+		val listener = View.OnClickListener {
+			val context = binding.root.context ?: return@OnClickListener
+
+			val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+				?: return@OnClickListener
+
+			//val position = binding.linearLayout.tag as? Int ?: return@OnClickListener
+
+			userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
+				context,
+				binding.root.findNavController(),
+				item.store
+			)
 		}
+		binding.storeImageImageView.setOnClickListener(listener)
+		binding.storeTextView.setOnClickListener(listener)
 		binding.favImageView.setOnClickListener {
-			General.TODO("ch 2")
+			val context = binding.root.context ?: return@setOnClickListener
+
+			val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
+
+			val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+				?: return@setOnClickListener
+
+			if (context.isLoginWithOpenAuth()) {
+				context.applicationScope?.launch {
+					repoShop.favOrUnFavAdv(item.id.orZero())
+				}
+
+				adapter.updateItem(
+					position,
+					item.copy(isFavorite = item.isFavorite.orFalse().not())
+				)
+			}
 		}
 
 		binding.whatsAppImageView.setOnClickListener {
-			General.TODO("ch 2")
+			val context = binding.root.context ?: return@setOnClickListener
+
+			val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+				?: return@setOnClickListener
+
+			context.launchWhatsApp(item.phone.orEmpty())
 		}
 		binding.callImageView.setOnClickListener {
-			General.TODO("ch 2")
+			val context = binding.root.context ?: return@setOnClickListener
+
+			val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+				?: return@setOnClickListener
+
+			context.launchDialNumber(item.phone.orEmpty())
 		}
 		binding.chatImageView.setOnClickListener {
-			General.TODO("ch 2")
+			val context = binding.root.context ?: return@setOnClickListener
+
+			val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+				?: return@setOnClickListener
+
+			if (context.isLoginWithOpenAuth()) {
+				item.store?.also {
+					context.launchCometChat(it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
+				}
+			}
 		}
 	}
 ) { binding, position, item ->
-	binding.root.tag = item.toJsonInlinedOrNull()
+	binding.root.setTagJson(item)
+	binding.root.setTag(R.id.position_tag, position)
 
 	binding.imageImageView.setupWithGlide {
 		load(item.image)

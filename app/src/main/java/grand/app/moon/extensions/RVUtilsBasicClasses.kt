@@ -96,6 +96,13 @@ open class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 		notifyDataSetChanged()
 	}
 
+	fun updateItem(position: Int, item: Item) {
+		this.list = this.list.toMutableList().also {
+			it[position] = item
+		}.toList()
+		notifyItemChanged(position)
+	}
+
 	fun insertList(list: List<Item>) {
 		if (list.isEmpty()) return
 		if (this.list.isEmpty()) return submitList(list)

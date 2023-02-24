@@ -59,15 +59,20 @@ class FilterResults2ViewModel @Inject constructor(
 			binding.storeTextView.setOnClickListener(listener)
 			binding.favImageView.setOnClickListener {
 				val context = binding.root.context ?: return@setOnClickListener
+
+				val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
+
 				val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 					?: return@setOnClickListener
-				val position = binding.linearLayout.tag as? Int ?: return@setOnClickListener
 
-				adapter.updateItem(position) {
-					it.isFavorite = item.isFavorite.orFalse().not()
-				}
-				context.applicationScope?.launch {
-					repoShop.favOrUnFavAdv(item.id.orZero())
+				if (context.isLoginWithOpenAuth()) {
+					context.applicationScope?.launch {
+						repoShop.favOrUnFavAdv(item.id.orZero())
+					}
+
+					adapter.updateItem(position) {
+						it.isFavorite = item.isFavorite.orFalse().not()
+					}
 				}
 			}
 			binding.whatsAppImageView.setOnClickListener {

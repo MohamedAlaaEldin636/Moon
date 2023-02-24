@@ -226,8 +226,6 @@
       android:layout_width="0dp"
       android:layout_height="0dp"
 
-      android:background="@color/white"
-
       android:layout_marginTop="1dp"
       android:padding="12dp"
       android:clipToPadding="false"
@@ -249,7 +247,7 @@
       android:layout_height="0dp"
 
       android:elevation="9dp"
-      android:onClick="@{v -> viewModel.changeFilter(v, TypeSearchResult.ADVERTISEMENT)}"
+      android:onClick="@{() -> viewModel.changeFilter(TypeSearchResult.ADVERTISEMENT)}"
 
       app:layout_constraintTop_toTopOf="@id/filterAdvertisementsTextView"
       app:layout_constraintBottom_toBottomOf="@id/filterAdvertisementsTextView"
@@ -260,7 +258,7 @@
       android:layout_height="0dp"
 
       android:elevation="9dp"
-      android:onClick="@{v -> viewModel.changeFilter(v, TypeSearchResult.STORE)}"
+      android:onClick="@{() -> viewModel.changeFilter(TypeSearchResult.STORE)}"
 
       app:layout_constraintTop_toTopOf="@id/filterStoresTextView"
       app:layout_constraintBottom_toBottomOf="@id/filterStoresTextView"
@@ -271,7 +269,7 @@
       android:layout_height="0dp"
 
       android:elevation="9dp"
-      android:onClick="@{v -> viewModel.changeFilter(v, TypeSearchResult.NICKNAME)}"
+      android:onClick="@{() -> viewModel.changeFilter(TypeSearchResult.NICKNAME)}"
 
       app:layout_constraintTop_toTopOf="@id/filterNicknamesTextView"
       app:layout_constraintBottom_toBottomOf="@id/filterNicknamesTextView"
@@ -282,7 +280,7 @@
       android:layout_height="0dp"
 
       android:elevation="9dp"
-      android:onClick="@{v -> viewModel.changeFilter(v, TypeSearchResult.CATEGORY)}"
+      android:onClick="@{() -> viewModel.changeFilter(TypeSearchResult.CATEGORY)}"
 
       app:layout_constraintTop_toTopOf="@id/filterCategoriesTextView"
       app:layout_constraintBottom_toBottomOf="@id/filterCategoriesTextView"

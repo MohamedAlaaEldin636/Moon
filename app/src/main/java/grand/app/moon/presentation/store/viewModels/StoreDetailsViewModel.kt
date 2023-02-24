@@ -323,7 +323,7 @@ class StoreDetailsViewModel @Inject constructor(
   }
 
   fun checkOnline() {
-    val listenerID = "store_${store.get()!!.id}";
+    val listenerID = "user_${store.get()!!.id}";
 
     CometChat.addUserListener(
       listenerID, object : CometChat.UserListener() {

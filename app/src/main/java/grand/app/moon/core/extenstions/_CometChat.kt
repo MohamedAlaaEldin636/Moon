@@ -29,12 +29,32 @@ fun Context.startChatPage(v: View, user: User) {
 
   v.context.startActivity(intent)
 }
+fun Context.startChatPage2(user: User) {
+  val intent = Intent(this, CometChatMessageListActivity::class.java)
+  intent.putExtra(UIKitConstants.IntentStrings.UID, user.uid)
+  intent.putExtra(UIKitConstants.IntentStrings.AVATAR, user.avatar)
+  intent.putExtra(UIKitConstants.IntentStrings.STATUS, user.status)
+  intent.putExtra(UIKitConstants.IntentStrings.NAME, user.name)
+  intent.putExtra(UIKitConstants.IntentStrings.TYPE, CometChatConstants.RECEIVER_TYPE_USER)
+  intent.putExtra(UIKitConstants.IntentStrings.LINK, user.link)
+  intent.putExtra(UIKitSettings.LANGUAGE_DATA, LanguagesHelper.getCurrentLanguage())
+
+	this.startActivity(intent)
+}
+
+fun Context.launchCometChat(uid: Int, name: String, image: String?) {
+	val user = User()
+	user.uid = "user_$uid"
+	if(image != null) user.avatar = image
+	user.name = name
+	startChatPage2(user)
+}
 
 fun Context.openChatStore(v: View, uid: Int, name: String, image: String?) {
   Log.d(TAG, "startChatConversation $image")
   v.disable()
   val user = User()
-  user.uid = "store_$uid" // Replace with the UID for the user to be created
+  user.uid = "user_$uid" // Replace with the UID for the user to be created
   if(image != null) user.avatar = image
   user.name = name
   startChatPage(v, user)

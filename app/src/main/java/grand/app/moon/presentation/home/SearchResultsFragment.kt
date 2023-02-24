@@ -2,26 +2,20 @@ package grand.app.moon.presentation.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
-import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.databinding.FragmentSearchResultsBinding
-import grand.app.moon.databinding.FragmentSearchSuggestionsBinding
-import grand.app.moon.extensions.MADividerItemDecoration
-import grand.app.moon.extensions.addUniqueTypeItemDecoration
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.home.viewModels.SearchResultsViewModel
-import grand.app.moon.presentation.home.viewModels.SearchSuggestionsViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class SearchResultsFragment : BaseFragment<FragmentSearchResultsBinding>() {
@@ -38,7 +32,7 @@ class SearchResultsFragment : BaseFragment<FragmentSearchResultsBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 
 		binding.recyclerView.setupWithRVItemCommonListUsage(
-			viewModel.adapterAdvertisements,
+			viewModel.adapterAdvertisements.withDefaultHeaderAndFooterAdapters(),
 			false,
 			1
 		)
@@ -69,11 +63,35 @@ class SearchResultsFragment : BaseFragment<FragmentSearchResultsBinding>() {
 		}
 
 		viewModel.filterType.observe(viewLifecycleOwner) {
-			binding.recyclerView.adapter = when (it) {
-				null, TypeSearchResult.ADVERTISEMENT -> viewModel.adapterAdvertisements
-				TypeSearchResult.STORE -> viewModel.adapterStories
-				TypeSearchResult.NICKNAME -> viewModel.adapterNicknames
-				TypeSearchResult.CATEGORY -> viewModel.adapterCategories
+			when (it) {
+				null, TypeSearchResult.ADVERTISEMENT -> {
+					binding.recyclerView.setupWithRVItemCommonListUsage(
+						viewModel.adapterAdvertisements.withDefaultHeaderAndFooterAdapters(),
+						false,
+						1
+					)
+				}
+				TypeSearchResult.STORE -> {
+					binding.recyclerView.setupWithRVItemCommonListUsage(
+						viewModel.adapterStories.withDefaultHeaderAndFooterAdapters(),
+						false,
+						2
+					)
+				}
+				TypeSearchResult.NICKNAME -> {
+					binding.recyclerView.setupWithRVItemCommonListUsage(
+						viewModel.adapterNicknames.withDefaultHeaderAndFooterAdapters(),
+						false,
+						2
+					)
+				}
+				TypeSearchResult.CATEGORY -> {
+					binding.recyclerView.setupWithRVItemCommonListUsage(
+						viewModel.adapterCategories.withDefaultHeaderAndFooterAdapters(),
+						false,
+						3
+					)
+				}
 			}
 		}
 	}

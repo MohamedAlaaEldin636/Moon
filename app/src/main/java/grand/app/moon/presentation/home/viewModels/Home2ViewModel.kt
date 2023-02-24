@@ -48,12 +48,12 @@ class Home2ViewModel @Inject constructor(
 	var listOfMostRatedStore = emptyList<ItemStoreInResponseHome>()
 	var listOfFollowingsStores = emptyList<ItemStoreInResponseHome>()
 
-	val adapterOfStores by lazy { getAdapterForStores(true) }
+	val adapterOfStores by lazy { getAdapterForStores() }
 	val adapterOfAds by lazy { getAdapterForAds() }
 
-	val adapterMostRatedStore by lazy { getAdapterForStores(true) }
+	val adapterMostRatedStore by lazy { getAdapterForStores() }
 
-	val adapterFollowingsStores by lazy { getAdapterForStores(false) }
+	val adapterFollowingsStores by lazy { getAdapterForStores() }
 
 	val adapterSuggestedAds by lazy { getAdapterForAds() }
 

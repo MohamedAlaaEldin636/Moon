@@ -4,26 +4,21 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.*
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.base.extensions.showMessage
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ItemHomeRV
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
-import grand.app.moon.presentation.splash.postWithReceiverAndRunCatching
-import grand.app.moon.presentation.splash.postWithReceiverAndRunCatchingUntilSpecificCriteria
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -61,17 +56,6 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-
-		if (binding.rvLikeLinearLayout.childCount == 0) {
-			//binding.recyclerView.recycledViewPool.setMaxRecycledViews(0, Int.MAX_VALUE)
-
-			/*viewModel.adapter2.setHasStableIds(true)
-			binding.recyclerView.setupWithRVItemCommonListUsage(
-				viewModel.adapter2,
-				false,
-				1
-			)*/
-		}
 
 		viewModel.adapterCategories.submitList(viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands())
 	}
@@ -170,7 +154,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 
 							binding.recyclerView.setupInnerRvs(position, item.type)
 
-							binding.showAllTextView.setupInnerShowAll(item.type)
+							binding.showAllTextView.setupInnerShowAll(item.type, item)
 
 							this@Home2Fragment.binding.rvLikeLinearLayout.addView(
 								binding.root,
@@ -187,25 +171,67 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 		}
 	}
 
-	private fun TextView.setupInnerShowAll(type: ItemHomeRV.Type) {
-		setOnClickListener {
+	private fun TextView.setupInnerShowAll(type: ItemHomeRV.Type, item: ItemHomeRV) {
+		setOnClickListener { view ->
+			val context = view.context ?: return@setOnClickListener
+
+			val navController = findNavController()
+
 			when (type) {
 				ItemHomeRV.Type.STORIES -> {
-					findNavController().navigateDeepLinkWithOptions(
+					navController.navigateDeepLinkWithOptions(
 						"fragment-dest",
 						"grand.app.moon.dest.all.stories"
 					)
 				}
 				ItemHomeRV.Type.CATEGORIES -> {
-					findNavController().navigateSafely(
+					navController.navigateSafely(
 						Home2FragmentDirections.actionDestHomeToDepartmentListFragment()
 					)
 				}
-				ItemHomeRV.Type.MOST_RATED_STORIES -> TODO()
-				ItemHomeRV.Type.FOLLOWING_STORIES -> TODO()
-				ItemHomeRV.Type.SUGGESTED_ADS -> TODO()
-				ItemHomeRV.Type.MOST_POPULAR_ADS -> TODO()
-				ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> TODO()
+				ItemHomeRV.Type.MOST_RATED_STORIES -> {
+					navController.navigateSafely(
+						Home2FragmentDirections.actionDestHomeFragmentToStoreListFragment(
+							context.getString(R.string.top_stores_rated),
+							3
+						)
+					)
+				}
+				ItemHomeRV.Type.FOLLOWING_STORIES -> {
+					navController.navigateDeepLinkWithOptions(
+						"store",
+						"grand.app.moon.store.followed"
+					)
+				}
+				ItemHomeRV.Type.SUGGESTED_ADS -> {
+					navController.navigate(
+						R.id.nav_category_list_ads,
+						bundleOf(
+							"category_id" to -1,
+							"tabBarText" to item.name.orEmpty(),
+							"type" to 1
+						), Constants.NAVIGATION_OPTIONS
+					)
+				}
+				ItemHomeRV.Type.MOST_POPULAR_ADS -> {
+					navController.navigate(
+						R.id.nav_category_list_ads,
+						bundleOf(
+							"category_id" to -1,
+							"tabBarText" to item.name.orEmpty(),
+							"type" to 2
+						), Constants.NAVIGATION_OPTIONS
+					)
+				}
+				ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> {
+					navController.navigate(
+						R.id.nav_category_list_ads,
+						bundleOf(
+							"category_id" to item.dynamicCategoriesAdsId.orZero(),
+							"tabBarText" to item.name.orEmpty()
+						), Constants.NAVIGATION_OPTIONS
+					)
+				}
 			}
 		}
 	}

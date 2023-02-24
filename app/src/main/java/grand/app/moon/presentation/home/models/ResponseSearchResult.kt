@@ -21,7 +21,11 @@ data class ResponseSearchResult(
 	var price: Float?,
 	@SerializedName("price_before") var priceBefore: Float?,
 	@SerializedName("is_negotiable") var negotiable: Int?,
-	var phone: String,
+	var phone: String?,
+	@SerializedName("is_following") var isFollowing: Boolean?,
+	var name: String?,
+	var nickname: String?,
+	@SerializedName("advertisements_count") var advertisementsCount: Int?,
 ) {
 	val isNegotiable get() = negotiable == 1
 
