@@ -77,14 +77,26 @@ fun <T : Any> Fragment.performListTransformationAndGetOnDistinctChangeForAdapter
 	viewLifecycleOwner.lifecycleScope.launch {
 		viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 			adapter.loadStateFlow.collectLatest {
+				MyLogger.e("checking transformations 1")
+
 				val newList = adapter.snapshot().items.let(transformation)
 
+				MyLogger.e("checking transformations 2")
+
 				if (newList != list) {
+					MyLogger.e("checking transformations 3")
+
 					list = newList
+
+					MyLogger.e("checking transformations 4")
 
 					adapter.submitData(PagingData.from(list.orEmpty()))
 
+					MyLogger.e("checking transformations 5")
+
 					onChange(list.orEmpty())
+
+					MyLogger.e("checking transformations 6")
 				}
 			}
 		}

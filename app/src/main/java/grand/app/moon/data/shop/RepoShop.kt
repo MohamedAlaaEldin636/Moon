@@ -19,6 +19,7 @@ import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.home.FilterAllFragment
 import grand.app.moon.presentation.home.models.Interaction
+import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.map.MapOfDataFragment
 import grand.app.moon.presentation.map.model.ResponseMapData
@@ -353,18 +354,38 @@ class RepoShop @Inject constructor(
 
 	suspend fun getAppSocialMedia() = remoteDataSource.getAppSocialMedia()
 
-	fun getAllStoriesFollowing() = BasePaging.createFlowViaPager {
+	fun getAllStoriesFollowing(
+		transformation: (List<ResponseStory>) -> List<ResponseStory> = { list ->
+			list.sortedBy {
+				if (it.isSeen) 1 else 0
+			}
+		}
+	) = BasePaging.createFlowViaPager {
 		remoteDataSource.getAllStories(it).mapImmediate { baseResponse ->
 			baseResponse.map { response ->
-				response?.followedStoresStories
+				response?.followedStoresStories?.let { stories ->
+					stories.copy(
+						transformation(stories.data.orEmpty())
+					)
+				}
 			}
 		}
 	}
 
-	fun getAllStoriesOther() = BasePaging.createFlowViaPager {
+	fun getAllStoriesOther(
+		transformation: (List<ResponseStory>) -> List<ResponseStory> = { list ->
+			list.sortedBy {
+				if (it.isSeen) 1 else 0
+			}
+		}
+	) = BasePaging.createFlowViaPager {
 		remoteDataSource.getAllStories(it).mapImmediate { baseResponse ->
 			baseResponse.map { response ->
-				response?.stories
+				response?.stories?.let { stories ->
+					stories.copy(
+						transformation(stories.data.orEmpty())
+					)
+				}
 			}
 		}
 	}

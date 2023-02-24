@@ -95,7 +95,6 @@ class AllStoriesFragment : BaseFragment<FragmentAllStoriesBinding>() {
 
 				launch {
 					viewModel.storiesOther.collectLatest {
-						//it.insertHeaderItem() // starting page // or base page bs kda
 						viewModel.adapterOther.submitData(it)
 					}
 				}
@@ -105,24 +104,6 @@ class AllStoriesFragment : BaseFragment<FragmentAllStoriesBinding>() {
 						viewModel.showFollowingStories.value = it.not()
 					}
 				}
-
-				performListTransformationAndGetOnDistinctChangeForAdapterUsingViewLifecycle(
-					viewModel.adapterFollowing,
-					transformation = { list ->
-						list.sortedBy {
-							if (it.isSeen) 1 else 0
-						}
-					}
-				)
-
-				performListTransformationAndGetOnDistinctChangeForAdapterUsingViewLifecycle(
-					viewModel.adapterOther,
-					transformation = { list ->
-						list.sortedBy {
-							if (it.isSeen) 1 else 0
-						}
-					}
-				)
 			}
 		}
 	}
