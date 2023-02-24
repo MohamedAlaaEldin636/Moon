@@ -3,10 +3,8 @@ package grand.app.moon.presentation.home
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.databinding.ViewDataBinding
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ConcatAdapter
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
@@ -14,7 +12,6 @@ import grand.app.moon.databinding.*
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.home.models.StoreModel
 import grand.app.moon.extensions.*
-import grand.app.moon.extensions.bindingAdapter.adjustInsideRV
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
 import grand.app.moon.presentation.base.extensions.showError
@@ -26,7 +23,7 @@ import grand.app.moon.presentation.home.models.toStore
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
 import kotlin.math.roundToInt
 
-fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems<ResponseStory>(
+fun Home2ViewModel.getAdapterStories(): RVItemCommonListUsageWithDifferentItems<ResponseStory> = RVItemCommonListUsageWithDifferentItems(
 	getLayoutRes = {
 		if (it == 0) R.layout.item_home_rv_story_addition else R.layout.item_home_rv_story_actual
 	},
@@ -86,23 +83,11 @@ fun Home2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems
 					}
 				}
 
-				// fragment-dest://grand.app.moon.dest.story.player/{jsonOfAllStoresWithStories}/{position}
-
-				if (true) {
-					fragment.findNavController().navigateDeepLinkWithOptions(
-						"fragment-dest",
-						"grand.app.moon.dest.story.player",
-						paths = arrayOf(toBeUsedListJson, toBeUsedPosition.toString())
-					)
-				}else {
-					fragment.findNavController()
-						.navigateSafely(Home2FragmentDirections.actionDestHome2ToStoryFragment(storyModel))
-				}
-				/*
-
-            R.id.home_fragment -> holder.itemLayoutBinding.shapeableImageView.findFragment<HomeFragment>()
-              .navigateSafe(HomeFragmentDirections.actionHomeFragmentToStoryFragment(storyModel))
-				 */
+				fragment.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.story.player",
+					paths = arrayOf(toBeUsedListJson, toBeUsedPosition.toString())
+				)
 			}
 		}
 	}
