@@ -14,22 +14,22 @@ data class MABasePaging<T>(
 
     val links: MAPagingLinks?,
 
-    @SerializedName("current_page") val currentPage: Int,
+    @SerializedName("current_page") val currentPage: Int?,
 
     @SerializedName("next_page_url") val nextPageUrl: String?,
     /** "first_page_url": "https://samee.my-staff.net/api/v1/orders?page=1" */
     @SerializedName("first_page_url") val firstPageUrl: String?,
 
-    @SerializedName("last_page") val lastPage: Int,
+    @SerializedName("last_page") val lastPage: Int?,
 
     /** 1 is the start number ex. index + 1 as doesn't start from 0 */
-    @SerializedName("from") val fromInPage: Int,
+    @SerializedName("from") val fromInPage: Int?,
     /** 1 */
-    @SerializedName("to") val toInPage: Int,
+    @SerializedName("to") val toInPage: Int?,
     /** 1 */
-    @SerializedName("total") val totalNumberOfItems: Int,
+    @SerializedName("total") val totalNumberOfItems: Int?,
     /** 20 */
-    @SerializedName("per_page") val numOfItemsPerPage: Int,
+    @SerializedName("per_page") val numOfItemsPerPage: Int?,
 )
 
 data class MAPagingLinks(
