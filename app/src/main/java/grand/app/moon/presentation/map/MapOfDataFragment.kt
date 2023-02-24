@@ -311,42 +311,11 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 			viewModel.allDataList?.firstOrNull { it.id == maClusterItem?.id }?.also { mapData ->
 				when (viewModel.args.type) {
 					Type.STORE -> {
-						if (mapData.stories.isNullOrEmpty()) {
-							if (mapData.id == viewModel.userLocalUseCase().id) {
-								// My Store
-								findNavController().navigateDeepLinkWithOptions(
-									"fragment-dest",
-									"grand.app.moon.dest.create.store"
-								)
-							}else {
-								// Other stores
-								findNavController().navigate(
-									R.id.nav_store,
-									bundleOf(
-										"id" to mapData.id.orZero(),
-										"type" to 3
-									), Constants.NAVIGATION_OPTIONS
-								)
-							}
-						}else {
-							val responseStory = ResponseStory(
-								stories = mapData.stories,
-								phone = mapData.phone,
-								image = mapData.image,
-								name = mapData.name,
-								createdAt = mapData.createdAt,
-								nickname = mapData.nickname,
-								id = mapData.id,
-								countryCode = mapData.country?.countryCode
-							)
-
-							findNavController().navigateDeepLinkWithOptions(
-								"fragment-dest",
-								"grand.app.moon.dest.story.player",
-								paths = arrayOf(
-									listOf(responseStory).toJsonInlinedOrNull().orEmpty(),
-									0.toString()
-								)
+						this.context?.also { context ->
+							viewModel.userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
+								context,
+								findNavController(),
+								mapData
 							)
 						}
 					}

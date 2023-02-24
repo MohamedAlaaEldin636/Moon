@@ -77,21 +77,11 @@ class MapOfDataViewModel @Inject constructor(
 	fun goToAdvDetails(view: View) {
 		val item = selectedMapData.value ?: return
 
-		if (item.store?.id == userLocalUseCase().id) {
-			view.findNavController().navigateDeepLinkWithOptions(
-				"fragment-dest",
-				"grand.app.moon.presentation.myAds.dest.my.adv.details.id",
-				paths = arrayOf(item.id.orZero().toString())
-			)
-		}else {
-			view.findNavController().navigate(
-				R.id.nav_ads, bundleOf(
-					"id" to item.id.orZero(),
-					"type" to 2,
-					"from_store" to false
-				)
-			)
-		}
+		userLocalUseCase.goToAdvDetailsCheckIfMyAdv(
+			view.context ?: return,
+			view.findNavController(),
+			item
+		)
 	}
 	fun launchWhatsApp(view: View) {
 		val phone = "${selectedMapData.value?.country?.countryCode.orEmpty()}${selectedMapData.value?.phone.orEmpty()}"

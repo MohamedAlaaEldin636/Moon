@@ -75,6 +75,9 @@ data class ItemAdvertisementInResponseHome(
 		var name: String?,
 		var nickname: String?,
 		var stories: List<ResponseStory.Story>?,
+		var phone: String?,
+		var createdAt: String?,
+		var country: Country?,
 	)
 }
 

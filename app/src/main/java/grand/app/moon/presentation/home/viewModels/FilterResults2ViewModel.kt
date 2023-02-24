@@ -29,46 +29,31 @@ class FilterResults2ViewModel @Inject constructor(
 	val adapter = RVPagingItemCommonListUsage<ItemHomeRvAdvBinding, ItemAdvertisementInResponseHome>(
 		R.layout.item_home_rv_adv,
 		onItemClick = { _, binding ->
+			val context = binding.root.context ?: return@RVPagingItemCommonListUsage
+
 			val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemAdvertisementInResponseHome>()
 				?: return@RVPagingItemCommonListUsage
 
-			if (item.store?.id == userLocalUseCase().id) {
-				binding.root.findNavController().navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.presentation.myAds.dest.my.adv.details.id",
-					paths = arrayOf(item.id.orZero().toString())
-				)
-			}else {
-				binding.root.findNavController().navigate(
-					R.id.nav_ads, bundleOf(
-						"id" to item.id.orZero(),
-						"type" to 2,
-						"from_store" to false
-					)
-				)
-			}
+			userLocalUseCase.goToAdvDetailsCheckIfMyAdv(
+				context,
+				binding.root.findNavController(),
+				item
+			)
 		},
 		additionalListenersSetups = { adapter, binding ->
 			val listener = View.OnClickListener { view ->
-				//val context = binding.root.context ?: return@OnClickListener
+				val context = binding.root.context ?: return@OnClickListener
+
 				val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 					?: return@OnClickListener
+
 				//val position = binding.linearLayout.tag as? Int ?: return@OnClickListener
 
-				if (item.store?.id == userLocalUseCase().id) {
-					view.findNavController().navigateDeepLinkWithOptions(
-						"fragment-dest",
-						"grand.app.moon.dest.create.store"
-					)
-				}else {
-					view.findNavController().navigate(
-						R.id.nav_store,
-						bundleOf(
-							"id" to item.store?.id.orZero(),
-							"type" to 3
-						), Constants.NAVIGATION_OPTIONS
-					)
-				}
+				userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
+					context,
+					binding.root.findNavController(),
+					item
+				)
 			}
 			binding.storeImageImageView.setOnClickListener(listener)
 			binding.storeTextView.setOnClickListener(listener)
