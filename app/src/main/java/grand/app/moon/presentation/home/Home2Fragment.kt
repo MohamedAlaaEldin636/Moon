@@ -196,7 +196,11 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 						"grand.app.moon.dest.all.stories"
 					)
 				}
-				ItemHomeRV.Type.CATEGORIES -> TODO()
+				ItemHomeRV.Type.CATEGORIES -> {
+					findNavController().navigateSafely(
+						Home2FragmentDirections.actionDestHomeToDepartmentListFragment()
+					)
+				}
 				ItemHomeRV.Type.MOST_RATED_STORIES -> TODO()
 				ItemHomeRV.Type.FOLLOWING_STORIES -> TODO()
 				ItemHomeRV.Type.SUGGESTED_ADS -> TODO()

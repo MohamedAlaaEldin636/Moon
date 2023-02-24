@@ -1,9 +1,10 @@
 package grand.app.moon.presentation.home.models
 
+import com.google.gson.annotations.SerializedName
 import grand.app.moon.helpers.paging.MABasePaging
 
 data class ResponseAllStories(
-	var followedStoresStories: MABasePaging<ResponseStory>?,
+	@SerializedName("followed_stores_stories") var followedStoresStories: MABasePaging<ResponseStory>?,
 	var stories: MABasePaging<ResponseStory>?,
 )
 /*
