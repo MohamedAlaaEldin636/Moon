@@ -87,6 +87,7 @@ data class ResponseHome(
 	@SerializedName("suggested-ads") var suggestedAds: List<ItemAdvertisementInResponseHome>?,
 	@SerializedName("most-popular-ads") var mostPopularAds: List<ItemAdvertisementInResponseHome>?,
 	@SerializedName("category-ads") var dynamicCategoriesAds: List<Category>?,
+	@SerializedName("notification_count") var notificationCount: Int?,
 ) {
 
 	data class Category(

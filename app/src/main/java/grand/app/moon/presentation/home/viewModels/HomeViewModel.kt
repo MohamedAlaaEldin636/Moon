@@ -6,6 +6,7 @@ import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
@@ -26,6 +27,7 @@ import grand.app.moon.domain.home.models.*
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.use_case.StoreUseCase
 import grand.app.moon.extensions.navigateDeepLinkWithOptions
+import grand.app.moon.extensions.orZero
 import grand.app.moon.presentation.addStore.BrowserHelper
 import grand.app.moon.presentation.ads.adapter.AdsHomeAdapter
 import grand.app.moon.presentation.base.utils.Constants
@@ -48,6 +50,11 @@ class HomeViewModel @Inject constructor(
   val homeUseCase: HomeUseCase,
   val repoPackages: RepositoryPackages
 ) : BaseViewModel() {
+
+	val notificationsCount = MutableLiveData(0)
+	val notificationsCountText = notificationsCount.map {
+		it.orZero().toString()
+	}
 
   var isRefresh = false
   val followStoreRequest = FollowStoreRequest()

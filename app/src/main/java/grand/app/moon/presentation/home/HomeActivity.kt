@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.os.postDelayed
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
@@ -75,6 +76,14 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>() {
     }
 
 	  MyLogger.e("gggggggggggggggggggggggggg -> 5 ${kotlin.runCatching { nav.currentDestination?.id == R.id.dest_add_story }.getOrElse { it }}")
+
+		viewModel.notificationsCount.observe(this) {
+			if (binding.icNotification.isVisible && it.orZero() > 0) {
+				binding.notificationTextView.show()
+			}else {
+				binding.notificationTextView.hide()
+			}
+		}
   }
 
 	private fun initFacebook() {
@@ -153,6 +162,8 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>() {
 //          nav.navigate(HomeFragmentDirections.actionHomeFragmentToCommetChatFragment())
 		    }
 		    Constants.NOTIFICATION -> {
+			    viewModel.notificationsCount.value = 0
+
 //          if (viewModel.isLoggin)
 			    nav.navigate(NavHomeDirections.moveToNotification())
 //          else
@@ -443,6 +454,7 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>() {
       binding.bottomNavigationView.hide()
       binding.imgMoonLogo.hide()
       binding.icNotification.hide()
+      binding.notificationTextView.hide()
       binding.menuItemMap.hide()
       binding.icChat.hide()
       binding.icMenu.hide()
@@ -456,6 +468,11 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>() {
       binding.bottomNavigationView.show()
       binding.imgMoonLogo.show()
       binding.icNotification.show()
+	    if (viewModel.notificationsCount.value.orZero() > 0) {
+		    binding.notificationTextView.show()
+	    }else {
+		    binding.notificationTextView.hide()
+	    }
       binding.menuItemMap.show()
       binding.icChat.show()
       binding.icMenu.show()

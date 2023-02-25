@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -19,6 +20,7 @@ import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ItemHomeRV
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
+import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -26,6 +28,8 @@ import kotlinx.coroutines.launch
 class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 
 	val viewModel by viewModels<Home2ViewModel>()
+
+	private val activityViewModel by activityViewModels<HomeViewModel>()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -100,6 +104,8 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 						}
 					}
 				) { responseHome ->
+					activityViewModel.notificationsCount.value = responseHome.notificationCount.orZero()
+
 					viewModel.listOfMostRatedStore = responseHome.mostRatedStores.orEmpty()
 					viewModel.adapterMostRatedStore.submitList(responseHome.mostRatedStores.orEmpty())
 
