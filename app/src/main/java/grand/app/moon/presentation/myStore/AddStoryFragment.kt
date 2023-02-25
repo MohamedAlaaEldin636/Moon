@@ -22,6 +22,7 @@ import grand.app.moon.databinding.FragmentAddStoryBinding
 import grand.app.moon.domain.shop.MAImagesOrVideo
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myStore.viewModel.AddStoryViewModel
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
@@ -111,6 +112,83 @@ class AddStoryFragment : BaseFragment<FragmentAddStoryBinding>() {
 	) { uri ->
 
 		if (uri == null) return@registerForActivityResult
+
+		val context = viewModel.app//context ?: return@registerForActivityResult
+
+		if (false) {
+			showLoading()
+
+			viewModel.addStoryImmediately(
+				this,
+				uri.createMultipartBodyPart(context, "file"),
+				true
+			) {
+				viewModel.addStoryImmediately(
+					this,
+					uri.createMultipartBodyPartAsFile(context, "file"),
+					true
+				) {
+					val uri2 = kotlin.runCatching {
+						FileProvider.getUriForFile(
+							context,
+							"grand.app.moon.fileprovider",
+							File(uri.path.orEmpty())
+						)
+						//Uri.fromFile(File(uri.path.orEmpty()))
+					}.getOrNull()
+
+					viewModel.addStoryImmediately(
+						this,
+						uri2?.createMultipartBodyPart(context, "file"),
+						true
+					) {
+						viewModel.addStoryImmediately(
+							this,
+							uri2?.createMultipartBodyPartAsFile(context, "file"),
+							true
+						) {
+							val uri3 = kotlin.runCatching {
+								Uri.fromFile(File(uri.path.orEmpty()))
+							}.getOrNull()
+
+							viewModel.addStoryImmediately(
+								this,
+								uri3?.createMultipartBodyPart(context, "file"),
+								true
+							) {
+								viewModel.addStoryImmediately(
+									this,
+									uri3?.createMultipartBodyPartAsFile(context, "file"),
+									true
+								) {
+									val uri4 = kotlin.runCatching {
+										copyFileSchemeUriToContentSchemeUri(context, uri3!!)
+									}.getOrNull()
+
+									viewModel.addStoryImmediately(
+										this,
+										uri4?.createMultipartBodyPart(context, "file"),
+										true
+									) {
+										viewModel.addStoryImmediately(
+											this,
+											uri4?.createMultipartBodyPartAsFile(context, "file"),
+											true
+										) {
+											MyLogger.e("wwwwwwwwww $uri $uri2 $uri3 $uri4 ${uri?.scheme} ${uri2?.scheme} ${uri3?.scheme} ${uri4?.scheme}")
+
+											hideLoading()
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return@registerForActivityResult
+		}
 
 //		MediaScannerConnection.scanFile(
 //			viewModel.app,

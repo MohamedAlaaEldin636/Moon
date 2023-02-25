@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -26,6 +27,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
+import grand.app.moon.presentation.myAds.addAdvFinalPage.CameraUtils
 import grand.app.moon.presentation.myStore.AddStoryFragment
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -126,9 +128,27 @@ Intent intent = new Intent(activity, ActVideoTrimmer.class);
 
 			Log.e("aa", "dofkpsdofk 1 $fileUri")
 
-			fragment.launcherTrimVideo3.launch(fileUri/*.ssssssssssss(fragment.requireContext()).also {
-				Log.e("aa", "dofkpsdofk 1 $it")
-			}*/)
+			val context = fragment.context ?: return
+
+			val destinationFile = File(context.filesDir, "video.mp4")
+
+			// Open an InputStream from the content URI and copy the file
+			val resolver = context.contentResolver
+			resolver.openInputStream(fileUri/*sourceUri*/)?.use { inputStream ->
+				destinationFile.outputStream().use { outputStream ->
+					inputStream.copyTo(outputStream)
+				}
+			}
+
+			val uri = FileProvider.getUriForFile(
+				context,
+				"grand.app.moon.fileprovider",
+				destinationFile
+			)
+
+			//addStoryImmediately(fragment, uri.createMultipartBodyPart(app, "file") ?: return)
+
+			fragment.launcherTrimVideo3.launch(fileUri)
 			/*fragment.launchSafelyTrimVideo(
 				fileUri,
 				fragment.launcherVideoTrimmer,
@@ -142,28 +162,32 @@ Intent intent = new Intent(activity, ActVideoTrimmer.class);
 		}
 	}
 
-	fun addStoryImmediately(fragment: AddStoryFragment, file: MultipartBody.Part, makeHugeChanges: Boolean = false) {
+	fun addStoryImmediately(fragment: AddStoryFragment, file: MultipartBody.Part?, makeHugeChanges: Boolean = false, onDone: () -> Unit = {}) {
 		if (false && makeHugeChanges) {
 			fragment.activity?.lifecycleScope?.launch {
 				MyLogger.e("cccccccccccc -> 1")
 
-				val resource = repoShop.addStory(
-					file,
-					link.value!!,
-					type.value!!,
-					name.value.orEmpty(),
-					if (type.value != StoryType.HIGHLIGHT) null else {
-						coverImage.value?.createMultipartBodyPart(app, "highlight_cover")
-					},
-				)
+				if (file != null) {
+					val resource = repoShop.addStory(
+						file,
+						link.value!!,
+						type.value!!,
+						name.value.orEmpty(),
+						if (type.value != StoryType.HIGHLIGHT) null else {
+							coverImage.value?.createMultipartBodyPart(app, "highlight_cover")
+						},
+					)
 
-				MyLogger.e("cccccccccccc -> 2  ${resource is Resource.Success} $resource")
+					MyLogger.e("cccccccccccc -> 2  ${resource is Resource.Success} $resource")
+				}
+
+				onDone()
 			}
 		}else {
 			fragment.handleRetryAbleActionCancellableNullable(
 				action = {
 					repoShop.addStory(
-						file,
+						file!!,
 						link.value!!,
 						type.value!!,
 						name.value.orEmpty(),
