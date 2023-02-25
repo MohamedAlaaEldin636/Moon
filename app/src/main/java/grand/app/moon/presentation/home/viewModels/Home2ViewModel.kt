@@ -41,6 +41,8 @@ class Home2ViewModel @Inject constructor(
 	val userLocalUseCase: UserLocalUseCase
 ) : AndroidViewModel(application) {
 
+	var callApi = false
+
 	val adapterStories by lazy { getAdapterStories() }
 
 	val adapterCategories by lazy { getAdapterCategories() }

@@ -34,6 +34,10 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
+		viewModel.callApi = true
+	}
+
+	private fun callApi() {
 		if (viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands().isEmpty()) {
 			handleRetryAbleActionOrGoBack(
 				action = {
@@ -61,6 +65,12 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		if (viewModel.callApi) {
+			viewModel.callApi = false
+
+			callApi()
+		}
+
 		viewModel.adapterCategories.submitList(viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands())
 	}
 
@@ -87,6 +97,8 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 			})
 
 			if (loadAds) {
+				if (_binding == null) return@handleRetryAbleActionOrGoBack
+
 				binding.rvLikeLinearLayout.removeAllViews()
 
 				handleRetryAbleActionOrGoBack(

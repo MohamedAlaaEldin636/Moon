@@ -61,26 +61,26 @@ class StoreFilterFragment : BaseFragment<FragmentStoreFilterBinding>() {
   fun setupObservers() {
     setupAdapter()
     Log.d(TAG, "setupObservers: starting")
-    viewModel.clickEvent.observe(viewLifecycleOwner, {
-      Log.d(TAG, "setupObservers: WORKED")
-      if (it == Constants.CONFIRM) {
-        Log.d(TAG, "setupObservers: CONFIRM")
+    viewModel.clickEvent.observe(viewLifecycleOwner) {
+	    Log.d(TAG, "setupObservers: WORKED")
+	    if (it == Constants.CONFIRM) {
+		    Log.d(TAG, "setupObservers: CONFIRM")
 //        val bundle = Bundle()
 //        bundle.putSerializable(Constants.STORE_FILTER, viewModel.request)
 //        setFragmentResult(Constants.BUNDLE, bundle)
 //        backToPreviousScreen()
 
-        viewModel.request.checked = true
-        val n = findNavController()
-        n.navigateUp()
-        n.currentBackStackEntry?.savedStateHandle?.set(
-          Constants.STORE_FILTER,
-          viewModel.request
-        )
+		    viewModel.request.checked = true
+		    val n = findNavController()
+		    n.navigateUp()
+		    n.currentBackStackEntry?.savedStateHandle?.set(
+			    Constants.STORE_FILTER,
+			    viewModel.request
+		    )
 
 
-      }
-    })
+	    }
+    }
   }
 
   private fun setupAdapter() {
