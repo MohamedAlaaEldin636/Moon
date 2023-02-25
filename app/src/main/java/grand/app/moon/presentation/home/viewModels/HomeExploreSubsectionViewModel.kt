@@ -22,6 +22,7 @@ import grand.app.moon.databinding.ItemHomeExploreSubsectionBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
+import grand.app.moon.presentation.explore.ExploreListFragmentDirections
 import grand.app.moon.presentation.home.HomeExploreSubsectionFragmentArgs
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
@@ -109,21 +110,17 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 
 			val listener = View.OnClickListener { view ->
 				val context = view.context ?: return@OnClickListener
-				val applicationScope = context.applicationScope ?: return@OnClickListener
+				//val applicationScope = context.applicationScope ?: return@OnClickListener
 
 				val position = binding.followButtonTextView.tag as? Int ?: return@OnClickListener
 
 				val item = adapter.snapshot().items.getOrNull(position) ?: return@OnClickListener
 
-				/* todo
-				v.findNavController().navigate(
-		ExploreListFragmentDirections.actionExploreListFragmentToCommentsListFragment(
-			model.id,
-			model.comments,
-			position
-		)
-	)
-				 */
+				view.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.commentsListFragment",
+					paths = arrayOf(item.id.orZero().toString(), item.commentsCount.orZero().toString(), position.toString())
+				)
 			}
 			binding.addCommentLinearLayout.setOnClickListener(listener)
 			binding.commentsCountTextView.setOnClickListener(listener)

@@ -159,6 +159,11 @@
     <argument
       android:name="position"
       app:argType="integer" />
+
+    <deepLink
+      android:id="@+id/deep_link_dest_commentsListFragment"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.commentsListFragment/{explore_id}/{total_comments}/{position}" />
   </fragment>
   <include app:graph="@navigation/nav_auth" />
 </navigation>
