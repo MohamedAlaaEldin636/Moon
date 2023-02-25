@@ -92,21 +92,19 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 
 				val position = binding.followButtonTextView.tag as? Int ?: return@setOnClickListener
 
-				if (context.isLoginWithOpenAuth()) {
-					val item = adapter.snapshot().items.getOrNull(position) ?: return@setOnClickListener
-					item.sharesCount = item.sharesCount.orZero().inc()
+				val item = adapter.snapshot().items.getOrNull(position) ?: return@setOnClickListener
+				item.sharesCount = item.sharesCount.orZero().inc()
 
-					applicationScope.launch {
-						repoShop.shareExplore(item.id.orZero())
-					}
-
-					adapter.notifyItemChanged(position)
-
-					context.launchShareText(
-						item.store?.name.orEmpty(),
-						item.files.orEmpty().joinToString("\n")
-					)
+				applicationScope.launch {
+					repoShop.shareExplore(item.id.orZero())
 				}
+
+				adapter.notifyItemChanged(position)
+
+				context.launchShareText(
+					item.store?.name.orEmpty(),
+					item.files.orEmpty().joinToString("\n")
+				)
 			}
 
 			val listener = View.OnClickListener { view ->

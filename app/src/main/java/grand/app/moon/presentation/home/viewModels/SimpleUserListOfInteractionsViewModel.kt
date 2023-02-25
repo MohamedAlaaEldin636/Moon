@@ -2,6 +2,7 @@ package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemSimpleUserBinding
@@ -14,6 +15,7 @@ import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragmentArgs
 import grand.app.moon.presentation.home.models.ResponseSimpleUserData
 import javax.inject.Inject
 
+@HiltViewModel
 class SimpleUserListOfInteractionsViewModel @Inject constructor(
 	application: Application,
 	val args: SimpleUserListOfInteractionsFragmentArgs,

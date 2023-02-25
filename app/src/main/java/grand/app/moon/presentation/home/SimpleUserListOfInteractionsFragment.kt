@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentSimpleUserListOfInteractionsBinding
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
@@ -15,6 +16,7 @@ import grand.app.moon.presentation.home.viewModels.SimpleUserListOfInteractionsV
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SimpleUserListOfInteractionsFragment : BaseFragment<FragmentSimpleUserListOfInteractionsBinding>() {
 
 	private val viewModel by viewModels<SimpleUserListOfInteractionsViewModel>()
