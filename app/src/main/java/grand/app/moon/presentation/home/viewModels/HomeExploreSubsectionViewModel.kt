@@ -19,6 +19,7 @@ import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeExploreSubsectionBinding
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
@@ -35,6 +36,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 	application: Application,
 	args: HomeExploreSubsectionFragmentArgs,
 	val repoShop: RepoShop,
+	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
 
 	val initialData = args.jsonOfListOfItemHomeExplore
@@ -147,6 +149,23 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 					)
 				)
 			}
+
+			val goToStoreListener = View.OnClickListener { view ->
+				val context = view.context ?: return@OnClickListener
+				//val applicationScope = context.applicationScope ?: return@OnClickListener
+
+				val position = binding.followButtonTextView.tag as? Int ?: return@OnClickListener
+
+				val item = adapter.snapshot().items.getOrNull(position) ?: return@OnClickListener
+
+				userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+					context,
+					view.findNavController(),
+					item.store?.id
+				)
+			}
+			binding.storeTextView.setOnClickListener(goToStoreListener)
+			binding.storeImageView.setOnClickListener(goToStoreListener)
 		},
 	) { binding, position, item ->
 		binding.followButtonTextView.tag = position
