@@ -62,7 +62,9 @@ object GoSellSDKUtils {
 	}
 
 	private fun MyApplication.configureApp(language: String) {
-		GoSellSDK.init(this, "sk_test_gdfGYQrI158pKJSmPEV4CtvN", packageName)
+		//sk_test_jeAIVETRHKpdgu6lOraPtsXm -> Android -> sk_live_5JpXIsZ2CuKrBv67nV1wF9EO
+		//sk_test_gdfGYQrI158pKJSmPEV4CtvN -> IOS
+		GoSellSDK.init(this, "sk_test_jeAIVETRHKpdgu6lOraPtsXm", packageName)
 		GoSellSDK.setLocale(language) //  if you dont pass locale then default locale EN will be used
 		// todo above init change above authToken(Secret API Key) with what will be given from Alaa
 		// todo setLocale before you enter any payment afdal bythaya2le isa.
