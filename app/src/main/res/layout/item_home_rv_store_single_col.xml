@@ -11,7 +11,6 @@
     android:id="@+id/constraintLayout"
 
     android:layout_width="match_parent"
-    tools:layout_width="168dp"
     android:layout_height="wrap_content"
 
     android:layout_marginStart="4dp"
@@ -30,20 +29,42 @@
       android:id="@+id/imageImageView"
 
       android:layout_width="0dp"
-      android:layout_height="127dp"
+      android:layout_height="148dp"
 
       android:scaleType="centerCrop"
 
       tools:background="@color/red_100"
 
-      tools:src="@drawable/splash"
-
-      app:shapeAppearance="@style/ShapeRound10Top"
-      app:shapeAppearanceOverlay="@style/ShapeRound10Top"
+      app:shapeAppearance="@style/ShapeRound10"
+      app:shapeAppearanceOverlay="@style/ShapeRound10"
 
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/logoImageView"
+
+      android:layout_width="60dp"
+      android:layout_height="60dp"
+
+      android:padding="2dp"
+
+      android:layout_marginEnd="19dp"
+
+      app:shapeAppearance="@style/ShapeCircle"
+      app:shapeAppearanceOverlay="@style/ShapeCircle"
+
+      tools:src="@drawable/splash"
+
+      android:scaleType="centerCrop"
+
+      app:strokeWidth="2dp"
+      app:strokeColor="@color/white"
+
+      app:layout_constraintEnd_toEndOf="@id/imageImageView"
+      app:layout_constraintTop_toBottomOf="@id/imageImageView"
+      app:layout_constraintBottom_toBottomOf="@id/imageImageView"/>
     
     <ImageView
       android:id="@+id/premiumImageView"
@@ -78,7 +99,7 @@
       textView_setSelectedBA="@{true}"
 
       android:layout_marginStart="10dp"
-      android:layout_marginEnd="10dp"
+      android:layout_marginEnd="19dp"
       android:layout_marginTop="12dp"
 
       android:drawablePadding="3.6dp"
@@ -86,7 +107,7 @@
 
       app:layout_constraintTop_toBottomOf="@id/imageImageView"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+      app:layout_constraintEnd_toStartOf="@id/logoImageView" />
 
     <TextView
       android:id="@+id/nicknameTextView"
@@ -120,7 +141,6 @@
     <androidx.appcompat.widget.AppCompatRatingBar
       android:id="@+id/ratingBar"
 
-      android:layout_marginTop="9.5dp"
       android:layout_marginStart="10dp"
 
       android:layout_width="wrap_content"
@@ -136,6 +156,7 @@
       android:progressTint="#FFBC23"
       android:progressBackgroundTint="#DAD9E2"
 
+      app:layout_constraintBottom_toTopOf="@id/viewsTextView"
       app:layout_constraintTop_toBottomOf="@id/nicknameTextView"
       app:layout_constraintStart_toStartOf="parent"/>
 
@@ -162,7 +183,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
 
-      android:layout_marginTop="12dp"
       android:layout_marginStart="10dp"
 
       style="@style/TextTajawalMedium14"
@@ -175,7 +195,7 @@
       android:drawablePadding="5dp"
       app:drawableStartCompat="@drawable/views_store_in_home_2"
 
-      app:layout_constraintTop_toBottomOf="@id/averageRateTextView"
+      app:layout_constraintBottom_toBottomOf="@id/followingButtonTextView"
       app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
@@ -184,7 +204,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
 
-      android:layout_marginTop="12dp"
       android:layout_marginStart="20dp"
 
       style="@style/TextTajawalMedium14"
@@ -197,37 +216,28 @@
       android:drawablePadding="5dp"
       app:drawableStartCompat="@drawable/ads_store_in_home_2"
 
-      app:layout_constraintTop_toBottomOf="@id/ratingBar"
-      app:layout_constraintStart_toEndOf="@id/viewsTextView"/>
-
-    <View
-      android:id="@+id/followingButtonView"
-
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-
-      android:background="@drawable/dr_rect_10_bottom"
-      android:backgroundTint="@color/colorPrimary"
-
-      app:layout_constraintTop_toTopOf="@id/followingButtonTextView"
       app:layout_constraintBottom_toBottomOf="@id/followingButtonTextView"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
+      app:layout_constraintStart_toEndOf="@id/viewsTextView"/>
 
     <!--15dp-->
     <TextView
       android:id="@+id/followingButtonTextView"
 
-      android:layout_width="0dp"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
 
       app:layout_constraintWidth_default="wrap"
 
-      android:layout_marginTop="15dp"
+      android:layout_marginBottom="20dp"
+      android:layout_marginEnd="13dp"
+      android:layout_marginTop="46dp"
 
-      android:padding="14dp"
+      android:paddingStart="13dp"
+      android:paddingEnd="13dp"
+      android:paddingTop="11dp"
+      android:paddingBottom="11dp"
 
-      android:background="@drawable/dr_rect_10_bottom"
+      android:background="@drawable/dr_rect_5"
       android:backgroundTint="@color/colorPrimary"
 
       style="@style/TextTajawalMedium14"
@@ -239,8 +249,8 @@
       android:drawablePadding="9.5dp"
       app:drawableStartCompat="@drawable/follow_add"
 
-      app:layout_constraintTop_toBottomOf="@id/viewsTextView"
-      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/logoImageView"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"/>
 
   </androidx.constraintlayout.widget.ConstraintLayout>

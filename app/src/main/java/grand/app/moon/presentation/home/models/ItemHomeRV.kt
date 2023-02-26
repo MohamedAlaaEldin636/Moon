@@ -36,6 +36,7 @@ data class ItemStoreInResponseHome(
 	var phone: String?,
 	var createdAt: String?,
 	var country: ItemAdvertisementInResponseHome.Country?,
+	@SerializedName("background_image") var backgroundImage: String?,
 ) : ItemInResponseHome {
 	val isPremium get() = premium == 1
 }

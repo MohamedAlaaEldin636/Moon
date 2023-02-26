@@ -269,6 +269,87 @@ class VHPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 
 }
 
+open class RVPagingItemCommonListUsageWithDifferentItems<Item : Any>(
+	private val getLayoutRes: RVPagingItemCommonListUsageWithDifferentItems<Item>.(position: Int) -> Int,
+	areItemsTheSameComparison: (oldItem: Item, newItem: Item) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	areContentsTheSameComparison: (oldItem: Item, newItem: Item) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+	private val onItemClick: ((adapter: RVPagingItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
+	private val onViewRecycledAction: (VHPagingItemCommonListUsageWithDifferentItems<Item>) -> Unit = {},
+	private val additionalListenersSetups: ((adapter: RVPagingItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
+	private val onBind: (binding: ViewDataBinding, position: Int, item: Item) -> Unit,
+) : PagingDataAdapter<Item, VHPagingItemCommonListUsageWithDifferentItems<Item>>(
+	object : DiffUtil.ItemCallback<Item>() {
+		override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean =
+			areItemsTheSameComparison(oldItem, newItem)
+
+		override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean =
+			areContentsTheSameComparison(oldItem, newItem)
+	}
+) {
+
+	val showEmptyViewFlow get() = loadStateFlow.mapLatest { loadState ->
+		loadState.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached &&
+			snapshot().isEmpty()
+	}
+
+	override fun getItemViewType(position: Int): Int {
+		return getLayoutRes(position)
+	}
+
+	override fun onCreateViewHolder(
+		parent: ViewGroup,
+		viewType: Int
+	): VHPagingItemCommonListUsageWithDifferentItems<Item> {
+		return VHPagingItemCommonListUsageWithDifferentItems(
+			this,
+			DataBindingUtil.inflate(parent.context.layoutInflater, viewType, parent, false),
+			onBind,
+			onItemClick,
+			additionalListenersSetups
+		)
+	}
+
+	override fun onBindViewHolder(holder: VHPagingItemCommonListUsageWithDifferentItems<Item>, position: Int) {
+		holder.bind(position, getItem(position) ?: return)
+	}
+
+	override fun onViewRecycled(holder: VHPagingItemCommonListUsageWithDifferentItems<Item>) {
+		onViewRecycledAction(holder)
+
+		super.onViewRecycled(holder)
+	}
+
+	fun updateItem(position: Int, adjustmentsAction: (Item) -> Unit) {
+		adjustmentsAction(snapshot().items[position])
+		notifyItemChanged(position)
+	}
+
+}
+
+class VHPagingItemCommonListUsageWithDifferentItems<Item : Any>(
+	private val adapter: RVPagingItemCommonListUsageWithDifferentItems<Item>,
+	val binding: ViewDataBinding,
+	private val onBind: (binding: ViewDataBinding, position: Int, item: Item) -> Unit,
+	private val onItemClick: ((adapter: RVPagingItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
+	additionalListenersSetups: ((adapter: RVPagingItemCommonListUsageWithDifferentItems<Item>, binding: ViewDataBinding) -> Unit)? = null,
+) : RecyclerView.ViewHolder(binding.root) {
+
+	init {
+		if (onItemClick != null) {
+			binding.root.setOnClickListener {
+				onItemClick.invoke(adapter, binding)
+			}
+		}
+
+		additionalListenersSetups?.invoke(adapter, binding)
+	}
+
+	fun bind(position: Int, item: Item) {
+		onBind(binding, position, item)
+	}
+
+}
+
 class VHItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	private val adapter: RVItemCommonListUsage<VDB, Item>,
 	val binding: VDB,

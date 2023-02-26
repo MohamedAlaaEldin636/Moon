@@ -16,6 +16,7 @@ import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeRvCategoryBinding
 import grand.app.moon.databinding.ItemHomeRvStoreBinding
+import grand.app.moon.databinding.ItemHomeRvStoreSingleColBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.extensions.*
@@ -86,12 +87,18 @@ class AllStoresViewModel @Inject constructor(
 		)
 	}
 
-	val adapterStores = RVPagingItemCommonListUsage<ItemHomeRvStoreBinding, ItemStoreInResponseHome>(
-		R.layout.item_home_rv_store,
+	val adapterStores = RVPagingItemCommonListUsageWithDifferentItems<ItemStoreInResponseHome>(
+		getLayoutRes = {
+			if (layoutIsTwoColNotOneCol.value == true) {
+				R.layout.item_home_rv_store
+			}else {
+				R.layout.item_home_rv_store_single_col
+			}
+		},
 		onItemClick = { _, binding ->
-			val context = binding.root.context ?: return@RVPagingItemCommonListUsage
+			val context = binding.root.context ?: return@RVPagingItemCommonListUsageWithDifferentItems
 
-			val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@RVPagingItemCommonListUsage
+			val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@RVPagingItemCommonListUsageWithDifferentItems
 
 			userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 				context,
@@ -100,21 +107,45 @@ class AllStoresViewModel @Inject constructor(
 			)
 		},
 		additionalListenersSetups = { adapter, binding ->
-			binding.followingButtonView.setOnClickListener { view ->
-				val context = view.context ?: return@setOnClickListener
+			when (binding) {
+				is ItemHomeRvStoreBinding -> {
+					binding.followingButtonView.setOnClickListener { view ->
+						val context = view.context ?: return@setOnClickListener
 
-				val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@setOnClickListener
-				val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
+						val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@setOnClickListener
+						val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
 
-				if (context.isLoginWithOpenAuth()) {
-					context.applicationScope?.launch {
-						repoShop.followStore(item.id.orZero())
+						if (context.isLoginWithOpenAuth()) {
+							context.applicationScope?.launch {
+								repoShop.followStore(item.id.orZero())
+							}
+
+							adapter.updateItem(
+								position
+							) {
+								it.isFollowing = it.isFollowing.orFalse().not()
+							}
+						}
 					}
+				}
+				is ItemHomeRvStoreSingleColBinding -> {
+					binding.followingButtonTextView.setOnClickListener { view ->
+						val context = view.context ?: return@setOnClickListener
 
-					adapter.updateItem(
-						position
-					) {
-						it.isFollowing = it.isFollowing.orFalse().not()
+						val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@setOnClickListener
+						val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
+
+						if (context.isLoginWithOpenAuth()) {
+							context.applicationScope?.launch {
+								repoShop.followStore(item.id.orZero())
+							}
+
+							adapter.updateItem(
+								position
+							) {
+								it.isFollowing = it.isFollowing.orFalse().not()
+							}
+						}
 					}
 				}
 			}
@@ -123,44 +154,86 @@ class AllStoresViewModel @Inject constructor(
 		binding.root.tag = item.toJsonInlinedOrNull()
 		binding.root.setTag(R.id.position_tag, position)
 
-		val context = binding.root.context ?: return@RVPagingItemCommonListUsage
+		val context = binding.root.context ?: return@RVPagingItemCommonListUsageWithDifferentItems
 
-		binding.imageImageView.setupWithGlide {
-			load(item.image)
+		when (binding) {
+			is ItemHomeRvStoreBinding -> {
+				binding.imageImageView.setupWithGlide {
+					load(item.image).placeholder(R.drawable.splash)
+				}
+
+				binding.nameTextView.text = item.name
+				binding.nameTextView.setCompoundDrawablesRelativeWithIntrinsicBoundsStart(
+					if (item.hasOffer.orFalse()) R.drawable.store_has_offer else 0
+				)
+
+				binding.nicknameTextView.text = item.nickname
+
+				binding.ratingBar.setProgressBA((item.averageRate.orZero() * 20).roundToInt())
+
+				binding.averageRateTextView.text = "( ${item.averageRate?.round(1).orZero()} )"
+
+				binding.viewsTextView.text = item.viewsCount.toStringOrEmpty()
+
+				binding.adsTextView.text = "${item.advertisementsCount.orZero()} ${context.getString(R.string.advertisement)}"
+
+				binding.followingButtonTextView.text = if (item.isFollowing.orFalse()) {
+					binding.followingButtonTextView.serDrawableCompatBA()
+
+					context.getString(R.string.un_follow)
+				}else {
+					binding.followingButtonTextView.serDrawableCompatBA(
+						start = ContextCompat.getDrawable(context, R.drawable.follow_add)
+					)
+
+					context.getString(R.string.follow)
+				}
+
+				binding.premiumImageView.isVisible = item.isPremium
+			}
+			is ItemHomeRvStoreSingleColBinding -> {
+				binding.imageImageView.setupWithGlide {
+					load(item.backgroundImage).placeholder(R.drawable.splash)
+				}
+
+				binding.logoImageView.setupWithGlide {
+					load(item.image).placeholder(R.drawable.splash)
+				}
+
+				binding.nameTextView.text = item.name
+				binding.nameTextView.setCompoundDrawablesRelativeWithIntrinsicBoundsStart(
+					if (item.hasOffer.orFalse()) R.drawable.store_has_offer else 0
+				)
+
+				binding.nicknameTextView.text = item.nickname
+
+				binding.ratingBar.setProgressBA((item.averageRate.orZero() * 20).roundToInt())
+
+				binding.averageRateTextView.text = "( ${item.averageRate?.round(1).orZero()} )"
+
+				binding.viewsTextView.text = item.viewsCount.toStringOrEmpty()
+
+				binding.adsTextView.text = "${item.advertisementsCount.orZero()} ${context.getString(R.string.advertisement)}"
+
+				binding.followingButtonTextView.text = if (item.isFollowing.orFalse()) {
+					binding.followingButtonTextView.serDrawableCompatBA()
+
+					context.getString(R.string.un_follow)
+				}else {
+					binding.followingButtonTextView.serDrawableCompatBA(
+						start = ContextCompat.getDrawable(context, R.drawable.follow_add)
+					)
+
+					context.getString(R.string.follow)
+				}
+
+				binding.premiumImageView.isVisible = item.isPremium
+			}
 		}
-
-		binding.nameTextView.text = item.name
-		binding.nameTextView.setCompoundDrawablesRelativeWithIntrinsicBoundsStart(
-			if (item.hasOffer.orFalse()) R.drawable.store_has_offer else 0
-		)
-
-		binding.nicknameTextView.text = item.nickname
-
-		binding.ratingBar.setProgressBA((item.averageRate.orZero() * 20).roundToInt())
-
-		binding.averageRateTextView.text = "( ${item.averageRate?.round(1).orZero()} )"
-
-		binding.viewsTextView.text = item.viewsCount.toStringOrEmpty()
-
-		binding.adsTextView.text = "${item.advertisementsCount.orZero()} ${context.getString(R.string.advertisement)}"
-
-		binding.followingButtonTextView.text = if (item.isFollowing.orFalse()) {
-			binding.followingButtonTextView.serDrawableCompatBA()
-
-			context.getString(R.string.un_follow)
-		}else {
-			binding.followingButtonTextView.serDrawableCompatBA(
-				start = ContextCompat.getDrawable(context, R.drawable.follow_add)
-			)
-
-			context.getString(R.string.follow)
-		}
-
-		binding.premiumImageView.isVisible = item.isPremium
 	}
 
 	fun getOnEditorListener(): TextView.OnEditorActionListener = TextView.OnEditorActionListener { view, actionId, _ ->
-		view.findFragmentOrNull<SearchSuggestionsFragment>()?.apply {
+		view.findFragmentOrNull<AllStoresFragment>()?.apply {
 			context?.apply {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 					filter.value = filter.value?.copy(
