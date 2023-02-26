@@ -31,6 +31,11 @@ data class ItemStoreInResponseHome(
 	@SerializedName("advertisements_count") var advertisementsCount: Int?,
 	@SerializedName("is_following") var isFollowing: Boolean?,
 	var premium: Int?,
+	@SerializedName("has_offer") var hasOffer: Boolean?,
+	var stories: List<ResponseStory.Story>?,
+	var phone: String?,
+	var createdAt: String?,
+	var country: ItemAdvertisementInResponseHome.Country?,
 ) : ItemInResponseHome {
 	val isPremium get() = premium == 1
 }

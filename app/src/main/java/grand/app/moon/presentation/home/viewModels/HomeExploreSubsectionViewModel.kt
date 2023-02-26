@@ -158,10 +158,11 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 
 				val item = adapter.snapshot().items.getOrNull(position) ?: return@OnClickListener
 
-				userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+				userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 					context,
 					view.findNavController(),
-					item.store?.id
+					item.store?.id,
+					item.store?.toResponseStory()
 				)
 			}
 			binding.storeTextView.setOnClickListener(goToStoreListener)

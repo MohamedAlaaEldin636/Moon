@@ -172,10 +172,8 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>() {
 	    }
     }
 
-
-
 	  nav.addOnDestinationChangedListener { controller, destination, arguments ->
-		  viewModel.showBarCode.value = destination.id == R.id.storeListFragment
+		  viewModel.showBarCode.value = destination.id == R.id.storeListFragment || destination.id == R.id.dest_all_stores
 		  viewModel.showExploreSubsectionSearch.value = destination.id == R.id.dest_home_explore_subsection
 
 		  resetTexts()
@@ -371,6 +369,16 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>() {
 	    }
     }
     binding.icMenu.setOnClickListener {
+	    if (true) {
+		    AllStoresFragment.launch(
+			    nav,
+			    null,
+			    getString(R.string.stores_879)
+		    )
+
+		    return@setOnClickListener
+	    }
+
       val uri = Uri.Builder()
         .scheme("storeList")
         .authority("grand.app.moon.store.List")

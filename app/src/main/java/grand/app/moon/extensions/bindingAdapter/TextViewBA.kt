@@ -1,5 +1,6 @@
 package grand.app.moon.extensions.bindingAdapter
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
@@ -8,6 +9,7 @@ import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatTextView
@@ -24,6 +26,9 @@ import kotlin.math.roundToInt
 
 fun TextView.setCompoundDrawablesRelativeWithIntrinsicBoundsEnd(@DrawableRes res: Int) {
 	setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, res, 0)
+}
+fun TextView.setCompoundDrawablesRelativeWithIntrinsicBoundsStart(@DrawableRes res: Int) {
+	setCompoundDrawablesRelativeWithIntrinsicBounds(res, 0, 0, 0)
 }
 
 fun AppCompatTextView.adjustInsideRV(
@@ -54,6 +59,11 @@ fun AppCompatTextView.adjustInsideRV(
 			TypedValue.COMPLEX_UNIT_SP
 		)
 	}
+}
+
+@BindingAdapter("textView_drawableTint")
+fun TextView.setCompoundDrawableTintListBA(@ColorInt color: Int?) {
+	compoundDrawableTintList = ColorStateList.valueOf(color ?: return)
 }
 
 @BindingAdapter("textView_setSelectedBA")

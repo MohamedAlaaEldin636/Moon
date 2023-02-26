@@ -17,6 +17,7 @@ import grand.app.moon.domain.utils.map
 import grand.app.moon.domain.utils.toFailureStatus
 import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.home.AllStoresFragment
 import grand.app.moon.presentation.home.FilterAllFragment
 import grand.app.moon.presentation.home.models.Interaction
 import grand.app.moon.presentation.home.models.ResponseStory
@@ -500,6 +501,10 @@ class RepoShop @Inject constructor(
 
 	fun getFilterResults(filter: FilterAllFragment.Filter) = BasePaging.createFlowViaPager {
 		remoteDataSource.getFilterResults(it, filter)
+	}
+
+	fun getAllStores(filter: AllStoresFragment.Filter) = BasePaging.createFlowViaPager {
+		remoteDataSource.getAllStores(it, filter)
 	}
 
 }

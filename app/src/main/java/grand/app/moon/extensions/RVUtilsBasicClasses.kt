@@ -22,6 +22,7 @@ fun RecyclerView.setupWithRVItemCommonListUsage(
 	isHorizontalNotVertical: Boolean,
 	spanCount: Int,
 	/** Ex. layoutParams.width = width / 3 */
+	onGridLayoutSpanSizeLookup: (GridLayoutManager.(Int) -> Int)? = null,
 	onLayoutManager: LayoutManager.(RecyclerView.LayoutParams) -> Unit = {},
 ) {
 	layoutManager = if (spanCount == 1) {
@@ -51,6 +52,14 @@ fun RecyclerView.setupWithRVItemCommonListUsage(
 				}
 
 				return super.checkLayoutParams(layoutParams)
+			}
+		}.also { gridLayoutManager ->
+			if (onGridLayoutSpanSizeLookup != null) {
+				gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+					override fun getSpanSize(position: Int): Int {
+						return gridLayoutManager.onGridLayoutSpanSizeLookup(position)
+					}
+				}
 			}
 		}
 	}

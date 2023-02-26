@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.upstream.TimeToFirstByteEstimator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
@@ -47,11 +48,16 @@ class StoryPlayerViewModel @Inject constructor(
 	var player: ExoPlayer? = null
 
 	private val allStoresWithStories = args.jsonOfAllStoresWithStories
-		.fromJsonInlinedOrNull<List<ResponseStory>>().orEmpty()
+		.fromJsonInlinedOrNull<List<ResponseStory>>().orEmpty().also {
+			MyLogger.e("hhhhhhhhhhhhhhhhhhhhhhhhh 1 -> $it")
+		}
 
 	private val currentIndexOfStoreWithStories = MutableLiveData(args.position)
 
 	val currentStoreWithStories = currentIndexOfStoreWithStories.map {
+		it.also {
+			MyLogger.e("hhhhhhhhhhhhhhhhhhhhhhhhh 2 -> $it")
+		}
 		allStoresWithStories.getOrNull(it.orZero())
 	}
 
@@ -93,9 +99,17 @@ class StoryPlayerViewModel @Inject constructor(
 		ContextCompat.getDrawable(application, drawableRes)
 	}
 
-	val phone = currentStoreWithStories.map {
+	fun getPhoneWithCountryCode() = currentStoreWithStories.value?.let {
+		"${it.countryCode.orEmpty()}${it.phone.orEmpty()}"
+	}.orEmpty()
+
+	/*val phone = currentStoreWithStories.map {
+		it.also {
+			MyLogger.e("hhhhhhhhhhhhhhhhhhhhhhhhh 3 -> ${it?.phone} -> $it")
+		}
+
 		it?.phone
-	}
+	}*/
 
 	val showImageNotVideo = currentStory.map {
 		it?.isVideo.orFalse().not()

@@ -285,7 +285,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 					    )
 				    }else {
 							// Remove below later
-							General.TODO("Only for shop account")
 				    }
 					}
 			    Constants.STORE_INFO -> {
@@ -296,7 +295,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 					    )
 				    }else {
 					    // Remove below later
-					    General.TODO("Only for shop account")
 				    }
 					}
 			    Constants.PROFILE -> navigateSafe(SettingsFragmentDirections.actionMyAccountFragmentToProfileFragment())

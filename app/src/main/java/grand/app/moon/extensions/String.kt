@@ -6,6 +6,14 @@ fun <T> T?.ifNotNull(action: (T) -> Unit) {
 	}
 }
 
+fun String?.orStringNullIfNullOrEmpty(): String {
+	return if (isNullOrEmpty()) {
+		"null"
+	}else {
+		this
+	}
+}
+
 fun String?.ifNotNullNorEmpty(action: (String) -> Unit) {
 	if (!isNullOrEmpty()) {
 		action(this)

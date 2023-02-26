@@ -21,9 +21,9 @@ inline fun <reified T> Fragment.setFragmentResultListenerUsingJson(
 	setFragmentResultListener(key) { _, bundle ->
 		val value = bundle.getString(AppConsts.NavController.GSON_KEY).fromJsonInlinedOrNull<T>()
 
-		if (value != null) {
-			clearFragmentResultListener(key)
+		clearFragmentResultListener(key)
 
+		if (value != null) {
 			onResult(value)
 		}
 	}

@@ -319,4 +319,10 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>
 	): MABaseResponse<MABasePaging<ItemAdvertisementInResponseHome>>
 
+	@GET("v1/stores")
+	suspend fun getAllStores(
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>
+	): MABaseResponse<MABasePaging<ItemStoreInResponseHome>>
+
 }

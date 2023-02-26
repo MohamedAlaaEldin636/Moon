@@ -14,6 +14,7 @@ import grand.app.moon.databinding.ItemSearchResultBinding
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
+import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsStart
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ResponseSearchResult
 import grand.app.moon.presentation.home.viewModels.SearchResultsViewModel
@@ -147,10 +148,10 @@ fun SearchResultsViewModel.getStoresAdapter() = RVPagingItemCommonListUsage<Item
 
 		val item = binding.root.getTagJson<ResponseSearchResult>() ?: return@RVPagingItemCommonListUsage
 
-		userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+		userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 			context,
 			binding.root.findNavController(),
-			item.id
+			item
 		)
 	},
 	additionalListenersSetups = { adapter, binding ->
@@ -184,6 +185,9 @@ fun SearchResultsViewModel.getStoresAdapter() = RVPagingItemCommonListUsage<Item
 	}
 
 	binding.nameTextView.text = item.name
+	binding.nameTextView.setCompoundDrawablesRelativeWithIntrinsicBoundsStart(
+		if (item.hasOffer.orFalse()) R.drawable.store_has_offer else 0
+	)
 
 	binding.nicknameTextView.text = item.nickname
 

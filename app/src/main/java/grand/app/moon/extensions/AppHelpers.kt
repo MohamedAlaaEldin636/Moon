@@ -8,10 +8,7 @@ import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
-import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
-import grand.app.moon.presentation.home.models.ResponseSearchResult
-import grand.app.moon.presentation.home.models.ResponseStory
+import grand.app.moon.presentation.home.models.*
 import grand.app.moon.presentation.map.model.ResponseMapData
 
 fun ResponseMapData.toResponseStory(): ResponseStory {
@@ -50,6 +47,42 @@ fun ItemAdvertisementInResponseHome.Store?.toResponseStory(): ResponseStory {
 		countryCode = this?.country?.countryCode
 	)
 }
+fun ItemStoreInResponseHome?.toResponseStory(): ResponseStory {
+	return ResponseStory(
+		stories = this?.stories,
+		phone = this?.phone,
+		image = this?.image,
+		name = this?.name,
+		createdAt = this?.createdAt,
+		nickname = this?.nickname,
+		id = this?.id,
+		countryCode = this?.country?.countryCode
+	)
+}
+fun ResponseSearchResult?.toResponseStory(): ResponseStory {
+	return ResponseStory(
+		stories = this?.stories,
+		phone = this?.phone,
+		image = this?.image,
+		name = this?.name,
+		createdAt = this?.createdAt,
+		nickname = this?.nickname,
+		id = this?.id,
+		countryCode = this?.country?.countryCode
+	)
+}
+fun ItemStoreInHomeExplore?.toResponseStory(): ResponseStory {
+	return ResponseStory(
+		stories = this?.stories,
+		phone = this?.phone,
+		image = this?.image,
+		name = this?.name,
+		createdAt = this?.createdAt,
+		nickname = this?.nickname,
+		id = this?.id,
+		countryCode = this?.country?.countryCode
+	)
+}
 
 fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 	context: Context,
@@ -64,7 +97,17 @@ fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 	context: Context,
 	navController: NavController,
+	mapData: ResponseSearchResult
+) = goToStoreStoriesOrDetailsCheckIfMyStore(context, navController, mapData.id, mapData.toResponseStory())
+fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
+	context: Context,
+	navController: NavController,
 	item: ItemAdvertisementInResponseHome.Store?
+) = goToStoreStoriesOrDetailsCheckIfMyStore(context, navController, item?.id, item.toResponseStory())
+fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
+	context: Context,
+	navController: NavController,
+	item: ItemStoreInResponseHome?
 ) = goToStoreStoriesOrDetailsCheckIfMyStore(context, navController, item?.id, item.toResponseStory())
 fun UserLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
 	context: Context,

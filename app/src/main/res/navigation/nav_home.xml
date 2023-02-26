@@ -1196,5 +1196,37 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.filter.results.two" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_all_stores"
+    android:name="grand.app.moon.presentation.home.AllStoresFragment"
+    android:label="{title}"
+    tools:layout="@layout/fragment_all_stores">
+    <argument
+      android:name="title"
+      app:argType="string"/>
+    <argument
+      android:name="jsonOfFilter"
+      app:argType="string"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_all_stores"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.all.stores/{title}/{jsonOfFilter}" />
+  </fragment>
+  <dialog
+    android:id="@+id/dest_stores_sort_dialog"
+    android:name="grand.app.moon.presentation.home.StoresSortDialogFragment"
+    android:label="{title}"
+    tools:layout="@layout/dialog_fragment_stores_sort">
+    <argument
+      android:name="title"
+      app:argType="string"/>
+    <argument
+      android:name="nameOfSortBy"
+      app:argType="string"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_stores_sort_dialog"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.stores.sort.dialog/{title}/{nameOfSortBy}" />
+  </dialog>
 
 </navigation>

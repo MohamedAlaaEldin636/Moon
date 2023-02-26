@@ -58,6 +58,13 @@ data class ItemStoreInHomeExplore(
 	@SerializedName("share_link") var shareLink: String?,
 	@SerializedName("is_following") var isFollowing: Boolean?,
 	var premium: Int?,
+	@SerializedName("has_offer") var hasOffer: Boolean?,
+	var stories: List<ResponseStory.Story>?,
+	var phone: String?,
+	var createdAt: String?,
+	var country: ItemAdvertisementInResponseHome.Country?,
+	var nickname: String?,
+	var image: String?,
 ) : ItemInResponseHome {
 	val isPremium get() = premium == 1
 }

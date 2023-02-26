@@ -26,6 +26,8 @@ data class ResponseSearchResult(
 	var name: String?,
 	var nickname: String?,
 	@SerializedName("advertisements_count") var advertisementsCount: Int?,
+	@SerializedName("has_offer") var hasOffer: Boolean?,
+	var stories: List<ResponseStory.Story>?,
 ) {
 	val isNegotiable get() = negotiable == 1
 

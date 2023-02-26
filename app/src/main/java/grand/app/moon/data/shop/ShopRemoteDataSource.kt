@@ -7,6 +7,7 @@ import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.*
+import grand.app.moon.presentation.home.AllStoresFragment
 import grand.app.moon.presentation.home.FilterAllFragment
 import grand.app.moon.presentation.home.models.Interaction
 import grand.app.moon.presentation.home.models.TypeSearchResult
@@ -503,6 +504,27 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		}
 
 		apiService.getFilterResults(page, map)
+	}
+
+	suspend fun getAllStores(
+		page: Int,
+		filter: AllStoresFragment.Filter,
+	) = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+
+		filter.search.ifNotNullNorEmpty { map["search"] = it }
+		filter.categoryId.ifNotNull { map["category_ids[0]"] = it.toString() }
+		filter.cityId.ifNotNull { map["city_ids[0]"] = it.toString() }
+		filter.areasIds?.forEachIndexed { index, id ->
+			map["area_ids[$index]"] = id.toString()
+		}
+		filter.sortBy.ifNotNull { map["order_by"] = it.apiValue.toString() }
+		filter.rating.ifNotNull {
+			map["min_rate"] = it.toString()
+			map["max_rate"] = 5.toString()
+		}
+
+		apiService.getAllStores(page, map)
 	}
 
 }

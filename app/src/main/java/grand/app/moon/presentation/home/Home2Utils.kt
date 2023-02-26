@@ -15,6 +15,7 @@ import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.home.models.StoreModel
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
+import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsStart
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.utils.Constants
@@ -151,10 +152,10 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 
 		val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@RVItemCommonListUsage
 
-		userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+		userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 			context,
 			binding.root.findNavController(),
-			item.id
+			item
 		)
 	},
 	additionalListenersSetups = { adapter, binding ->
@@ -187,6 +188,9 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 	}
 
 	binding.nameTextView.text = item.name
+	binding.nameTextView.setCompoundDrawablesRelativeWithIntrinsicBoundsStart(
+		if (item.hasOffer.orFalse()) R.drawable.store_has_offer else 0
+	)
 
 	binding.nicknameTextView.text = item.nickname
 
