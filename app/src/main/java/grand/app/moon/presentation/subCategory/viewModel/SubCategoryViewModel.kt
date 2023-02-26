@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -15,6 +16,8 @@ import grand.app.moon.BR
 import grand.app.moon.R
 import grand.app.moon.appMoonHelper.FilterDialog
 import grand.app.moon.core.MyApplication
+import grand.app.moon.databinding.ActivityHomeBinding
+import grand.app.moon.databinding.FragmentSubCategoryBinding
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.ads.entity.AdsListPaginateData
 import grand.app.moon.domain.ads.repository.AdsRepository
@@ -25,10 +28,14 @@ import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.subCategory.entity.SubCategoryResponse
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.findFragmentOrNull
 import grand.app.moon.presentation.ads.adapter.AdsAdapter
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.home.HomeActivity
+import grand.app.moon.presentation.map.MapOfDataFragment
 import grand.app.moon.presentation.subCategory.PropertiesAdapter
+import grand.app.moon.presentation.subCategory.SubCategoryFragment
 import grand.app.moon.presentation.subCategory.SubCategoryFragmentDirections
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -170,6 +177,20 @@ class SubCategoryViewModel @Inject constructor(
   }
 
   fun map(v: View) {
+	  if (true) {
+		  /*val binding = DataBindingUtil.findBinding<FragmentSubCategoryBinding>(v) ?: return
+		  val activity = binding.lifecycleOwner as? HomeActivity ?: return
+		  MapOfDataFragment.goToThisScreenForAds(
+			  activity.nav
+		  )*/
+		  val activity = v.findFragmentOrNull<SubCategoryFragment>()?.activity as? HomeActivity ?: return
+		  MapOfDataFragment.goToThisScreenForAds(
+			  activity.nav
+		  )
+
+			return
+	  }
+
     this.subCategoryResponse.get()?.let {
       val sub = SubCategoryResponse()
       if(subCategoryResponse.get()!!.properties.isNotEmpty())
