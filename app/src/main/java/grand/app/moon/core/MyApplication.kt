@@ -19,8 +19,10 @@ import com.google.android.gms.security.ProviderInstaller
 import com.onesignal.OneSignal
 import com.zeugmasolutions.localehelper.LocaleAwareApplication
 import com.zeugmasolutions.localehelper.LocaleHelper
+import company.tap.gosellapi.GoSellSDK
 import dagger.hilt.android.HiltAndroidApp
 import grand.app.moon.appMoonHelper.language.MyContextWrapper
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.splash.*
 import kotlinx.coroutines.CoroutineScope
@@ -92,6 +94,11 @@ class MyApplication : /*LocaleAwareApplication*/Application() {
 			// OneSignal Initialization
 			OneSignal.initWithContext(this@MyApplication)
 			OneSignal.setAppId(Constants.ONESIGNAL_APP_ID)
+
+			// Below is secret key of IOS I guess wait to get from Alaa for android
+			MyLogger.e("app id $packageName which should be grand.app.moon")
+
+			GoSellSDKUtils.beforeAnyLaunchSetups(this@MyApplication)
 		}
 	}
 
