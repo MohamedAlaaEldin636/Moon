@@ -61,6 +61,10 @@ class StoryPlayerViewModel @Inject constructor(
 		allStoresWithStories.getOrNull(it.orZero())
 	}
 
+	val isSouqMoonStory = currentStoreWithStories.map {
+		it?.isSouqMoonStory.orFalse()
+	}
+
 	val currentIndexOfStory = MutableLiveData(0)
 
 	val currentStory = switchMapMultiple2(currentStoreWithStories, currentIndexOfStory) {

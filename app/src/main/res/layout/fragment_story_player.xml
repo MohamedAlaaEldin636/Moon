@@ -122,6 +122,8 @@
       android:src="@drawable/like"
       tools:src="@drawable/ic_like_fill"
 
+      android:visibility="@{!viewModel.isSouqMoonStory()}"
+
       imageView_setImageDrawableBA="@{viewModel.drawableOfLikeIcon}"
 
       android:layout_marginEnd="8dp"
@@ -169,7 +171,7 @@
 
       android:layout_marginBottom="13dp"
 
-      android:visibility="@{viewModel.storyLink != null}"
+      android:visibility="@{viewModel.storyLink != null &amp;&amp; !viewModel.isSouqMoonStory()}"
 
       android:background="@drawable/dr_rect_15"
 

@@ -47,19 +47,14 @@ class AllStoriesViewModel @Inject constructor(
 			storyModel.list.addAll(adapter.snapshot().items.map { it.toStore() })
 			storyModel.position = position
 
-			if (true) {
-				fragment.findNavController().navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.story.player",
-					paths = arrayOf(
-						adapter.snapshot().items.toJsonInlinedOrNull().orEmpty(),
-						position.toString()
-					)
+			fragment.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.story.player",
+				paths = arrayOf(
+					adapter.snapshot().items.toJsonInlinedOrNull().orEmpty(),
+					position.toString()
 				)
-			}else {
-				fragment.findNavController()
-					.navigateSafely(Home2FragmentDirections.actionDestHome2ToStoryFragment(storyModel))
-			}
+			)
 		}
 	) { binding, position, item ->
 		MyLogger.e("aaaaaaaa $position")

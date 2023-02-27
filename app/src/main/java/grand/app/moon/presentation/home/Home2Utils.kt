@@ -75,7 +75,7 @@ fun Home2ViewModel.getAdapterStories(): RVItemCommonListUsageWithDifferentItems<
 				if (context.isLogin() && item.isSeen.not()) {
 					item.stories?.firstOrNull()?.isSeen = true
 
-					if (item.isSeen) {
+					if (item.isSouqMoonStory.orFalse().not() && item.isSeen) {
 						val updatedList = adapter.list.toMutableList()
 						val updatedItem = updatedList.removeAt(position)
 						updatedList += updatedItem

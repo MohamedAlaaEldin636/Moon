@@ -365,8 +365,12 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getAllStories(it).mapImmediate { baseResponse ->
 			baseResponse.map { response ->
 				response?.followedStoresStories?.let { stories ->
+					val souqMoonStory: ResponseStory? = response.souqMoonStory?.let { souqMoonStory ->
+						if (souqMoonStory.stories.isNullOrEmpty()) null else souqMoonStory.copy(isSouqMoonStory = true)
+					}
+
 					stories.copy(
-						listOfNotNull(response.souqMoonStory) + transformation(stories.data.orEmpty())
+						listOfNotNull(souqMoonStory) + transformation(stories.data.orEmpty())
 					)
 				}
 			}

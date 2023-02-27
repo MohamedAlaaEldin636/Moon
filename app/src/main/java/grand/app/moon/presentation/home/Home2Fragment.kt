@@ -92,7 +92,12 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 				}
 			}
 		) { response ->
-			val allStories = listOfNotNull(response.souqMoonStory) + response.stories.orEmpty().sortedBy {
+			// todo handle enaha matro74 back w en el denya ttshal f story player isa. hna w in all stories.
+			val souqMoonStory: ResponseStory? = response.souqMoonStory?.let {
+				if (it.stories.isNullOrEmpty()) null else it.copy(isSouqMoonStory = true)
+			}
+
+			val allStories = listOfNotNull(souqMoonStory) + response.stories.orEmpty().sortedBy {
 				if (it.isSeen) 1 else 0
 			}
 

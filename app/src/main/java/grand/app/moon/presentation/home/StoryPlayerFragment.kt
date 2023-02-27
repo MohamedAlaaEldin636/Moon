@@ -40,6 +40,8 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 			velocityX: Float,
 			velocityY: Float
 		): Boolean {
+			if (viewModel.isSouqMoonStory.value == true) return super.onFling(e1, e2, velocityX, velocityY)
+
 			val context = _binding?.root?.context
 
 			if (velocityY < 0 && context != null) {
