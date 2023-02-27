@@ -248,16 +248,17 @@ class AllStoresViewModel @Inject constructor(
 	}
 
 	fun filter(view: View) {
-		if (true) return General.TODO("Working on it")
-
 		val fragment = view.findFragmentOrNull<AllStoresFragment>() ?: return
 
 		fragment.setFragmentResultListenerUsingJson<AllStoresFragment.Filter>(
 			FilterAllFragment::class.java.name
 		) {
+			searchQuery.value = it.search.orEmpty()
+
 			filter.value = filter.value?.copy(
-				//search = null,
+				search = it.search,
 				categoryId = it.categoryId,
+				subCategoryId = it.subCategoryId,
 				cityId = it.cityId,
 				areasIds = it.areasIds,
 				//sortBy = null,
@@ -268,7 +269,10 @@ class AllStoresViewModel @Inject constructor(
 		view.findNavController().navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.filter.all",
-			paths = arrayOf(false.toString())
+			paths = arrayOf(
+				false.toString(),
+				filter.value?.toFilterAllFragmentFilter()?.toSpecialString().orStringNullIfNullOrEmpty()
+			)
 		)
 	}
 	fun sort(view: View) {

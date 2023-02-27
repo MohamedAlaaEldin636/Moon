@@ -97,17 +97,33 @@ class AllStoresFragment : BaseFragment<FragmentAllStoresBinding>() {
 	data class Filter(
 		val search: String? = null,
 		val categoryId: Int? = null,
+		val subCategoryId: Int? = null,
 		val cityId: Int? = null,
 		val areasIds: List<Int>? = null,
 		val sortBy: SortBy? = null,
 		val rating: Int? = null,
 
-		//val subCategoryId: Int? = null,
 		//val minPrice: Float? = null,
 		//val maxPrice: Float? = null,
 		//val properties: List<DynamicFilterProperty> = emptyList(),
 		//val adType: FilterAllFragment.AdType? = null,
-	)
+	) {
+		fun toFilterAllFragmentFilter(): FilterAllFragment.Filter {
+			return FilterAllFragment.Filter(
+				search,
+				categoryId,
+				subCategoryId,
+				null,
+				null,
+				cityId,
+				areasIds,
+				emptyList(),
+				null, // Won't be used in case of store
+				null,
+				rating
+			)
+		}
+	}
 
 	enum class SortBy(val apiValue: Int) {
 		NEWEST(1), OLDEST(2), HIGHEST_RATED(3)

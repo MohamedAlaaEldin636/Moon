@@ -717,8 +717,6 @@
 
           android:background="@drawable/dr_rect_10"
 
-          android:visibility="visible"
-
           android:paddingTop="26dp"
           android:paddingBottom="20dp"
           android:paddingStart="16dp"

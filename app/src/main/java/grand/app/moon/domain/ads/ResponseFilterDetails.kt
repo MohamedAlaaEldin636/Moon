@@ -50,6 +50,42 @@ sealed interface DynamicFilterProperty {
 	data class Checked(val id: Int, val title: String, val isSelected: Boolean = false) : DynamicFilterProperty
 }
 
+fun DynamicFilterProperty.toSpecialDynamicFilterProperty(): SpecialDynamicFilterProperty {
+	var selection: DynamicFilterProperty.Selection? = null
+	var rangedText: DynamicFilterProperty.RangedText? = null
+	var text: DynamicFilterProperty.Text? = null
+	var checked: DynamicFilterProperty.Checked? = null
+
+	when (this) {
+		is DynamicFilterProperty.Checked -> checked = this
+		is DynamicFilterProperty.RangedText -> rangedText = this
+		is DynamicFilterProperty.Selection -> selection = this
+		is DynamicFilterProperty.Text -> text = this
+	}
+
+	return SpecialDynamicFilterProperty(
+		selection, rangedText, text, checked
+	)
+}
+
+fun SpecialDynamicFilterProperty.toDynamicFilterProperty(): DynamicFilterProperty? {
+	return when {
+		selection != null -> selection
+		rangedText != null -> rangedText
+		text != null -> text
+		checked != null -> checked
+		else -> null
+	}
+}
+
+/** Used just for json serialization isa. */
+data class SpecialDynamicFilterProperty(
+	val selection: DynamicFilterProperty.Selection?,
+	val rangedText: DynamicFilterProperty.RangedText?,
+	val text: DynamicFilterProperty.Text?,
+	val checked: DynamicFilterProperty.Checked?,
+)
+
 data class ResponseFilterDetails(
 	var properties: List<ItemProperty>?,
 	@SerializedName("min_price") var minPrice: Float?,

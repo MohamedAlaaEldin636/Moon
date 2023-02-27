@@ -2,7 +2,6 @@ package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
 import android.view.View
-import androidx.core.view.postDelayed
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
@@ -26,7 +25,6 @@ import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsEnd
-import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.AllStoresFragment
 import grand.app.moon.presentation.home.FilterAllFragment
@@ -42,7 +40,9 @@ class FilterAllViewModel @Inject constructor(
 	val repoShop: RepoShop,
 	val args: FilterAllFragmentArgs,
 ) : AndroidViewModel(application) {
-	// todo treat SortBy.HIGHEST_PRICE as highest rated for stores isa.
+
+	val initialFilter = FilterAllFragment.Filter.fromSpecialString(args.initialSpecialStringFiltering)
+
 	val showDataOfAds = MutableLiveData(args.forAdsNotStores)
 
 	private val allCategoriesWithSubCategories = repoShop.getCategoriesWithSubCategoriesAndBrands()
@@ -50,10 +50,22 @@ class FilterAllViewModel @Inject constructor(
 	private val country = repoShop.getSelectedCountry()
 	private val citiesWithAreas = country?.cities.orEmpty()
 
-	val searchQuery = MutableLiveData("")
+	val searchQuery = MutableLiveData(initialFilter.search)
 
-	private val selectedCategory = MutableLiveData<ItemCategory?>(null)
-	private val selectedSubCategory = MutableLiveData<ItemSubCategory?>(null)
+	private val selectedCategory = MutableLiveData<ItemCategory?>(
+		allCategoriesWithSubCategories.firstOrNull {
+			initialFilter.categoryId == it.id
+		}
+	)
+	private val selectedSubCategory = MutableLiveData<ItemSubCategory?>(
+		if (initialFilter.categoryId == null) null else {
+			allCategoriesWithSubCategories.firstOrNull { itemCategory ->
+				itemCategory.id == initialFilter.categoryId
+			}?.subCategories?.firstOrNull {
+				it.id == initialFilter.subCategoryId
+			}
+		}
+	)
 	val mainCategory = selectedCategory.map {
 		it?.name.letIfNullOrEmpty { app.getString(R.string.main_section) }
 	}
@@ -61,12 +73,26 @@ class FilterAllViewModel @Inject constructor(
 		it?.name ?: app.getString(R.string.sub_section)
 	}
 
-	private val selectedCity = MutableLiveData<ResponseCity?>(null)
+	private val selectedCity = MutableLiveData<ResponseCity?>(
+		citiesWithAreas.firstOrNull {
+			it.id == initialFilter.cityId
+		}
+	)
 	val city = selectedCity.map {
 		it?.name ?: app.getString(R.string.city)
 	}
 
-	private val selectedAreas = MutableLiveData<List<ResponseArea>?>(null)
+	private val selectedAreas = MutableLiveData<List<ResponseArea>?>(
+		if (initialFilter.cityId == null) null else {
+			val list = citiesWithAreas.firstOrNull {
+				it.id == initialFilter.cityId
+			}?.areas?.filter {
+				it.id in initialFilter.areasIds.orEmpty()
+			}
+
+			if (list.isNullOrEmpty()) null else list
+		}
+	)
 	val area = selectedAreas.map { list ->
 		if (list.isNullOrEmpty()) {
 			app.getString(R.string.area)
@@ -75,18 +101,18 @@ class FilterAllViewModel @Inject constructor(
 		}
 	}
 
-	val minPrice = MutableLiveData("")
-	val maxPrice = MutableLiveData("")
+	val minPrice = MutableLiveData(initialFilter.minPrice.toStringOrEmpty())
+	val maxPrice = MutableLiveData(initialFilter.maxPrice.toStringOrEmpty())
 
-	val selectedSortBy = MutableLiveData<FilterAllFragment.SortBy?>()
+	val selectedSortBy = MutableLiveData<FilterAllFragment.SortBy?>(initialFilter.sortBy)
 
-	val selectedAdType = MutableLiveData<FilterAllFragment.AdType?>()
+	val selectedAdType = MutableLiveData<FilterAllFragment.AdType?>(initialFilter.adType)
 
-	val fiveStarsIsSelected = MutableLiveData(false)
-	val fourStarsIsSelected = MutableLiveData(false)
-	val threeStarsIsSelected = MutableLiveData(false)
-	val twoStarsIsSelected = MutableLiveData(false)
-	val oneStarIsSelected = MutableLiveData(false)
+	val fiveStarsIsSelected = MutableLiveData(initialFilter.rating == 5)
+	val fourStarsIsSelected = MutableLiveData(initialFilter.rating == 4)
+	val threeStarsIsSelected = MutableLiveData(initialFilter.rating == 3)
+	val twoStarsIsSelected = MutableLiveData(initialFilter.rating == 2)
+	val oneStarIsSelected = MutableLiveData(initialFilter.rating == 1)
 
 	val responseFilterProperties = MutableLiveData<ResponseFilterProperties?>()
 
@@ -280,12 +306,14 @@ class FilterAllViewModel @Inject constructor(
 				if (newSelection != selectedSubCategory.value) {
 					selectedSubCategory.value = newSelection
 
-					fragment.handleRetryAbleActionOrGoBack(
-						action = {
-							repoShop.getFilterProperties(selectedCategory.value?.id.orZero(), newSelection?.id.orZero())
+					if (args.forAdsNotStores) {
+						fragment.handleRetryAbleActionOrGoBack(
+							action = {
+								repoShop.getFilterProperties(selectedCategory.value?.id.orZero(), newSelection?.id.orZero())
+							}
+						) {
+							responseFilterProperties.value = it
 						}
-					) {
-						responseFilterProperties.value = it
 					}
 				}
 			}
@@ -394,11 +422,12 @@ class FilterAllViewModel @Inject constructor(
 				"grand.app.moon.dest.filter.results.two"
 			)
 		}else {
-			// todo receive current filtering
-			// Ignore search & sort as it is in the previous screen isa.
+			// Ignore only sort as it is in the previous screen, but other stuff in previous screen keep
+			// them according to bakrey isa.
 			val filter = AllStoresFragment.Filter(
-				null,
+				searchQuery.value,
 				selectedCategory.value?.id,
+				selectedSubCategory.value?.id,
 				selectedCity.value?.id,
 				selectedAreas.value?.map { it.id.orZero() },
 				null,

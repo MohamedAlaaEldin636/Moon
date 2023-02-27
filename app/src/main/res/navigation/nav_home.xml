@@ -1184,10 +1184,13 @@
     <argument
       android:name="forAdsNotStores"
       app:argType="boolean"/>
+    <argument
+      android:name="initialSpecialStringFiltering"
+      app:argType="string"/>
     <deepLink
       android:id="@+id/deep_link_dest_filter_all"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.filter.all/{forAdsNotStores}" />
+      app:uri="fragment-dest://grand.app.moon.dest.filter.all/{forAdsNotStores}/{initialSpecialStringFiltering}" />
   </fragment>
   <fragment
     android:id="@+id/dest_filter_results_2"

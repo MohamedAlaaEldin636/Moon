@@ -8,10 +8,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentFilterAllBinding
 import grand.app.moon.domain.ads.DynamicFilterProperty
-import grand.app.moon.domain.shop.IdAndName
-import grand.app.moon.extensions.observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
-import grand.app.moon.extensions.orZero
-import grand.app.moon.extensions.setupWithRVItemCommonListUsage
+import grand.app.moon.domain.ads.SpecialDynamicFilterProperty
+import grand.app.moon.domain.ads.toDynamicFilterProperty
+import grand.app.moon.domain.ads.toSpecialDynamicFilterProperty
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.viewModels.FilterAllViewModel
 import grand.app.moon.presentation.home.viewModels.FilterNavHomeGraphViewModel
@@ -22,6 +22,25 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 	private val viewModel by viewModels<FilterAllViewModel>()
 
 	val navGraphViewModel by navGraphViewModels<FilterNavHomeGraphViewModel>(R.id.nav_home)
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		if (viewModel.args.forAdsNotStores) {
+			val categoryId = viewModel.initialFilter.categoryId
+			val subCategoryId = viewModel.initialFilter.subCategoryId
+
+			if (categoryId != null && subCategoryId != null) {
+				handleRetryAbleActionOrGoBack(
+					action = {
+						viewModel.repoShop.getFilterProperties(categoryId, subCategoryId)
+					}
+				) {
+					viewModel.responseFilterProperties.value = it
+				}
+			}
+		}
+	}
 
 	override fun getLayoutId(): Int = R.layout.fragment_filter_all
 
@@ -71,6 +90,48 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 		val sortBy: SortBy? = null,
 		val adType: AdType? = null,
 		val rating: Int? = null,
-	)
+	) {
+
+		companion object {
+			fun fromSpecialString(string: String?): Filter {
+				return string.fromJsonInlinedOrNull<SpecialFilter>()?.toFilter() ?: Filter()
+			}
+		}
+
+		private fun toSpecialFilter(): SpecialFilter {
+			return SpecialFilter(
+				search, categoryId, subCategoryId, minPrice, maxPrice, cityId, areasIds,
+				properties.map { it.toSpecialDynamicFilterProperty() },
+				sortBy
+			)
+		}
+
+		fun toSpecialString(): String? {
+			return toSpecialFilter().toJsonInlinedOrNull()
+		}
+
+	}
+
+	data class SpecialFilter(
+		val search: String? = null,
+		val categoryId: Int? = null,
+		val subCategoryId: Int? = null,
+		val minPrice: Float? = null,
+		val maxPrice: Float? = null,
+		val cityId: Int? = null,
+		val areasIds: List<Int>? = null,
+		val properties: List<SpecialDynamicFilterProperty>? = null,
+		val sortBy: SortBy? = null,
+		val adType: AdType? = null,
+		val rating: Int? = null,
+	) {
+		fun toFilter(): Filter {
+			return Filter(
+				search, categoryId, subCategoryId, minPrice, maxPrice, cityId, areasIds,
+				properties?.mapNotNull { it.toDynamicFilterProperty() }.orEmpty(),
+				sortBy
+			)
+		}
+	}
 
 }

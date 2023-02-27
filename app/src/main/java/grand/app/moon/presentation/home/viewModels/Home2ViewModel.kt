@@ -260,7 +260,7 @@ class Home2ViewModel @Inject constructor(
 		view.findNavController().navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.filter.all",
-			paths = arrayOf(true.toString())
+			paths = arrayOf(true.toString(), "".orStringNullIfNullOrEmpty())
 		)
 
 		//toFilter(view)

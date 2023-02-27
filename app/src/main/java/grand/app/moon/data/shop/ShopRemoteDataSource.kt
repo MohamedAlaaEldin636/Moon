@@ -514,6 +514,7 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 		filter.search.ifNotNullNorEmpty { map["search"] = it }
 		filter.categoryId.ifNotNull { map["category_ids[0]"] = it.toString() }
+		filter.subCategoryId.ifNotNull { map["sub_category_ids[0]"] = it.toString() }
 		filter.cityId.ifNotNull { map["city_ids[0]"] = it.toString() }
 		filter.areasIds?.forEachIndexed { index, id ->
 			map["area_ids[$index]"] = id.toString()
