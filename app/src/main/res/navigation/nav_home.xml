@@ -1244,5 +1244,21 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.all.categories" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_category_details_2"
+    android:name="grand.app.moon.presentation.home.CategoryDetails2Fragment"
+    android:label="{categoryName}"
+    tools:layout="@layout/fragment_category_details_2">
+    <argument
+      android:name="categoryId"
+      app:argType="integer"/>
+    <argument
+      android:name="categoryName"
+      app:argType="string"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_all_stores"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.category.details.two/{categoryId}/{categoryName}" />
+  </fragment>
 
 </navigation>

@@ -25,6 +25,11 @@ import grand.app.moon.presentation.stats.StatsUsersHistoryFragmentArgs
 object ViewModelArgsModule {
 
 	@Provides
+	fun provideCategoryDetails2FragmentArgs(state: SavedStateHandle): CategoryDetails2FragmentArgs {
+		return CategoryDetails2FragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
 	fun provideFilterAllFragmentArgs(state: SavedStateHandle): FilterAllFragmentArgs {
 		return FilterAllFragmentArgs.fromBundle(state.asBundle())
 	}
