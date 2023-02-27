@@ -37,14 +37,14 @@ class AllStoresViewModel @Inject constructor(
 	val args: AllStoresFragmentArgs,
 ) : AndroidViewModel(application) {
 
-	val searchQuery = MutableLiveData("")
+	private val initialFilter = args.jsonOfFilter.fromJsonInlinedOrNull<AllStoresFragment.Filter>()
+		?: AllStoresFragment.Filter()
+
+	val filter = MutableLiveData(initialFilter)
+
+	val searchQuery = MutableLiveData(initialFilter.search.orEmpty())
 
 	val layoutIsTwoColNotOneCol = MutableLiveData(true)
-
-	val filter = MutableLiveData(
-		args.jsonOfFilter.fromJsonInlinedOrNull<AllStoresFragment.Filter>()
-			?: AllStoresFragment.Filter()
-	)
 
 	private val allCategories = repoShop.getCategoriesWithSubCategoriesAndBrands()
 

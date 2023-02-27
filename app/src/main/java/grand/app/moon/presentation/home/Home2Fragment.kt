@@ -220,11 +220,10 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 					)
 				}
 				ItemHomeRV.Type.MOST_RATED_STORIES -> {
-					navController.navigateSafely(
-						Home2FragmentDirections.actionDestHomeFragmentToStoreListFragment(
-							context.getString(R.string.top_stores_rated),
-							3
-						)
+					AllStoresFragment.launch(
+						navController,
+						AllStoresFragment.Filter(sortBy = AllStoresFragment.SortBy.HIGHEST_RATED),
+						getString(R.string.stores_879)
 					)
 				}
 				ItemHomeRV.Type.FOLLOWING_STORIES -> {

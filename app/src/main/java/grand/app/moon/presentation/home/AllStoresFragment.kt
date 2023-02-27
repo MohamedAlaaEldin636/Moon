@@ -22,7 +22,7 @@ class AllStoresFragment : BaseFragment<FragmentAllStoresBinding>() {
 			navController.navigateDeepLinkWithOptions(
 				"fragment-dest",
 				"grand.app.moon.dest.all.stores",
-				paths = arrayOf(title, filter.toJsonInlinedOrNull().orEmpty())
+				paths = arrayOf(title, filter.toJsonInlinedOrNull().orStringNullIfNullOrEmpty())
 			)
 		}
 	}
