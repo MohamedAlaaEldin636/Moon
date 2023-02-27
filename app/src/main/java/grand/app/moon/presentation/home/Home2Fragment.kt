@@ -92,7 +92,6 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 				}
 			}
 		) { response ->
-			// todo handle enaha matro74 back w en el denya ttshal f story player isa. hna w in all stories.
 			val souqMoonStory: ResponseStory? = response.souqMoonStory?.let {
 				if (it.stories.isNullOrEmpty()) null else it.copy(isSouqMoonStory = true)
 			}
@@ -208,7 +207,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 
 	private fun TextView.setupInnerShowAll(type: ItemHomeRV.Type, item: ItemHomeRV) {
 		setOnClickListener { view ->
-			val context = view.context ?: return@setOnClickListener
+			//val context = view.context ?: return@setOnClickListener
 
 			val navController = findNavController()
 
@@ -220,9 +219,13 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 					)
 				}
 				ItemHomeRV.Type.CATEGORIES -> {
-					navController.navigateSafely(
-						Home2FragmentDirections.actionDestHomeToDepartmentListFragment()
+					view.findNavController().navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.all.categories",
 					)
+					/*navController.navigateSafely(
+						Home2FragmentDirections.actionDestHomeToDepartmentListFragment()
+					)*/
 				}
 				ItemHomeRV.Type.MOST_RATED_STORIES -> {
 					AllStoresFragment.launch(

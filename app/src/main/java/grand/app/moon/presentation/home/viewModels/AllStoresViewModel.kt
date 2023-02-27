@@ -299,7 +299,10 @@ class AllStoresViewModel @Inject constructor(
 	}
 
 	fun showAllCategories(view: View) {
-		General.TODO("WOrking on it.")
+		view.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.all.categories",
+		)
 	}
 
 }

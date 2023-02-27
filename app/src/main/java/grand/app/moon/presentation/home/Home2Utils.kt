@@ -140,7 +140,7 @@ fun Home2ViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCate
 	binding.textTextView.text = item.name
 
 	binding.imageImageView.setupWithGlide {
-		load(item.image)
+		load(item.image).saveDiskCacheStrategyAll()
 	}
 
 }

@@ -509,4 +509,5 @@
   <string name="warning_of_price_range">السعر الأقصى يجب ان يكون اكبر من او يساوى السعر الأدنى</string>
   <string name="filter_search_4">فلتر البحث</string>
   <string name="stores_879">المتاجر</string>
+    <string name="categories_6876">الاقسام</string>
 </resources>
