@@ -75,7 +75,7 @@ fun ItemStoreInHomeExplore?.toResponseStory(): ResponseStory {
 	return ResponseStory(
 		stories = this?.stories,
 		phone = this?.phone,
-		image = this?.image,
+		image = this?.logo,
 		name = this?.name,
 		createdAt = this?.createdAt,
 		nickname = this?.nickname,

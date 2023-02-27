@@ -40,15 +40,15 @@ data class ItemHomeExplore(
 	@SerializedName("is_liked") var isLiked: Boolean?,
 	@SerializedName("created_at") var createdAt: String?,
 	var store: ItemStoreInHomeExplore?
-) : BasePaging.Listener {
+) /*: BasePaging.Listener*/ {
 	val isVideo get() = mimeType?.contains(AppConsts.Files.MIME_TYPE_PREFIX_VIDEO).orFalse()
 
-	@JvmField
+	/*@JvmField
 	var page: Int? = null
 
 	override fun setPage(page: Int) {
 		this.page = page
-	}
+	}*/
 }
 
 data class ItemStoreInHomeExplore(
@@ -64,7 +64,7 @@ data class ItemStoreInHomeExplore(
 	var createdAt: String?,
 	var country: ItemAdvertisementInResponseHome.Country?,
 	var nickname: String?,
-	var image: String?,
+	//var image: String?,
 ) : ItemInResponseHome {
 	val isPremium get() = premium == 1
 }

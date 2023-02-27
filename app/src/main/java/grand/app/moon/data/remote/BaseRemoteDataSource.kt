@@ -260,7 +260,16 @@ open class BaseRemoteDataSource @Inject constructor() {
 
 			MyLogger.e("jsadkjash ch 1")
 
-      val response = apiCall()
+      val response = kotlin.runCatching {
+	      apiCall()
+      }.getOrElse {
+	      MyLogger.e("jsadkjash ch 1.5 -> $it")
+	      it.stackTrace.forEach {
+		      MyLogger.e("jsadkjash ch 1.7 -> ${it}")
+	      }
+
+				throw it
+      }
 
 	    MyLogger.e("jsadkjash ch 2 $response")
 

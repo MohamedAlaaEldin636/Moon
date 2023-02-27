@@ -299,6 +299,16 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getHomeExplores(it)
 	}
 
+	fun getHomeExplores2(
+		minimumPageNumber: Int = 1,
+	) = BasePaging.createFlowViaPager(minimumPageNumber) {
+		remoteDataSource.getHomeExplores2(it)
+	}
+
+	fun getHomeExplores3() = BasePaging.createFlowViaPager {
+		remoteDataSource.getHomeExplores2(it)
+	}
+
 	suspend fun getStoreStats(
 		from: String?,
 		to: String?

@@ -269,6 +269,10 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun getHomeExplores(page: Int) = safeApiCall2 { apiService.getHomeExplores(page) }
 
+	suspend fun getHomeExplores2(page: Int) = safeApiCall2 {
+		apiService.getHomeExplores2(page)
+	}
+
 	suspend fun getStoreStats(
 		from: String?,
 		to: String?,

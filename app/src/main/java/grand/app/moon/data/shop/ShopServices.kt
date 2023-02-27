@@ -193,6 +193,11 @@ interface ShopServices {
 		@Query("page") page: Int,
 	): MABaseResponse<MABasePaging<ItemHomeExplore>>
 
+	@GET("v1/explores")
+	suspend fun getHomeExplores2(
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ItemHomeExplore>>
+
 	@GET("v1/profile/statistics")
 	suspend fun getStoreStats(
 		@QueryMap map: Map<String, String>,
