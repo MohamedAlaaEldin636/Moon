@@ -28,7 +28,9 @@ import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsEnd
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.showMessage
+import grand.app.moon.presentation.home.AllStoresFragment
 import grand.app.moon.presentation.home.FilterAllFragment
+import grand.app.moon.presentation.home.FilterAllFragmentArgs
 import grand.app.moon.presentation.home.SingleOrMultiSelectionFragment
 import grand.app.moon.presentation.myStore.model.ResponseArea
 import grand.app.moon.presentation.myStore.model.ResponseCity
@@ -38,7 +40,10 @@ import javax.inject.Inject
 class FilterAllViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop,
+	val args: FilterAllFragmentArgs,
 ) : AndroidViewModel(application) {
+	// todo treat SortBy.HIGHEST_PRICE as highest rated for stores isa.
+	val showDataOfAds = MutableLiveData(args.forAdsNotStores)
 
 	private val allCategoriesWithSubCategories = repoShop.getCategoriesWithSubCategoriesAndBrands()
 
@@ -369,24 +374,44 @@ class FilterAllViewModel @Inject constructor(
 			if (minPrice > maxPrice) return fragment.showMessage(fragment.getString(R.string.warning_of_price_range))
 		}
 
-		fragment.navGraphViewModel.filter = FilterAllFragment.Filter(
-			searchQuery.value,
-			selectedCategory.value?.id,
-			selectedSubCategory.value?.id,
-			minPrice,
-			maxPrice,
-			selectedCity.value?.id,
-			selectedAreas.value?.map { it.id.orZero() },
-			adapter.list,
-			selectedSortBy.value,
-			selectedAdType.value,
-			getSelectedStar()
-		)
+		if (showDataOfAds.value == true) {
+			fragment.navGraphViewModel.filter = FilterAllFragment.Filter(
+				searchQuery.value,
+				selectedCategory.value?.id,
+				selectedSubCategory.value?.id,
+				minPrice,
+				maxPrice,
+				selectedCity.value?.id,
+				selectedAreas.value?.map { it.id.orZero() },
+				adapter.list,
+				selectedSortBy.value,
+				selectedAdType.value,
+				getSelectedStar()
+			)
 
-		fragment.findNavController().navigateDeepLinkWithOptions(
-			"fragment-dest",
-			"grand.app.moon.dest.filter.results.two"
-		)
+			fragment.findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.filter.results.two"
+			)
+		}else {
+			// todo receive current filtering
+			// Ignore search & sort as it is in the previous screen isa.
+			val filter = AllStoresFragment.Filter(
+				null,
+				selectedCategory.value?.id,
+				selectedCity.value?.id,
+				selectedAreas.value?.map { it.id.orZero() },
+				null,
+				getSelectedStar()
+			)
+
+			fragment.setFragmentResultUsingJson(
+				FilterAllFragment::class.java.name,
+				filter
+			)
+
+			fragment.findNavController().navigateUp()
+		}
 	}
 
 	private fun getSelectedStar(): Int? {

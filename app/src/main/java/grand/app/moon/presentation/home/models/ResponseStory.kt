@@ -37,7 +37,8 @@ data class ResponseStory(
 	@SerializedName("background_image") var backgroundImage: String? = null,
 	var description: String? = null,
 	@SerializedName("created_at") var createdAt: String? = null,
-	var stories: List<Story>? = null
+	var stories: List<Story>? = null,
+	var isSouqMoonStory: Boolean? = false,
 	//@SerializedName("social_media_links") var socialMediaLinks: String?,
 	//@SerializedName("working_hours") var workingHours: String?,
 ) {

@@ -7,6 +7,7 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.map
 import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.presentation.home.models.ResponseHome
+import grand.app.moon.presentation.home.models.ResponseHomeStories
 import grand.app.moon.presentation.home.models.ResponseStory
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,11 +20,11 @@ class RepoHome2 @Inject constructor(
 
 	suspend fun checkAvailabilityForStories() = remoteDataSource.checkAvailabilityForStories()
 
-	suspend fun getNotAllStories() = remoteDataSource.getNotAllStories()
+	suspend fun getNotAllStories(): Resource<BaseResponse<ResponseHomeStories?>> = remoteDataSource.getNotAllStories()
 
 	suspend fun getHome() = remoteDataSource.getHome()
 
-	suspend fun getWholeHomeData(): Resource<BaseResponse<WholeHomeData?>> {
+	/*suspend fun getWholeHomeData(): Resource<BaseResponse<WholeHomeData?>> {
 		val resourceStories = getNotAllStories()
 
 		return if (resourceStories is Resource.Success && resourceStories.value.data.isNullOrEmpty().not()) {
@@ -51,7 +52,7 @@ class RepoHome2 @Inject constructor(
 		}else {
 			resourceStories.mapToNullSuccess()
 		}
-	}
+	}*/
 
 	data class WholeHomeData(
 		var stories: List<ResponseStory>,

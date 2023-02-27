@@ -366,7 +366,7 @@ class RepoShop @Inject constructor(
 			baseResponse.map { response ->
 				response?.followedStoresStories?.let { stories ->
 					stories.copy(
-						transformation(stories.data.orEmpty())
+						listOfNotNull(response.souqMoonStory) + transformation(stories.data.orEmpty())
 					)
 				}
 			}

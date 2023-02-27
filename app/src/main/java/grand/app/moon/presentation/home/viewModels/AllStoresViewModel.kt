@@ -22,10 +22,7 @@ import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsStart
-import grand.app.moon.presentation.home.AllStoresFragment
-import grand.app.moon.presentation.home.AllStoresFragmentArgs
-import grand.app.moon.presentation.home.SearchSuggestionsFragment
-import grand.app.moon.presentation.home.StoresSortDialogFragment
+import grand.app.moon.presentation.home.*
 import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
 import grand.app.moon.presentation.map.MapOfDataFragment
 import kotlinx.coroutines.launch
@@ -251,7 +248,28 @@ class AllStoresViewModel @Inject constructor(
 	}
 
 	fun filter(view: View) {
-		TODO()
+		if (true) return General.TODO("Working on it")
+
+		val fragment = view.findFragmentOrNull<AllStoresFragment>() ?: return
+
+		fragment.setFragmentResultListenerUsingJson<AllStoresFragment.Filter>(
+			FilterAllFragment::class.java.name
+		) {
+			filter.value = filter.value?.copy(
+				//search = null,
+				categoryId = it.categoryId,
+				cityId = it.cityId,
+				areasIds = it.areasIds,
+				//sortBy = null,
+				rating = it.rating,
+			)
+		}
+
+		view.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.filter.all",
+			paths = arrayOf(false.toString())
+		)
 	}
 	fun sort(view: View) {
 		val fragment = view.findFragmentOrNull<AllStoresFragment>() ?: return
@@ -275,7 +293,7 @@ class AllStoresViewModel @Inject constructor(
 	}
 
 	fun showAllCategories(view: View) {
-		TODO()
+		General.TODO("WOrking on it.")
 	}
 
 }

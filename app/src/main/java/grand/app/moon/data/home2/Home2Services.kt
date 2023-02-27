@@ -3,6 +3,7 @@ package grand.app.moon.data.home2
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.presentation.home.models.ResponseHome
+import grand.app.moon.presentation.home.models.ResponseHomeStories
 import grand.app.moon.presentation.home.models.ResponseStory
 import retrofit2.http.GET
 
@@ -12,7 +13,7 @@ interface Home2Services {
 	suspend fun checkAvailabilityForStories(): BaseResponse<Int?>
 
 	@GET("v1/stories")
-	suspend fun getNotAllStories(): BaseResponse<List<ResponseStory>?>
+	suspend fun getNotAllStories(): BaseResponse<ResponseHomeStories?>
 
 	@GET("v1/stories?all=1")
 	suspend fun getAllStories(): BaseResponse<List<ResponseStory>?>

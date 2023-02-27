@@ -1181,10 +1181,13 @@
     android:name="grand.app.moon.presentation.home.FilterAllFragment"
     android:label="@string/filter_search_4"
     tools:layout="@layout/fragment_filter_all">
+    <argument
+      android:name="forAdsNotStores"
+      app:argType="boolean"/>
     <deepLink
       android:id="@+id/deep_link_dest_filter_all"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.filter.all" />
+      app:uri="fragment-dest://grand.app.moon.dest.filter.all/{forAdsNotStores}" />
   </fragment>
   <fragment
     android:id="@+id/dest_filter_results_2"

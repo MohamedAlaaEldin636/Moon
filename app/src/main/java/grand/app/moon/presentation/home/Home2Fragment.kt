@@ -91,96 +91,108 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 					_binding?.swipeRefreshLayout?.isRefreshing = true
 				}
 			}
-		) { stories ->
-			viewModel.adapterStories.submitList(listOf(ResponseStory()) + stories.sortedBy {
+		) { response ->
+			val allStories = listOfNotNull(response.souqMoonStory) + response.stories.orEmpty().sortedBy {
 				if (it.isSeen) 1 else 0
-			})
+			}
+
+			viewModel.adapterStories.submitList(listOf(ResponseStory()) + allStories)
 
 			if (loadAds) {
 				if (_binding == null) return@handleRetryAbleActionOrGoBack
 
-				binding.rvLikeLinearLayout.removeAllViews()
+				binding.rvLikeNestedScrollView.post {
+					kotlin.runCatching {
+						binding.rvLikeLinearLayout.removeAllViews()
+					}.getOrElse {
+						MyLogger.e("error hudisaud $it")
+					}
 
-				handleRetryAbleActionOrGoBack(
-					action = {
-						viewModel.repoHome2.getHome()
-					},
-					showLoadingCode = {},
-					onErrorCode = { failure, selfBlock ->
-						showLoading()
+					handleRetryAbleActionOrGoBack(
+						action = {
+							viewModel.repoHome2.getHome()
+						},
+						showLoadingCode = {},
+						onErrorCode = { failure, selfBlock ->
+							showLoading()
 
-						showRetryErrorDialogWithBackNegativeButton(
-							failure.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
-						) {
-							selfBlock()
+							showRetryErrorDialogWithBackNegativeButton(
+								failure.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+							) {
+								selfBlock()
+							}
 						}
-					}
-				) { responseHome ->
-					activityViewModel.notificationsCount.value = responseHome.notificationCount.orZero()
+					) { responseHome ->
+						activityViewModel.notificationsCount.value = responseHome.notificationCount.orZero()
 
-					viewModel.listOfMostRatedStore = responseHome.mostRatedStores.orEmpty()
-					viewModel.adapterMostRatedStore.submitList(responseHome.mostRatedStores.orEmpty())
+						viewModel.listOfMostRatedStore = responseHome.mostRatedStores.orEmpty()
+						viewModel.adapterMostRatedStore.submitList(responseHome.mostRatedStores.orEmpty())
 
-					viewModel.listOfFollowingsStores = responseHome.followingsStores.orEmpty()
-					viewModel.adapterFollowingsStores.submitList(responseHome.followingsStores.orEmpty())
+						viewModel.listOfFollowingsStores = responseHome.followingsStores.orEmpty()
+						viewModel.adapterFollowingsStores.submitList(responseHome.followingsStores.orEmpty())
 
-					viewModel.adapterSuggestedAds.submitList(responseHome.suggestedAds.orEmpty())
+						viewModel.adapterSuggestedAds.submitList(responseHome.suggestedAds.orEmpty())
 
-					viewModel.adapterMostPopularAds.submitList(responseHome.mostPopularAds.orEmpty())
+						viewModel.adapterMostPopularAds.submitList(responseHome.mostPopularAds.orEmpty())
 
-					val dynamicCategoriesAds = responseHome.dynamicCategoriesAds.orEmpty().filter {
-						it.advertisements.isNullOrEmpty().not()
-					}
-					viewModel.adapterDynamicCategoryAds = dynamicCategoriesAds.map { category ->
-						viewModel.getAdapterForAds().also { it.submitList(category.advertisements.orEmpty()) }
-					}
-
-					val list = mutableListOf(
-						ItemHomeRV(ItemHomeRV.Type.STORIES, null),
-						ItemHomeRV(ItemHomeRV.Type.CATEGORIES, getString(R.string.departments)),
-					)
-
-					if (viewModel.adapterMostRatedStore.itemCount > 0) {
-						list += ItemHomeRV(ItemHomeRV.Type.MOST_RATED_STORIES, getString(R.string.most_rated_stores))
-					}
-					if (viewModel.adapterFollowingsStores.itemCount > 0) {
-						list += ItemHomeRV(ItemHomeRV.Type.FOLLOWING_STORIES, getString(R.string.following_stories))
-					}
-					if (viewModel.adapterSuggestedAds.itemCount > 0) {
-						list += ItemHomeRV(ItemHomeRV.Type.SUGGESTED_ADS, getString(R.string.suggestions_ads_for_you))
-					}
-					if (viewModel.adapterMostPopularAds.itemCount > 0) {
-						list += ItemHomeRV(ItemHomeRV.Type.MOST_POPULAR_ADS, getString(R.string.most_popular_ads))
-					}
-
-					viewModel.adapterDynamicCategoryAdsStartIndex = list.size
-					if (dynamicCategoriesAds.isNotEmpty()) {
-						for (item in dynamicCategoriesAds) {
-							list += ItemHomeRV(ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS, item.name, item.adsCount, item.id)
+						val dynamicCategoriesAds = responseHome.dynamicCategoriesAds.orEmpty().filter {
+							it.advertisements.isNullOrEmpty().not()
 						}
-					}
+						viewModel.adapterDynamicCategoryAds = dynamicCategoriesAds.map { category ->
+							viewModel.getAdapterForAds().also { it.submitList(category.advertisements.orEmpty()) }
+						}
 
-					lifecycleScope.launch {
-						for ((position, item) in list.withIndex()) {
-							val binding = DataBindingUtil.inflate<ItemHomeRvBinding>(
-								layoutInflater, R.layout.item_home_rv, binding.rvLikeLinearLayout, false
-							)
+						val list = mutableListOf(
+							ItemHomeRV(ItemHomeRV.Type.STORIES, null),
+							ItemHomeRV(ItemHomeRV.Type.CATEGORIES, getString(R.string.departments)),
+						)
 
-							binding.nameTextView.text = item.name
+						if (viewModel.adapterMostRatedStore.itemCount > 0) {
+							list += ItemHomeRV(ItemHomeRV.Type.MOST_RATED_STORIES, getString(R.string.most_rated_stores))
+						}
+						if (viewModel.adapterFollowingsStores.itemCount > 0) {
+							list += ItemHomeRV(ItemHomeRV.Type.FOLLOWING_STORIES, getString(R.string.following_stories))
+						}
+						if (viewModel.adapterSuggestedAds.itemCount > 0) {
+							list += ItemHomeRV(ItemHomeRV.Type.SUGGESTED_ADS, getString(R.string.suggestions_ads_for_you))
+						}
+						if (viewModel.adapterMostPopularAds.itemCount > 0) {
+							list += ItemHomeRV(ItemHomeRV.Type.MOST_POPULAR_ADS, getString(R.string.most_popular_ads))
+						}
 
-							binding.countTextView.text = item.count.toStringOrEmpty()
+						viewModel.adapterDynamicCategoryAdsStartIndex = list.size
+						if (dynamicCategoriesAds.isNotEmpty()) {
+							for (item in dynamicCategoriesAds) {
+								list += ItemHomeRV(ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS, item.name, item.adsCount, item.id)
+							}
+						}
 
-							binding.recyclerView.setupInnerRvs(position, item.type)
+						lifecycleScope.launch {
+							for ((position, item) in list.withIndex()) {
+								val binding = DataBindingUtil.inflate<ItemHomeRvBinding>(
+									layoutInflater, R.layout.item_home_rv, binding.rvLikeLinearLayout, false
+								)
 
-							binding.showAllTextView.setupInnerShowAll(item.type, item)
+								binding.nameTextView.text = item.name
 
-							this@Home2Fragment.binding.rvLikeLinearLayout.addView(
-								binding.root,
-								LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-							)
+								binding.countTextView.text = item.count.toStringOrEmpty()
 
-							if (position.inc() % 3 == 0) {
-								delay(500)
+								binding.recyclerView.setupInnerRvs(position, item.type)
+
+								binding.showAllTextView.setupInnerShowAll(item.type, item)
+
+								kotlin.runCatching {
+									this@Home2Fragment.binding.rvLikeLinearLayout.addView(
+										binding.root,
+										LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+									)
+								}.getOrElse {
+									MyLogger.e("errorrrr uiheiwufhwe $it")
+								}
+
+								if (position.inc() % 3 == 0) {
+									delay(500)
+								}
 							}
 						}
 					}
