@@ -253,8 +253,6 @@ class AllStoresViewModel @Inject constructor(
 		fragment.setFragmentResultListenerUsingJson<AllStoresFragment.Filter>(
 			FilterAllFragment::class.java.name
 		) {
-			searchQuery.value = it.search.orEmpty()
-
 			filter.value = filter.value?.copy(
 				search = it.search,
 				categoryId = it.categoryId,
@@ -263,6 +261,10 @@ class AllStoresViewModel @Inject constructor(
 				areasIds = it.areasIds,
 				//sortBy = null,
 				rating = it.rating,
+			)
+
+			searchQuery.postValue(
+				it.search.orEmpty()
 			)
 		}
 
