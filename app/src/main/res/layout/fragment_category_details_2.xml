@@ -119,6 +119,7 @@
       android:textColor="@color/colorPrimary"
 
       tools:text="متاجر السيارات"
+      android:text="@{viewModel.storesLabelText}"
 
       android:layout_marginTop="8dp"
       android:layout_marginStart="16dp"
@@ -151,6 +152,8 @@
 
       app:drawableEndCompat="@drawable/ic_arrow_home_1"
       android:drawablePadding="6.5dp"
+
+      android:onClick="@{v -> viewModel.showAllStores(v)}"
 
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="@id/labelStoresTextView"

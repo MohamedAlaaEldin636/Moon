@@ -19,6 +19,8 @@ class CategoryDetails2ViewModel @Inject constructor(
 	val args: CategoryDetails2FragmentArgs
 ) : AndroidViewModel(application) {
 
+	val searchQuery = MutableLiveData("")
+
 	val storesLabelText by lazy {
 		"${app.getString(R.string.stores)} ${args.categoryName}"
 	}
