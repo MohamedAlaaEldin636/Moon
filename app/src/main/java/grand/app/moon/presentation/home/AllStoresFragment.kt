@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -12,6 +13,7 @@ import grand.app.moon.databinding.FragmentAllStoresBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.viewModels.AllStoresViewModel
 
 @AndroidEntryPoint
@@ -91,6 +93,30 @@ class AllStoresFragment : BaseFragment<FragmentAllStoresBinding>() {
 			val layoutParams = binding.recyclerViewStores.layoutParams
 			layoutParams.height = binding.rootConstraintLayout.height
 			binding.recyclerViewStores.layoutParams = layoutParams
+		}
+
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<String>(QRCodeScannerFragment::class.java.name) {
+			// Example -> https://eg.sooqmoon.net/ar/shop/9852/m1006mmm
+
+			val endIndex = it.lastIndexOf("/")
+			val id = if (endIndex.dec() < 0) null else {
+				val index = it.lastIndexOf("/", startIndex = endIndex.dec())
+				if (index.inc() < 0) null else it.substring(index.inc(), endIndex).toIntOrNull()
+			}
+
+			if (id == null) {
+				showMessage(getString(R.string.something_went_wrong_please_try_again))
+
+				return@observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull
+			}
+
+			context?.also { context ->
+				viewModel.userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+					context,
+					findNavController(),
+					id
+				)
+			}
 		}
 	}
 

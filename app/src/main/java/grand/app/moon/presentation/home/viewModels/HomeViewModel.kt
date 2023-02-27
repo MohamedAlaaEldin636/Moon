@@ -261,10 +261,8 @@ class HomeViewModel @Inject constructor(
 	fun openBarCode(view: View) {
 		val binding = DataBindingUtil.findBinding<ActivityHomeBinding>(view) ?: return
 		val activity = binding.lifecycleOwner as? HomeActivity ?: return
-		activity.nav.navigateDeepLinkWithOptions(
-			"fragment-dest",
-			"grand.app.moon.dest.qr.code",
-		)
+
+		activity.handler.actOnAllPermissionsAcceptedOrRequestPermissions()
 	}
 	fun openSearchCycleInHome(view: View) {
 		val binding = DataBindingUtil.findBinding<ActivityHomeBinding>(view) ?: return

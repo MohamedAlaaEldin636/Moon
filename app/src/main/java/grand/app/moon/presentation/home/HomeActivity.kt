@@ -1,8 +1,10 @@
 package grand.app.moon.presentation.home
 
+import android.Manifest
 import android.content.Intent
 import android.content.IntentSender
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -45,7 +47,7 @@ import grand.app.moon.presentation.splash.MABaseActivity
 //private var CAUSE_NAV_UP = false
 
 @AndroidEntryPoint
-class HomeActivity : MABaseActivity<ActivityHomeBinding>() {
+class HomeActivity : MABaseActivity<ActivityHomeBinding>(), PermissionsHandler.Listener {
 
   var filePath: ValueCallback<Array<Uri>>? = null
   private lateinit var appBarConfiguration: AppBarConfiguration
@@ -54,9 +56,26 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>() {
 
 	var immediateUpdateActivity: ImmediateUpdateActivity? = null
 
+	lateinit var handler: PermissionsHandler
+
   override fun getLayoutId() = R.layout.activity_home
 
+	override fun onAllPermissionsAccepted() {
+		nav.navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.qr.code",
+		)
+	}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
+		handler = PermissionsHandler(
+			this,
+			lifecycle,
+			this,
+			listOf(Manifest.permission.CAMERA),
+			this
+		)
+
     super.onCreate(savedInstanceState)
 
 	  if (savedInstanceState == null) {
