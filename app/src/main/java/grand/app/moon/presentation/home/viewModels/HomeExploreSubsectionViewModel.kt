@@ -179,7 +179,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 		binding.followButtonTextView.text = if (item.store?.isFollowing.orFalse()) context.getString(R.string.un_follow) else context.getString(R.string.follow)
 
 		binding.storeImageView.setupWithGlide {
-			load(item.store?.logo)
+			load(item.store?.logo).saveDiskCacheStrategyAll()
 		}
 
 		binding.storeTextView.text = item.store?.name
@@ -191,8 +191,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 		if (isVideo.not()) {
 			binding.sliderView.setSliderAdapter(RVSliderImageFull(item.files.orEmpty()) { link ->
 				setupWithGlide {
-					load(link)
-						.apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
+					load(link).saveDiskCacheStrategyAll()
 				}
 			})
 			binding.sliderView.startAutoCycle()

@@ -52,9 +52,13 @@ class CategoryDetails2ViewModel @Inject constructor(
 
 	val adapterStores = getAdapterStores()
 
-	val adapterSubCategories = getSubCategoriesOrBrandsAdapter(allSubCategories, true)
+	val adapterSubCategories by lazy {
+		getSubCategoriesOrBrandsAdapter(allSubCategories, true)
+	}
 
-	val adapterBrands = getSubCategoriesOrBrandsAdapter(allBrands, false)
+	val adapterBrands by lazy {
+		getSubCategoriesOrBrandsAdapter(allBrands, false)
+	}
 
 	val adapterAds = getAdapterAds()
 
@@ -98,6 +102,11 @@ class CategoryDetails2ViewModel @Inject constructor(
 			"fragment-dest",
 			"grand.app.moon.dest.search.suggestions",
 		)
+	}
+
+	fun changeAdsCount(adsCount: Int) {
+		adapterSubCategories.changeAdsCount(adsCount)
+		adapterBrands.changeAdsCount(adsCount)
 	}
 
 }

@@ -126,7 +126,7 @@ class HomeExploreViewModel @Inject constructor(
 			val videoLink = item.files?.firstOrNull()
 			if (videoLink != null && videoLink.isNotEmpty()) {
 				binding.imageImageView.setupWithGlide {
-					load(item.files?.firstOrNull()).asVideo()
+					load(item.files?.firstOrNull()).asVideo().saveDiskCacheStrategyAll()
 				}
 			}
 
@@ -158,7 +158,7 @@ class HomeExploreViewModel @Inject constructor(
 			}*/
 		}else {
 			binding.imageImageView.setupWithGlide {
-				load(item.files?.firstOrNull())
+				load(item.files?.firstOrNull()).saveDiskCacheStrategyAll()
 			}
 		}
 	}
@@ -234,7 +234,7 @@ class HomeExploreViewModel @Inject constructor(
 			}
 		}else {
 			binding.imageImageView.setupWithGlide {
-				load(item.files?.firstOrNull())
+				load(item.files?.firstOrNull()).saveDiskCacheStrategyAll()
 			}
 		}
 	}*/

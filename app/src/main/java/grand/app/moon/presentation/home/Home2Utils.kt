@@ -104,6 +104,7 @@ fun Home2ViewModel.getAdapterStories(): RVItemCommonListUsageWithDifferentItems<
 			binding.storeLogoImageView.setupWithGlide {
 				load(item.image)
 					.error(R.drawable.ic_logo_shop_in_create_shop)
+					.saveDiskCacheStrategyAll()
 			}
 
 			val story = item.stories?.firstOrNull()
@@ -112,6 +113,7 @@ fun Home2ViewModel.getAdapterStories(): RVItemCommonListUsageWithDifferentItems<
 				load(story?.file)
 					.asVideoIfRequired(story?.isVideo.orFalse())
 					.error(R.drawable.splash)
+					.saveDiskCacheStrategyAll()
 			}
 		}
 	}
@@ -180,7 +182,7 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 	val context = binding.root.context ?: return@RVItemCommonListUsage
 
 	binding.imageImageView.setupWithGlide {
-		load(item.image)
+		load(item.image).saveDiskCacheStrategyAll()
 	}
 
 	binding.nameTextView.text = item.name
@@ -298,7 +300,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 	binding.root.setTag(R.id.position_tag, position)
 
 	binding.imageImageView.setupWithGlide {
-		load(item.image)
+		load(item.image).saveDiskCacheStrategyAll()
 	}
 
 	binding.premiumImageView.isVisible = item.isPremium
@@ -321,7 +323,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 	binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
 	binding.storeImageImageView.setupWithGlide {
-		load(item.store?.image)
+		load(item.store?.image).saveDiskCacheStrategyAll()
 	}
 
 	binding.storeTextView.text = item.store?.name

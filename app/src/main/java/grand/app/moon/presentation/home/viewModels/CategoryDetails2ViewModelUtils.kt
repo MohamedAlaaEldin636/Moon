@@ -3,6 +3,7 @@ package grand.app.moon.presentation.home.viewModels
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.databinding.ViewDataBinding
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import grand.app.moon.R
@@ -17,6 +18,7 @@ import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWith
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
 import grand.app.moon.presentation.home.AllAdsOfCategoryFragment
 import grand.app.moon.presentation.home.CategoryDetails2Fragment
+import grand.app.moon.presentation.home.CategoryDetails2FragmentArgs
 import grand.app.moon.presentation.home.FilterAllFragment
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
@@ -24,60 +26,78 @@ import grand.app.moon.presentation.home.models.ResponseStory
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-@Suppress("unused", "RemoveExplicitTypeArguments")
-fun CategoryDetails2ViewModel.getSubCategoriesOrBrandsAdapter(
+class SubCategoriesOrBrandsAdapter(
 	initialData: List<ItemSubCategory>,
-	isSubCategoryNotBrand: Boolean,
-) = RVItemCommonListUsageWithDifferentItems<ItemSubCategory>(
+	private val isSubCategoryNotBrand: Boolean,
+	private val args: CategoryDetails2FragmentArgs,
+	private val loadingString: String,
+	private var adsCount: Int? = null
+) : RVItemCommonListUsageWithDifferentItems2<ItemSubCategory>(
 	getLayoutRes = { position ->
 		if (position == 0) R.layout.item_home_rv_category_see_all else R.layout.item_home_rv_category
 	},
 	listOf(ItemSubCategory()) + initialData,
 	onItemClick = { _, binding ->
 		val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemSubCategory>()
-			?: return@RVItemCommonListUsageWithDifferentItems
+
+		if (item != null) {
+			when (binding) {
+				is ItemHomeRvCategorySeeAllBinding -> {
+					AllAdsOfCategoryFragment.launch(
+						binding.root.findNavController(),
+						FilterAllFragment.Filter(
+							categoryId = args.categoryId,
+						),
+						args.categoryName,
+						args.categoryId
+					)
+				}
+				is ItemHomeRvCategoryBinding -> {
+					AllAdsOfCategoryFragment.launch(
+						binding.root.findNavController(),
+						FilterAllFragment.Filter(
+							categoryId = args.categoryId,
+							subCategoryId = if (isSubCategoryNotBrand) item.id else null,
+							brandId = if (isSubCategoryNotBrand) null else item.id,
+						),
+						args.categoryName,
+						args.categoryId
+					)
+				}
+			}
+		}
+	},
+) {
+	fun changeAdsCount(adsCount: Int) {
+		this.adsCount = adsCount
+		notifyItemChanged(0)
+	}
+
+	override fun onBind(binding: ViewDataBinding, position: Int, item: ItemSubCategory) {
+		binding.root.tag = item.toJsonInlinedOrNull()
 
 		when (binding) {
 			is ItemHomeRvCategorySeeAllBinding -> {
-				AllAdsOfCategoryFragment.launch(
-					binding.root.findNavController(),
-					FilterAllFragment.Filter(
-						categoryId = args.categoryId,
-					),
-					args.categoryName,
-					args.categoryId
-				)
+				binding.textNumOfAdsTextView.text = adsCount?.toString() ?: loadingString
 			}
 			is ItemHomeRvCategoryBinding -> {
-				AllAdsOfCategoryFragment.launch(
-					binding.root.findNavController(),
-					FilterAllFragment.Filter(
-						categoryId = args.categoryId,
-						subCategoryId = if (isSubCategoryNotBrand) item.id else null,
-						brandId = if (isSubCategoryNotBrand) null else item.id,
-					),
-					args.categoryName,
-					args.categoryId
-				)
-			}
-		}
-	}
-) { binding, _, item ->
-	binding.root.tag = item.toJsonInlinedOrNull()
+				binding.textTextView.text = item.name
 
-	when (binding) {
-		is ItemHomeRvCategorySeeAllBinding -> {
-			binding.textNumOfAdsTextView.text = initialData.size.toString()
-		}
-		is ItemHomeRvCategoryBinding -> {
-			binding.textTextView.text = item.name
-
-			binding.imageImageView.setupWithGlide {
-				load(item.image).saveDiskCacheStrategyAll()
+				binding.imageImageView.setupWithGlide {
+					load(item.image).saveDiskCacheStrategyAll()
+				}
 			}
 		}
 	}
 }
+
+@Suppress("unused", "RemoveExplicitTypeArguments")
+fun CategoryDetails2ViewModel.getSubCategoriesOrBrandsAdapter(
+	initialData: List<ItemSubCategory>,
+	isSubCategoryNotBrand: Boolean,
+) = SubCategoriesOrBrandsAdapter(
+	initialData, isSubCategoryNotBrand, args, app.getString(R.string.loading)
+)
 
 fun CategoryDetails2ViewModel.getAdapterStores() = RVItemCommonListUsage<ItemHomeRvStoreBinding, ItemStoreInResponseHome>(
 	R.layout.item_home_rv_store,
@@ -118,7 +138,7 @@ fun CategoryDetails2ViewModel.getAdapterStores() = RVItemCommonListUsage<ItemHom
 	val context = binding.root.context ?: return@RVItemCommonListUsage
 
 	binding.imageImageView.setupWithGlide {
-		load(item.image)
+		load(item.image).saveDiskCacheStrategyAll()
 	}
 
 	binding.nameTextView.text = item.name
@@ -213,6 +233,7 @@ fun CategoryDetails2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDif
 			binding.storeLogoImageView.setupWithGlide {
 				load(item.image)
 					.error(R.drawable.ic_logo_shop_in_create_shop)
+					.saveDiskCacheStrategyAll()
 			}
 
 			val story = item.stories?.firstOrNull()
@@ -221,6 +242,7 @@ fun CategoryDetails2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDif
 				load(story?.file)
 					.asVideoIfRequired(story?.isVideo.orFalse())
 					.error(R.drawable.splash)
+					.saveDiskCacheStrategyAll()
 			}
 		}
 	}
@@ -313,7 +335,7 @@ fun CategoryDetails2ViewModel.getAdapterAds() = RVItemCommonListUsage<ItemSearch
 	binding.root.setTag(R.id.position_tag, position)
 
 	binding.imageImageView.setupWithGlide {
-		load(item.image)
+		load(item.image).saveDiskCacheStrategyAll()
 	}
 
 	binding.premiumImageView.isVisible = item.isPremium
@@ -336,7 +358,7 @@ fun CategoryDetails2ViewModel.getAdapterAds() = RVItemCommonListUsage<ItemSearch
 	binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
 	binding.storeImageImageView.setupWithGlide {
-		load(item.store?.image)
+		load(item.store?.image).saveDiskCacheStrategyAll()
 	}
 
 	binding.storeTextView.text = item.store?.name

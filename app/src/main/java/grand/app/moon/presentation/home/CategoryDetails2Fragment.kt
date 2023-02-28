@@ -9,6 +9,7 @@ import grand.app.moon.R
 import grand.app.moon.databinding.FragmentCategoryDetails2Binding
 import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
 import grand.app.moon.extensions.navigateDeepLinkWithOptions
+import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.models.ResponseStory
@@ -59,6 +60,8 @@ class CategoryDetails2Fragment : BaseFragment<FragmentCategoryDetails2Binding>()
 
 				viewModel.adapterAds.submitList(categoryDetails.advertisements.orEmpty())
 				viewModel.showAds.value = categoryDetails.advertisements.isNullOrEmpty().not()
+
+				viewModel.changeAdsCount(categoryDetails.adsCount.orZero())
 			}
 		}
 	}

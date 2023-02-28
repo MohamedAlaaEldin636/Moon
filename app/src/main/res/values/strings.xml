@@ -514,4 +514,5 @@
   <string name="brands">الماركات</string>
   <string name="see_all_ads">مشاهدة جميع الاعلانت</string>
   <string name="sub_categories">الأقسام الفرعية</string>
+  <string name="loading">Loading…</string>
 </resources>
