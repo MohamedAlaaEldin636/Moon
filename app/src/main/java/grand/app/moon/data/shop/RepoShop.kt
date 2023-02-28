@@ -529,6 +529,10 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getAllAds(it, filter)
 	}
 
+	fun getAllAdsHandlingChanges(filter: FilterAllFragment.Filter) = BasePaging.createFlowViaPager {
+		remoteDataSource.getAllAdsAsResponseBody(it, filter)
+	}
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

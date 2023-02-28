@@ -34,7 +34,7 @@ class AllAdsFragment : BaseFragment<FragmentAllAdsBinding>() {
 		RetryAbleFlow(
 			this,
 			getFlow = {
-				viewModel.repoShop.getAllAds(viewModel.filter.value ?: FilterAllFragment.Filter())
+				viewModel.repoShop.getAllAdsHandlingChanges(viewModel.filter.value ?: FilterAllFragment.Filter())
 			},
 			collectLatestAction = {
 				viewModel.adapterAds.submitData(it)

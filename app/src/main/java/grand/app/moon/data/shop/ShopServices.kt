@@ -18,6 +18,7 @@ import grand.app.moon.presentation.stats.models.ResponseStoreStats
 import grand.app.moon.presentation.stats.models.ResponseUserInGeneralStats
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -345,5 +346,11 @@ interface ShopServices {
 		@Query("page") page: Int,
 		@QueryMap map: Map<String, String>
 	): MABaseResponse<MABasePaging<ItemAdvertisementInResponseHome>>
+
+	@GET("v1/advertisements")
+	suspend fun getAllAdsAsResponseBody(
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>
+	): ResponseBody
 
 }

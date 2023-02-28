@@ -9,8 +9,7 @@ import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.home.AllStoresFragment
 import grand.app.moon.presentation.home.FilterAllFragment
-import grand.app.moon.presentation.home.models.Interaction
-import grand.app.moon.presentation.home.models.TypeSearchResult
+import grand.app.moon.presentation.home.models.*
 import grand.app.moon.presentation.map.MapOfDataFragment
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
@@ -599,6 +598,78 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		filter.adSpecificType.ifNotNull { map["type"] = it.apiValue.toString() }
 
 		apiService.getAllAds(page, map)
+	}
+
+	suspend fun getAllAdsAsResponseBody(
+		page: Int,
+		filter: FilterAllFragment.Filter,
+	) = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+
+		filter.search.ifNotNullNorEmpty { map["search"] = it }
+		filter.categoryId.ifNotNull { map["category_id"] = it.toString() }
+		filter.subCategoryId.ifNotNull { map["sub_category_id"] = it.toString() }
+		filter.brandId.ifNotNull { map["brand_id"] = it.toString() }
+		filter.minPrice.ifNotNull { map["min_price"] = it.toString() }
+		filter.maxPrice.ifNotNull { map["max_price"] = it.toString() }
+		filter.cityId.ifNotNull { map["city_ids[0]"] = it.toString() }
+		filter.areasIds?.forEachIndexed { index, id ->
+			map["area_ids[$index]"] = id.toString()
+		}
+		var index = 0
+		filter.properties.forEach { item ->
+			val (id, from, to) = when (item) {
+				is DynamicFilterProperty.Checked -> if (item.isSelected) {
+					item.id to null triple null
+				}else {
+					return@forEach
+				}
+				is DynamicFilterProperty.RangedText -> if (item.from.isNotEmpty() && item.to.isNotEmpty()) {
+					item.id to item.from triple item.to
+				}else {
+					return@forEach
+				}
+				is DynamicFilterProperty.Selection -> {
+					item.selectedData.forEach { (id, _) ->
+						id.ifNotNull { map["properties[${index++}][id]"] = it.toString() }
+					}
+
+					return@forEach
+				}
+				is DynamicFilterProperty.Text -> if (item.value.isNotEmpty()) {
+					item.id to item.value triple item.value
+				}else {
+					return@forEach
+				}
+			}
+
+			map["properties[$index][id]"] = id.toString()
+			from.ifNotNullNorEmpty { map["properties[$index][from]"] = from.toString() }
+			from.ifNotNullNorEmpty { map["properties[$index][to]"] = to.toString() }
+			index++
+		}
+		filter.sortBy.ifNotNull { map["order_by"] = it.apiValue.toString() }
+		filter.adType.ifNotNull { map["other_options"] = it.apiValue.toString() }
+		filter.rating.ifNotNull {
+			map["min_rate"] = it.toString()
+			map["max_rate"] = 5.toString()
+		}
+		filter.adSpecificType.ifNotNull { map["type"] = it.apiValue.toString() }
+
+		val json = kotlin.runCatching {
+			apiService.getAllAdsAsResponseBody(page, map)
+				.string()
+		}.getOrElse {
+			null
+		}
+
+		if (filter.categoryId != null) {
+			json.fromJsonInlinedOrNull<MABaseResponse<ResponseAllAdsOfCategory>>()
+				.toSpecialResponseOfAllAds1().toPaging()
+		}else {
+			json.fromJsonInlinedOrNull<MABaseResponse<MABasePaging<ItemAdvertisementInResponseHome>>>()
+				.toSpecialResponseOfAllAds2().toPaging()
+		} ?: MABaseResponse(null, "", 401)
 	}
 
 }
