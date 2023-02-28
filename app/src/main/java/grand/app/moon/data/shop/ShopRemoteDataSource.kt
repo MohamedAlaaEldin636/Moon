@@ -462,6 +462,7 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		filter.search.ifNotNullNorEmpty { map["search"] = it }
 		filter.categoryId.ifNotNull { map["category_id"] = it.toString() }
 		filter.subCategoryId.ifNotNull { map["sub_category_id"] = it.toString() }
+		filter.brandId.ifNotNull { map["brand_id"] = it.toString() }
 		filter.minPrice.ifNotNull { map["min_price"] = it.toString() }
 		filter.maxPrice.ifNotNull { map["max_price"] = it.toString() }
 		filter.cityId.ifNotNull { map["city_ids[0]"] = it.toString() }
@@ -530,6 +531,14 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		}
 
 		apiService.getAllStores(page, map)
+	}
+
+	suspend fun getCategoryDetails(categoryId: Int) = safeApiCall {
+		apiService.getCategoryDetails(categoryId)
+	}
+
+	suspend fun getCategoryStories(categoryId: Int) = safeApiCall {
+		apiService.getCategoryStories(categoryId)
 	}
 
 }

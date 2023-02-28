@@ -28,9 +28,9 @@ data class ItemCategory(
 
 @Keep
 data class ItemSubCategory(
-	var id: Int?,
-	var name: String?,
-	var image: String?,
+	var id: Int? = null,
+	var name: String? = null,
+	var image: String? = null,
 	//var ads_count: Int?,
 	//var order_by_no: Int?,
 ) : ItemRelatedToCategories

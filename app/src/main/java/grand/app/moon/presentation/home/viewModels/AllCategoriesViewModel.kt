@@ -2,9 +2,7 @@ package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.map
 import androidx.navigation.findNavController
@@ -14,9 +12,7 @@ import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeRvCategoryBinding
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.extensions.*
-import grand.app.moon.presentation.base.extensions.showMessage
-import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.home.AllCategoriesFragment
+import grand.app.moon.presentation.home.CategoryDetails2Fragment
 import grand.app.moon.presentation.map.MapOfDataFragment
 import javax.inject.Inject
 
@@ -45,13 +41,10 @@ class AllCategoriesViewModel @Inject constructor(
 			val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemCategory>()
 				?: return@RVItemCommonListUsage
 
-			// todo will require new screen and same in home fragment as well isa.
-			binding.root.findNavController().navigate(
-				R.id.categoryDetailsFragment,
-				bundleOf(
-					"category_id" to item.id.orZero(),
-					"tabBarText" to item.name.orEmpty()
-				), Constants.NAVIGATION_OPTIONS
+			CategoryDetails2Fragment.launch(
+				binding.root.findNavController(),
+				item.id.orZero(),
+				item.name.orEmpty()
 			)
 		}
 	) { binding, _, item ->

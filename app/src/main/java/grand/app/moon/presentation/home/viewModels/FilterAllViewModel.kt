@@ -66,11 +66,26 @@ class FilterAllViewModel @Inject constructor(
 			}
 		}
 	)
+	val showBrand = selectedCategory.map {
+		args.forAdsNotStores && it?.brands.isNullOrEmpty().not()
+	}
+	private val selectedBrand = MutableLiveData<ItemSubCategory?>(
+		if (initialFilter.categoryId == null) null else {
+			allCategoriesWithSubCategories.firstOrNull { itemCategory ->
+				itemCategory.id == initialFilter.categoryId
+			}?.brands?.firstOrNull {
+				it.id == initialFilter.brandId
+			}
+		}
+	)
 	val mainCategory = selectedCategory.map {
 		it?.name.letIfNullOrEmpty { app.getString(R.string.main_section) }
 	}
 	val subCategory = selectedSubCategory.map {
 		it?.name ?: app.getString(R.string.sub_section)
+	}
+	val brand = selectedBrand.map {
+		it?.name ?: app.getString(R.string.brand)
 	}
 
 	private val selectedCity = MutableLiveData<ResponseCity?>(
@@ -277,6 +292,7 @@ class FilterAllViewModel @Inject constructor(
 				if (newSelection != selectedCategory.value) {
 					selectedCategory.value = newSelection
 					selectedSubCategory.value = null
+					selectedBrand.value = null
 
 					fragment.handleRetryAbleActionOrGoBack(
 						action = {
@@ -315,6 +331,26 @@ class FilterAllViewModel @Inject constructor(
 							responseFilterProperties.value = it
 						}
 					}
+				}
+			}
+		)
+	}
+	fun pickBrand(view: View) {
+		val fragment = view.findFragmentOrNull<FilterAllFragment>() ?: return
+
+		if (selectedCategory.value == null) return fragment.showMessage(fragment.getString(R.string.pick_main_category_firstly))
+
+		val allBrands = selectedCategory.value?.brands.orEmpty()
+
+		if (allBrands.isEmpty()) return fragment.showMessage(fragment.getString(R.string.no_brands_found))
+
+		view.showPopup(
+			allBrands.map { it.name.orEmpty() },
+			listener = { menuItem ->
+				val newSelection = allBrands.firstOrNull { it.name == menuItem.title }
+
+				if (newSelection != selectedBrand.value) {
+					selectedBrand.value = newSelection
 				}
 			}
 		)
@@ -407,6 +443,7 @@ class FilterAllViewModel @Inject constructor(
 				searchQuery.value,
 				selectedCategory.value?.id,
 				selectedSubCategory.value?.id,
+				selectedBrand.value?.id,
 				minPrice,
 				maxPrice,
 				selectedCity.value?.id,

@@ -330,4 +330,14 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>
 	): MABaseResponse<MABasePaging<ItemStoreInResponseHome>>
 
+	@GET("v1/sub-categories")
+	suspend fun getCategoryDetails(
+		@Query("category_id") categoryId: Int?,
+	): BaseResponse<ResponseCategoryDetails?>
+
+	@GET("v1/stories")
+	suspend fun getCategoryStories(
+		@Query("category_id") categoryId: Int
+	): BaseResponse<ResponseHomeStories?>
+
 }

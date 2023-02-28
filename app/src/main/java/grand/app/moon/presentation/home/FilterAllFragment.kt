@@ -82,6 +82,7 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 		val search: String? = null,
 		val categoryId: Int? = null,
 		val subCategoryId: Int? = null,
+		val brandId: Int? = null,
 		val minPrice: Float? = null,
 		val maxPrice: Float? = null,
 		val cityId: Int? = null,
@@ -100,7 +101,7 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 
 		private fun toSpecialFilter(): SpecialFilter {
 			return SpecialFilter(
-				search, categoryId, subCategoryId, minPrice, maxPrice, cityId, areasIds,
+				search, categoryId, subCategoryId, brandId, minPrice, maxPrice, cityId, areasIds,
 				properties.map { it.toSpecialDynamicFilterProperty() },
 				sortBy
 			)
@@ -116,6 +117,7 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 		val search: String? = null,
 		val categoryId: Int? = null,
 		val subCategoryId: Int? = null,
+		val brandId: Int? = null,
 		val minPrice: Float? = null,
 		val maxPrice: Float? = null,
 		val cityId: Int? = null,
@@ -127,7 +129,7 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 	) {
 		fun toFilter(): Filter {
 			return Filter(
-				search, categoryId, subCategoryId, minPrice, maxPrice, cityId, areasIds,
+				search, categoryId, subCategoryId, brandId, minPrice, maxPrice, cityId, areasIds,
 				properties?.mapNotNull { it.toDynamicFilterProperty() }.orEmpty(),
 				sortBy
 			)

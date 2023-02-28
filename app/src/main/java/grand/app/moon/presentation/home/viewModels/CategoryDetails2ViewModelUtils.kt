@@ -1,4 +1,4 @@
-package grand.app.moon.presentation.home
+package grand.app.moon.presentation.home.viewModels
 
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -10,138 +10,76 @@ import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.launchCometChat
 import grand.app.moon.databinding.*
-import grand.app.moon.domain.categories.entity.ItemCategory
-import grand.app.moon.domain.home.models.StoreModel
+import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsStart
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
-import grand.app.moon.presentation.base.extensions.showError
-import grand.app.moon.presentation.home.models.*
-import grand.app.moon.presentation.home.viewModels.Home2ViewModel
+import grand.app.moon.presentation.home.AllAdsOfCategoryFragment
+import grand.app.moon.presentation.home.CategoryDetails2Fragment
+import grand.app.moon.presentation.home.FilterAllFragment
+import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
+import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
+import grand.app.moon.presentation.home.models.ResponseStory
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-fun Home2ViewModel.getAdapterStories(): RVItemCommonListUsageWithDifferentItems<ResponseStory> = RVItemCommonListUsageWithDifferentItems(
-	getLayoutRes = {
-		if (it == 0) R.layout.item_home_rv_story_addition else R.layout.item_home_rv_story_actual
+@Suppress("unused", "RemoveExplicitTypeArguments")
+fun CategoryDetails2ViewModel.getSubCategoriesOrBrandsAdapter(
+	initialData: List<ItemSubCategory>,
+	isSubCategoryNotBrand: Boolean,
+) = RVItemCommonListUsageWithDifferentItems<ItemSubCategory>(
+	getLayoutRes = { position ->
+		if (position == 0) R.layout.item_home_rv_category_see_all else R.layout.item_home_rv_category
 	},
-	onItemClick = { adapter, binding ->
-		val fragment = binding.root.findFragmentOrNull<Home2Fragment>()
+	listOf(ItemSubCategory()) + initialData,
+	onItemClick = { _, binding ->
+		val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemSubCategory>()
 			?: return@RVItemCommonListUsageWithDifferentItems
-		val context = fragment.context ?: return@RVItemCommonListUsageWithDifferentItems
 
 		when (binding) {
-			is ItemHomeRvStoryAdditionBinding -> {
-				if (fragment.context?.isLoginWithOpenAuth().orFalse()) {
-					if (fragment.viewModel.userLocalUseCase().isStore.orFalse()) {
-						fragment.handleRetryAbleActionCancellable(
-							action = {
-								repoHome2.checkAvailabilityForStories()
-							}
-						) { count ->
-							if (count > 0) {
-								fragment.findNavController().navigateDeepLinkWithOptions(
-									"fragment-dest",
-									"grand.app.moon.dest.add.story"
-								)
-							}else {
-								fragment.showError(fragment.getString(R.string.no_more_rem_stories_in_your_package))
-							}
-						}
-					}else {
-						fragment.findNavController().navigateDeepLinkWithOptions(
-							"fragment-dest",
-							"grand.app.moon.dest.become.shop.packages"
-						)
-					}
-				}
+			is ItemHomeRvCategorySeeAllBinding -> {
+				AllAdsOfCategoryFragment.launch(
+					binding.root.findNavController(),
+					FilterAllFragment.Filter(
+						categoryId = args.categoryId,
+					),
+					args.categoryName,
+					args.categoryId
+				)
 			}
-			is ItemHomeRvStoryActualBinding -> {
-				val newList = adapter.list.drop(1)
-
-				val position = binding.root.tag as? Int ?: return@RVItemCommonListUsageWithDifferentItems
-
-				val toBeUsedListJson = newList.toJsonInlinedOrNull().orEmpty()
-				val toBeUsedPosition = position - 1
-
-				val storyModel = StoreModel()
-				storyModel.list.addAll(newList.map { it.toStore() })
-				storyModel.position = position - 1
-
-				val item = adapter.list[position]
-				if (context.isLogin() && item.isSeen.not()) {
-					item.stories?.firstOrNull()?.isSeen = true
-
-					if (item.isSouqMoonStory.orFalse().not() && item.isSeen) {
-						val updatedList = adapter.list.toMutableList()
-						val updatedItem = updatedList.removeAt(position)
-						updatedList += updatedItem
-
-						adapter.submitList(updatedList)
-					}
-				}
-
-				fragment.findNavController().navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.story.player",
-					paths = arrayOf(toBeUsedListJson, toBeUsedPosition.toString())
+			is ItemHomeRvCategoryBinding -> {
+				AllAdsOfCategoryFragment.launch(
+					binding.root.findNavController(),
+					FilterAllFragment.Filter(
+						categoryId = args.categoryId,
+						subCategoryId = if (isSubCategoryNotBrand) item.id else null,
+						brandId = if (isSubCategoryNotBrand) null else item.id,
+					),
+					args.categoryName,
+					args.categoryId
 				)
 			}
 		}
 	}
-) { binding, position, item ->
-	binding.root.tag = position
+) { binding, _, item ->
+	binding.root.tag = item.toJsonInlinedOrNull()
 
 	when (binding) {
-		is ItemHomeRvStoryActualBinding -> {
-			binding.storeNameTextView.text = item.name
+		is ItemHomeRvCategorySeeAllBinding -> {
+			binding.textNumOfAdsTextView.text = initialData.size.toString()
+		}
+		is ItemHomeRvCategoryBinding -> {
+			binding.textTextView.text = item.name
 
-			binding.seenCircleView.visibleOrInvisible(
-				item.isSeen.not()
-			)
-
-			binding.storeLogoImageView.setupWithGlide {
-				load(item.image)
-					.error(R.drawable.ic_logo_shop_in_create_shop)
-			}
-
-			val story = item.stories?.firstOrNull()
-
-			binding.storyImageView.setupWithGlide {
-				load(story?.file)
-					.asVideoIfRequired(story?.isVideo.orFalse())
-					.error(R.drawable.splash)
+			binding.imageImageView.setupWithGlide {
+				load(item.image).saveDiskCacheStrategyAll()
 			}
 		}
 	}
 }
 
-@Suppress("unused")
-fun Home2ViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCategoryBinding, ItemCategory>(
-	R.layout.item_home_rv_category,
-	onItemClick = { _, binding ->
-		val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemCategory>()
-			?: return@RVItemCommonListUsage
-
-		CategoryDetails2Fragment.launch(
-			binding.root.findNavController(),
-			item.id.orZero(),
-			item.name.orEmpty()
-		)
-	}
-) { binding, _, item ->
-	binding.root.tag = item.toJsonInlinedOrNull()
-
-	binding.textTextView.text = item.name
-
-	binding.imageImageView.setupWithGlide {
-		load(item.image).saveDiskCacheStrategyAll()
-	}
-
-}
-
-fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStoreBinding, ItemStoreInResponseHome>(
+fun CategoryDetails2ViewModel.getAdapterStores() = RVItemCommonListUsage<ItemHomeRvStoreBinding, ItemStoreInResponseHome>(
 	R.layout.item_home_rv_store,
 	onItemClick = { _, binding ->
 		val context = binding.root.context ?: return@RVItemCommonListUsage
@@ -213,8 +151,83 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 	binding.premiumImageView.isVisible = item.isPremium
 }
 
-fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBinding, ItemAdvertisementInResponseHome>(
-	R.layout.item_home_rv_adv,
+@Suppress("unused")
+fun CategoryDetails2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDifferentItems<ResponseStory>(
+	getLayoutRes = {
+		if (it == 0) R.layout.item_home_rv_story_see_more else R.layout.item_home_rv_story_actual
+	},
+	onItemClick = { adapter, binding ->
+		val fragment = binding.root.findFragmentOrNull<CategoryDetails2Fragment>()
+			?: return@RVItemCommonListUsageWithDifferentItems
+		val context = fragment.context ?: return@RVItemCommonListUsageWithDifferentItems
+
+		val navController = fragment.findNavController()
+
+		when (binding) {
+			is ItemHomeRvStorySeeMoreBinding -> {
+				navController.navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.all.stories"
+				)
+			}
+			is ItemHomeRvStoryActualBinding -> {
+				val newList = adapter.list.drop(1)
+
+				val position = binding.root.tag as? Int ?: return@RVItemCommonListUsageWithDifferentItems
+
+				val toBeUsedListJson = newList.toJsonInlinedOrNull().orEmpty()
+				val toBeUsedPosition = position - 1
+
+				val item = adapter.list[position]
+				if (context.isLogin() && item.isSeen.not()) {
+					item.stories?.firstOrNull()?.isSeen = true
+
+					if (item.isSouqMoonStory.orFalse().not() && item.isSeen) {
+						val updatedList = adapter.list.toMutableList()
+						val updatedItem = updatedList.removeAt(position)
+						updatedList += updatedItem
+
+						adapter.submitList(updatedList)
+					}
+				}
+
+				fragment.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.story.player",
+					paths = arrayOf(toBeUsedListJson, toBeUsedPosition.toString())
+				)
+			}
+		}
+	}
+) { binding, position, item ->
+	binding.root.tag = position
+
+	when (binding) {
+		is ItemHomeRvStoryActualBinding -> {
+			binding.storeNameTextView.text = item.name
+
+			binding.seenCircleView.visibleOrInvisible(
+				item.isSeen.not()
+			)
+
+			binding.storeLogoImageView.setupWithGlide {
+				load(item.image)
+					.error(R.drawable.ic_logo_shop_in_create_shop)
+			}
+
+			val story = item.stories?.firstOrNull()
+
+			binding.storyImageView.setupWithGlide {
+				load(story?.file)
+					.asVideoIfRequired(story?.isVideo.orFalse())
+					.error(R.drawable.splash)
+			}
+		}
+	}
+}
+
+fun CategoryDetails2ViewModel.getAdapterAds() = RVItemCommonListUsage<ItemSearchResultBinding, ItemAdvertisementInResponseHome>(
+	R.layout.item_search_result,
 	onItemClick = { _, binding ->
 		val context = binding.root.context ?: return@RVItemCommonListUsage
 
@@ -259,12 +272,14 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 
 				adapter.updateItem(
 					position,
-					item.copy(isFavorite = item.isFavorite.orFalse().not())
+					item.copy(
+						isFavorite = item.isFavorite.orFalse().not()
+					)
 				)
 			}
 		}
 
-		binding.whatsAppImageView.setOnClickListener {
+		binding.whatsAppConstraintLayout.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener
 
 			val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
@@ -272,7 +287,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 
 			context.launchWhatsApp(item.phone.orEmpty())
 		}
-		binding.callImageView.setOnClickListener {
+		binding.phoneConstraintLayout.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener
 
 			val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
@@ -280,7 +295,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 
 			context.launchDialNumber(item.phone.orEmpty())
 		}
-		binding.chatImageView.setOnClickListener {
+		binding.chatConstraintLayout.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener
 
 			val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
@@ -304,7 +319,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 	binding.premiumImageView.isVisible = item.isPremium
 
 	binding.favImageView.setImageResource(
-		if (item.isFavorite.orFalse()) R.drawable.item_adv_fav_med_cropped else R.drawable.item_adv_fav_cropped
+		if (item.isFavorite.orFalse()) R.drawable.item_adv_fav_med_cropped else R.drawable.item_adv_fav_large_cropped
 	)
 
 	binding.ratingTextView.text = "( ${item.averageRate?.round(1).orZero()
@@ -326,7 +341,8 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 
 	binding.storeTextView.text = item.store?.name
 
-	binding.priceTextView.text = "${item.price?.round(2).orZero()} ${item.country?.currency.orEmpty()}"
+	binding.priceTextView.text = item.price?.round(2).orZero().toString()
+	binding.currencyTextView.text = item.country?.currency.orEmpty()
 
 	binding.negotiableTextView.isVisible = item.isNegotiable
 }

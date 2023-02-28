@@ -510,4 +510,8 @@
   <string name="filter_search_4">فلتر البحث</string>
   <string name="stores_879">المتاجر</string>
     <string name="categories_6876">الاقسام</string>
+    <string name="no_brands_found">لا يوجد ماركات</string>
+  <string name="brands">الماركات</string>
+  <string name="see_all_ads">مشاهدة جميع الاعلانت</string>
+  <string name="sub_categories">الأقسام الفرعية</string>
 </resources>

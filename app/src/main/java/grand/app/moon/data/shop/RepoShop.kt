@@ -521,6 +521,10 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getAllStores(it, filter)
 	}
 
+	suspend fun getCategoryDetails(categoryId: Int) = remoteDataSource.getCategoryDetails(categoryId)
+
+	suspend fun getCategoryStories(categoryId: Int) = remoteDataSource.getCategoryStories(categoryId)
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

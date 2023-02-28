@@ -166,6 +166,45 @@
           app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
+          android:id="@+id/brandTextView"
+
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+
+          android:layout_marginTop="24dp"
+
+          android:background="@drawable/dr_rect_5"
+          android:elevation="5dp"
+
+          style="@style/TextTajawalBold14"
+          android:textSize="16sp"
+          android:textColor="@color/black"
+          android:gravity="center_vertical"
+          android:textDirection="locale"
+
+          android:paddingTop="14dp"
+          android:paddingBottom="14dp"
+          android:paddingStart="10dp"
+          android:paddingEnd="20dp"
+
+          android:text="@{viewModel.brand,default=@string/brand}"
+          tools:text="@string/brand"
+
+          android:onClick="@{v -> viewModel.pickBrand(v)}"
+
+          android:visibility="@{viewModel.showBrand}"
+
+          android:drawablePadding="9.5dp"
+          app:drawableEndCompat="@drawable/filter_arrow_down"
+
+          app:layout_constraintTop_toBottomOf="@id/subCategoryTextView"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
           android:id="@+id/cityTextView"
 
           android:layout_marginStart="16dp"
@@ -198,7 +237,7 @@
           android:drawablePadding="9.5dp"
           app:drawableEndCompat="@drawable/filter_arrow_down"
 
-          app:layout_constraintTop_toBottomOf="@id/subCategoryTextView"
+          app:layout_constraintTop_toBottomOf="@id/brandTextView"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"  />
 

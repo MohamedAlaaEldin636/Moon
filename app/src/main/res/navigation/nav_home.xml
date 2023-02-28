@@ -1260,5 +1260,24 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.category.details.two/{categoryId}/{categoryName}" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_all_ads_of_category"
+    android:name="grand.app.moon.presentation.home.AllAdsOfCategoryFragment"
+    android:label="{title}"
+    tools:layout="@layout/fragment_all_ads_of_category">
+    <argument
+      android:name="title"
+      app:argType="string"/>
+    <argument
+      android:name="initialSpecialStringFiltering"
+      app:argType="string"/>
+    <argument
+      android:name="categoryId"
+      app:argType="integer"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_all_ads_of_category"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.all.ads.of.category/{title}/{initialSpecialStringFiltering}/{categoryId}" />
+  </fragment>
 
 </navigation>

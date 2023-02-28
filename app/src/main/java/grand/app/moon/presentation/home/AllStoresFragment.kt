@@ -141,6 +141,7 @@ class AllStoresFragment : BaseFragment<FragmentAllStoresBinding>() {
 				subCategoryId,
 				null,
 				null,
+				null,
 				cityId,
 				areasIds,
 				emptyList(),
