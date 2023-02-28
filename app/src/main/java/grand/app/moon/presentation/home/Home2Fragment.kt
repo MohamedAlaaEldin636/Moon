@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -177,7 +178,9 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 									layoutInflater, R.layout.item_home_rv, binding.rvLikeLinearLayout, false
 								)
 
-								binding.nameTextView.text = item.name
+								binding.nameTextView.text = if (item.dynamicCategoriesAdsId == null) item.name else {
+									"${getString(R.string.advertisements)} ${item.name}"
+								}
 
 								binding.countTextView.text = item.count.toStringOrEmpty()
 
@@ -241,32 +244,29 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 					)
 				}
 				ItemHomeRV.Type.SUGGESTED_ADS -> {
-					navController.navigate(
-						R.id.nav_category_list_ads,
-						bundleOf(
-							"category_id" to -1,
-							"tabBarText" to item.name.orEmpty(),
-							"type" to 1
-						), Constants.NAVIGATION_OPTIONS
+					AllAdsFragment.launch(
+						navController,
+						FilterAllFragment.Filter(
+							adSpecificType = FilterAllFragment.AdSpecificType.SUGGESTED
+						),
+						getString(R.string.suggestions_ads_for_you)
 					)
 				}
 				ItemHomeRV.Type.MOST_POPULAR_ADS -> {
-					navController.navigate(
-						R.id.nav_category_list_ads,
-						bundleOf(
-							"category_id" to -1,
-							"tabBarText" to item.name.orEmpty(),
-							"type" to 2
-						), Constants.NAVIGATION_OPTIONS
+					AllAdsFragment.launch(
+						navController,
+						FilterAllFragment.Filter(
+							adSpecificType = FilterAllFragment.AdSpecificType.MOST_POPULAR
+						),
+						getString(R.string.most_popular_ads)
 					)
 				}
 				ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> {
-					navController.navigate(
-						R.id.nav_category_list_ads,
-						bundleOf(
-							"category_id" to item.dynamicCategoriesAdsId.orZero(),
-							"tabBarText" to item.name.orEmpty()
-						), Constants.NAVIGATION_OPTIONS
+					AllAdsOfCategoryFragment.launch(
+						navController,
+						null,
+						item.name.orEmpty(),
+						item.dynamicCategoriesAdsId.orZero(),
 					)
 				}
 			}

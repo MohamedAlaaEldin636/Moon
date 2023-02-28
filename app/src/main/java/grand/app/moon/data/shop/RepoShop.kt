@@ -525,6 +525,10 @@ class RepoShop @Inject constructor(
 
 	suspend fun getCategoryStories(categoryId: Int) = remoteDataSource.getCategoryStories(categoryId)
 
+	fun getAllAds(filter: FilterAllFragment.Filter) = BasePaging.createFlowViaPager {
+		remoteDataSource.getAllAds(it, filter)
+	}
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

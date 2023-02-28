@@ -340,4 +340,10 @@ interface ShopServices {
 		@Query("category_id") categoryId: Int
 	): BaseResponse<ResponseHomeStories?>
 
+	@GET("v1/advertisements")
+	suspend fun getAllAds(
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>
+	): MABaseResponse<MABasePaging<ItemAdvertisementInResponseHome>>
+
 }

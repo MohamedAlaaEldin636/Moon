@@ -26,10 +26,7 @@ import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsEnd
 import grand.app.moon.presentation.base.extensions.showMessage
-import grand.app.moon.presentation.home.AllStoresFragment
-import grand.app.moon.presentation.home.FilterAllFragment
-import grand.app.moon.presentation.home.FilterAllFragmentArgs
-import grand.app.moon.presentation.home.SingleOrMultiSelectionFragment
+import grand.app.moon.presentation.home.*
 import grand.app.moon.presentation.myStore.model.ResponseArea
 import grand.app.moon.presentation.myStore.model.ResponseCity
 import javax.inject.Inject
@@ -451,13 +448,29 @@ class FilterAllViewModel @Inject constructor(
 				adapter.list,
 				selectedSortBy.value,
 				selectedAdType.value,
-				getSelectedStar()
+				getSelectedStar(),
+				initialFilter.adSpecificType
 			)
 
-			fragment.findNavController().navigateDeepLinkWithOptions(
+			val selectedCategory = selectedCategory.value
+			if (selectedCategory != null) {
+				AllAdsOfCategoryFragment.launch(
+					fragment.findNavController(),
+					fragment.navGraphViewModel.filter,
+					selectedCategory.name.orEmpty(),
+					selectedCategory.id.orZero()
+				)
+			}else {
+				AllAdsFragment.launch(
+					fragment.findNavController(),
+					fragment.navGraphViewModel.filter,
+					fragment.getString(R.string.advertisements_8)
+				)
+			}
+			/*fragment.findNavController().navigateDeepLinkWithOptions(
 				"fragment-dest",
 				"grand.app.moon.dest.filter.results.two"
-			)
+			)*/
 		}else {
 			// Ignore only sort as it is in the previous screen, but other stuff in previous screen keep
 			// them according to bakrey isa.

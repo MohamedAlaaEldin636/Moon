@@ -78,6 +78,10 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 		ALL(1), PREMIUM(2), FREE(3)
 	}
 
+	enum class AdSpecificType(val apiValue: Int) {
+		SUGGESTED(1), MOST_POPULAR(2)
+	}
+
 	data class Filter(
 		val search: String? = null,
 		val categoryId: Int? = null,
@@ -91,6 +95,7 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 		val sortBy: SortBy? = null,
 		val adType: AdType? = null,
 		val rating: Int? = null,
+		val adSpecificType: AdSpecificType? = null,
 	) {
 
 		companion object {
@@ -103,7 +108,7 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 			return SpecialFilter(
 				search, categoryId, subCategoryId, brandId, minPrice, maxPrice, cityId, areasIds,
 				properties.map { it.toSpecialDynamicFilterProperty() },
-				sortBy
+				sortBy, adType, rating, adSpecificType
 			)
 		}
 
@@ -126,12 +131,13 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 		val sortBy: SortBy? = null,
 		val adType: AdType? = null,
 		val rating: Int? = null,
+		val adSpecificType: AdSpecificType? = null,
 	) {
 		fun toFilter(): Filter {
 			return Filter(
 				search, categoryId, subCategoryId, brandId, minPrice, maxPrice, cityId, areasIds,
 				properties?.mapNotNull { it.toDynamicFilterProperty() }.orEmpty(),
-				sortBy
+				sortBy, adType, rating, adSpecificType
 			)
 		}
 	}

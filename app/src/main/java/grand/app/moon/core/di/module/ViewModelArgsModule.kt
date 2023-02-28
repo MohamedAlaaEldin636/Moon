@@ -25,6 +25,21 @@ import grand.app.moon.presentation.stats.StatsUsersHistoryFragmentArgs
 object ViewModelArgsModule {
 
 	@Provides
+	fun provideAllAdsOfCategoryFragmentArgs(state: SavedStateHandle): AllAdsOfCategoryFragmentArgs {
+		return AllAdsOfCategoryFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
+	fun provideAdsSortDialogFragmentArgs(state: SavedStateHandle): AdsSortDialogFragmentArgs {
+		return AdsSortDialogFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
+	fun provideAllAdsFragmentArgs(state: SavedStateHandle): AllAdsFragmentArgs {
+		return AllAdsFragmentArgs.fromBundle(state.asBundle())
+	}
+
+	@Provides
 	fun provideCategoryDetails2FragmentArgs(state: SavedStateHandle): CategoryDetails2FragmentArgs {
 		return CategoryDetails2FragmentArgs.fromBundle(state.asBundle())
 	}

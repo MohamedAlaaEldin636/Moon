@@ -1234,6 +1234,22 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.stores.sort.dialog/{title}/{nameOfSortBy}" />
   </dialog>
+  <dialog
+    android:id="@+id/dest_ads_sort_dialog"
+    android:name="grand.app.moon.presentation.home.AdsSortDialogFragment"
+    android:label="{title}"
+    tools:layout="@layout/dialog_fragment_ads_sort">
+    <argument
+      android:name="title"
+      app:argType="string"/>
+    <argument
+      android:name="nameOfSortBy"
+      app:argType="string"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_ads_sort_dialog"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.ads.sort.dialog/{title}/{nameOfSortBy}" />
+  </dialog>
   <fragment
     android:id="@+id/dest_all_categories"
     android:name="grand.app.moon.presentation.home.AllCategoriesFragment"
@@ -1278,6 +1294,22 @@
       android:id="@+id/deep_link_dest_all_ads_of_category"
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.all.ads.of.category/{title}/{initialSpecialStringFiltering}/{categoryId}" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_all_ads"
+    android:name="grand.app.moon.presentation.home.AllAdsFragment"
+    android:label="{title}"
+    tools:layout="@layout/fragment_all_ads">
+    <argument
+      android:name="title"
+      app:argType="string"/>
+    <argument
+      android:name="initialSpecialStringFiltering"
+      app:argType="string"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_all_ads_of_category"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.all.ads/{title}/{initialSpecialStringFiltering}" />
   </fragment>
 
 </navigation>
