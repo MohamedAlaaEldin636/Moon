@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentAllAdsOfCategoryBinding
@@ -54,6 +55,8 @@ class AllAdsOfCategoryFragment : BaseFragment<FragmentAllAdsOfCategoryBinding>()
 				viewModel.adapterAds.submitData(it)
 			},
 			onRetry = {
+				viewModel.adapterAds.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+
 				viewModel.adapterAds.refresh()
 			}
 		)

@@ -3,6 +3,7 @@ package grand.app.moon.presentation.stats
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.paging.PagingData
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentGeneralStatsBinding
@@ -49,6 +50,8 @@ class GeneralStatsFragment : BaseFragment<FragmentGeneralStatsBinding>() {
 				viewModel.adapter.submitData(it)
 			},
 			onRetry = {
+				viewModel.adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+
 				viewModel.adapter.refresh()
 			}
 		)

@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -41,6 +42,8 @@ class AllStoresFragment : BaseFragment<FragmentAllStoresBinding>() {
 				viewModel.adapterStores.submitData(it)
 			},
 			onRetry = {
+				viewModel.adapterStores.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+
 				viewModel.adapterStores.refresh()
 			}
 		)

@@ -3,6 +3,7 @@ package grand.app.moon.presentation.myStore
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.paging.PagingData
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentStoreClientsReviewsBinding
@@ -33,6 +34,8 @@ class StoreClientsReviewsFragment : BaseFragment<FragmentStoreClientsReviewsBind
 				viewModel.adapter.submitData(it)
 			},
 			onRetry = {
+				viewModel.adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+
 				viewModel.adapter.refresh()
 			}
 		)

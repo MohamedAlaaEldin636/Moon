@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.PagingData
 import com.airbnb.lottie.LottieDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -38,6 +39,8 @@ class ExploreInShopInfoFragment : BaseFragment<FragmentExploreInShopInfoBinding>
 				viewModel.adapter.submitData(it)
 			},
 			onRetry = {
+				viewModel.adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+
 				viewModel.adapter.refresh()
 			}
 		)
