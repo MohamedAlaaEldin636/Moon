@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.NavController
+import androidx.paging.PagingData
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentAllAdsBinding
@@ -38,6 +39,8 @@ class AllAdsFragment : BaseFragment<FragmentAllAdsBinding>() {
 				viewModel.adapterAds.submitData(it)
 			},
 			onRetry = {
+				viewModel.adapterAds.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+
 				viewModel.adapterAds.refresh()
 			}
 		)

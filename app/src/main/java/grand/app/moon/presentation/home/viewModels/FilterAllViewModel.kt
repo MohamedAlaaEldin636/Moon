@@ -172,22 +172,26 @@ class FilterAllViewModel @Inject constructor(
 			}
 		},
 		additionalListenersSetups = { _, binding ->
-			val position = binding.root.tag as? Int ?: return@RVItemCommonListUsageWithDifferentItems
-
 			when (binding) {
 				is ItemDynamicFilterTextBinding -> {
 					binding.editText.doAfterTextChanged { newText ->
+						val position = binding.root.tag as? Int ?: return@doAfterTextChanged
+
 						(responseFilterProperties.value?.properties?.getOrNull(position) as? DynamicFilterProperty.Text)
 							?.value = newText.toStringOrEmpty()
 					}
 				}
 				is ItemDynamicFilterRangedTextBinding -> {
 					binding.fromEditText.doAfterTextChanged { newText ->
+						val position = binding.root.tag as? Int ?: return@doAfterTextChanged
+
 						(responseFilterProperties.value?.properties?.getOrNull(position) as? DynamicFilterProperty.RangedText)
 							?.from = newText.toStringOrEmpty()
 					}
 
 					binding.fromEditText.doAfterTextChanged { newText ->
+						val position = binding.root.tag as? Int ?: return@doAfterTextChanged
+
 						(responseFilterProperties.value?.properties?.getOrNull(position) as? DynamicFilterProperty.RangedText)
 							?.to = newText.toStringOrEmpty()
 					}
