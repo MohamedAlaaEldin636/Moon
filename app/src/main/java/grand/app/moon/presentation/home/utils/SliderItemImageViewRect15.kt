@@ -65,7 +65,7 @@ class VHSliderItemImageViewRect15(
 		binding.constraintLayout.setTagJson(item)
 
 		binding.imageView.setupWithGlide {
-			load(item).saveDiskCacheStrategyAll()
+			load(item.image).saveDiskCacheStrategyAll()
 		}
 	}
 

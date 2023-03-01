@@ -65,7 +65,6 @@ class AllAdsViewModel @Inject constructor(
 		) { specialFilterString ->
 			val filter = FilterAllFragment.Filter.fromSpecialString(specialFilterString)
 
-
 			this.filter.value = this.filter.value?.copy(
 				search = filter.search,
 				categoryId = filter.categoryId,
