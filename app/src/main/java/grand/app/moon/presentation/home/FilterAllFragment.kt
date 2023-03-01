@@ -7,10 +7,7 @@ import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentFilterAllBinding
-import grand.app.moon.domain.ads.DynamicFilterProperty
-import grand.app.moon.domain.ads.SpecialDynamicFilterProperty
-import grand.app.moon.domain.ads.toDynamicFilterProperty
-import grand.app.moon.domain.ads.toSpecialDynamicFilterProperty
+import grand.app.moon.domain.ads.*
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.viewModels.FilterAllViewModel
@@ -30,13 +27,21 @@ class FilterAllFragment : BaseFragment<FragmentFilterAllBinding>() {
 			val categoryId = viewModel.initialFilter.categoryId
 			val subCategoryId = viewModel.initialFilter.subCategoryId
 
-			if (categoryId != null && subCategoryId != null) {
-				handleRetryAbleActionOrGoBack(
-					action = {
-						viewModel.repoShop.getFilterProperties(categoryId, subCategoryId)
+			if (categoryId != null) {
+				if (viewModel.initialFilter.properties.isEmpty()) {
+					handleRetryAbleActionOrGoBack(
+						action = {
+							viewModel.repoShop.getFilterProperties(categoryId, subCategoryId)
+						}
+					) {
+						viewModel.responseFilterProperties.value = it
 					}
-				) {
-					viewModel.responseFilterProperties.value = it
+				}else {
+					viewModel.responseFilterProperties.value = ResponseFilterProperties(
+						viewModel.initialFilter.properties,
+						viewModel.initialFilter.minPrice,
+						viewModel.initialFilter.maxPrice,
+					)
 				}
 			}
 		}

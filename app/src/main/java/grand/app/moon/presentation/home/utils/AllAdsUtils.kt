@@ -28,8 +28,14 @@ fun AllAdsViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCat
 		val previousSelectionPosition = allCategories.indexOfFirstOrNull { it.id == filter.value?.categoryId }
 
 		filter.value = filter.value?.copy(
-			categoryId = if (position == previousSelectionPosition) null else item?.id
+			categoryId = if (position == previousSelectionPosition) null else item?.id,
+			subCategoryId = null,
+			brandId = null,
+			properties = emptyList()
 		)
+
+		// todo clear sub cat id, brand id & pros as well isa. doesn't preserve data go filter go back then filter again filter all inital data for ads isa.
+		//  and check for stores as well isa. + if enter filter with just cat id then get data of props awel ma td5ol as well isa.
 
 		adapter.notifyItemsChanged(previousSelectionPosition, position)
 	}

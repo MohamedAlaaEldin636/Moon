@@ -39,8 +39,8 @@ fun ResponseFilterDetails.toResponseFilterProperties(isSingleSelectionNotMultipl
 
 data class ResponseFilterProperties(
 	var properties: List<DynamicFilterProperty> = emptyList(),
-	var minPrice: Float = Float.MIN_VALUE,
-	var maxPrice: Float = Float.MAX_VALUE,
+	var minPrice: Float? = Float.MIN_VALUE,
+	var maxPrice: Float? = Float.MAX_VALUE,
 )
 
 sealed interface DynamicFilterProperty {

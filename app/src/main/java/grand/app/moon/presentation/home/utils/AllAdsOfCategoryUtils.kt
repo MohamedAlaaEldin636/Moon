@@ -27,7 +27,8 @@ fun AllAdsOfCategoryViewModel.getAdapterSubCategories() = RVItemCommonListUsage<
 		val previousSelectionPosition = allSubCategories.indexOfFirstOrNull { it.id == filter.value?.subCategoryId }
 
 		filter.value = filter.value?.copy(
-			categoryId = if (position == previousSelectionPosition) null else item.id
+			categoryId = if (position == previousSelectionPosition) null else item.id,
+			properties = emptyList()
 		)
 
 		adapter.notifyItemsChanged(previousSelectionPosition, position)
