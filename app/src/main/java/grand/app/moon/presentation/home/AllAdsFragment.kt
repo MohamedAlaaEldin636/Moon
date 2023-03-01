@@ -39,7 +39,7 @@ class AllAdsFragment : BaseFragment<FragmentAllAdsBinding>() {
 				viewModel.adapterAds.submitData(it)
 			},
 			onRetry = {
-				viewModel.adapterAds.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+				kotlin.runCatching { viewModel.adapterAds.submitData(viewLifecycleOwner.lifecycle, PagingData.empty()) }
 
 				viewModel.adapterAds.refresh()
 			}

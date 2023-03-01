@@ -42,7 +42,7 @@ class AllStoresFragment : BaseFragment<FragmentAllStoresBinding>() {
 				viewModel.adapterStores.submitData(it)
 			},
 			onRetry = {
-				viewModel.adapterStores.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+				kotlin.runCatching { viewModel.adapterStores.submitData(viewLifecycleOwner.lifecycle, PagingData.empty()) }
 
 				viewModel.adapterStores.refresh()
 			}

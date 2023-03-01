@@ -39,7 +39,7 @@ class ExploreInShopInfoFragment : BaseFragment<FragmentExploreInShopInfoBinding>
 				viewModel.adapter.submitData(it)
 			},
 			onRetry = {
-				viewModel.adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
+				kotlin.runCatching { viewModel.adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.empty()) }
 
 				viewModel.adapter.refresh()
 			}
