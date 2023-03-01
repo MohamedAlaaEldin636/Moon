@@ -6,12 +6,15 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
+import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.home.*
+import grand.app.moon.presentation.home.utils.RVSliderItemImageViewRect15
 import grand.app.moon.presentation.home.utils.getAdapterAds
 import grand.app.moon.presentation.home.utils.getAdapterSubCategories
 import grand.app.moon.presentation.map.MapOfDataFragment
@@ -37,9 +40,17 @@ class AllAdsOfCategoryViewModel @Inject constructor(
 
 	val allSubCategories = allCategories.firstOrNull { it.id == args.categoryId }?.subCategories.orEmpty()
 
-	val adapterSubCategories = getAdapterSubCategories()
+	val adapterSubCategories = getAdapterSubCategories(allSubCategories)
 
 	val adapterAds = getAdapterAds()
+
+	val numOfAds = MutableLiveData(0)
+
+	val textOfNumOfAds = numOfAds.map {
+		app.getString(R.string.num_of_ads_var_ad, it.orZero().toString())
+	}
+
+	val adapterSlider = RVSliderItemImageViewRect15(userLocalUseCase)
 
 	fun getOnEditorListener(): TextView.OnEditorActionListener = TextView.OnEditorActionListener { view, actionId, _ ->
 		view.findFragmentOrNull<AllAdsFragment>()?.apply {
@@ -62,17 +73,21 @@ class AllAdsOfCategoryViewModel @Inject constructor(
 	fun filter(view: View) {
 		val fragment = view.findFragmentOrNull<AllAdsOfCategoryFragment>() ?: return
 
-		// todo add 1 more in navDeep to return result isa.
 		fragment.setFragmentResultListenerUsingJson<FilterAllFragment.Filter>(
 			FilterAllFragment::class.java.name
 		) {
-			filter.value = filter.value?.copy(
+			this.filter.value = this.filter.value?.copy(
 				search = it.search,
 				categoryId = it.categoryId,
 				subCategoryId = it.subCategoryId,
+				brandId = it.brandId,
+				minPrice = it.minPrice,
+				maxPrice = it.maxPrice,
 				cityId = it.cityId,
 				areasIds = it.areasIds,
-				//sortBy = null,
+				properties = it.properties,
+				sortBy = it.sortBy,
+				adType = it.adType,
 				rating = it.rating,
 			)
 

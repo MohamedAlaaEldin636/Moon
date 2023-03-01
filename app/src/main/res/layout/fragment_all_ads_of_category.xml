@@ -362,6 +362,7 @@
         android:layout_marginStart="16dp"
         
         tools:text="@string/num_of_ads_var_ad"
+        android:text="@{viewModel.textOfNumOfAds}"
 
         app:layout_constraintTop_toBottomOf="@id/recyclerViewSubCategories"
         app:layout_constraintStart_toStartOf="parent"/>

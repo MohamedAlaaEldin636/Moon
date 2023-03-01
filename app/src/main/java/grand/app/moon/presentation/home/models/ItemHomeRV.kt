@@ -57,6 +57,10 @@ data class ItemAdvertisementInResponseHome(
 	var price: Float?,
 	@SerializedName("is_negotiable") var negotiable: Int?,
 	var phone: String?,
+
+	// used for paging not data from backend
+	@SerializedName("ads_count") var adsCount: Int?,
+	var slider: List<ItemAdvertisementInResponseHome>?
 ) : ItemInResponseHome {
 
 	val isNegotiable get() = negotiable == 1

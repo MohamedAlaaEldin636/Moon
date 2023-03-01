@@ -545,7 +545,12 @@ class RepoShop @Inject constructor(
 	fun getAllAdsOfCategory(filter: FilterAllFragment.Filter) = BasePaging.createFlowViaPager { page ->
 		remoteDataSource.getAllAdsOfCategory(page, filter).mapImmediate { maBaseResponse ->
 			maBaseResponse.map { response ->
-				response?.advertisements
+				response?.advertisements?.map {
+					it.copy(
+						adsCount = response.adsCount,
+						slider = response.slider
+					)
+				}
 			}
 		}
 	}

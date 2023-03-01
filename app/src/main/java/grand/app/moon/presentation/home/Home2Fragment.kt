@@ -264,7 +264,9 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 				ItemHomeRV.Type.DYNAMIC_CATEGORIES_ADS -> {
 					AllAdsOfCategoryFragment.launch(
 						navController,
-						null,
+						FilterAllFragment.Filter(
+							categoryId = item.dynamicCategoriesAdsId.orZero()
+						),
 						item.name.orEmpty(),
 						item.dynamicCategoriesAdsId.orZero(),
 					)

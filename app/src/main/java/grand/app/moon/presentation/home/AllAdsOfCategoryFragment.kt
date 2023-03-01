@@ -8,7 +8,6 @@ import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -16,7 +15,6 @@ import grand.app.moon.databinding.FragmentAllAdsOfCategoryBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.viewModels.AllAdsOfCategoryViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -107,7 +105,22 @@ class AllAdsOfCategoryFragment : BaseFragment<FragmentAllAdsOfCategoryBinding>()
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 				viewModel.adapterAds.loadStateFlow.collectLatest {
-					// todo ...
+					viewModel.adapterAds.snapshot().items.firstOrNull()?.also { item ->
+						if (viewModel.numOfAds.value != item.adsCount) {
+							viewModel.numOfAds.value = item.adsCount
+						}
+
+						if (viewModel.adapterSlider.list != item.slider) {
+							viewModel.adapterSlider.submitList(
+								item.slider.orEmpty()
+							)
+
+							binding.sliderView.post {
+								binding.sliderView.setSliderAdapter(viewModel.adapterSlider)
+								binding.sliderView.startAutoCycle()
+							}
+						}
+					}
 				}
 			}
 		}

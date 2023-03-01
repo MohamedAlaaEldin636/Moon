@@ -18,8 +18,11 @@ import grand.app.moon.presentation.home.models.ResponseSearchResult
 import grand.app.moon.presentation.home.viewModels.AllAdsOfCategoryViewModel
 import kotlinx.coroutines.launch
 
-fun AllAdsOfCategoryViewModel.getAdapterSubCategories() = RVItemCommonListUsage<ItemStoreCategoryInMyAdsBinding, ItemSubCategory>(
+fun AllAdsOfCategoryViewModel.getAdapterSubCategories(
+	initialData: List<ItemSubCategory>,
+) = RVItemCommonListUsage<ItemStoreCategoryInMyAdsBinding, ItemSubCategory>(
 	R.layout.item_store_category_in_my_ads,
+	initialData,
 	onItemClick = { adapter, binding ->
 		val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemSubCategory>() ?: return@RVItemCommonListUsage
 		val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@RVItemCommonListUsage
@@ -27,7 +30,7 @@ fun AllAdsOfCategoryViewModel.getAdapterSubCategories() = RVItemCommonListUsage<
 		val previousSelectionPosition = allSubCategories.indexOfFirstOrNull { it.id == filter.value?.subCategoryId }
 
 		filter.value = filter.value?.copy(
-			categoryId = if (position == previousSelectionPosition) null else item.id,
+			subCategoryId = if (position == previousSelectionPosition) null else item.id,
 			properties = emptyList()
 		)
 
