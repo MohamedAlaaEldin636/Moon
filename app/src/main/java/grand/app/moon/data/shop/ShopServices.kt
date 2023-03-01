@@ -353,4 +353,10 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>
 	): ResponseBody
 
+	@GET("v1/advertisements")
+	suspend fun getAllAdsOfCategory(
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>
+	): MABaseResponse<ResponseAllAdsOfCategory>
+
 }

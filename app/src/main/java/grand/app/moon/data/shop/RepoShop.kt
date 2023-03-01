@@ -533,6 +533,23 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getAllAdsAsResponseBody(it, filter)
 	}
 
+	suspend fun getAllAdsOfCategorySlider(filter: FilterAllFragment.Filter) =
+		remoteDataSource.getAllAdsOfCategory(1, filter).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { response ->
+				response?.let {
+					it.slider to it.adsCount
+				}
+			}
+		}
+
+	fun getAllAdsOfCategory(filter: FilterAllFragment.Filter) = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getAllAdsOfCategory(page, filter).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { response ->
+				response?.advertisements
+			}
+		}
+	}
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

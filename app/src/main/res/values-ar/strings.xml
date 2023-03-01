@@ -505,4 +505,5 @@
   <string name="see_all_ads">مشاهدة جميع الاعلانت</string>
   <string name="sub_categories">الأقسام الفرعية</string>
   <string name="loading">جارى التحميل…</string>
+  <string name="num_of_ads_var_ad">عدد الإعلانات %1$s أعلان</string>
 </resources>

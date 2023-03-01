@@ -60,21 +60,29 @@ class AllAdsViewModel @Inject constructor(
 	fun filter(view: View) {
 		val fragment = view.findFragmentOrNull<AllAdsFragment>() ?: return
 
-		fragment.setFragmentResultListenerUsingJson<FilterAllFragment.Filter>(
+		fragment.setFragmentResultListenerUsingJson<String>(
 			FilterAllFragment::class.java.name
-		) {
-			filter.value = filter.value?.copy(
-				search = it.search,
-				categoryId = it.categoryId,
-				subCategoryId = it.subCategoryId,
-				cityId = it.cityId,
-				areasIds = it.areasIds,
-				//sortBy = null,
-				rating = it.rating,
+		) { specialFilterString ->
+			val filter = FilterAllFragment.Filter.fromSpecialString(specialFilterString)
+
+
+			this.filter.value = this.filter.value?.copy(
+				search = filter.search,
+				categoryId = filter.categoryId,
+				subCategoryId = filter.subCategoryId,
+				brandId = filter.brandId,
+				minPrice = filter.minPrice,
+				maxPrice = filter.maxPrice,
+				cityId = filter.cityId,
+				areasIds = filter.areasIds,
+				properties = filter.properties,
+				sortBy = filter.sortBy,
+				adType = filter.adType,
+				rating = filter.rating,
 			)
 
 			searchQuery.postValue(
-				it.search.orEmpty()
+				filter.search.orEmpty()
 			)
 		}
 
@@ -82,8 +90,9 @@ class AllAdsViewModel @Inject constructor(
 			"fragment-dest",
 			"grand.app.moon.dest.filter.all",
 			paths = arrayOf(
-				false.toString(),
-				filter.value?.toSpecialString().orStringNullIfNullOrEmpty()
+				true.toString(),
+				filter.value?.toSpecialString().orStringNullIfNullOrEmpty(),
+				true.toString()
 			)
 		)
 	}

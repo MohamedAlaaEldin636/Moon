@@ -291,12 +291,14 @@ class FilterAllViewModel @Inject constructor(
 					selectedSubCategory.value = null
 					selectedBrand.value = null
 
-					fragment.handleRetryAbleActionOrGoBack(
-						action = {
-							repoShop.getFilterProperties(newSelection?.id.orZero(), null)
+					if (args.forAdsNotStores) {
+						fragment.handleRetryAbleActionOrGoBack(
+							action = {
+								repoShop.getFilterProperties(newSelection?.id.orZero(), null)
+							}
+						) {
+							responseFilterProperties.value = it
 						}
-					) {
-						responseFilterProperties.value = it
 					}
 				}
 			}
@@ -453,24 +455,29 @@ class FilterAllViewModel @Inject constructor(
 			)
 
 			val selectedCategory = selectedCategory.value
-			if (selectedCategory != null) {
-				AllAdsOfCategoryFragment.launch(
-					fragment.findNavController(),
-					fragment.navGraphViewModel.filter,
-					selectedCategory.name.orEmpty(),
-					selectedCategory.id.orZero()
+			if (args.forceReturnResult) {
+				fragment.setFragmentResultUsingJson(
+					FilterAllFragment::class.java.name,
+					fragment.navGraphViewModel.filter.toSpecialString().orStringNullIfNullOrEmpty()
 				)
+
+				fragment.findNavController().navigateUp()
 			}else {
-				AllAdsFragment.launch(
-					fragment.findNavController(),
-					fragment.navGraphViewModel.filter,
-					fragment.getString(R.string.advertisements_8)
-				)
+				if (selectedCategory != null) {
+					AllAdsOfCategoryFragment.launch(
+						fragment.findNavController(),
+						fragment.navGraphViewModel.filter,
+						selectedCategory.name.orEmpty(),
+						selectedCategory.id.orZero()
+					)
+				}else {
+					AllAdsFragment.launch(
+						fragment.findNavController(),
+						fragment.navGraphViewModel.filter,
+						fragment.getString(R.string.advertisements_8)
+					)
+				}
 			}
-			/*fragment.findNavController().navigateDeepLinkWithOptions(
-				"fragment-dest",
-				"grand.app.moon.dest.filter.results.two"
-			)*/
 		}else {
 			// Ignore only sort as it is in the previous screen, but other stuff in previous screen keep
 			// them according to bakrey isa.

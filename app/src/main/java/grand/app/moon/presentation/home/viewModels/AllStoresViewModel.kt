@@ -273,7 +273,8 @@ class AllStoresViewModel @Inject constructor(
 			"grand.app.moon.dest.filter.all",
 			paths = arrayOf(
 				false.toString(),
-				filter.value?.toFilterAllFragmentFilter()?.toSpecialString().orStringNullIfNullOrEmpty()
+				filter.value?.toFilterAllFragmentFilter()?.toSpecialString().orStringNullIfNullOrEmpty(),
+				true.toString()
 			)
 		)
 	}
