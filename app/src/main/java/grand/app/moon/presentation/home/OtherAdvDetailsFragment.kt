@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentOtherAdvDetailsBinding
@@ -38,7 +39,7 @@ class OtherAdvDetailsFragment : BaseFragment<FragmentOtherAdvDetailsBinding>() {
 				viewModel.repoShop.getAdvDetailsFromView(viewModel.args.id)
 			}
 		) { response ->
-			viewModel.response.value = response
+			viewModel.response.value = response.copy(viewsCount = response.viewsCount?.inc())
 
 			viewModel.adapterImages.submitList(
 				response.images.orEmpty().map { it.image.orEmpty() }
@@ -148,6 +149,66 @@ class OtherAdvDetailsFragment : BaseFragment<FragmentOtherAdvDetailsBinding>() {
 			layoutParams.width = totalWidth / number
 
 			MyLogger.e("hhhhhhhhh -> ${layoutParams.height}")
+		}
+
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean>(AppConsts.KEY_BOOLEAN_1) {
+			handleRetryAbleActionOrGoBack(
+				action = {
+					viewModel.repoShop.getAdvDetailsFromView(viewModel.args.id)
+				}
+			) { response ->
+				viewModel.response.value = response.copy(viewsCount = response.viewsCount?.inc())
+
+				viewModel.adapterImages.submitList(
+					response.images.orEmpty().map { it.image.orEmpty() }
+				)
+				_binding?.sliderView?.post {
+					_binding?.sliderView?.setSliderAdapter(viewModel.adapterImages)
+					_binding?.sliderView?.startAutoCycle()
+				}
+
+				viewModel.adapterProperties.submitList(
+					response.properties.orEmpty()
+				)
+
+				viewModel.adapterSwitches.submitList(
+					response.switches.orEmpty()
+				)
+
+				val reviews = if (response.reviews.isNullOrEmpty()) {
+					listOf(
+						ItemReviewInAdvDetails(
+							ItemUserInReviewsInAdvDetails(
+								kotlin.runCatching { viewModel.userLocalUseCase().id }.getOrNull(),
+								null,
+								null,
+								kotlin.runCatching { viewModel.userLocalUseCase().name.orEmpty() }.getOrElse { getString(R.string.name) },
+								null,
+								null,
+								null,
+								kotlin.runCatching { viewModel.userLocalUseCase().image.orEmpty() }.getOrNull(),
+								null,
+							),
+							0,
+							getString(R.string.add_rate_2),
+							""
+						)
+					)
+				}else {
+					response.reviews.orEmpty().take(3)
+				}
+				viewModel.adapterReviews.submitList(
+					reviews
+				)
+
+				viewModel.adapterAds.submitList(
+					response.similarAds.orEmpty()
+				)
+
+				viewModel.adapterStores.submitList(
+					response.similarStores.orEmpty()
+				)
+			}
 		}
 	}
 

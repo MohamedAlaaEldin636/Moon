@@ -15,7 +15,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
-import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.core.extenstions.launchCometChat
 import grand.app.moon.core.extenstions.showError
@@ -55,7 +54,7 @@ class OtherAdvDetailsViewModel @Inject constructor(
 
 	val adapterImages = RVSliderImageFull()
 
-	val isFavorite = response.mapToMutableLiveData {
+	val isFavorite = response.map {
 		it?.isFavorite.orFalse()
 	}
 
@@ -233,7 +232,12 @@ class OtherAdvDetailsViewModel @Inject constructor(
 		val context = view.context ?: return
 
 		if (context.isLoginWithOpenAuth()) {
-			isFavorite.toggleValue()
+			val newIsFav = isFavorite.value.orFalse().not()
+
+			response.value = response.value?.copy(
+				isFavorite = newIsFav,
+				favoriteCount = if (newIsFav) response.value?.favoriteCount?.inc() else response.value?.favoriteCount?.dec()
+			)
 
 			context.applicationScope?.launch {
 				repoShop.favOrUnFavAdv(response.value?.id.orZero())
@@ -245,6 +249,10 @@ class OtherAdvDetailsViewModel @Inject constructor(
 		val link = response.value?.shareLink.orEmpty()
 
 		if (link.isEmpty()) return view.context.showError(view.context.getString(R.string.no_link_exists))
+
+		response.value = response.value?.copy(
+			shareCount = response.value?.shareCount?.inc()
+		)
 
 		view.context?.applicationScope?.launch {
 			repoShop.shareAdv(response.value?.id.orZero())
@@ -297,14 +305,12 @@ class OtherAdvDetailsViewModel @Inject constructor(
 	fun goToReviews(view: View) {
 		val fragment = view.findFragmentOrNull<OtherAdvDetailsFragment>() ?: return
 
-		val context = fragment.context ?: return
-
 		fragment.findNavController().navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.adv.clients.reviews",
 			paths = arrayOf(
 				response.value?.id.orZero().toString(),
-				(context.isLogin() && response.value?.store?.id == userLocalUseCase().id).toString() // useRating
+				true.toString() // useRating
 			)
 		)
 	}
