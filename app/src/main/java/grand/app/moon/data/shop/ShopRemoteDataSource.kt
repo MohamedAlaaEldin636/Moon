@@ -445,6 +445,10 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.favOrUnFavAdv(advId)
 	}
 
+	suspend fun shareAdv(advId: Int) = safeApiCall {
+		apiService.shareAdv(advId)
+	}
+
 	suspend fun getDynamicFilterProperties(categoryId: Int, subCategoryId: Int?) = safeApiCall {
 		val map = mutableMapOf<String, String>()
 		if (subCategoryId != null) map["sub_category_id"] = subCategoryId.toString()
@@ -732,6 +736,21 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 			page,
 			map
 		)
+	}
+
+	suspend fun getAdvDetails(id: Int, fromSearchNotView: Boolean) = safeApiCall {
+		apiService.getAdvDetails(id, if (fromSearchNotView) 5 else 2)
+	}
+
+	suspend fun getAdvReportingReason() = safeApiCall {
+		apiService.getAdvReportingReason()
+	}
+
+	suspend fun reportAdv(
+		advertisementId: Int,
+		reasonId: Int,
+	) = safeApiCall {
+		apiService.reportAdv(advertisementId, reasonId)
 	}
 
 }

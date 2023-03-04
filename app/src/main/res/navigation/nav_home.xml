@@ -795,6 +795,10 @@
     <argument
       android:name="longitude"
       app:argType="string" />
+    <deepLink
+      android:id="@+id/deep_link_dest_location_viewer"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.location.viewer/{latitude}/{longitude}" />
   </fragment>
   <fragment
     android:id="@+id/dest_become_shop_packages"
@@ -1314,5 +1318,32 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.all.ads/{title}/{initialSpecialStringFiltering}" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_other_adv_details"
+    android:name="grand.app.moon.presentation.home.OtherAdvDetailsFragment"
+    tools:layout="@layout/fragment_other_adv_details">
+    <argument
+      android:name="id"
+      app:argType="integer" />
+    <deepLink
+      android:id="@+id/deep_link_dest_other_adv_details"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.other.adv.details/{id}" />
+  </fragment>
+  <dialog
+    android:id="@+id/dest_reporting"
+    android:name="grand.app.moon.presentation.home.ReportingDialogFragment"
+    tools:layout="@layout/fragment_other_adv_details">
+    <argument
+      android:name="type"
+      app:argType="grand.app.moon.presentation.home.ReportingDialogFragment$Type" />
+    <argument
+      android:name="id"
+      app:argType="integer"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_reporting"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.reporting/{type}/{id}" />
+  </dialog>
 
 </navigation>

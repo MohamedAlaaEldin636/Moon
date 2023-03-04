@@ -490,6 +490,8 @@ class RepoShop @Inject constructor(
 
 	suspend fun favOrUnFavAdv(advId: Int) = remoteDataSource.favOrUnFavAdv(advId)
 
+	suspend fun shareAdv(advId: Int) = remoteDataSource.shareAdv(advId)
+
 	fun getCountriesWithCitiesWithAreas() = appContext.getCountriesWithCitiesWithAreas()
 	fun setCountriesWithCitiesWithAreas(
 		value: List<ResponseCountry>
@@ -554,6 +556,17 @@ class RepoShop @Inject constructor(
 			}
 		}
 	}
+
+	suspend fun getAdvDetailsFromView(id: Int) = remoteDataSource.getAdvDetails(id, false)
+
+	suspend fun getAdvDetailsFromSearch(id: Int) = remoteDataSource.getAdvDetails(id, true)
+
+	suspend fun getAdvReportingReason() = remoteDataSource.getAdvReportingReason()
+
+	suspend fun reportAdv(
+		advertisementId: Int,
+		reasonId: Int,
+	) = remoteDataSource.reportAdv(advertisementId, reasonId)
 
 }
 

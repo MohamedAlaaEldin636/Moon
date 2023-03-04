@@ -202,7 +202,7 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>(), PermissionsHandler.L
           hideTopBarControls()
           supportActionBar?.hide()
         }
-	      R.id.dest_add_advertisement, R.id.dest_my_adv_details, R.id.dest_story_player -> {
+	      R.id.dest_add_advertisement, R.id.dest_my_adv_details, R.id.dest_other_adv_details/*, R.id.dest_other_store_details*/, R.id.dest_story_player -> {
 					hideTopBarControls()
 		      hideAllToolbar()
 		      binding.bottomNavigationView.hide()

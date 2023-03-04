@@ -1,6 +1,8 @@
 package grand.app.moon.domain.account.use_case
 
+import android.content.Context
 import com.onesignal.OneSignal
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.home.models.ResponseAnnouncement
@@ -12,6 +14,8 @@ import javax.inject.Inject
 class UserLocalUseCase @Inject constructor(
 	private val accountRepository: AccountRepository
 ) {
+
+	fun getSafeUserOrNullIfNotLoggedIn(context: Context) = if (context.isLogin()) invoke() else null
 
   operator fun invoke(user: User) = accountRepository.saveUserToLocal(user)
   operator fun invoke(): User = accountRepository.getUserToLocal()

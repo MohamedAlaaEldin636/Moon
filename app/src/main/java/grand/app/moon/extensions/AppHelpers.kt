@@ -3,11 +3,11 @@ package grand.app.moon.extensions
 import android.content.Context
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.home.OtherAdvDetailsFragment
 import grand.app.moon.presentation.home.models.*
 import grand.app.moon.presentation.map.model.ResponseMapData
 
@@ -163,13 +163,7 @@ fun UserLocalUseCase.goToAdvDetailsCheckIfMyAdv(
 			paths = arrayOf(item.id.orZero().toString())
 		)
 	}else {
-		navController.navigate(
-			R.id.nav_ads, bundleOf(
-				"id" to item.id.orZero(),
-				"type" to 2,
-				"from_store" to false
-			)
-		)
+		OtherAdvDetailsFragment.launch(navController, item.id.orZero())
 	}
 }
 
@@ -187,13 +181,7 @@ fun UserLocalUseCase.goToAdvDetailsCheckIfMyAdv(
 			paths = arrayOf(item.id.orZero().toString())
 		)
 	}else {
-		navController.navigate(
-			R.id.nav_ads, bundleOf(
-				"id" to item.id.orZero(),
-				"type" to 2,
-				"from_store" to false
-			)
-		)
+		OtherAdvDetailsFragment.launch(navController, item.id.orZero())
 	}
 }
 
@@ -211,12 +199,6 @@ fun UserLocalUseCase.goToAdvDetailsCheckIfMyAdv(
 			paths = arrayOf(item.id.orZero().toString())
 		)
 	}else {
-		navController.navigate(
-			R.id.nav_ads, bundleOf(
-				"id" to item.id.orZero(),
-				"type" to 2,
-				"from_store" to false
-			)
-		)
+		OtherAdvDetailsFragment.launch(navController, item.id.orZero())
 	}
 }

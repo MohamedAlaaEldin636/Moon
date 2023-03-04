@@ -4,27 +4,38 @@
   xmlns:tools="http://schemas.android.com/tools"
 
   tools:ignore="SmallSp,ContentDescription"
-  tools:context="grand.app.moon.presentation.myAds.MyAdvDetailsFragment">
+  tools:context="grand.app.moon.presentation.home.OtherAdvDetailsFragment">
 
   <data>
+    <import type="grand.app.moon.presentation.home.OtherAdvDetailsFragment.SocialMedia"/>
+
     <variable
       name="viewModel"
-      type="grand.app.moon.presentation.myAds.viewModel.MyAdvDetailsViewModel" />
+      type="grand.app.moon.presentation.home.viewModels.OtherAdvDetailsViewModel" />
   </data>
 
-  <FrameLayout
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="0dp"
 
-      android:fillViewport="true">
+      android:layout_weight="1"
+
+      android:fillViewport="true"
+
+      tools:background="@color/grey">
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+
+        android:paddingBottom="16dp"
+        android:clipToPadding="false">
 
         <!-- region Slider View & it's Contents -->
 
@@ -86,16 +97,33 @@
 
           android:src="@drawable/ic_back_32"
 
-          android:onClick="@{v -> viewModel.goToHomeScreen(v)}"
+          android:onClick="@{v -> viewModel.goBack(v)}"
 
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
+          android:id="@+id/favImageView"
+
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
 
-          android:layout_marginTop="31dp"
+          android:layout_marginTop="41dp"
+          android:layout_marginEnd="16dp"
+
+          android:src="@{viewModel.isFavorite() ? @drawable/ic_fav_ads_fill : @drawable/ic_fav_not_selected}"
+          tools:src="@drawable/ic_fav_ads_fill"
+
+          android:onClick="@{v -> viewModel.favOrUnFav(v)}"
+
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+          android:layout_width="33dp"
+          android:layout_height="30dp"
+
+          android:layout_marginTop="15dp"
           android:layout_marginEnd="16dp"
 
           android:src="@drawable/ic_share_32"
@@ -103,7 +131,7 @@
           android:onClick="@{v -> viewModel.shareThisScreen(v)}"
 
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent"/>
+          app:layout_constraintTop_toBottomOf="@id/favImageView"/>
 
         <ImageView
           android:id="@+id/ratingIconInSliderImageView"
@@ -437,44 +465,26 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/recyclerViewStats"
-
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-
-          android:padding="8dp"
-          android:clipToPadding="false"
-
-          android:scrollbars="vertical"
-          tools:itemCount="4"
-          app:spanCount="2"
-          tools:orientation="vertical"
-          tools:listitem="@layout/item_stats_in_adv_details"
-          tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-
-          app:layout_constraintTop_toBottomOf="@id/titleTextView"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent" />
-
         <LinearLayout
           android:id="@+id/locationLinearLayout"
 
+          android:onClick="@{v -> viewModel.showLocation(v)}"
+
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-
-          android:onClick="@{v -> viewModel.showLocation(v)}"
 
           android:orientation="horizontal"
 
           android:gravity="center_vertical"
+
+          android:layout_marginTop="17dp"
 
           android:padding="16dp"
           android:clipToPadding="false"
 
           android:background="@color/white"
 
-          app:layout_constraintTop_toBottomOf="@id/recyclerViewStats"
+          app:layout_constraintTop_toBottomOf="@id/titleTextView"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent">
 
@@ -606,6 +616,331 @@
           app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/ownerConstraintLayout"
+
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+
+          android:layout_marginTop="16dp"
+
+          android:paddingTop="16dp"
+          android:paddingBottom="16dp"
+          android:clipToPadding="false"
+
+          android:background="@color/white"
+
+          android:onClick="@{v -> viewModel.goToStore(v)}"
+
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/recyclerViewSwitches">
+
+          <TextView
+            android:id="@+id/labelOfOwnerTextView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="16dp"
+
+            style="@style/TextTajawalBold14"
+            android:textSize="16sp"
+            android:text="@string/some_customers_reviews"
+
+            android:textDirection="locale"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+          <ImageView
+            android:id="@+id/ownerImageView"
+
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+
+            android:scaleType="centerCrop"
+
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="16dp"
+
+            imageView_setupWithGlideOrDefaultUserBA="@{viewModel.ownerImage}"
+
+            app:layout_constraintTop_toBottomOf="@id/labelOfOwnerTextView"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+          <TextView
+            android:id="@+id/ownerFollowButtonTextView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            style="@style/TextTajawalMedium14"
+            android:textColor="@color/white"
+
+            android:background="@drawable/dr_rect_5"
+            android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
+
+            tools:text="@string/follow"
+            android:text="@{viewModel.ownerFollowingText}"
+
+            textView_serDrawableCompatBA_drawableStart="@{viewModel.ownerFollowingTextDrawable}"
+
+            android:drawablePadding="9.5dp"
+            tools:drawableStartCompat="@drawable/follow_add"
+
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+
+            android:layout_marginEnd="27dp"
+
+            android:onClick="@{v -> viewModel.followOrUnFollowStore(v)}"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ownerImageView"
+            app:layout_constraintBottom_toBottomOf="@id/ownerImageView"/>
+
+          <TextView
+            android:id="@+id/ownerNameTextView"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit ="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            textView_setSelectedBA="@{true}"
+            android:textDirection="locale"
+
+            android:text="@{viewModel.ownerName}"
+
+            style="@style/TextTajawalBold14"
+            android:textColorHint="@color/colorPrimary"
+
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="2dp"
+
+            app:layout_constraintBottom_toTopOf="@id/ownerNickNameTextView"
+            app:layout_constraintTop_toTopOf="@id/ownerImageView"
+            app:layout_constraintStart_toEndOf="@id/ownerImageView"
+            app:layout_constraintEnd_toStartOf="@id/ownerFollowButtonTextView"/>
+
+          <TextView
+            android:id="@+id/ownerNickNameTextView"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit ="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            textView_setSelectedBA="@{true}"
+
+            android:text="@{viewModel.ownerNickname}"
+
+            style="@style/TextTajawalMedium14"
+            android:textSize="12sp"
+            android:textColorHint="#C1C1C1"
+            android:textDirection="locale"
+
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+
+            app:layout_constraintTop_toBottomOf="@id/ownerNameTextView"
+            app:layout_constraintBottom_toTopOf="@id/ownerRatingBar"
+            app:layout_constraintStart_toEndOf="@id/ownerImageView"
+            app:layout_constraintEnd_toStartOf="@id/ownerFollowButtonTextView"/>
+
+          <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/ownerRatingBar"
+
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="20dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:numStars="5"
+            android:progress="0"
+            tools:progress="60"
+            android:max="100"
+
+            style="@style/Widget.AppCompat.RatingBar.Small"
+
+            android:progressTint="#FFBC23"
+            android:progressBackgroundTint="#DAD9E2"
+
+            appCompatRatingBar_setProgress="@{viewModel.ownerAverageRateValue}"
+
+            app:layout_constraintTop_toBottomOf="@id/ownerNickNameTextView"
+            app:layout_constraintBottom_toBottomOf="@id/ownerImageView"
+            app:layout_constraintStart_toEndOf="@id/ownerImageView"/>
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            style="@style/TextTajawalMedium14"
+            android:textSize="10sp"
+            android:textColor="#B3000000"
+
+            tools:text="( 4.5 )"
+            android:text="@{viewModel.ownerAverageRateText}"
+
+            app:layout_constraintTop_toTopOf="@id/ownerRatingBar"
+            app:layout_constraintBottom_toBottomOf="@id/ownerRatingBar"
+            app:layout_constraintStart_toEndOf="@id/ownerRatingBar"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/safetyConstraintLayout"
+
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+
+          android:layout_marginTop="16dp"
+
+          android:paddingTop="16dp"
+          android:paddingBottom="16dp"
+          android:clipToPadding="false"
+
+          android:background="@color/white"
+
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/ownerConstraintLayout">
+
+          <TextView
+            android:id="@+id/safetyOfOwnerTextView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="16dp"
+
+            style="@style/TextTajawalBold14"
+            android:textSize="16sp"
+            android:text="@string/advices_for_safe"
+
+            android:textDirection="locale"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+          <TextView
+            android:id="@+id/safetyTextView1"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+
+            style="@style/TextTajawalMedium14"
+            android:text="@string/check_purchasing_before_buying"
+
+            android:textDirection="locale"
+
+            android:layout_marginTop="20dp"
+
+            android:drawablePadding="10dp"
+            tools:drawableStartCompat="@drawable/item_circle_7"
+
+            android:gravity="center_vertical"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/safetyOfOwnerTextView"/>
+
+          <TextView
+            android:id="@+id/safetyTextView2"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+
+            style="@style/TextTajawalMedium14"
+            android:text="@string/pay_only_after_collect_item"
+
+            android:textDirection="locale"
+
+            android:layout_marginTop="20dp"
+
+            android:drawablePadding="10dp"
+            tools:drawableStartCompat="@drawable/item_circle_7"
+
+            android:gravity="center_vertical"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/safetyTextView1"/>
+
+          <TextView
+            android:id="@+id/safetyTextView3"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+
+            style="@style/TextTajawalMedium14"
+            android:text="@string/beware_of_unrealistic_offers"
+
+            android:textDirection="locale"
+
+            android:layout_marginTop="20dp"
+
+            android:drawablePadding="10dp"
+            tools:drawableStartCompat="@drawable/item_circle_7"
+
+            android:gravity="center_vertical"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/safetyTextView2"/>
+
+          <TextView
+            android:id="@+id/safetyTextView4"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+
+            style="@style/TextTajawalMedium14"
+            android:text="@string/meet_seller_in_safe_place"
+
+            android:textDirection="locale"
+
+            android:layout_marginTop="20dp"
+
+            android:drawablePadding="10dp"
+            tools:drawableStartCompat="@drawable/item_circle_7"
+
+            android:gravity="center_vertical"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/safetyTextView3"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
           android:id="@+id/reviewsConstraintLayout"
 
           android:layout_width="0dp"
@@ -621,7 +956,7 @@
 
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/recyclerViewSwitches">
+          app:layout_constraintTop_toBottomOf="@id/safetyConstraintLayout">
 
           <TextView
             android:id="@+id/labelOfReviewsTextView"
@@ -694,125 +1029,256 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <TextView
+          android:id="@+id/labelShareAdTextView"
+
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+
+          style="@style/TextTajawalBold14"
+          android:textSize="16sp"
+
+          android:text="@string/share_ad_789"
+
+          android:layout_margin="16dp"
+
+          app:layout_constraintTop_toBottomOf="@id/reviewsConstraintLayout"
+          app:layout_constraintStart_toStartOf="parent"/>
+
+        <HorizontalScrollView
+          android:id="@+id/shareAdHorizontalScrollView"
+
           android:layout_width="0dp"
           android:layout_height="wrap_content"
 
-          android:visibility="invisible"
+          android:layout_marginTop="11dp"
 
-          android:background="@color/white"
-          android:elevation="10dp"
+          android:fillViewport="true"
 
-          android:orientation="horizontal"
+          android:scrollbars="none"
 
-          android:layout_marginTop="16dp"
+          app:layout_constraintTop_toBottomOf="@id/labelShareAdTextView"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent">
 
-          android:paddingStart="16dp"
-          android:paddingEnd="16dp"
-          android:paddingTop="13dp"
-          android:paddingBottom="13dp"
+          <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-          android:clipToPadding="false"
+            android:orientation="horizontal"
+
+            android:paddingEnd="16dp"
+            android:clipToPadding="false">
+
+            <ImageView
+              android:id="@+id/facebookImageView"
+
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+
+              android:layout_marginStart="16dp"
+
+              android:src="@drawable/adv_details_facebook"
+
+              android:onClick="@{v -> viewModel.shareLink(v, SocialMedia.FACEBOOK)}"
+
+              app:layout_constraintTop_toBottomOf="@id/labelShareAdTextView"
+              app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+              android:id="@+id/instagramImageView"
+
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+
+              android:layout_marginStart="30dp"
+
+              android:src="@drawable/adv_details_instagram"
+
+              android:onClick="@{v -> viewModel.shareLink(v, SocialMedia.INSTAGRAM)}"
+
+              app:layout_constraintTop_toBottomOf="@id/labelShareAdTextView"
+              app:layout_constraintStart_toEndOf="@id/facebookImageView"/>
+            <ImageView
+              android:id="@+id/twitterImageView"
+
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+
+              android:layout_marginStart="30dp"
+
+              android:src="@drawable/adv_details_twitter"
+
+              android:onClick="@{v -> viewModel.shareLink(v, SocialMedia.TWITTER)}"
+
+              app:layout_constraintTop_toBottomOf="@id/labelShareAdTextView"
+              app:layout_constraintStart_toEndOf="@id/instagramImageView"/>
+            <ImageView
+              android:id="@+id/youtubeImageView"
+
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+
+              android:layout_marginStart="30dp"
+
+              android:src="@drawable/adv_details_youtube"
+
+              android:onClick="@{v -> viewModel.shareLink(v, SocialMedia.YOUTUBE)}"
+
+              app:layout_constraintTop_toBottomOf="@id/labelShareAdTextView"
+              app:layout_constraintStart_toEndOf="@id/instagramImageView"/>
+            <ImageView
+              android:id="@+id/copyLinkImageView"
+
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+
+              android:layout_marginStart="30dp"
+
+              android:src="@drawable/adv_details_copy_link"
+
+              android:onClick="@{v -> viewModel.shareLink(v, SocialMedia.COPY_LINK)}"
+
+              app:layout_constraintTop_toBottomOf="@id/labelShareAdTextView"
+              app:layout_constraintStart_toEndOf="@id/instagramImageView"/>
+
+          </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <TextView
+          android:id="@+id/reportAdTextView"
+
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+
+          style="@style/TextTajawalMedium16"
+          android:textDirection="locale"
+          android:gravity="center_vertical"
+
+          android:text="@string/report_on_issue"
+
+          android:paddingStart="8.6dp"
+          android:paddingEnd="6dp"
+          android:paddingTop="6dp"
+          android:paddingBottom="6dp"
+
+          android:layout_marginTop="33dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+
+          android:background="@drawable/dr_rect_5_with_border_1"
+
+          android:drawablePadding="20dp"
+          app:drawableStartCompat="@drawable/adv_details_reportsvg"
+          app:drawableEndCompat="@drawable/adv_details_report_arrow"
+
+          android:onClick="@{v -> viewModel.reportAdv(v)}"
+
+          app:layout_constraintTop_toBottomOf="@id/shareAdHorizontalScrollView"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+          android:id="@+id/labelAdsTextView"
+
+          android:visibility="@{viewModel.showSimilarAds}"
+
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+
+          android:textSize="18sp"
+          style="@style/TextTajawalBold14"
+          android:textColor="@color/colorPrimary"
+
+          android:text="@string/similar_ads"
+
+          android:layout_marginTop="39dp"
+          android:layout_marginStart="16dp"
+
+          android:maxLines="1"
+          android:ellipsize="end"
+
+          app:layout_constraintWidth_default="wrap"
+          app:layout_constraintHorizontal_bias="0"
+          app:layout_constraintHorizontal_chainStyle="packed"
 
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/reviewsConstraintLayout">
+          app:layout_constraintTop_toBottomOf="@id/reportAdTextView"/>
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/recyclerViewAds"
 
-          <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+          android:visibility="@{viewModel.showSimilarAds}"
 
-            android:background="@drawable/dr_round_not_selected"
-            android:backgroundTint="#0D0633"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
 
-            android:text="@string/edit_adv"
-            style="@style/TextTajawalMedium14"
-            android:textSize="12sp"
-            android:textColor="@color/white"
+          android:paddingTop="8dp"
+          android:paddingBottom="8dp"
+          android:paddingStart="12dp"
+          android:paddingEnd="12dp"
+          android:clipToPadding="false"
 
-            android:gravity="center"
+          android:scrollbars="none"
+          tools:orientation="horizontal"
+          tools:spanCount="1"
+          tools:itemCount="8"
+          tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+          tools:listitem="@layout/item_home_rv_adv"
 
-            android:drawablePadding="4dp"
-            app:drawableStartCompat="@drawable/ic_edit_9"
+          app:layout_constraintTop_toBottomOf="@id/labelAdsTextView"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"/>
 
-            android:layout_marginEnd="1.5dp"
+        <TextView
+          android:id="@+id/labelStoresTextView"
 
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="6sp"
+          android:visibility="@{viewModel.showSimilarStores}"
 
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="9dp"
-            android:paddingBottom="9dp"/>
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
 
-          <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+          android:textSize="18sp"
+          style="@style/TextTajawalBold14"
+          android:textColor="@color/colorPrimary"
 
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="6sp"
+          android:text="@string/similar_stores"
 
-            android:background="@drawable/dr_round_not_selected"
-            android:backgroundTint="#E89028"
+          android:layout_marginTop="8dp"
+          android:layout_marginStart="16dp"
 
-            android:layout_marginStart="1.5dp"
-            android:layout_marginEnd="1.5dp"
+          android:maxLines="1"
+          android:ellipsize="end"
 
-            android:text="@string/prem_ad"
-            style="@style/TextTajawalMedium14"
-            android:textSize="12sp"
-            android:textColor="@color/white"
+          app:layout_constraintWidth_default="wrap"
+          app:layout_constraintHorizontal_bias="0"
+          app:layout_constraintHorizontal_chainStyle="packed"
 
-            android:gravity="center"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/recyclerViewAds"/>
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/recyclerViewStores"
 
-            android:drawablePadding="4dp"
-            app:drawableStartCompat="@drawable/ic_prem_9"
+          android:visibility="@{viewModel.showSimilarStores}"
 
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="9dp"
-            android:paddingBottom="9dp"/>
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
 
-          <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+          android:paddingTop="8dp"
+          android:paddingBottom="8dp"
+          android:paddingStart="12dp"
+          android:paddingEnd="12dp"
+          android:clipToPadding="false"
 
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="6sp"
+          android:scrollbars="none"
+          tools:orientation="horizontal"
+          tools:spanCount="1"
+          tools:itemCount="8"
+          tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+          tools:listitem="@layout/item_home_rv_store"
 
-            android:background="@drawable/dr_round_not_selected"
-            android:backgroundTint="#CA2A2A"
-
-            android:layout_marginStart="1.5dp"
-
-            android:text="@string/del_ad"
-            style="@style/TextTajawalMedium14"
-            android:textSize="12sp"
-            android:textColor="@color/white"
-
-            android:gravity="center"
-
-            android:drawablePadding="4dp"
-            app:drawableStartCompat="@drawable/ic_prem_9"
-
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="9dp"
-            android:paddingBottom="9dp"/>
-
-        </LinearLayout>
+          app:layout_constraintTop_toBottomOf="@id/labelStoresTextView"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"/>
 
       </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -822,37 +1288,28 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 
-      android:layout_gravity="bottom"
+      android:orientation="horizontal"
 
       android:background="@color/white"
       android:elevation="10dp"
 
-      android:orientation="horizontal"
-
-      android:layout_marginTop="16dp"
-
-      android:paddingStart="16dp"
-      android:paddingEnd="16dp"
-      android:paddingTop="13dp"
-      android:paddingBottom="13dp"
-
-      android:clipToPadding="false"
-
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/reviewsConstraintLayout">
+      android:paddingStart="15dp"
+      android:paddingEnd="15dp"
+      android:paddingTop="12dp"
+      android:paddingBottom="12dp"
+      android:clipToPadding="false">
 
       <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
 
-        android:onClick="@{v -> viewModel.editAdv(v)}"
+        android:onClick="@{v -> viewModel.goToWhatsApp(v)}"
 
-        android:background="@drawable/dr_round_not_selected"
-        android:backgroundTint="#0D0633"
+        android:background="@drawable/dr_rect_5"
+        android:backgroundTint="#55CD6C"
 
-        android:text="@string/edit_adv"
+        android:text="@string/whatsapp_3"
         style="@style/TextTajawalMedium14"
         android:textSize="12sp"
         android:textColor="@color/white"
@@ -860,9 +1317,9 @@
         android:gravity="center"
 
         android:drawablePadding="4dp"
-        app:drawableStartCompat="@drawable/ic_edit_9"
+        app:drawableStartCompat="@drawable/whatsapp_in_stats"
 
-        android:layout_marginEnd="1.5dp"
+        android:layout_marginEnd="3.5dp"
 
         android:maxLines="1"
         android:ellipsize="end"
@@ -880,7 +1337,41 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
 
-        android:onClick="@{v -> viewModel.makeAdvPremiumOrCheckAdvPremium(v)}"
+        android:onClick="@{v -> viewModel.makeCall(v)}"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="12sp"
+        app:autoSizeMinTextSize="6sp"
+
+        android:background="@drawable/dr_rect_5"
+        android:backgroundTint="@color/colorPrimary"
+
+        android:layout_marginStart="3.5dp"
+        android:layout_marginEnd="3.5dp"
+
+        android:text="@string/call_3829"
+        style="@style/TextTajawalMedium14"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+
+        android:gravity="center"
+
+        android:drawablePadding="4dp"
+        app:drawableStartCompat="@drawable/call_white"
+
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
+        android:onClick="@{v -> viewModel.chat(v)}"
 
         android:maxLines="1"
         android:ellipsize="end"
@@ -891,11 +1382,9 @@
         android:background="@drawable/dr_round_not_selected"
         android:backgroundTint="#E89028"
 
-        android:layout_marginStart="1.5dp"
-        android:layout_marginEnd="1.5dp"
+        android:layout_marginStart="3.5dp"
 
-        android:text="@{viewModel.showPremium ? @string/check_ad_premium : @string/prem_ad}"
-        tools:text="@string/check_ad_premium"
+        android:text="@string/chat"
         style="@style/TextTajawalMedium14"
         android:textSize="12sp"
         android:textColor="@color/white"
@@ -903,40 +1392,7 @@
         android:gravity="center"
 
         android:drawablePadding="4dp"
-        app:drawableStartCompat="@drawable/ic_prem_9"
-
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingTop="9dp"
-        android:paddingBottom="9dp"/>
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-
-        android:onClick="@{v -> viewModel.deleteAdv(v)}"
-
-        android:maxLines="1"
-        android:ellipsize="end"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMaxTextSize="12sp"
-        app:autoSizeMinTextSize="6sp"
-
-        android:background="@drawable/dr_round_not_selected"
-        android:backgroundTint="#CA2A2A"
-
-        android:layout_marginStart="1.5dp"
-
-        android:text="@string/del_ad"
-        style="@style/TextTajawalMedium14"
-        android:textSize="12sp"
-        android:textColor="@color/white"
-
-        android:gravity="center"
-
-        android:drawablePadding="4dp"
-        app:drawableStartCompat="@drawable/ic_prem_9"
+        app:drawableStartCompat="@drawable/chat_white"
 
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
@@ -945,6 +1401,6 @@
 
     </LinearLayout>
 
-  </FrameLayout>
+  </LinearLayout>
 
 </layout>

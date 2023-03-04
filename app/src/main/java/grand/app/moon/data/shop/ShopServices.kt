@@ -13,6 +13,7 @@ import grand.app.moon.presentation.home.models.*
 import grand.app.moon.presentation.map.model.ResponseMapData
 import grand.app.moon.presentation.map.model.ResponseMapDataForAdv
 import grand.app.moon.presentation.map.model.ResponseMapDataForStore
+import grand.app.moon.presentation.myAds.model.ResponseMyAdvDetails
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
 import grand.app.moon.presentation.stats.models.ResponseStoreStats
 import grand.app.moon.presentation.stats.models.ResponseUserInGeneralStats
@@ -358,5 +359,27 @@ interface ShopServices {
 		@Query("page") page: Int,
 		@QueryMap map: Map<String, String>
 	): MABaseResponse<ResponseAllAdsOfCategory>
+
+	@FormUrlEncoded
+	@POST("v1/share")
+	suspend fun shareAdv(
+		@Field("advertisement_id") advId: Int,
+	): BaseResponse<Any?>
+
+	@GET("v1/advertisements/{id}")
+	suspend fun getAdvDetails(
+		@Path("id") id: Int,
+		@Query("type") type: Int,
+	): BaseResponse<ResponseMyAdvDetails?>
+
+	@GET("v1/settings?type=6")
+	suspend fun getAdvReportingReason(): BaseResponse<List<ResponseReason>?>
+
+	@FormUrlEncoded
+	@POST("v1/report")
+	suspend fun reportAdv(
+		@Field("advertisement_id") advertisementId: Int,
+		@Field("reason_id") reasonId: Int,
+	): BaseResponse<Any?>
 
 }

@@ -147,7 +147,7 @@ fun Context.getAppWebLinkOnGooglePay(): String {
 	return "https://play.google.com/store/apps/details?id=$packageName"
 }
 
-private fun Context.launchActivitySafely(msg: String = getString(R.string.something_went_wrong_please_try_again), block: () -> Unit) {
+fun Context.launchActivitySafely(msg: String = getString(R.string.something_went_wrong_please_try_again), block: () -> Unit) {
 	try {
 		block()
 	}catch (throwable: Throwable) {

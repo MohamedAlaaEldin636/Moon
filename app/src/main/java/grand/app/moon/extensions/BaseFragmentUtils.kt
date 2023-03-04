@@ -79,6 +79,20 @@ fun BaseFragment<*>.showRetryErrorDialogWithBackNegativeButton(
 /**
  * - Can't be dismissed, If wanna show a can be dismissed error use [Toast] or [Snackbar] isa.
  */
+fun MADialogFragment<*>.showRetryErrorDialogWithBackNegativeButton(
+	msg: String = getString(R.string.something_went_wrong_please_try_again),
+	negativeButton: String = getString(R.string.back),
+	negativeButtonAction: () -> Unit = {
+		hideLoading()
+
+		findNavController().navigateUp()
+	},
+	onRetry: () -> Unit
+) = showRetryErrorDialog(activity, msg, negativeButton, negativeButtonAction, onRetry)
+
+/**
+ * - Can't be dismissed, If wanna show a can be dismissed error use [Toast] or [Snackbar] isa.
+ */
 fun BaseFragment<*>.showRetryErrorDialogWithCancelNegativeButton(
 	msg: String = getString(R.string.something_went_wrong_please_try_again),
 	negativeButton: String = getString(R.string.cancel),
@@ -238,6 +252,46 @@ fun <T> MADialogFragment<*>.handleRetryAbleActionCancellableNullable(
 				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
 			) {
 				handleRetryAbleActionCancellableNullable(action, onSuccess)
+			}
+		},
+		onSuccess
+	)
+}
+
+fun <T> MADialogFragment<*>.handleRetryAbleActionOrGoBack(
+	action: suspend () -> Resource<BaseResponse<T?>>,
+	onSuccess: (T) -> Unit
+) {
+	handleRetryAbleAction(
+		showLoading = { showLoading() },
+		hideLoading = { hideLoading() },
+		lifecycleScope,
+		action,
+		onError = {
+			showRetryErrorDialogWithBackNegativeButton(
+				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+			) {
+				handleRetryAbleActionOrGoBack(action, onSuccess)
+			}
+		},
+		onSuccess
+	)
+}
+
+fun <T> MADialogFragment<*>.handleRetryAbleActionOrGoBackNullable(
+	action: suspend () -> Resource<BaseResponse<T?>>,
+	onSuccess: (T?) -> Unit
+) {
+	handleRetryAbleActionNullable(
+		showLoading = { showLoading() },
+		hideLoading = { hideLoading() },
+		lifecycleScope,
+		action,
+		onError = {
+			showRetryErrorDialogWithBackNegativeButton(
+				it.message.orElseIfNullOrEmpty(getString(R.string.something_went_wrong_please_try_again))
+			) {
+				handleRetryAbleActionOrGoBack(action, onSuccess)
 			}
 		},
 		onSuccess

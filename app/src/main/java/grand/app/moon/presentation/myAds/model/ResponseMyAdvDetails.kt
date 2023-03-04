@@ -7,6 +7,8 @@ import grand.app.moon.extensions.orZero
 import java.math.BigDecimal
 import java.math.RoundingMode
 import grand.app.moon.R
+import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
+import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
 
 data class ResponseMyAdvertisements(
 	var advertisements: List<ResponseMyAdvDetails>?
@@ -48,10 +50,16 @@ data class ResponseMyAdvDetails(
 	@SerializedName("price_before") var priceBeforeDiscount: Int?,
 	@SerializedName("store_category_id") var storeCategoryId: Int?,
 	@SerializedName("store_sub_category_id") var storeSubCategoryId: Int?,
+
+	var store: ItemAdvertisementInResponseHome.Store?,
+	@SerializedName("similar_ads") var similarAds: List<ItemAdvertisementInResponseHome>?,
+	@SerializedName("similar_stores") var similarStores: List<ItemStoreInResponseHome>?,
 ) {
 	val isPremium get() = premium == 1
 
 	val isNegotiable get() = negotiable == 1
+
+	val fullPhone get() = "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
 
 	fun makePremium() {
 		premium = 1

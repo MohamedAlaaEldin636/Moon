@@ -516,4 +516,8 @@
   <string name="sub_categories">الأقسام الفرعية</string>
   <string name="loading">Loading…</string>
   <string name="num_of_ads_var_ad">عدد الإعلانات %1$s أعلان</string>
+  <string name="published_var">تم النشر %1$s</string>
+    <string name="share_ad_789">شارك الاعلان</string>
+    <string name="no_address_found">لا يوجد عنوان</string>
+  <string name="similar_stores">متاجر مشابهة</string>
 </resources>

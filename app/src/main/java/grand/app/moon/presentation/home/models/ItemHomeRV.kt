@@ -88,6 +88,8 @@ data class ItemAdvertisementInResponseHome(
 		var phone: String?,
 		var createdAt: String?,
 		var country: Country?,
+		@SerializedName("is_following") var isFollowing: Boolean?,
+		@SerializedName("average_rate") var averageRate: Float?,
 	)
 }
 
