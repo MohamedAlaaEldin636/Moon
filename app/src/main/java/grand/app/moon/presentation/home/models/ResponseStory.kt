@@ -39,6 +39,8 @@ data class ResponseStory(
 	@SerializedName("created_at") var createdAt: String? = null,
 	var stories: List<Story>? = null,
 	var isSouqMoonStory: Boolean? = false,
+	@SerializedName("highlight_name") var highlightName: String? = null,
+	@SerializedName("highlight_cover") var highlightCover: String? = null,
 	//@SerializedName("social_media_links") var socialMediaLinks: String?,
 	//@SerializedName("working_hours") var workingHours: String?,
 ) {

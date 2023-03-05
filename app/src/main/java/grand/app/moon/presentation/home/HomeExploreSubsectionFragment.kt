@@ -47,7 +47,6 @@ class HomeExploreSubsectionFragment : BaseFragment<FragmentHomeExploreSubsection
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 				viewModel.explores.collectLatest {
-					MyLogger.e("djasdakskdash 3 -> ${viewModel.initialData.map { it.files }}")
 					viewModel.adapter.submitData(it.insertHeaderItems(viewModel.initialData))
 				}
 			}

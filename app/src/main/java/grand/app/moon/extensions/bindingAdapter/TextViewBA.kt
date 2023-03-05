@@ -27,6 +27,7 @@ import kotlin.math.roundToInt
 fun TextView.setCompoundDrawablesRelativeWithIntrinsicBoundsEnd(@DrawableRes res: Int) {
 	setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, res, 0)
 }
+@BindingAdapter("textView_setCompoundDrawablesRelativeWithIntrinsicBoundsStartBA")
 fun TextView.setCompoundDrawablesRelativeWithIntrinsicBoundsStart(@DrawableRes res: Int) {
 	setCompoundDrawablesRelativeWithIntrinsicBounds(res, 0, 0, 0)
 }

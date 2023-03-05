@@ -1,6 +1,7 @@
 package grand.app.moon.data.shop
 
 import android.content.Context
+import androidx.paging.PagingData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import grand.app.moon.core.extenstions.*
 import grand.app.moon.data.local.preferences.AppPreferences
@@ -16,9 +17,11 @@ import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.map
 import grand.app.moon.domain.utils.toFailureStatus
 import grand.app.moon.extensions.mapToNullSuccess
+import grand.app.moon.extensions.orZero
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.home.AllStoresFragment
 import grand.app.moon.presentation.home.FilterAllFragment
+import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.models.Interaction
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.models.TypeSearchResult
@@ -29,6 +32,7 @@ import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import grand.app.moon.presentation.myStore.model.ResponseCountry
 import grand.app.moon.presentation.stats.models.ItemStoreStats
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -425,8 +429,18 @@ class RepoShop @Inject constructor(
 		exploreId, ExploreInteractions.SHARE.apiValue
 	)
 
-	fun getSimpleUsersOfExploreLikes(id: Int) = BasePaging.createFlowViaPager {
-		remoteDataSource.getSimpleUsersOfExploreLikes(id, it)
+	fun getSimpleUsersOfExploreLikes(id: Int): Flow<PagingData<SimpleUserListOfInteractionsFragment.Item>> = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getSimpleUsersOfExploreLikes(id, page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+					)
+				}
+			}
+		}
 	}
 
 	/**
@@ -561,12 +575,48 @@ class RepoShop @Inject constructor(
 
 	suspend fun getAdvDetailsFromSearch(id: Int) = remoteDataSource.getAdvDetails(id, true)
 
+	suspend fun getStoreDetailsFromView(id: Int) = remoteDataSource.getStoreDetails(id, false)
+
+	suspend fun getStoreDetailsFromSearch(id: Int) = remoteDataSource.getStoreDetails(id, true)
+
 	suspend fun getAdvReportingReason() = remoteDataSource.getAdvReportingReason()
 
 	suspend fun reportAdv(
 		advertisementId: Int,
 		reasonId: Int,
 	) = remoteDataSource.reportAdv(advertisementId, reasonId)
+
+	suspend fun shareStore(storeId: Int) = remoteDataSource.shareStore(storeId)
+
+	fun getStoreViews(id: Int) = BasePaging.createFlowViaPager {
+		remoteDataSource.getStoreViews(id).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+						it.totalViews.orZero(),
+						it.createdAt.orEmpty()
+					)
+				}
+			}
+		}
+	}
+
+	fun getStoreFollowers(id: Int) = BasePaging.createFlowViaPager {
+		remoteDataSource.getStoreFollowers(id).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+					)
+				}
+			}
+		}
+	}
 
 }
 

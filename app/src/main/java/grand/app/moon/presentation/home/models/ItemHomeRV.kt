@@ -60,7 +60,10 @@ data class ItemAdvertisementInResponseHome(
 
 	// used for paging not data from backend
 	@SerializedName("ads_count") var adsCount: Int?,
-	var slider: List<ItemAdvertisementInResponseHome>?
+	var slider: List<ItemAdvertisementInResponseHome>?,
+
+	@SerializedName("store_category_id") var storeCategoryId: Int?,
+	@SerializedName("store_sub_category_id") var storeSubCategoryId: Int?,
 ) : ItemInResponseHome {
 
 	val isNegotiable get() = negotiable == 1
@@ -72,6 +75,7 @@ data class ItemAdvertisementInResponseHome(
 		var name: String?,
 		var currency: String?,
 		@SerializedName("country_code") var countryCode: String?,
+		var image: String?,
 	)
 
 	data class City(

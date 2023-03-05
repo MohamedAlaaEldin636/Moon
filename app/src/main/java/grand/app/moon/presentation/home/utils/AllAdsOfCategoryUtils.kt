@@ -144,7 +144,7 @@ fun AllAdsOfCategoryViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithD
 				val listener = View.OnClickListener {
 					val context = binding.root.context ?: return@OnClickListener
 
-					val item = binding.root.getTagJson<ResponseSearchResult>()
+					val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 						?: return@OnClickListener
 
 					//val position = binding.linearLayout.tag as? Int ?: return@OnClickListener
@@ -162,7 +162,7 @@ fun AllAdsOfCategoryViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithD
 
 					val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
 
-					val item = binding.root.getTagJson<ResponseSearchResult>()
+					val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 						?: return@setOnClickListener
 
 					if (context.isLoginWithOpenAuth()) {
@@ -181,7 +181,7 @@ fun AllAdsOfCategoryViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithD
 				binding.whatsAppConstraintLayout.setOnClickListener {
 					val context = binding.root.context ?: return@setOnClickListener
 
-					val item = binding.root.getTagJson<ResponseSearchResult>()
+					val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 						?: return@setOnClickListener
 
 					context.launchWhatsApp(item.phone.orEmpty())
@@ -189,7 +189,7 @@ fun AllAdsOfCategoryViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithD
 				binding.phoneConstraintLayout.setOnClickListener {
 					val context = binding.root.context ?: return@setOnClickListener
 
-					val item = binding.root.getTagJson<ResponseSearchResult>()
+					val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 						?: return@setOnClickListener
 
 					context.launchDialNumber(item.phone.orEmpty())
@@ -197,7 +197,7 @@ fun AllAdsOfCategoryViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithD
 				binding.chatConstraintLayout.setOnClickListener {
 					val context = binding.root.context ?: return@setOnClickListener
 
-					val item = binding.root.getTagJson<ResponseSearchResult>()
+					val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 						?: return@setOnClickListener
 
 					if (context.isLoginWithOpenAuth()) {

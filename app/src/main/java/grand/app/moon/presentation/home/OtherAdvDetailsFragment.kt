@@ -18,11 +18,11 @@ import grand.app.moon.presentation.myAds.model.ItemUserInReviewsInAdvDetails
 class OtherAdvDetailsFragment : BaseFragment<FragmentOtherAdvDetailsBinding>() {
 
 	companion object {
-		fun launch(navController: NavController, id: Int) {
+		fun launch(navController: NavController, id: Int, fromViewNotSearch: Boolean = true) {
 			navController.navigateDeepLinkWithOptions(
 				"fragment-dest",
 				"grand.app.moon.dest.other.adv.details",
-				paths = arrayOf(id.toString())
+				paths = arrayOf(id.toString(), fromViewNotSearch.toString())
 			)
 		}
 	}
@@ -36,7 +36,11 @@ class OtherAdvDetailsFragment : BaseFragment<FragmentOtherAdvDetailsBinding>() {
 
 		handleRetryAbleActionOrGoBack(
 			action = {
-				viewModel.repoShop.getAdvDetailsFromView(viewModel.args.id)
+				if (viewModel.args.fromViewNotSearch) {
+					viewModel.repoShop.getAdvDetailsFromView(viewModel.args.id)
+				}else {
+					viewModel.repoShop.getAdvDetailsFromSearch(viewModel.args.id)
+				}
 			}
 		) { response ->
 			viewModel.response.value = response.copy(viewsCount = response.viewsCount?.inc())

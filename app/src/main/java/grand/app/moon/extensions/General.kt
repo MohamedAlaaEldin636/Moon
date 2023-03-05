@@ -7,6 +7,13 @@ import com.google.android.material.snackbar.Snackbar
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
 import grand.app.moon.domain.utils.Resource
+import kotlinx.coroutines.delay
+
+suspend fun suspendUntilNotNull(delayMillis: Long = 50L, value: () -> Any?) {
+	while (value() == null) {
+		delay(delayMillis)
+	}
+}
 
 infix fun <A, B, C> Pair<A, B>.triple(third: C): Triple<A, B, C> = Triple(first, second, third)
 

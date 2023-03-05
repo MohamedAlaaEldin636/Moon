@@ -8,6 +8,7 @@ import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.OtherAdvDetailsFragment
+import grand.app.moon.presentation.home.OtherStoreDetailsFragment
 import grand.app.moon.presentation.home.models.*
 import grand.app.moon.presentation.map.model.ResponseMapData
 
@@ -98,7 +99,7 @@ fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 	context: Context,
 	navController: NavController,
 	mapData: ResponseSearchResult
-) = goToStoreStoriesOrDetailsCheckIfMyStore(context, navController, mapData.id, mapData.toResponseStory())
+) = goToStoreStoriesOrDetailsCheckIfMyStore(context, navController, mapData.id, mapData.toResponseStory(), false)
 fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 	context: Context,
 	navController: NavController,
@@ -118,7 +119,8 @@ fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 	context: Context,
 	navController: NavController,
 	storeId: Int?,
-	responseStory: ResponseStory?
+	responseStory: ResponseStory?,
+	fromViewNotSearch: Boolean = true
 ) {
 	if (responseStory?.stories.isNullOrEmpty()) {
 		if (context.isLogin() && storeId == this().id) {
@@ -129,13 +131,18 @@ fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 			)
 		}else {
 			// Other stores
-			navController.navigate(
+			OtherStoreDetailsFragment.launch(
+				navController,
+				storeId.orZero(),
+				fromViewNotSearch
+			)
+			/*navController.navigate(
 				R.id.nav_store,
 				bundleOf(
 					"id" to storeId.orZero(),
 					"type" to 3
 				), Constants.NAVIGATION_OPTIONS
-			)
+			)*/
 		}
 	}else {
 		navController.navigateDeepLinkWithOptions(
@@ -199,6 +206,6 @@ fun UserLocalUseCase.goToAdvDetailsCheckIfMyAdv(
 			paths = arrayOf(item.id.orZero().toString())
 		)
 	}else {
-		OtherAdvDetailsFragment.launch(navController, item.id.orZero())
+		OtherAdvDetailsFragment.launch(navController, item.id.orZero(), false)
 	}
 }

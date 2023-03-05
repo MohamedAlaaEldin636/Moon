@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.findNavController
+import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -28,6 +29,8 @@ import grand.app.moon.presentation.home.HomeExploreSubsectionFragmentArgs
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.myAds.adapter.RVSliderImageFull
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,7 +45,11 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 	val initialData = args.jsonOfListOfItemHomeExplore
 		.fromJsonInlinedOrNull<List<ItemHomeExplore>>().orEmpty()
 
-	val explores = repoShop.getHomeExplores(args.maxPageReached.inc())
+	val explores = if (args.maxPageReached == -1) {
+		flowOf(PagingData.empty())
+	}else {
+		repoShop.getHomeExplores(args.maxPageReached.inc())
+	}
 
 	var player: ExoPlayer? = null
 		private set

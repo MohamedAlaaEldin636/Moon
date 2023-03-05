@@ -382,4 +382,26 @@ interface ShopServices {
 		@Field("reason_id") reasonId: Int,
 	): BaseResponse<Any?>
 
+	@GET("v1/stores/{id}")
+	suspend fun getStoreDetails(
+		@Path("id") id: Int,
+		@Query("type") type: Int,
+	): BaseResponse<ResponseStoreDetails?>
+
+	@FormUrlEncoded
+	@POST("v1/share")
+	suspend fun shareStore(
+		@Field("store_id") storeId: Int,
+	): BaseResponse<Any?>
+
+	@GET("v1/stores/{id}/views")
+	suspend fun getStoreViews(
+		@Path("id") id: Int,
+	): MABaseResponse<MABasePaging<ResponseStoreViews>>
+
+	@GET("v1/stores/{id}/followers")
+	suspend fun getStoreFollowers(
+		@Path("id") id: Int,
+	): MABaseResponse<MABasePaging<ResponseStoreViews>>
+
 }

@@ -34,6 +34,19 @@ fun ImageView.setupWithGlideOrDefaultImageBA(value: String?) {
 	}
 }
 
+@BindingAdapter("imageView_setupWithGlideOrDefaultSplashBA")
+fun ImageView.setupWithGlideOrDefaultSplashBA(value: String?) {
+	if (value.isNullOrEmpty().not()) {
+		setupWithGlide {
+			load(value).saveDiskCacheStrategyAll()
+		}
+	}else {
+		setupWithGlide {
+			load(R.drawable.splash).saveDiskCacheStrategyAll()
+		}
+	}
+}
+
 @BindingAdapter("imageView_setupWithGlideOrDefaultUserBA")
 fun ImageView.setupWithGlideOrDefaultUserBA(value: String?) {
 	if (value.isNullOrEmpty().not()) {

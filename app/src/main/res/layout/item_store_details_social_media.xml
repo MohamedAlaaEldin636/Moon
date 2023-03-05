@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
+
+    <ImageView
+      android:id="@+id/imageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/adv_details_facebook"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"/>
+    <TextView
+      android:id="@+id/textView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="9dp"
+      android:textColor="#202020"
+      android:text="@string/facebook_7989"
+      android:gravity="center"
+      android:textDirection="locale"
+
+      android:singleLine="true"
+      android:ellipsize="marquee"
+      android:marqueeRepeatLimit ="marquee_forever"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:scrollHorizontally="true"
+      textView_setSelectedBA="@{true}"
+
+      app:layout_constraintTop_toBottomOf="@id/imageView"
+      app:layout_constraintStart_toStartOf="@id/imageView"
+      app:layout_constraintEnd_toEndOf="@id/imageView"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

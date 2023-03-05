@@ -1325,10 +1325,28 @@
     <argument
       android:name="id"
       app:argType="integer" />
+    <argument
+      android:name="fromViewNotSearch"
+      app:argType="boolean" />
     <deepLink
       android:id="@+id/deep_link_dest_other_adv_details"
       android:autoVerify="true"
-      app:uri="fragment-dest://grand.app.moon.dest.other.adv.details/{id}" />
+      app:uri="fragment-dest://grand.app.moon.dest.other.adv.details/{id}/{fromViewNotSearch}" />
+  </fragment>
+  <fragment
+    android:id="@+id/dest_other_store_details"
+    android:name="grand.app.moon.presentation.home.OtherStoreDetailsFragment"
+    tools:layout="@layout/fragment_other_store_details">
+    <argument
+      android:name="id"
+      app:argType="integer" />
+    <argument
+      android:name="fromViewNotSearch"
+      app:argType="boolean" />
+    <deepLink
+      android:id="@+id/deep_link_dest_other_store_details"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.other.store.details/{id}/{fromViewNotSearch}" />
   </fragment>
   <dialog
     android:id="@+id/dest_reporting"

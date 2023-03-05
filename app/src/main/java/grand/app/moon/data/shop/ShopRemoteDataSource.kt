@@ -742,6 +742,10 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getAdvDetails(id, if (fromSearchNotView) 5 else 2)
 	}
 
+	suspend fun getStoreDetails(id: Int, fromSearchNotView: Boolean) = safeApiCall {
+		apiService.getStoreDetails(id, if (fromSearchNotView) 4 else 3)
+	}
+
 	suspend fun getAdvReportingReason() = safeApiCall {
 		apiService.getAdvReportingReason()
 	}
@@ -751,6 +755,18 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		reasonId: Int,
 	) = safeApiCall {
 		apiService.reportAdv(advertisementId, reasonId)
+	}
+
+	suspend fun shareStore(storeId: Int) = safeApiCall {
+		apiService.shareStore(storeId)
+	}
+
+	suspend fun getStoreViews(id: Int) = safeApiCall2 {
+		apiService.getStoreViews(id)
+	}
+
+	suspend fun getStoreFollowers(id: Int) = safeApiCall2 {
+		apiService.getStoreFollowers(id)
 	}
 
 }

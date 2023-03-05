@@ -520,4 +520,18 @@
     <string name="share_ad_789">شارك الاعلان</string>
     <string name="no_address_found">لا يوجد عنوان</string>
   <string name="similar_stores">متاجر مشابهة</string>
+  <string name="slash">\\</string>
+  <string name="views_count">عدد المشاهدات</string>
+  <string name="followers_count">عدد المتابعين</string>
+  <string name="online_now">متصل الاَن</string>
+  <string name="not_online_now">غير متصل الاَن</string>
+  <string name="member_since">عضو منذ</string>
+  <string name="views_89">مشاهدات</string>
+  <string name="reviews_78678">التقيمات</string>
+  <string name="ads_68768">الاعلانات</string>
+  <string name="highlighted_stories_7">الاستوري المثبتة</string>
+  <string name="social_media_89">السوشيال ميديا</string>
+  <string name="facebook_7989">فيس بوك</string>
+  <string name="copy_link">نسخ الرابط</string>
+  <string name="explore_890">الإكسبلور</string>
 </resources>

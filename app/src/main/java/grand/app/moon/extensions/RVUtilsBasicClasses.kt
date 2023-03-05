@@ -2,6 +2,7 @@
 
 package grand.app.moon.extensions
 
+import android.content.Context
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -13,6 +14,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import grand.app.moon.core.extenstions.layoutInflater
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
@@ -370,6 +374,145 @@ class VHItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 
 	fun bind(position: Int, item: Item) {
 		onBind(binding, position, item)
+	}
+
+}
+
+open class RVItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any>(
+	@LayoutRes private val layoutRes: Int,
+	list: List<Item> = emptyList(),
+	private val onItemClick: ((adapter: RVItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
+	private val additionalListenersSetups: ((adapter: RVItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
+	private val afterOnCreateViewHolder: ((viewHolder: VHItemCommonListUsageWithExoPlayer<VDB, Item>, layoutRes: Int) -> Unit)? = null,
+	private val onBind: VHItemCommonListUsageWithExoPlayer<VDB, Item>.(binding: VDB, position: Int, item: Item) -> Unit,
+) : RecyclerView.Adapter<VHItemCommonListUsageWithExoPlayer<VDB, Item>>() {
+
+	var list = list
+		private set
+
+	override fun getItemCount(): Int = list.size
+
+	override fun onCreateViewHolder(
+		parent: ViewGroup,
+		viewType: Int
+	): VHItemCommonListUsageWithExoPlayer<VDB, Item> {
+		return VHItemCommonListUsageWithExoPlayer(
+			this,
+			DataBindingUtil.inflate(parent.context.layoutInflater, layoutRes, parent, false),
+			onBind,
+			onItemClick,
+			additionalListenersSetups
+		).also {
+			afterOnCreateViewHolder?.invoke(it, viewType)
+		}
+	}
+
+	override fun onBindViewHolder(holder: VHItemCommonListUsageWithExoPlayer<VDB, Item>, position: Int) {
+		holder.bind(position, list[position])
+	}
+
+	override fun onViewRecycled(holder: VHItemCommonListUsageWithExoPlayer<VDB, Item>) {
+		holder.releasePlayer()
+
+		//onViewRecycledAction(holder)
+
+		super.onViewRecycled(holder)
+	}
+
+	fun releaseAllPlayers(recyclerView: RecyclerView) {
+		//if (recyclerView.adapter != this) return
+
+		for (index in 0 until recyclerView.childCount) {
+			val child = recyclerView.getChildAt(index) ?: continue
+			val viewHolder = recyclerView.getChildViewHolder(child)
+			if (viewHolder is VHPagingItemCommonListUsageWithExoPlayer<*, *>) {
+				viewHolder.releasePlayer()
+			}
+		}
+	}
+
+	fun submitList(list: List<Item>) {
+		this.list = list
+		notifyDataSetChanged()
+	}
+
+	fun updateItem(position: Int, item: Item) {
+		this.list = this.list.toMutableList().also {
+			it[position] = item
+		}.toList()
+		notifyItemChanged(position)
+	}
+
+	fun insertList(list: List<Item>) {
+		if (list.isEmpty()) return
+		if (this.list.isEmpty()) return submitList(list)
+
+		val start = this.list.size
+		this.list = this.list + list
+		notifyItemRangeInserted(start, list.size)
+	}
+
+	fun deleteAt(index: Int) {
+		if (index >= list.size) return
+
+		list = list.toMutableList().also {
+			it.removeAt(index)
+		}.toList()
+
+		notifyItemRemoved(index)
+	}
+
+}
+
+class VHItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any>(
+	private val adapter: RVItemCommonListUsageWithExoPlayer<VDB, Item>,
+	val binding: VDB,
+	private val onBind: VHItemCommonListUsageWithExoPlayer<VDB, Item>.(binding: VDB, position: Int, item: Item) -> Unit,
+	private val onItemClick: ((adapter: RVItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
+	additionalListenersSetups: ((adapter: RVItemCommonListUsageWithExoPlayer<VDB, Item>, binding: VDB) -> Unit)? = null,
+) : RecyclerView.ViewHolder(binding.root) {
+
+	private var player: ExoPlayer? = null
+
+	init {
+		if (onItemClick != null) {
+			binding.root.setOnClickListener {
+				onItemClick.invoke(adapter, binding)
+			}
+		}
+
+		additionalListenersSetups?.invoke(adapter, binding)
+	}
+
+	fun bind(position: Int, item: Item) {
+		onBind(binding, position, item)
+	}
+
+	fun releasePlayer() {
+		player?.release()
+		player = null
+	}
+
+	fun playVideo(context: Context, videoLink: String): Player? {
+		releasePlayer()
+		player = ExoPlayer.Builder(context).build().also { exoPlayer ->
+			val mediaItem = MediaItem.fromUri(videoLink)
+			exoPlayer.setMediaItem(mediaItem)
+
+			exoPlayer.addListener(object : Player.Listener {
+				override fun onPlaybackStateChanged(playbackState: Int) {
+					if (playbackState == ExoPlayer.STATE_ENDED) {
+						player?.seekTo(0L)
+					}
+				}
+			})
+
+			exoPlayer.volume = 0f
+			exoPlayer.playWhenReady = true
+			exoPlayer.prepare()
+		}
+
+		return player
 	}
 
 }
