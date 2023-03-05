@@ -31,6 +31,7 @@ import grand.app.moon.R
 import grand.app.moon.core.extenstions.showError
 import grand.app.moon.extensions.findFragmentOrNull
 import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.trimAllWhitespaces
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import grand.app.moon.helpers.login.SocialRequest
@@ -90,6 +91,7 @@ class LogInViewModel @Inject constructor(
     }
     Log.d(TAG, "onLogInClicked after: ${request.phone}")
     typeRequest = Constants.LOGIN
+	  request.phone = request.phone.trimAllWhitespaces()
     logInUseCase(request)
       .onEach { result ->
         Log.d(TAG, "onLogInClicked: HEREREEREE")

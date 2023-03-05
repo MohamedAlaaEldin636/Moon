@@ -22,6 +22,7 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.auth.use_case.LogInUseCase
+import grand.app.moon.extensions.trimAllWhitespaces
 import grand.app.moon.presentation.auth.log_in.LogInFragmentDirections
 import grand.app.moon.presentation.base.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +51,7 @@ class ConfirmViewModel @Inject constructor(
     startTimer()
   }
   fun verifyAccount(v: View) {
+	  request.phone = request.phone.trimAllWhitespaces()
     verifyAccountUseCase(request)
       .onEach { result ->
         _verifyResponse.value = result

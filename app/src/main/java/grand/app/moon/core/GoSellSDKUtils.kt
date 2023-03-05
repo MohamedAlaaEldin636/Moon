@@ -1,11 +1,24 @@
 package grand.app.moon.core
 
+import android.app.Activity
 import android.graphics.Typeface
 import company.tap.gosellapi.GoSellSDK
+import company.tap.gosellapi.internal.api.enums.PaymentType
+import company.tap.gosellapi.internal.api.enums.measurements.Measurement
+import company.tap.gosellapi.internal.api.enums.measurements.MeasurementUnit
+import company.tap.gosellapi.internal.api.models.Quantity
 import company.tap.gosellapi.open.controllers.SDKSession
 import company.tap.gosellapi.open.controllers.ThemeObject
+import company.tap.gosellapi.open.delegate.SessionDelegate
 import company.tap.gosellapi.open.enums.AppearanceMode
+import company.tap.gosellapi.open.enums.CardType
+import company.tap.gosellapi.open.models.Customer.CustomerBuilder
+import company.tap.gosellapi.open.models.PaymentItem
+import company.tap.gosellapi.open.models.PaymentItem.PaymentItemBuilder
+import company.tap.gosellapi.open.models.Receipt
+import company.tap.gosellapi.open.models.TapCurrency
 import grand.app.moon.core.GoSellSDKUtils.performBeforeAnyUsageSetups
+import java.math.BigDecimal
 
 @Suppress("UsePropertyAccessSyntax")
 object GoSellSDKUtils {
@@ -15,6 +28,7 @@ object GoSellSDKUtils {
 	fun beforeAnyLaunchSetups(application: MyApplication, language: String = "en") {
 		// TODO shel el if condition da isa.
 		if (true) return
+
 		application.performBeforeAnyUsageSetups(language)
 	}
 
@@ -45,7 +59,7 @@ object GoSellSDKUtils {
 		 * Required step.
 		 * Configure SDK Session with all required data.
 		 */
-		configureSDKSession()
+		//configureSDKSession() // todo
 
 		/**
 		 * Required step.
@@ -148,80 +162,87 @@ object GoSellSDKUtils {
 
 	/**
 	 * Configure SDK Session
+	 *
+	 * @param sessionDelegate activity or I think maybe fragment as well isa.
 	 */
-	private fun configureSDKSession() {
+	private fun configureSDKSession(
+		activity: Activity, // todo generric where kaza
+		sessionDelegate: SessionDelegate,
+		currencyIsoCode: String,
+		userId: Int,
+		amount: BigDecimal,
+		//paymentItemId: Int,
+		cardType: CardType,
+	) {
 		// Instantiate SDK Session
 		if (sdkSession == null) {
 			sdkSession = SDKSession() //** Required **
 		}
 
-		// TODO LESSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
 		// pass your activity as a session delegate to listen to SDK internal payment process follow
-//		sdkSession?.addSessionDelegate(this) //** Required **
+		sdkSession?.addSessionDelegate(sessionDelegate) //** Required **
 
 		// initiate PaymentDataSource
-//		sdkSession.instantiatePaymentDataSource() //** Required **
-//
-//		// set transaction currency associated to your account
-//		sdkSession.setTransactionCurrency(TapCurrency("KWD")) //** Required **
-//
-//		// Using static CustomerBuilder method available inside TAP Customer Class you can populate TAP Customer object and pass it to SDK
-//		sdkSession.setCustomer(customer) //** Required **
-//
-//		// Set Total Amount. The Total amount will be recalculated according to provided Taxes and Shipping
-//		sdkSession.setAmount(BigDecimal(1)) //** Required **
-//
-//		// Set Payment Items array list
-//		sdkSession.setPaymentItems(ArrayList()) // ** Optional ** you can pass empty array list
-//
-//
-//		sdkSession.setPaymentType("CARD");   //** Merchant can pass paymentType
-//
-//		// Set Taxes array list
-//		sdkSession.setTaxes(ArrayList()) // ** Optional ** you can pass empty array list
-//
-//		// Set Shipping array list
-//		sdkSession.setShipping(ArrayList()) // ** Optional ** you can pass empty array list
-//
-//		// Post URL
-//		sdkSession.setPostURL("") // ** Optional **
-//
-//		// Payment Description
-//		sdkSession.setPaymentDescription("") //** Optional **
-//
-//		// Payment Extra Info
-//		sdkSession.setPaymentMetadata(HashMap()) // ** Optional ** you can pass empty array hash map
-//
-//		// Payment Reference
-//		sdkSession.setPaymentReference(null) // ** Optional ** you can pass null
-//
-//		// Payment Statement Descriptor
-//		sdkSession.setPaymentStatementDescriptor("") // ** Optional **
-//
-//		// Enable or Disable Saving Card
-//		sdkSession.isUserAllowedToSaveCard(true) //  ** Required ** you can pass boolean
-//
-//		// Enable or Disable 3DSecure
-//		sdkSession.isRequires3DSecure(true)
-//
-//		//Set Receipt Settings [SMS - Email ]
-//		sdkSession.setReceiptSettings(Receipt(false, false)) // ** Optional ** you can pass Receipt object or null
-//
-//		// Set Authorize Action
-//		sdkSession.setAuthorizeAction(null) // ** Optional ** you can pass AuthorizeAction object or null
-//		sdkSession.setDestination(null) // ** Optional ** you can pass Destinations object or null
-//		sdkSession.setMerchantID(null) // ** Optional ** you can pass merchant id or null
-//		sdkSession.setCardType(CardType.CREDIT) // ** Optional ** you can pass which cardType[CREDIT/DEBIT] you want.By default it loads all available cards for Merchant.
-//
-//		sdkSession.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
-//		sdkSession.isUserAllowedToEnableCardHolderName(false) // ** Optional ** you can enable/ disable  default CardHolderName .
-//		/**
-//		 * Use this method where ever you want to show TAP SDK Main Screen.
-//		 * This method must be called after you configured SDK as above
-//		 * This method will be used in case of you are not using TAP PayButton in your activity.
-//		 */
-//		sdkSession.start(this)
+		sdkSession?.instantiatePaymentDataSource() //** Required **
+
+		// set transaction currency associated to your account
+		sdkSession?.setTransactionCurrency(TapCurrency(currencyIsoCode)) //** Required **
+
+		// Using static CustomerBuilder method available inside TAP Customer Class you can populate TAP Customer object and pass it to SDK
+		sdkSession?.setCustomer(CustomerBuilder(userId.toString()).build()) //** Required **
+
+		// Set Total Amount. The Total amount will be recalculated according to provided Taxes and Shipping
+		sdkSession?.setAmount(amount) //** Required **
+
+		// Set Payment Items array list
+		sdkSession?.setPaymentItems(ArrayList()/*todo optional but check with bassem*/) // ** Optional ** you can pass empty array list
+
+		sdkSession?.setPaymentType(PaymentType.CARD.name/*"CARD"*/)   //** Merchant can pass paymentType
+
+		// Set Taxes array list
+		sdkSession?.setTaxes(ArrayList()) // ** Optional ** you can pass empty array list
+
+		// Set Shipping array list
+		sdkSession?.setShipping(ArrayList()) // ** Optional ** you can pass empty array list
+
+		// Post URL
+		//sdkSession?.setPostURL("") // ** Optional **
+
+		// Payment Description
+		//sdkSession?.setPaymentDescription("") //** Optional **
+
+		// Payment Extra Info
+		//sdkSession?.setPaymentMetadata(HashMap()) // ** Optional ** you can pass empty array hash map
+
+		// Payment Reference
+		sdkSession?.setPaymentReference(null) // ** Optional ** you can pass null
+
+		// Payment Statement Descriptor
+		//sdkSession?.setPaymentStatementDescriptor("") // ** Optional **
+
+		// Enable or Disable Saving Card
+		sdkSession?.isUserAllowedToSaveCard(false) //  ** Required ** you can pass boolean
+
+		// Enable or Disable 3DSecure
+		sdkSession?.isRequires3DSecure(true)
+
+		//Set Receipt Settings [SMS - Email ]
+		sdkSession?.setReceiptSettings(null/*Receipt(false, false)*/) // ** Optional ** you can pass Receipt object or null
+
+		// Set Authorize Action
+		sdkSession?.setAuthorizeAction(null) // ** Optional ** you can pass AuthorizeAction object or null
+		sdkSession?.setDestination(null) // ** Optional ** you can pass Destinations object or null
+		sdkSession?.setMerchantID(null) // ** Optional ** you can pass merchant id or null
+		sdkSession?.setCardType(cardType) // ** Optional ** you can pass which cardType[CREDIT/DEBIT] you want.By default it loads all available cards for Merchant.
+
+		sdkSession?.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
+		sdkSession?.isUserAllowedToEnableCardHolderName(false) // ** Optional ** you can enable/ disable  default CardHolderName .
+		/**
+		 * Use this method where ever you want to show TAP SDK Main Screen.
+		 * This method must be called after you configured SDK as above
+		 * This method will be used in case of you are not using TAP PayButton in your activity.
+		 */
+		sdkSession?.start(activity)
 	}
 
 
