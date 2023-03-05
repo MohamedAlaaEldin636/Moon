@@ -37,7 +37,11 @@ class RateInAdvViewModel @Inject constructor(
 
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
-				repoShop.addReviewForAdv(args.advId, rate, comment.value.orEmpty())
+				if (args.forAdNotStore) {
+					repoShop.addReviewForAdv(args.advId, rate, comment.value.orEmpty())
+				}else {
+					repoShop.addReviewForStore(args.advId, rate, comment.value.orEmpty())
+				}
 			}
 		) {
 			fragment.showMessage(fragment.getString(R.string.done_successfully))

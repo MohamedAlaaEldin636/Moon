@@ -218,6 +218,17 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.addReviewForAdv(advertisementId, review, map)
 	}
 
+	suspend fun addReviewForStore(
+		storeId: Int,
+		rate: Int?,
+		review: String
+	) = safeApiCall {
+		val map = mutableMapOf<String, String>()
+		if (rate != null) map["rate"] = rate.toString()
+
+		apiService.addReviewForStore(storeId, review, map)
+	}
+
 	suspend fun addStory(
 		file: MultipartBody.Part,
 		storyLink: StoryLink,
@@ -264,6 +275,10 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun getReviewsForAdv(advertisementId: Int, page: Int) = safeApiCall2 {
 		apiService.getReviewsForAdv(advertisementId, page)
+	}
+
+	suspend fun getReviewsForStore(storeId: Int, page: Int) = safeApiCall2 {
+		apiService.getReviewsForStore(storeId, page)
 	}
 
 	suspend fun getHomeExplores(page: Int) = safeApiCall2 { apiService.getHomeExplores(page) }

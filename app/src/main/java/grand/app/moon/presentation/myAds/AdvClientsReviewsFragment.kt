@@ -27,7 +27,11 @@ class AdvClientsReviewsFragment : BaseFragment<FragmentAdvClientsReviewsBinding>
 
 		handleRetryAbleActionOrGoBack(
 			action = {
-				viewModel.repoShop.getReviewsForAdv(viewModel.args.advId)
+				if (viewModel.args.forAdNotStore) {
+					viewModel.repoShop.getReviewsForAdv(viewModel.args.advId)
+				}else {
+					viewModel.repoShop.getReviewsForStore(viewModel.args.advId)
+				}
 			}
 		) {
 			viewModel.response.value = it

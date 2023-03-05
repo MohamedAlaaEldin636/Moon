@@ -149,6 +149,12 @@ class RepoShop @Inject constructor(
 		review: String
 	) = remoteDataSource.addReviewForAdv(advertisementId, rate, review)
 
+	suspend fun addReviewForStore(
+		storeId: Int,
+		rate: Int?,
+		review: String
+	) = remoteDataSource.addReviewForStore(storeId, rate, review)
+
 	/*fun getExplores(
 		from: String?,
 		to: String?,
@@ -285,8 +291,18 @@ class RepoShop @Inject constructor(
 	suspend fun getReviewsForAdv(advertisementId: Int) =
 		remoteDataSource.getReviewsForAdv(advertisementId, 1).toResource()
 
+	suspend fun getReviewsForStore(storeId: Int) = remoteDataSource.getReviewsForStore(storeId, 1).toResource()
+
 	fun getReviewsForAdvPaging(advertisementId: Int) = BasePaging.createFlowViaPager {
-		remoteDataSource.getReviewsForAdv(advertisementId, 1).mapImmediate { maBaseResponse ->
+		remoteDataSource.getReviewsForAdv(advertisementId, it).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { response ->
+				response?.reviews
+			}
+		}
+	}
+
+	fun getReviewsForStorePaging(storeId: Int) = BasePaging.createFlowViaPager {
+		remoteDataSource.getReviewsForStore(storeId, it).mapImmediate { maBaseResponse ->
 			maBaseResponse.map { response ->
 				response?.reviews
 			}

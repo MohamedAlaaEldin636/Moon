@@ -235,14 +235,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 		}
 	}
 
-	val allCategories = response.map {
-		it?.storeCategories.orEmpty()
-	}
-	val allSubCategories = response.map { response ->
-		response?.storeCategories.orEmpty().flatMap {
-			it.subCategories.orEmpty()
-		}
-	}
+	val allCategories = MutableLiveData<List<ItemCategory>?>(null)
+	val allSubCategories = MutableLiveData<List<ItemSubCategory>?>(null)
 	val selectedCategory = MutableLiveData<ItemCategory?>()
 	val toBeShownSubCategories = selectedCategory.map {
 		selectedCategory.value?.subCategories ?: allSubCategories.value.orEmpty()
@@ -712,10 +706,11 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 		fragment.findNavController().navigateDeepLinkWithOptions(
 			"fragment-dest",
-			"grand.app.moon.dest.adv.clients.reviews",
+			"grand.app.moon.dest.adv.clients.reviews.with.option",
 			paths = arrayOf(
 				response.value?.id.orZero().toString(),
-				true.toString() // useRating
+				true.toString(), // useRating
+				false.toString(),
 			)
 		)
 	}
@@ -741,7 +736,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 	
 	fun showWorkingHours(view: View) {
-		// todo ... launch dialog fragment isa.
+		WorkingHoursDialogFragment.launch(
+			view.findNavController(),
+			response.value?.workingHours.orEmpty()
+		)
 	}
 
 	fun reportStore(view: View) {

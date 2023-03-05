@@ -162,6 +162,14 @@ interface ShopServices {
 		@FieldMap map: Map<String, String>,
 	): BaseResponse<Any?>
 
+	@FormUrlEncoded
+	@POST("v1/review")
+	suspend fun addReviewForStore(
+		@Field("store_id") storeId: Int,
+		@Field("review") review: String,
+		@FieldMap map: Map<String, String>,
+	): BaseResponse<Any?>
+
 	@GET("v1/statistics/show")
 	suspend fun getMyAdvStats(
 		@Query("advertisement_id") advId: Int,
@@ -183,6 +191,12 @@ interface ShopServices {
 		@Query("advertisement_id") advertisementId: Int,
 		@Query("page") page: Int,
 	): MABaseResponse<ResponseReviewsWithStats>
+
+	/*@GET("v1/reviews")
+	suspend fun getReviewsForStore(
+		@Query("store_id") storeId: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<ResponseReviewsWithStats>*/
 
 	@GET("v1/reviews")
 	suspend fun getReviewsForStore(

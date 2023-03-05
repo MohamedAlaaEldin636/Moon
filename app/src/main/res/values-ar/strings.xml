@@ -524,4 +524,6 @@
   <string name="facebook_7989">فيس بوك</string>
   <string name="copy_link">نسخ الرابط</string>
   <string name="explore_890">الإكسبلور</string>
+  <string name="go_back_768">الرجوع</string>
+  <string name="from_var_am_to_var_pm">من %1$s صباحا الي %2$s مساءً</string>
 </resources>

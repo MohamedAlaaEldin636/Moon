@@ -17,6 +17,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentOtherStoreDetailsBinding
+import grand.app.moon.domain.categories.entity.ItemCategory
+import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
@@ -85,6 +87,19 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 
 			viewModel.adapterExplores.submitList(response.explores.orEmpty())
 
+			val storeCategories = listOf(ItemCategory(null, getString(R.string.all))).plus(
+				response.storeCategories.orEmpty()
+			)
+			viewModel.allCategories.value = storeCategories
+			viewModel.adapterCategories.submitList(storeCategories)
+			val storeSubCategories = listOf(ItemSubCategory(null, getString(R.string.all))).plus(
+				response.storeCategories.orEmpty().flatMap {
+					it.subCategories.orEmpty()
+				}
+			)
+			viewModel.allSubCategories.value = storeSubCategories
+			viewModel.adapterSubCategories.submitList(storeSubCategories)
+
 			viewModel.adapterAds.submitList(response.advertisements.orEmpty())
 
 			lifecycleScope.launch {
@@ -136,6 +151,18 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 			onGridLayoutSpanSizeLookup = {
 				if (viewModel.layoutIsTwoColNotOneCol.value == true) 1 else 2
 			}
+		)
+
+		binding.recyclerViewStoreCategories.setupWithRVItemCommonListUsage(
+			viewModel.adapterCategories,
+			true,
+			1
+		)
+
+		binding.recyclerViewStoreSubCategories.setupWithRVItemCommonListUsage(
+			viewModel.adapterSubCategories,
+			true,
+			1
 		)
 
 		viewModel.layoutIsTwoColNotOneCol.distinctUntilChanged().ignoreFirstTimeChanged().observe(viewLifecycleOwner) {

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.home.WorkingHoursDialogFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.home.viewModels.WorkingHoursDialogViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:background="@color/grey"
+
+    android:onClick="@{v -> viewModel.goBack(v)}">
+
+    <View
+      android:id="@+id/backgroundView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:onClick="@{() -> viewModel.doNothing()}"
+
+      android:background="@drawable/dr_top_20"
+
+      app:layout_constraintTop_toTopOf="@id/helperView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/labelTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="13dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+
+      style="@style/TextTajawalBold14"
+      android:textSize="18sp"
+      android:textDirection="locale"
+      android:gravity="center"
+
+      android:text="@string/daily_working_hours"
+
+      app:layout_constraintVertical_chainStyle="packed"
+
+      app:layout_constraintVertical_bias="1"
+
+      app:layout_constraintBottom_toTopOf="@id/recyclerView"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/buttonTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginBottom="16dp"
+      android:layout_marginStart="24dp"
+      android:layout_marginEnd="24dp"
+
+      android:padding="17dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textColor="@color/white"
+      android:textDirection="locale"
+      android:gravity="center"
+      android:text="@string/go_back_768"
+
+      android:background="@drawable/dr_rect_5"
+      android:backgroundTint="@color/colorPrimary"
+
+      android:onClick="@{v -> viewModel.goBack(v)}"
+
+      app:layout_constraintTop_toBottomOf="@id/recyclerView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!--16.5 16 16 16-->
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      app:layout_constraintHeight_default="wrap"
+
+      android:scrollbars="none"
+      tools:itemCount="3"
+      tools:spanCount="1"
+      tools:orientation="vertical"
+      tools:listitem="@layout/item_store_details_working_hours"
+      tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+      android:paddingTop="19.5dp"
+      android:paddingBottom="20dp"
+      android:clipToPadding="false"
+
+      app:layout_constraintTop_toBottomOf="@id/labelTextView"
+      app:layout_constraintBottom_toTopOf="@id/buttonTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+      android:id="@+id/helperView"
+
+      android:layout_width="1dp"
+      android:layout_height="44dp"
+
+      app:layout_constraintBottom_toTopOf="@id/labelTextView"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

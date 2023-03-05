@@ -47,7 +47,11 @@ class AdvClientsReviewsViewModel @Inject constructor(
 		user.id
 	}
 
-	val reviews = repoShop.getReviewsForAdvPaging(args.advId)
+	val reviews = if (args.forAdNotStore) {
+		repoShop.getReviewsForAdvPaging(args.advId)
+	}else {
+		repoShop.getReviewsForStorePaging(args.advId)
+	}
 
 	val adapter = RVPagingItemCommonListUsage<ItemReviewInClientsReviewsInAdvDetailsBinding, ResponseClientReviews>(
 		R.layout.item_review_in_clients_reviews_in_adv_details,
@@ -70,7 +74,7 @@ class AdvClientsReviewsViewModel @Inject constructor(
 		fragment.findNavController().navigateDeepLinkWithOptions(
 			"fragment-dest",
 			"grand.app.moon.dest.rate.in.adv.dialog",
-			paths = arrayOf(args.advId.toString(), args.useRating.toString())
+			paths = arrayOf(args.advId.toString(), args.useRating.toString(), args.forAdNotStore.toString())
 		)
 	}
 
