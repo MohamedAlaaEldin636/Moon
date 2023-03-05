@@ -237,11 +237,16 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 	val allCategories = MutableLiveData<List<ItemCategory>?>(null)
 	val allSubCategories = MutableLiveData<List<ItemSubCategory>?>(null)
-	val selectedCategory = MutableLiveData<ItemCategory?>()
-	val toBeShownSubCategories = selectedCategory.map {
-		selectedCategory.value?.subCategories ?: allSubCategories.value.orEmpty()
+	private val selectedCategory = MutableLiveData<ItemCategory?>()
+	val toBeShownSubCategories = switchMapMultiple2(allCategories, allSubCategories, selectedCategory) {
+		val allSubCategories = allSubCategories.value.orEmpty()
+		listOf(ItemSubCategory(null, getString(R.string.all))).plus(
+			selectedCategory.value?.let { item ->
+				allCategories.value.orEmpty().firstOrNull { item.id == it.id }?.subCategories.orEmpty()
+			} ?: allSubCategories
+		)
 	}
-	val selectedSubCategory = MutableLiveData<ItemSubCategory?>()
+	private val selectedSubCategory = MutableLiveData<ItemSubCategory?>()
 	val filter = MutableLiveData(FilterAllFragment.Filter())
 	val searchQuery = MutableLiveData("")
 	val toBeShownAds = switchMapMultiple2(response, selectedCategory, selectedSubCategory, filter, searchQuery) {
@@ -260,9 +265,13 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 		filter.value?.also { filter ->
 			// todo
+			// 3 stars fema fo2 + sub_category + brand_id
+
+			filter.categoryId.ifNotNull { categoryId ->
+				ads = ads.filter { it.category?.id == categoryId }
+			}
 
 			/*
-			val search: String? = null,
 		val categoryId: Int? = null,
 		val subCategoryId: Int? = null,
 		val brandId: Int? = null,
@@ -532,6 +541,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 			if (selectedCategory.value?.id != newSelection?.id) {
 				selectedCategory.value = newSelection
 				selectedSubCategory.value = null
+
+				adapterSubCategories.notifyDataSetChanged()
 
 				adapter.notifyItemsChanged(oldSelectionPosition, position)
 			}

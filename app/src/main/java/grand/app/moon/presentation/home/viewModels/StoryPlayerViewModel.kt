@@ -17,6 +17,7 @@ import com.google.android.exoplayer2.upstream.TimeToFirstByteEstimator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
+import grand.app.moon.core.extenstions.launchCometChat
 import grand.app.moon.core.extenstions.openChatStore
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemSegmentBinding
@@ -232,13 +233,27 @@ class StoryPlayerViewModel @Inject constructor(
 		val context = view.context ?: return
 
 		if (context.isLoginWithOpenAuth()) {
-			currentStoreWithStories.value?.also {
-				context.openChatStore(view, it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
+			if (currentStoreWithStories.value?.isSouqMoonStory == true) {
+				val it = currentStoreWithStories.value?.chatAgent
+
+				context.launchCometChat {
+					uid = it?.uid
+					name = it?.name
+					avatar = it?.avatar
+					status = it?.status
+					role = it?.role
+				}
+			}else {
+				currentStoreWithStories.value?.also {
+					context.openChatStore(view, it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
+				}
 			}
 		}
 	}
 
 	fun goToStore(view: View) {
+		if (currentStoreWithStories.value?.isSouqMoonStory == true) return
+
 		if (currentStoreWithStories.value?.id.orZero() == userLocalUseCase().id) {
 			// My Store
 			view.findNavController().navigateDeepLinkWithOptions(
@@ -252,13 +267,6 @@ class StoryPlayerViewModel @Inject constructor(
 				view.findNavController(),
 				currentStoreWithStories.value?.id.orZero()
 			)
-			/*view.findNavController().navigate(
-				R.id.nav_store,
-				bundleOf(
-					"id" to currentStoreWithStories.value?.id.orZero(),
-					"type" to 3
-				), Constants.NAVIGATION_OPTIONS
-			)*/
 		}
 	}
 

@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.home.models
 
 import com.google.gson.annotations.SerializedName
+import grand.app.moon.domain.categories.entity.ItemCategory
 
 data class ItemHomeRV(
 	val type: Type,
@@ -64,6 +65,9 @@ data class ItemAdvertisementInResponseHome(
 
 	@SerializedName("store_category_id") var storeCategoryId: Int?,
 	@SerializedName("store_sub_category_id") var storeSubCategoryId: Int?,
+	@SerializedName("sub_category_id") var subCategoryId: Int?,
+	@SerializedName("brand_id") var brandId: Int?,
+	var category: ItemCategory?,
 ) : ItemInResponseHome {
 
 	val isNegotiable get() = negotiable == 1

@@ -43,6 +43,7 @@ data class ResponseStory(
 	@SerializedName("highlight_cover") var highlightCover: String? = null,
 	//@SerializedName("social_media_links") var socialMediaLinks: String?,
 	//@SerializedName("working_hours") var workingHours: String?,
+	@SerializedName("chat_agent") var chatAgent: ResponseChatAgent? = null,
 ) {
 
 	val isSeen get() = stories.orEmpty().all { it.isSeen.orFalse() }

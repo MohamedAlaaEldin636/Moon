@@ -92,13 +92,13 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 			)
 			viewModel.allCategories.value = storeCategories
 			viewModel.adapterCategories.submitList(storeCategories)
-			val storeSubCategories = listOf(ItemSubCategory(null, getString(R.string.all))).plus(
-				response.storeCategories.orEmpty().flatMap {
-					it.subCategories.orEmpty()
-				}
-			)
+			val storeSubCategories = response.storeCategories.orEmpty().flatMap {
+				it.subCategories.orEmpty()
+			}
 			viewModel.allSubCategories.value = storeSubCategories
-			viewModel.adapterSubCategories.submitList(storeSubCategories)
+			viewModel.adapterSubCategories.submitList(
+				listOf(ItemSubCategory(name = getString(R.string.all))) + storeSubCategories
+			)
 
 			viewModel.adapterAds.submitList(response.advertisements.orEmpty())
 
@@ -167,6 +167,10 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 
 		viewModel.layoutIsTwoColNotOneCol.distinctUntilChanged().ignoreFirstTimeChanged().observe(viewLifecycleOwner) {
 			binding.recyclerViewAds.layoutManager?.requestLayout()
+		}
+
+		viewModel.toBeShownSubCategories.observe(viewLifecycleOwner) {
+			viewModel.adapterSubCategories.submitList(it.orEmpty())
 		}
 
 		viewModel.toBeShownAds.observe(viewLifecycleOwner) {
