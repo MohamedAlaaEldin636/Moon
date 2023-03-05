@@ -68,14 +68,33 @@ class ReportingViewModel @Inject constructor(
 
 		fragment.handleRetryAbleActionOrGoBackNullable(
 			action = {
-				repoShop.reportAdv(
-					args.id,
-					selectedId.orZero()
-				)
+				when (args.type) {
+					ReportingDialogFragment.Type.REPORT_ADS -> {
+						repoShop.reportAdv(
+							args.id,
+							selectedId.orZero()
+						)
+					}
+					ReportingDialogFragment.Type.REPORT_STORES -> {
+						repoShop.reportStore(
+							args.id,
+							selectedId.orZero()
+						)
+					}
+					ReportingDialogFragment.Type.BLOCK_STORES -> {
+						repoShop.blockStore(
+							args.id,
+							selectedId.orZero()
+						)
+					}
+				}
 			}
 		) {
 			fragment.showMessage(fragment.getString(R.string.done_successfully))
 
+			if (args.type == ReportingDialogFragment.Type.BLOCK_STORES) {
+				fragment.setFragmentResultUsingJson(ReportingDialogFragment.Type.BLOCK_STORES.name, args.id)
+			}
 			fragment.findNavController().navigateUp()
 		}
 	}

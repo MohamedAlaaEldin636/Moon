@@ -404,4 +404,18 @@ interface ShopServices {
 		@Path("id") id: Int,
 	): MABaseResponse<MABasePaging<ResponseStoreViews>>
 
+	@GET("v1/settings?type=7")
+	suspend fun getStoreReportingReasons(): BaseResponse<List<ResponseReason>?>
+
+	@GET("v1/settings?type=8")
+	suspend fun getStoreBlockingReasons(): BaseResponse<List<ResponseReason>?>
+
+	@FormUrlEncoded
+	@POST("v1/store/report_block")
+	suspend fun reportOrBlockStore(
+		@Field("store_id") storeId: Int,
+		@Field("reason_id") reasonId: Int,
+		@Field("type") type: Int,
+	): BaseResponse<Any?>
+
 }

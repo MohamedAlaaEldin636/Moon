@@ -618,6 +618,14 @@ class RepoShop @Inject constructor(
 		}
 	}
 
+	suspend fun getStoreReportingReasons() = remoteDataSource.getStoreReportingReasons()
+
+	suspend fun getStoreBlockingReasons() = remoteDataSource.getStoreBlockingReasons()
+
+	suspend fun reportStore(storeId: Int, reasonId: Int) = remoteDataSource.reportStore(storeId, reasonId)
+
+	suspend fun blockStore(storeId: Int, reasonId: Int) = remoteDataSource.blockStore(storeId, reasonId)
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

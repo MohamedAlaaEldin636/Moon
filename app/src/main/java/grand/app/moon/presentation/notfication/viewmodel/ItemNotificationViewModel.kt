@@ -6,6 +6,7 @@ import androidx.fragment.app.findFragment
 import androidx.navigation.findNavController
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLogin
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.settings.models.NotificationData
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.navToMyAdvDetails
@@ -37,6 +38,7 @@ class ItemNotificationViewModel constructor(val model: NotificationData) : BaseV
 
 	  MyLogger.e("aa -> ch 6")
     if(model.notify_type == 2) {
+			// todo recheck it later isa.
 	    v.findNavController().navigate(
 		    R.id.nav_ads, bundleOf(
 			    "id" to model.action_by_id,

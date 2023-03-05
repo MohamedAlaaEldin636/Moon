@@ -731,8 +731,13 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun goToAdvertisements(view: View) {
-		// R.id.labelAdsTextView
-		//TODO("AMA TEKHALAS 34AN TE3MEL HNA GET FRAGMENT THEM SCROLL TO AND CHANGE SELECTION OF ADS OR EXPLORES TO ADS AS WELL ISA.")
+		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
+
+		fragment.binding.nestedScrollView.smoothScrollBy(0, fragment.binding.labelAdsTextView.top)
+
+		if (showAdsNotExplore.value != true) {
+			showAdsNotExplore.value = true
+		}
 	}
 	
 	fun showWorkingHours(view: View) {
@@ -740,16 +745,29 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun reportStore(view: View) {
-		// todo
-		/*ReportingDialogFragment.launch(
+		ReportingDialogFragment.launch(
 			view.findNavController(),
-			ReportingDialogFragment.Type.REPORT_ADS,
+			ReportingDialogFragment.Type.REPORT_STORES,
 			response.value?.id.orZero()
-		)*/
+		)
 	}
 
 	fun blockStore(view: View) {
-		// todo ... launch dialog fragment isa.
+		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
+
+		fragment.setFragmentResultListenerUsingJson<Int>(ReportingDialogFragment.Type.BLOCK_STORES.name) {
+			if (it == response.value?.id) {
+				// todo tell previous screens as well which is kinda of a plumber isa.
+				// Easily check all not on view created fetch data ex. home screen ads & stores isa.
+				fragment.findNavController().navigateUp()
+			}
+		}
+
+		ReportingDialogFragment.launch(
+			view.findNavController(),
+			ReportingDialogFragment.Type.BLOCK_STORES,
+			response.value?.id.orZero()
+		)
 	}
 
 	fun showAds() {

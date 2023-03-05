@@ -38,7 +38,11 @@ class ReportingDialogFragment : MADialogFragment<DialogFragmentReportingBinding>
 
 		handleRetryAbleActionOrGoBack(
 			action = {
-				viewModel.repoShop.getAdvReportingReason()
+				when (viewModel.args.type) {
+					Type.REPORT_ADS -> viewModel.repoShop.getAdvReportingReason()
+					Type.REPORT_STORES -> viewModel.repoShop.getStoreReportingReasons()
+					Type.BLOCK_STORES -> viewModel.repoShop.getStoreBlockingReasons()
+				}
 			}
 		) { response ->
 			viewModel.adapter.submitList(response)
@@ -71,7 +75,7 @@ class ReportingDialogFragment : MADialogFragment<DialogFragmentReportingBinding>
 	}
 
 	enum class Type {
-		REPORT_ADS
+		REPORT_ADS, REPORT_STORES, BLOCK_STORES
 	}
 
 }

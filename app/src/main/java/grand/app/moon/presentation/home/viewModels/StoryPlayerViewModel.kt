@@ -247,13 +247,18 @@ class StoryPlayerViewModel @Inject constructor(
 			)
 		}else {
 			// Other stores
-			view.findNavController().navigate(
+			userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+				view.context ?: return,
+				view.findNavController(),
+				currentStoreWithStories.value?.id.orZero()
+			)
+			/*view.findNavController().navigate(
 				R.id.nav_store,
 				bundleOf(
 					"id" to currentStoreWithStories.value?.id.orZero(),
 					"type" to 3
 				), Constants.NAVIGATION_OPTIONS
-			)
+			)*/
 		}
 	}
 

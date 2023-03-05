@@ -769,4 +769,20 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getStoreFollowers(id)
 	}
 
+	suspend fun getStoreReportingReasons() = safeApiCall {
+		apiService.getStoreReportingReasons()
+	}
+
+	suspend fun getStoreBlockingReasons() = safeApiCall {
+		apiService.getStoreBlockingReasons()
+	}
+
+	suspend fun reportStore(storeId: Int, reasonId: Int) = safeApiCall {
+		apiService.reportOrBlockStore(storeId, reasonId, 1)
+	}
+
+	suspend fun blockStore(storeId: Int, reasonId: Int) = safeApiCall {
+		apiService.reportOrBlockStore(storeId, reasonId, 2)
+	}
+
 }
