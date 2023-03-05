@@ -785,4 +785,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.reportOrBlockStore(storeId, reasonId, 2)
 	}
 
+	suspend fun getChatAgent() = safeApiCall {
+		apiService.getChatAgent()
+	}
+
 }

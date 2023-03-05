@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLogin
+import grand.app.moon.core.extenstions.launchCometChat
 import grand.app.moon.core.extenstions.redirectIfNotLoggedIn
 import grand.app.moon.data.packages.RepositoryPackages
 import grand.app.moon.data.shop.RepoShop
@@ -112,8 +113,19 @@ class MoreViewModel @Inject constructor(
 					)
 				}
 				R.drawable.ic_chat_with_app_managers -> {
-					// will be programmed after comet chat starts to work properly so later isa.
-					fragment.showMessage("غير مفعلة حالياً")
+					fragment.handleRetryAbleActionCancellable(
+						action = {
+							repoShop.getChatAgent()
+						}
+					) {
+						fragment.context?.launchCometChat {
+							uid = it.uid
+							name = it.name
+							avatar = it.avatar
+							status = it.status
+							role = it.role
+						}
+					}
 				}
 				R.drawable.ic_contact_settings -> {
 					navController.navigateDeepLinkWithOptions(

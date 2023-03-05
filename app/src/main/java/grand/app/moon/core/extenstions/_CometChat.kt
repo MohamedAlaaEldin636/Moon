@@ -50,6 +50,12 @@ fun Context.launchCometChat(uid: Int, name: String, image: String?) {
 	startChatPage2(user)
 }
 
+fun Context.launchCometChat(configurations: User.() -> Unit) {
+	val user = User()
+	user.configurations()
+	startChatPage2(user)
+}
+
 fun Context.openChatStore(v: View, uid: Int, name: String, image: String?) {
   Log.d(TAG, "startChatConversation $image")
   v.disable()

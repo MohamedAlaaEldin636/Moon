@@ -626,6 +626,8 @@ class RepoShop @Inject constructor(
 
 	suspend fun blockStore(storeId: Int, reasonId: Int) = remoteDataSource.blockStore(storeId, reasonId)
 
+	suspend fun getChatAgent() = remoteDataSource.getChatAgent()
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

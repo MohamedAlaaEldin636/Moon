@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -136,6 +137,10 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 				if (viewModel.layoutIsTwoColNotOneCol.value == true) 1 else 2
 			}
 		)
+
+		viewModel.layoutIsTwoColNotOneCol.distinctUntilChanged().ignoreFirstTimeChanged().observe(viewLifecycleOwner) {
+			binding.recyclerViewAds.layoutManager?.requestLayout()
+		}
 
 		viewModel.toBeShownAds.observe(viewLifecycleOwner) {
 			viewModel.adapterAds.submitList(it)

@@ -418,4 +418,7 @@ interface ShopServices {
 		@Field("type") type: Int,
 	): BaseResponse<Any?>
 
+	@GET("v1/chat")
+	suspend fun getChatAgent(): BaseResponse<ResponseChatAgent?>
+
 }
