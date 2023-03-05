@@ -84,7 +84,24 @@ fun ItemStoreInHomeExplore?.toResponseStory(): ResponseStory {
 		countryCode = this?.country?.countryCode
 	)
 }
+fun ResponseStoreDetails?.toResponseStory(): ResponseStory {
+	return ResponseStory(
+		stories = this?.stories,
+		phone = this?.phone,
+		image = this?.image,
+		name = this?.name,
+		createdAt = this?.createdAt,
+		nickname = this?.nickname,
+		id = this?.id,
+		countryCode = this?.country?.countryCode
+	)
+}
 
+fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
+	context: Context,
+	navController: NavController,
+	item: ResponseStoreDetails
+) = goToStoreStoriesOrDetailsCheckIfMyStore(context, navController, item.id, item.toResponseStory())
 fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 	context: Context,
 	navController: NavController,

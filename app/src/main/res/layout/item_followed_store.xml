@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="@drawable/dr_rect_10"
+
+    android:layout_margin="8dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/imageView"
+
+      android:layout_width="108dp"
+      android:layout_height="108dp"
+
+      android:scaleType="centerCrop"
+
+      app:shapeAppearance="@style/ShapeRound10"
+      app:shapeAppearanceOverlay="@style/ShapeRound10"
+
+      android:layout_margin="5dp"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <View
+      android:layout_width="0.5dp"
+      android:layout_height="0dp"
+
+      android:background="#707070"
+
+      android:layout_marginStart="4dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toEndOf="@id/imageView"/>
+
+    <TextView
+      android:id="@+id/nameTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalBold14"
+      android:textColor="@color/colorPrimary"
+      android:textDirection="locale"
+
+      android:layout_marginStart="26dp"
+      android:layout_marginEnd="10dp"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="5dp"
+
+      android:singleLine="true"
+      android:ellipsize="marquee"
+      android:marqueeRepeatLimit ="marquee_forever"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:scrollHorizontally="true"
+      textView_setSelectedBA="@{true}"
+
+      app:layout_constraintStart_toEndOf="@id/imageView"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toTopOf="@id/ratingBar"/>
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+      android:id="@+id/ratingBar"
+
+      android:layout_marginStart="26dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="5dp"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:numStars="5"
+      android:progress="0"
+      tools:progress="60"
+      android:max="100"
+
+      style="@style/Widget.AppCompat.RatingBar.Small"
+
+      android:progressTint="#FFBC23"
+      android:progressBackgroundTint="#DAD9E2"
+
+      app:layout_constraintTop_toBottomOf="@id/nameTextView"
+      app:layout_constraintStart_toEndOf="@id/imageView"
+      app:layout_constraintBottom_toTopOf="@id/viewsTextView"/>
+    <TextView
+      android:id="@+id/ratingTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="10sp"
+      android:textColor="#B3000000"
+
+      android:layout_marginStart="4.43dp"
+
+      tools:text="( 4.5 )"
+
+      app:layout_constraintStart_toEndOf="@id/ratingBar"
+      app:layout_constraintTop_toTopOf="@id/ratingBar"
+      app:layout_constraintBottom_toBottomOf="@id/ratingBar"/>
+
+    <TextView
+      android:id="@+id/viewsTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="5dp"
+      android:layout_marginStart="26dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="12sp"
+      android:textColor="#C1C1C1"
+      tools:text="2345"
+      android:includeFontPadding="false"
+      android:gravity="center"
+
+      android:drawablePadding="5dp"
+      app:drawableStartCompat="@drawable/views_store_in_home_2"
+
+      app:layout_constraintTop_toBottomOf="@id/ratingBar"
+      app:layout_constraintBottom_toTopOf="@id/buttonConstraintLayout"
+      app:layout_constraintStart_toEndOf="@id/imageView"/>
+    <TextView
+      android:id="@+id/adsTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_marginStart="16dp"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="12sp"
+      android:textColor="#C1C1C1"
+      tools:text="اعلان 45"
+      android:includeFontPadding="false"
+      android:gravity="center"
+
+      android:drawablePadding="5dp"
+      app:drawableStartCompat="@drawable/ads_store_in_home_2"
+
+      app:layout_constraintTop_toTopOf="@id/viewsTextView"
+      app:layout_constraintStart_toEndOf="@id/viewsTextView"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/buttonConstraintLayout"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginStart="26dp"
+      android:layout_marginEnd="10dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="10dp"
+
+      app:layout_constraintStart_toEndOf="@id/imageView"
+      app:layout_constraintTop_toBottomOf="@id/viewsTextView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+
+      android:padding="12dp"
+      android:clipToPadding="false"
+
+      android:background="@drawable/dr_rect_5"
+      android:backgroundTint="@color/colorPrimary">
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintWidth_default="wrap"
+
+        style="@style/TextTajawalBold14"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:textDirection="locale"
+        android:gravity="center"
+        android:text="@string/cancel_follow_3892733"
+
+        android:drawablePadding="10dp"
+        app:drawableStartCompat="@drawable/followed_store_un_follow"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

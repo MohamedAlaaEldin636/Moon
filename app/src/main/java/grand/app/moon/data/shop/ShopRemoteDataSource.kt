@@ -804,4 +804,14 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getChatAgent()
 	}
 
+	suspend fun getFollowedStores(
+		categoryId: Int?,
+		page: Int,
+	) = safeApiCall2 {
+		val map = mutableMapOf<String, String>()
+		categoryId.ifNotNull { map["category_id"] = it.toString() }
+
+		apiService.getFollowedStores(page, map)
+	}
+
 }

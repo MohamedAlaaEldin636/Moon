@@ -435,4 +435,10 @@ interface ShopServices {
 	@GET("v1/chat")
 	suspend fun getChatAgent(): BaseResponse<ResponseChatAgent?>
 
+	@GET("v1/profile/followings")
+	suspend fun getFollowedStores(
+		@Query("page") page: Int,
+		@QueryMap map: Map<String, String>,
+	): MABaseResponse<MABasePaging<ResponseStoreDetails>>
+
 }

@@ -644,6 +644,10 @@ class RepoShop @Inject constructor(
 
 	suspend fun getChatAgent() = remoteDataSource.getChatAgent()
 
+	fun getFollowedStores(categoryId: Int?) = BasePaging.createFlowViaPager {
+		remoteDataSource.getFollowedStores(categoryId, it)
+	}
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

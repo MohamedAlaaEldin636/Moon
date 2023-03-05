@@ -4,20 +4,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.*
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ItemHomeRV
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
@@ -226,9 +223,6 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 						"fragment-dest",
 						"grand.app.moon.dest.all.categories",
 					)
-					/*navController.navigateSafely(
-						Home2FragmentDirections.actionDestHomeToDepartmentListFragment()
-					)*/
 				}
 				ItemHomeRV.Type.MOST_RATED_STORIES -> {
 					AllStoresFragment.launch(
@@ -238,10 +232,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 					)
 				}
 				ItemHomeRV.Type.FOLLOWING_STORIES -> {
-					navController.navigateDeepLinkWithOptions(
-						"store",
-						"grand.app.moon.store.followed"
-					)
+					FollowedStoresFragment.launch(navController)
 				}
 				ItemHomeRV.Type.SUGGESTED_ADS -> {
 					AllAdsFragment.launch(

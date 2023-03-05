@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.home.FollowedStoresFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.home.viewModels.FollowedStoresViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+      android:id="@+id/toolbarCurve"
+
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      layout="@layout/item_toolbar_curve"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/showAllTextView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="12sp"
+      android:textColorHint="@color/colorPrimary"
+
+      android:layout_marginTop="20.4dp"
+      android:layout_marginEnd="16dp"
+
+      android:drawablePadding="6.4dp"
+      app:drawableEndCompat="@drawable/all_stores_show_all"
+
+      android:text="@string/show_all"
+
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
+
+      android:onClick="@{v -> viewModel.showAllCategories(v)}"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerViewCategories"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="2dp"
+
+      android:padding="4dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="none"
+      tools:orientation="horizontal"
+      tools:spanCount="1"
+      tools:itemCount="6"
+      tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      tools:listitem="@layout/item_home_rv_category"
+
+      app:layout_constraintTop_toBottomOf="@id/showAllTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerViewStores"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:layout_marginTop="4dp"
+
+      android:padding="8dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="none"
+      tools:orientation="vertical"
+      tools:spanCount="1"
+      tools:itemCount="6"
+      tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      tools:listitem="@layout/item_followed_store"
+
+      app:layout_constraintTop_toBottomOf="@id/recyclerViewCategories"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

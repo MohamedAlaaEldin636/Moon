@@ -1386,5 +1386,15 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.dialog.fragment.working.hours/{jsonOfWorkingHoursList}" />
   </dialog>
+  <fragment
+    android:id="@+id/dest_followed_stores"
+    android:name="grand.app.moon.presentation.home.FollowedStoresFragment"
+    android:label="@string/stores_had_been_followed"
+    tools:layout="@layout/fragment_followed_stores">
+    <deepLink
+      android:id="@+id/deep_link_dest_followed_stores"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.followed.stores" />
+  </fragment>
 
 </navigation>
