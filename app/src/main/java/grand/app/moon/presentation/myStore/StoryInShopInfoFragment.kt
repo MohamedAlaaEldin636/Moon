@@ -28,7 +28,7 @@ class StoryInShopInfoFragment : BaseFragment<FragmentStoryInShopInfoBinding>() {
 
 	private val viewModel by viewModels<StoryInShopInfoViewModel>()
 
-	val retryAbleFlow by lazy {
+	private val retryAbleFlow by lazy {
 		RetryAbleFlow(
 			this,
 			getFlow = {
@@ -123,6 +123,10 @@ class StoryInShopInfoFragment : BaseFragment<FragmentStoryInShopInfoBinding>() {
 		return "${year.toString().minLengthZerosPrefix(4)}-" +
 			"${month.toString().minLengthZerosPrefix(2)}-" +
 			day.toString().minLengthZerosPrefix(2)
+	}
+
+	fun reFetchData() {
+		retryAbleFlow.retry()
 	}
 
 }

@@ -157,7 +157,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 
 						remainingExploreCount.value = remainingExploreCount.value.orZero().inc()
 
-						fragment.retryAbleFlow.retry()
+						fragment.reFetchData()
 					}
 				}
 			}
@@ -275,7 +275,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 	}
 
 	fun search(view: View) {
-		view.findFragmentOrNull<ExploreInShopInfoFragment>()?.retryAbleFlow?.retry()
+		view.findFragmentOrNull<ExploreInShopInfoFragment>()?.reFetchData()
 	}
 
 	fun goToAddExplore(view: View) {

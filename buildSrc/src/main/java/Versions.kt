@@ -7,7 +7,7 @@ object Versions {
   const val javaInject = "1"
 
   // Support
-  const val appcompat = "1.3.1"
+  const val appcompat = "1.6.1"
   const val coreKtx = "1.6.0"
   const val supportVersion = "1.0.0"
 

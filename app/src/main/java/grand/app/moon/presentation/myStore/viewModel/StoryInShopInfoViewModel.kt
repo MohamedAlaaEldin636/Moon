@@ -157,7 +157,7 @@ class StoryInShopInfoViewModel @Inject constructor(
 
 						remainingCount.value = remainingCount.value.orZero().inc()
 
-						fragment.retryAbleFlow.retry()
+						fragment.reFetchData()
 					}
 				}
 			}
@@ -288,7 +288,7 @@ class StoryInShopInfoViewModel @Inject constructor(
 	}
 
 	fun search(view: View) {
-		view.findFragmentOrNull<StoryInShopInfoFragment>()?.retryAbleFlow?.retry()
+		view.findFragmentOrNull<StoryInShopInfoFragment>()?.reFetchData()
 	}
 
 	fun goToAddStory(view: View) {
