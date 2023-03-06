@@ -37,6 +37,8 @@ android {
     multiDexEnabled = true
     testInstrumentationRunner = Config.AppConfig.testRunner
 
+	  resourceConfigurations.add("en")// += ["en", "ar"]
+	  resourceConfigurations.add("ar")// += ["en", "ar"]
   }
 
   buildTypes {

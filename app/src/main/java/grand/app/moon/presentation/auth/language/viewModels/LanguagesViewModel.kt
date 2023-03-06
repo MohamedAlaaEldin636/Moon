@@ -3,6 +3,8 @@ package grand.app.moon.presentation.auth.language.viewModels
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
@@ -166,8 +168,12 @@ class LanguagesViewModel @Inject constructor(
 
 		  //activity.setCurrentLocale(lang, autoRecreate)
 
+		  val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(lang)
+			// Call this on the main thread as it may require Activity.restart()
+		  AppCompatDelegate.setApplicationLocales(appLocale)
+
 		  if (activity is IntroActivity) {
-			  activity.recreate()
+			  //activity.recreate()
 		  }else {
 			  activity.openActivityAndClearStack(MASplash2Activity::class.java)
 		  }
