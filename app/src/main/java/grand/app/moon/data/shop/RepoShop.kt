@@ -634,6 +634,115 @@ class RepoShop @Inject constructor(
 		}
 	}
 
+	fun getStoryViews(id: Int) = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getStoryViews(id, page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+						it.count,
+						it.createdAt,
+						it.email,
+						it.phone,
+						it.countryCode
+					)
+				}
+			}
+		}
+	}
+	fun getStoryLikes(id: Int) = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getStoryLikes(id, page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+						it.count,
+						it.createdAt,
+						it.email,
+						it.phone,
+						it.countryCode
+					)
+				}
+			}
+		}
+	}
+	fun getStoryShares(id: Int) = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getStoryShares(id, page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+						it.count,
+						it.createdAt,
+						it.email,
+						it.phone,
+						it.countryCode
+					)
+				}
+			}
+		}
+	}
+	fun getExploreComments(id: Int) = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getExploreComments(id, page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+						it.count,
+						it.createdAt,
+						it.email,
+						it.phone,
+						it.countryCode
+					)
+				}
+			}
+		}
+	}
+	fun getExploreLikes(id: Int) = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getExploreLikes(id, page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+						it.count,
+						it.createdAt,
+						it.email,
+						it.phone,
+						it.countryCode
+					)
+				}
+			}
+		}
+	}
+	fun getExploreShares(id: Int) = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getExploreShares(id, page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+						it.count,
+						it.createdAt,
+						it.email,
+						it.phone,
+						it.countryCode
+					)
+				}
+			}
+		}
+	}
+
 	suspend fun getStoreReportingReasons() = remoteDataSource.getStoreReportingReasons()
 
 	suspend fun getStoreBlockingReasons() = remoteDataSource.getStoreBlockingReasons()

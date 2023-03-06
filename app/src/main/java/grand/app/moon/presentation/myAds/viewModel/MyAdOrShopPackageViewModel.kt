@@ -13,6 +13,7 @@ import grand.app.moon.domain.packages.ResponsePackage
 import grand.app.moon.extensions.app
 import grand.app.moon.extensions.navigateSafely
 import grand.app.moon.extensions.orZero
+import grand.app.moon.extensions.toIntIfNoFractionsOrThisFloat
 import grand.app.moon.presentation.myAds.MyAdOrShopPackageFragmentArgs
 import grand.app.moon.presentation.myAds.MyAdOrShopPackageFragmentDirections
 import javax.inject.Inject
@@ -41,7 +42,7 @@ class MyAdOrShopPackageViewModel @Inject constructor(
 	}
 
 	val price = response.map {
-		"${it?.price.orZero()} ${it?.country?.currency.orEmpty()}"
+		"${it?.price.orZero().toIntIfNoFractionsOrThisFloat()} ${it?.country?.currency.orEmpty()}"
 	}
 
 	val restDays = response.map {

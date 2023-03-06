@@ -97,7 +97,7 @@ class ExploreInShopInfoFragment : BaseFragment<FragmentExploreInShopInfoBinding>
 		retryAbleFlow.collectLatest()
 
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
-			viewModel.adapter.refresh()
+			retryAbleFlow.retry()
 		}
 
 		_binding?.lottieFrameLayout?.removeAllViews()

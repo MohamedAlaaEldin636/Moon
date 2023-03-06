@@ -306,6 +306,8 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 			override fun onClusterRendered(cluster: Cluster<MAClusterItem>, marker: Marker) {
 				marker.drawCluster(cluster)
 			}
+		}.also {
+			//it.minClusterSize = ; //todo in px same as the drawing isa. + in case of click on cluster and reached max zoom show list of stores isa.
 		}
 		viewModel.clusterManager?.setOnClusterItemClickListener { maClusterItem ->
 			viewModel.allDataList?.firstOrNull { it.id == maClusterItem?.id }?.also { mapData ->

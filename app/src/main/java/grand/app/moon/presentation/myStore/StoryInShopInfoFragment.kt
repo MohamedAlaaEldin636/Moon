@@ -100,7 +100,7 @@ class StoryInShopInfoFragment : BaseFragment<FragmentStoryInShopInfoBinding>() {
 		retryAbleFlow.collectLatest()
 
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
-			viewModel.adapter.refresh()
+			retryAbleFlow.retry()
 		}
 
 		_binding?.lottieFrameLayout?.removeAllViews()

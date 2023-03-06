@@ -12,6 +12,7 @@ import grand.app.moon.data.packages.RepositoryPackages
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemStoreFullDataBinding
 import grand.app.moon.domain.account.repository.AccountRepository
+import grand.app.moon.domain.account.use_case.LogOutUseCase
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.extensions.*
@@ -31,6 +32,7 @@ class MyAccount2ViewModel @Inject constructor(
 	val repoPackages: RepositoryPackages,
 	val accountRepository: AccountRepository,
 	val logInUseCase: LogInUseCase,
+	val logOutUseCase: LogOutUseCase
 ) : AndroidViewModel(application) {
 
 	val user = userLocalUseCase()
@@ -99,6 +101,7 @@ class MyAccount2ViewModel @Inject constructor(
 						}
 					) {
 						fragment.logout()
+						logOutUseCase()
 						fragment.openActivityAndClearStack(HomeActivity::class.java)
 					}
 				}
@@ -113,6 +116,7 @@ class MyAccount2ViewModel @Inject constructor(
 							}
 						) {
 							fragment.logout()
+							logOutUseCase()
 
 							dialog.dismiss()
 

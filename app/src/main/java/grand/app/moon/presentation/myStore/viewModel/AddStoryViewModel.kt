@@ -148,6 +148,8 @@ Intent intent = new Intent(activity, ActVideoTrimmer.class);
 
 			//addStoryImmediately(fragment, uri.createMultipartBodyPart(app, "file") ?: return)
 
+			tmpFileUri = fileUri
+
 			fragment.launcherTrimVideo3.launch(fileUri)
 			/*fragment.launchSafelyTrimVideo(
 				fileUri,
@@ -161,6 +163,8 @@ Intent intent = new Intent(activity, ActVideoTrimmer.class);
 			addStoryImmediately(fragment, fileUri.createMultipartBodyPart(app, "file") ?: return)
 		}
 	}
+
+	var tmpFileUri: Uri? = null
 
 	fun addStoryImmediately(fragment: AddStoryFragment, file: MultipartBody.Part?, makeHugeChanges: Boolean = false, onDone: () -> Unit = {}) {
 		if (false && makeHugeChanges) {

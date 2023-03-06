@@ -2,6 +2,7 @@ package grand.app.moon.presentation.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentSimpleUserListOfInteractionsBinding
 import grand.app.moon.extensions.navigateDeepLinkWithOptions
+import grand.app.moon.extensions.orStringNullIfNullOrEmpty
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
@@ -28,10 +30,10 @@ class SimpleUserListOfInteractionsFragment : BaseFragment<FragmentSimpleUserList
 				"fragment-dest",
 				"grand.app.moon.dest.simple.user.list.of.interactions",
 				paths = arrayOf(
-					screenTitle,
-					dataTitle,
+					screenTitle.orStringNullIfNullOrEmpty(),
+					dataTitle.orStringNullIfNullOrEmpty(),
 					type.toString(),
-					id.toStringOrEmpty()
+					id.toStringOrEmpty().orStringNullIfNullOrEmpty()
 				)
 			)
 		}
@@ -64,7 +66,13 @@ class SimpleUserListOfInteractionsFragment : BaseFragment<FragmentSimpleUserList
 	}
 
 	enum class Type {
-		EXPLORE_LIKES, STORE_VIEWS, STORE_FOLLOWERS
+		EXPLORE_LIKES, STORE_VIEWS, STORE_FOLLOWERS,
+		SHOP_INFO_STORY_LIKES,
+		SHOP_INFO_STORY_VIEWS,
+		SHOP_INFO_STORY_SHARES,
+		SHOP_INFO_EXPLORE_LIKES,
+		SHOP_INFO_EXPLORE_COMMENTS,
+		SHOP_INFO_EXPLORE_SHARES,
 	}
 
 	data class Item(
@@ -73,6 +81,9 @@ class SimpleUserListOfInteractionsFragment : BaseFragment<FragmentSimpleUserList
 		var image: String,
 		var count: Int? = null,
 		var createdAt: String? = null,
+		var email: String? = null,
+		var phone: String? = null,
+		var countryCode: String? = null,
 	)
 
 }

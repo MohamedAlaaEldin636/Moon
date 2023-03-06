@@ -7,6 +7,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.core.text.buildSpannedString
 import androidx.lifecycle.*
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -24,6 +25,7 @@ import grand.app.moon.domain.stats.toChartData
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
+import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.myStore.StoryInShopInfoFragment
 import grand.app.moon.presentation.myStore.StoryInShopInfoFragmentArgs
 import grand.app.moon.presentation.stats.models.ResponseGeneralStats
@@ -93,16 +95,43 @@ class StoryInShopInfoViewModel @Inject constructor(
 				)
 			}
 
-			binding.likeValueTextView.setOnClickListener {
-				General.TODO("Will be programmed in next sprint isa.")
+			binding.likeValueTextView.setOnClickListener { view ->
+				val item = (binding.constraintLayout.tag as? String)
+					.fromJsonInlinedOrNull<ItemStoryInShopInfo>() ?: return@setOnClickListener
+
+				SimpleUserListOfInteractionsFragment.launch(
+					view.findNavController(),
+					"الإعجابات",
+					"",
+					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_LIKES,
+					item.id.orZero()
+				)
 			}
 
-			binding.commentsValueTextView.setOnClickListener {
-				General.TODO("Will be programmed in next sprint isa.")
+			binding.commentsValueTextView.setOnClickListener { view ->
+				val item = (binding.constraintLayout.tag as? String)
+					.fromJsonInlinedOrNull<ItemStoryInShopInfo>() ?: return@setOnClickListener
+
+				SimpleUserListOfInteractionsFragment.launch(
+					view.findNavController(),
+					"المشاهدات",
+					"",
+					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_VIEWS,
+					item.id.orZero()
+				)
 			}
 
-			binding.sharesValueTextView.setOnClickListener {
-				General.TODO("Will be programmed in next sprint isa.")
+			binding.sharesValueTextView.setOnClickListener { view ->
+				val item = (binding.constraintLayout.tag as? String)
+					.fromJsonInlinedOrNull<ItemStoryInShopInfo>() ?: return@setOnClickListener
+
+				SimpleUserListOfInteractionsFragment.launch(
+					view.findNavController(),
+					"المشاركات",
+					"",
+					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_SHARES,
+					item.id.orZero()
+				)
 			}
 
 			binding.delView.setOnClickListener { view ->
@@ -128,7 +157,7 @@ class StoryInShopInfoViewModel @Inject constructor(
 
 						remainingCount.value = remainingCount.value.orZero().inc()
 
-						adapter.refresh()
+						fragment.retryAbleFlow.retry()
 					}
 				}
 			}

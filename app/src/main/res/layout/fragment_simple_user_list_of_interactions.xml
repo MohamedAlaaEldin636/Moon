@@ -30,6 +30,10 @@
       app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
+      android:id="@+id/dataTitleTextView"
+
+      android:visibility="@{viewModel.showDataTitle}"
+
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 

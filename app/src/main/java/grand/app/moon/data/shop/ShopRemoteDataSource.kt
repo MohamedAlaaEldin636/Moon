@@ -813,5 +813,12 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 		apiService.getFollowedStores(page, map)
 	}
+	
+	suspend fun getStoryViews(id: Int, page: Int) = safeApiCall2 { apiService.getStoryViews(id, page) }
+	suspend fun getStoryLikes(id: Int, page: Int) = safeApiCall2 { apiService.getStoryLikes(id, page) }
+	suspend fun getStoryShares(id: Int, page: Int) = safeApiCall2 { apiService.getStoryShares(id, page) }
+	suspend fun getExploreComments(id: Int, page: Int) = safeApiCall2 { apiService.getExploreComments(id, page) }
+	suspend fun getExploreLikes(id: Int, page: Int) = safeApiCall2 { apiService.getExploreLikes(id, page) }
+	suspend fun getExploreShares(id: Int, page: Int) = safeApiCall2 { apiService.getExploreShares(id, page) }
 
 }

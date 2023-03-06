@@ -441,4 +441,35 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>,
 	): MABaseResponse<MABasePaging<ResponseStoreDetails>>
 
+	@GET("v1/profile/stories/views/{id}")
+	suspend fun getStoryViews(
+		@Path("id") id: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
+	@GET("v1/profile/stories/likes/{id}")
+	suspend fun getStoryLikes(
+		@Path("id") id: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
+	@GET("v1/profile/stories/shares/{id}")
+	suspend fun getStoryShares(
+		@Path("id") id: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
+	@GET("v1/profile/explores/comments/{id}")
+	suspend fun getExploreComments(
+		@Path("id") id: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
+	@GET("v1/profile/explores/likes/{id}")
+	suspend fun getExploreLikes(
+		@Path("id") id: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
+	@GET("v1/profile/explores/shares/{id}")
+	suspend fun getExploreShares(
+		@Path("id") id: Int,
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
+
 }

@@ -4,15 +4,16 @@ import android.app.Application
 import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.toast
+import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.data.packages.RepositoryPackages
+import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemPackageInPackagesBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.packages.ResponsePackage
@@ -24,6 +25,8 @@ import grand.app.moon.presentation.myAds.MakeAdvOrStorePremiumFragment
 import grand.app.moon.presentation.myAds.MakeAdvOrStorePremiumFragmentArgs
 import grand.app.moon.presentation.myAds.MakeAdvOrStorePremiumFragmentDirections
 import grand.app.moon.presentation.myAds.MyAdsFragment
+import grand.app.moon.presentation.myAds.utils.ISessionDelegate
+import grand.app.moon.presentation.myAds.utils.startPayment
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,7 +34,9 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 	application: Application,
 	private val repoPackages: RepositoryPackages,
 	private val args: MakeAdvOrStorePremiumFragmentArgs,
-	private val userLocalUseCase: UserLocalUseCase
+	val userLocalUseCase: UserLocalUseCase,
+	val repoShop: RepoShop,
+	private val appPreferences: AppPreferences,
 ) : AndroidViewModel(application) {
 
 	private val isStore by lazy {
@@ -61,7 +66,7 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 			}else {
 				app.getString(R.string.renew_package)
 			}
-			else -> app.getString(R.string.promote_and_pay_var_var, selectedPackage.price.orZero(), selectedPackage.country?.currency.orEmpty())
+			else -> app.getString(R.string.promote_and_pay_var_var, selectedPackage.price.orZero().toIntIfNoFractionsOrThisFloat(), selectedPackage.country?.currency.orEmpty())
 		}
 	}
 
@@ -105,7 +110,6 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 			)
 		}else {
 			// Either wasn't subscribed OR renewing package
-			// TODO ( Payment ) for now we immediately success subscription but later it will only happen after payment success isa.
 			fragment.handleRetryAbleActionCancellableNullable(
 				action = {
 					if (adsNotStoresAreSelected.value == true) {
@@ -185,7 +189,7 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 				binding.innerConstraintLayout.tag = item.id
 
 				binding.priceTextView.adjustInsideRV(
-					"${item.price.orZero()} ${item.country?.currency.orEmpty()}",
+					"${item.price.orZero().toIntIfNoFractionsOrThisFloat()} ${item.country?.currency.orEmpty()}",
 					20f,
 					6f
 				)

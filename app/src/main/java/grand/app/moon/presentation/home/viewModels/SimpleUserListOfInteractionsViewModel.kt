@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemSimpleUserBinding
+import grand.app.moon.databinding.ItemUserInShopInfoStoriesOrExploresBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragmentArgs
@@ -23,20 +24,70 @@ class SimpleUserListOfInteractionsViewModel @Inject constructor(
 		SimpleUserListOfInteractionsFragment.Type.EXPLORE_LIKES -> repoShop.getSimpleUsersOfExploreLikes(args.exploreId)
 		SimpleUserListOfInteractionsFragment.Type.STORE_VIEWS -> repoShop.getStoreViews(args.exploreId)
 		SimpleUserListOfInteractionsFragment.Type.STORE_FOLLOWERS -> repoShop.getStoreFollowers(args.exploreId)
+		SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_LIKES -> repoShop.getStoryLikes(args.exploreId)
+		SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_VIEWS -> repoShop.getStoryViews(args.exploreId)
+		SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_SHARES -> repoShop.getStoryShares(args.exploreId)
+		SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_LIKES -> repoShop.getExploreLikes(args.exploreId)
+		SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_COMMENTS -> repoShop.getExploreComments(args.exploreId)
+		SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_SHARES -> repoShop.getExploreShares(args.exploreId)
 	}
 
-	val adapter = RVPagingItemCommonListUsage<ItemSimpleUserBinding, SimpleUserListOfInteractionsFragment.Item>(
-		R.layout.item_simple_user
-	) { binding, _, item ->
-		binding.textView.text = item.name
+	val showDataTitle = when (args.type) {
+		SimpleUserListOfInteractionsFragment.Type.EXPLORE_LIKES,
+		SimpleUserListOfInteractionsFragment.Type.STORE_VIEWS,
+		SimpleUserListOfInteractionsFragment.Type.STORE_FOLLOWERS -> true
+		else -> false
+	}
 
-		binding.imageView.setupWithGlide {
-			load(item.image).saveDiskCacheStrategyAll()
+	val adapter = RVPagingItemCommonListUsageWithDifferentItems<SimpleUserListOfInteractionsFragment.Item>(
+		getLayoutRes = {
+			when (args.type) {
+				SimpleUserListOfInteractionsFragment.Type.EXPLORE_LIKES,
+				SimpleUserListOfInteractionsFragment.Type.STORE_VIEWS,
+				SimpleUserListOfInteractionsFragment.Type.STORE_FOLLOWERS -> R.layout.item_simple_user
+				else -> R.layout.item_user_in_shop_info_stories_or_explores
+			}
+		},
+		additionalListenersSetups = { _, binding ->
+			if (binding is ItemUserInShopInfoStoriesOrExploresBinding) {
+				binding.whatsappImageView.setOnClickListener { view ->
+					val item = binding.root.getTagJson<SimpleUserListOfInteractionsFragment.Item>()
+						?: return@setOnClickListener
+
+					view.context?.launchWhatsApp(item.countryCode.orEmpty() + item.phone.orEmpty())
+				}
+			}
 		}
+	) { binding, _, item ->
+		binding.root.setTagJson(item)
 
-		binding.countTextView.isVisible = item.count != null
-		binding.countTextView.text = item.count.toStringOrEmpty()
-		binding.createdAtTextView.text = item.createdAt.orEmpty()
+		when (binding) {
+			is ItemSimpleUserBinding -> {
+				binding.textView.text = item.name
+
+				binding.imageView.setupWithGlide {
+					load(item.image).saveDiskCacheStrategyAll()
+				}
+
+				binding.countTextView.isVisible = item.count != null
+				binding.countTextView.text = item.count.toStringOrEmpty()
+				binding.createdAtTextView.text = item.createdAt.orEmpty()
+			}
+			is ItemUserInShopInfoStoriesOrExploresBinding -> {
+				binding.nameTextView.text = item.name
+
+				binding.imageImageView.setupWithGlide {
+					load(item.image).saveDiskCacheStrategyAll()
+				}
+
+				binding.countTextView.isVisible = item.count != null
+				binding.countTextView.text = item.count.toStringOrEmpty()
+				binding.dateTextView.text = item.createdAt.orEmpty()
+
+				binding.emailValueTextView.text = item.email.orEmpty()
+				binding.phoneValueTextView.text = "${item.countryCode.orEmpty()} ${item.phone.orEmpty()}"
+			}
+		}
 	}
 
 	// EXPLORE_LIKES

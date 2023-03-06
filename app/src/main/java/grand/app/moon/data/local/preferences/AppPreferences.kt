@@ -175,7 +175,14 @@ class AppPreferences @Inject constructor(
     private const val SESSION_PREFERENCES_NAME = "APP-NAME-UserCache"
     const val MODE = Context.MODE_PRIVATE
 	  val SEARCH_SUGGESTIONS = stringPreferencesKey("SEARCH_SUGGESTIONS")
+
+	  private const val PAYMENT_PREFERENCES_NAME = "PAYMENT_PREFERENCES_NAME"
+	  private const val SAVE_PAYMENT_ID = "SAVE_PAYMENT_ID"
+	  private const val SAVE_PAYMENT_META_DATA = "SAVE_PAYMENT_META_DATA"
   }
+
+  private val prefsPayment: SharedPreferences =
+    context.getSharedPreferences(PAYMENT_PREFERENCES_NAME, MODE)
 
   private val appPreferences: SharedPreferences =
     context.getSharedPreferences(APP_PREFERENCES_NAME, MODE)
@@ -296,4 +303,23 @@ class AppPreferences @Inject constructor(
       object : TypeToken<BaseResponse<List<Country>>>() {}.type
     )
   }
+
+	fun savePaymentSuccess(chargeId: String, metaData: Map<String, String>) {
+		prefsPayment.edit {
+			it.putString(SAVE_PAYMENT_ID, chargeId)
+			it.putString(SAVE_PAYMENT_META_DATA, metaData.toJsonInlinedOrNull().orEmpty())
+
+			it.commit()
+		}
+	}
+	fun getPaymentSuccess(): Pair<String, Map<String, String>>? {
+		val chargeId = prefsPayment.getString(SAVE_PAYMENT_ID, "")
+
+		if (chargeId.isNullOrEmpty()) return null
+
+		val metadata = prefsPayment.getString(SAVE_PAYMENT_META_DATA, "")
+			.fromJsonInlinedOrNull<Map<String, String>>().orEmpty()
+
+		return chargeId to metadata
+	}
 }

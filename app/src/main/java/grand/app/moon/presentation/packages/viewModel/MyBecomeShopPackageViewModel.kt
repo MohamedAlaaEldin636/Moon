@@ -33,7 +33,7 @@ class MyBecomeShopPackageViewModel @Inject constructor(
 	}
 
 	val price = response.map {
-		"${it?.price.orZero()} ${it?.country?.currency.orEmpty()}"
+		"${it?.price.orZero().toIntIfNoFractionsOrThisFloat()} ${it?.country?.currency.orEmpty()}"
 	}
 
 	val restDays = response.map {

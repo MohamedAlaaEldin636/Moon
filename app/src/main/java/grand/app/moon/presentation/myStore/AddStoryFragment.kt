@@ -111,6 +111,16 @@ class AddStoryFragment : BaseFragment<FragmentAddStoryBinding>() {
 		TrimmingVideoNum2Activity.StartTrim()
 	) { uri ->
 
+		if (true) {
+			viewModel.tmpFileUri
+			viewModel.addStoryImmediately(
+				this,
+				viewModel.tmpFileUri?.createMultipartBodyPart(viewModel.app, "file") ?: return@registerForActivityResult
+			)
+
+			return@registerForActivityResult
+		}
+
 		if (uri == null) return@registerForActivityResult
 
 		val context = viewModel.app//context ?: return@registerForActivityResult

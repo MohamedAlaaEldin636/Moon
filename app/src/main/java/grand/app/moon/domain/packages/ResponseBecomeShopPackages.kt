@@ -41,7 +41,7 @@ data class ResponsePackage(
 	@SerializedName("period_type") var periodType: Int?,
 	var recommended: Int?,
 	@SerializedName("advertisements_count") var advertisementsCount: Int?,
-	var price: Int?,
+	var price: Float?,
 	@SerializedName("price_before") var priceBefore: Int?,
 	@SerializedName("stories_count") var storiesCount: Int?,
 	@SerializedName("explores_count") var exploresCount: Int?,

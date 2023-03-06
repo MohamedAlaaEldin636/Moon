@@ -6,6 +6,10 @@ fun <T> List<T>.copyUpdateItem(index: Int, item: T): List<T> {
 	}.toList()
 }
 
+fun <T> List<T>.copyUpdateAllItems(transformation: (T) -> T): List<T> {
+	return toMutableList().onEach { transformation(it) }.toList()
+}
+
 fun <T> MutableList<T>.swap(firstPosition: Int, secondPosition: Int) {
 	if (firstPosition == secondPosition) return
 

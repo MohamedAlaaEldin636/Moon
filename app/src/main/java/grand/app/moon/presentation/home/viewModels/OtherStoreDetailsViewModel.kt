@@ -45,6 +45,28 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 	val response = MutableLiveData<ResponseStoreDetails?>(null)
 
+	val isSeen = response.map {
+		it?.toResponseStory()?.isSeen.orFalse().not()
+	}
+
+	fun showStories(view: View) {
+		val responseStory = response.value?.toResponseStory() ?: return
+
+		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
+
+		if (responseStory.isSeen && responseStory.stories.orEmpty().size < 2) {
+			response.value = response.value?.copy(
+				stories = response.value?.stories?.copyUpdateAllItems { it.copy(isSeen = false) }
+			)
+		}
+
+		fragment.findNavController().navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.dest.story.player",
+			paths = arrayOf(listOf(responseStory).toJsonInlinedOrNull().orEmpty(), 0.toString())
+		)
+	}
+
 	val backgroundImage = response.map {
 		it?.backgroundImage.orEmpty()
 	}

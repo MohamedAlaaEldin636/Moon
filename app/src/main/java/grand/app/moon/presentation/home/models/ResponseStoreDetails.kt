@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.domain.shop.ResponseWorkingHour
+import grand.app.moon.extensions.orFalse
 
 data class ResponseStoreDetails(
 	@SerializedName("share_link") var shareLink: String?,
@@ -43,4 +44,6 @@ data class ResponseStoreDetails(
 	val isPremium get() = premium == 1
 
 	val fullPhone get() = "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
+
+	val isSeen get() = stories.orEmpty().all { it.isSeen.orFalse() }
 }

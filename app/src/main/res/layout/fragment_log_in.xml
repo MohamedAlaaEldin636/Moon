@@ -77,7 +77,7 @@
           app:ccp_areaCodeDetectedCountry="true"
           app:ccp_autoDetectLanguage="true"
           app:ccp_autoFormatNumber="true"
-          app:ccp_countryAutoDetectionPref="LOCALE_NETWORK"
+          app:ccp_countryAutoDetectionPref="SIM_NETWORK_LOCALE"
           app:ccp_arrowColor="@color/colorPrimary"
           app:ccp_contentColor="@color/colorPrimary"
           app:ccpDialog_rippleEnable="true"

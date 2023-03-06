@@ -31,6 +31,7 @@ object GoSellSDKUtils {
 	private var sdkSession: SDKSession? = null
 
 	fun beforeAnyLaunchSetups(application: MyApplication, language: String = "en") {
+		if (true) return
 		application.performBeforeAnyUsageSetups(language)
 	}
 
@@ -171,6 +172,7 @@ object GoSellSDKUtils {
 		amount: BigDecimal,
 		//paymentItemId: Int,
 		cardType: CardType,
+		metaData: HashMap<String, String>
 	) {
 		// Instantiate SDK Session
 		if (sdkSession == null) {
@@ -210,7 +212,7 @@ object GoSellSDKUtils {
 		//sdkSession?.setPaymentDescription("") //** Optional **
 
 		// Payment Extra Info
-		//sdkSession?.setPaymentMetadata(HashMap()) // ** Optional ** you can pass empty array hash map
+		sdkSession?.setPaymentMetadata(metaData) // ** Optional ** you can pass empty array hash map
 
 		// Payment Reference
 		sdkSession?.setPaymentReference(null) // ** Optional ** you can pass null

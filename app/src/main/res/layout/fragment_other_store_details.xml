@@ -122,16 +122,38 @@
             android:paddingBottom="22dp"
             android:clipToPadding="false">
 
+            <View
+              android:id="@+id/seenStoryView"
+
+              android:layout_width="0dp"
+              android:layout_height="0dp"
+
+              android:background="@drawable/dr_circle_62_stroke_2"
+
+              android:visibility="@{viewModel.isSeen()}"
+              tools:visibility="visible"
+
+              app:layout_constraintTop_toTopOf="@id/cardOwnerImageView"
+              app:layout_constraintBottom_toBottomOf="@id/cardOwnerImageView"
+              app:layout_constraintStart_toStartOf="@id/cardOwnerImageView"
+              app:layout_constraintEnd_toEndOf="@id/cardOwnerImageView"/>
+
             <com.google.android.material.imageview.ShapeableImageView
               android:id="@+id/cardOwnerImageView"
 
               android:layout_width="86dp"
               android:layout_height="86dp"
 
+              android:onClick="@{v -> viewModel.showStories(v)}"
+
+              tools:src="@drawable/splash"
+
+              android:padding="2dp"
+
               android:scaleType="centerCrop"
 
-              app:shapeAppearance="@style/ShapeRound10"
-              app:shapeAppearanceOverlay="@style/ShapeRound10"
+              app:shapeAppearance="@style/ShapeCircle"
+              app:shapeAppearanceOverlay="@style/ShapeCircle"
 
               imageView_setupWithGlideOrDefaultImageBA="@{viewModel.logoImage}"
 
