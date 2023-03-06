@@ -20,15 +20,17 @@ import company.tap.gosellapi.open.models.TapCurrency
 import grand.app.moon.core.GoSellSDKUtils.performBeforeAnyUsageSetups
 import java.math.BigDecimal
 
+/**
+ * todo
+ *  1. change language on change in app
+ *  2. make secret keys actually secrets isa. local.properties w kda w gradle w kda isa.
+ */
 @Suppress("UsePropertyAccessSyntax")
 object GoSellSDKUtils {
 
 	private var sdkSession: SDKSession? = null
 
 	fun beforeAnyLaunchSetups(application: MyApplication, language: String = "en") {
-		// TODO shel el if condition da isa.
-		if (true) return
-
 		application.performBeforeAnyUsageSetups(language)
 	}
 
@@ -59,20 +61,18 @@ object GoSellSDKUtils {
 		 * Required step.
 		 * Configure SDK Session with all required data.
 		 */
-		//configureSDKSession() // todo
+		//configureSDKSession()
 
 		/**
 		 * Required step.
 		 * Choose between different SDK modes
 		 */
 		//configureSDKMode()
-		// TODO LESSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 		/**
 		 * If you included Tap Pay Button then configure it first, if not then ignore this step.
 		 */
 		//initPayButton()
-		// TODO LESSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 	}
 
 	private fun MyApplication.configureApp(language: String) {
@@ -80,8 +80,6 @@ object GoSellSDKUtils {
 		//sk_test_gdfGYQrI158pKJSmPEV4CtvN -> IOS
 		GoSellSDK.init(this, "sk_test_jeAIVETRHKpdgu6lOraPtsXm", packageName)
 		GoSellSDK.setLocale(language) //  if you dont pass locale then default locale EN will be used
-		// todo above init change above authToken(Secret API Key) with what will be given from Alaa
-		// todo setLocale before you enter any payment afdal bythaya2le isa.
 	}
 
 	private fun configureSDKThemeObject(language: String) {
@@ -165,8 +163,8 @@ object GoSellSDKUtils {
 	 *
 	 * @param sessionDelegate activity or I think maybe fragment as well isa.
 	 */
-	private fun configureSDKSession(
-		activity: Activity, // todo generric where kaza
+	fun configureSDKSessionAndStartIt(
+		activity: Activity,
 		sessionDelegate: SessionDelegate,
 		currencyIsoCode: String,
 		userId: Int,
@@ -195,7 +193,7 @@ object GoSellSDKUtils {
 		sdkSession?.setAmount(amount) //** Required **
 
 		// Set Payment Items array list
-		sdkSession?.setPaymentItems(ArrayList()/*todo optional but check with bassem*/) // ** Optional ** you can pass empty array list
+		sdkSession?.setPaymentItems(ArrayList()) // ** Optional ** you can pass empty array list
 
 		sdkSession?.setPaymentType(PaymentType.CARD.name/*"CARD"*/)   //** Merchant can pass paymentType
 
@@ -245,6 +243,21 @@ object GoSellSDKUtils {
 		sdkSession?.start(activity)
 	}
 
+	/**
+	 * Configure SDK Theme
+	 */
+	private fun configureSDKMode(){
 
+		/**
+		 * You have to choose only one Mode of the following modes:
+		 * Note:-
+		 *      - In case of using PayButton, then don't call sdkSession.start(this) because the SDK will start when user clicks the tap pay button.
+		 */
+		/**
+		 *  Start using  SDK features through SDK main activity (With Tap CARD FORM)
+		 */
+		//startSDKUI()
+
+	}
 
 }
