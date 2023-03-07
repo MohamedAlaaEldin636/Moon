@@ -79,15 +79,21 @@
 
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/tv_title"
-          style="@style/boldFont"
+
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+
           android:layout_marginTop="@dimen/dimen16"
           android:layout_marginBottom="@dimen/dimen2"
+
           android:gravity="center"
+
           android:text="@{viewModel.tutorial.title}"
+
           android:textColor="@color/colorPrimary"
           android:textSize="25sp"
+          style="@style/TextTajawalBold14"
+
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="0.5"
           app:layout_constraintStart_toStartOf="parent"
@@ -95,16 +101,20 @@
 
         <androidx.appcompat.widget.AppCompatTextView
           android:id="@+id/tv_content"
-          style="@style/mediumFont"
+
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+
           android:layout_marginStart="@dimen/dimen30"
           android:layout_marginEnd="@dimen/dimen30"
+
           android:gravity="center"
+
           android:text="@{viewModel.tutorial.content}"
-          android:textColor="@color/colorBlack"
-          android:textSize="@dimen/text_size18"
-          android:textStyle="bold"
+
+          style="@style/TextTajawalMedium14"
+          android:textSize="16sp"
+
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"

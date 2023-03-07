@@ -53,8 +53,8 @@ internal class TutorialAdapter(
     private lateinit var currentItem: AppTutorial
 
     init {
-      itemBinding.tvTitle.setTextColor(titleColor)
-      itemBinding.tvContent.setTextColor(contentColor)
+	    //itemBinding.tvTitle.setTextColor(titleColor)
+      //itemBinding.tvContent.setTextColor(contentColor)
     }
 
     fun bind(item: AppTutorial) {
