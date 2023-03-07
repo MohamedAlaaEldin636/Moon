@@ -10,6 +10,7 @@ import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.GoSellSDKUtils2
 import grand.app.moon.core.extenstions.toast
 import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.data.packages.RepositoryPackages
@@ -38,6 +39,12 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 	val repoShop: RepoShop,
 	private val appPreferences: AppPreferences,
 ) : AndroidViewModel(application) {
+
+	companion object {
+		const val META_DATA_PACKAGE_ID = "META_DATA_PACKAGE_ID"
+		const val META_DATA_PACKAGE_IS_AD_NOT_STORE = "META_DATA_PACKAGE_IS_AD_NOT_STORE"
+		const val META_DATA_PACKAGE_AD_ID_OR_EMPTY = "META_DATA_PACKAGE_AD_ID_OR_EMPTY"
+	}
 
 	private val isStore by lazy {
 		userLocalUseCase().isStore.orFalse()
@@ -110,56 +117,56 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 			)
 		}else {
 			// Either wasn't subscribed OR renewing package
-			val paymentListener = ISessionDelegate(
+			val currency = repoShop.getSelectedCountry()?.englishCurrencyIsoCode ?: return
+			if (currency.isEmpty()) return
+
+			GoSellSDKUtils2.startPayment(
+				fragment,
 				appPreferences,
-				onPaymentFailed = {
-					app.toast(app.getString(R.string.something_went_wrong_please_try_again))
-				},
-				onPaymentSuccess = {
-					fragment.handleRetryAbleActionCancellableNullable(
-						action = {
-							if (adsNotStoresAreSelected.value == true) {
-								repoPackages.subscribeToMakeAdvertisementPremiumPackage(args.advertisementId, selectedIdOfPackage)
-							}else {
-								repoPackages.subscribeToMakeShopPremiumPackage(selectedIdOfPackage)
-							}
-						}
-					) {
-						fragment.showMessage(fragment.getString(R.string.done_successfully))
-
-						getCurrentlyUsedAdapter().snapshot().forEach {
-							if (it?.id == selectedIdOfPackage) {
-								it.isSubscribed = true
-								it.restDays = selectedPackage.getPeriodInDays()
-							}else {
-								it?.isSubscribed = false
-							}
-						}
-
+				currency,
+				selectedPackage.price.orZero().toBigDecimal(),
+				userLocalUseCase,
+				mutableMapOf(
+					META_DATA_PACKAGE_ID to selectedIdOfPackage.toString(),
+					META_DATA_PACKAGE_IS_AD_NOT_STORE to (adsNotStoresAreSelected.value == true).toString(),
+					META_DATA_PACKAGE_AD_ID_OR_EMPTY to (if (adsNotStoresAreSelected.value == true) args.advertisementId else null).toString(),
+				).toHashMap(),
+			) { onSuccessAction ->
+				fragment.handleRetryAbleActionCancellableNullable(
+					action = {
 						if (adsNotStoresAreSelected.value == true) {
-							selectedAdsPackageId.value = null
-							selectedAdsPackageId.postValue(selectedIdOfPackage)
-
-							fragment.findNavController().setResultInPreviousBackStackEntrySavedStateHandleViaGson(
-								MyAdsFragment.NewAdvertisementState.BECAME_PREMIUM
-							)
+							repoPackages.subscribeToMakeAdvertisementPremiumPackage(args.advertisementId, selectedIdOfPackage)
 						}else {
-							selectedShopsPackageId.value = null
-							selectedShopsPackageId.postValue(selectedIdOfPackage)
+							repoPackages.subscribeToMakeShopPremiumPackage(selectedIdOfPackage)
 						}
 					}
-				}
-			)
+				) {
+					onSuccessAction()
 
-			// todo check that email is there isa. in 7esabe isa.
-			startPayment(
-				fragment,
-				paymentListener,
-				selectedPackage.price.orZero().toBigDecimal(),
-				selectedIdOfPackage,
-				adsNotStoresAreSelected.value == true,
-				if (adsNotStoresAreSelected.value == true) args.advertisementId else null
-			)
+					fragment.showMessage(fragment.getString(R.string.done_successfully))
+
+					getCurrentlyUsedAdapter().snapshot().forEach {
+						if (it?.id == selectedIdOfPackage) {
+							it.isSubscribed = true
+							it.restDays = selectedPackage.getPeriodInDays()
+						}else {
+							it?.isSubscribed = false
+						}
+					}
+
+					if (adsNotStoresAreSelected.value == true) {
+						selectedAdsPackageId.value = null
+						selectedAdsPackageId.postValue(selectedIdOfPackage)
+
+						fragment.findNavController().setResultInPreviousBackStackEntrySavedStateHandleViaGson(
+							MyAdsFragment.NewAdvertisementState.BECAME_PREMIUM
+						)
+					}else {
+						selectedShopsPackageId.value = null
+						selectedShopsPackageId.postValue(selectedIdOfPackage)
+					}
+				}
+			}
 		}
 	}
 

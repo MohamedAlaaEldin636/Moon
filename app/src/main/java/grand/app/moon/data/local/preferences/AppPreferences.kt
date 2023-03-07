@@ -312,6 +312,9 @@ class AppPreferences @Inject constructor(
 			it.commit()
 		}
 	}
+	fun clearPaymentSuccess() {
+		prefsPayment.edit().clear().commit()
+	}
 	fun getPaymentSuccess(): Pair<String, Map<String, String>>? {
 		val chargeId = prefsPayment.getString(SAVE_PAYMENT_ID, "")
 

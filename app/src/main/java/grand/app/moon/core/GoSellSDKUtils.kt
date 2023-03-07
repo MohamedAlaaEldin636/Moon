@@ -12,6 +12,7 @@ import company.tap.gosellapi.open.enums.CardType
 import company.tap.gosellapi.open.enums.TransactionMode
 import company.tap.gosellapi.open.models.Customer.CustomerBuilder
 import company.tap.gosellapi.open.models.TapCurrency
+import grand.app.moon.BuildConfig
 import grand.app.moon.core.extenstions.toast
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import java.math.BigDecimal
@@ -25,6 +26,8 @@ import java.math.BigDecimal
 object GoSellSDKUtils {
 
 	private var sdkSession: SDKSession? = null
+
+	private fun useDebugForPayment() = BuildConfig.DEBUG
 
 	fun beforeAnyLaunchSetups(application: MyApplication, language: String = "en") {
 		application.performBeforeAnyUsageSetups(language)
@@ -74,7 +77,12 @@ object GoSellSDKUtils {
 	private fun MyApplication.configureApp(language: String) {
 		//sk_test_jeAIVETRHKpdgu6lOraPtsXm -> Android -> sk_live_5JpXIsZ2CuKrBv67nV1wF9EO
 		//sk_test_gdfGYQrI158pKJSmPEV4CtvN -> IOS
-		GoSellSDK.init(this, "sk_test_jeAIVETRHKpdgu6lOraPtsXm", packageName)
+		val key = if (useDebugForPayment()) {
+			"sk_test_jeAIVETRHKpdgu6lOraPtsXm"
+		}else {
+			"sk_live_5JpXIsZ2CuKrBv67nV1wF9EO"
+		}
+		GoSellSDK.init(this, key, packageName)
 		GoSellSDK.setLocale(language) //  if you dont pass locale then default locale EN will be used
 	}
 
@@ -237,8 +245,13 @@ object GoSellSDKUtils {
 		sdkSession?.setMerchantID(null) // ** Optional ** you can pass merchant id or null
 		sdkSession?.setCardType(cardType) // ** Optional ** you can pass which cardType[CREDIT/DEBIT] you want.By default it loads all available cards for Merchant.
 
-		sdkSession?.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
-		sdkSession?.isUserAllowedToEnableCardHolderName(false) // ** Optional ** you can enable/ disable  default CardHolderName .
+		if (useDebugForPayment()) {
+			sdkSession?.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
+			sdkSession?.isUserAllowedToEnableCardHolderName(false) // ** Optional ** you can enable/ disable  default CardHolderName .
+		}else {
+			//sdkSession?.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
+			sdkSession?.isUserAllowedToEnableCardHolderName(true) // ** Optional ** you can enable/ disable  default CardHolderName .
+		}
 
 		//company.tap.sample.managers.SettingsManager
 		sdkSession?.transactionMode = TransactionMode.PURCHASE
@@ -251,8 +264,6 @@ object GoSellSDKUtils {
 		sdkSession?.start(activity)
 
 		//sdkSession?.startPayment()
-
-		activity.toast("Hello")
 	}
 
 	/**

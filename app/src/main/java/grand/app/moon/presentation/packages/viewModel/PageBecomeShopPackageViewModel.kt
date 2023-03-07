@@ -8,11 +8,13 @@ import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.GoSellSDKUtils2
+import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.data.packages.RepositoryPackages
+import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.packages.ResponsePackage
 import grand.app.moon.extensions.*
-import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.packages.BecomeShopPackagesFragment
 import grand.app.moon.presentation.packages.BecomeShopPackagesFragmentDirections
 import grand.app.moon.presentation.packages.PageBecomeShopPackageFragment
@@ -23,7 +25,13 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 	application: Application,
 	private val userLocalUseCase: UserLocalUseCase,
 	private val repositoryPackages: RepositoryPackages,
+	val repoShop: RepoShop,
+	val appPreferences: AppPreferences,
 ) : AndroidViewModel(application) {
+
+	companion object {
+		const val META_DATA_PACKAGE_ID = "grand.app.moon.presentation.packages.viewModel.PageBecomeShopPackageViewModel.META_DATA_PACKAGE_ID"
+	}
 
 	val response = MutableLiveData<ResponsePackage?>()
 
@@ -148,59 +156,75 @@ class PageBecomeShopPackageViewModel @Inject constructor(
 			)
 		}else {
 			// Subscribe Now to new package or renew current package and return success isa.
-			fragment.handleRetryAbleActionCancellableNullable(
-				action = {
-					repositoryPackages.subscribeToBecomeShopPackage(response.value?.id.orZero())
-				}
-			) { successResponse ->
-				val user = userLocalUseCase()
-				userLocalUseCase(user.copy(isStore = true))
+			val currency = repoShop.getSelectedCountry()?.englishCurrencyIsoCode ?: return
+			if (currency.isEmpty()) return
 
-				navController.setResultInPreviousBackStackEntrySavedStateHandleViaGson(
-					true // subscribed successfully
-				)
-
-				// Change Data
-				response.value = response.value?.copy(
-					isSubscribed = true,
-					restDays = response.value?.getPeriodInDays().orZero()
-				)
-
-				val parentFragment = (fragment.parentFragment as? BecomeShopPackagesFragment)
-
-				val parentViewModel = parentFragment?.viewModel
-				parentViewModel?.allPackages?.forEach {
-					if (it.id == response.value?.id) {
-						it.isSubscribed = true
-						it.restDays = response.value?.getPeriodInDays().orZero()
-					}else {
-						it.isSubscribed = false
+			GoSellSDKUtils2.startPayment(
+				fragment,
+				appPreferences,
+				currency,
+				response.value?.price.orZero().toBigDecimal(),
+				userLocalUseCase,
+				mutableMapOf(
+					META_DATA_PACKAGE_ID to response.value?.id.orZero().toString(),
+				).toHashMap(),
+			) { onSuccessAction ->
+				fragment.handleRetryAbleActionCancellableNullable(
+					action = {
+						repositoryPackages.subscribeToBecomeShopPackage(response.value?.id.orZero())
 					}
-				}
+				) { successResponse ->
+					onSuccessAction()
 
-				val willGoToCreateShopNotMyPackage = if (successResponse?.storeInfoIsCompleted == true) {
-					// Check Subscription
-					navController.navigateSafely(
-						BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestMyBecomeShopPackage()
+					val user = userLocalUseCase()
+					userLocalUseCase(user.copy(isStore = true))
+
+					navController.setResultInPreviousBackStackEntrySavedStateHandleViaGson(
+						true // subscribed successfully
 					)
 
-					false
-				}else {
-					// Now go to create store data and on result of it's creation nav up.
-					parentFragment?.observeCreateShopFragment()
-
-					navController.navigateSafely(
-						BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestCreateStore()
+					// Change Data
+					response.value = response.value?.copy(
+						isSubscribed = true,
+						restDays = response.value?.getPeriodInDays().orZero()
 					)
 
-					true
-				}
+					val parentFragment = (fragment.parentFragment as? BecomeShopPackagesFragment)
 
-				navController.navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.success.shop.subscription",
-					paths = arrayOf(willGoToCreateShopNotMyPackage.toString())
-				)
+					val parentViewModel = parentFragment?.viewModel
+					parentViewModel?.allPackages?.forEach {
+						if (it.id == response.value?.id) {
+							it.isSubscribed = true
+							it.restDays = response.value?.getPeriodInDays().orZero()
+						}else {
+							it.isSubscribed = false
+						}
+					}
+
+					val willGoToCreateShopNotMyPackage = if (successResponse?.storeInfoIsCompleted == true) {
+						// Check Subscription
+						navController.navigateSafely(
+							BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestMyBecomeShopPackage()
+						)
+
+						false
+					}else {
+						// Now go to create store data and on result of it's creation nav up.
+						parentFragment?.observeCreateShopFragment()
+
+						navController.navigateSafely(
+							BecomeShopPackagesFragmentDirections.actionDestBecomeShopPackagesToDestCreateStore()
+						)
+
+						true
+					}
+
+					navController.navigateDeepLinkWithOptions(
+						"fragment-dest",
+						"grand.app.moon.dest.success.shop.subscription",
+						paths = arrayOf(willGoToCreateShopNotMyPackage.toString())
+					)
+				}
 			}
 		}
 	}
