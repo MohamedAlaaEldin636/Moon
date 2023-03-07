@@ -3,27 +3,19 @@ package grand.app.moon.core
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
-import android.os.Build
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.multidex.MultiDex
 import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.CometChat
 import com.cometchat.pro.exceptions.CometChatException
-import com.google.android.exoplayer2.database.DatabaseProvider
-import com.google.android.exoplayer2.database.ExoDatabaseProvider
-import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
-import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
 import com.onesignal.OneSignal
-import com.zeugmasolutions.localehelper.LocaleAwareApplication
-import com.zeugmasolutions.localehelper.LocaleHelper
-import company.tap.gosellapi.GoSellSDK
 import dagger.hilt.android.HiltAndroidApp
-import grand.app.moon.appMoonHelper.language.MyContextWrapper
+import grand.app.moon.core.extenstions.InitialAppLaunch
+import grand.app.moon.core.extenstions.getInitialAppLaunch
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.splash.*
@@ -42,7 +34,13 @@ fun Context?.makeAppInitializations() {
 }
 
 @HiltAndroidApp
-class MyApplication : /*LocaleAwareApplication*/Application() {
+class MyApplication : Application() {
+
+	companion object {
+		lateinit var instance : MyApplication
+
+		private const val DEFAULT_LANGUAGE = "ar"
+	}
 
 	var checkedAppGlobalAnnouncement = false
 	var showedAppGlobalAnnouncement = false
@@ -64,10 +62,12 @@ class MyApplication : /*LocaleAwareApplication*/Application() {
 
 	override fun attachBaseContext(base: Context?) {
 		base?.apply {
-			setCurrentLangFromSharedPrefs("ar")
+			if (getInitialAppLaunch() == InitialAppLaunch.SHOW_WELCOMING_SCREENS) {
+				setCurrentLangFromSharedPrefs(DEFAULT_LANGUAGE)
 
-			val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags("ar")
-			AppCompatDelegate.setApplicationLocales(appLocale)
+				val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(DEFAULT_LANGUAGE)
+				AppCompatDelegate.setApplicationLocales(appLocale)
+			}
 		}
 
 		super.attachBaseContext(attachBaseContextMA(base))
@@ -96,7 +96,6 @@ class MyApplication : /*LocaleAwareApplication*/Application() {
 		applicationScope.launch {
 			initChat()
 			updateAndroidSecurityProvider()
-			//initStoryViewer() //todo this makes a problem for now restarting activity isa.
 
 			// Logging set to help debug issues, remove before releasing your app.
 			//OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
@@ -110,21 +109,6 @@ class MyApplication : /*LocaleAwareApplication*/Application() {
 			GoSellSDKUtils.beforeAnyLaunchSetups(this@MyApplication)
 		}
 	}
-
-  private fun initStoryViewer() {
-    val leastRecentlyUsedCacheEvictor = LeastRecentlyUsedCacheEvictor(90 * 1024 * 1024)
-    val databaseProvider: DatabaseProvider = ExoDatabaseProvider(this)
-
-    if (simpleCache == null) {
-      simpleCache = SimpleCache(cacheDir, leastRecentlyUsedCacheEvictor, databaseProvider)
-    }
-  }
-
-  companion object {
-    var simpleCache: SimpleCache? = null
-
-	  lateinit var instance : MyApplication
-  }
 
   private fun initChat() {
     val appID = Constants.CHAT_APP_ID
