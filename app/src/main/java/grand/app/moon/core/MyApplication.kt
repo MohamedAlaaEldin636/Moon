@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.multidex.MultiDex
 import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.CometChat
@@ -61,6 +63,13 @@ class MyApplication : /*LocaleAwareApplication*/Application() {
 	}
 
 	override fun attachBaseContext(base: Context?) {
+		base?.apply {
+			setCurrentLangFromSharedPrefs("ar")
+
+			val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags("ar")
+			AppCompatDelegate.setApplicationLocales(appLocale)
+		}
+
 		super.attachBaseContext(attachBaseContextMA(base))
 
 		MultiDex.install(this)
