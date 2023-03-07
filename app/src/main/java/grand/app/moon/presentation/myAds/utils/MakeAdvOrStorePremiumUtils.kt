@@ -30,21 +30,21 @@ fun MakeAdvOrStorePremiumViewModel.startPayment(
 ) {
 	val activity = fragment.activity ?: return
 
-	val currency = repoShop.getSelectedCountry()?.currency ?: return
+	val currency = repoShop.getSelectedCountry()?.englishCurrencyIsoCode ?: return
 	if (currency.isEmpty()) return
 
 	GoSellSDKUtils.configureSDKSessionAndStartIt(
 		activity,
 		sessionDelegate,
 		currency,
-		userLocalUseCase().id,
 		amount,
 		CardType.ALL,
 		mutableMapOf(
 			META_DATA_PACKAGE_ID to packageId.toString(),
 			META_DATA_PACKAGE_IS_AD_NOT_STORE to isAdNotStore.toString(),
 			META_DATA_PACKAGE_AD_ID_OR_EMPTY to adIdOrNullIfStore.toString(),
-		).toHashMap()
+		).toHashMap(),
+		userLocalUseCase
 	)
 }
 
@@ -54,45 +54,53 @@ class ISessionDelegate(
 	private val onPaymentFailed: () -> Unit,
 ) : SessionDelegate {
 	override fun paymentSucceed(charge: Charge) {
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> paymentSucceed $charge")
+
 		appPreferences.savePaymentSuccess(charge.id.orEmpty(), charge.metadata.toMap())
 
 		onPaymentSuccess()
 	}
 
 	override fun paymentFailed(charge: Charge?) {
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> paymentFailed $charge")
+
 		onPaymentFailed()
 	}
 
 	override fun authorizationSucceed(authorize: Authorize) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> authorizationSucceed")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> authorizationSucceed $authorize")
 	}
 
 	override fun authorizationFailed(authorize: Authorize?) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> authorizationFailed")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> authorizationFailed $authorize")
 	}
 
 	override fun cardSaved(charge: Charge) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> cardSaved")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> cardSaved $charge")
 	}
 
 	override fun cardSavingFailed(charge: Charge) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> cardSavingFailed")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> cardSavingFailed $charge")
 	}
 
 	override fun cardTokenizedSuccessfully(token: Token) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> cardTokenizedSuccessfully")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> cardTokenizedSuccessfully $token")
 	}
 
 	override fun cardTokenizedSuccessfully(token: Token, saveCardEnabled: Boolean) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> cardTokenizedSuccessfully 2 params")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> cardTokenizedSuccessfully 2 params $token $saveCardEnabled")
 	}
 
 	override fun savedCardsList(cardsList: CardsList) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> savedCardsList")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> savedCardsList $cardsList")
 	}
 
 	override fun sdkError(goSellError: GoSellError?) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> sdkError")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> sdkError ${goSellError?.toSpecialString()}")
+	}
+
+	private fun GoSellError?.toSpecialString(): String {
+		return if (this == null) "null" else "$errorCode $errorMessage $errorBody"
 	}
 
 	override fun sessionIsStarting() {
@@ -116,7 +124,7 @@ class ISessionDelegate(
 	}
 
 	override fun backendUnknownError(message: String?) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> backendUnknownError")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> backendUnknownError $message")
 
 		onPaymentFailed()
 	}
@@ -130,14 +138,14 @@ class ISessionDelegate(
 	}
 
 	override fun userEnabledSaveCardOption(saveCardEnabled: Boolean) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> userEnabledSaveCardOption")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> userEnabledSaveCardOption $saveCardEnabled")
 	}
 
 	override fun asyncPaymentStarted(charge: Charge) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> asyncPaymentStarted")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> asyncPaymentStarted $charge")
 	}
 
 	override fun paymentInitiated(charge: Charge?) {
-		MyLogger.e("TAP PAYMENT GO SELL SDK -> paymentInitiated")
+		MyLogger.e("TAP PAYMENT GO SELL SDK -> paymentInitiated $charge")
 	}
 }

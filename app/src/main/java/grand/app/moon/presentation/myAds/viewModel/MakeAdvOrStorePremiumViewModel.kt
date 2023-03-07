@@ -110,38 +110,56 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 			)
 		}else {
 			// Either wasn't subscribed OR renewing package
-			fragment.handleRetryAbleActionCancellableNullable(
-				action = {
-					if (adsNotStoresAreSelected.value == true) {
-						repoPackages.subscribeToMakeAdvertisementPremiumPackage(args.advertisementId, selectedIdOfPackage)
-					}else {
-						repoPackages.subscribeToMakeShopPremiumPackage(selectedIdOfPackage)
+			val paymentListener = ISessionDelegate(
+				appPreferences,
+				onPaymentFailed = {
+					app.toast(app.getString(R.string.something_went_wrong_please_try_again))
+				},
+				onPaymentSuccess = {
+					fragment.handleRetryAbleActionCancellableNullable(
+						action = {
+							if (adsNotStoresAreSelected.value == true) {
+								repoPackages.subscribeToMakeAdvertisementPremiumPackage(args.advertisementId, selectedIdOfPackage)
+							}else {
+								repoPackages.subscribeToMakeShopPremiumPackage(selectedIdOfPackage)
+							}
+						}
+					) {
+						fragment.showMessage(fragment.getString(R.string.done_successfully))
+
+						getCurrentlyUsedAdapter().snapshot().forEach {
+							if (it?.id == selectedIdOfPackage) {
+								it.isSubscribed = true
+								it.restDays = selectedPackage.getPeriodInDays()
+							}else {
+								it?.isSubscribed = false
+							}
+						}
+
+						if (adsNotStoresAreSelected.value == true) {
+							selectedAdsPackageId.value = null
+							selectedAdsPackageId.postValue(selectedIdOfPackage)
+
+							fragment.findNavController().setResultInPreviousBackStackEntrySavedStateHandleViaGson(
+								MyAdsFragment.NewAdvertisementState.BECAME_PREMIUM
+							)
+						}else {
+							selectedShopsPackageId.value = null
+							selectedShopsPackageId.postValue(selectedIdOfPackage)
+						}
 					}
 				}
-			) {
-				fragment.showMessage(fragment.getString(R.string.done_successfully))
+			)
 
-				getCurrentlyUsedAdapter().snapshot().forEach {
-					if (it?.id == selectedIdOfPackage) {
-						it.isSubscribed = true
-						it.restDays = selectedPackage.getPeriodInDays()
-					}else {
-						it?.isSubscribed = false
-					}
-				}
-
-				if (adsNotStoresAreSelected.value == true) {
-					selectedAdsPackageId.value = null
-					selectedAdsPackageId.postValue(selectedIdOfPackage)
-
-					fragment.findNavController().setResultInPreviousBackStackEntrySavedStateHandleViaGson(
-						MyAdsFragment.NewAdvertisementState.BECAME_PREMIUM
-					)
-				}else {
-					selectedShopsPackageId.value = null
-					selectedShopsPackageId.postValue(selectedIdOfPackage)
-				}
-			}
+			// todo check that email is there isa. in 7esabe isa.
+			startPayment(
+				fragment,
+				paymentListener,
+				selectedPackage.price.orZero().toBigDecimal(),
+				selectedIdOfPackage,
+				adsNotStoresAreSelected.value == true,
+				if (adsNotStoresAreSelected.value == true) args.advertisementId else null
+			)
 		}
 	}
 

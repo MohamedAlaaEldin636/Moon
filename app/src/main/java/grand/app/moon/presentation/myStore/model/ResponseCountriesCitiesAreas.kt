@@ -13,7 +13,8 @@ fun Country?.toResponseCountry(): ResponseCountry {
 		this?.image,
 		this?.cities?.map {
 			it.toResponseCity()
-		}
+		},
+		this?.enIsoCode
 	)
 }
 
@@ -50,6 +51,7 @@ data class ResponseCountry(
 	@SerializedName("iso_code") var isoCode: String?,
 	var image: String?,
 	var cities: List<ResponseCity>?,
+	@SerializedName("english_iso_code") var englishCurrencyIsoCode: String?,
 )
 
 data class ResponseCity(

@@ -1,23 +1,19 @@
 package grand.app.moon.core
 
 import android.app.Activity
-import android.graphics.Typeface
 import company.tap.gosellapi.GoSellSDK
 import company.tap.gosellapi.internal.api.enums.PaymentType
-import company.tap.gosellapi.internal.api.enums.measurements.Measurement
-import company.tap.gosellapi.internal.api.enums.measurements.MeasurementUnit
-import company.tap.gosellapi.internal.api.models.Quantity
+import company.tap.gosellapi.internal.api.models.PhoneNumber
 import company.tap.gosellapi.open.controllers.SDKSession
 import company.tap.gosellapi.open.controllers.ThemeObject
 import company.tap.gosellapi.open.delegate.SessionDelegate
 import company.tap.gosellapi.open.enums.AppearanceMode
 import company.tap.gosellapi.open.enums.CardType
+import company.tap.gosellapi.open.enums.TransactionMode
 import company.tap.gosellapi.open.models.Customer.CustomerBuilder
-import company.tap.gosellapi.open.models.PaymentItem
-import company.tap.gosellapi.open.models.PaymentItem.PaymentItemBuilder
-import company.tap.gosellapi.open.models.Receipt
 import company.tap.gosellapi.open.models.TapCurrency
-import grand.app.moon.core.GoSellSDKUtils.performBeforeAnyUsageSetups
+import grand.app.moon.core.extenstions.toast
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import java.math.BigDecimal
 
 /**
@@ -31,7 +27,6 @@ object GoSellSDKUtils {
 	private var sdkSession: SDKSession? = null
 
 	fun beforeAnyLaunchSetups(application: MyApplication, language: String = "en") {
-		if (true) return
 		application.performBeforeAnyUsageSetups(language)
 	}
 
@@ -168,11 +163,11 @@ object GoSellSDKUtils {
 		activity: Activity,
 		sessionDelegate: SessionDelegate,
 		currencyIsoCode: String,
-		userId: Int,
 		amount: BigDecimal,
 		//paymentItemId: Int,
 		cardType: CardType,
-		metaData: HashMap<String, String>
+		metaData: HashMap<String, String>,
+		userLocalUseCase: UserLocalUseCase,
 	) {
 		// Instantiate SDK Session
 		if (sdkSession == null) {
@@ -189,7 +184,13 @@ object GoSellSDKUtils {
 		sdkSession?.setTransactionCurrency(TapCurrency(currencyIsoCode)) //** Required **
 
 		// Using static CustomerBuilder method available inside TAP Customer Class you can populate TAP Customer object and pass it to SDK
-		sdkSession?.setCustomer(CustomerBuilder(userId.toString()).build()) //** Required **
+		val user = userLocalUseCase()
+		sdkSession?.setCustomer(
+			CustomerBuilder(null)
+				.firstName(user.name)
+				.phone(PhoneNumber(user.country_code, user.phone))
+				.build()
+		) //** Required **
 
 		// Set Total Amount. The Total amount will be recalculated according to provided Taxes and Shipping
 		sdkSession?.setAmount(amount) //** Required **
@@ -215,6 +216,7 @@ object GoSellSDKUtils {
 		sdkSession?.setPaymentMetadata(metaData) // ** Optional ** you can pass empty array hash map
 
 		// Payment Reference
+		//Reference()
 		sdkSession?.setPaymentReference(null) // ** Optional ** you can pass null
 
 		// Payment Statement Descriptor
@@ -237,12 +239,20 @@ object GoSellSDKUtils {
 
 		sdkSession?.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
 		sdkSession?.isUserAllowedToEnableCardHolderName(false) // ** Optional ** you can enable/ disable  default CardHolderName .
+
+		//company.tap.sample.managers.SettingsManager
+		sdkSession?.transactionMode = TransactionMode.PURCHASE
+
 		/**
 		 * Use this method where ever you want to show TAP SDK Main Screen.
 		 * This method must be called after you configured SDK as above
 		 * This method will be used in case of you are not using TAP PayButton in your activity.
 		 */
 		sdkSession?.start(activity)
+
+		//sdkSession?.startPayment()
+
+		activity.toast("Hello")
 	}
 
 	/**
