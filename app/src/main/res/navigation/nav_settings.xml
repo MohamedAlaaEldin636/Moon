@@ -446,7 +446,7 @@
   <fragment
     android:id="@+id/dest_contact_us_2"
     android:name="grand.app.moon.presentation.home.ContactUs2Fragment"
-    android:label="@string/complains_and_suggestions"
+    android:label="@string/contact_us"
     tools:layout="@layout/fragment_contact_us_2">
     <deepLink
       android:id="@+id/deep_link_dest_contact_us_2"
