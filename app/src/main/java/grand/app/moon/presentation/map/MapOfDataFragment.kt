@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
@@ -41,8 +40,6 @@ import grand.app.moon.databinding.ItemMapImageStoryBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.showMessage
-import grand.app.moon.presentation.base.utils.Constants
-import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.map.model.MAClusterItem
 import grand.app.moon.presentation.map.model.ResponseMapData
 import grand.app.moon.presentation.map.viewModel.MapOfDataViewModel
@@ -55,6 +52,13 @@ import kotlin.math.roundToInt
 class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCallback {
 
 	companion object {
+		/**
+		 * - Zooming range https://developers.google.com/maps/documentation/android-sdk/views#zoom
+		 *
+		 * 1: World, 5: Landmass/continent, 10: City, 15: Streets, 20: Buildings
+		 */
+		const val DEFAULT_ZOOM = 10f
+
 		fun goToThisScreenForStores(navController: NavController, categoryId: Int = -1, subCategoryId: Int = -1, propertyId: Int = -1) {
 			goToThisScreen(navController, Type.STORE, categoryId, subCategoryId, propertyId)
 		}
@@ -307,7 +311,7 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 				marker.drawCluster(cluster)
 			}
 		}.also {
-			//it.minClusterSize = ; //todo in px same as the drawing isa. + in case of click on cluster and reached max zoom show list of stores isa.
+			it.minClusterSize = 2
 		}
 		viewModel.clusterManager?.setOnClusterItemClickListener { maClusterItem ->
 			viewModel.allDataList?.firstOrNull { it.id == maClusterItem?.id }?.also { mapData ->
@@ -392,11 +396,11 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 
 			viewModel.clusterManager?.setAnimation(true)
 
-			updateDataToMapThenAnimateCamera()
+			updateDataToMapThenAnimateCamera(true)
 		}
 	}
 
-	private fun updateDataToMapThenAnimateCamera() {
+	private fun updateDataToMapThenAnimateCamera(isFirsTime: Boolean = false) {
 		showLoading()
 
 		val list = viewModel.getFilteredDataList()
@@ -413,13 +417,21 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 				}
 			)
 
+			val myCurrentLocation = viewModel.myCurrentLocation
 			viewModel.googleMap?.animateCamera(
-				CameraUpdateFactory.newLatLngBounds(
-					list.map {
-						LatLng(it.latitude.orZero(), it.longitude.orZero())
-					}.toLatLngBounds(),
-					spacingBetweenDataItemsOnMapsAndScreenBorder
-				)
+				if (isFirsTime && myCurrentLocation != null) {
+					CameraUpdateFactory.newLatLngZoom(
+						myCurrentLocation,
+						DEFAULT_ZOOM
+					)
+				}else {
+					CameraUpdateFactory.newLatLngBounds(
+						list.map {
+							LatLng(it.latitude.orZero(), it.longitude.orZero())
+						}.toLatLngBounds(),
+						spacingBetweenDataItemsOnMapsAndScreenBorder
+					)
+				}
 			)
 		}else {
 			val msg = when (viewModel.args.type) {
