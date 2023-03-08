@@ -90,6 +90,45 @@ class AppPreferences @Inject constructor(
     it[COUNTRY_ID] ?: "1"
   }
 
+	suspend fun getAnnouncementLocally(): ResponseAnnouncement? {
+		return getAnnouncement()?.let {
+			val nthTime = if (BuildConfig.DEBUG) 2 else 15
+
+			MyLogger.e("announc announc announc announc ${getAnnouncementCount()} ${getAnnouncementCount().dec() % nthTime == 0}")
+
+			if (getAnnouncementCount().dec() % nthTime == 0) it else null
+		}
+	}
+
+	suspend fun saveAnnouncementLocally(announcement: ResponseAnnouncement?) {
+		val prevAnnouncement = getAnnouncement()
+
+		context.dataStore.edit {
+			it[ANNOUNCEMENT] = announcement.toJsonOrNull(ResponseAnnouncement::class.java).orEmpty()
+		}
+
+		when {
+			announcement == null -> {
+				// No announcement so clear count and show nothing.
+				saveAnnouncementCount(0)
+			}
+			prevAnnouncement?.id == announcement.id -> {
+				// Same announcement increment count and show according to client's preference.
+				val prevCount = getAnnouncementCount()
+				saveAnnouncementCount(prevCount.inc())
+
+				// nth time after showing ex. if 2 then will see then no see then see etc...
+				/*val nthTime = if (BuildConfig.DEBUG) 15*//*2*//* else 15
+
+				if (prevCount % nthTime == 0) announcement else null*/
+			}
+			else -> {
+				// New announcement make count 1 and show it
+				saveAnnouncementCount(1)
+			}
+		}
+	}
+
 	/**
 	 * - By client instructions only show 1st time then every 15th time check if same id.
 	 *
@@ -122,7 +161,7 @@ class AppPreferences @Inject constructor(
 				if (prevCount % nthTime == 0) announcement else null
 			}
 			else -> {
-				// New announcement make count 0 and show it
+				// New announcement make count 1 and show it
 				saveAnnouncementCount(1)
 
 				announcement

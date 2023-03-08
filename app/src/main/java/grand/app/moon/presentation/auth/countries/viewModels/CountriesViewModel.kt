@@ -18,6 +18,7 @@ import grand.app.moon.domain.account.repository.AccountRepository
 import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.applicationScope
 import grand.app.moon.presentation.auth.countries.CountriesFragmentArgs
 import grand.app.moon.presentation.auth.countries.CountriesFragmentDirections
 import grand.app.moon.presentation.auth.countries.adapters.CountriesAdapter
@@ -99,10 +100,15 @@ class CountriesViewModel @Inject constructor(
 	  }
 
     countriesFragmentArgs?.from?.let {
-      if (it == Constants.SPLASH)
-        v.findNavController().navigate(CountriesFragmentDirections.actionCountriesFragment2ToTutorialFragment())
-      else
-        clickEvent.value = Constants.BACK
+      if (it == Constants.SPLASH){
+	      v.context?.applicationScope?.launch {
+		      repoShop.fetchAnnouncementAndSaveItLocally()
+	      }
+
+	      v.findNavController().navigate(CountriesFragmentDirections.actionCountriesFragment2ToTutorialFragment())
+			}else {
+	      clickEvent.value = Constants.BACK
+      }
     }
   }
 

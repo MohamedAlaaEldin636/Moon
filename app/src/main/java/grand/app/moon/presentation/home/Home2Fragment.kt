@@ -9,9 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.*
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
@@ -19,8 +21,7 @@ import grand.app.moon.presentation.home.models.ItemHomeRV
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
@@ -36,6 +37,29 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
 	}
 
 	private fun callApi() {
+		lifecycleScope.launch {
+			val app = activity?.application as? MyApplication
+			MyLogger.e("announc announc announc announc $app $activity ${activity?.application} ${app?.checkedAppGlobalAnnouncement}")
+			if (app != null && !app.checkedAppGlobalAnnouncement) {
+				val announcement = viewModel.repoShop.getAnnouncementIfShouldAppearOrNull()
+				app.checkedAppGlobalAnnouncement = true
+
+				MyLogger.e("announc announc announc announc $announcement")
+
+				if (announcement != null) {
+					kotlin.runCatching {
+						findNavController().navigateDeepLinkWithOptions(
+							"fragment-dest",
+							"grand.app.moon.dest.announcement.dialog",
+							paths = arrayOf(announcement.image.orEmpty())
+						)
+					}.getOrElse {
+						MyLogger.e("announc announc announc announc $it")
+					}
+				}
+			}
+		}
+
 		if (viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands().isEmpty()) {
 			handleRetryAbleActionOrGoBack(
 				action = {

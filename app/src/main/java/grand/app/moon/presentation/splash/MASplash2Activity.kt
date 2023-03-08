@@ -51,6 +51,10 @@ class MASplash2Activity : AppCompatActivity() {
 				delay(50)
 
 				applicationScope?.launch {
+					if (getInitialAppLaunch() == InitialAppLaunch.SHOW_HOME) {
+						repoShop.fetchAnnouncementAndSaveItLocally()
+					}
+
 					repoShop.fetchAllCategoriesAndSaveThemLocallyIfPossible()
 				}
 

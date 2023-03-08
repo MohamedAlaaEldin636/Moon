@@ -608,6 +608,10 @@
     <argument
       android:name="image"
       app:argType="string" />
+    <deepLink
+      android:id="@+id/deep_deep_link_dest_announcement_dialog"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.announcement.dialog/{image}" />
   </dialog>
   <fragment
     android:id="@+id/dest_my_ads"

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.paging.PagingData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import grand.app.moon.core.extenstions.*
+import grand.app.moon.data.home.repository.HomeRepositoryImpl
 import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.ads.DynamicFilterProperty
 import grand.app.moon.domain.ads.ResponseFilterProperties
@@ -11,11 +12,13 @@ import grand.app.moon.domain.ads.toResponseFilterProperties
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
+import grand.app.moon.domain.home.repository.HomeRepository
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.map
 import grand.app.moon.domain.utils.toFailureStatus
+import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.mapToNullSuccess
 import grand.app.moon.extensions.orZero
 import grand.app.moon.helpers.paging.*
@@ -32,6 +35,7 @@ import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
 import grand.app.moon.presentation.myStore.ItemWorkingHours2
 import grand.app.moon.presentation.myStore.model.ResponseCountry
 import grand.app.moon.presentation.stats.models.ItemStoreStats
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -43,6 +47,7 @@ class RepoShop @Inject constructor(
 	private val useCaseCountries: CountriesUseCase,
 	@ApplicationContext private val appContext: Context,
 	private val appPreferences: AppPreferences,
+	private val homeRepository: HomeRepository
 ) {
 
 	fun getMyCategories() = BasePaging.createFlowViaPager {
@@ -471,6 +476,29 @@ class RepoShop @Inject constructor(
 
 				return
 			}
+		}
+	}
+
+	suspend fun getAnnouncementIfShouldAppearOrNull() = appPreferences.getAnnouncementLocally()
+
+	suspend fun fetchAnnouncementAndSaveItLocally(retries: Int = 50) {
+		repeat(retries.coerceAtLeast(0).inc()) {
+			MyLogger.e("dhasuidhasi")
+
+			val resource = remoteDataSource.getAnnouncement()
+
+
+			MyLogger.e("dhasuidhasi $resource")
+
+			if (resource is MAResult.Success) {
+				MyLogger.e("dhasuidhasi 2")
+
+				appPreferences.saveAnnouncementLocally(resource.value.data)
+
+				return
+			}
+
+			delay(100)
 		}
 	}
 

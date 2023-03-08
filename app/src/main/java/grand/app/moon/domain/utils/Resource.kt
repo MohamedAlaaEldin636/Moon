@@ -30,7 +30,11 @@ sealed class Resource<out T> {
     val failureStatus: FailureStatus,
     val code: Int? = null,
     val message: String? = null
-  ) : Resource<Nothing>()
+  ) : Resource<Nothing>() {
+	  override fun toString(): String {
+		  return "$failureStatus $code $message"
+	  }
+	}
 
   object Loading : Resource<Nothing>()
 
