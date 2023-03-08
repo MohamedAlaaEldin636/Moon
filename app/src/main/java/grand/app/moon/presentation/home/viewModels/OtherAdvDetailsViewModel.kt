@@ -346,6 +346,10 @@ class OtherAdvDetailsViewModel @Inject constructor(
 
 		val context = fragment.context ?: return
 
+		context.applicationScope?.launch {
+			repoShop.interactionForAdWhatsApp(response.value?.id.orZero())
+		}
+
 		context.launchWhatsApp(response.value?.fullPhone.orEmpty())
 	}
 
@@ -353,6 +357,10 @@ class OtherAdvDetailsViewModel @Inject constructor(
 		val fragment = view.findFragmentOrNull<OtherAdvDetailsFragment>() ?: return
 
 		val context = fragment.context ?: return
+
+		context.applicationScope?.launch {
+			repoShop.interactionForAdCall(response.value?.id.orZero())
+		}
 
 		context.launchDialNumber(response.value?.fullPhone.orEmpty())
 	}
@@ -363,6 +371,10 @@ class OtherAdvDetailsViewModel @Inject constructor(
 		val context = fragment.context ?: return
 
 		if (context.isLoginWithOpenAuth()) {
+			context.applicationScope?.launch {
+				repoShop.interactionForAdChat(response.value?.id.orZero())
+			}
+
 			response.value?.store?.also {
 				context.launchCometChat(it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
 			}

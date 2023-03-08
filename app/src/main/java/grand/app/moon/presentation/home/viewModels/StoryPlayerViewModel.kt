@@ -146,6 +146,10 @@ class StoryPlayerViewModel @Inject constructor(
 				}else {
 					MyLogger.e("dejwkejhdkwejd ${getPhoneWithCountryCode()}")
 
+					context.applicationScope?.launch {
+						repoShop.interactionForStoreWhatsApp(currentStoreWithStories.value?.id.orZero())
+					}
+
 					context.launchWhatsApp(getPhoneWithCountryCode())
 				}
 			}
@@ -154,6 +158,10 @@ class StoryPlayerViewModel @Inject constructor(
 					fragment.showMessage(getString(R.string.no_ph_743))
 				}else {
 					MyLogger.e("dejwkejhdkwejd ${getPhoneWithCountryCode()}")
+
+					context.applicationScope?.launch {
+						repoShop.interactionForStoreCall(currentStoreWithStories.value?.id.orZero())
+					}
 
 					context.launchDialNumber(getPhoneWithCountryCode())
 				}
@@ -265,6 +273,10 @@ class StoryPlayerViewModel @Inject constructor(
 					role = it?.role
 				}
 			}else {
+				context.applicationScope?.launch {
+					repoShop.interactionForStoreWhatsApp(currentStoreWithStories.value?.id.orZero())
+				}
+
 				currentStoreWithStories.value?.also {
 					context.openChatStore(view, it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
 				}

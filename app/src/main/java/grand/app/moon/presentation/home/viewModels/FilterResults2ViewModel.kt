@@ -81,6 +81,10 @@ class FilterResults2ViewModel @Inject constructor(
 					?: return@setOnClickListener
 				//val position = binding.linearLayout.tag as? Int ?: return@setOnClickListener
 
+				context.applicationScope?.launch {
+					repoShop.interactionForAdWhatsApp(item.id.orZero())
+				}
+
 				context.launchWhatsApp(item.phone.orEmpty())
 			}
 			binding.callImageView.setOnClickListener {
@@ -88,6 +92,10 @@ class FilterResults2ViewModel @Inject constructor(
 				val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 					?: return@setOnClickListener
 				//val position = binding.linearLayout.tag as? Int ?: return@setOnClickListener
+
+				context.applicationScope?.launch {
+					repoShop.interactionForAdCall(item.id.orZero())
+				}
 
 				context.launchDialNumber(item.phone.orEmpty())
 			}
@@ -98,6 +106,10 @@ class FilterResults2ViewModel @Inject constructor(
 				//val position = binding.linearLayout.tag as? Int ?: return@setOnClickListener
 
 				if (context.isLoginWithOpenAuth()) {
+					context.applicationScope?.launch {
+						repoShop.interactionForAdChat(item.id.orZero())
+					}
+
 					item.store?.also {
 						context.openChatStore(view, it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
 					}

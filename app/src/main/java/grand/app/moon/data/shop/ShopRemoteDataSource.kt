@@ -19,10 +19,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.Part
-import retrofit2.http.Query
-import retrofit2.http.QueryMap
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -822,5 +818,17 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	suspend fun getExploreShares(id: Int, page: Int) = safeApiCall2 { apiService.getExploreShares(id, page) }
 
 	suspend fun getAnnouncement() = safeApiCall2 { apiService.getAnnouncement() }
+
+	suspend fun interactionForAdv(advId: Int, type: TypeAdOrStoreInteraction) = safeApiCall {
+		apiService.interactionForAd(advId, type.apiValue)
+	}
+
+	suspend fun interactionForStore(storeId: Int, type: TypeAdOrStoreInteraction) = safeApiCall {
+		apiService.interactionForStore(storeId, type.apiValue)
+	}
+
+	enum class TypeAdOrStoreInteraction(val apiValue: Int) {
+		CALL(6), WHATSAPP(7), CHAT(8)
+	}
 
 }

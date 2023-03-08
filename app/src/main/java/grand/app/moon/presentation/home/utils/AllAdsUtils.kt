@@ -127,6 +127,10 @@ fun AllAdsViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithDifferentIt
 					val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 						?: return@setOnClickListener
 
+					context.applicationScope?.launch {
+						repoShop.interactionForAdWhatsApp(item.id.orZero())
+					}
+
 					context.launchWhatsApp(item.phone.orEmpty())
 				}
 				binding.callImageView.setOnClickListener {
@@ -134,6 +138,10 @@ fun AllAdsViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithDifferentIt
 
 					val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 						?: return@setOnClickListener
+
+					context.applicationScope?.launch {
+						repoShop.interactionForAdCall(item.id.orZero())
+					}
 
 					context.launchDialNumber(item.phone.orEmpty())
 				}
@@ -144,6 +152,10 @@ fun AllAdsViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithDifferentIt
 						?: return@setOnClickListener
 
 					if (context.isLoginWithOpenAuth()) {
+						context.applicationScope?.launch {
+							repoShop.interactionForAdChat(item.id.orZero())
+						}
+
 						item.store?.also {
 							context.launchCometChat(it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
 						}
@@ -194,6 +206,10 @@ fun AllAdsViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithDifferentIt
 					val item = binding.root.getTagJson<ResponseSearchResult>()
 						?: return@setOnClickListener
 
+					context.applicationScope?.launch {
+						repoShop.interactionForAdWhatsApp(item.id.orZero())
+					}
+
 					context.launchWhatsApp(item.phone.orEmpty())
 				}
 				binding.phoneConstraintLayout.setOnClickListener {
@@ -201,6 +217,10 @@ fun AllAdsViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithDifferentIt
 
 					val item = binding.root.getTagJson<ResponseSearchResult>()
 						?: return@setOnClickListener
+
+					context.applicationScope?.launch {
+						repoShop.interactionForAdCall(item.id.orZero())
+					}
 
 					context.launchDialNumber(item.phone.orEmpty())
 				}
@@ -211,6 +231,10 @@ fun AllAdsViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithDifferentIt
 						?: return@setOnClickListener
 
 					if (context.isLoginWithOpenAuth()) {
+						context.applicationScope?.launch {
+							repoShop.interactionForAdChat(item.id.orZero())
+						}
+
 						item.store?.also {
 							context.launchCometChat(it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
 						}

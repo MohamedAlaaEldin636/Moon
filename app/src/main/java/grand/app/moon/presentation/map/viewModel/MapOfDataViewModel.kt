@@ -86,10 +86,22 @@ class MapOfDataViewModel @Inject constructor(
 	fun launchWhatsApp(view: View) {
 		val phone = "${selectedMapData.value?.country?.countryCode.orEmpty()}${selectedMapData.value?.phone.orEmpty()}"
 
+		val context = view.context ?: return
+
+		context.applicationScope?.launch {
+			repoShop.interactionForAdWhatsApp(selectedMapData.value?.id.orZero())
+		}
+
 		view.context?.launchWhatsApp(phone)
 	}
 	fun launchCall(view: View) {
 		val phone = "${selectedMapData.value?.country?.countryCode.orEmpty()}${selectedMapData.value?.phone.orEmpty()}"
+
+		val context = view.context ?: return
+
+		context.applicationScope?.launch {
+			repoShop.interactionForAdCall(selectedMapData.value?.id.orZero())
+		}
 
 		view.context?.launchDialNumber(phone)
 	}
@@ -97,6 +109,10 @@ class MapOfDataViewModel @Inject constructor(
 		val context = view.context ?: return
 
 		if (context.isLoginWithOpenAuth()) {
+			context.applicationScope?.launch {
+				repoShop.interactionForAdChat(selectedMapData.value?.id.orZero())
+			}
+
 			selectedMapData.value?.also {
 				context.openChatStore(view, it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
 			}

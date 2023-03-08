@@ -476,4 +476,18 @@ interface ShopServices {
 	@GET("v1/announcement")
 	suspend fun getAnnouncement(): MABaseResponse<ResponseAnnouncement?>
 
+	@FormUrlEncoded
+	@POST("v1/interactions")
+	suspend fun interactionForAd(
+		@Field("advertisement_id") advId: Int,
+		@Field("type") type: Int,
+	): BaseResponse<Any?>
+
+	@FormUrlEncoded
+	@POST("v1/interactions")
+	suspend fun interactionForStore(
+		@Field("store_id") storeId: Int,
+		@Field("type") type: Int,
+	): BaseResponse<Any?>
+
 }

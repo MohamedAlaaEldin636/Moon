@@ -379,6 +379,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 							?: return@setOnClickListener
 
+						context.applicationScope?.launch {
+							repoShop.interactionForAdWhatsApp(item.id.orZero())
+						}
+
 						context.launchWhatsApp(item.phone.orEmpty())
 					}
 					binding.callImageView.setOnClickListener {
@@ -386,6 +390,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 							?: return@setOnClickListener
+
+						context.applicationScope?.launch {
+							repoShop.interactionForAdCall(item.id.orZero())
+						}
 
 						context.launchDialNumber(item.phone.orEmpty())
 					}
@@ -396,6 +404,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 							?: return@setOnClickListener
 
 						if (context.isLoginWithOpenAuth()) {
+							context.applicationScope?.launch {
+								repoShop.interactionForAdChat(item.id.orZero())
+							}
+
 							item.store?.also {
 								context.launchCometChat(it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
 							}
@@ -445,6 +457,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 							?: return@setOnClickListener
 
+						context.applicationScope?.launch {
+							repoShop.interactionForAdWhatsApp(item.id.orZero())
+						}
+
 						context.launchWhatsApp(item.phone.orEmpty())
 					}
 					binding.phoneConstraintLayout.setOnClickListener {
@@ -452,6 +468,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 							?: return@setOnClickListener
+
+						context.applicationScope?.launch {
+							repoShop.interactionForAdCall(item.id.orZero())
+						}
 
 						context.launchDialNumber(item.phone.orEmpty())
 					}
@@ -462,6 +482,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 							?: return@setOnClickListener
 
 						if (context.isLoginWithOpenAuth()) {
+							context.applicationScope?.launch {
+								repoShop.interactionForAdChat(item.id.orZero())
+							}
+
 							item.store?.also {
 								context.launchCometChat(it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
 							}
@@ -813,6 +837,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 		val context = fragment.context ?: return
 
+		context.applicationScope?.launch {
+			repoShop.interactionForStoreWhatsApp(response.value?.id.orZero())
+		}
+
 		context.launchWhatsApp(response.value?.fullPhone.orEmpty())
 	}
 
@@ -820,6 +848,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
 
 		val context = fragment.context ?: return
+
+		context.applicationScope?.launch {
+			repoShop.interactionForStoreCall(response.value?.id.orZero())
+		}
 
 		context.launchDialNumber(response.value?.fullPhone.orEmpty())
 	}
@@ -830,6 +862,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 		val context = fragment.context ?: return
 
 		if (context.isLoginWithOpenAuth()) {
+			context.applicationScope?.launch {
+				repoShop.interactionForStoreChat(response.value?.id.orZero())
+			}
+
 			response.value?.also {
 				context.launchCometChat(it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
 			}

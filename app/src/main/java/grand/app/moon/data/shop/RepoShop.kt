@@ -784,6 +784,25 @@ class RepoShop @Inject constructor(
 	fun getFollowedStores(categoryId: Int?) = BasePaging.createFlowViaPager {
 		remoteDataSource.getFollowedStores(categoryId, it)
 	}
+	
+	suspend fun interactionForAdWhatsApp(advId: Int) = remoteDataSource.interactionForAdv(
+		advId, ShopRemoteDataSource.TypeAdOrStoreInteraction.WHATSAPP
+	)
+	suspend fun interactionForAdCall(advId: Int) = remoteDataSource.interactionForAdv(
+		advId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CALL
+	)
+	suspend fun interactionForAdChat(advId: Int) = remoteDataSource.interactionForAdv(
+		advId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CHAT
+	)
+	suspend fun interactionForStoreWhatsApp(storeId: Int) = remoteDataSource.interactionForStore(
+		storeId, ShopRemoteDataSource.TypeAdOrStoreInteraction.WHATSAPP
+	)
+	suspend fun interactionForStoreCall(storeId: Int) = remoteDataSource.interactionForStore(
+		storeId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CALL
+	)
+	suspend fun interactionForStoreChat(storeId: Int) = remoteDataSource.interactionForStore(
+		storeId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CHAT
+	)
 
 }
 
