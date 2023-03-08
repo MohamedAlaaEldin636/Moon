@@ -433,7 +433,7 @@
 
         android:onClick="@{v -> viewModel.pickImage(v)}"
 
-        android:hint="@string/add_img"
+        android:hint="@string/add_img_or_video"
 
         app:layout_constraintTop_toBottomOf="@id/typeTextView"
         app:layout_constraintStart_toStartOf="parent"

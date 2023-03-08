@@ -47,7 +47,7 @@ class ContactUs2ViewModel @Inject constructor(
 	}
 	val image = MutableLiveData<Uri?>()
 	val textImage = image.map { uri ->
-		uri?.let { app.getString(R.string.image_has_been_added) }.orEmpty()
+		uri?.let { app.getString(R.string.added_successfully) }.orEmpty()
 	}
 
 	val message = MutableLiveData("")
@@ -56,7 +56,7 @@ class ContactUs2ViewModel @Inject constructor(
 
 	val adapter = RVItemCommonListUsage<ItemContactUsBinding, ResponseContactUsData>(
 		R.layout.item_contact_us
-	) { binding, position, item ->
+	) { binding, _, item ->
 		binding.imageView.setImageResource(
 			when (selectedTypeOfData.value) {
 				ContactUs2Fragment.Selection.EMAIL -> R.drawable.contact_us_msg
@@ -92,7 +92,7 @@ class ContactUs2ViewModel @Inject constructor(
 
 	private fun getInnerAdapter() = RVItemCommonListUsage<ItemInsideItemContactUsBinding, ItemInsideContactUsData>(
 		R.layout.item_inside_item_contact_us,
-		onItemClick = { adapter, binding ->
+		onItemClick = { _, binding ->
 			val fragment = binding.root.findFragmentOrNull<ContactUs2Fragment>() ?: return@RVItemCommonListUsage
 			val context = fragment.context ?: return@RVItemCommonListUsage
 			val value = binding.textView.text.toStringOrEmpty()
@@ -107,7 +107,7 @@ class ContactUs2ViewModel @Inject constructor(
 				null -> {}
 			}
 		}
-	) { binding, position, item ->
+	) { binding, _, item ->
 		binding.textView.text = item.content
 	}
 

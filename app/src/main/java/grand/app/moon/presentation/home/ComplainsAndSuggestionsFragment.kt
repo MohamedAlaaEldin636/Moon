@@ -24,13 +24,12 @@ class ComplainsAndSuggestionsFragment : BaseFragment<FragmentComplainsAndSuggest
 	override fun onCreate(savedInstanceState: Bundle?) {
 		gettingImageHandler = PickImagesOrVideoHandler(
 			this,
-			PickImagesOrVideoHandler.SupportedMediaType.IMAGE,
+			PickImagesOrVideoHandler.SupportedMediaType.BOTH,
+			3 * 60,
 			requestMultipleImages = false,
 			getAnchor = { _binding?.imageTextView }
-		) { uris, _, isImageNotVideo ->
-			if (isImageNotVideo) {
-				viewModel.image.value = uris.firstOrNull()
-			}
+		) { uris, _, _ ->
+			viewModel.image.value = uris.firstOrNull()
 		}
 
 		super.onCreate(savedInstanceState)

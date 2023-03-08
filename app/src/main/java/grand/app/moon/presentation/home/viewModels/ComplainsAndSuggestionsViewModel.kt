@@ -40,7 +40,7 @@ class ComplainsAndSuggestionsViewModel @Inject constructor(
 	}
 	val image = MutableLiveData<Uri?>()
 	val textImage = image.map { uri ->
-		uri?.let { app.getString(R.string.image_has_been_added) }.orEmpty()
+		uri?.let { app.getString(R.string.added_successfully) }.orEmpty()
 	}
 
 	val message = MutableLiveData("")

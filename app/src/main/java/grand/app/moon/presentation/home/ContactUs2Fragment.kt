@@ -7,15 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
-import grand.app.moon.databinding.FragmentComplainsAndSuggestionsBinding
 import grand.app.moon.databinding.FragmentContactUs2Binding
-import grand.app.moon.databinding.FragmentContactUsBinding
-import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.PickImagesOrVideoHandler
 import grand.app.moon.extensions.handleRetryAbleActionOrGoBack
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.home.viewModels.ComplainsAndSuggestionsViewModel
 import grand.app.moon.presentation.home.viewModels.ContactUs2ViewModel
 
 @AndroidEntryPoint
@@ -29,13 +25,12 @@ class ContactUs2Fragment : BaseFragment<FragmentContactUs2Binding>() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		gettingImageHandler = PickImagesOrVideoHandler(
 			this,
-			PickImagesOrVideoHandler.SupportedMediaType.IMAGE,
+			PickImagesOrVideoHandler.SupportedMediaType.BOTH,
+			3 * 60,
 			requestMultipleImages = false,
 			getAnchor = { _binding?.imageTextView }
-		) { uris, _, isImageNotVideo ->
-			if (isImageNotVideo) {
-				viewModel.image.value = uris.firstOrNull()
-			}
+		) { uris, _, _ ->
+			viewModel.image.value = uris.firstOrNull()
 		}
 
 		super.onCreate(savedInstanceState)
