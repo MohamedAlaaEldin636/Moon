@@ -5,6 +5,28 @@ import androidx.paging.LoadStateAdapter
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.ConcatAdapter
 
+fun PagingDataAdapter<*, *>.withDefaultHeaderOnlyAdapter(): ConcatAdapter {
+	val headerAdapter = LSAdapterLoadingErrorEmpty(this, false)
+
+	return withCustomHeaderOnlyAdapter(
+		headerAdapter,
+	)
+}
+
+fun PagingDataAdapter<*, *>.withCustomHeaderOnlyAdapter(
+	header: LoadStateAdapter<*>,
+): ConcatAdapter {
+	addLoadStateListener { loadStates ->
+		header.loadState = if (loadStates.refresh is LoadState.Loading) {
+			LoadState.Loading
+		}else {
+			loadStates.prepend
+		}
+	}
+
+	return ConcatAdapter(header, this)
+}
+
 fun PagingDataAdapter<*, *>.withDefaultHeaderAndFooterAdapters(): ConcatAdapter {
 	val headerAdapter = LSAdapterLoadingErrorEmpty(this, false)
 	val footerAdapter = LSAdapterLoadingErrorEmpty(this, true)

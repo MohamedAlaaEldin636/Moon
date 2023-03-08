@@ -119,7 +119,7 @@ fun SearchResultsViewModel.getAdsAdapter() = RVPagingItemCommonListUsage<ItemSea
 	binding.root.setTag(R.id.position_tag, position)
 
 	binding.imageImageView.setupWithGlide {
-		load(item.image)
+		load(item.image).saveDiskCacheStrategyAll()
 	}
 
 	binding.premiumImageView.isVisible = item.isPremium
@@ -193,7 +193,7 @@ fun SearchResultsViewModel.getStoresAdapter() = RVPagingItemCommonListUsage<Item
 	val context = binding.root.context ?: return@RVPagingItemCommonListUsage
 
 	binding.imageImageView.setupWithGlide {
-		load(item.image)
+		load(item.image).saveDiskCacheStrategyAll()
 	}
 
 	binding.nameTextView.text = item.name
@@ -247,7 +247,7 @@ fun SearchResultsViewModel.getCategoriesAdapter() = RVPagingItemCommonListUsage<
 	binding.textTextView.text = item.name
 
 	binding.imageImageView.setupWithGlide {
-		load(item.image)
+		load(item.image).saveDiskCacheStrategyAll()
 	}
 
 }

@@ -34,6 +34,21 @@ class SearchResultsViewModel @Inject constructor(
 
 	val filterType = MutableLiveData(TypeSearchResult.ADVERTISEMENT)
 
+	val showEmptyForAds = MutableLiveData(false)
+	val showEmptyForStores = MutableLiveData(false)
+	val showEmptyForNicknames = MutableLiveData(false)
+	val showEmptyForCategories = MutableLiveData(false)
+
+	val showEmptyView = switchMapMultiple2(filterType, showEmptyForAds, showEmptyForStores, showEmptyForNicknames, showEmptyForCategories) {
+		when (filterType.value) {
+			TypeSearchResult.ADVERTISEMENT -> showEmptyForAds.value == true
+			TypeSearchResult.STORE -> showEmptyForStores.value == true
+			TypeSearchResult.NICKNAME -> showEmptyForNicknames.value == true
+			TypeSearchResult.CATEGORY -> showEmptyForCategories.value == true
+			null -> true
+		}
+	}
+
 	val filterAdvertisementsIsSelected = filterType.map {
 		it == TypeSearchResult.ADVERTISEMENT
 	}

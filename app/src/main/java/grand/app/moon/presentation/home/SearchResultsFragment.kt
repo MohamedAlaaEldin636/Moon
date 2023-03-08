@@ -11,6 +11,7 @@ import grand.app.moon.R
 import grand.app.moon.databinding.FragmentSearchResultsBinding
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
+import grand.app.moon.helpers.paging.withDefaultHeaderOnlyAdapter
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.home.viewModels.SearchResultsViewModel
@@ -32,7 +33,7 @@ class SearchResultsFragment : BaseFragment<FragmentSearchResultsBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 
 		binding.recyclerView.setupWithRVItemCommonListUsage(
-			viewModel.adapterAdvertisements.withDefaultHeaderAndFooterAdapters(),
+			viewModel.adapterAdvertisements.withDefaultHeaderOnlyAdapter(),
 			false,
 			1
 		)
@@ -57,6 +58,27 @@ class SearchResultsFragment : BaseFragment<FragmentSearchResultsBinding>() {
 				launch {
 					viewModel.categories.collectLatest {
 						viewModel.adapterCategories.submitData(it)
+					}
+				}
+
+				launch {
+					viewModel.adapterAdvertisements.showEmptyViewFlow.collectLatest {
+						viewModel.showEmptyForAds.value = it
+					}
+				}
+				launch {
+					viewModel.adapterStories.showEmptyViewFlow.collectLatest {
+						viewModel.showEmptyForStores.value = it
+					}
+				}
+				launch {
+					viewModel.adapterNicknames.showEmptyViewFlow.collectLatest {
+						viewModel.showEmptyForNicknames.value = it
+					}
+				}
+				launch {
+					viewModel.adapterCategories.showEmptyViewFlow.collectLatest {
+						viewModel.showEmptyForCategories.value = it
 					}
 				}
 			}
