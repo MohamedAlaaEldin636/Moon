@@ -5,15 +5,9 @@ import android.animation.ValueAnimator
 import android.app.Application
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.upstream.TimeToFirstByteEstimator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.isLoginWithOpenAuth
@@ -25,12 +19,10 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.shop.StoryLink
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.constraintPercentWidth
-import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.base.extensions.showMessage
+import grand.app.moon.presentation.home.StoryPlayerFragment
 import grand.app.moon.presentation.home.StoryPlayerFragmentArgs
 import grand.app.moon.presentation.home.models.ResponseStory
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -90,8 +82,8 @@ class StoryPlayerViewModel @Inject constructor(
 	val textOfStoryLink = storyLink.map {
 		val textRes = when (it) {
 			StoryLink.WHATSAPP -> R.string.whatsapp_3
-			StoryLink.CALL -> R.string.chat_3829
-			StoryLink.CHAT -> R.string.call
+			StoryLink.CALL -> R.string.call
+			StoryLink.CHAT -> R.string.chat_3829
 			null -> return@map null
 		}
 
@@ -140,6 +132,35 @@ class StoryPlayerViewModel @Inject constructor(
 
 	val storeNickName = currentStoreWithStories.map {
 		"( ${it?.nickname.orEmpty()} )"
+	}
+
+	fun actOnStoryLink(view: View) {
+		val fragment = view.findFragmentOrNull<StoryPlayerFragment>() ?: return
+
+		val context = view.context ?: return
+
+		when (storyLink.value) {
+			StoryLink.WHATSAPP -> {
+				if (getPhoneWithCountryCode().isEmpty()) {
+					fragment.showMessage(getString(R.string.no_ph_743))
+				}else {
+					MyLogger.e("dejwkejhdkwejd ${getPhoneWithCountryCode()}")
+
+					context.launchWhatsApp(getPhoneWithCountryCode())
+				}
+			}
+			StoryLink.CALL -> {
+				if (getPhoneWithCountryCode().isEmpty()) {
+					fragment.showMessage(getString(R.string.no_ph_743))
+				}else {
+					MyLogger.e("dejwkejhdkwejd ${getPhoneWithCountryCode()}")
+
+					context.launchDialNumber(getPhoneWithCountryCode())
+				}
+			}
+			StoryLink.CHAT -> chat(fragment.binding.chatTextView)
+			null -> {}
+		}
 	}
 
 	fun pause() {

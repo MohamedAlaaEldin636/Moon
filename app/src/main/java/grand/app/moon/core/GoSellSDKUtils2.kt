@@ -75,7 +75,7 @@ object GoSellSDKUtils2 {
 		}
 
 		override fun paymentFailed(charge: Charge?) {
-			MyLogger.e("TAP PAYMENT GO SELL SDK -> paymentFailed $charge")
+			MyLogger.e("TAP PAYMENT GO SELL SDK -> paymentFailed $charge ${charge?.expiry}")
 
 			onPaymentFailed?.invoke() ?: weakRefFragment.showErrorMsg("payment failed")
 		}

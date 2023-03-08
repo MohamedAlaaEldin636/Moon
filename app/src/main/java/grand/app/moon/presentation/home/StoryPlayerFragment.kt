@@ -46,24 +46,7 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 
 			if (velocityY < 0 && context != null) {
 				// Swipe Up
-				when (viewModel.storyLink.value) {
-					StoryLink.WHATSAPP -> {
-						if (viewModel.getPhoneWithCountryCode().isEmpty()) {
-							showMessage(getString(R.string.no_ph_743))
-						}else {
-							context.launchWhatsApp(viewModel.getPhoneWithCountryCode())
-						}
-					}
-					StoryLink.CALL -> {
-						if (viewModel.getPhoneWithCountryCode().isEmpty()) {
-							showMessage(getString(R.string.no_ph_743))
-						}else {
-							context.launchDialNumber(viewModel.getPhoneWithCountryCode())
-						}
-					}
-					StoryLink.CHAT -> viewModel.chat(binding.chatTextView)
-					null -> {}
-				}
+				viewModel.actOnStoryLink(binding.swipIndicationTextView)
 			}
 
 			return super.onFling(e1, e2, velocityX, velocityY)

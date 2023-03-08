@@ -77,6 +77,8 @@ object GoSellSDKUtils {
 	private fun MyApplication.configureApp(language: String) {
 		//sk_test_jeAIVETRHKpdgu6lOraPtsXm -> Android -> sk_live_5JpXIsZ2CuKrBv67nV1wF9EO
 		//sk_test_gdfGYQrI158pKJSmPEV4CtvN -> IOS
+
+		// sk_test_gdfGYQrI158pKJSmPEV4CtvN
 		val key = if (useDebugForPayment()) {
 			"sk_test_jeAIVETRHKpdgu6lOraPtsXm"
 		}else {
