@@ -16,6 +16,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.showPopup
+import grand.app.moon.data.home2.RepoHome2
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemStoryInShopInfoBinding
 import grand.app.moon.domain.shop.ItemExploreInShopInfo
@@ -40,6 +41,7 @@ class StoryInShopInfoViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop,
 	val args: StoryInShopInfoFragmentArgs,
+	private val repoHome2: RepoHome2,
 ) : ItemStatsChartViewModel(application) {
 
 	val showStats = MutableLiveData(args.titlePlural != app.getString(R.string.def_value_string))
@@ -294,13 +296,19 @@ class StoryInShopInfoViewModel @Inject constructor(
 	fun goToAddStory(view: View) {
 		val fragment = view.findFragmentOrNull<StoryInShopInfoFragment>() ?: return
 
-		if (remainingCount.value.orZero() > 0) {
-			fragment.findNavController().navigateDeepLinkWithOptions(
-				"fragment-dest",
-				"grand.app.moon.dest.add.story"
-			)
-		}else {
-			fragment.showError(fragment.getString(R.string.no_more_rem_stories_in_your_package))
+		fragment.handleRetryAbleActionCancellable(
+			action = {
+				repoHome2.checkAvailabilityForStories()
+			}
+		) { count ->
+			if (count > 0) {
+				fragment.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.add.story"
+				)
+			}else {
+				fragment.showError(fragment.getString(R.string.no_more_rem_stories_in_your_package))
+			}
 		}
 	}
 

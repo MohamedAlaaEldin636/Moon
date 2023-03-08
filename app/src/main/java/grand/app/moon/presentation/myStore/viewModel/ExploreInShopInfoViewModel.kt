@@ -19,6 +19,7 @@ import grand.app.moon.R
 import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemExploreInShopInfoBinding
+import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.shop.ItemExploreInShopInfo
 import grand.app.moon.domain.stats.toChartData
 import grand.app.moon.extensions.*
@@ -45,7 +46,8 @@ import kotlin.math.roundToInt
 class ExploreInShopInfoViewModel @Inject constructor(
 	application: Application,
 	val repoShop: RepoShop,
-	val args: ExploreInShopInfoFragmentArgs
+	val args: ExploreInShopInfoFragmentArgs,
+	private val homeUseCase: HomeUseCase,
 ) : ItemStatsChartViewModel(application) {
 
 	val showStats = MutableLiveData(args.titlePlural != app.getString(R.string.def_value_string))
@@ -281,13 +283,24 @@ class ExploreInShopInfoViewModel @Inject constructor(
 	fun goToAddExplore(view: View) {
 		val fragment = view.findFragmentOrNull<ExploreInShopInfoFragment>() ?: return
 
-		if (remainingExploreCount.value.orZero() > 0) {
-			fragment.findNavController().navigateDeepLinkWithOptions(
-				"fragment-dest",
-				"grand.app.moon.dest.add.explore"
-			)
-		}else {
-			fragment.showError(fragment.getString(R.string.no_more_rem_explore_in_your_package))
+		fragment.handleRetryAbleActionCancellable(
+			action = {
+				homeUseCase.checkAvailableExplore()
+			}
+		) {
+			if (it > 0) {
+				fragment.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.add.explore"
+				)
+			}else {
+				fragment.showError(fragment.getString(R.string.no_more_rem_explore_in_your_package))
+
+				/*fragment.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.become.shop.packages"
+				)*/
+			}
 		}
 	}
 
