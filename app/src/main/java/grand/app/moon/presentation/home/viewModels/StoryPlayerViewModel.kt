@@ -238,7 +238,14 @@ class StoryPlayerViewModel @Inject constructor(
 	fun like(view: View) {
 		val context = view.context ?: return
 
+		val fragment = view.findFragmentOrNull<StoryPlayerFragment>() ?: return
+
 		if (context.isLoginWithOpenAuth()) {
+			if (currentStoreWithStories.value?.id.orZero() == userLocalUseCase().id) {
+				// My Store
+				return fragment.showMessage(context.getString(R.string.you_can_t_like_your_own_story))
+			}
+
 			val currentStoreId = currentStoreWithStories.value?.id.orZero()
 			val currentStoryId = currentStory.value?.id.orZero()
 			val newIsLiked = currentStory.value?.isLiked.orFalse().not()

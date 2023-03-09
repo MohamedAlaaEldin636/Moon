@@ -538,4 +538,5 @@
   <string name="from_var_am_to_var_pm">From %1$s in the morning to %2$s in the evening</string>
   <string name="cancel_follow_3892733">unfollow</string>
     <string name="add_img_or_video">إضافة صورة أو فيديو</string>
+    <string name="you_can_t_like_your_own_story">لا يمكنك لإعجاب الحالة الخاصة بك</string>
 </resources>
