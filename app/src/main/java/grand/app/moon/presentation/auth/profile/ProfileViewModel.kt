@@ -7,8 +7,6 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
-import grand.app.moon.core.MyApplication
-import grand.app.moon.core.extenstions.createMultipartBodyPart
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.auth.entity.model.User
 import grand.app.moon.domain.auth.entity.request.LogInRequest
@@ -17,6 +15,7 @@ import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.isValidEmail
+import grand.app.moon.extensions.trimAllWhitespaces
 import grand.app.moon.presentation.base.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -31,7 +30,9 @@ class ProfileViewModel @Inject constructor(
 
   ) : BaseViewModel() {
 
-  @Bindable
+	var phoneChanged = false
+
+	@Bindable
   val request = UpdateProfileRequest()
   var imageUri: Uri? = null
 
@@ -69,10 +70,12 @@ class ProfileViewModel @Inject constructor(
     if (request.country_code == "+20" && request.phone.startsWith("0")) {
       request.phone = request.phone.substring(1)
     }
+	  request.phone = request.phone.trimAllWhitespaces()
 
-    val phoneOld = user.country_code + user.phone
+	  val phoneOld = user.country_code + user.phone
     val phoneNew = request.country_code + request.phone
-    if (phoneNew != phoneOld) {
+	  phoneChanged = phoneNew != phoneOld
+    if (false && phoneNew != phoneOld) {
       val loginRequest= LogInRequest()
       loginRequest.country_code = request.country_code
       loginRequest.phone = request.phone
@@ -83,11 +86,11 @@ class ProfileViewModel @Inject constructor(
         }
         .launchIn(viewModelScope)
     } else {
+			//val withOldPhoneRequest = request.copy(country_code = , phone = )
       useCase.updateProfile(request).onEach { result ->
         response.value = result
       }.launchIn(viewModelScope)
     }
   }
-
 
 }

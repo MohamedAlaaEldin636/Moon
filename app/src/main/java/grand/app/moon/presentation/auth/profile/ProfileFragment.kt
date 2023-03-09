@@ -97,7 +97,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
           is Resource.Success -> {
             hideLoading()
             showMessage(it.value.message)
-            backToPreviousScreen()
+            if (viewModel.phoneChanged) {
+	            val gson = context?.convertToString(viewModel.request)
+	            Log.d(TAG, "setupObservers: $gson")
+	            //      app:uri="confirmCode://grand.app.moon.confirm.code/{country_code}/{phone}/{type}/{profile}" />
+	            val uri = Uri.Builder()
+		            .scheme("confirmCode")
+		            .authority("grand.app.moon.confirm.code")
+		            .appendPath(viewModel.request.country_code)
+		            .appendPath(viewModel.request.phone)
+		            .appendPath("verify")
+		            //.appendPath(gson.orEmpty())
+		            .build()
+	            val request = NavDeepLinkRequest.Builder.fromUri(uri).build()
+	            findNavController().navigate(request)
+            }else {
+	            backToPreviousScreen()
+            }
           }
           is Resource.Failure -> {
             hideLoading()
@@ -121,6 +137,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
             Log.d(TAG, "setupObservers: WORKED HERE")
 
+	          //UpdateProfileRequest
             val gson = context?.convertToString(viewModel.request)
             Log.d(TAG, "setupObservers: $gson")
             val uri = Uri.Builder()

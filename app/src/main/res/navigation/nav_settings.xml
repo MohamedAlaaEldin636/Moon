@@ -229,6 +229,11 @@
       android:autoVerify="true"
       app:uri="confirmCode://grand.app.moon.confirm.code/{profile}" />
 
+    <deepLink
+      android:id="@+id/confirmCode_6778"
+      android:autoVerify="true"
+      app:uri="confirmCode://grand.app.moon.confirm.code/{country_code}/{phone}/{type}" />
+
   </fragment>
   <fragment
     android:id="@+id/dest_store_full_data"
