@@ -78,7 +78,7 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>(), PermissionsHandler.L
 
     super.onCreate(savedInstanceState)
 
-	  if (savedInstanceState == null) {
+	  if (true || savedInstanceState == null) {
 		  setUpBottomNavigation()
 		  //setUpNavigationDrawer()
 	  }
