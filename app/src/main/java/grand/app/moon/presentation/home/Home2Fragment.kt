@@ -26,6 +26,7 @@ import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
 import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import kotlinx.coroutines.*
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.Listener {
@@ -341,12 +342,12 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 				true,
 				1
 			) { layoutParams ->
-				val number = 4
+				val number = 3.1f
 				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
 				val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
-				layoutParams.width = (totalWidth + layoutParams.marginEnd) / number
+				layoutParams.width = ((totalWidth + layoutParams.marginEnd.toFloat()) / number).roundToInt()
 			}
 			ItemHomeRV.Type.MOST_RATED_STORIES -> setupWithRVItemCommonListUsage(
 				viewModel.adapterMostRatedStore,
