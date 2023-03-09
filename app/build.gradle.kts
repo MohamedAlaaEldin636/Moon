@@ -237,7 +237,7 @@ dependencies {
   //slider
   implementation("com.github.denzcoskun:ImageSlideshow:0.1.0")
   //chat
-  implementation("com.cometchat:pro-android-chat-sdk:3.0.4")
+  implementation("com.cometchat:pro-android-chat-sdk:3.0.13")
 
   //exo-player
   implementation("com.google.android.exoplayer:exoplayer:2.18.2")

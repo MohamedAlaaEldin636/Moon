@@ -818,6 +818,8 @@ public class Utils {
         }
 
         fun getAddress(context: Context?, latitude: Double, longitude: Double): String? {
+	        if (context == null) return null
+
             val geocoder = Geocoder(context, Locale.getDefault())
             try {
                 val addresses = geocoder.getFromLocation(latitude, longitude, 1)

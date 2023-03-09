@@ -338,7 +338,7 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
                 animator.duration = 2000
                 animator.start()
                 animator.addListener(object : AnimatorListenerAdapter() {
-                  override fun onAnimationEnd(animation: Animator?) {
+                  override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
                     if (imageToFly != null)
                       imageToFly?.clearAnimation()
@@ -664,7 +664,7 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
     transition.repeatCount = 3
     fadeOut.repeatCount = 3
     fadeOut.addListener(object : AnimatorListenerAdapter() {
-      override fun onAnimationEnd(animation: Animator?) {
+      override fun onAnimationEnd(animation: Animator) {
         viewToAnimate.visibility = View.GONE
       }
     })
@@ -700,6 +700,46 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
       Log.e(TAG, "checkOnGoingCall: " + getActiveCall().toString())
     }
   }
+
+	private fun Context.checkSelfPermissionsGranted(vararg permissions: String): Boolean {
+		return permissions.all { permission ->
+			ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+		}
+	}
+
+	private val galleryAPI33Permissions = registerForActivityResult(
+		ActivityResultContracts.RequestMultiplePermissions()
+	) { permissions ->
+		if (permissions.all { it.value == true }) {
+			startActivityForResult(
+				MediaUtils.openGallery(activity!!),
+				UIKitConstants.RequestCode.GALLERY
+			)
+		}
+	}
+
+	private val filesAPI33Permissions = registerForActivityResult(
+		ActivityResultContracts.RequestMultiplePermissions()
+	) { permissions ->
+		if (permissions.all { it.value == true }) {
+			(context as Activity).startActivityForResult(
+				MediaUtils.getFileIntent(
+					UIKitConstants.IntentStrings.EXTRA_MIME_DOC
+				), UIKitConstants.RequestCode.FILE
+			)
+		}
+	}
+
+	private val audioAPI33Permissions = registerForActivityResult(
+		ActivityResultContracts.RequestMultiplePermissions()
+	) { permissions ->
+		if (permissions.all { it.value == true }) {
+			(context as Activity).startActivityForResult(
+				MediaUtils.openAudio(activity!!),
+				UIKitConstants.RequestCode.AUDIO
+			)
+		}
+	}
 
   private fun setComposeBoxListener() {
     composeBox?.setComposeBoxListener(object : ComposeActionListener() {
@@ -748,7 +788,22 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
       }
 
       override fun onAudioActionClicked() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+	      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+		      if (context?.checkSelfPermissionsGranted(
+				      Manifest.permission.READ_MEDIA_AUDIO,
+			      ) == true) {
+			      (context as Activity).startActivityForResult(
+				      MediaUtils.openAudio(activity!!),
+				      UIKitConstants.RequestCode.AUDIO
+			      )
+		      }else {
+			      audioAPI33Permissions.launch(
+				      arrayOf(
+					      Manifest.permission.READ_MEDIA_AUDIO,
+				      )
+			      )
+		      }
+	      }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
           audioPermission.launch(permission.WRITE_EXTERNAL_STORAGE)
         } else {
           if (Utils.hasPermissions(context, WRITE_EXTERNAL_STORAGE)) {
@@ -781,7 +836,25 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
       }
 
       override fun onGalleryActionClicked() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+	      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+		      if (context?.checkSelfPermissionsGranted(
+				      Manifest.permission.READ_MEDIA_IMAGES,
+				      Manifest.permission.READ_MEDIA_VIDEO,
+					) == true) {
+			      startActivityForResult(
+				      MediaUtils.openGallery(activity!!),
+				      UIKitConstants.RequestCode.GALLERY
+			      )
+		      }else {
+			      galleryAPI33Permissions.launch(
+				      arrayOf(
+					      Manifest.permission.READ_MEDIA_IMAGES,
+					      Manifest.permission.READ_MEDIA_VIDEO,
+					      //Manifest.permission.READ_MEDIA_AUDIO,
+				      )
+			      )
+		      }
+	      }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
           galleryPermission.launch(WRITE_EXTERNAL_STORAGE)
         } else {
           if (Utils.hasPermissions(context, WRITE_EXTERNAL_STORAGE)) {
@@ -799,7 +872,27 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
       }
 
       override fun onFileActionClicked() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+	      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+		      if (context?.checkSelfPermissionsGranted(
+				      Manifest.permission.READ_MEDIA_IMAGES,
+				      Manifest.permission.READ_MEDIA_VIDEO,
+				      Manifest.permission.READ_MEDIA_AUDIO
+			      ) == true) {
+			      (context as Activity).startActivityForResult(
+				      MediaUtils.getFileIntent(
+					      UIKitConstants.IntentStrings.EXTRA_MIME_DOC
+				      ), UIKitConstants.RequestCode.FILE
+			      )
+		      }else {
+			      filesAPI33Permissions.launch(
+				      arrayOf(
+					      Manifest.permission.READ_MEDIA_IMAGES,
+					      Manifest.permission.READ_MEDIA_VIDEO,
+					      Manifest.permission.READ_MEDIA_AUDIO,
+				      )
+			      )
+		      }
+	      }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
           if (!checkPermission()) {
             requestFilePermission()
           } else {

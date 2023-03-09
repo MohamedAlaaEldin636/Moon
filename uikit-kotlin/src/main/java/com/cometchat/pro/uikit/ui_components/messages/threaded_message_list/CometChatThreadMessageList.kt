@@ -473,7 +473,7 @@ class CometChatThreadMessageList : Fragment(), View.OnClickListener, OnMessageLo
                             animator.duration = 2000
                             animator.start()
                             animator.addListener(object : AnimatorListenerAdapter() {
-                                override fun onAnimationEnd(animation: Animator?) {
+                                override fun onAnimationEnd(animation: Animator) {
                                     super.onAnimationEnd(animation)
                                     if (imageToFly != null)
                                         imageToFly?.clearAnimation()
@@ -720,7 +720,7 @@ class CometChatThreadMessageList : Fragment(), View.OnClickListener, OnMessageLo
         transition.repeatCount = 3
         fadeOut.repeatCount = 3
         fadeOut.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 viewToAnimate.visibility = View.GONE
             }
         })

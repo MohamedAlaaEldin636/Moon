@@ -1,5 +1,7 @@
 package grand.app.moon.presentation.home
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -11,7 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.cometchat.pro.uikit.ui_components.cometchat_ui.CometChatUI
 import dagger.hilt.android.AndroidEntryPoint
+import grand.app.moon.BuildConfig
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.*
@@ -24,16 +28,44 @@ import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import kotlinx.coroutines.*
 
 @AndroidEntryPoint
-class Home2Fragment : BaseFragment<FragmentHome2Binding>() {
+class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.Listener {
 
 	val viewModel by viewModels<Home2ViewModel>()
 
 	private val activityViewModel by activityViewModels<HomeViewModel>()
 
+	var permissionsHandler: PermissionsHandler? = null
+
+	override fun onAllPermissionsAccepted() {
+		// Do nothing used just for comet chat
+	}
+
+	override fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {
+		permissionsHandler?.actOnAllPermissionsAcceptedOrRequestPermissions()
+	}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+			permissionsHandler = PermissionsHandler(
+				this,
+				lifecycle,
+				requireContext(),
+				listOf(
+					Manifest.permission.POST_NOTIFICATIONS,
+				),
+				this
+			)
+		}
+
 		super.onCreate(savedInstanceState)
 
 		viewModel.callApi = true
+	}
+
+	override fun onResume() {
+		super.onResume()
+
+		permissionsHandler?.actOnAllPermissionsAcceptedOrRequestPermissions()
 	}
 
 	private fun callApi() {
