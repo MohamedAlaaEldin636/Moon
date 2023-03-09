@@ -26,6 +26,7 @@ import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
+import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.*
 import grand.app.moon.presentation.home.models.*
@@ -812,9 +813,9 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 		fragment.setFragmentResultListenerUsingJson<Int>(ReportingDialogFragment.Type.BLOCK_STORES.name) {
 			if (it == response.value?.id) {
-				// todo tell previous screens as well which is kinda of a plumber isa.
 				// Easily check all not on view created fetch data ex. home screen ads & stores isa.
-				fragment.findNavController().navigateUp()
+				//fragment.findNavController().navigateUp()
+				fragment.activity?.openActivityAndClearStack(HomeActivity::class.java)
 			}
 		}
 
