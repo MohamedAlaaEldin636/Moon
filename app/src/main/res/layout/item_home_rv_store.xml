@@ -68,6 +68,7 @@
       android:textDirection="locale"
       tools:text="سيارات"
       android:includeFontPadding="false"
+      android:gravity="center_vertical"
 
       android:singleLine="true"
       android:ellipsize="marquee"
