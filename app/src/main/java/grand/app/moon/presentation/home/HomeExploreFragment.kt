@@ -59,6 +59,18 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 
 	private var job: Job? = null
 
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.explores.collectLatest {
+					viewModel.adapter.submitData(it)
+				}
+			}
+		}
+	}
+
 	override fun getLayoutId(): Int = R.layout.fragment_home_explore
 
 	override fun setBindingVariables() {
@@ -71,17 +83,9 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 		binding.recyclerView.layoutManager = requireContext().getExploreLayoutManager()
 		binding.recyclerView.adapter = viewModel.adapter.withDefaultHeaderAndFooterAdapters()
 
-		viewLifecycleOwner.lifecycleScope.launch {
-			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-				viewModel.explores.collectLatest {
-					viewModel.adapter.submitData(it)
-				}
-			}
-		}
-
-		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
+		/*observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 			viewModel.adapter.refresh()
-		}
+		}*/
 
 		binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -128,14 +132,6 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 		}
 
 		super.onStop()
-	}
-
-	override fun onDestroyView() {
-		lifecycleScope.launch {
-			viewModel.adapter.submitData(PagingData.empty())
-		}
-
-		super.onDestroyView()
 	}
 
 	private fun loadVideo() {
