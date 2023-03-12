@@ -481,7 +481,7 @@ class RepoShop @Inject constructor(
 
 	suspend fun getAnnouncementIfShouldAppearOrNull() = appPreferences.getAnnouncementLocally()
 
-	suspend fun fetchAnnouncementAndSaveItLocally(retries: Int = 50) {
+	suspend fun fetchAnnouncementAndSaveItLocally(retries: Int = 1) {
 		repeat(retries.coerceAtLeast(0).inc()) {
 			MyLogger.e("dhasuidhasi")
 

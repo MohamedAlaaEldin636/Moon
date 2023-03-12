@@ -71,6 +71,12 @@ class HomeExploreSubsectionFragment : BaseFragment<FragmentHomeExploreSubsection
 		}
 	}
 
+	override fun onDestroyView() {
+		kotlin.runCatching { viewModel.releasePlayer() }
+
+		super.onDestroyView()
+	}
+
 	private fun loadVideo() {
 		val context = context ?: return
 

@@ -259,7 +259,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 	}
 
 	override fun onCleared() {
-		resumePlayer()
+		releasePlayer()
 
 		super.onCleared()
 	}
