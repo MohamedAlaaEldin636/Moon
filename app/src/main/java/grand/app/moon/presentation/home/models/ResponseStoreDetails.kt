@@ -6,6 +6,23 @@ import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.domain.shop.ResponseWorkingHour
 import grand.app.moon.extensions.orFalse
 
+fun ResponseStoreDetails?.toItemHomeExplore(): ItemStoreInHomeExplore? {
+	return ItemStoreInHomeExplore(
+		this?.id,
+		this?.image,
+		this?.name,
+		this?.shareLink,
+		this?.isFollowing,
+		this?.premium,
+		this?.hasOffer,
+		this?.stories,
+		this?.phone,
+		this?.createdAt,
+		this?.country,
+		this?.nickname
+	)
+}
+
 data class ResponseStoreDetails(
 	@SerializedName("share_link") var shareLink: String?,
 	var id: Int?,

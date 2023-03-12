@@ -210,6 +210,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 			val list = adapter.list.toMutableList().also {
 				it.swap(0, position)
+			}.onEach {
+				it.store = response.value?.toItemHomeExplore()
 			}.toList()
 
 			binding.root.findNavController().navigateDeepLinkWithOptions(
