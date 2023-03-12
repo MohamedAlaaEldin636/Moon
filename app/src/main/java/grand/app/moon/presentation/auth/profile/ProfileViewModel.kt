@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
@@ -15,8 +16,11 @@ import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.isValidEmail
+import grand.app.moon.extensions.findFragmentOrNull
+import grand.app.moon.extensions.orFalse
 import grand.app.moon.extensions.trimAllWhitespaces
 import grand.app.moon.presentation.base.BaseViewModel
+import grand.app.moon.presentation.base.extensions.showError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,8 +31,11 @@ class ProfileViewModel @Inject constructor(
   val userUseCase: UserLocalUseCase,
   val useCase: LogInUseCase,
   private val logInUseCase: LogInUseCase,
+) : BaseViewModel() {
 
-  ) : BaseViewModel() {
+	val showValidPhoneNum = MutableLiveData(false)
+
+	val phone = MutableLiveData("")
 
 	var phoneChanged = false
 
@@ -59,6 +66,11 @@ class ProfileViewModel @Inject constructor(
 
   private val TAG = "ProfileViewModel"
   fun updateProfile(v: View) {
+	  val fragment = v.findFragmentOrNull<ProfileFragment>() ?: return
+
+	  if (showValidPhoneNum.value.orFalse().not()) {
+		  return fragment.showError(fragment.getString(R.string.phone_num_is_invalid))
+	  }
 
     if (request.email.trim().isNotEmpty()) {
       if (!request.email.isValidEmail()) {

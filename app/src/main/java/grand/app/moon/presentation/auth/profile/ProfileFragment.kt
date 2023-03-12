@@ -8,9 +8,12 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +29,7 @@ import grand.app.moon.core.extenstions.showPopup
 import grand.app.moon.databinding.FragmentProfileBinding
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.utils.getUriFromBitmapRetrievedByCamera
 import grand.app.moon.helpers.utils.handleCaptureImageRotation
 import grand.app.moon.presentation.base.BaseFragment
@@ -40,6 +44,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
   private val viewModel: ProfileViewModel by viewModels()
 
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		return super.onCreateView(inflater, container, savedInstanceState)?.also {
+			binding.ccp.registerCarrierNumberEditText(binding.edtLoginPhone)
+
+			binding.edtLoginPhone.doAfterTextChanged {
+				viewModel.phone.value = it.toStringOrEmpty()
+			}
+		}
+	}
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setFragmentResultListener(Constants.BUNDLE) { requestKey, bundle ->
@@ -53,6 +71,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
       }
     }
 
+	  viewModel.phone.observe(viewLifecycleOwner) {
+		  viewModel.showValidPhoneNum.value = binding.ccp.isValidFullNumber
+	  }
   }
   
   override
