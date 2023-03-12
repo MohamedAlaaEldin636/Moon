@@ -22,6 +22,7 @@ import grand.app.moon.core.MyApplication
 import grand.app.moon.core.di.module.qualifiers.BaseInterceptor
 import grand.app.moon.core.di.module.qualifiers.ProgressInterceptor22
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.getDeviceIdWithoutPermission
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.splash.getCurrentLangFromSharedPrefs
 import okhttp3.*
@@ -108,7 +109,9 @@ object RetrofitModule {
 	    MyLogger.e("HttpLoggingInterceptor -> language -> ${appPreferences.context.getCurrentLangFromSharedPrefs()}")
       request.addHeader("language", appPreferences.context.getCurrentLangFromSharedPrefs())
       request.addHeader("platform", "1")
+      request.addHeader("device", appPreferences.context.getDeviceIdWithoutPermission())
       //request.addHeader("Accept", "application/json")
+	    MyLogger.e("HttpLoggingInterceptor -> device -> ${appPreferences.context.getDeviceIdWithoutPermission()}")
 	    MyLogger.e("HttpLoggingInterceptor -> countryId -> ${appPreferences.getLocal(Constants.COUNTRY_ID)}")
       request.addHeader("countryId", appPreferences.getLocal(Constants.COUNTRY_ID))
 
@@ -249,7 +252,14 @@ object RetrofitModule {
         .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .writeTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
-        .addInterceptor(logging)
+	      /*.addInterceptor(NetworkProgressModule.ProgressInterceptor(
+		      object : NetworkProgressModule.UploadProgressListener {
+			      override fun onProgressUpdate(progress: Int) {
+				      MyLogger.e("NetworkProgressModule.UploadProgressListener progress $progress")
+			      }
+		      }
+	      ))*/
+	      .addInterceptor(logging)
         .addInterceptor(headersInterceptor)
 	      .addInterceptor(progressInterceptor22)
         //.addInterceptor(ChuckInterceptor(context))

@@ -1,9 +1,20 @@
 package grand.app.moon.extensions
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.Settings
 import grand.app.moon.R
+
+@SuppressLint("HardwareIds")
+fun Context.getDeviceIdWithoutPermission(fallbackOfNullOrEmpty: String = "device_id"): String {
+	return kotlin.runCatching {
+		Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+	}.getOrNull().let {
+		if (it.isNullOrEmpty()) fallbackOfNullOrEmpty else it
+	}
+}
 
 private fun Context.shareTextOnSpecificPackageOrBrowserIfPossibleOrAsPlainText(text: String, appPackage: String) {
 	val shareIntent = Intent(Intent.ACTION_SEND)
