@@ -155,7 +155,7 @@ class CreateStoreViewModel @Inject constructor(
 			return fragment.showError(fragment.getString(R.string.fill_required_fields))
 		}
 
-		val regex = Regex("[a-zA-Z0-9&._-]+")
+		val regex = Regex("[a-zA-Z\\s0-9&._-]+")
 		if (regex.matches(userName.value.orEmpty()).not()) {
 			return fragment.showError(fragment.getString(R.string.nickname_must_be_in_english_characters))
 		}
