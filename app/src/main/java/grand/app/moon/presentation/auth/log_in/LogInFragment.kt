@@ -66,6 +66,8 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>() {
 		viewModel.phone.observe(viewLifecycleOwner) {
 			viewModel.showValidPhoneNum.value = binding.ccp.isValidFullNumber
 		}
+
+		initView()
 	}
 
   override

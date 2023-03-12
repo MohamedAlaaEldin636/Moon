@@ -52,6 +52,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 		return super.onCreateView(inflater, container, savedInstanceState)?.also {
 			binding.ccp.registerCarrierNumberEditText(binding.edtLoginPhone)
 
+			binding.edtLoginPhone.setText(viewModel.phone.value.orEmpty())
 			binding.edtLoginPhone.doAfterTextChanged {
 				viewModel.phone.value = it.toStringOrEmpty()
 			}

@@ -16,9 +16,7 @@ import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.domain.utils.isValidEmail
-import grand.app.moon.extensions.findFragmentOrNull
-import grand.app.moon.extensions.orFalse
-import grand.app.moon.extensions.trimAllWhitespaces
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.extensions.showError
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +33,7 @@ class ProfileViewModel @Inject constructor(
 
 	val showValidPhoneNum = MutableLiveData(false)
 
-	val phone = MutableLiveData("")
+	val phone = MutableLiveData(userUseCase().phone.toStringOrEmpty())
 
 	var phoneChanged = false
 
@@ -61,6 +59,7 @@ class ProfileViewModel @Inject constructor(
       null -> ""
       else -> user.image
     }
+	  //phone.value = user.phone.toStringOrEmpty()
   }
 
 
