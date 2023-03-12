@@ -32,6 +32,8 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 	OnMapReadyCallback {
 
 	companion object {
+		const val KEY_RESULT_IS_FOLLOWING = "OtherStoreDetailsFragment.KEY_RESULT_IS_FOLLOWING"
+
 		fun launch(navController: NavController, id: Int, fromViewNotSearch: Boolean = true) {
 			navController.navigateDeepLinkWithOptions(
 				"fragment-dest",

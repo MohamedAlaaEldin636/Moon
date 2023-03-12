@@ -25,7 +25,9 @@ import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
 import grand.app.moon.presentation.explore.ExploreListFragmentDirections
+import grand.app.moon.presentation.home.HomeExploreSubsectionFragment
 import grand.app.moon.presentation.home.HomeExploreSubsectionFragmentArgs
+import grand.app.moon.presentation.home.OtherStoreDetailsFragment
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.myAds.adapter.RVSliderImageFull
@@ -164,6 +166,13 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 				val position = binding.followButtonTextView.tag as? Int ?: return@OnClickListener
 
 				val item = adapter.snapshot().items.getOrNull(position) ?: return@OnClickListener
+
+				val fragment = view.findFragmentOrNull<HomeExploreSubsectionFragment>() ?: return@OnClickListener
+
+				fragment.setFragmentResultListenerUsingJson<Boolean>(OtherStoreDetailsFragment.KEY_RESULT_IS_FOLLOWING) { isFollowing ->
+					adapter.snapshot().items.onEach { it.store?.isFollowing = isFollowing }
+					adapter.notifyDataSetChanged()
+				}
 
 				userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 					context,

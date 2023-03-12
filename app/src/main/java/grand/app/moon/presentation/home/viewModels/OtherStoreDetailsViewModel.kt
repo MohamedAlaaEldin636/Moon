@@ -745,6 +745,13 @@ class OtherStoreDetailsViewModel @Inject constructor(
 				isFollowing = response.value?.isFollowing?.not()
 			)
 
+			val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
+
+			fragment.setFragmentResultUsingJson(
+				OtherStoreDetailsFragment.KEY_RESULT_IS_FOLLOWING,
+				response.value?.isFollowing.orFalse()
+			)
+
 			context.applicationScope?.launch {
 				repoShop.followStore(response.value?.id.orZero())
 			}
