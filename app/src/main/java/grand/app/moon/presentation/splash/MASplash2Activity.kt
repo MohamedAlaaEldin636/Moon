@@ -38,6 +38,21 @@ class MASplash2Activity : AppCompatActivity() {
 
 		val binding = DataBindingUtil.setContentView<ActivityMaSplash2Binding>(this, R.layout.activity_ma_splash_2)
 
+		val appLinkAction = intent?.action
+		val appLinkData = intent?.data
+		MyLogger.e("dijasodjasoidjas $appLinkAction $appLinkData")
+		/*
+		override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    ...
+    val appLinkIntent = intent
+    val appLinkAction = appLinkIntent.action
+    val appLinkData = appLinkIntent.data
+    ...
+}
+
+		*/
+
 		binding.splashImageView.setupWithGlide {
 			load(R.drawable.aaaa).saveDiskCacheStrategyAll()
 		}

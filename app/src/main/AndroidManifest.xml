@@ -128,7 +128,16 @@ package="grand.app.moon">
 
       <data android:scheme="https" />
       <data android:scheme="http" />
-      <data android:host="souqmoon.com" />
+      <data android:host="*.souqmoon.com" /> <!--*.souqmoon.com-->
+
+      <!--
+            https://EG.souqmoon.com/en/shop/7989/seos7667
+-->
+      <!--سيو صح
+سيو صح شركة تسويق الكتروني متخصصة فى تحسين ترتيب نتائج المواقع فى محركات البحث
+-->
+
+      <!--todo check if can be with astrix ... deep link store det. and adv det.& story feh addional param efta7 story mn astore det. -->
 
     </intent-filter>
   </activity>
