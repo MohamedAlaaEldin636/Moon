@@ -183,14 +183,14 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 					call: Call<BaseResponse<Any?>>,
 					response: Response<BaseResponse<Any?>>
 				) {
-					MyLogger.e("feowifjewohiiiiiiiiiii BEFOOOOOOOOOOOOOOOOOOOOORE")
+					//MyLogger.e("feowifjewohiiiiiiiiiii BEFOOOOOOOOOOOOOOOOOOOOORE")
 					kotlin.runCatching {
 						it.resume(response.body() ?: BaseResponse(null, "dd", 200))
 					}
 				}
 
 				override fun onFailure(call: Call<BaseResponse<Any?>>, t: Throwable) {
-					MyLogger.e("feowifjewohiiiiiiiiiii EEEEEEEEEEEEEEEEEEEEEE")
+					//MyLogger.e("feowifjewohiiiiiiiiiii EEEEEEEEEEEEEEEEEEEEEE")
 					kotlin.runCatching {
 						it.resume(BaseResponse(null, "dd", 200))
 					}

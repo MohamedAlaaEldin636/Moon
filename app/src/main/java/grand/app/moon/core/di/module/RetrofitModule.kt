@@ -165,7 +165,7 @@ object RetrofitModule {
 	fun provideProgressInterceptor(): Interceptor {
 		return object : Interceptor {
 			private var progressListener: (Long, Long, Boolean) -> Unit = { a, b, c ->
-				MyLogger.e("feowifjewohiiiiiiiiiii $a $b $c")
+				//MyLogger.e("feowifjewohiiiiiiiiiii $a $b $c")
 			}
 
 			fun addProgressListener(listener: (Long, Long, Boolean) -> Unit) {
@@ -217,7 +217,7 @@ object RetrofitModule {
 			if (bufferedSource == null) {
 				bufferedSource = source(responseBody.source()).buffer()
 			}
-			MyLogger.e("yabooooooy MMMMMMMMMMMMMMMMMMMMMMMM")
+			//MyLogger.e("yabooooooy MMMMMMMMMMMMMMMMMMMMMMMM")
 			return bufferedSource!!
 		}
 
@@ -226,7 +226,7 @@ object RetrofitModule {
 				var totalBytesRead = 0L
 
 				override fun read(sink: Buffer, byteCount: Long): Long {
-					MyLogger.e("yabooooooy ${System.currentTimeMillis()}")
+					//MyLogger.e("yabooooooy ${System.currentTimeMillis()}")
 					val bytesRead = super.read(sink, byteCount)
 					totalBytesRead += if (bytesRead != -1L) bytesRead else 0
 					//                float percent = bytesRead == -1 ? 100f : (((float)totalBytesRead / (float) responseBody.contentLength()) * 100);
