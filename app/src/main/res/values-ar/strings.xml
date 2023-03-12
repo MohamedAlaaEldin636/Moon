@@ -349,8 +349,8 @@
   <string name="working_hours_2">مواعيد العمل</string>
   <string name="working_hours_hint">ساعة / دقيقة / صباحاً</string>
   <string name="select_time">حدد الوقت</string>
-  <string name="working_hours_value_am">%1$d / %2$d / ص</string>
-  <string name="working_hours_value_pm">%1$d / %2$d / م</string>
+  <string name="working_hours_value_am">%1$02d / %2$02d / ص</string>
+  <string name="working_hours_value_pm">%1$02d / %2$02d / م</string>
   <string name="facebook">فيسبوك</string>
   <string name="twitter">تويتر</string>
   <string name="snapchat">سناب شات</string>

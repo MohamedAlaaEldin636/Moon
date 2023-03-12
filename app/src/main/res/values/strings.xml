@@ -357,8 +357,8 @@
   <string name="working_hours_2">Working Hours</string>
   <string name="working_hours_hint">hour \\ min \\ am</string>
   <string name="select_time">Pick Time</string>
-  <string name="working_hours_value_am">%1$d \\ %2$d \\ AM</string>
-  <string name="working_hours_value_pm">%1$d \\ %2$d \\ PM</string>
+  <string name="working_hours_value_am">%1$02d \\ %2$02d \\ AM</string>
+  <string name="working_hours_value_pm">%1$02d \\ %2$02d \\ PM</string>
   <string name="facebook">Facebook</string>
   <string name="twitter">Twitter</string>
   <string name="snapchat">Snapchat</string>
