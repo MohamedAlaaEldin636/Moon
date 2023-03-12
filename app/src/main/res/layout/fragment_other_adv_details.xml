@@ -645,7 +645,7 @@
 
             style="@style/TextTajawalBold14"
             android:textSize="16sp"
-            android:text="@string/some_customers_reviews"
+            android:text="@string/ads_owner"
 
             android:textDirection="locale"
 

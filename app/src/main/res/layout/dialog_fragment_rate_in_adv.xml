@@ -18,7 +18,7 @@
         android:orientation="vertical"
 
         android:background="@drawable/dr_top_20"
-        tools:backgroundTint="@android:color/darker_gray"
+        tools:backgroundTint="@android:color/white"
 
         tools:layout_gravity="bottom"
 
@@ -58,7 +58,7 @@
         android:isIndicator="false"
 
         android:progressTint="#FFBC23"
-        android:progressBackgroundTint="#DAD9E2"/>
+        android:progressBackgroundTint="#77777A"/>
 
       <EditText
         android:layout_width="match_parent"
