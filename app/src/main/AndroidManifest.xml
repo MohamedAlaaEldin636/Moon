@@ -128,7 +128,9 @@ package="grand.app.moon">
 
       <data android:scheme="https" />
       <data android:scheme="http" />
-      <data android:host="*.souqmoon.com" /> <!--*.souqmoon.com-->
+      <data android:host="*.souqmoon.com" />
+      <data android:host="*.sooqmoon.net" />
+      <!--*.souqmoon.com-->
 
       <!--
             https://EG.souqmoon.com/en/shop/7989/seos7667
