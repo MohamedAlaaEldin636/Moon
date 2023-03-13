@@ -128,8 +128,8 @@ package="grand.app.moon">
 
       <data android:scheme="https" />
       <data android:scheme="http" />
-      <data android:host="*.souqmoon.com" />
-      <data android:host="*.sooqmoon.net" />
+      <data android:host="*souqmoon.com" />
+      <data android:host="*sooqmoon.net" />
       <!--*.souqmoon.com-->
 
       <!--

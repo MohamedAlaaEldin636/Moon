@@ -41,16 +41,12 @@ class MASplash2Activity : AppCompatActivity() {
 		val appLinkAction = intent?.action
 		val appLinkData = intent?.data
 		MyLogger.e("dijasodjasoidjas $appLinkAction $appLinkData")
-		/*
-		override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    ...
-    val appLinkIntent = intent
-    val appLinkAction = appLinkIntent.action
-    val appLinkData = appLinkIntent.data
-    ...
-}
-
+		/* todo ...
+		null
+		dijasodjasoidjas android.intent.action.VIEW https://om.sooqmoon.net/website/ar/shop/7779/mariz-store?story=view
+		dijasodjasoidjas android.intent.action.VIEW https://om.sooqmoon.net/website/ar/shop/7598/nana
+		dijasodjasoidjas android.intent.action.VIEW https://OM.sooqmoon.net/website/ar/37880/ggg
+		dijasodjasoidjas android.intent.action.VIEW https://sooqmoon.net/storage/explores/1676294941kbj18.mp4
 		*/
 
 		binding.splashImageView.setupWithGlide {
