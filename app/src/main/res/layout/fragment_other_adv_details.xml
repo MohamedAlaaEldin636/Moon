@@ -652,11 +652,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-          <ImageView
+          <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ownerImageView"
 
             android:layout_width="53dp"
             android:layout_height="53dp"
+
+            app:shapeAppearance="@style/ShapeCircle"
+            app:shapeAppearanceOverlay="@style/ShapeCircle"
 
             android:scaleType="centerCrop"
 
