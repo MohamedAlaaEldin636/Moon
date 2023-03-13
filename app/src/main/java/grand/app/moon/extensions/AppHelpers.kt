@@ -142,9 +142,14 @@ fun UserLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 	if (responseStory?.stories.isNullOrEmpty()) {
 		if (context.isLogin() && storeId == this().id) {
 			// My Store
-			navController.navigateDeepLinkWithOptions(
+			/*navController.navigateDeepLinkWithOptions(
 				"fragment-dest",
 				"grand.app.moon.dest.create.store"
+			)*/
+			OtherStoreDetailsFragment.launch(
+				navController,
+				storeId.orZero(),
+				fromViewNotSearch
 			)
 		}else {
 			// Other stores

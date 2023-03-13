@@ -26,7 +26,9 @@ import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
+import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
+import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.*
 import grand.app.moon.presentation.home.models.*
@@ -45,6 +47,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
 	val response = MutableLiveData<ResponseStoreDetails?>(null)
+
+	val isMyStore = response.map {
+		app.isLogin() && userLocalUseCase().id == it?.id
+	}
 
 	val isSeen = response.map {
 		it?.toResponseStory()?.isSeen.orFalse().not()
@@ -316,13 +322,25 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 	val layoutIsTwoColNotOneCol = MutableLiveData(false)
 
+	// to-do .adjustIn kaza isa.
+	/*
+	binding.fromTextView.adjustInsideRV(
+			item.from.toAppTimeFormat(context),
+			10.5f,
+			6f
+		)
+
+		viewModel.showPremium ? @string/check_ad_premium : @string/prem_ad
+
+		gher on clicks
+	 */
 	@Suppress("RemoveExplicitTypeArguments")
 	val adapterAds = RVItemCommonListUsageWithDifferentItems<ItemAdvertisementInResponseHome>(
 		getLayoutRes = {
 			if (layoutIsTwoColNotOneCol.value == true) {
-				R.layout.item_home_rv_adv
+				if (isMyStore.value == true) R.layout.item_home_rv_adv_my_adv else R.layout.item_home_rv_adv
 			}else {
-				R.layout.item_search_result
+				if (isMyStore.value == true) R.layout.item_search_result_my_adv else R.layout.item_search_result
 			}
 		},
 		onItemClick = { _, binding ->
@@ -417,6 +435,62 @@ class OtherStoreDetailsViewModel @Inject constructor(
 						}
 					}
 				}
+				is ItemHomeRvAdvMyAdvBinding -> {
+					val listener = View.OnClickListener {
+						val context = binding.root.context ?: return@OnClickListener
+
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@OnClickListener
+
+						//val position = binding.linearLayout.tag as? Int ?: return@OnClickListener
+
+						userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
+							context,
+							binding.root.findNavController(),
+							item.store
+						)
+					}
+					binding.storeImageImageView.setOnClickListener(listener)
+					binding.storeTextView.setOnClickListener(listener)
+					binding.favImageView.setOnClickListener {
+						val context = binding.root.context ?: return@setOnClickListener
+
+						val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
+
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@setOnClickListener
+
+						if (context.isLoginWithOpenAuth()) {
+							context.applicationScope?.launch {
+								repoShop.favOrUnFavAdv(item.id.orZero())
+							}
+
+							adapter.updateItem(
+								position,
+								item.copy(isFavorite = item.isFavorite.orFalse().not())
+							)
+						}
+					}
+
+					binding.editImageView.setOnClickListener {
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@setOnClickListener
+
+						binding.root.findFragmentOrNull<OtherStoreDetailsFragment>()?.editMyAdv(item)
+					}
+					binding.promotionImageView.setOnClickListener {
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@setOnClickListener
+
+						binding.root.findFragmentOrNull<OtherStoreDetailsFragment>()?.makeMyAdvPremiumOrCheckAdvPremium(item)
+					}
+					binding.editImageView.setOnClickListener {
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@setOnClickListener
+
+						binding.root.findFragmentOrNull<OtherStoreDetailsFragment>()?.delMyAdv(item)
+					}
+				}
 				is ItemSearchResultBinding -> {
 					val listener = View.OnClickListener {
 						val context = binding.root.context ?: return@OnClickListener
@@ -495,6 +569,62 @@ class OtherStoreDetailsViewModel @Inject constructor(
 						}
 					}
 				}
+				is ItemSearchResultMyAdvBinding -> {
+					val listener = View.OnClickListener {
+						val context = binding.root.context ?: return@OnClickListener
+
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@OnClickListener
+
+						//val position = binding.linearLayout.tag as? Int ?: return@OnClickListener
+
+						userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
+							context,
+							binding.root.findNavController(),
+							item.store
+						)
+					}
+					binding.storeImageImageView.setOnClickListener(listener)
+					binding.storeTextView.setOnClickListener(listener)
+					binding.favImageView.setOnClickListener {
+						val context = binding.root.context ?: return@setOnClickListener
+
+						val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
+
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@setOnClickListener
+
+						if (context.isLoginWithOpenAuth()) {
+							context.applicationScope?.launch {
+								repoShop.favOrUnFavAdv(item.id.orZero())
+							}
+
+							adapter.updateItem(
+								position,
+								item.copy(isFavorite = item.isFavorite.orFalse().not())
+							)
+						}
+					}
+
+					binding.editAdvTextView.setOnClickListener {
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@setOnClickListener
+
+						binding.root.findFragmentOrNull<OtherStoreDetailsFragment>()?.editMyAdv(item)
+					}
+					binding.promotionAdvTextView.setOnClickListener {
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@setOnClickListener
+
+						binding.root.findFragmentOrNull<OtherStoreDetailsFragment>()?.makeMyAdvPremiumOrCheckAdvPremium(item)
+					}
+					binding.editAdvTextView.setOnClickListener {
+						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
+							?: return@setOnClickListener
+
+						binding.root.findFragmentOrNull<OtherStoreDetailsFragment>()?.delMyAdv(item)
+					}
+				}
 			}
 		}
 	) { binding, position, item ->
@@ -505,6 +635,40 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 		when (binding) {
 			is ItemHomeRvAdvBinding -> {
+				binding.imageImageView.setupWithGlide {
+					load(item.image).saveDiskCacheStrategyAll()
+				}
+
+				binding.premiumImageView.isVisible = item.isPremium
+
+				binding.favImageView.setImageResource(
+					if (item.isFavorite.orFalse()) R.drawable.item_adv_fav_med_cropped else R.drawable.item_adv_fav_cropped
+				)
+
+				binding.ratingTextView.text = "( ${item.averageRate?.round(1).orZero()
+					.toIntIfNoFractionsOrThisFloat().toStringOrEmpty()} )"
+
+				binding.favsTextView.text = item.favoriteCount.orZero().toStringOrEmpty()
+
+				binding.viewsTextView.text = item.viewsCount.orZero().toStringOrEmpty()
+
+				binding.nameTextView.text = item.title
+
+				binding.timeTextView.text = item.createdAt.orEmpty()
+
+				binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
+
+				binding.storeImageImageView.setupWithGlide {
+					load(item.store?.image).saveDiskCacheStrategyAll()
+				}
+
+				binding.storeTextView.text = item.store?.name
+
+				binding.priceTextView.text = "${item.price?.round(2).orZero()} ${item.country?.currency.orEmpty()}"
+
+				binding.negotiableTextView.isVisible = item.isNegotiable
+			}
+			is ItemHomeRvAdvMyAdvBinding -> {
 				binding.imageImageView.setupWithGlide {
 					load(item.image).saveDiskCacheStrategyAll()
 				}
@@ -572,6 +736,45 @@ class OtherStoreDetailsViewModel @Inject constructor(
 				binding.currencyTextView.text = item.country?.currency.orEmpty()
 
 				binding.negotiableTextView.isVisible = item.isNegotiable
+			}
+			is ItemSearchResultMyAdvBinding -> {
+				binding.imageImageView.setupWithGlide {
+					load(item.image)
+				}
+
+				binding.premiumImageView.isVisible = item.isPremium
+
+				binding.favImageView.setImageResource(
+					if (item.isFavorite.orFalse()) R.drawable.item_adv_fav_med_cropped else R.drawable.item_adv_fav_large_cropped
+				)
+
+				binding.ratingTextView.text = "( ${item.averageRate?.round(1).orZero()
+					.toIntIfNoFractionsOrThisFloat().toStringOrEmpty()} )"
+
+				binding.favsTextView.text = item.favoriteCount.orZero().toStringOrEmpty()
+
+				binding.viewsTextView.text = item.viewsCount.orZero().toStringOrEmpty()
+
+				binding.nameTextView.text = item.title
+
+				binding.timeTextView.text = item.createdAt.orEmpty()
+
+				binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
+
+				binding.storeImageImageView.setupWithGlide {
+					load(item.store?.image)
+				}
+
+				binding.storeTextView.text = item.store?.name
+
+				binding.priceTextView.text = item.price?.round(2).orZero().toString()
+				binding.currencyTextView.text = item.country?.currency.orEmpty()
+
+				binding.negotiableTextView.isVisible = item.isNegotiable
+
+				binding.promotionAdvTextView.text = app.getString(
+					if (item.isPremium) R.string.check_ad_premium else R.string.prem_ad
+				)
 			}
 		}
 	}
@@ -884,6 +1087,149 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 			response.value?.also {
 				context.launchCometChat(it.id.orZero(), it.name.orEmpty(), it.image.orEmpty())
+			}
+		}
+	}
+
+	private fun BaseFragment<*>.editMyAdv(item: ItemAdvertisementInResponseHome) {
+		val list = repoShop.getCategoriesWithSubCategoriesAndBrands()
+
+		val categoryId = item.category?.id.orZero()
+
+		val category = list.firstOrNull { it.id == categoryId }
+			?: return showError(getString(R.string.something_went_wrong_please_try_again))
+
+		handleRetryAbleActionCancellable(
+			action = {
+				adsUseCase.getMyAdvertisementDetails(item.id.orZero())
+			}
+		) { response ->
+			//fragment-dest://grand.app.moon.dest.add.adv.final.page/{idOfMainCategory}/{idOfSubCategory}/{jsonListOfBrands}/{jsonResponseMyAdvDetails}
+			findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.add.adv.final.page",
+				paths = arrayOf(
+					category.id.orZero().toString(),
+					item.subCategoryId.orZero().toString(),
+					category.brands.toJsonInlinedOrNull().orStringNullIfNullOrEmpty(),
+					response.toJsonInlinedOrNull().orStringNullIfNullOrEmpty()
+				)
+			)
+			/*findNavController().navigate(
+				MyAdvDetailsFragmentDirections.actionDestMyAdvDetailsToDestAddAdvFinalPage(
+					category.id.orZero(),
+					item.subCategoryId.orZero(),
+					category.brands.toJsonInlinedOrNull().orStringNullIfNullOrEmpty(),
+					response.toJsonInlinedOrNull().orStringNullIfNullOrEmpty()
+				)
+			)*/
+		}
+	}
+
+	private fun BaseFragment<*>.makeMyAdvPremiumOrCheckAdvPremium(item: ItemAdvertisementInResponseHome) {
+		if (item.isPremium) {
+			//fragment-dest://grand.app.moon.dest.my.ad.or.shop.package/{advertisementId}/{isAdvNotShop}
+			findNavController().navigateDeepLinkWithOptions(
+				"fragment-dest",
+				"grand.app.moon.dest.my.ad.or.shop.package",
+				paths = arrayOf(
+					item.id.orZero().toString(),
+					true.toString()
+				)
+			)
+			/*findNavController().navigateSafely(
+				MyAdvDetailsFragmentDirections.actionDestMyAdvDetailsToDestMyAdOrShopPackage(
+					item.id.orZero(), true
+				)
+			)*/
+
+			return
+		}
+
+		handleRetryAbleActionCancellable(
+			action = {
+				homeUseCase.getCheckAvailabilityForPremiumAds()
+			}
+		) { availableAds ->
+			MyLogger.e("availableAds $availableAds")
+
+			if (availableAds > 0) {
+				updateMyAdvertisementToBePremium(item)
+			}else {
+				//fragment-dest://grand.app.moon.dest.make.adv.or.store.premium/{advertisementId}
+				findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.make.adv.or.store.premium",
+					paths = arrayOf(item.id.orZero().toString())
+				)
+				/*
+				fragment.findNavController().setResultInPreviousBackStackEntrySavedStateHandleViaGson(
+							MyAdsFragment.NewAdvertisementState.BECAME_PREMIUM
+						)
+				 */
+				/*findNavController().navigateSafely(
+					MyAdvDetailsFragmentDirections.actionDestMyAdvDetailsToDestMakeAdvOrStorePremium(
+						item.id.orZero()
+					)
+				)*/
+			}
+		}
+	}
+
+	private fun BaseFragment<*>.updateMyAdvertisementToBePremium(item: ItemAdvertisementInResponseHome) {
+		handleRetryAbleActionCancellableNullable(
+			action = {
+				adsUseCase.updateAdvertisementToBePremium(item.id.orZero())
+			}
+		) {
+			afterMyAdvBecamePremium(item)
+		}
+	}
+
+	@Suppress("unused")
+	private fun BaseFragment<*>.afterMyAdvBecamePremium(item: ItemAdvertisementInResponseHome) {
+		adapterAds.list.indexOfFirstOrNull { it.id == item.id }?.also { index ->
+			val newItem = adapterAds.list.getOrNull(index)?.also { it.makePremium() }
+			if (newItem != null) {
+				adapterAds.updateItem(index, newItem)
+			}
+		}
+
+		/*findNavController().setResultInPreviousBackStackEntrySavedStateHandleViaGson(
+			MyAdsFragment.NewAdvertisementChange(
+				item.id.orZero(),
+				MyAdsFragment.NewAdvertisementState.BECAME_PREMIUM
+			)
+		)*/
+	}
+
+	private fun BaseFragment<*>.delMyAdv(item: ItemAdvertisementInResponseHome) {
+		showCustomYesNoWarningDialog(
+			getString(R.string.confirm_deletion),
+			getString(R.string.are_you_sure_del_ad)
+		) { dialog ->
+			handleRetryAbleActionCancellableNullable(
+				action = {
+					adsUseCase.deleteAdvertisement(item.id.orZero())
+				}
+			) {
+				dialog.dismiss()
+
+				showMessage(getString(R.string.done_successfully))
+
+				adapterAds.list.indexOfFirstOrNull { it.id == item.id }?.also { index ->
+					val newItem = adapterAds.list.getOrNull(index)?.also { it.makePremium() }
+					if (newItem != null) {
+						adapterAds.deleteAt(index)
+					}
+				}
+
+				/*findNavController().navUpThenSetResultInBackStackEntrySavedStateHandleViaGson(
+					MyAdsFragment.NewAdvertisementChange(
+						item.id.orZero(),
+						MyAdsFragment.NewAdvertisementState.DELETED
+					)
+				)*/
 			}
 		}
 	}

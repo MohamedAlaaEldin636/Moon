@@ -42,6 +42,139 @@ data class ItemStoreInResponseHome(
 	val isPremium get() = premium == 1
 }
 
+/*
+{
+                "id": 23091,
+                "title": "منخل معدني",
+                "store_id": 9739,
+                "price": 2.8,
+                "premium": 1,
+                "is_negotiable": 0,
+                "created_at": "6 months ago",
+                "date": 1657125233000,
+                "views_count": 9,
+                "favorite_count": 0,
+                "share_count": 1,
+                "latitude": 24.69,
+                "longitude": 46.72,
+                "phone": "1205577043",
+                "sub_category_id": 437,
+                "category_id": 431,
+                "category": {
+                    "id": 431,
+                    "name": "home and kitchen",
+                    "image": "https://sooqmoon.net/storage/categories/1660650050eU8is.webp",
+                    "ads_count": null,
+                    "order_by_no": null
+                },
+                "is_favorite": false,
+                "average_rate": 1,
+                "image": "https://sooqmoon.net/storage/advertisements/1657125233Evw4Z.webp",
+                "store": {
+                    "share_link": "http://eg.sooqmoon.net/en/shop/9739/emma-store",
+                    "id": 9739,
+                    "name": "Emma Store",
+                    "has_offer": true,
+                    "nickname": "emma_store",
+                    "email": "emma@gmail.com",
+                    "phone": "1205577043",
+                    "country_code": "+20",
+                    "website": "www.emma.com",
+                    "latitude": 30.14367614261,
+                    "longitude": 31.398016651865,
+                    "token": null,
+                    "average_rate": 5,
+                    "rate_count": 1,
+                    "premium": 1,
+                    "advertisements_count": 0,
+                    "followers_count": 0,
+                    "views_count": 0,
+                    "is_following": false,
+                    "image": "https://sooqmoon.net/storage/users/1673954257TzD9r.webp",
+                    "background_image": "https://sooqmoon.net/storage/users/1674393758Ic7L5.webp",
+                    "social_media_links": [
+                        {
+                            "type": "snapchat",
+                            "link": "https://facturerapide.com/"
+                        },
+                        {
+                            "type": "facebook",
+                            "link": "https://facturerapide.com/"
+                        }
+                    ],
+                    "working_hours": [
+                        {
+                            "from": "09:20",
+                            "to": "21:20",
+                            "status": true
+                        },
+                        {
+                            "from": "09:20",
+                            "to": "21:20",
+                            "status": true
+                        },
+                        {
+                            "from": "09:20",
+                            "to": "21:20",
+                            "status": true
+                        },
+                        {
+                            "from": "09:20",
+                            "to": "21:20",
+                            "status": true
+                        },
+                        {
+                            "from": "09:20",
+                            "to": "21:20",
+                            "status": true
+                        },
+                        {
+                            "from": "09:20",
+                            "to": "21:20",
+                            "status": true
+                        },
+                        {
+                            "from": "09:20",
+                            "to": "21:20",
+                            "status": true
+                        }
+                    ],
+                    "description": "emma store is the best",
+                    "created_at": "4 weeks ago"
+                },
+                "country": {
+                    "id": 2,
+                    "name": "Sultanate of Oman",
+                    "currency": "OMR",
+                    "country_code": "+968",
+                    "iso_code": "OM",
+                    "image": "https://sooqmoon.net/storage/countries/1649929925GqoKL.webp"
+                },
+                "city": {
+                    "id": 13,
+                    "name": "Al Buraimi",
+                    "currency": null,
+                    "country_code": null,
+                    "iso_code": null,
+                    "image": "https://sooqmoon.net/storage/countries/1657015177ibQgk.webp"
+                }
+            },
+ */
+/*fun ItemAdvertisementInResponseHome.toResponseMyAdvDetails(): ResponseMyAdvDetails {
+	return ResponseMyAdvDetails(
+		id,
+		title,
+		description,
+		latitude,
+		longitude,
+		address,
+		price,
+		premium,
+		createdAt,
+
+	)
+}*/
+
 data class ItemAdvertisementInResponseHome(
 	var id: Int?,
 	@SerializedName("is_favorite") var isFavorite: Boolean?,
@@ -68,11 +201,16 @@ data class ItemAdvertisementInResponseHome(
 	@SerializedName("sub_category_id") var subCategoryId: Int?,
 	@SerializedName("brand_id") var brandId: Int?,
 	var category: ItemCategory?,
+	//@SerializedName("sub_category_id") var subCategoryId: Int?,
 ) : ItemInResponseHome {
 
 	val isNegotiable get() = negotiable == 1
 
 	val isPremium get() = premium == 1
+
+	fun makePremium() {
+		premium = 1
+	}
 
 	data class Country(
 		var id: Int?,

@@ -3,12 +3,9 @@ package grand.app.moon.presentation.home
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.compose.ui.platform.ComposeView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -16,16 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.cometchat.pro.uikit.ui_components.cometchat_ui.CometChatUI
 import dagger.hilt.android.AndroidEntryPoint
-import grand.app.moon.BuildConfig
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.databinding.*
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.models.ItemHomeRV
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
@@ -40,7 +34,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 
 	private val activityViewModel by activityViewModels<HomeViewModel>()
 
-	var permissionsHandler: PermissionsHandler? = null
+	private var permissionsHandler: PermissionsHandler? = null
 
 	override fun onAllPermissionsAccepted() {
 		// Do nothing used just for comet chat
@@ -148,32 +142,17 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 						val id = MyApplication.deepLinkUri?.pathSegments?.dropLast(1)?.lastOrNull()?.toIntOrNull()
 
 						if (id != null) {
-							val isStoreNotStory = MyApplication.deepLinkUri?.getQueryParameter("story").isNullOrEmpty()
-
-							if (context.isLogin() && id == viewModel.userLocalUseCase().id && isStoreNotStory.not()) {
-								// Story of my story todo
-								// should be same screen 3ade isa...
-								/*findNavController().navigateDeepLinkWithOptions(
-									"fragment-dest",
-									"grand.app.moon.dest.story.player",
-									paths = arrayOf(
-										listOf(responseStory).toJsonInlinedOrNull().orEmpty(),
-										0.toString()
-									)
-								)*/
-							}else {
-								// todo play story if is story.
-								viewModel.userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
-									requireContext(),
-									findNavController(),
-									id
-								)
-							}
+							viewModel.userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+								requireContext(),
+								findNavController(),
+								id
+							)
 						}
 					}
 					"explores" in path -> {
 						//https://sooqmoon.net/storage/explores/1676294941kbj18.mp4
-						// todo ...
+						// todo ... change response to share_link and share action button as well isa.
+						// todo handle result. + make deep link as null after using it in all 4 screens explore adv store story
 					}
 					else -> {
 						// https://OM.sooqmoon.net/website/ar/37880/ggg?store_id=983
@@ -187,6 +166,8 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 								context.isLogin() && MyApplication.deepLinkUri
 									?.getQueryParameter("store_id") == viewModel.userLocalUseCase().id.toString()
 							)
+
+							MyApplication.deepLinkUri = null
 						}
 					}
 				}

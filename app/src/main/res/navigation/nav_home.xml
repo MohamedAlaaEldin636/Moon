@@ -713,6 +713,10 @@
       android:name="jsonResponseMyAdvDetails"
       app:argType="string"
       app:nullable="true" />
+    <deepLink
+      android:id="@+id/deep_link_dest_add_adv_final_page"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.add.adv.final.page/{idOfMainCategory}/{idOfSubCategory}/{jsonListOfBrands}/{jsonResponseMyAdvDetails}" />
   </fragment>
   <action
     android:id="@+id/action_global_dest_add_advertisement"
@@ -851,6 +855,10 @@
       android:id="@+id/action_dest_make_adv_or_store_premium_to_dest_my_ad_or_shop_package"
       app:destination="@id/dest_my_ad_or_shop_package"
       app:launchSingleTop="true" />
+    <deepLink
+      android:id="@+id/deep_link_dest_make_adv_or_store_premium"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.make.adv.or.store.premium/{advertisementId}" />
   </fragment>
   <fragment
     android:id="@+id/dest_my_ad_or_shop_package"
@@ -867,6 +875,10 @@
       android:id="@+id/action_dest_my_ad_or_shop_package_to_dest_make_adv_or_store_premium"
       app:destination="@id/dest_make_adv_or_store_premium"
       app:launchSingleTop="true" />
+    <deepLink
+      android:id="@+id/deep_link_dest_my_ad_or_shop_package"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.my.ad.or.shop.package/{advertisementId}/{isAdvNotShop}" />
   </fragment>
   <fragment
     android:id="@+id/dest_more"

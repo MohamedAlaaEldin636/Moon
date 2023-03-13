@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+
+    android:layout_width="match_parent"
+    tools:layout_width="168dp"
+    android:layout_height="wrap_content"
+
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+
+    android:paddingBottom="17dp"
+    android:clipToPadding="false"
+
+    android:layout_gravity="center"
+
+    android:background="@drawable/dr_rect_10_with_border_1">
+    
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/imageImageView"
+
+      android:layout_width="0dp"
+      android:layout_height="104dp"
+
+      tools:src="@drawable/splash"
+
+      android:scaleType="centerCrop"
+
+      app:shapeAppearance="@style/ShapeRound10Top"
+      app:shapeAppearanceOverlay="@style/ShapeRound10Top"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+      android:id="@+id/linearLayout"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:orientation="horizontal"
+
+      android:layout_margin="12dp"
+
+      android:gravity="center_vertical"
+
+      app:layout_constraintBottom_toBottomOf="@id/imageImageView"
+      app:layout_constraintStart_toStartOf="@id/imageImageView"
+      app:layout_constraintEnd_toEndOf="@id/imageImageView">
+
+      <ImageView
+        android:layout_width="12dp"
+        android:layout_height="11dp"
+
+        android:src="@drawable/ic_rate_32" />
+
+      <TextView
+        android:id="@+id/ratingTextView"
+
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+
+        android:layout_marginStart="5dp"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+
+        tools:text="( 3 )"
+        android:textColor="@color/white" />
+
+      <ImageView
+        android:layout_width="12dp"
+        android:layout_height="11dp"
+
+        android:layout_marginStart="2dp"
+
+        android:src="@drawable/ic_fav_32" />
+
+      <TextView
+        android:id="@+id/favsTextView"
+
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+
+        android:layout_marginStart="5dp"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+
+        tools:text="354"
+        android:textColor="@color/white" />
+
+      <ImageView
+        android:layout_width="12dp"
+        android:layout_height="11dp"
+
+        android:layout_marginStart="2dp"
+
+        android:src="@drawable/ic_views_32" />
+
+      <TextView
+        android:id="@+id/viewsTextView"
+
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+
+        android:layout_marginStart="5dp"
+
+        android:maxLines="1"
+        android:ellipsize="end"
+
+        tools:text="985"
+        android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <ImageView
+      android:id="@+id/premiumImageView"
+
+      android:layout_width="55.55dp"
+      android:layout_height="55.55dp"
+
+      android:src="@drawable/premium_32"
+
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+      android:id="@+id/favImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/item_adv_fav_cropped"
+
+      android:layout_margin="10dp"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+      android:id="@+id/nameTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalMedium14"
+      android:textSize="14sp"
+      android:textColor="@color/colorPrimary"
+      android:textDirection="locale"
+      tools:text="سيارات"
+      android:includeFontPadding="false"
+
+      android:singleLine="true"
+      android:ellipsize="marquee"
+      android:marqueeRepeatLimit ="marquee_forever"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:scrollHorizontally="true"
+      textView_setSelectedBA="@{true}"
+
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+      android:layout_marginTop="14dp"
+
+      app:layout_constraintTop_toBottomOf="@id/imageImageView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+      android:id="@+id/timeAndLocationLinearLayout"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:orientation="horizontal"
+
+      android:layout_marginTop="9dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+
+      app:layout_constraintTop_toBottomOf="@id/nameTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent">
+
+      <TextView
+        android:id="@+id/timeTextView"
+
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        textView_setSelectedBA="@{true}"
+
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+        android:textColor="#C1C1C1"
+        tools:text="30 Years ago"
+        android:textDirection="locale"
+
+        app:drawableStartCompat="@drawable/clock_home_2"
+        android:drawablePadding="2dp"
+
+        android:layout_marginEnd="3.75dp"/>
+
+      <TextView
+        android:id="@+id/placeTextView"
+
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        textView_setSelectedBA="@{true}"
+
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
+        style="@style/TextTajawalMedium14"
+        android:textSize="10sp"
+        android:textColor="#C1C1C1"
+        tools:text="Egypt \\ Cairo"
+        android:textDirection="locale"
+
+        app:drawableStartCompat="@drawable/location_home_2"
+        android:drawablePadding="2dp"
+
+        android:layout_marginStart="3.75dp"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/storeImageImageView"
+
+      android:layout_width="19dp"
+      android:layout_height="19dp"
+
+      android:layout_marginTop="10dp"
+      android:layout_marginStart="9dp"
+
+      app:shapeAppearance="@style/ShapeCircle"
+      app:shapeAppearanceOverlay="@style/ShapeCircle"
+
+      app:layout_constraintTop_toBottomOf="@id/timeAndLocationLinearLayout"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+      android:id="@+id/storeTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalRegular12"
+      android:textColor="@color/colorPrimary"
+      tools:text="متجر بيتزا هت"
+      android:textDirection="locale"
+
+      android:layout_marginStart="3dp"
+      android:layout_marginEnd="9dp"
+
+      app:layout_constraintTop_toTopOf="@id/storeImageImageView"
+      app:layout_constraintBottom_toBottomOf="@id/storeImageImageView"
+      app:layout_constraintStart_toEndOf="@id/storeImageImageView"
+      app:layout_constraintEnd_toEndOf="parent"/>
+    
+    <TextView
+      android:id="@+id/priceTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:layout_marginTop="11dp"
+      android:layout_marginStart="10dp"
+
+      android:ellipsize="end"
+      android:maxLines="1"
+
+      style="@style/TextTajawalBold14"
+      android:textSize="16sp"
+      android:textColor="#1F336B"
+
+      app:layout_constraintWidth_default="wrap"
+
+      android:layout_marginEnd="3dp"
+
+      android:text="300 ريال"
+
+      android:includeFontPadding="false"
+
+      app:layout_constraintTop_toBottomOf="@id/storeImageImageView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/negotiableTextView"/>
+
+    <TextView
+      android:id="@+id/negotiableTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      android:includeFontPadding="false"
+
+      android:layout_marginStart="3dp"
+
+      style="@style/TextTajawalRegular12"
+      android:textSize="10sp"
+      android:textColor="#C1C1C1"
+      android:text="@string/has_negatiable"
+
+      app:layout_constraintStart_toEndOf="@id/priceTextView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="@id/priceTextView"
+      app:layout_constraintBottom_toBottomOf="@id/priceTextView"/>
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="24dp"
+
+      android:orientation="horizontal"
+
+      android:layout_marginTop="20dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+
+      android:gravity="center_vertical"
+
+      app:layout_constraintTop_toBottomOf="@id/priceTextView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent">
+
+      <ImageView
+        android:id="@+id/editImageView"
+
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+
+        android:src="@drawable/ic_edit_9"
+
+        android:layout_marginEnd="2dp"
+
+        android:background="@drawable/dr_round_not_selected"
+        android:backgroundTint="#0D0633"
+
+        android:padding="4dp"/>
+
+      <ImageView
+        android:id="@+id/promotionImageView"
+
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+
+        android:src="@drawable/ic_prem_9"
+
+        android:background="@drawable/dr_round_not_selected"
+        android:backgroundTint="#E89028"
+
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+
+        android:padding="4dp"/>
+
+      <ImageView
+        android:id="@+id/delImageView"
+
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+
+        android:src="@drawable/ic_trash_9"
+
+        android:layout_marginStart="2dp"
+
+        android:background="@drawable/dr_round_not_selected"
+        android:backgroundTint="#CA2A2A"
+
+        android:padding="4dp"/>
+
+    </LinearLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

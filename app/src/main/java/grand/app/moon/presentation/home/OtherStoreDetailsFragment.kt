@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.FragmentOtherStoreDetailsBinding
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.categories.entity.ItemSubCategory
@@ -24,6 +26,7 @@ import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.utils.MACometChatUtils
 import grand.app.moon.presentation.home.viewModels.OtherStoreDetailsViewModel
+import grand.app.moon.presentation.myAds.MyAdsFragment
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -108,6 +111,13 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 				viewModel.showIsOnline.value = MACometChatUtils.isUserOnline(response.id.orZero())
 
 				hideLoading()
+
+				if (MyApplication.deepLinkUri?.getQueryParameter("story").isNullOrEmpty().not()) {
+					//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store?story=view
+					viewModel.showStories(binding.cardOwnerImageView)
+				}
+
+				MyApplication.deepLinkUri = null
 			}
 		}
 	}
@@ -189,6 +199,28 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 			val layoutParams1 = binding.recyclerViewAds.layoutParams
 			layoutParams1.height = height
 			binding.recyclerViewAds.layoutParams = layoutParams1
+		}
+
+		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<MyAdsFragment.NewAdvertisementState> {
+			if (it == MyAdsFragment.NewAdvertisementState.BECAME_PREMIUM) {
+				findNavController().currentBackStackEntry?.savedStateHandle?.remove<MyAdsFragment.NewAdvertisementState>(
+					AppConsts.NavController.GSON_KEY
+				)
+
+				handleRetryAbleActionOrGoBack(
+					action = {
+						if (viewModel.args.fromViewNotSearch) {
+							viewModel.repoShop.getStoreDetailsFromView(viewModel.args.id)
+						}else {
+							viewModel.repoShop.getStoreDetailsFromSearch(viewModel.args.id)
+						}
+					},
+				) { response ->
+					viewModel.response.value = viewModel.response.value?.copy(
+						advertisements = response.advertisements
+					)
+				}
+			}
 		}
 	}
 
