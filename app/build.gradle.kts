@@ -24,6 +24,7 @@ plugins {
 }
 
 android {
+	//namespace = "android_app"
   compileSdk = Config.AppConfig.compileSdkVersion
 
   defaultConfig {
