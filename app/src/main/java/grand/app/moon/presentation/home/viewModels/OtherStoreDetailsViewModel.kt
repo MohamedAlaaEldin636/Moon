@@ -759,6 +759,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun goToViews(view: View) {
+		if (userLocalUseCase().isStore.orFalse().not()) return
+
 		SimpleUserListOfInteractionsFragment.launch(
 			view.findNavController(),
 			app.getString(R.string.views),
@@ -769,6 +771,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun goToReviews(view: View) {
+		if (userLocalUseCase().isStore.orFalse().not()) return
+
 		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
 
 		fragment.findNavController().navigateDeepLinkWithOptions(
@@ -783,6 +787,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun goToFollowers(view: View) {
+		if (userLocalUseCase().isStore.orFalse().not()) return
+
 		SimpleUserListOfInteractionsFragment.launch(
 			view.findNavController(),
 			app.getString(R.string.followers),
