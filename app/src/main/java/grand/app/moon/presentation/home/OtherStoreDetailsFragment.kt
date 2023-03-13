@@ -24,6 +24,7 @@ import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.utils.MACometChatUtils
 import grand.app.moon.presentation.home.viewModels.OtherStoreDetailsViewModel
 import grand.app.moon.presentation.myAds.MyAdsFragment
@@ -114,7 +115,11 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 
 				if (MyApplication.deepLinkUri?.getQueryParameter("story").isNullOrEmpty().not()) {
 					//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store?story=view
-					viewModel.showStories(binding.cardOwnerImageView)
+					if (response.stories.isNullOrEmpty()) {
+						showMessage(getString(R.string.no_stories_found))
+					}else {
+						viewModel.showStories(binding.cardOwnerImageView)
+					}
 				}
 
 				MyApplication.deepLinkUri = null

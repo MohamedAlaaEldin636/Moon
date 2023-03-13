@@ -539,4 +539,5 @@
   <string name="cancel_follow_3892733">unfollow</string>
     <string name="add_img_or_video">Add Image or Video</string>
     <string name="you_can_t_like_your_own_story">You can\'t like your own Story</string>
+    <string name="no_stories_found">لا يوجد حالات</string>
 </resources>

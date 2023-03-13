@@ -153,6 +153,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 						//https://sooqmoon.net/storage/explores/1676294941kbj18.mp4
 						// todo ... change response to share_link and share action button as well isa.
 						// todo handle result. + make deep link as null after using it in all 4 screens explore adv store story
+						// todo check deep linking tany making el nela home page abyad
 					}
 					else -> {
 						// https://OM.sooqmoon.net/website/ar/37880/ggg?store_id=983

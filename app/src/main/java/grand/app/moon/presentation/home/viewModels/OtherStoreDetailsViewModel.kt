@@ -57,6 +57,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun showStories(view: View) {
+		if (response.value?.stories.isNullOrEmpty()) {
+			return
+		}
+
 		val responseStory = response.value?.toResponseStory() ?: return
 
 		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
