@@ -212,6 +212,23 @@ fun UserLocalUseCase.goToAdvDetailsCheckIfMyAdv(
 fun UserLocalUseCase.goToAdvDetailsCheckIfMyAdv(
 	context: Context,
 	navController: NavController,
+	advId: Int,
+	isMyAdv: Boolean,
+) {
+	if (context.isLogin() && isMyAdv) {
+		navController.navigateDeepLinkWithOptions(
+			"fragment-dest",
+			"grand.app.moon.presentation.myAds.dest.my.adv.details.id",
+			paths = arrayOf(advId.toString())
+		)
+	}else {
+		OtherAdvDetailsFragment.launch(navController, advId)
+	}
+}
+
+fun UserLocalUseCase.goToAdvDetailsCheckIfMyAdv(
+	context: Context,
+	navController: NavController,
 	item: ResponseSearchResult
 ) {
 	val store = item.store

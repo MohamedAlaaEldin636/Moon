@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.BuildConfig
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
+import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.databinding.*
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
@@ -133,6 +134,8 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		val context = context ?: return
+
 		MyLogger.e("Home2Fragment -> onViewCreated ${viewModel.callApi}")
 		if (MyApplication.usedDeepLink.not() && MyApplication.deepLinkUri != null) {
 			val path = MyApplication.deepLinkUri?.path.toStringOrEmpty()
@@ -140,27 +143,51 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 			if (path.isNotEmpty()) {
 				when {
 					"shop" in path -> {
+						//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store?story=view
+						//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store
 						val id = MyApplication.deepLinkUri?.pathSegments?.dropLast(1)?.lastOrNull()?.toIntOrNull()
 
 						if (id != null) {
 							val isStoreNotStory = MyApplication.deepLinkUri?.getQueryParameter("story").isNullOrEmpty()
 
-							if (isStoreNotStory) {
+							if (context.isLogin() && id == viewModel.userLocalUseCase().id && isStoreNotStory.not()) {
+								// Story of my story todo
+								// should be same screen 3ade isa...
+								/*findNavController().navigateDeepLinkWithOptions(
+									"fragment-dest",
+									"grand.app.moon.dest.story.player",
+									paths = arrayOf(
+										listOf(responseStory).toJsonInlinedOrNull().orEmpty(),
+										0.toString()
+									)
+								)*/
+							}else {
+								// todo play story if is story.
 								viewModel.userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
 									requireContext(),
 									findNavController(),
 									id
 								)
-							}else {
-
 							}
 						}
 					}
 					"explores" in path -> {
-
+						//https://sooqmoon.net/storage/explores/1676294941kbj18.mp4
+						// todo ...
 					}
 					else -> {
+						// https://OM.sooqmoon.net/website/ar/37880/ggg?store_id=983
+						val id = MyApplication.deepLinkUri?.pathSegments?.dropLast(1)?.lastOrNull()?.toIntOrNull()
 
+						if (id != null) {
+							viewModel.userLocalUseCase.goToAdvDetailsCheckIfMyAdv(
+								requireContext(),
+								findNavController(),
+								id,
+								context.isLogin() && MyApplication.deepLinkUri
+									?.getQueryParameter("store_id") == viewModel.userLocalUseCase().id.toString()
+							)
+						}
 					}
 				}
 			}
@@ -174,12 +201,6 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 			viewModel.adapterCategories.submitList(viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands())
 		}
 	}
-
-	/*override fun onDestroyView() {
-		hideLoading()
-
-		super.onDestroyView()
-	}*/
 
 	fun loadStoriesAndPossiblyAds(showLoading: Boolean, loadAds: Boolean) {
 		handleRetryAbleActionOrGoBack(
