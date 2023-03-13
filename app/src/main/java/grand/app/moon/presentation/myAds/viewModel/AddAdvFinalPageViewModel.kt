@@ -140,7 +140,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 			return fragment.showError(fragment.getString(R.string.all_fields_required))
 		}
 
-		if (priceBeforeDiscount.value?.toIntOrNull() != null
+		if (isStore && priceBeforeDiscount.value?.toIntOrNull() != null
 			&& price.value?.toIntOrNull().orZero() >= priceBeforeDiscount.value?.toIntOrNull().orZero()) {
 			return fragment.showError(fragment.getString(R.string.price_before_and_after_check))
 		}
