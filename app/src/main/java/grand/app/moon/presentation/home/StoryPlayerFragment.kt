@@ -63,7 +63,7 @@ class StoryPlayerFragment : BaseFragment<FragmentStoryPlayerBinding>() {
 			val viewWidth = _binding?.constraintLayout?.width.orZero()
 			if (viewWidth > 0) {
 				val isRtl = context?.resources?.getBoolean(R.bool.is_rtl).orFalse()
-				val goToNextStory = if (touchX < viewWidth / 2) {
+				val goToNextStory = if (touchX <= viewWidth / 2) {
 					// Touch is on the left side of the view
 					 isRtl
 				}else {

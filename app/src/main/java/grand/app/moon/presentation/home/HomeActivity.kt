@@ -4,20 +4,14 @@ import android.Manifest
 import android.content.Intent
 import android.content.IntentSender
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.webkit.ValueCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
@@ -25,7 +19,6 @@ import com.facebook.FacebookSdk
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import grand.app.moon.R
-import grand.app.moon.presentation.base.BaseActivity
 import grand.app.moon.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.NavHomeDirections
@@ -37,11 +30,10 @@ import grand.app.moon.presentation.home.viewModels.HomeViewModel
 import grand.app.moon.appMoonHelper.FilterDialog
 
 import com.onesignal.OneSignal
+import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.update.ImmediateUpdateActivity
-import grand.app.moon.presentation.base.utils.showMessage
-import grand.app.moon.presentation.packages.BecomeShopPackagesFragmentDirections
 import grand.app.moon.presentation.splash.MABaseActivity
 
 //private var CAUSE_NAV_UP = false

@@ -3,6 +3,7 @@ package grand.app.moon.core
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.multidex.MultiDex
@@ -40,6 +41,9 @@ class MyApplication : Application() {
 		lateinit var instance : MyApplication
 
 		private const val DEFAULT_LANGUAGE = "ar"
+
+		var deepLinkUri: Uri? = null
+		var usedDeepLink = false
 	}
 
 	var checkedAppGlobalAnnouncement = false

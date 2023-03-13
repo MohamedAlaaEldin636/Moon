@@ -29,11 +29,29 @@
 
       android:background="@color/all_screens_background">
 
+      <!--<androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/curveOfToolbarView"
+
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+
+        android:src="@drawable/ic_curve_filter"
+
+        android:scaleType="fitXY"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>-->
+      <!--<item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">33dp</item>
+    <item name="android:src">@drawable/ic_curve_filter</item>
+    <item name="android:scaleType">fitXY</item>-->
+
       <include
         android:id="@+id/toolbarCurve"
 
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="58dp"
 
         layout="@layout/item_toolbar_curve"
 
@@ -43,6 +61,8 @@
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/searchTextView"
+
+        android:layout_marginTop="10dp"
 
         android:layout_width="0dp"
         android:layout_height="48dp"

@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.InitialAppLaunch
 import grand.app.moon.core.extenstions.getInitialAppLaunch
 import grand.app.moon.core.makeAppInitializations
@@ -38,16 +39,9 @@ class MASplash2Activity : AppCompatActivity() {
 
 		val binding = DataBindingUtil.setContentView<ActivityMaSplash2Binding>(this, R.layout.activity_ma_splash_2)
 
-		val appLinkAction = intent?.action
 		val appLinkData = intent?.data
-		MyLogger.e("dijasodjasoidjas $appLinkAction $appLinkData")
-		/* todo ...
-		null
-		dijasodjasoidjas android.intent.action.VIEW https://om.sooqmoon.net/website/ar/shop/7779/mariz-store?story=view
-		dijasodjasoidjas android.intent.action.VIEW https://om.sooqmoon.net/website/ar/shop/7598/nana
-		dijasodjasoidjas android.intent.action.VIEW https://OM.sooqmoon.net/website/ar/37880/ggg
-		dijasodjasoidjas android.intent.action.VIEW https://sooqmoon.net/storage/explores/1676294941kbj18.mp4
-		*/
+		MyApplication.deepLinkUri = appLinkData
+		MyApplication.usedDeepLink = appLinkData == null
 
 		binding.splashImageView.setupWithGlide {
 			load(R.drawable.aaaa).saveDiskCacheStrategyAll()

@@ -3,9 +3,12 @@ package grand.app.moon.presentation.home
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -21,6 +24,7 @@ import grand.app.moon.core.MyApplication
 import grand.app.moon.databinding.*
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.BaseFragment
+import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.models.ItemHomeRV
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.viewModels.Home2ViewModel
@@ -117,17 +121,65 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 		binding.viewModel = viewModel
 	}
 
+	override fun onDestroyView() {
+		if (MyApplication.usedDeepLink.not()) {
+			mRootView = null
+			MyApplication.usedDeepLink = true
+		}
+
+		super.onDestroyView()
+	}
+
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		if (viewModel.callApi) {
-			viewModel.callApi = false
+		MyLogger.e("Home2Fragment -> onViewCreated ${viewModel.callApi}")
+		if (MyApplication.usedDeepLink.not() && MyApplication.deepLinkUri != null) {
+			val path = MyApplication.deepLinkUri?.path.toStringOrEmpty()
+			MyLogger.e("dijasodjasoidjas $path")
+			if (path.isNotEmpty()) {
+				when {
+					"shop" in path -> {
+						val id = MyApplication.deepLinkUri?.pathSegments?.dropLast(1)?.lastOrNull()?.toIntOrNull()
 
-			callApi()
+						if (id != null) {
+							val isStoreNotStory = MyApplication.deepLinkUri?.getQueryParameter("story").isNullOrEmpty()
+
+							if (isStoreNotStory) {
+								viewModel.userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+									requireContext(),
+									findNavController(),
+									id
+								)
+							}else {
+
+							}
+						}
+					}
+					"explores" in path -> {
+
+					}
+					else -> {
+
+					}
+				}
+			}
+		}else {
+			if (viewModel.callApi) {
+				viewModel.callApi = false
+
+				callApi()
+			}
+
+			viewModel.adapterCategories.submitList(viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands())
 		}
-
-		viewModel.adapterCategories.submitList(viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands())
 	}
+
+	/*override fun onDestroyView() {
+		hideLoading()
+
+		super.onDestroyView()
+	}*/
 
 	fun loadStoriesAndPossiblyAds(showLoading: Boolean, loadAds: Boolean) {
 		handleRetryAbleActionOrGoBack(
@@ -158,11 +210,13 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 			viewModel.adapterStories.submitList(listOf(ResponseStory()) + allStories)
 
 			if (loadAds) {
+				MyLogger.e("_binding $_binding")
 				if (_binding == null) return@handleRetryAbleActionOrGoBack
 
 				binding.rvLikeNestedScrollView.post {
 					kotlin.runCatching {
 						binding.rvLikeLinearLayout.removeAllViews()
+						MyLogger.e("_binding removed all views")
 					}.getOrElse {
 						MyLogger.e("error hudisaud $it")
 					}
@@ -247,6 +301,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 										binding.root,
 										LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 									)
+									MyLogger.e("_binding adding a view")
 								}.getOrElse {
 									MyLogger.e("errorrrr uiheiwufhwe $it")
 								}
@@ -255,6 +310,14 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 									delay(500)
 								}
 							}
+
+							//this@Home2Fragment.binding.rvLikeLinearLayout.requestLayout()
+
+							//this@Home2Fragment.showMessage("dkapsdkp")
+
+//							this@Home2Fragment.binding.rvLikeLinearLayout.addView(
+//								TextView(requireContext()).also { it.text = "kewpodkwepdk" }
+//							)
 						}
 					}
 				}

@@ -38,7 +38,7 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
   var _binding: VB? = null
 		private set
   open val binding get() = _binding!!
-  private var mRootView: View? = null
+  var mRootView: View? = null
   private var hasInitializedRootView = false
   private var progressDialog: Dialog? = null
   val selectedImages = SingleLiveEvent<Uri>()

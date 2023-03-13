@@ -4,3 +4,5 @@ import android.content.Context
 import grand.app.moon.core.MyApplication
 
 val Context?.applicationScope get() = (this?.applicationContext as? MyApplication)?.applicationScope
+
+val Context?.myApplication get() = this?.applicationContext as? MyApplication
