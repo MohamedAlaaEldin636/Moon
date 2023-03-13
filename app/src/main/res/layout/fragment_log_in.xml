@@ -172,7 +172,7 @@
         android:layout_height="@dimen/dimen40"
         android:padding="@dimen/dimen6"
         android:onClick="@{ (v) -> viewModel.google(v)}"
-        android:visibility="@{viewModel.showSocial ? View.VISIBLE : View.GONE }"
+        android:visibility="@{false &amp;&amp; viewModel.showSocial ? View.VISIBLE : View.GONE}"
         android:background="@drawable/corner_white"
         android:src="@drawable/ic_google"
         app:layout_constraintEnd_toStartOf="@+id/ic_twitter"
