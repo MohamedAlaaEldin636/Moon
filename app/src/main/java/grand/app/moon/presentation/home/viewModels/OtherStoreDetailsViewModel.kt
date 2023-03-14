@@ -988,6 +988,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 			paths = arrayOf(
 				response.value?.id.orZero().toString(),
 				true.toString(), // useRating
+				response.value?.id.toString(),
 				false.toString(),
 			)
 		)

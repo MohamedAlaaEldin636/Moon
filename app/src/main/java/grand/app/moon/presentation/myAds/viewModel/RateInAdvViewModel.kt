@@ -8,10 +8,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
-import grand.app.moon.extensions.findFragmentOrNull
-import grand.app.moon.extensions.handleRetryAbleActionCancellableNullable
-import grand.app.moon.extensions.navUpThenSetResultInBackStackEntrySavedStateHandleViaGson
-import grand.app.moon.extensions.setProgressBA
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.myAds.RateInAdvDialogFragment
 import grand.app.moon.presentation.myAds.RateInAdvDialogFragmentArgs
@@ -34,6 +31,8 @@ class RateInAdvViewModel @Inject constructor(
 		val binding = fragment._binding ?: return
 
 		val rate = if (args.useRating) binding.ratingBar.progress / 20 else null
+
+		MyLogger.e("dasdasdasd ${binding.ratingBar.progress} $rate ${args.useRating}")
 
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {

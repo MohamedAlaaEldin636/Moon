@@ -282,7 +282,8 @@ class MyAdvDetailsViewModel @Inject constructor(
 			"grand.app.moon.dest.adv.clients.reviews",
 			paths = arrayOf(
 				response.value?.id.orZero().toString(),
-				false.toString() // cam from not MY advertisement meaning not my own adv of my account.
+				false.toString(), // cam from not MY advertisement meaning not my own adv of my account.
+				userLocalUseCase().id.toString()
 			)
 		)
 	}

@@ -310,7 +310,8 @@ class OtherAdvDetailsViewModel @Inject constructor(
 			"grand.app.moon.dest.adv.clients.reviews",
 			paths = arrayOf(
 				response.value?.id.orZero().toString(),
-				true.toString() // useRating
+				true.toString(), // useRating
+				response.value?.store?.id.toString()
 			)
 		)
 	}

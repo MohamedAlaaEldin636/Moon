@@ -53,6 +53,7 @@
         android:progress="0"
         tools:progress="60"
         android:max="100"
+        appCompatRatingBar_setProgressFloat="@{0f}"
 
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:isIndicator="false"
