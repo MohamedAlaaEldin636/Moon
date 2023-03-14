@@ -493,7 +493,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 						binding.root.findFragmentOrNull<OtherStoreDetailsFragment>()?.makeMyAdvPremiumOrCheckAdvPremium(item)
 					}
-					binding.editImageView.setOnClickListener {
+					binding.delImageView.setOnClickListener {
 						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 							?: return@setOnClickListener
 
@@ -627,7 +627,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 						binding.root.findFragmentOrNull<OtherStoreDetailsFragment>()?.makeMyAdvPremiumOrCheckAdvPremium(item)
 					}
-					binding.editAdvTextView.setOnClickListener {
+					binding.delAdvTextView.setOnClickListener {
 						val item = binding.root.getTagJson<ItemAdvertisementInResponseHome>()
 							?: return@setOnClickListener
 
