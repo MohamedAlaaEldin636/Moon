@@ -59,6 +59,8 @@ data class ResponseStory(
 		@SerializedName("is_seen") var isSeen: Boolean?,
 		var file: String?,
 		var store: Store?,
+		@SerializedName("highlight_name") var highlightName: String? = null,
+		@SerializedName("highlight_cover") var highlightCover: String? = null,
 	) {
 
 		val isVideo get() = mimeType?.startsWith(Constants.VIDEO).orFalse()

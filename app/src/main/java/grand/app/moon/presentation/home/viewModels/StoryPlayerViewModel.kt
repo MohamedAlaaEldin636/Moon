@@ -40,6 +40,11 @@ class StoryPlayerViewModel @Inject constructor(
 
 	var player: ExoPlayer? = null
 
+	init {
+		MyLogger.e("dasoidhoasihds story player -> ${args.jsonOfAllStoresWithStories
+			.fromJsonInlinedOrNull<List<ResponseStory>>().orEmpty()} ${args.position}")
+	}
+
 	private val allStoresWithStories = args.jsonOfAllStoresWithStories
 		.fromJsonInlinedOrNull<List<ResponseStory>>().orEmpty().also {
 			MyLogger.e("hhhhhhhhhhhhhhhhhhhhhhhhh 1 -> $it")

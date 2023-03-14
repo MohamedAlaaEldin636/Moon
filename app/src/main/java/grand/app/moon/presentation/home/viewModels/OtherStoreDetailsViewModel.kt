@@ -142,7 +142,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 		)
 	}*/
 
-	val adapterHighlights = RVItemCommonListUsage<ItemStoryInStoreDetailsBinding, ResponseStory>(
+	val adapterHighlights = RVItemCommonListUsage<ItemStoryInStoreDetailsBinding, ResponseStory.Story>(
 		R.layout.item_story_in_store_details,
 		onItemClick = { adapter, binding ->
 			val fragment = binding.root.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return@RVItemCommonListUsage
@@ -151,10 +151,10 @@ class OtherStoreDetailsViewModel @Inject constructor(
 			val position = binding.root.tag as? Int ?: return@RVItemCommonListUsage
 
 			val item = adapter.list[position]
-			if (context.isLogin() && item.isSeen.not()) {
-				item.stories?.firstOrNull()?.isSeen = true
+			if (context.isLogin() && item.isSeen.orFalse().not()) {
+				item.isSeen = true
 
-				if (item.isSeen) {
+				if (item.isSeen == true) {
 					val updatedList = adapter.list.toMutableList()
 					val updatedItem = updatedList.removeAt(position)
 					updatedList += updatedItem
@@ -163,16 +163,21 @@ class OtherStoreDetailsViewModel @Inject constructor(
 				}
 			}
 
+			val responseStory = response.value?.toResponseStory()?.copy(
+				stories = adapter.list
+			) ?: return@RVItemCommonListUsage
+
+			MyLogger.e("dasoidhoasihds adapter.list ${adapter.list} $position")
 			fragment.findNavController().navigateDeepLinkWithOptions(
 				"fragment-dest",
 				"grand.app.moon.dest.story.player",
-				paths = arrayOf(adapter.list.toJsonInlinedOrNull().orEmpty(), position.toString())
+				paths = arrayOf(listOf(responseStory).toJsonInlinedOrNull().orEmpty(), position.toString())
 			)
 		}
 	) { binding, position, item ->
 		binding.root.tag = position
 
-		binding.view.visibleOrInvisible(item.isSeen.not())
+		binding.view.visibleOrInvisible(item.isSeen.orFalse().not())
 
 		binding.imageView.setupWithGlide {
 			load(item.highlightCover).saveDiskCacheStrategyAll()

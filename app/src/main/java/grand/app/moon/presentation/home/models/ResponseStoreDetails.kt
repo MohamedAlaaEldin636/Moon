@@ -54,7 +54,7 @@ data class ResponseStoreDetails(
 	var country: ItemAdvertisementInResponseHome.Country?, // name
 	var city: ItemAdvertisementInResponseHome.City?, // name
 	var stories: List<ResponseStory.Story>?,
-	var highlights: List<ResponseStory>?,
+	var highlights: List<ResponseStory.Story>?,
 	@SerializedName("store_categories") var storeCategories: List<ItemCategory>?,
 	var explores: List<ItemHomeExplore>?
 ) {
