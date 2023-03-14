@@ -8,6 +8,8 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.core.extenstions.CometChatUtils
+import grand.app.moon.core.extenstions.unblockUserInCometChat
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.store.entity.FollowStoreRequest
 import grand.app.moon.domain.store.entity.StoreListPaginateData
@@ -125,6 +127,7 @@ class StoreBlockListViewModel @Inject constructor(
     followStoreRequest.storeId = adapter.differ.currentList[adapter.position].id
     storeUseCase.unBlock(followStoreRequest).launchIn(viewModelScope)
     adapter.removeItem()
+	  CometChatUtils.unblockUserInCometChat(followStoreRequest.storeId.orZero())
 //    ListHelper.removeStoreBlock(followStoreRequest.storeId!!)
   }
 

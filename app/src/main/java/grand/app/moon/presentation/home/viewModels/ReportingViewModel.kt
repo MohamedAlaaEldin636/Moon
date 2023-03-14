@@ -7,6 +7,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.CometChatUtils
+import grand.app.moon.core.extenstions.blockUserInCometChat
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemSingleOrMultiSelection2Binding
 import grand.app.moon.extensions.*
@@ -94,6 +96,8 @@ class ReportingViewModel @Inject constructor(
 
 			if (args.type == ReportingDialogFragment.Type.BLOCK_STORES) {
 				fragment.setFragmentResultUsingJson(ReportingDialogFragment.Type.BLOCK_STORES.name, args.id)
+
+				CometChatUtils.blockUserInCometChat(args.id)
 			}
 			fragment.findNavController().navigateUp()
 		}

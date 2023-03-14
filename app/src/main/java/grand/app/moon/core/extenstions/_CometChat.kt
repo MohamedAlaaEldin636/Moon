@@ -42,6 +42,36 @@ fun Context.startChatPage2(user: User) {
 	this.startActivity(intent)
 }
 
+object CometChatUtils
+
+fun CometChatUtils.blockUserInCometChat(id: Int) {
+	val uid = "user_$id"
+
+	CometChat.blockUsers(listOf(uid), object : CometChat.CallbackListener<HashMap<String, String>>() {
+		override fun onSuccess(resultMap: HashMap<String, String>) {
+			// Handle unblock users success.
+		}
+
+		override fun onError(e: CometChatException) {
+			// Handle unblock users failure
+		}
+	})
+}
+
+fun CometChatUtils.unblockUserInCometChat(id: Int) {
+	val uid = "user_$id"
+
+	CometChat.unblockUsers(listOf(uid), object : CometChat.CallbackListener<HashMap<String, String>>() {
+		override fun onSuccess(resultMap: HashMap<String, String>) {
+			// Handle unblock users success.
+		}
+
+		override fun onError(e: CometChatException) {
+			// Handle unblock users failure
+		}
+	})
+}
+
 fun Context.launchCometChat(uid: Int, name: String, image: String?) {
 	val user = User()
 	user.uid = "user_$uid"

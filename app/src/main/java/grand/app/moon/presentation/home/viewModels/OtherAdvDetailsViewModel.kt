@@ -31,6 +31,7 @@ import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrSplashBA
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.OtherAdvDetailsFragment
 import grand.app.moon.presentation.home.OtherAdvDetailsFragmentArgs
+import grand.app.moon.presentation.home.OtherStoreDetailsFragment
 import grand.app.moon.presentation.home.ReportingDialogFragment
 import grand.app.moon.presentation.home.utils.getAdapterForAds
 import grand.app.moon.presentation.home.utils.getAdapterForStores
@@ -335,11 +336,17 @@ class OtherAdvDetailsViewModel @Inject constructor(
 	}
 
 	fun reportAdv(view: View) {
-		ReportingDialogFragment.launch(
-			view.findNavController(),
-			ReportingDialogFragment.Type.REPORT_ADS,
-			response.value?.id.orZero()
-		)
+		val fragment = view.findFragmentOrNull<OtherAdvDetailsFragment>() ?: return
+
+		val context = fragment.context ?: return
+
+		if (context.isLoginWithOpenAuth()) {
+			ReportingDialogFragment.launch(
+				view.findNavController(),
+				ReportingDialogFragment.Type.REPORT_ADS,
+				response.value?.id.orZero()
+			)
+		}
 	}
 
 	fun goToWhatsApp(view: View) {

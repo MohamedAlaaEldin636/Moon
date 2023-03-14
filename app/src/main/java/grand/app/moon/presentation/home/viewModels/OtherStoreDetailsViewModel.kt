@@ -1024,29 +1024,39 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun reportStore(view: View) {
-		ReportingDialogFragment.launch(
-			view.findNavController(),
-			ReportingDialogFragment.Type.REPORT_STORES,
-			response.value?.id.orZero()
-		)
+		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
+
+		val context = fragment.context ?: return
+
+		if (context.isLoginWithOpenAuth()) {
+			ReportingDialogFragment.launch(
+				view.findNavController(),
+				ReportingDialogFragment.Type.REPORT_STORES,
+				response.value?.id.orZero()
+			)
+		}
 	}
 
 	fun blockStore(view: View) {
 		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
 
-		fragment.setFragmentResultListenerUsingJson<Int>(ReportingDialogFragment.Type.BLOCK_STORES.name) {
-			if (it == response.value?.id) {
-				// Easily check all not on view created fetch data ex. home screen ads & stores isa.
-				//fragment.findNavController().navigateUp()
-				fragment.activity?.openActivityAndClearStack(HomeActivity::class.java)
-			}
-		}
+		val context = fragment.context ?: return
 
-		ReportingDialogFragment.launch(
-			view.findNavController(),
-			ReportingDialogFragment.Type.BLOCK_STORES,
-			response.value?.id.orZero()
-		)
+		if (context.isLoginWithOpenAuth()) {
+			fragment.setFragmentResultListenerUsingJson<Int>(ReportingDialogFragment.Type.BLOCK_STORES.name) {
+				if (it == response.value?.id) {
+					// Easily check all not on view created fetch data ex. home screen ads & stores isa.
+					//fragment.findNavController().navigateUp()
+					fragment.activity?.openActivityAndClearStack(HomeActivity::class.java)
+				}
+			}
+
+			ReportingDialogFragment.launch(
+				view.findNavController(),
+				ReportingDialogFragment.Type.BLOCK_STORES,
+				response.value?.id.orZero()
+			)
+		}
 	}
 
 	fun showAds() {
