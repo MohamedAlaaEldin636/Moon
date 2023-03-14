@@ -32,6 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.core.extenstions.inflateLayout
+import grand.app.moon.core.extenstions.showPopup
 import grand.app.moon.databinding.FragmentMapOfDataBinding
 import grand.app.moon.databinding.ItemMapClusterBinding
 import grand.app.moon.databinding.ItemMapImageAdvBinding
@@ -43,6 +44,7 @@ import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.map.model.MAClusterItem
 import grand.app.moon.presentation.map.model.ResponseMapData
 import grand.app.moon.presentation.map.viewModel.MapOfDataViewModel
+import kotlinx.android.synthetic.main.fragment_map_of_data.view.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -362,12 +364,38 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 		}
 		viewModel.clusterManager?.setOnClusterClickListener { cluster ->
 			if (cluster != null) {
-				viewModel.googleMap?.animateCamera(
-					CameraUpdateFactory.newLatLngZoom(
-						cluster.position,
-						viewModel.googleMap?.cameraPosition?.zoom.orZero().inc().inc()
+				val currentZoom = viewModel.googleMap?.cameraPosition?.zoom.orZero()
+				//val newZoom = viewModel.googleMap?.cameraPosition?.zoom.orZero().inc().inc()
+				val maxZoom = viewModel.googleMap?.maxZoomLevel.orZero()
+
+				if (currentZoom >= maxZoom) {
+					@Suppress("UselessCallOnNotNull")
+					val items = cluster.items.filterNotNull().orEmpty()
+					val ids = items.map { it.id }
+
+					val appItems = viewModel.allDataList.orEmpty().filter { it.id in ids }
+
+					binding.screenCenteredView.showPopup(
+						appItems.map { if (viewModel.args.type == Type.STORE) it.name.orEmpty() else it.title.orEmpty() },
+						listener = { menuItem ->
+							val item = appItems.firstOrNull {
+								val name = if (viewModel.args.type == Type.STORE) it.name.orEmpty() else it.title.orEmpty()
+								name == menuItem.title
+							}
+
+							if (item != null) {
+								onMapDataItemClick(item)
+							}
+						}
 					)
-				)
+				}else {
+					viewModel.googleMap?.animateCamera(
+						CameraUpdateFactory.newLatLngZoom(
+							cluster.position,
+							viewModel.googleMap?.cameraPosition?.zoom.orZero().inc().inc()
+						)
+					)
+				}
 			}
 
 			/*
@@ -382,6 +410,50 @@ class MapOfDataFragment : BaseFragment<FragmentMapOfDataBinding>(), OnMapReadyCa
 		googleMap.setOnMarkerClickListener(viewModel.clusterManager)
 
 		addFirstTimeDataToMapThenAnimateCamera()
+	}
+
+	private fun onMapDataItemClick(mapData: ResponseMapData) {
+		val context = context ?: return
+
+		when (viewModel.args.type) {
+			Type.STORE -> {
+				viewModel.userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
+					context,
+					findNavController(),
+					mapData
+				)
+			}
+			Type.ADVERTISEMENT -> {
+				val oldItem = viewModel.selectedMapData.value
+
+				if (oldItem?.id == mapData.id) return
+
+				viewModel.selectedMapData.value = viewModel.allDataList?.firstOrNull {
+					it.id == mapData.id
+				}
+
+				//val list = viewModel.clusterManager?.algorithm?.items?.filterNotNull().orEmpty()
+				if (oldItem?.id != null) {
+					viewModel.bitmapsDataMap[oldItem.id.orZero()] = context.createAdvItemBitmap(oldItem)
+				}
+
+				viewModel.bitmapsDataMap[mapData.id.orZero()] = context.createAdvItemBitmap(mapData)
+
+				viewModel.clusterManager?.cluster()
+
+				val maClusterItem = MAClusterItem(
+					mapData.id.orZero(),
+					mapData.latitude.orZero(),
+					mapData.longitude.orZero()
+				)
+
+				maClusterItem.also {
+					viewModel.googleMap?.animateCamera(
+						CameraUpdateFactory.newLatLng(it.position)
+					)
+				}
+			}
+		}
 	}
 
 	private fun addFirstTimeDataToMapThenAnimateCamera() {

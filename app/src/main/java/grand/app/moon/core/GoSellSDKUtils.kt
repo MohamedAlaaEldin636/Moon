@@ -27,7 +27,7 @@ object GoSellSDKUtils {
 
 	private var sdkSession: SDKSession? = null
 
-	private fun useDebugForPayment() = /*false && */BuildConfig.DEBUG
+	private fun useDebugForPayment() = false && BuildConfig.DEBUG
 
 	fun beforeAnyLaunchSetups(application: MyApplication, language: String = "en") {
 		application.performBeforeAnyUsageSetups(language)
