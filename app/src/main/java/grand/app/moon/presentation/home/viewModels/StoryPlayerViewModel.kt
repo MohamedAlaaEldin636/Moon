@@ -294,20 +294,12 @@ class StoryPlayerViewModel @Inject constructor(
 	fun goToStore(view: View) {
 		if (currentStoreWithStories.value?.isSouqMoonStory == true) return
 
-		if (currentStoreWithStories.value?.id.orZero() == userLocalUseCase().id) {
-			// My Store
-			view.findNavController().navigateDeepLinkWithOptions(
-				"fragment-dest",
-				"grand.app.moon.dest.create.store"
-			)
-		}else {
-			// Other stores
-			userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
-				view.context ?: return,
-				view.findNavController(),
-				currentStoreWithStories.value?.id.orZero()
-			)
-		}
+		// Mine or Other stores
+		userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+			view.context ?: return,
+			view.findNavController(),
+			currentStoreWithStories.value?.id.orZero()
+		)
 	}
 
 	class AdapterSegments(
