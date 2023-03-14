@@ -114,9 +114,12 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 				adapter.notifyItemChanged(position)
 
 				context.launchShareText(
+					item.shareLink.orEmpty()
+				)
+				/*context.launchShareText(
 					item.store?.name.orEmpty(),
 					item.files.orEmpty().joinToString("\n")
-				)
+				)*/
 			}
 
 			val listener = View.OnClickListener { view ->

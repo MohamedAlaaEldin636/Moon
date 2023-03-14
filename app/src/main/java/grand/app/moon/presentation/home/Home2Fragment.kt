@@ -149,11 +149,25 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 							)
 						}
 					}
-					"explores" in path -> {
-						//https://sooqmoon.net/storage/explores/1676294941kbj18.mp4
-						// todo ... change response to share_link and share action button as well isa.
-						// todo handle result. + make deep link as null after using it in all 4 screens explore adv store story
-						// todo check deep linking tany making el nela home page abyad
+					"explore" in path -> {
+						//https://EG.sooqmoon.net/website/ar/explore/133
+						val id = MyApplication.deepLinkUri?.pathSegments?.lastOrNull()?.toIntOrNull()
+
+						if (id != null) {
+							handleRetryAbleActionOrGoBack(
+								action = {
+									viewModel.repoShop.getExploreDetails(id)
+								}
+							) { item ->
+								findNavController().navigateDeepLinkWithOptions(
+									"fragment-dest",
+									"grand.app.moon.dest.home.explore.subsection",
+									paths = arrayOf(listOf(item).toJsonInlinedOrNull(), (-1).toString())
+								)
+							}
+						}
+
+						MyApplication.deepLinkUri = null
 					}
 					else -> {
 						// https://OM.sooqmoon.net/website/ar/37880/ggg?store_id=983

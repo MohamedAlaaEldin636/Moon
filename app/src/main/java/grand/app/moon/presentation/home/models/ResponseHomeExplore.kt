@@ -39,7 +39,8 @@ data class ItemHomeExplore(
 	@SerializedName("shares_count") var sharesCount: Int?,
 	@SerializedName("is_liked") var isLiked: Boolean?,
 	@SerializedName("created_at") var createdAt: String?,
-	var store: ItemStoreInHomeExplore?
+	var store: ItemStoreInHomeExplore?,
+	@SerializedName("share_link") var shareLink: String?,
 ) /*: BasePaging.Listener*/ {
 	val isVideo get() = mimeType?.contains(AppConsts.Files.MIME_TYPE_PREFIX_VIDEO).orFalse()
 

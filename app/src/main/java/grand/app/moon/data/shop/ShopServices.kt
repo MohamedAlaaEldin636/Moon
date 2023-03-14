@@ -490,4 +490,9 @@ interface ShopServices {
 		@Field("type") type: Int,
 	): BaseResponse<Any?>
 
+	@GET("v1/explores/{id}")
+	suspend fun getExploreDetails(
+		@Path("id") id: Int,
+	): BaseResponse<ItemHomeExplore?>
+
 }

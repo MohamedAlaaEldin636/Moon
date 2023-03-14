@@ -804,6 +804,8 @@ class RepoShop @Inject constructor(
 		storeId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CHAT
 	)
 
+	suspend fun getExploreDetails(id: Int) = remoteDataSource.getExploreDetails(id)
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

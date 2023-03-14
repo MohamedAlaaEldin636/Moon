@@ -827,6 +827,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.interactionForStore(storeId, type.apiValue)
 	}
 
+	suspend fun getExploreDetails(id: Int) = safeApiCall { apiService.getExploreDetails(id) }
+
 	enum class TypeAdOrStoreInteraction(val apiValue: Int) {
 		CALL(6), WHATSAPP(7), CHAT(8)
 	}
