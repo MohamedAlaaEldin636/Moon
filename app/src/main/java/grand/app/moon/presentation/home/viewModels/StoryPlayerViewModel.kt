@@ -96,7 +96,7 @@ class StoryPlayerViewModel @Inject constructor(
 		ContextCompat.getDrawable(application, drawableRes)
 	}
 
-	fun getPhoneWithCountryCode() = currentStoreWithStories.value?.let {
+	private fun getPhoneWithCountryCode() = currentStoreWithStories.value?.let {
 		"${it.countryCode.orEmpty()}${it.phone.orEmpty()}"
 	}.orEmpty()
 
