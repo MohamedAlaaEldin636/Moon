@@ -48,7 +48,7 @@
       android:layout_marginEnd="20dp"
 
       style="@style/TextTajawalMedium16"
-      android:textDirection="locale"
+      android:textDirection="ltr"
 
       tools:text="https://www.facebook.com"
 
