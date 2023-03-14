@@ -34,9 +34,6 @@ fun AllAdsViewModel.getAdapterCategories() = RVItemCommonListUsage<ItemHomeRvCat
 			properties = emptyList()
 		)
 
-		// todo clear sub cat id, brand id & pros as well isa. doesn't preserve data go filter go back then filter again filter all inital data for ads isa.
-		//  and check for stores as well isa. + if enter filter with just cat id then get data of props awel ma td5ol as well isa.
-
 		adapter.notifyItemsChanged(previousSelectionPosition, position)
 	}
 ) { binding, position, item ->
@@ -143,7 +140,7 @@ fun AllAdsViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithDifferentIt
 						repoShop.interactionForAdCall(item.id.orZero())
 					}
 
-					context.launchDialNumber(item.phone.orEmpty())
+					context.launchDialNumber("${item.country?.countryCode.orEmpty()} ${item.phone.orEmpty()}")
 				}
 				binding.chatImageView.setOnClickListener {
 					val context = binding.root.context ?: return@setOnClickListener
@@ -222,7 +219,7 @@ fun AllAdsViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithDifferentIt
 						repoShop.interactionForAdCall(item.id.orZero())
 					}
 
-					context.launchDialNumber(item.phone.orEmpty())
+					context.launchDialNumber("${item.country?.countryCode.orEmpty()} ${item.phone.orEmpty()}")
 				}
 				binding.chatConstraintLayout.setOnClickListener {
 					val context = binding.root.context ?: return@setOnClickListener

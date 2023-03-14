@@ -1,3 +1,4 @@
+
 package grand.app.moon.presentation.home
 
 import android.view.View
@@ -288,7 +289,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 				repoShop.interactionForAdCall(item.id.orZero())
 			}
 
-			context.launchDialNumber(item.phone.orEmpty())
+			context.launchDialNumber("${item.country?.countryCode.orEmpty()} ${item.phone.orEmpty()}")
 		}
 		binding.chatImageView.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener
