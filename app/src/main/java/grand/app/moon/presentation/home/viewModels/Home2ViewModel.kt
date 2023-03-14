@@ -406,4 +406,8 @@ class Home2ViewModel @Inject constructor(
 		}
 	}
 
+	fun addStoreInFollowedStores() {
+
+	}
+
 }

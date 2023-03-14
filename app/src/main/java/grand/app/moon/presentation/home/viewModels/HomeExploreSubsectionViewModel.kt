@@ -204,7 +204,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 		binding.storeTextView.text = item.store?.name
 
 		val isVideo = item.isVideo
-		binding.playerView.isVisible = isVideo
+		binding.playerView.visibility = if (isVideo) View.VISIBLE else View.GONE
 		binding.sliderView.visibleOrInvisible(isVideo.not())
 		binding.playerView.player = null
 		if (isVideo.not()) {

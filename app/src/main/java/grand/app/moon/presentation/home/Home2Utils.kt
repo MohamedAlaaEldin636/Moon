@@ -169,10 +169,13 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 					repoShop.followStore(item.id.orZero())
 				}
 
+				val newItem = item.copy(isFollowing = item.isFollowing.orFalse().not())
 				adapter.updateItem(
 					position,
-					item.copy(isFollowing = item.isFollowing.orFalse().not())
+					newItem
 				)
+
+				//addStoreInFollowedStores(newItem)
 			}
 		}
 	}
