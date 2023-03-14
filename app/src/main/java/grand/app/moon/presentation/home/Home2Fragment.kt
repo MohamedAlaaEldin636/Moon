@@ -307,7 +307,9 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 									"${getString(R.string.advertisements)} ${item.name}"
 								}
 
-								binding.countTextView.text = item.count.toStringOrEmpty()
+								binding.countTextView.text = item.count.toStringOrEmpty().let {
+									if (it.isEmpty()) it else "( $it )"
+								}
 
 								binding.recyclerView.setupInnerRvs(position, item.type)
 
@@ -410,12 +412,12 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 				true,
 				1
 			) { layoutParams ->
-				val number = 4
+				val number = 3.75f
 				val itemMargins = layoutParams.marginStart + layoutParams.marginEnd
 
 				val totalWidth = width - paddingStart - paddingEnd - (number.dec() * itemMargins)
 
-				layoutParams.width = (totalWidth - viewModel.dpToPx8) / number
+				layoutParams.width = ((totalWidth - viewModel.dpToPx8.toFloat()) / number).roundToInt()
 			}
 			ItemHomeRV.Type.CATEGORIES -> setupWithRVItemCommonListUsage(
 				viewModel.adapterCategories,
