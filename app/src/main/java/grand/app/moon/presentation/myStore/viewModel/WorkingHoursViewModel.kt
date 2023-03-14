@@ -33,28 +33,32 @@ class WorkingHoursViewModel @Inject constructor(
 			binding.fromTextView.setOnClickListener { view ->
 				val position = binding.fromTextView.tag as? Int ?: return@setOnClickListener
 
-				view.showTimePicker(
-					adapter.list[position].from
-				) { time ->
-					adapter.list[position].also {
-						it.from = time
-					}
+				if (adapter.list[position].enabled) {
+					view.showTimePicker(
+						adapter.list[position].from
+					) { time ->
+						adapter.list[position].also {
+							it.from = time
+						}
 
-					adapter.notifyItemChanged(position)
+						adapter.notifyItemChanged(position)
+					}
 				}
 			}
 
 			binding.toTextView.setOnClickListener { view ->
 				val position = binding.fromTextView.tag as? Int ?: return@setOnClickListener
 
-				view.showTimePicker(
-					adapter.list[position].to
-				) { time ->
-					adapter.list[position].also {
-						it.to = time
-					}
+				if (adapter.list[position].enabled) {
+					view.showTimePicker(
+						adapter.list[position].to
+					) { time ->
+						adapter.list[position].also {
+							it.to = time
+						}
 
-					adapter.notifyItemChanged(position)
+						adapter.notifyItemChanged(position)
+					}
 				}
 			}
 
