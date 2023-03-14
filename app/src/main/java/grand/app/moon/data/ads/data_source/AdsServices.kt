@@ -126,7 +126,7 @@ interface AdsServices {
 		@Part("latitude") latitude: RequestBody,
 		@Part("longitude") longitude: RequestBody,
 		@Part("address") address: RequestBody,
-		@Part("price") price: Int,
+		@Part("price") price: Float,
 		@Part("is_negotiable") is_negotiable: Int,
 		//@Part("brand_id") brand_id: Int,
 		//@Part("description") description: RequestBody,
@@ -144,7 +144,7 @@ interface AdsServices {
 		@Part("latitude") latitude: RequestBody,
 		@Part("longitude") longitude: RequestBody,
 		@Part("address") address: RequestBody,
-		@Part("price") price: Int,
+		@Part("price") price: Float,
 		@Part("is_negotiable") is_negotiable: Int,
 		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>,
 		@Header(RetrofitModule.HEADER_KEY_TIME_OUT_IN_MINUTES) infiniteTimeout: String = 30.toString()

@@ -41,7 +41,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	//private val homeUseCase: HomeUseCase,
 	application: Application,
 	val args: AddAdvFinalPageFragmentArgs,
-	useCaseUser: UserLocalUseCase,
+	val useCaseUser: UserLocalUseCase,
 	val countriesUseCase: CountriesUseCase,
 	val adsUseCase: AdsUseCase,
 	val repoShop: RepoShop,
@@ -126,7 +126,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 	fun addAdvertisement(fragment: AddAdvFinalPageFragment) {
 		val context = (fragment as? Fragment)?.context ?: return
 
-		val isStore = user.isStore.orFalse()
+		val isStore = useCaseUser().isStore.orFalse()
 
 		if (locationData.value == null || selectedCity.value == null || price.value.isNullOrEmpty()
 			|| (brands.isNotEmpty() && selectedBrand.value == null) /*|| description.value.isNullOrEmpty()*/
@@ -162,7 +162,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 						locationData.value?.longitude.orEmpty(),
 						locationData.value?.address.orEmpty(),
 						selectedCity.value?.id.orZero(),
-						price.value?.toIntOrNull().orZero(),
+						price.value?.toFloatOrNull().orZero(),
 						negotiable.value.orFalse(),
 						selectedBrand.value?.id,
 						description.value.orEmpty(),
@@ -183,7 +183,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 								}
 							}
 						},
-						priceBeforeDiscount.value?.toIntOrNull(),
+						priceBeforeDiscount.value?.toFloatOrNull(),
 						selectedCategory.value?.id,
 						selectedSubCategory.value?.id,
 					)
@@ -201,7 +201,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 						locationData.value?.longitude.orEmpty(),
 						locationData.value?.address.orEmpty(),
 						selectedCity.value?.id.orZero(),
-						price.value?.toIntOrNull().orZero(),
+						price.value?.toFloatOrNull().orZero(),
 						negotiable.value.orFalse(),
 						selectedBrand.value?.id,
 						description.value.orEmpty(),
@@ -222,7 +222,7 @@ class AddAdvFinalPageViewModel @Inject constructor(
 								}
 							}
 						},
-						priceBeforeDiscount.value?.toIntOrNull(),
+						priceBeforeDiscount.value?.toFloatOrNull(),
 						selectedCategory.value?.id,
 						selectedSubCategory.value?.id,
 					)

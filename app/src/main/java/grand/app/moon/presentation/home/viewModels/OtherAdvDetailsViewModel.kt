@@ -109,7 +109,7 @@ class OtherAdvDetailsViewModel @Inject constructor(
 		}
 	}
 	val showOldPrice = response.map {
-		it?.priceBeforeDiscount != null
+		it?.priceBeforeDiscount.orZero() > 0
 	}
 
 	val showIsNegotiable = response.map {

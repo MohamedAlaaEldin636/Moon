@@ -123,12 +123,12 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		longitude: String,
 		address: String,
 		city_id: Int,
-		price: Int,
+		price: Float,
 		is_negotiable: Int,
 		brand_id: Int?,
 		description: String,
 		propertiesIds: List<Pair<Int, String?>>,
-		price_before: Int?,
+		price_before: Float?,
 		store_category_id: Int?,
 		store_sub_category_id: Int?,
 	) = safeApiCall {
@@ -153,7 +153,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 
 		map["city_id"] = city_id.toString().toRequestBody()
 
-		if (price_before != null) {
+		if (price_before != null && price_before > 0) {
 			map["price_before"] = price_before.toString().toRequestBody()
 		}
 		if (store_category_id != null) {
@@ -190,12 +190,12 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 		longitude: String,
 		address: String,
 		city_id: Int,
-		price: Int,
+		price: Float,
 		is_negotiable: Int,
 		brand_id: Int?,
 		description: String,
 		propertiesIds: List<Pair<Int, String?>>,
-		price_before: Int?,
+		price_before: Float?,
 		store_category_id: Int?,
 		store_sub_category_id: Int?,
 	) = safeApiCall {
@@ -220,7 +220,7 @@ class AdsRemoteDataSource @Inject constructor(private val apiService: AdsService
 
 		map["city_id"] = city_id.toString().toRequestBody()
 
-		if (price_before != null) {
+		if (price_before != null && price_before > 0) {
 			map["price_before"] = price_before.toString().toRequestBody()
 		}
 		if (store_category_id != null) {

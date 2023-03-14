@@ -92,6 +92,7 @@ class LogInViewModel @Inject constructor(
     Log.d(TAG, "onLogInClicked after: ${request.phone}")
     typeRequest = Constants.LOGIN
 	  request.phone = request.phone.trimAllWhitespaces()
+	  fragment.showLoading()
     logInUseCase(request)
       .onEach { result ->
         Log.d(TAG, "onLogInClicked: HEREREEREE")
