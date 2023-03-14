@@ -27,6 +27,7 @@ import grand.app.moon.domain.home.models.Store
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.showError
+import grand.app.moon.presentation.home.Home2Fragment
 import grand.app.moon.presentation.home.HomeExploreFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.home.models.toExplore
@@ -196,47 +197,10 @@ class HomeExploreViewModel @Inject constructor(
 		}
 	}
 
-	/*fun setupRvs(
-		binding: ItemHomeExploreBinding,
-		item: ItemHomeExplore,
-		position: Int,
-		viewHolder: VHPagingItemCommonListUsageWithExoPlayer<ItemHomeExploreBinding, ItemHomeExplore>
-	) {
-		binding.imageImageView.isVisible = true
+	fun onRefreshWholeScreen(view: View) {
+		val fragment = view.findFragmentOrNull<HomeExploreFragment>() ?: return
 
-		val context = binding.root.context ?: return
-
-		val isVideo = item.isVideo
-
-		if (isVideo) {
-			val videoLink = item.files?.firstOrNull()
-			if (videoLink != null && videoLink.isNotEmpty()) {
-				viewHolder.player = ExoPlayer.Builder(context).build().also { exoPlayer ->
-					val mediaItem = MediaItem.fromUri(videoLink)
-					exoPlayer.setMediaItem(mediaItem)
-
-					exoPlayer.addListener(object : Player.Listener {
-						override fun onPlaybackStateChanged(playbackState: Int) {
-							if (playbackState == ExoPlayer.STATE_ENDED) {
-								viewHolder.player?.seekTo(0L)
-							}
-						}
-					})
-
-					exoPlayer.volume = 0f
-					exoPlayer.playWhenReady = true
-					exoPlayer.prepare()
-				}
-
-				binding.imageImageView.isVisible = false
-				binding.playerView.isVisible = true
-				binding.playerView.player = viewHolder.player
-			}
-		}else {
-			binding.imageImageView.setupWithGlide {
-				load(item.files?.firstOrNull()).saveDiskCacheStrategyAll()
-			}
-		}
-	}*/
+		fragment.loadExplores(true)
+	}
 
 }

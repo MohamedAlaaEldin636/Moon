@@ -3,29 +3,18 @@ package grand.app.moon.presentation.home
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.paging.PagingData
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import coil.load
-import coil.request.videoFramePercent
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentHomeExploreBinding
 import grand.app.moon.databinding.ItemHomeExploreBinding
-import grand.app.moon.databinding.ItemHomeRvBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
@@ -57,14 +46,26 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 
 	private val viewModel by viewModels<HomeExploreViewModel>()
 
-	private var job: Job? = null
+	private var jobFirstTimeDataLoadCheckVideo: Job? = null
+
+	private var jobLoadExplores: Job? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		lifecycleScope.launch {
+		loadExplores()
+	}
+
+	fun loadExplores(checkFistTimeDataLoadToLoadVideo: Boolean = false) {
+		jobLoadExplores?.cancel()
+		jobLoadExplores = lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				viewModel.explores.collectLatest {
+					viewModel.maxPageReached = 0
+					_binding?.swipeRefreshLayout?.isRefreshing = false
+					if (checkFistTimeDataLoadToLoadVideo) {
+						checkFistTimeDataLoadToLoadVideo()
+					}
 					viewModel.adapter.submitData(it)
 				}
 			}
@@ -83,10 +84,6 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 		binding.recyclerView.layoutManager = requireContext().getExploreLayoutManager()
 		binding.recyclerView.adapter = viewModel.adapter.withDefaultHeaderAndFooterAdapters()
 
-		/*observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
-			viewModel.adapter.refresh()
-		}*/
-
 		binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -95,13 +92,24 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 			}
 		})
 
-		job = viewLifecycleOwner.lifecycleScope.launch {
+		checkFistTimeDataLoadToLoadVideo()
+
+		getOnPageChangeForAdapterUsingViewLifecycle(
+			viewModel.adapter
+		) {
+			viewModel.maxPageReached = max(viewModel.maxPageReached, it)
+		}
+	}
+
+	private fun checkFistTimeDataLoadToLoadVideo() {
+		jobFirstTimeDataLoadCheckVideo?.cancel()
+		jobFirstTimeDataLoadCheckVideo = viewLifecycleOwner.lifecycleScope.launch {
 			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 				viewModel.adapter.loadStateFlow.collectLatest { state ->
 					MyLogger.e("zzzzzzzzzz ch ${state.refresh} ${state.append}")
 					if (state.refresh is LoadState.NotLoading) {
-						job?.cancel()
-						job = null
+						jobFirstTimeDataLoadCheckVideo?.cancel()
+						jobFirstTimeDataLoadCheckVideo = null
 
 						binding.recyclerView.postDelayed(500) {
 							loadVideo()
@@ -109,12 +117,6 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 					}
 				}
 			}
-		}
-
-		getOnPageChangeForAdapterUsingViewLifecycle(
-			viewModel.adapter
-		) {
-			viewModel.maxPageReached = max(viewModel.maxPageReached, it)
 		}
 	}
 
