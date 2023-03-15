@@ -317,6 +317,23 @@ class OtherStoreDetailsViewModel @Inject constructor(
 				ads = ads.filter { it.category?.id == categoryId }
 			}
 
+			filter.sortBy.ifNotNull { sortBy ->
+				ads = when (sortBy) {
+					FilterAllFragment.SortBy.NEWEST -> ads.sortedByDescending { item ->
+						item.dateInMs
+					}
+					FilterAllFragment.SortBy.OLDEST -> ads.sortedBy { item ->
+						item.dateInMs
+					}
+					FilterAllFragment.SortBy.LEAST_PRICE -> ads.sortedBy { item ->
+						item.price
+					}
+					FilterAllFragment.SortBy.HIGHEST_PRICE -> ads.sortedByDescending { item ->
+						item.price
+					}
+				}
+			}
+
 			/*
 		val categoryId: Int? = null,
 		val subCategoryId: Int? = null,

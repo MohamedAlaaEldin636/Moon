@@ -201,6 +201,7 @@ data class ItemAdvertisementInResponseHome(
 	@SerializedName("sub_category_id") var subCategoryId: Int?,
 	@SerializedName("brand_id") var brandId: Int?,
 	var category: ItemCategory?,
+	@SerializedName("date") var dateInMs: Long?,
 	//@SerializedName("sub_category_id") var subCategoryId: Int?,
 ) : ItemInResponseHome {
 
