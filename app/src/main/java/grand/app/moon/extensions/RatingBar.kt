@@ -19,5 +19,6 @@ fun AppCompatRatingBar.setProgressBAFloat(progress: Float?) {
 		.coerceAtMost(100)
 
 	max = 100
+	stepSize = 1f
 	this.progress = actualProgress
 }
