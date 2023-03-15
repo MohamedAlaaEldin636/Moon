@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -21,6 +22,7 @@ import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeExploreSubsectionBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import grand.app.moon.domain.shop.ItemExploreInShopInfo
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
@@ -31,6 +33,7 @@ import grand.app.moon.presentation.home.OtherStoreDetailsFragment
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.myAds.adapter.RVSliderImageFull
+import grand.app.moon.presentation.myStore.ExploreInShopInfoFragment
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -194,11 +197,20 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 					player?.volume = app.getCurrentDeviceVolume()
 				}
 				binding.videoVolumeImageView.setImageResource(
-					if (player?.volume.orZero() > 0f) R.drawable.volume_mute else R.drawable.volume_unmute
+					if (player?.volume.orZero() > 0f) R.drawable.volume_unmute else R.drawable.volume_mute
 				)
 			}
-			binding.videoFullscreenImageView.setOnClickListener {
-				// todo
+			binding.videoFullscreenImageView.setOnClickListener { view ->
+				pausePlayer()
+
+				val position = binding.followButtonTextView.tag as? Int ?: return@setOnClickListener
+				val item = adapter.snapshot().items.getOrNull(position) ?: return@setOnClickListener
+
+				view.findNavController().navigateDeepLinkWithoutOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.show.images.or.video",
+					paths = arrayOf(false.toString(), item.files.toJsonInlinedOrNull().orEmpty())
+				)
 			}
 		},
 	) { binding, position, item ->
@@ -220,7 +232,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 		val isVideo = item.isVideo
 		binding.videoVolumeImageView.isVisible = isVideo
 		binding.videoVolumeImageView.setImageResource(
-			if (player?.volume.orZero() > 0f) R.drawable.volume_mute else R.drawable.volume_unmute
+			if (player?.volume.orZero() > 0f) R.drawable.volume_unmute else R.drawable.volume_mute
 		)
 		binding.videoFullscreenImageView.isVisible = isVideo
 		binding.playerView.visibility = if (isVideo) View.VISIBLE else View.GONE
