@@ -152,7 +152,7 @@ fun OtherAdvDetailsViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHome
 				repoShop.interactionForAdWhatsApp(item.id.orZero())
 			}
 
-			context.launchWhatsApp(item.phone.orEmpty())
+			context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
 		}
 		binding.callImageView.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener

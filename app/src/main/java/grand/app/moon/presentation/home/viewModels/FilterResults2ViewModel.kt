@@ -86,7 +86,7 @@ class FilterResults2ViewModel @Inject constructor(
 					repoShop.interactionForAdWhatsApp(item.id.orZero())
 				}
 
-				context.launchWhatsApp(item.phone.orEmpty())
+				context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
 			}
 			binding.callImageView.setOnClickListener {
 				val context = binding.root.context ?: return@setOnClickListener
@@ -98,7 +98,7 @@ class FilterResults2ViewModel @Inject constructor(
 					repoShop.interactionForAdCall(item.id.orZero())
 				}
 
-				context.launchDialNumber("${item.country?.countryCode.orEmpty()} ${item.phone.orEmpty()}")
+				context.launchDialNumber(item.store?.fullAdsPhone.orEmpty())
 			}
 			binding.chatImageView.setOnClickListener { view ->
 				val context = binding.root.context ?: return@setOnClickListener

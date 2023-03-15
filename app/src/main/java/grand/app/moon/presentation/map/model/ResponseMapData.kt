@@ -86,8 +86,36 @@ data class ResponseMapData(
 	var phone: String? = null,
 	var nickname: String? = null,
 	var priceBefore: Float? = null,
+
+	@SerializedName("ads_phone") var adsPhone: String? = null,
+	@SerializedName("whatsapp_phone") var whatsappPhone: String? = null,
+	//var store: Store? = null,
 ) {
 	val isNegotiable get() = negotiable == 1
+
+	fun getFullWhatsAppPhone(isStoreNotAdv: Boolean) = if (isStoreNotAdv) {
+		if (whatsappPhone.isNullOrEmpty()) getFullPhone(isStoreNotAdv) else {
+			"${country?.countryCode.orEmpty()}${store?.whatsappPhone.orEmpty()}"
+		}
+	}else {
+		if (whatsappPhone.isNullOrEmpty()) getFullPhone(isStoreNotAdv) else {
+			"${country?.countryCode.orEmpty()}${whatsappPhone.orEmpty()}"
+		}
+	}
+	fun getFullAdsPhone(isStoreNotAdv: Boolean) = if (isStoreNotAdv) {
+		if (whatsappPhone.isNullOrEmpty()) getFullPhone(isStoreNotAdv) else {
+			"${country?.countryCode.orEmpty()}${store?.adsPhone.orEmpty()}"
+		}
+	}else {
+		if (whatsappPhone.isNullOrEmpty()) getFullPhone(isStoreNotAdv) else {
+			"${country?.countryCode.orEmpty()}${adsPhone.orEmpty()}"
+		}
+	}
+	fun getFullPhone(isStoreNotAdv: Boolean) = if (isStoreNotAdv) {
+		if (store?.phone.isNullOrEmpty()) "" else "${store?.country?.countryCode.orEmpty()}${store?.phone.orEmpty()}"
+	}else {
+		if (phone.isNullOrEmpty()) "" else "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
+	}
 }
 
 data class ItemCategoryInResponseMapData(

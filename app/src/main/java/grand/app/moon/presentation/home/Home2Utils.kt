@@ -286,7 +286,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 				repoShop.interactionForAdWhatsApp(item.id.orZero())
 			}
 
-			context.launchWhatsApp(item.phone.orEmpty())
+			context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
 		}
 		binding.callImageView.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener
@@ -298,7 +298,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 				repoShop.interactionForAdCall(item.id.orZero())
 			}
 
-			context.launchDialNumber("${item.country?.countryCode.orEmpty()} ${item.phone.orEmpty()}")
+			context.launchDialNumber(item.store?.fullAdsPhone.orEmpty())
 		}
 		binding.chatImageView.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener

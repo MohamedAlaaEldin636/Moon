@@ -38,6 +38,8 @@ data class ItemStoreInResponseHome(
 	var createdAt: String?,
 	var country: ItemAdvertisementInResponseHome.Country?,
 	@SerializedName("background_image") var backgroundImage: String?,
+	@SerializedName("ads_phone") var adsPhone: String?,
+	@SerializedName("whatsapp_phone") var whatsappPhone: String?,
 ) : ItemInResponseHome {
 	val isPremium get() = premium == 1
 }
@@ -205,6 +207,8 @@ data class ItemAdvertisementInResponseHome(
 	//@SerializedName("sub_category_id") var subCategoryId: Int?,
 ) : ItemInResponseHome {
 
+	val fullPhone get() = "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
+
 	val isNegotiable get() = negotiable == 1
 
 	val isPremium get() = premium == 1
@@ -237,7 +241,17 @@ data class ItemAdvertisementInResponseHome(
 		var country: Country?,
 		@SerializedName("is_following") var isFollowing: Boolean?,
 		@SerializedName("average_rate") var averageRate: Float?,
-	)
+		@SerializedName("ads_phone") var adsPhone: String?,
+		@SerializedName("whatsapp_phone") var whatsappPhone: String?,
+	) {
+		val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
+			"${country?.countryCode.orEmpty()}${whatsappPhone.orEmpty()}"
+		}
+		val fullAdsPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
+			"${country?.countryCode.orEmpty()}${adsPhone.orEmpty()}"
+		}
+		val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
+ 	}
 }
 
 data class ResponseHome(

@@ -65,6 +65,8 @@ data class ItemStoreInHomeExplore(
 	var createdAt: String?,
 	var country: ItemAdvertisementInResponseHome.Country?,
 	var nickname: String?,
+	@SerializedName("ads_phone") var adsPhone: String?,
+	@SerializedName("whatsapp_phone") var whatsappPhone: String?,
 	//var image: String?,
 ) : ItemInResponseHome {
 	val isPremium get() = premium == 1

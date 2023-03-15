@@ -122,7 +122,7 @@ fun AllAdsOfCategoryViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithD
 						repoShop.interactionForAdWhatsApp(item.id.orZero())
 					}
 
-					context.launchWhatsApp(item.phone.orEmpty())
+					context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
 				}
 				binding.callImageView.setOnClickListener {
 					val context = binding.root.context ?: return@setOnClickListener
@@ -201,7 +201,7 @@ fun AllAdsOfCategoryViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithD
 						repoShop.interactionForAdWhatsApp(item.id.orZero())
 					}
 
-					context.launchWhatsApp(item.phone.orEmpty())
+					context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
 				}
 				binding.phoneConstraintLayout.setOnClickListener {
 					val context = binding.root.context ?: return@setOnClickListener

@@ -44,7 +44,17 @@ data class ResponseStory(
 	//@SerializedName("social_media_links") var socialMediaLinks: String?,
 	//@SerializedName("working_hours") var workingHours: String?,
 	@SerializedName("chat_agent") var chatAgent: ResponseChatAgent? = null,
+	@SerializedName("ads_phone") var adsPhone: String? = null,
+	@SerializedName("whatsapp_phone") var whatsappPhone: String? = null,
 ) {
+
+	val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
+		"${countryCode.orEmpty()}${whatsappPhone.orEmpty()}"
+	}
+	val fullAdsPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
+		"${countryCode.orEmpty()}${adsPhone.orEmpty()}"
+	}
+	val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${countryCode.orEmpty()}${phone.orEmpty()}"
 
 	val isSeen get() = stories.orEmpty().all { it.isSeen.orFalse() }
 

@@ -24,6 +24,7 @@ import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
+import grand.app.moon.presentation.map.MapOfDataFragment
 import grand.app.moon.presentation.map.MapOfDataFragmentArgs
 import grand.app.moon.presentation.map.model.MAClusterItem
 import grand.app.moon.presentation.map.model.ResponseMapData
@@ -84,26 +85,22 @@ class MapOfDataViewModel @Inject constructor(
 		)
 	}
 	fun launchWhatsApp(view: View) {
-		val phone = "${selectedMapData.value?.country?.countryCode.orEmpty()}${selectedMapData.value?.phone.orEmpty()}"
-
 		val context = view.context ?: return
 
 		context.applicationScope?.launch {
 			repoShop.interactionForAdWhatsApp(selectedMapData.value?.id.orZero())
 		}
 
-		view.context?.launchWhatsApp(phone)
+		view.context?.launchWhatsApp(selectedMapData.value?.getFullWhatsAppPhone(args.type == MapOfDataFragment.Type.STORE).orEmpty())
 	}
 	fun launchCall(view: View) {
-		val phone = "${selectedMapData.value?.country?.countryCode.orEmpty()}${selectedMapData.value?.phone.orEmpty()}"
-
 		val context = view.context ?: return
 
 		context.applicationScope?.launch {
 			repoShop.interactionForAdCall(selectedMapData.value?.id.orZero())
 		}
 
-		view.context?.launchDialNumber(phone)
+		view.context?.launchDialNumber(selectedMapData.value?.getFullAdsPhone(args.type == MapOfDataFragment.Type.STORE).orEmpty())
 	}
 	fun launchChat(view: View) {
 		val context = view.context ?: return

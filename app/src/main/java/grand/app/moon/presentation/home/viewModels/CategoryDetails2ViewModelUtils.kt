@@ -312,7 +312,7 @@ fun CategoryDetails2ViewModel.getAdapterAds() = RVItemCommonListUsage<ItemSearch
 				repoShop.interactionForAdWhatsApp(item.id.orZero())
 			}
 
-			context.launchWhatsApp(item.phone.orEmpty())
+			context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
 		}
 		binding.phoneConstraintLayout.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener
@@ -324,7 +324,7 @@ fun CategoryDetails2ViewModel.getAdapterAds() = RVItemCommonListUsage<ItemSearch
 				repoShop.interactionForAdCall(item.id.orZero())
 			}
 
-			context.launchDialNumber("${item.country?.countryCode.orEmpty()} ${item.phone.orEmpty()}")
+			context.launchDialNumber(item.store?.fullAdsPhone.orEmpty())
 		}
 		binding.chatConstraintLayout.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener

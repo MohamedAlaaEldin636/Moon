@@ -436,7 +436,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 							repoShop.interactionForAdWhatsApp(item.id.orZero())
 						}
 
-						context.launchWhatsApp(item.phone.orEmpty())
+						context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
 					}
 					binding.callImageView.setOnClickListener {
 						val context = binding.root.context ?: return@setOnClickListener
@@ -448,7 +448,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 							repoShop.interactionForAdCall(item.id.orZero())
 						}
 
-						context.launchDialNumber("${item.country?.countryCode.orEmpty()} ${item.phone.orEmpty()}")
+						context.launchDialNumber(item.store?.fullAdsPhone.orEmpty())
 					}
 					binding.chatImageView.setOnClickListener {
 						val context = binding.root.context ?: return@setOnClickListener
@@ -570,7 +570,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 							repoShop.interactionForAdWhatsApp(item.id.orZero())
 						}
 
-						context.launchWhatsApp(item.phone.orEmpty())
+						context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
 					}
 					binding.phoneConstraintLayout.setOnClickListener {
 						val context = binding.root.context ?: return@setOnClickListener
@@ -582,7 +582,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 							repoShop.interactionForAdCall(item.id.orZero())
 						}
 
-						context.launchDialNumber("${item.country?.countryCode.orEmpty()} ${item.phone.orEmpty()}")
+						context.launchDialNumber(item.store?.fullAdsPhone.orEmpty())
 					}
 					binding.chatConstraintLayout.setOnClickListener {
 						val context = binding.root.context ?: return@setOnClickListener
@@ -1098,7 +1098,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 			repoShop.interactionForStoreWhatsApp(response.value?.id.orZero())
 		}
 
-		context.launchWhatsApp(response.value?.fullPhone.orEmpty())
+		context.launchWhatsApp(response.value?.fullWhatsAppPhone.orEmpty())
 	}
 
 	fun makeCall(view: View) {
@@ -1110,7 +1110,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 			repoShop.interactionForStoreCall(response.value?.id.orZero())
 		}
 
-		context.launchDialNumber(response.value?.fullPhone.orEmpty())
+		context.launchDialNumber(response.value?.fullAdsPhone.orEmpty())
 	}
 
 	fun chat(view: View) {

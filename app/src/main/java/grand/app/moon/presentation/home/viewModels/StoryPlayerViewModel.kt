@@ -101,9 +101,8 @@ class StoryPlayerViewModel @Inject constructor(
 		ContextCompat.getDrawable(application, drawableRes)
 	}
 
-	private fun getPhoneWithCountryCode() = currentStoreWithStories.value?.let {
-		"${it.countryCode.orEmpty()}${it.phone.orEmpty()}"
-	}.orEmpty()
+	private fun getPhoneWithCountryCodeForWhatsAppNum() = currentStoreWithStories.value?.fullWhatsAppPhone.orEmpty()
+	private fun getPhoneWithCountryCodeForAdsNum() = currentStoreWithStories.value?.fullAdsPhone.orEmpty()
 
 	/*val phone = currentStoreWithStories.map {
 		it.also {
@@ -146,29 +145,29 @@ class StoryPlayerViewModel @Inject constructor(
 
 		when (storyLink.value) {
 			StoryLink.WHATSAPP -> {
-				if (getPhoneWithCountryCode().isEmpty()) {
+				if (getPhoneWithCountryCodeForWhatsAppNum().isEmpty()) {
 					fragment.showMessage(getString(R.string.no_ph_743))
 				}else {
-					MyLogger.e("dejwkejhdkwejd ${getPhoneWithCountryCode()}")
+					MyLogger.e("dejwkejhdkwejd ${getPhoneWithCountryCodeForWhatsAppNum()}")
 
 					context.applicationScope?.launch {
 						repoShop.interactionForStoreWhatsApp(currentStoreWithStories.value?.id.orZero())
 					}
 
-					context.launchWhatsApp(getPhoneWithCountryCode())
+					context.launchWhatsApp(getPhoneWithCountryCodeForWhatsAppNum())
 				}
 			}
 			StoryLink.CALL -> {
-				if (getPhoneWithCountryCode().isEmpty()) {
+				if (getPhoneWithCountryCodeForAdsNum().isEmpty()) {
 					fragment.showMessage(getString(R.string.no_ph_743))
 				}else {
-					MyLogger.e("dejwkejhdkwejd ${getPhoneWithCountryCode()}")
+					MyLogger.e("dejwkejhdkwejd ${getPhoneWithCountryCodeForAdsNum()}")
 
 					context.applicationScope?.launch {
 						repoShop.interactionForStoreCall(currentStoreWithStories.value?.id.orZero())
 					}
 
-					context.launchDialNumber(getPhoneWithCountryCode())
+					context.launchDialNumber(getPhoneWithCountryCodeForAdsNum())
 				}
 			}
 			StoryLink.CHAT -> chat(fragment.binding.chatTextView)

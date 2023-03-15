@@ -358,7 +358,7 @@ class OtherAdvDetailsViewModel @Inject constructor(
 			repoShop.interactionForAdWhatsApp(response.value?.id.orZero())
 		}
 
-		context.launchWhatsApp(response.value?.fullPhone.orEmpty())
+		context.launchWhatsApp(response.value?.store?.fullWhatsAppPhone.orEmpty())
 	}
 
 	fun makeCall(view: View) {
@@ -370,7 +370,7 @@ class OtherAdvDetailsViewModel @Inject constructor(
 			repoShop.interactionForAdCall(response.value?.id.orZero())
 		}
 
-		context.launchDialNumber(response.value?.fullPhone.orEmpty())
+		context.launchDialNumber(response.value?.store?.fullAdsPhone.orEmpty())
 	}
 
 	fun chat(view: View) {

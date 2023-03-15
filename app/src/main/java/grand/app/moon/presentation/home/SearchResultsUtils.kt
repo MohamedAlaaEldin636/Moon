@@ -84,7 +84,7 @@ fun SearchResultsViewModel.getAdsAdapter() = RVPagingItemCommonListUsage<ItemSea
 				repoShop.interactionForAdWhatsApp(item.id.orZero())
 			}
 
-			context.launchWhatsApp(item.phone.orEmpty())
+			context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
 		}
 		binding.phoneConstraintLayout.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener

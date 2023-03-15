@@ -21,7 +21,9 @@ fun ResponseMapData.toResponseStory(): ResponseStory {
 		createdAt = createdAt,
 		nickname = nickname,
 		id = id,
-		countryCode = country?.countryCode
+		countryCode = country?.countryCode,
+		adsPhone = adsPhone,
+		whatsappPhone = whatsappPhone
 	)
 }
 fun ItemAdvertisementInResponseHome.toResponseStory(): ResponseStory {
@@ -33,7 +35,9 @@ fun ItemAdvertisementInResponseHome.toResponseStory(): ResponseStory {
 		createdAt = store?.createdAt,
 		nickname = store?.nickname,
 		id = store?.id,
-		countryCode = store?.country?.countryCode
+		countryCode = store?.country?.countryCode,
+		adsPhone = store?.adsPhone,
+		whatsappPhone = store?.whatsappPhone
 	)
 }
 fun ItemAdvertisementInResponseHome.Store?.toResponseStory(): ResponseStory {
@@ -45,7 +49,9 @@ fun ItemAdvertisementInResponseHome.Store?.toResponseStory(): ResponseStory {
 		createdAt = this?.createdAt,
 		nickname = this?.nickname,
 		id = this?.id,
-		countryCode = this?.country?.countryCode
+		countryCode = this?.country?.countryCode,
+		adsPhone = this?.adsPhone,
+		whatsappPhone = this?.whatsappPhone
 	)
 }
 fun ItemStoreInResponseHome?.toResponseStory(): ResponseStory {
@@ -57,7 +63,9 @@ fun ItemStoreInResponseHome?.toResponseStory(): ResponseStory {
 		createdAt = this?.createdAt,
 		nickname = this?.nickname,
 		id = this?.id,
-		countryCode = this?.country?.countryCode
+		countryCode = this?.country?.countryCode,
+		adsPhone = this?.adsPhone,
+		whatsappPhone = this?.whatsappPhone
 	)
 }
 fun ResponseSearchResult?.toResponseStory(): ResponseStory {
@@ -69,7 +77,9 @@ fun ResponseSearchResult?.toResponseStory(): ResponseStory {
 		createdAt = this?.createdAt,
 		nickname = this?.nickname,
 		id = this?.id,
-		countryCode = this?.country?.countryCode
+		countryCode = this?.country?.countryCode,
+		adsPhone = if (this?.adsPhone.isNullOrEmpty().not()) this?.adsPhone else this?.store?.adsPhone,
+		whatsappPhone = if (this?.whatsappPhone.isNullOrEmpty().not()) this?.whatsappPhone else this?.store?.whatsappPhone
 	)
 }
 fun ItemStoreInHomeExplore?.toResponseStory(): ResponseStory {
@@ -81,7 +91,9 @@ fun ItemStoreInHomeExplore?.toResponseStory(): ResponseStory {
 		createdAt = this?.createdAt,
 		nickname = this?.nickname,
 		id = this?.id,
-		countryCode = this?.country?.countryCode
+		countryCode = this?.country?.countryCode,
+		adsPhone = this?.adsPhone,
+		whatsappPhone = this?.whatsappPhone
 	)
 }
 fun ResponseStoreDetails?.toResponseStory(): ResponseStory {
@@ -93,7 +105,9 @@ fun ResponseStoreDetails?.toResponseStory(): ResponseStory {
 		createdAt = this?.createdAt,
 		nickname = this?.nickname,
 		id = this?.id,
-		countryCode = this?.country?.countryCode
+		countryCode = this?.country?.countryCode,
+		adsPhone = this?.adsPhone,
+		whatsappPhone = this?.whatsappPhone
 	)
 }
 

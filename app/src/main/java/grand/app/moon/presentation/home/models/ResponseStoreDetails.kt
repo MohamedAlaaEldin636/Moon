@@ -19,7 +19,9 @@ fun ResponseStoreDetails?.toItemHomeExplore(): ItemStoreInHomeExplore? {
 		this?.phone,
 		this?.createdAt,
 		this?.country,
-		this?.nickname
+		this?.nickname,
+		this?.adsPhone,
+		this?.whatsappPhone,
 	)
 }
 
@@ -58,10 +60,18 @@ data class ResponseStoreDetails(
 	@SerializedName("store_categories") var storeCategories: List<ItemCategory>?,
 	var explores: List<ItemHomeExplore>?,
 	@SerializedName("is_store") var isStore: Boolean?,
+	@SerializedName("ads_phone") var adsPhone: String?,
+	@SerializedName("whatsapp_phone") var whatsappPhone: String?,
 ) {
 	val isPremium get() = premium == 1
 
-	val fullPhone get() = "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
+	val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
+		"${country?.countryCode.orEmpty()}${whatsappPhone.orEmpty()}"
+	}
+	val fullAdsPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
+		"${country?.countryCode.orEmpty()}${adsPhone.orEmpty()}"
+	}
+	val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
 
 	val isSeen get() = stories.orEmpty().all { it.isSeen.orFalse() }
 }
