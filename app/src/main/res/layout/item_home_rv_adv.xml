@@ -289,6 +289,9 @@
       android:layout_marginStart="3dp"
       android:layout_marginEnd="9dp"
 
+      android:maxLines="1"
+      android:ellipsize="end"
+
       app:layout_constraintTop_toTopOf="@id/storeImageImageView"
       app:layout_constraintBottom_toBottomOf="@id/storeImageImageView"
       app:layout_constraintStart_toEndOf="@id/storeImageImageView"

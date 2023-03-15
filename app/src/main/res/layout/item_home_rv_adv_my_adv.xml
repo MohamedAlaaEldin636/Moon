@@ -278,6 +278,9 @@
     <TextView
       android:id="@+id/storeTextView"
 
+      android:maxLines="1"
+      android:ellipsize="end"
+
       android:layout_width="0dp"
       android:layout_height="wrap_content"
 
