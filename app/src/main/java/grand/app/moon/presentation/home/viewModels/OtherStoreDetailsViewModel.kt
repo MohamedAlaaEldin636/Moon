@@ -48,6 +48,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 	val response = MutableLiveData<ResponseStoreDetails?>(null)
 
+	val isStoreAccount = response.map { it?.isStore; true /* todo */ }
+
 	val isMyStore = response.map {
 		app.isLogin() && userLocalUseCase().id == it?.id
 	}
@@ -114,6 +116,9 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 	val generalAddress = response.map {
 		"${it?.country?.name.orEmpty()} ${app.getString(R.string.slash)} ${it?.city?.name.orEmpty()}"
+	}
+	val showGeneralAddress = response.map {
+		it?.country?.name.isNullOrEmpty().not() && it?.city?.name.isNullOrEmpty().not()
 	}
 	val website = response.map {
 		it?.website.orEmpty()
@@ -971,7 +976,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun goToViews(view: View) {
-		if (userLocalUseCase().isStore.orFalse().not()) return
+		val context = view.context ?: return
+		if (context.isLogin().not() || (userLocalUseCase().isStore.orFalse().not() && userLocalUseCase().id != response.value?.id)) return
 
 		SimpleUserListOfInteractionsFragment.launch(
 			view.findNavController(),
@@ -983,7 +989,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun goToReviews(view: View) {
-		if (userLocalUseCase().isStore.orFalse().not()) return
+		val context = view.context ?: return
+		if (context.isLogin().not() || (userLocalUseCase().isStore.orFalse().not() && userLocalUseCase().id != response.value?.id)) return
 
 		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
 
@@ -1000,7 +1007,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 
 	fun goToFollowers(view: View) {
-		if (userLocalUseCase().isStore.orFalse().not()) return
+		val context = view.context ?: return
+		if (context.isLogin().not() || (userLocalUseCase().isStore.orFalse().not() && userLocalUseCase().id != response.value?.id)) return
 
 		SimpleUserListOfInteractionsFragment.launch(
 			view.findNavController(),

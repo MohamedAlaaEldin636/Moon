@@ -56,7 +56,8 @@ data class ResponseStoreDetails(
 	var stories: List<ResponseStory.Story>?,
 	var highlights: List<ResponseStory.Story>?,
 	@SerializedName("store_categories") var storeCategories: List<ItemCategory>?,
-	var explores: List<ItemHomeExplore>?
+	var explores: List<ItemHomeExplore>?,
+	@SerializedName("is_store") var isStore: Boolean?,
 ) {
 	val isPremium get() = premium == 1
 

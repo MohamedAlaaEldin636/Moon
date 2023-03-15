@@ -155,7 +155,7 @@
               app:shapeAppearance="@style/ShapeCircle"
               app:shapeAppearanceOverlay="@style/ShapeCircle"
 
-              imageView_setupWithGlideOrDefaultImageBA="@{viewModel.logoImage}"
+              imageView_setupWithGlideOrDefaultUserBA="@{viewModel.logoImage}"
 
               app:layout_constraintTop_toTopOf="parent"
               app:layout_constraintStart_toStartOf="parent"/>
@@ -163,7 +163,7 @@
             <TextView
               android:id="@+id/cardOwnerFollowButtonTextView"
 
-              android:visibility="@{!viewModel.isMyStore()}"
+              android:visibility="@{!viewModel.isMyStore() &amp;&amp; viewModel.isStoreAccount()}"
 
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -234,6 +234,8 @@
               android:layout_height="wrap_content"
 
               android:text="@{viewModel.nickname}"
+
+              android:visibility="@{viewModel.nickname != null &amp;&amp; viewModel.nickname.length() > 0}"
 
               android:layout_marginStart="8.7dp"
               android:layout_marginEnd="8.7dp"
@@ -371,6 +373,8 @@
 
               android:text="@{viewModel.generalAddress}"
 
+              android:visibility="@{viewModel.showGeneralAddress}"
+
               android:singleLine="true"
               android:ellipsize="marquee"
               android:marqueeRepeatLimit ="marquee_forever"
@@ -404,6 +408,8 @@
 
               android:text="@{viewModel.website}"
 
+              android:visibility="@{viewModel.website != null &amp;&amp; viewModel.website.length() > 0}"
+
               android:singleLine="true"
               android:ellipsize="marquee"
               android:marqueeRepeatLimit ="marquee_forever"
@@ -435,7 +441,9 @@
               android:layout_marginStart="8.7dp"
               android:layout_marginEnd="8.7dp"
 
-              android:text="@{viewModel.website}"
+              android:text="@{viewModel.email}"
+
+              android:visibility="@{viewModel.email != null &amp;&amp; viewModel.email.length() > 0}"
 
               android:singleLine="true"
               android:ellipsize="marquee"
@@ -815,7 +823,7 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
 
-          android:visibility="@{viewModel.showSocialMedia}"
+          android:visibility="@{viewModel.showSocialMedia &amp;&amp; viewModel.isStoreAccount()}"
 
           android:background="@color/white"
 
@@ -892,6 +900,8 @@
         <TextView
           android:id="@+id/labelWorkingHoursTextView"
 
+          android:visibility="@{viewModel.isStoreAccount()}"
+
           android:layout_width="0dp"
           android:layout_height="wrap_content"
 
@@ -925,6 +935,8 @@
         <TextView
           android:id="@+id/descLabelTextView"
 
+          android:visibility="@{viewModel.isStoreAccount()}"
+
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
 
@@ -940,6 +952,8 @@
 
         <TextView
           android:id="@+id/descValueTextView"
+
+          android:visibility="@{viewModel.isStoreAccount()}"
 
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -958,6 +972,8 @@
         <TextView
           android:id="@+id/mapLabelTextView"
 
+          android:visibility="@{viewModel.isStoreAccount()}"
+
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
 
@@ -973,6 +989,8 @@
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+
+          android:visibility="@{viewModel.isStoreAccount()}"
 
           style="@style/TextTajawalMedium16"
           android:textSize="12sp"
@@ -992,6 +1010,8 @@
           app:drawableStartCompat="@drawable/store_details_map_share" />
         <androidx.fragment.app.FragmentContainerView
           android:id="@+id/mapFragmentContainerView"
+
+          android:visibility="@{viewModel.isStoreAccount()}"
 
           android:layout_width="0dp"
           android:layout_height="134dp"
@@ -1022,7 +1042,7 @@
         <TextView
           android:id="@+id/reportStoreTextView"
 
-          android:visibility="@{!viewModel.isMyStore()}"
+          android:visibility="@{!viewModel.isMyStore() &amp;&amp; viewModel.isStoreAccount()}"
 
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -1051,7 +1071,7 @@
         <TextView
           android:id="@+id/blockStoreTextView"
 
-          android:visibility="@{!viewModel.isMyStore()}"
+          android:visibility="@{!viewModel.isMyStore() &amp;&amp; viewModel.isStoreAccount()}"
 
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -1101,6 +1121,9 @@
           app:layout_constraintEnd_toStartOf="@id/labelExploresTextView"/>
         <TextView
           android:id="@+id/labelExploresTextView"
+
+          android:visibility="@{viewModel.isStoreAccount()}"
+          tools:visibility="gone"
 
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -1153,7 +1176,8 @@
           android:paddingBottom="0dp"
           android:clipToPadding="false"
 
-          android:visibility="@{!viewModel.showAdsNotExplore}"
+          android:visibility="@{!viewModel.showAdsNotExplore &amp;&amp; viewModel.isStoreAccount()}"
+          tools:visibility="gone"
 
           android:scrollbars="vertical"
           tools:itemCount="26"
@@ -1171,7 +1195,7 @@
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recyclerViewStoreCategories"
 
-          android:visibility="@{viewModel.showAdsNotExplore}"
+          android:visibility="@{viewModel.showAdsNotExplore &amp;&amp; viewModel.isStoreAccount()}"
 
           android:layout_marginTop="30.5dp"
 
@@ -1195,7 +1219,7 @@
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recyclerViewStoreSubCategories"
 
-          android:visibility="@{viewModel.showAdsNotExplore}"
+          android:visibility="@{viewModel.showAdsNotExplore &amp;&amp; viewModel.isStoreAccount()}"
 
           android:layout_width="0dp"
           android:layout_height="wrap_content"
