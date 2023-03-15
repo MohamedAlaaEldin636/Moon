@@ -25,6 +25,7 @@ import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.extensions.*
+import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrDefaultUserBA
 import grand.app.moon.extensions.bindingAdapter.visibleOrInvisible
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
@@ -672,9 +673,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 				binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
-				binding.storeImageImageView.setupWithGlide {
-					load(item.store?.image).saveDiskCacheStrategyAll()
-				}
+				binding.storeImageImageView.setupWithGlideOrDefaultUserBA(item.store?.image)
 
 				binding.storeTextView.text = item.store?.name
 
@@ -706,9 +705,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 				binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
-				binding.storeImageImageView.setupWithGlide {
-					load(item.store?.image).saveDiskCacheStrategyAll()
-				}
+				binding.storeImageImageView.setupWithGlideOrDefaultUserBA(item.store?.image)
 
 				binding.storeTextView.text = item.store?.name
 
@@ -740,9 +737,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 				binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
-				binding.storeImageImageView.setupWithGlide {
-					load(item.store?.image)
-				}
+				binding.storeImageImageView.setupWithGlideOrDefaultUserBA(item.store?.image)
 
 				binding.storeTextView.text = item.store?.name
 
@@ -775,9 +770,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 				binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
-				binding.storeImageImageView.setupWithGlide {
-					load(item.store?.image)
-				}
+				binding.storeImageImageView.setupWithGlideOrDefaultUserBA(item.store?.image)
 
 				binding.storeTextView.text = item.store?.name
 

@@ -15,6 +15,7 @@ import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsStart
+import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrDefaultUserBA
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ResponseSearchResult
 import grand.app.moon.presentation.home.viewModels.SearchResultsViewModel
@@ -141,9 +142,7 @@ fun SearchResultsViewModel.getAdsAdapter() = RVPagingItemCommonListUsage<ItemSea
 
 	binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
-	binding.storeImageImageView.setupWithGlide {
-		load(item.store?.image)
-	}
+	binding.storeImageImageView.setupWithGlideOrDefaultUserBA(item.store?.image)
 
 	binding.storeTextView.text = item.store?.name
 

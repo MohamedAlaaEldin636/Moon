@@ -14,6 +14,7 @@ import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeRvAdvBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.extensions.*
+import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrDefaultUserBA
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import kotlinx.coroutines.launch
@@ -145,9 +146,7 @@ class FilterResults2ViewModel @Inject constructor(
 
 		binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
-		binding.storeImageImageView.setupWithGlide {
-			load(item.store?.image)
-		}
+		binding.storeImageImageView.setupWithGlideOrDefaultUserBA(item.store?.image)
 
 		binding.storeTextView.text = item.store?.name
 

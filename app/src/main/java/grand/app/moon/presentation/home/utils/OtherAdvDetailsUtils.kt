@@ -12,6 +12,7 @@ import grand.app.moon.databinding.ItemHomeRvStoreBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.serDrawableCompatBA
 import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsStart
+import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrDefaultUserBA
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
 import grand.app.moon.presentation.home.viewModels.OtherAdvDetailsViewModel
@@ -209,9 +210,7 @@ fun OtherAdvDetailsViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHome
 
 	binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
-	binding.storeImageImageView.setupWithGlide {
-		load(item.store?.image).saveDiskCacheStrategyAll()
-	}
+	binding.storeImageImageView.setupWithGlideOrDefaultUserBA(item.store?.image)
 
 	binding.storeTextView.text = item.store?.name
 

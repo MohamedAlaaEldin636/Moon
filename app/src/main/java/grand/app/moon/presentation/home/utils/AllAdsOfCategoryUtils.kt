@@ -13,6 +13,7 @@ import grand.app.moon.databinding.ItemSearchResultBinding
 import grand.app.moon.databinding.ItemStoreCategoryInMyAdsBinding
 import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.extensions.*
+import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrDefaultUserBA
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ResponseSearchResult
 import grand.app.moon.presentation.home.viewModels.AllAdsOfCategoryViewModel
@@ -264,9 +265,7 @@ fun AllAdsOfCategoryViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithD
 
 			binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
-			binding.storeImageImageView.setupWithGlide {
-				load(item.store?.image).saveDiskCacheStrategyAll()
-			}
+			binding.storeImageImageView.setupWithGlideOrDefaultUserBA(item.store?.image)
 
 			binding.storeTextView.text = item.store?.name
 
@@ -298,9 +297,7 @@ fun AllAdsOfCategoryViewModel.getAdapterAds() = RVPagingItemCommonListUsageWithD
 
 			binding.placeTextView.text = "${item.country?.name.orEmpty()} / ${item.city?.name.orEmpty()}"
 
-			binding.storeImageImageView.setupWithGlide {
-				load(item.store?.image)
-			}
+			binding.storeImageImageView.setupWithGlideOrDefaultUserBA(item.store?.image)
 
 			binding.storeTextView.text = item.store?.name
 
