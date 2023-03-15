@@ -1009,7 +1009,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 			"grand.app.moon.dest.adv.clients.reviews.with.option",
 			paths = arrayOf(
 				response.value?.id.orZero().toString(),
-				true.toString(), // useRating
+				(app.isLogin() && response.value?.id != userLocalUseCase().id).toString(), // useRating
 				response.value?.id.toString(),
 				false.toString(),
 			)
