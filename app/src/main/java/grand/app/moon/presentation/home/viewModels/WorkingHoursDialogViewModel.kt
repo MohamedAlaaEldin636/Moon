@@ -33,6 +33,7 @@ class WorkingHoursDialogViewModel @Inject constructor(
 	) { binding, position, item ->
 		binding.closedTextView.isVisible = item.enabled != true
 		binding.timesTextView.isVisible = item.enabled == true
+		//"${app.getString(R.string.from)} "
 		binding.timesTextView.text = app.getString(R.string.from_var_am_to_var_pm, item.from.orEmpty(), item.to.orEmpty())
 		binding.dayTextView.text = when (position) {
 			0 -> getString(R.string.saturday)

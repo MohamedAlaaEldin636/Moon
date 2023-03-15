@@ -525,9 +525,11 @@
   <string name="copy_link">نسخ الرابط</string>
   <string name="explore_890">الإكسبلور</string>
   <string name="go_back_768">الرجوع</string>
-  <string name="from_var_am_to_var_pm">من %1$s صباحا الي %2$s مساءً</string>
+  <string name="from_var_am_to_var_pm">من %1$s صباحاً الي %2$s مساءً</string>
   <string name="cancel_follow_3892733">الغاء المتابعة</string>
     <string name="add_img_or_video">إضافة صورة أو فيديو</string>
     <string name="you_can_t_like_your_own_story">لا يمكنك لإعجاب الحالة الخاصة بك</string>
     <string name="no_stories_found">لا يوجد حالات</string>
+  <string name="am">صباحاً</string>
+  <string name="pm">مساءً</string>
 </resources>
