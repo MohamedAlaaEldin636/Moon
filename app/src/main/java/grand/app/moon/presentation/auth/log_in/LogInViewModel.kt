@@ -86,13 +86,15 @@ class LogInViewModel @Inject constructor(
     }
     Log.d(TAG, "onLogInClicked: ${request.country_code}")
     Log.d(TAG, "onLogInClicked: ${request.phone}")
-    if(request.country_code == "+20" && request.phone.startsWith("0") ){
+
+	  fragment.showLoading()
+
+	  if(request.country_code == "+20" && request.phone.startsWith("0") ){
       request.phone = request.phone.substring(1)
     }
     Log.d(TAG, "onLogInClicked after: ${request.phone}")
     typeRequest = Constants.LOGIN
 	  request.phone = request.phone.trimAllWhitespaces()
-	  fragment.showLoading()
     logInUseCase(request)
       .onEach { result ->
         Log.d(TAG, "onLogInClicked: HEREREEREE")

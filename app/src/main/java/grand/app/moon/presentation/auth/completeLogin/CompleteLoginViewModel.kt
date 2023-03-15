@@ -58,9 +58,13 @@ class CompleteLoginViewModel @Inject constructor(
 			return fragment.showMessage(fragment.getString(R.string.fill_this_field))
 		}
 
+		fragment.showLoading()
+
 		viewModelScope.launch {
 			when (val resource = useCaseLogIn.updateProfile(name.value.orEmpty(), user)) {
 				is Resource.Success -> {
+					fragment.hideLoading()
+
 					if (resource.value.data == null) {
 						return@launch fragment.showMessage(fragment.getString(R.string.something_went_wrong_please_try_again))
 					}
@@ -68,6 +72,8 @@ class CompleteLoginViewModel @Inject constructor(
 					fragment.makeIntegrationWithRedirectHome(user.id)
 				}
 				is Resource.Failure -> {
+					fragment.hideLoading()
+
 					fragment.binding.root.showSnackbarWithAction(
 						resource
 					) {
