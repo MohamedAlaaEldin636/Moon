@@ -19,6 +19,7 @@ import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.logout
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.extensions.showMessage
+import grand.app.moon.presentation.home.FollowedStoresFragment
 import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.myAds.MyAdsFragment
 import grand.app.moon.presentation.myStore.model.ItemStoreInfo
@@ -69,10 +70,7 @@ class MyAccount2ViewModel @Inject constructor(
 					)
 				}
 				R.drawable.stores_followed -> {
-					navController.navigateDeepLinkWithOptions(
-						"store",
-						"grand.app.moon.store.followed",
-					)
+					FollowedStoresFragment.launch(navController)
 				}
 				R.drawable.ic_last_search -> {
 					navController.navigateDeepLinkWithOptions(
