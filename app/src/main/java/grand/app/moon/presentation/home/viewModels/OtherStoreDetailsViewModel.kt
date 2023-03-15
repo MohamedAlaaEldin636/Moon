@@ -310,12 +310,35 @@ class OtherStoreDetailsViewModel @Inject constructor(
 		}
 
 		filter.value?.also { filter ->
-			// todo
-			// 3 stars fema fo2 + sub_category + brand_id
-
 			filter.categoryId.ifNotNull { categoryId ->
 				ads = ads.filter { it.category?.id == categoryId }
 			}
+
+			filter.subCategoryId.ifNotNull { subCategoryId ->
+				ads = ads.filter { it.subCategoryId == subCategoryId }
+			}
+
+			filter.brandId.ifNotNull { brandId ->
+				ads = ads.filter { it.brandId == brandId }
+			}
+
+			filter.minPrice.ifNotNull { minPrice ->
+				ads = ads.filter { it.price != null && it.price.orZero() >= minPrice }
+			}
+
+			filter.maxPrice.ifNotNull { maxPrice ->
+				ads = ads.filter { it.price != null && it.price.orZero() <= maxPrice }
+			}
+
+			filter.cityId.ifNotNull { cityId ->
+				ads = ads.filter { it.city?.id == cityId }
+			}
+
+			filter.areasIds.ifNotNull { areasIds ->
+				ads = ads.filter { it.area?.id in areasIds }
+			}
+
+			filter.properties // todo
 
 			filter.sortBy.ifNotNull { sortBy ->
 				ads = when (sortBy) {
@@ -334,19 +357,17 @@ class OtherStoreDetailsViewModel @Inject constructor(
 				}
 			}
 
-			/*
-		val categoryId: Int? = null,
-		val subCategoryId: Int? = null,
-		val brandId: Int? = null,
-		val minPrice: Float? = null,
-		val maxPrice: Float? = null,
-		val cityId: Int? = null,
-		val areasIds: List<Int>? = null,
-		val properties: List<DynamicFilterProperty> = emptyList(),
-		val sortBy: SortBy? = null,
-		val adType: AdType? = null,
-		val rating: Int? = null,
-			 */
+			filter.adType.ifNotNull { adType ->
+				when (adType) {
+					FilterAllFragment.AdType.ALL -> { /* Do nothing */ }
+					FilterAllFragment.AdType.PREMIUM -> ads = ads.filter { it.isPremium }
+					FilterAllFragment.AdType.FREE -> ads = ads.filter { it.isPremium.not() }
+				}
+			}
+
+			filter.rating.ifNotNull { rating ->
+				ads = ads.filter { it.averageRate.orZero() >= rating.toFloat() }
+			}
 		}
 
 		ads
