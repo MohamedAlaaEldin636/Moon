@@ -98,7 +98,7 @@ class AllAdsOfCategoryFragment : BaseFragment<FragmentAllAdsOfCategoryBinding>()
 
 		binding.rootConstraintLayout.post {
 			val layoutParams = binding.recyclerViewAds.layoutParams
-			layoutParams.height = binding.rootConstraintLayout.height
+			layoutParams.height = binding.rootConstraintLayout.height / 2
 			binding.recyclerViewAds.layoutParams = layoutParams
 		}
 
