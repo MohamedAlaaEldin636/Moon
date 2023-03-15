@@ -52,6 +52,8 @@ class AllAdsOfCategoryViewModel @Inject constructor(
 
 	val adapterSlider = RVSliderItemImageViewRect15(userLocalUseCase)
 
+	val showSlider = MutableLiveData(true)
+
 	fun getOnEditorListener(): TextView.OnEditorActionListener = TextView.OnEditorActionListener { view, actionId, _ ->
 		view.findFragmentOrNull<AllAdsFragment>()?.apply {
 			context?.apply {

@@ -105,14 +105,15 @@ class AllAdsOfCategoryFragment : BaseFragment<FragmentAllAdsOfCategoryBinding>()
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 				viewModel.adapterAds.loadStateFlow.collectLatest {
-					viewModel.adapterAds.snapshot().items.firstOrNull()?.also { item ->
-						if (viewModel.numOfAds.value != item.adsCount) {
-							viewModel.numOfAds.value = item.adsCount
+					viewModel.adapterAds.snapshot().items.firstOrNull().also { item ->
+						if (viewModel.numOfAds.value != item?.adsCount) {
+							viewModel.numOfAds.value = item?.adsCount.orZero()
 						}
 
-						if (viewModel.adapterSlider.list != item.slider) {
+						viewModel.showSlider.value = item?.slider.isNullOrEmpty().not()
+						if (viewModel.adapterSlider.list != item?.slider) {
 							viewModel.adapterSlider.submitList(
-								item.slider.orEmpty()
+								item?.slider.orEmpty()
 							)
 
 							binding.sliderView.post {
