@@ -123,7 +123,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 			}
 
 			val listener = View.OnClickListener { view ->
-				val context = view.context ?: return@OnClickListener
+				//val context = view.context ?: return@OnClickListener
 				//val applicationScope = context.applicationScope ?: return@OnClickListener
 
 				val position = binding.followButtonTextView.tag as? Int ?: return@OnClickListener
@@ -186,6 +186,20 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 			}
 			binding.storeTextView.setOnClickListener(goToStoreListener)
 			binding.storeImageView.setOnClickListener(goToStoreListener)
+
+			binding.videoVolumeImageView.setOnClickListener {
+				if (player?.volume.orZero() > 0f) {
+					player?.volume = 0f
+				}else {
+					player?.volume = app.getCurrentDeviceVolume()
+				}
+				binding.videoVolumeImageView.setImageResource(
+					if (player?.volume.orZero() > 0f) R.drawable.volume_mute else R.drawable.volume_unmute
+				)
+			}
+			binding.videoFullscreenImageView.setOnClickListener {
+				// todo
+			}
 		},
 	) { binding, position, item ->
 		binding.followButtonTextView.tag = position
@@ -204,6 +218,11 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 		binding.storeTextView.text = item.store?.name
 
 		val isVideo = item.isVideo
+		binding.videoVolumeImageView.isVisible = isVideo
+		binding.videoVolumeImageView.setImageResource(
+			if (player?.volume.orZero() > 0f) R.drawable.volume_mute else R.drawable.volume_unmute
+		)
+		binding.videoFullscreenImageView.isVisible = isVideo
 		binding.playerView.visibility = if (isVideo) View.VISIBLE else View.GONE
 		binding.sliderView.visibleOrInvisible(isVideo.not())
 		binding.playerView.player = null
@@ -240,7 +259,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 				}
 			})
 
-			//exoPlayer.volume = 0f
+			exoPlayer.volume = 0f
 			exoPlayer.playWhenReady = true
 			exoPlayer.prepare()
 		}

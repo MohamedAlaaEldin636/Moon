@@ -3,9 +3,16 @@ package grand.app.moon.extensions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.net.Uri
 import android.provider.Settings
+import androidx.core.content.getSystemService
 import grand.app.moon.R
+
+fun Context.getCurrentDeviceVolume(): Float {
+	val audioManager = getSystemService<AudioManager>() ?: return 0f
+	return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
+}
 
 @SuppressLint("HardwareIds")
 fun Context.getDeviceIdWithoutPermission(fallbackOfNullOrEmpty: String = "device_id"): String {

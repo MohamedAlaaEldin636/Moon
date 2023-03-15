@@ -124,6 +124,31 @@
       app:layout_constraintBottom_toBottomOf="@id/sliderView"
       app:layout_constraintStart_toStartOf="@id/sliderView"
       app:layout_constraintEnd_toEndOf="@id/sliderView"/>
+
+    <ImageView
+      android:id="@+id/videoVolumeImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/volume_unmute"
+
+      android:layout_margin="6dp"
+
+      app:layout_constraintTop_toTopOf="@id/playerView"
+      app:layout_constraintStart_toStartOf="@id/playerView"/>
+    <ImageView
+      android:id="@+id/videoFullscreenImageView"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:src="@drawable/view_in_fullscreen"
+
+      android:layout_margin="6dp"
+
+      app:layout_constraintTop_toTopOf="@id/playerView"
+      app:layout_constraintEnd_toEndOf="@id/playerView"/>
     
     <ImageView
       android:id="@+id/favImageView"
