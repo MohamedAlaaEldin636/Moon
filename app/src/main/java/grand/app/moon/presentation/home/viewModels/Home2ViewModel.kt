@@ -3,6 +3,7 @@ package grand.app.moon.presentation.home.viewModels
 import android.app.Application
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -406,8 +407,66 @@ class Home2ViewModel @Inject constructor(
 		}
 	}
 
-	fun addStoreInFollowedStores() {
+	fun onStoreFollowingStateChanged(fragment: Home2Fragment, item: ItemStoreInResponseHome) {
+		val index = 3
 
+		if (item.isFollowing.orFalse()) {
+			// Add to following list
+			adapterFollowingsStores.insert(item)
+
+			if (adapterFollowingsStores.itemCount == 1) {
+				kotlin.runCatching {
+					val binding = DataBindingUtil.inflate<ItemHomeRvBinding>(
+						fragment.layoutInflater, R.layout.item_home_rv, fragment.binding.rvLikeLinearLayout, false
+					)
+
+					binding.nameTextView.text = app.getString(R.string.following_stories)
+
+					binding.countTextView.text = ""
+
+					fragment.apply {
+						binding.recyclerView.setupInnerRvs(-1, ItemHomeRV.Type.FOLLOWING_STORIES)
+					}
+
+					fragment.apply {
+						binding.showAllTextView.setupInnerShowAll(ItemHomeRV.Type.FOLLOWING_STORIES, ItemHomeRV(ItemHomeRV.Type.FOLLOWING_STORIES, ""))
+					}
+
+					fragment.binding.rvLikeLinearLayout.addView(
+						binding.root,
+						index,
+						LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+					)
+					MyLogger.e("2. _binding adding a view")
+				}.getOrElse {
+					MyLogger.e("2. errorrrr uiheiwufhwe $it")
+				}
+			}
+		}else {
+			// Remove from following list
+			adapterFollowingsStores.list.indexOfFirstOrNull { it.id == item.id }?.also { position ->
+				adapterFollowingsStores.deleteAt(position)
+				if (adapterFollowingsStores.itemCount.dec() >= position) {
+					adapterFollowingsStores.notifyItemRangeChanged(position, adapterFollowingsStores.itemCount - position)
+				}
+			}
+
+			adapterMostRatedStore.list.indexOfFirstOrNull { it.id == item.id }?.also { position ->
+				val mostRatedItem = adapterMostRatedStore.list[position]
+				if (mostRatedItem.isFollowing.orFalse()) {
+					adapterMostRatedStore.updateItem(position, mostRatedItem.copy(isFollowing = false))
+				}
+			}
+
+			if (adapterFollowingsStores.itemCount == 0) {
+				kotlin.runCatching {
+					fragment.binding.rvLikeLinearLayout.removeViewAt(index)
+					MyLogger.e("3. _binding removing a view")
+				}.getOrElse {
+					MyLogger.e("3. errorrrr uiheiwufhwe $it")
+				}
+			}
+		}
 	}
 
 }

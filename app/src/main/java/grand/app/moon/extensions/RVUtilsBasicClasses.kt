@@ -135,6 +135,14 @@ open class RVItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 		notifyItemRemoved(index)
 	}
 
+	fun insert(item: Item) = insertList(listOf(item))
+
+	fun delete(item: Item, equalityCondition: (first: Item, second: Item) -> Boolean = { f, s -> f == s }) {
+		list.indexOfFirstOrNull { equalityCondition(item, it) }?.also { index ->
+			deleteAt(index)
+		}
+	}
+
 }
 
 abstract class RVItemCommonListUsage2<VDB : ViewDataBinding, Item : Any>(

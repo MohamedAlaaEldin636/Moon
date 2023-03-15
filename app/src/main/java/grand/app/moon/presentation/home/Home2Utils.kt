@@ -4,6 +4,9 @@ package grand.app.moon.presentation.home
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import grand.app.moon.R
@@ -161,6 +164,8 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 		binding.followingButtonView.setOnClickListener { view ->
 			val context = view.context ?: return@setOnClickListener
 
+			val fragment = view.findFragmentOrNull<Home2Fragment>() ?: return@setOnClickListener
+
 			val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@setOnClickListener
 			val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
 
@@ -175,7 +180,7 @@ fun Home2ViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemHomeRvStore
 					newItem
 				)
 
-				//addStoreInFollowedStores(newItem)
+				onStoreFollowingStateChanged(fragment, newItem)
 			}
 		}
 	}

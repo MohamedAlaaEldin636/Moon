@@ -344,7 +344,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 		}
 	}
 
-	private fun TextView.setupInnerShowAll(type: ItemHomeRV.Type, item: ItemHomeRV) {
+	fun TextView.setupInnerShowAll(type: ItemHomeRV.Type, item: ItemHomeRV) {
 		setOnClickListener { view ->
 			//val context = view.context ?: return@setOnClickListener
 
@@ -405,7 +405,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 		}
 	}
 
-	private fun RecyclerView.setupInnerRvs(position: Int, type: ItemHomeRV.Type) {
+	fun RecyclerView.setupInnerRvs(position: Int, type: ItemHomeRV.Type) {
 		when (type) {
 			ItemHomeRV.Type.STORIES -> setupWithRVItemCommonListUsage(
 				viewModel.adapterStories,
