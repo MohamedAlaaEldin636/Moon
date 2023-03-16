@@ -33,6 +33,7 @@ import grand.app.moon.presentation.home.OtherAdvDetailsFragment
 import grand.app.moon.presentation.home.OtherAdvDetailsFragmentArgs
 import grand.app.moon.presentation.home.OtherStoreDetailsFragment
 import grand.app.moon.presentation.home.ReportingDialogFragment
+import grand.app.moon.presentation.home.models.toItemStoreInResponseHome
 import grand.app.moon.presentation.home.utils.getAdapterForAds
 import grand.app.moon.presentation.home.utils.getAdapterForStores
 import grand.app.moon.presentation.myAds.adapter.RVSliderImageFull
@@ -291,6 +292,8 @@ class OtherAdvDetailsViewModel @Inject constructor(
 
 			context.applicationScope?.launch {
 				repoShop.followStore(response.value?.store?.id.orZero())
+
+				context.followOrUnFollowStoreFromNotHomeScreen(response.value?.store?.toItemStoreInResponseHome())
 			}
 		}
 	}

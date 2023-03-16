@@ -4,26 +4,20 @@ import android.app.Application
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.dpToPx
-import grand.app.moon.core.extenstions.inflateLayout
 import grand.app.moon.data.home2.RepoHome2
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemHomeRvAdvBinding
 import grand.app.moon.databinding.ItemHomeRvBinding
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.home.models.Store
-import grand.app.moon.domain.home.use_case.HomeUseCase
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.*
@@ -403,6 +397,76 @@ class Home2ViewModel @Inject constructor(
 
 					layoutParams.width = totalWidth / number
 				}*/
+			}
+		}
+	}
+
+	// todo ...
+	fun onStoresFollowingStateChanges(fragment: Home2Fragment, data: List<ItemStoreInResponseHome>) {
+		if (data.isEmpty()) return
+
+		// For Followed Stores
+		val oldFollowedStoresCount = adapterFollowingsStores.itemCount
+		val newIsFollowedStores = buildList {
+			val ids = data.mapNotNull { it.id }
+
+			addAll(
+				adapterFollowingsStores.list.filter { it.id !in ids }
+			)
+
+			for (item in data) {
+				if (item.isFollowing.orFalse()) {
+					add(item)
+				}
+			}
+		}
+		adapterFollowingsStores.submitList(newIsFollowedStores)
+		val newFollowedStoresCount = adapterFollowingsStores.itemCount
+
+		// For most rated stores
+		adapterMostRatedStore.submitList(
+			adapterMostRatedStore.list.map { item ->
+				item.copy(
+					isFollowing = (data.firstOrNull { it.id == item.id } ?: item).isFollowing
+				)
+			}
+		)
+
+		// Add view if required isa.
+		val index = 3
+		if (oldFollowedStoresCount == 0 && newFollowedStoresCount > 0) {
+			kotlin.runCatching {
+				val binding = DataBindingUtil.inflate<ItemHomeRvBinding>(
+					fragment.layoutInflater, R.layout.item_home_rv, fragment.binding.rvLikeLinearLayout, false
+				)
+
+				binding.nameTextView.text = app.getString(R.string.following_stories)
+
+				binding.countTextView.text = ""
+
+				fragment.apply {
+					binding.recyclerView.setupInnerRvs(-1, ItemHomeRV.Type.FOLLOWING_STORIES)
+				}
+
+				fragment.apply {
+					binding.showAllTextView.setupInnerShowAll(ItemHomeRV.Type.FOLLOWING_STORIES, ItemHomeRV(ItemHomeRV.Type.FOLLOWING_STORIES, ""))
+				}
+
+				fragment.binding.rvLikeLinearLayout.addView(
+					binding.root,
+					index,
+					LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+				)
+				MyLogger.e("2. _binding adding a view")
+			}.getOrElse {
+				MyLogger.e("2. errorrrr uiheiwufhwe $it")
+			}
+		}else if (oldFollowedStoresCount > 0 && newFollowedStoresCount == 0) {
+			kotlin.runCatching {
+				fragment.binding.rvLikeLinearLayout.removeViewAt(index)
+				MyLogger.e("3. _binding removing a view")
+			}.getOrElse {
+				MyLogger.e("3. errorrrr uiheiwufhwe $it")
 			}
 		}
 	}

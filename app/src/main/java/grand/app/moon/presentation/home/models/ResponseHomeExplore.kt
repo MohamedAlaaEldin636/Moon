@@ -67,6 +67,10 @@ data class ItemStoreInHomeExplore(
 	var nickname: String?,
 	@SerializedName("ads_phone") var adsPhone: String?,
 	@SerializedName("whatsapp_phone") var whatsappPhone: String?,
+	@SerializedName("background_image") var backgroundImage: String?,
+	@SerializedName("average_rate") var averageRate: Float?,
+	@SerializedName("advertisements_count") var advertisementsCount: Int?,
+	@SerializedName("views_count") var viewsCount: Int?,
 	//var image: String?,
 ) : ItemInResponseHome {
 	val isPremium get() = premium == 1

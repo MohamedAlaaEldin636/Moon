@@ -39,14 +39,17 @@ fun OtherAdvDetailsViewModel.getAdapterForStores() = RVItemCommonListUsage<ItemH
 			val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@setOnClickListener
 			val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
 
+			val newItem = item.copy(isFollowing = item.isFollowing.orFalse().not())
 			if (context.isLoginWithOpenAuth()) {
 				context.applicationScope?.launch {
 					repoShop.followStore(item.id.orZero())
+
+					context.followOrUnFollowStoreFromNotHomeScreen(newItem)
 				}
 
 				adapter.updateItem(
 					position,
-					item.copy(isFollowing = item.isFollowing.orFalse().not())
+					newItem
 				)
 			}
 		}

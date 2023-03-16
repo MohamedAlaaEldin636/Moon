@@ -30,6 +30,7 @@ data class ResponseSearchResult(
 	@SerializedName("ads_phone") var adsPhone: String?,
 	@SerializedName("whatsapp_phone") var whatsappPhone: String?,
 	var stories: List<ResponseStory.Story>?,
+	@SerializedName("background_image") var backgroundImage: String?,
 ) {
 	val isNegotiable get() = negotiable == 1
 

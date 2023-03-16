@@ -6,7 +6,7 @@ import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.domain.shop.ResponseWorkingHour
 import grand.app.moon.extensions.orFalse
 
-fun ResponseStoreDetails?.toItemHomeExplore(): ItemStoreInHomeExplore? {
+fun ResponseStoreDetails?.toItemHomeExplore(): ItemStoreInHomeExplore {
 	return ItemStoreInHomeExplore(
 		this?.id,
 		this?.image,
@@ -22,6 +22,10 @@ fun ResponseStoreDetails?.toItemHomeExplore(): ItemStoreInHomeExplore? {
 		this?.nickname,
 		this?.adsPhone,
 		this?.whatsappPhone,
+		this?.backgroundImage,
+		this?.averageRate,
+		this?.advertisementsCount,
+		this?.viewsCount
 	)
 }
 

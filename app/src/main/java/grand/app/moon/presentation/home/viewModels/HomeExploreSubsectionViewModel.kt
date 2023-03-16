@@ -32,6 +32,7 @@ import grand.app.moon.presentation.home.HomeExploreSubsectionFragmentArgs
 import grand.app.moon.presentation.home.OtherStoreDetailsFragment
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
+import grand.app.moon.presentation.home.models.toItemStoreInResponseHome
 import grand.app.moon.presentation.myAds.adapter.RVSliderImageFull
 import grand.app.moon.presentation.myStore.ExploreInShopInfoFragment
 import kotlinx.coroutines.flow.emptyFlow
@@ -74,6 +75,8 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 
 					applicationScope.launch {
 						repoShop.followStore(store.id.orZero())
+
+						context.followOrUnFollowStoreFromNotHomeScreen(store.toItemStoreInResponseHome())
 					}
 
 					adapter.notifyItemChanged(position)

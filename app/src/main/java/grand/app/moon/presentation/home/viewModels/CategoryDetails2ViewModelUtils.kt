@@ -24,6 +24,7 @@ import grand.app.moon.presentation.home.FilterAllFragment
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
 import grand.app.moon.presentation.home.models.ResponseStory
+import grand.app.moon.presentation.home.models.toItemStoreInResponseHome
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -120,14 +121,17 @@ fun CategoryDetails2ViewModel.getAdapterStores() = RVItemCommonListUsage<ItemHom
 			val item = binding.root.getTagJson<ItemStoreInResponseHome>() ?: return@setOnClickListener
 			val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
 
+			val newItem = item.copy(isFollowing = item.isFollowing.orFalse().not())
 			if (context.isLoginWithOpenAuth()) {
 				context.applicationScope?.launch {
 					repoShop.followStore(item.id.orZero())
+
+					context.followOrUnFollowStoreFromNotHomeScreen(newItem)
 				}
 
 				adapter.updateItem(
 					position,
-					item.copy(isFollowing = item.isFollowing.orFalse().not())
+					newItem
 				)
 			}
 		}

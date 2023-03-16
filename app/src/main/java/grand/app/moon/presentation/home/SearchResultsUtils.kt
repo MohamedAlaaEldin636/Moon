@@ -18,6 +18,7 @@ import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWith
 import grand.app.moon.extensions.bindingAdapter.setupWithGlideOrDefaultUserBA
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.models.ResponseSearchResult
+import grand.app.moon.presentation.home.models.toItemStoreInResponseHome
 import grand.app.moon.presentation.home.viewModels.SearchResultsViewModel
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -172,15 +173,18 @@ fun SearchResultsViewModel.getStoresAdapter() = RVPagingItemCommonListUsage<Item
 			val item = binding.root.getTagJson<ResponseSearchResult>() ?: return@setOnClickListener
 			val position = binding.root.getTag(R.id.position_tag) as? Int ?: return@setOnClickListener
 
+			val newItem = item.copy(isFollowing = item.isFollowing.orFalse().not())
 			if (context.isLoginWithOpenAuth()) {
 				context.applicationScope?.launch {
 					repoShop.followStore(item.id.orZero())
+
+					context.followOrUnFollowStoreFromNotHomeScreen(newItem.toItemStoreInResponseHome())
 				}
 
 				adapter.updateItem(
 					position,
 				) {
-					it.isFollowing = it.isFollowing.orFalse().not()
+					it.isFollowing = newItem.isFollowing
 				}
 			}
 		}

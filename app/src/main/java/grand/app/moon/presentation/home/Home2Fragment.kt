@@ -195,6 +195,8 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 			}
 
 			viewModel.adapterCategories.submitList(viewModel.repoShop.getCategoriesWithSubCategoriesAndBrands())
+
+			viewModel.onStoresFollowingStateChanges(this, context.getStoresFollowingStateChangesOnceTillNewChangesCome())
 		}
 	}
 

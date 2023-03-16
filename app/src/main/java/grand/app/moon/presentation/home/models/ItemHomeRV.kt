@@ -3,6 +3,34 @@ package grand.app.moon.presentation.home.models
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.domain.categories.entity.ItemCategory
 
+fun  ItemAdvertisementInResponseHome.Store.toItemStoreInResponseHome(): ItemStoreInResponseHome {
+	return ItemStoreInResponseHome(
+		id, image, name, nickname, averageRate, viewsCount, advertisementsCount,
+		isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage, adsPhone, whatsappPhone
+	)
+}
+
+fun ResponseSearchResult.toItemStoreInResponseHome(): ItemStoreInResponseHome {
+	return ItemStoreInResponseHome(
+		id, image, name, nickname, averageRate, viewsCount, advertisementsCount,
+		isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage, adsPhone, whatsappPhone
+	)
+}
+
+fun ItemStoreInHomeExplore.toItemStoreInResponseHome(): ItemStoreInResponseHome {
+	return ItemStoreInResponseHome(
+		id, logo, name, nickname, averageRate, viewsCount, advertisementsCount,
+		isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage, adsPhone, whatsappPhone
+	)
+}
+
+fun ResponseStoreDetails.toItemStoreInResponseHome(): ItemStoreInResponseHome {
+	return ItemStoreInResponseHome(
+		id, image, name, nickname, averageRate, viewsCount, advertisementsCount, isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage,
+		adsPhone, whatsappPhone
+	)
+}
+
 data class ItemHomeRV(
 	val type: Type,
 	val name: String?,
@@ -249,7 +277,12 @@ data class ItemAdvertisementInResponseHome(
 		@SerializedName("average_rate") var averageRate: Float?,
 		@SerializedName("ads_phone") var adsPhone: String?,
 		@SerializedName("whatsapp_phone") var whatsappPhone: String?,
-	) {
+		@SerializedName("background_image") var backgroundImage: String?,
+		@SerializedName("advertisements_count") var advertisementsCount: Int?,
+		@SerializedName("views_count") var viewsCount: Int?,
+		@SerializedName("has_offer") var hasOffer: Boolean?,
+		var premium: Int,
+) {
 		val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
 			"${country?.countryCode.orEmpty()}${whatsappPhone.orEmpty()}"
 		}

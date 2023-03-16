@@ -1002,6 +1002,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 			context.applicationScope?.launch {
 				repoShop.followStore(response.value?.id.orZero())
+
+				context.followOrUnFollowStoreFromNotHomeScreen(response.value?.toItemStoreInResponseHome())
 			}
 		}
 	}

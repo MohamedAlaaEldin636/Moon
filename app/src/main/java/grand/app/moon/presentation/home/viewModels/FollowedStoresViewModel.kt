@@ -17,6 +17,7 @@ import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.home.FollowedStoresFragment
 import grand.app.moon.presentation.home.models.ResponseStoreDetails
+import grand.app.moon.presentation.home.models.toItemStoreInResponseHome
 import javax.inject.Inject
 
 @HiltViewModel
@@ -85,9 +86,12 @@ class FollowedStoresViewModel @Inject constructor(
 
 				fragment.handleRetryAbleActionCancellableNullable(
 					action = {
+						// Unfollow
 						repoShop.followStore(item.id.orZero())
 					}
 				) {
+					fragment.context.followOrUnFollowStoreFromNotHomeScreen(item.copy(isFollowing = false).toItemStoreInResponseHome())
+
 					fragment.reFetchData()
 				}
 			}

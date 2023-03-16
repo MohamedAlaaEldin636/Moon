@@ -30,8 +30,14 @@ class CategoryDetails2Fragment : BaseFragment<FragmentCategoryDetails2Binding>()
 
 	private val viewModel by viewModels<CategoryDetails2ViewModel>()
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	override fun getLayoutId(): Int = R.layout.fragment_category_details_2
+
+	override fun setBindingVariables() {
+		binding.viewModel = viewModel
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 
 		handleRetryAbleActionOrGoBack(
 			action = {
@@ -64,16 +70,6 @@ class CategoryDetails2Fragment : BaseFragment<FragmentCategoryDetails2Binding>()
 				viewModel.changeAdsCount(categoryDetails.adsCount.orZero())
 			}
 		}
-	}
-
-	override fun getLayoutId(): Int = R.layout.fragment_category_details_2
-
-	override fun setBindingVariables() {
-		binding.viewModel = viewModel
-	}
-
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
 
 		binding.recyclerViewStories.setupWithRVItemCommonListUsage(
 			viewModel.adapterStories,

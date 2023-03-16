@@ -18,7 +18,10 @@ import dagger.hilt.android.HiltAndroidApp
 import grand.app.moon.core.extenstions.InitialAppLaunch
 import grand.app.moon.core.extenstions.getInitialAppLaunch
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.indexOfFirstOrNull
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
+import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
 import grand.app.moon.presentation.splash.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +54,25 @@ class MyApplication : Application() {
 
 	private val supervisorJob = SupervisorJob()
 	val applicationScope = CoroutineScope(Dispatchers.IO + supervisorJob)
+
+	private val newFollowingStateChangeStores = mutableListOf<ItemStoreInResponseHome>()
+	// todo
+	private val newFavStateChangeAds = mutableSetOf<ItemAdvertisementInResponseHome>()
+
+	fun getStoresFollowingStateChangesOnceTillNewChangesCome(): List<ItemStoreInResponseHome> {
+		val list = newFollowingStateChangeStores.toList()
+		newFollowingStateChangeStores.clear()
+		return list
+	}
+
+	/** @param item after follow state change */
+	@Synchronized
+	fun followOrUnFollowStoreFromNotHomeScreen(item: ItemStoreInResponseHome) {
+		val index = newFollowingStateChangeStores.indexOfFirstOrNull { it.id == item.id }
+		if (index == null) newFollowingStateChangeStores.add(item) else {
+			newFollowingStateChangeStores[index] = item
+		}
+	}
 
 	override fun getApplicationContext(): Context {
 		return getApplicationContextMA(/*getCurrentLocale(this)*/)//getContextForLocaleMA("ar", this)
