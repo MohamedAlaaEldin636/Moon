@@ -136,7 +136,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 			MyLogger.e("dijasodjasoidjas $path")
 			if (path.isNotEmpty()) {
 				when {
-					"shop" in path -> {
+					"shop" in path || "stores" in path -> {
 						//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store?story=view
 						//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store
 						val id = MyApplication.deepLinkUri?.pathSegments?.dropLast(1)?.lastOrNull()?.toIntOrNull()

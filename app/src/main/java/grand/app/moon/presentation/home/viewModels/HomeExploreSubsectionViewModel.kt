@@ -48,6 +48,8 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
 
+	var ignoreOnDestroyView = false
+
 	val initialData = args.jsonOfListOfItemHomeExplore
 		.fromJsonInlinedOrNull<List<ItemHomeExplore>>().orEmpty()
 
@@ -79,7 +81,11 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 						context.followOrUnFollowStoreFromNotHomeScreen(store.toItemStoreInResponseHome())
 					}
 
-					adapter.notifyItemChanged(position)
+					// Update item.
+					binding.followButtonTextView.serDrawableCompatBA(
+						start = if (store.isFollowing.orFalse()) null else ContextCompat.getDrawable(context, R.drawable.follow_add)
+					)
+					binding.followButtonTextView.text = if (store.isFollowing.orFalse()) context.getString(R.string.un_follow) else context.getString(R.string.follow)
 				}
 			}
 
@@ -100,7 +106,11 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 						repoShop.likeExplore(item.id.orZero())
 					}
 
-					adapter.notifyItemChanged(position)
+					// Update item.
+					binding.favImageView.setImageResource(
+						if (item.isLiked.orFalse()) R.drawable.explore_subsection_is_fav else R.drawable.explore_subsection_is_not_fav
+					)
+					binding.likesCountTextView.text = "${item.likesCount.orZero()} ${context.getString(R.string.like)}"
 				}
 			}
 
@@ -117,15 +127,12 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 					repoShop.shareExplore(item.id.orZero())
 				}
 
-				adapter.notifyItemChanged(position)
+				// Update item.
+				binding.sharesCountTextView.text = "${item.sharesCount.orZero()} ${context.getString(R.string.share)}"
 
 				context.launchShareText(
 					item.shareLink.orEmpty()
 				)
-				/*context.launchShareText(
-					item.store?.name.orEmpty(),
-					item.files.orEmpty().joinToString("\n")
-				)*/
 			}
 
 			val listener = View.OnClickListener { view ->
@@ -141,6 +148,8 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 					"grand.app.moon.dest.commentsListFragment",
 					paths = arrayOf(item.id.orZero().toString(), item.commentsCount.orZero().toString(), position.toString())
 				)
+
+				ignoreOnDestroyView = true
 			}
 			binding.addCommentLinearLayout.setOnClickListener(listener)
 			binding.commentsCountTextView.setOnClickListener(listener)
@@ -166,22 +175,16 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 						item.id.orZero().toString()
 					)
 				)
+
+				ignoreOnDestroyView = true
 			}
 
 			val goToStoreListener = View.OnClickListener { view ->
 				val context = view.context ?: return@OnClickListener
-				//val applicationScope = context.applicationScope ?: return@OnClickListener
 
 				val position = binding.followButtonTextView.tag as? Int ?: return@OnClickListener
 
 				val item = adapter.snapshot().items.getOrNull(position) ?: return@OnClickListener
-
-				val fragment = view.findFragmentOrNull<HomeExploreSubsectionFragment>() ?: return@OnClickListener
-
-				fragment.setFragmentResultListenerUsingJson<Boolean>(OtherStoreDetailsFragment.KEY_RESULT_IS_FOLLOWING) { isFollowing ->
-					adapter.snapshot().items.onEach { it.store?.isFollowing = isFollowing }
-					adapter.notifyDataSetChanged()
-				}
 
 				userLocalUseCase.goToStoreStoriesOrDetailsCheckIfMyStore(
 					context,
@@ -189,6 +192,8 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 					item.store?.id,
 					item.store?.toResponseStory()
 				)
+
+				ignoreOnDestroyView = true
 			}
 			binding.storeTextView.setOnClickListener(goToStoreListener)
 			binding.storeImageView.setOnClickListener(goToStoreListener)
@@ -240,7 +245,9 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 		binding.videoFullscreenImageView.isVisible = isVideo
 		binding.playerView.visibility = if (isVideo) View.VISIBLE else View.GONE
 		binding.sliderView.visibleOrInvisible(isVideo.not())
-		binding.playerView.player = null
+		binding.playerView.player = if (item.files?.firstOrNull() != player?.currentMediaItem?.localConfiguration?.uri?.toString()) null else {
+			player
+		}
 		if (isVideo.not()) {
 			binding.sliderView.setSliderAdapter(RVSliderImageFull(item.files.orEmpty()) { link ->
 				setupWithGlide {

@@ -1,5 +1,9 @@
 package grand.app.moon.extensions
 
+fun <T> List<T>?.ifNotNullNorEmpty(action: (List<T>) -> Unit) {
+	if (!isNullOrEmpty()) action(this)
+}
+
 fun <T> T?.ifNotNull(action: (T) -> Unit) {
 	if (this != null) {
 		action(this)

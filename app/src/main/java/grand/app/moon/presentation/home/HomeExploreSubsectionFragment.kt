@@ -1,25 +1,20 @@
 package grand.app.moon.presentation.home
 
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.paging.insertHeaderItem
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentHomeExploreSubsectionBinding
-import grand.app.moon.databinding.ItemHomeExploreBinding
 import grand.app.moon.databinding.ItemHomeExploreSubsectionBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
-import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.home.viewModels.HomeExploreSubsectionViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,6 +32,13 @@ class HomeExploreSubsectionFragment : BaseFragment<FragmentHomeExploreSubsection
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+
+		context.getStoresFollowingStateChanges().ifNotNullNorEmpty { list ->
+			viewModel.adapter.snapshot().items.onEach { item ->
+				val isFollowing = list.firstOrNull { it.id == item.store?.id }?.isFollowing ?: item.store?.isFollowing
+				item.store?.isFollowing = isFollowing
+			}
+		}
 
 		binding.recyclerView.setupWithRVItemCommonListUsage(
 			viewModel.adapter.withDefaultHeaderAndFooterAdapters(),
@@ -72,7 +74,11 @@ class HomeExploreSubsectionFragment : BaseFragment<FragmentHomeExploreSubsection
 	}
 
 	override fun onDestroyView() {
-		kotlin.runCatching { viewModel.releasePlayer() }
+		if (viewModel.ignoreOnDestroyView) {
+			viewModel.ignoreOnDestroyView = false
+		}else {
+			kotlin.runCatching { viewModel.releasePlayer() }
+		}
 
 		super.onDestroyView()
 	}
@@ -126,6 +132,7 @@ class HomeExploreSubsectionFragment : BaseFragment<FragmentHomeExploreSubsection
 			val binding = viewHolder.binding
 
 			if (binding is ItemHomeExploreSubsectionBinding) {
+				binding.videoVolumeImageView.setImageResource(R.drawable.volume_mute)
 				binding.playerView.player = viewModel.playVideo(context, item.files?.firstOrNull().orEmpty())
 			}
 		}

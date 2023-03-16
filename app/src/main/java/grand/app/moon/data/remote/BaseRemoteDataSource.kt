@@ -1,7 +1,10 @@
 package grand.app.moon.data.remote
 
+import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ApplicationContext
+import grand.app.moon.R
 import grand.app.moon.helpers.paging.MABaseResponse
 import grand.app.moon.core.extenstions.loginPage
 import grand.app.moon.core.extenstions.logout
@@ -27,7 +30,9 @@ import javax.inject.Inject
 
 
 
-open class BaseRemoteDataSource @Inject constructor() {
+open class BaseRemoteDataSource @Inject constructor(
+	//@ApplicationContext private val context: Context,
+) {
   var gson: Gson = Gson()
   private val TAG = "BaseRemoteDataSource"
   fun getParameters(requestData: Any): Map<String, String> {
@@ -174,7 +179,8 @@ open class BaseRemoteDataSource @Inject constructor() {
           }
         }
       }
-      return Resource.Failure(FailureStatus.API_FAIL, 404, "please try again")
+	    MyLogger.e("dioasjdoasijd API Failure ${throwable.message} $throwable")
+      return Resource.Failure(FailureStatus.API_FAIL, 404, throwable.message/*"API Failure ${throwable.message} $throwable"*//*context.getString(R.string.please_try_again_32332)*/)
 //      when (throwable) {
 //        is HttpException -> {
 //          when {

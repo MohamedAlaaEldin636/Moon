@@ -170,14 +170,13 @@ class OtherStoreDetailsViewModel @Inject constructor(
 			}
 
 			val responseStory = response.value?.toResponseStory()?.copy(
-				stories = adapter.list
+				stories = listOf(item)
 			) ?: return@RVItemCommonListUsage
 
-			MyLogger.e("dasoidhoasihds adapter.list ${adapter.list} $position")
 			fragment.findNavController().navigateDeepLinkWithOptions(
 				"fragment-dest",
 				"grand.app.moon.dest.story.player",
-				paths = arrayOf(listOf(responseStory).toJsonInlinedOrNull().orEmpty(), position.toString())
+				paths = arrayOf(listOf(responseStory).toJsonInlinedOrNull().orEmpty(), 0.toString())
 			)
 		}
 	) { binding, position, item ->
