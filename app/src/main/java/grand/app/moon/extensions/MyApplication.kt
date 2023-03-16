@@ -15,6 +15,9 @@ fun Context?.followOrUnFollowStoreFromNotHomeScreen(item: ItemStoreInResponseHom
 	}
 }
 
+fun Context?.getStoresFollowingStateChanges() =
+	myApplication?.getStoresFollowingStateChanges().orEmpty()
+
 fun Context?.getStoresFollowingStateChangesOnceTillNewChangesCome() =
 	myApplication?.getStoresFollowingStateChangesOnceTillNewChangesCome().orEmpty()
 /*

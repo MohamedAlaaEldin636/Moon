@@ -59,6 +59,10 @@ class MyApplication : Application() {
 	// todo
 	private val newFavStateChangeAds = mutableSetOf<ItemAdvertisementInResponseHome>()
 
+	fun getStoresFollowingStateChanges(): List<ItemStoreInResponseHome> {
+		return newFollowingStateChangeStores.toList()
+	}
+
 	fun getStoresFollowingStateChangesOnceTillNewChangesCome(): List<ItemStoreInResponseHome> {
 		val list = newFollowingStateChangeStores.toList()
 		newFollowingStateChangeStores.clear()

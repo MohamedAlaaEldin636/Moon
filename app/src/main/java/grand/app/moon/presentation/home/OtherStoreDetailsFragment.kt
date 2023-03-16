@@ -146,6 +146,16 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		if (viewModel.response.value != null) {
+			context.getStoresFollowingStateChanges().firstOrNull { it.id == viewModel.response.value?.id }?.also { item ->
+				if (viewModel.response.value?.isFollowing != item.isFollowing) {
+					viewModel.response.value = viewModel.response.value?.copy(
+						isFollowing = item.isFollowing
+					)
+				}
+			}
+		}
+
 		binding.recyclerViewStories.setupWithRVItemCommonListUsage(
 			viewModel.adapterHighlights,
 			true,

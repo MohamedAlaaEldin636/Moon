@@ -104,6 +104,18 @@ class OtherAdvDetailsFragment : BaseFragment<FragmentOtherAdvDetailsBinding>() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		if (viewModel.response.value != null) {
+			context.getStoresFollowingStateChanges().firstOrNull { it.id == viewModel.response.value?.store?.id }?.also { item ->
+				if (viewModel.response.value?.store?.isFollowing != item.isFollowing) {
+					viewModel.response.value = viewModel.response.value?.copy(
+						store = viewModel.response.value?.store?.copy(
+							isFollowing = item.isFollowing
+						)
+					)
+				}
+			}
+		}
+
 		binding.sliderView.post {
 			binding.sliderView.setSliderAdapter(viewModel.adapterImages)
 			binding.sliderView.startAutoCycle()
