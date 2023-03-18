@@ -56,19 +56,16 @@ class MyApplication : Application() {
 	val applicationScope = CoroutineScope(Dispatchers.IO + supervisorJob)
 
 	private val newFollowingStateChangeStores = mutableListOf<ItemStoreInResponseHome>()
-	// todo
 	private val newFavStateChangeAds = mutableSetOf<ItemAdvertisementInResponseHome>()
 
 	fun getStoresFollowingStateChanges(): List<ItemStoreInResponseHome> {
 		return newFollowingStateChangeStores.toList()
 	}
-
 	fun getStoresFollowingStateChangesOnceTillNewChangesCome(): List<ItemStoreInResponseHome> {
 		val list = newFollowingStateChangeStores.toList()
 		newFollowingStateChangeStores.clear()
 		return list
 	}
-
 	/** @param item after follow state change */
 	@Synchronized
 	fun followOrUnFollowStoreFromNotHomeScreen(item: ItemStoreInResponseHome) {
@@ -77,6 +74,24 @@ class MyApplication : Application() {
 			newFollowingStateChangeStores[index] = item
 		}
 	}
+
+	// todo
+	/*fun getAdsFavStateChanges(): List<ItemAdvertisementInResponseHome> {
+		return newFavStateChangeAds.toList()
+	}
+	fun getAdsFavStateChangesOnceTillNewChangesCome(): List<ItemAdvertisementInResponseHome> {
+		val list = newFollowingStateChangeStores.toList()
+		newFollowingStateChangeStores.clear()
+		return list
+	}
+	*//** @param item after follow state change *//*
+	@Synchronized
+	fun favOrUnFavAdvFromNotHomeScreen(item: ItemAdvertisementInResponseHome) {
+		val index = newFollowingStateChangeStores.indexOfFirstOrNull { it.id == item.id }
+		if (index == null) newFollowingStateChangeStores.add(item) else {
+			newFollowingStateChangeStores[index] = item
+		}
+	}*/
 
 	override fun getApplicationContext(): Context {
 		return getApplicationContextMA(/*getCurrentLocale(this)*/)//getContextForLocaleMA("ar", this)
