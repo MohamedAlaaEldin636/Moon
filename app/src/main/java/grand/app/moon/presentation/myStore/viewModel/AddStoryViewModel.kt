@@ -15,10 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.grand.trim_video_lib.launchSafelyTrimVideo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.*
 import grand.app.moon.core.extenstions.createMultipartBodyPart
-import grand.app.moon.core.extenstions.getVideoLength
-import grand.app.moon.core.extenstions.showPopup
-import grand.app.moon.core.extenstions.ssssssssssss
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.domain.shop.MAImagesOrVideo
 import grand.app.moon.domain.shop.StoryLink
@@ -190,6 +188,8 @@ Intent intent = new Intent(activity, ActVideoTrimmer.class);
 		}else {
 			fragment.handleRetryAbleActionCancellableNullable(
 				action = {
+					MyLogger.e("kdjasdjasl ${type.value != StoryType.HIGHLIGHT}")
+
 					repoShop.addStory(
 						file!!,
 						link.value!!,

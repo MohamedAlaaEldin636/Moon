@@ -237,6 +237,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 			map["highlight_name"] = name.orEmpty().toRequestBody()
 		}
 
+		MyLogger.e("kdjasdjasl $map $coverImage $file")
+
 		apiService.addStory(
 			storyLink.apiValue.toString().toRequestBody(),
 			storyType.apiValue.toString().toRequestBody(),
