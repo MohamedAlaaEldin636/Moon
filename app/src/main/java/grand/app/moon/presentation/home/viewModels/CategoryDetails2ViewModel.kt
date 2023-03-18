@@ -47,6 +47,7 @@ class CategoryDetails2ViewModel @Inject constructor(
 	val showStores = MutableLiveData(true)
 	val showAds = MutableLiveData(true)
 	val showBrands = allBrands.isNotEmpty()
+	val showSubCategories = allSubCategories.isNotEmpty()
 
 	val adapterStories = getAdapterStories()
 

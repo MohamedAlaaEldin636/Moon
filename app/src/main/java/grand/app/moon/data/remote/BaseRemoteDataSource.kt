@@ -14,6 +14,7 @@ import grand.app.moon.domain.utils.ErrorResponse
 import grand.app.moon.domain.utils.FailureStatus
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.paging.MAResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -180,7 +181,10 @@ open class BaseRemoteDataSource @Inject constructor(
         }
       }
 	    MyLogger.e("dioasjdoasijd API Failure ${throwable.message} $throwable")
-      return Resource.Failure(FailureStatus.API_FAIL, 404, throwable.message/*"API Failure ${throwable.message} $throwable"*//*context.getString(R.string.please_try_again_32332)*/)
+	    val causedBy1 = throwable.toStringOrEmpty().substringAfter("Caused by", "")
+	    val causedBy2 = throwable.cause.toStringOrEmpty().substringAfter("Caused by", "")
+	    //val msg = if ()
+      return Resource.Failure(FailureStatus.API_FAIL, 404, "${throwable.message}\n\n$causedBy1\n\n$causedBy2\n\n${throwable.message}"/*"API Failure ${throwable.message} $throwable"*//*context.getString(R.string.please_try_again_32332)*/)
 //      when (throwable) {
 //        is HttpException -> {
 //          when {
