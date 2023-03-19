@@ -103,7 +103,7 @@ class RVPagingItemCommonListUsageWithExoPlayer<VDB : ViewDataBinding, Item : Any
 	}
 
 	val showLoadingFlow get() = loadStateFlow.mapLatest { loadState ->
-		loadState.refresh is LoadState.Loading
+		loadState.refresh is LoadState.Loading && snapshot().items.isEmpty()
 	}
 
 	override fun onCreateViewHolder(

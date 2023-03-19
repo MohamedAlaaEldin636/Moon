@@ -3,6 +3,7 @@ package grand.app.moon.presentation.home.viewModels
 import android.app.Application
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
@@ -19,6 +20,8 @@ class SimpleUserListOfInteractionsViewModel @Inject constructor(
 	val args: SimpleUserListOfInteractionsFragmentArgs,
 	val repoShop: RepoShop,
 ) : AndroidViewModel(application) {
+
+	val showWholePageLoader = MutableLiveData(true)
 
 	val users = when (args.type) {
 		SimpleUserListOfInteractionsFragment.Type.EXPLORE_LIKES -> repoShop.getSimpleUsersOfExploreLikes(args.exploreId)

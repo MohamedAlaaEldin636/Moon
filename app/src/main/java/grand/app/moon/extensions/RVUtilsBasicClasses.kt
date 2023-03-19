@@ -228,7 +228,7 @@ open class RVPagingItemCommonListUsage<VDB : ViewDataBinding, Item : Any>(
 	}
 
 	val showLoadingFlow get() = loadStateFlow.mapLatest { loadState ->
-		loadState.refresh is LoadState.Loading
+		loadState.refresh is LoadState.Loading && snapshot().items.isEmpty()
 	}
 
 	override fun onCreateViewHolder(
@@ -309,7 +309,7 @@ open class RVPagingItemCommonListUsageWithDifferentItems<Item : Any>(
 	}
 
 	val showLoadingFlow get() = loadStateFlow.mapLatest { loadState ->
-		loadState.refresh is LoadState.Loading
+		loadState.refresh is LoadState.Loading && snapshot().items.isEmpty()
 	}
 
 	override fun getItemViewType(position: Int): Int {

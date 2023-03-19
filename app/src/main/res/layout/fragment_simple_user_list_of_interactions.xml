@@ -55,18 +55,41 @@
       tools:text="@string/got_likes_of_var_users"
       android:text="@{viewModel.args.dataTitle}"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recyclerView"
+    <FrameLayout
+      android:id="@+id/rvContainerFrameLayout"
 
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="match_parent">
 
-      android:scrollbars="vertical"
-      tools:itemCount="6"
-      tools:spanCount="1"
-      tools:orientation="vertical"
-      tools:listitem="@layout/item_simple_user"
-      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"/>
+      <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+
+        android:visibility="@{viewModel.showWholePageLoader}"
+
+        app:layout_constraintTop_toTopOf="@id/heightRVView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+
+        android:visibility="@{!viewModel.showWholePageLoader}"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:scrollbars="vertical"
+        tools:itemCount="6"
+        tools:spanCount="1"
+        tools:orientation="vertical"
+        tools:listitem="@layout/item_simple_user"
+        tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"/>
+
+    </FrameLayout>
 
   </LinearLayout>
 

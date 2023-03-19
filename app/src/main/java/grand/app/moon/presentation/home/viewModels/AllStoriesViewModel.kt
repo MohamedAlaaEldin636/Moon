@@ -25,6 +25,8 @@ class AllStoriesViewModel @Inject constructor(
 	val repoShop: RepoShop,
 ) : AndroidViewModel(application) {
 
+	val showWholePageLoader = MutableLiveData(true)
+
 	val showFollowingStories = MutableLiveData(true)
 
 	val adapterFollowing = getAdapter()
