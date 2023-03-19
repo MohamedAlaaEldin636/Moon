@@ -3,6 +3,7 @@ package grand.app.moon.presentation.myStore.viewModel
 import android.app.Application
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
@@ -21,6 +22,8 @@ class StoreCategoriesViewModel @Inject constructor(
 	application: Application,
 	private val repoShop: RepoShop,
 ) : AndroidViewModel(application) {
+
+	val showWholePageLoader = MutableLiveData(true)
 
 	val categories = repoShop.getMyCategories()
 

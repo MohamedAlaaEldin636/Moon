@@ -42,29 +42,50 @@
 
       android:text="@string/your_store_main_categories_2"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recyclerView"
-
+    <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_weight="1"
+      android:layout_weight="1">
 
-      android:paddingEnd="8dp"
-      android:paddingStart="8dp"
-      android:paddingBottom="5dp"
-      android:paddingTop="5dp"
-      android:clipToPadding="false"
+      <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-      android:scrollbars="vertical"
-      tools:itemCount="3"
-      app:spanCount="1"
-      tools:orientation="vertical"
-      tools:listitem="@layout/item_store_category"
-      tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        android:layout_gravity="center"
 
-      app:layout_constraintTop_toBottomOf="@id/adsPromotionsTextView"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
+        android:visibility="@{viewModel.showWholePageLoader}"
+
+        app:layout_constraintTop_toTopOf="@id/heightRVView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+
+        android:visibility="@{!viewModel.showWholePageLoader}"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:clipToPadding="false"
+
+        android:scrollbars="vertical"
+        tools:itemCount="3"
+        app:spanCount="1"
+        tools:orientation="vertical"
+        tools:listitem="@layout/item_store_category"
+        tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+
+        app:layout_constraintTop_toBottomOf="@id/adsPromotionsTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    </FrameLayout>
 
     <TextView
       android:layout_width="match_parent"

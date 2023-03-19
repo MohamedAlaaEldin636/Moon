@@ -70,16 +70,24 @@ fun PagingDataAdapter<*, *>.withCustomAdapters(
 }
 
 fun PagingDataAdapter<*, *>.withDefaultFooterOnlyAdapter(): ConcatAdapter {
+	val headerAdapter = LSAdapterLoadingErrorEmpty(this, false)
 	val footerAdapter = LSAdapterLoadingErrorEmpty(this, true)
 
 	return withCustomAdaptersFooterOnly(
+		headerAdapter,
 		footerAdapter
 	)
 }
 fun PagingDataAdapter<*, *>.withCustomAdaptersFooterOnly(
+	header: LoadStateAdapter<*>,
 	footer: LoadStateAdapter<*>
 ): ConcatAdapter {
 	addLoadStateListener { loadStates ->
+		header.loadState = if (loadStates.refresh is LoadState.Loading && snapshot().items.isNotEmpty()) {
+			LoadState.Loading
+		}else {
+			loadStates.prepend
+		}
 		footer.loadState = when (loadStates.refresh) {
 			is LoadState.Loading -> {
 				LoadState.NotLoading(false)
@@ -93,5 +101,5 @@ fun PagingDataAdapter<*, *>.withCustomAdaptersFooterOnly(
 		}
 	}
 
-	return ConcatAdapter(this, footer)
+	return ConcatAdapter(header, this, footer)
 }
