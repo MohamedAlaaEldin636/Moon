@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,8 @@ class HomeExploreViewModel @Inject constructor(
 	val homeUseCase: HomeUseCase,
 	val userLocalUseCase: UserLocalUseCase
 ) : AndroidViewModel(application) {
+
+	val showWholePageLoader = MutableLiveData(true)
 
 	val explores = repoShop.getHomeExplores()
 

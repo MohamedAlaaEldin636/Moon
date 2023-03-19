@@ -16,6 +16,7 @@ import grand.app.moon.R
 import grand.app.moon.databinding.FragmentHomeExploreBinding
 import grand.app.moon.databinding.ItemHomeExploreBinding
 import grand.app.moon.extensions.*
+import grand.app.moon.helpers.paging.withDefaultFooterOnlyAdapter
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
@@ -82,7 +83,15 @@ class HomeExploreFragment : BaseFragment<FragmentHomeExploreBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 
 		binding.recyclerView.layoutManager = requireContext().getExploreLayoutManager()
-		binding.recyclerView.adapter = viewModel.adapter.withDefaultHeaderAndFooterAdapters()
+		binding.recyclerView.adapter = viewModel.adapter.withDefaultFooterOnlyAdapter()
+
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.adapter.showLoadingFlow.collectLatest {
+					viewModel.showWholePageLoader.value = it
+				}
+			}
+		}
 
 		binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

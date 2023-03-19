@@ -68,3 +68,30 @@ fun PagingDataAdapter<*, *>.withCustomAdapters(
 	
 	return ConcatAdapter(header, this, footer)
 }
+
+fun PagingDataAdapter<*, *>.withDefaultFooterOnlyAdapter(): ConcatAdapter {
+	val footerAdapter = LSAdapterLoadingErrorEmpty(this, true)
+
+	return withCustomAdaptersFooterOnly(
+		footerAdapter
+	)
+}
+fun PagingDataAdapter<*, *>.withCustomAdaptersFooterOnly(
+	footer: LoadStateAdapter<*>
+): ConcatAdapter {
+	addLoadStateListener { loadStates ->
+		footer.loadState = when (loadStates.refresh) {
+			is LoadState.Loading -> {
+				LoadState.NotLoading(false)
+			}
+			is LoadState.Error -> {
+				loadStates.refresh
+			}
+			else -> {
+				loadStates.append
+			}
+		}
+	}
+
+	return ConcatAdapter(this, footer)
+}
