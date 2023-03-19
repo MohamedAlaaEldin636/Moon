@@ -14,7 +14,6 @@ import grand.app.moon.databinding.FragmentHomeExploreSubsectionBinding
 import grand.app.moon.databinding.ItemHomeExploreSubsectionBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultFooterOnlyAdapter
-import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.viewModels.HomeExploreSubsectionViewModel
 import kotlinx.coroutines.flow.collectLatest

@@ -17,7 +17,6 @@ import grand.app.moon.databinding.FragmentHomeExploreBinding
 import grand.app.moon.databinding.ItemHomeExploreBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.withDefaultFooterOnlyAdapter
-import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.models.ItemHomeExplore
 import grand.app.moon.presentation.home.viewModels.HomeExploreViewModel

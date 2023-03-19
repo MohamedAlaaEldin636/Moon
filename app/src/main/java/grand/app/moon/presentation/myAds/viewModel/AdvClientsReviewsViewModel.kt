@@ -28,6 +28,8 @@ class AdvClientsReviewsViewModel @Inject constructor(
 	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
 
+	val showWholePageLoader = MutableLiveData(true)
+
 	val response = MutableLiveData<ResponseReviewsWithStats?>()
 
 	val textAverageRate = response.map { "${app.getString(R.string.average_rate)} ( ${it?.averageRate.orZero()} )" }
