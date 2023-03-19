@@ -27,6 +27,8 @@ class FollowedStoresViewModel @Inject constructor(
 	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
 
+	val showWholePageLoader = MutableLiveData(true)
+
 	private val allCategories = repoShop.getCategoriesWithSubCategoriesAndBrands()
 
 	val selectedCategory = MutableLiveData<ItemCategory?>(null)
