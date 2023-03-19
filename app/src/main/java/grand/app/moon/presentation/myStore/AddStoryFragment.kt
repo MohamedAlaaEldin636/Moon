@@ -112,7 +112,6 @@ class AddStoryFragment : BaseFragment<FragmentAddStoryBinding>() {
 	) { uri ->
 
 		if (true) {
-			viewModel.tmpFileUri
 			viewModel.addStoryImmediately(
 				this,
 				viewModel.tmpFileUri?.createMultipartBodyPart(viewModel.app, "file") ?: return@registerForActivityResult

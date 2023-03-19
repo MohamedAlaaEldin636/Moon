@@ -15,3 +15,5 @@ rootDir
     include(":${it.name}")
   }
 include(":trim_video_lib")
+include(":CometChatIntegration")
+//include ':uikit_kotlin_2'

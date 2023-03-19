@@ -114,6 +114,17 @@ fun Uri.createMultipartBodyPart(context: Context, paramNameInApi: String): Multi
 
 private  val TAG = "Uri"
 private fun Uri.toBytesArray(context: Context): ByteArray? {
+	/*
+	InputStream inputStream = context.getContentResolver().openInputStream(uri);
+	ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+	byte[] buffer = new byte[1024];
+	int length;
+	while ((length = inputStream.read(buffer)) != -1) {
+	    byteArrayOutputStream.write(buffer, 0, length);
+	}
+	byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+	 */
 	return try {
 		val inputStream = context.applicationContext.contentResolver.openInputStream(this)
 		
