@@ -2,7 +2,6 @@ package grand.app.moon.presentation.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +15,6 @@ import grand.app.moon.extensions.orStringNullIfNullOrEmpty
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
 import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.paging.withDefaultFooterOnlyAdapter
-import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.viewModels.SimpleUserListOfInteractionsViewModel
 import kotlinx.coroutines.flow.collectLatest
