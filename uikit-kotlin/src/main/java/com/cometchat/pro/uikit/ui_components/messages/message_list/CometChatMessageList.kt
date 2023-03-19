@@ -233,6 +233,9 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
 
   private var ivBackArrow: ImageView? = null
 
+	/*var gettingImagesOrVideoHandler: PickImagesOrVideoHandler? = null
+		private set*/
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     handleArguments()
@@ -746,7 +749,7 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
       override fun onEditTextMediaSelected(inputContentInfo: InputContentInfoCompat?) {
         val messageType = inputContentInfo?.linkUri.toString()
           .substring(inputContentInfo?.linkUri.toString().lastIndexOf('.'))
-        val mediaMessage = MediaMessage(Id, null, CometChatConstants.MESSAGE_TYPE_IMAGE, type)
+        val mediaMessage = MediaMessage(Id, null as? File, CometChatConstants.MESSAGE_TYPE_IMAGE, type)
         val attachment = Attachment()
         attachment.fileUrl = inputContentInfo?.linkUri.toString()
         attachment.fileMimeType = inputContentInfo?.description?.getMimeType(0)

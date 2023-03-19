@@ -781,7 +781,23 @@ public class Utils {
                     .startWithVideoMuted(true)
                     .build()
             CometChat.startCall(callSettings, object : OngoingCallListener {
-                override fun onUserJoined(user: User) {
+	            override fun onRecordingStarted(p0: User?) {
+		            //TODO("Not yet implemented")
+	            }
+
+	            override fun onRecordingStopped(p0: User?) {
+		            //TODO("Not yet implemented")
+	            }
+
+	            override fun onUserMuted(p0: User?, p1: User?) {
+		            //TODO("Not yet implemented")
+	            }
+
+	            override fun onCallSwitchedToVideo(p0: String?, p1: User?, p2: User?) {
+		            //TODO("Not yet implemented")
+	            }
+
+	            override fun onUserJoined(user: User) {
                     Log.e("onUserJoined: ", user.uid)
                 }
 

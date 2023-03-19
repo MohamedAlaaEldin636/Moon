@@ -54,6 +54,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
 import java.lang.Exception
 import java.lang.IllegalArgumentException
 import java.util.*
@@ -397,7 +398,7 @@ class CometChatForwardMessageActivity : AppCompatActivity() {
                 uid = (conversation.conversationWith as Group).guid
                 type = CometChatConstants.RECEIVER_TYPE_GROUP
               }
-              message = MediaMessage(uid, null, messageType, type)
+              message = MediaMessage(uid, null as? File, messageType, type)
               val attachment = Attachment()
               attachment.fileUrl = mediaMessageUrl
               attachment.fileMimeType = mediaMessageMime

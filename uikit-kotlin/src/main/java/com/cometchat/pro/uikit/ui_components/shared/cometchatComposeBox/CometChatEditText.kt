@@ -23,7 +23,7 @@ class CometChatEditText : AppCompatEditText {
     private val TAG = "CometChatEditText"
     var onEditTextMediaListener: OnEditTextMediaListener? = null
 
-    override fun onCreateInputConnection(outAttrs: EditorInfo?): InputConnection {
+    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection {
         val ic = super.onCreateInputConnection(outAttrs)
         EditorInfoCompat.setContentMimeTypes(outAttrs!!, arrayOf("image/png", "image/gif"))
 
@@ -49,7 +49,7 @@ class CometChatEditText : AppCompatEditText {
             // call inputContentInfo.releasePermission() as needed.
             true // return true if succeeded
         }
-        return InputConnectionCompat.createWrapper(ic, outAttrs, callback)
+        return InputConnectionCompat.createWrapper(ic!!, outAttrs, callback)
     }
 
     fun setMediaSelected(onEditTextMediaListener: OnEditTextMediaListener?) {

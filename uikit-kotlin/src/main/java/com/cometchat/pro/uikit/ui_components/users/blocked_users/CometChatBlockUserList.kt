@@ -72,7 +72,7 @@ class CometChatBlockUserList : Fragment() {
             override fun onClick(var1: View, var2: Int) {
                 val user = var1.getTag(R.string.user) as User
                 if (activity != null) {
-                    val alert = MaterialAlertDialogBuilder(activity)
+                    val alert = MaterialAlertDialogBuilder(requireActivity())
                     alert.setTitle(resources.getString(R.string.unblock))
                     alert.setMessage(String.format(resources.getString(R.string.unblock_user_question), user.name))
                     alert.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, i -> unBlockUser(user, var1) }
