@@ -336,11 +336,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+      <View
+        android:id="@+id/heightRVView"
+
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewCategories"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+      <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="@{viewModel.showWholePageLoader}"
+
+        app:layout_constraintTop_toTopOf="@id/heightRVView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
       <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewStores"
 
+        android:visibility="@{!viewModel.showWholePageLoader}"
+
         android:layout_width="0dp"
-        android:layout_height="600dp"
+        android:layout_height="0dp"
 
         android:paddingEnd="4dp"
         android:paddingStart="4dp"
@@ -355,6 +376,7 @@
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/item_home_rv_store"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recyclerViewCategories"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

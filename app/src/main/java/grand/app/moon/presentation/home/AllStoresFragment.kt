@@ -3,19 +3,26 @@ package grand.app.moon.presentation.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.databinding.FragmentAllStoresBinding
 import grand.app.moon.extensions.*
-import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
+import grand.app.moon.helpers.paging.withDefaultFooterOnlyAdapter
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.viewModels.AllStoresViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class AllStoresFragment : BaseFragment<FragmentAllStoresBinding>() {
@@ -74,13 +81,21 @@ class AllStoresFragment : BaseFragment<FragmentAllStoresBinding>() {
 		}
 
 		binding.recyclerViewStores.setupWithRVItemCommonListUsage(
-			viewModel.adapterStores.withDefaultHeaderAndFooterAdapters(),
+			viewModel.adapterStores.withDefaultFooterOnlyAdapter(),
 			false,
 			2,
 			onGridLayoutSpanSizeLookup = {
 				if (viewModel.layoutIsTwoColNotOneCol.value == true) 1 else 2
 			}
 		)
+
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.adapterStores.showLoadingFlow.collectLatest {
+					viewModel.showWholePageLoader.value = it
+				}
+			}
+		}
 
 		viewModel.layoutIsTwoColNotOneCol.distinctUntilChanged().ignoreFirstTimeChanged().observe(viewLifecycleOwner) {
 			binding.recyclerViewStores.layoutManager?.requestLayout()
@@ -94,7 +109,11 @@ class AllStoresFragment : BaseFragment<FragmentAllStoresBinding>() {
 
 		binding.rootConstraintLayout.post {
 			val layoutParams = binding.recyclerViewStores.layoutParams
-			layoutParams.height = binding.rootConstraintLayout.height
+			layoutParams.height = binding.heightRVView.height.plus(
+				binding.buttonsConstraintLayout.top
+			).minus(
+				context?.dpToPx(9.5f)?.roundToInt().orZero()
+			)
 			binding.recyclerViewStores.layoutParams = layoutParams
 		}
 

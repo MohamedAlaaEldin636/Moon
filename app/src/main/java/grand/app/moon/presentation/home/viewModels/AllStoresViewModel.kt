@@ -37,6 +37,8 @@ class AllStoresViewModel @Inject constructor(
 	val args: AllStoresFragmentArgs,
 ) : AndroidViewModel(application) {
 
+	val showWholePageLoader = MutableLiveData(true)
+
 	private val initialFilter = args.jsonOfFilter.fromJsonInlinedOrNull<AllStoresFragment.Filter>()
 		?: AllStoresFragment.Filter()
 
