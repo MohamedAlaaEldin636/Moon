@@ -39,6 +39,8 @@ class AllAdsViewModel @Inject constructor(
 
 	val adapterAds = getAdapterAds()
 
+	val showWholePageLoader = MutableLiveData(true)
+
 	fun getOnEditorListener(): TextView.OnEditorActionListener = TextView.OnEditorActionListener { view, actionId, _ ->
 		view.findFragmentOrNull<AllAdsFragment>()?.apply {
 			context?.apply {

@@ -308,6 +308,10 @@ open class RVPagingItemCommonListUsageWithDifferentItems<Item : Any>(
 			snapshot().isEmpty()
 	}
 
+	val showLoadingFlow get() = loadStateFlow.mapLatest { loadState ->
+		loadState.refresh is LoadState.Loading
+	}
+
 	override fun getItemViewType(position: Int): Int {
 		return getLayoutRes(position)
 	}

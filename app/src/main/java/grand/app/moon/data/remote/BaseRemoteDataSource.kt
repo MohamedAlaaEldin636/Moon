@@ -115,21 +115,20 @@ open class BaseRemoteDataSource @Inject constructor(
     return params
   }
 
-	private var counter = 0
   suspend fun <T> safeApiCall(apiCall: suspend () -> T): Resource<T> {
-	  MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> start")
+	  MyLogger.e("safeApiCall safeApiCall -> ch 1 -> start")
     println(apiCall)
-	  MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> $apiCall")
+	  MyLogger.e("safeApiCall safeApiCall -> ch 2 -> $apiCall")
     try {
       val apiResponse = apiCall.invoke()
-	    MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> $apiResponse")
+	    MyLogger.e("safeApiCall safeApiCall -> ch 3 -> $apiResponse")
       val gson = Gson()
       val json = gson.toJson(apiResponse)
-	    MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> $json")
+	    MyLogger.e("safeApiCall safeApiCall -> ch 4 -> $json")
       Log.d(TAG, "safeApiCall: $json")
 
 //      println(json)
-	    MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> ${(apiResponse as? BaseResponse<*>)?.code}")
+	    MyLogger.e("safeApiCall safeApiCall -> ch 5 -> ${(apiResponse as? BaseResponse<*>)?.code}")
       when ((apiResponse as BaseResponse<*>).code) {
         403 -> {
           return Resource.Failure(FailureStatus.TOKEN_EXPIRED, (apiResponse as BaseResponse<*>).code, (apiResponse as BaseResponse<*>).message)
@@ -156,12 +155,12 @@ open class BaseRemoteDataSource @Inject constructor(
         }
       }
     } catch (throwable: Throwable) {
-	    MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> throwable $throwable")
+	    MyLogger.e("safeApiCall safeApiCall -> ch 6 -> throwable $throwable")
 	    println(throwable)
       when(throwable){
         is HttpException -> {
           Log.d(TAG, "http_code: ${throwable.code()}")
-	        MyLogger.e("safeApiCall safeApiCall -> ch ${counter++} -> throwable CODE ${throwable.code()}")
+	        MyLogger.e("safeApiCall safeApiCall -> ch 7 -> throwable CODE ${throwable.code()}")
           when(throwable.code()){
             401 -> {
               val errorResponse = Gson().fromJson(

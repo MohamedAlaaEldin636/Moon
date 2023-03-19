@@ -28,6 +28,8 @@ class AllAdsOfCategoryViewModel @Inject constructor(
 	val args: AllAdsOfCategoryFragmentArgs,
 ) : AndroidViewModel(application) {
 
+	val showWholePageLoader = MutableLiveData(true)
+
 	val initialFilter = FilterAllFragment.Filter.fromSpecialString(args.initialSpecialStringFiltering)
 
 	val filter = MutableLiveData(initialFilter)

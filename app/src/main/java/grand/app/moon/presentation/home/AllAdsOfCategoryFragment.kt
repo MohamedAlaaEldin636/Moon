@@ -11,13 +11,16 @@ import androidx.navigation.NavController
 import androidx.paging.PagingData
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
+import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.databinding.FragmentAllAdsOfCategoryBinding
 import grand.app.moon.extensions.*
+import grand.app.moon.helpers.paging.withDefaultFooterOnlyAdapter
 import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.viewModels.AllAdsOfCategoryViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class AllAdsOfCategoryFragment : BaseFragment<FragmentAllAdsOfCategoryBinding>() {
@@ -78,13 +81,21 @@ class AllAdsOfCategoryFragment : BaseFragment<FragmentAllAdsOfCategoryBinding>()
 		)
 
 		binding.recyclerViewAds.setupWithRVItemCommonListUsage(
-			viewModel.adapterAds.withDefaultHeaderAndFooterAdapters(),
+			viewModel.adapterAds.withDefaultFooterOnlyAdapter(),
 			false,
 			2,
 			onGridLayoutSpanSizeLookup = {
 				if (viewModel.layoutIsTwoColNotOneCol.value == true) 1 else 2
 			}
 		)
+
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.adapterAds.showLoadingFlow.collectLatest {
+					viewModel.showWholePageLoader.value = it
+				}
+			}
+		}
 
 		viewModel.layoutIsTwoColNotOneCol.distinctUntilChanged().ignoreFirstTimeChanged().observe(viewLifecycleOwner) {
 			binding.recyclerViewAds.layoutManager?.requestLayout()
@@ -98,7 +109,11 @@ class AllAdsOfCategoryFragment : BaseFragment<FragmentAllAdsOfCategoryBinding>()
 
 		binding.rootConstraintLayout.post {
 			val layoutParams = binding.recyclerViewAds.layoutParams
-			layoutParams.height = binding.rootConstraintLayout.height / 2
+			layoutParams.height = binding.heightRVView.height.plus(
+				binding.buttonsConstraintLayout.top
+			).minus(
+				context?.dpToPx(9.5f)?.roundToInt().orZero()
+			)
 			binding.recyclerViewAds.layoutParams = layoutParams
 		}
 
