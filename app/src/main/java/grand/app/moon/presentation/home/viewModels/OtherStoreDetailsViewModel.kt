@@ -49,7 +49,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 	val response = MutableLiveData<ResponseStoreDetails?>(null)
 
-	val isStoreAccount = response.map { it?.isStore; true /* todo */ }
+	val isStoreAccount = response.map { it?.isStore }
 
 	val isMyStore = response.map {
 		app.isLogin() && userLocalUseCase().id == it?.id
