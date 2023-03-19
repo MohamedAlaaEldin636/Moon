@@ -17,6 +17,7 @@ import com.onesignal.OneSignal
 import dagger.hilt.android.HiltAndroidApp
 import grand.app.moon.core.extenstions.InitialAppLaunch
 import grand.app.moon.core.extenstions.getInitialAppLaunch
+import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.indexOfFirstOrNull
 import grand.app.moon.presentation.base.utils.Constants
@@ -29,6 +30,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
+import javax.inject.Inject
 import javax.net.ssl.SSLContext
 
 fun Context?.getMyApplication() = this?.applicationContext as? MyApplication
@@ -47,6 +49,15 @@ class MyApplication : Application() {
 
 		var deepLinkUri: Uri? = null
 		var usedDeepLink = false
+	}
+
+	@Inject
+	lateinit var loginUseCase: LogInUseCase
+
+	fun logOutAsync() {
+		applicationScope.launch {
+			loginUseCase.logout()
+		}
 	}
 
 	var checkedAppGlobalAnnouncement = false

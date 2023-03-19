@@ -20,8 +20,11 @@ import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.domain.home.models.Store
+import grand.app.moon.extensions.applicationScope
+import grand.app.moon.extensions.myApplication
 import grand.app.moon.presentation.splash.MASplash2Activity
 import grand.app.moon.presentation.splash.SplashActivity
+import kotlinx.coroutines.launch
 
 fun Context.dpToPx(value: Float): Float {
   return TypedValue.applyDimension(
@@ -87,6 +90,7 @@ fun Context.logout(){
   ThirdPartyHelper.clearOpenSignal()
   MyApplication.instance.logoutCometChat()
   AppPreferences(MyApplication.instance).clearUser()
+	myApplication?.logOutAsync()
 }
 
 fun Context.loginPage(){
