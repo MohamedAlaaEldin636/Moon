@@ -53,6 +53,7 @@ interface PackagesServices {
 	@GET("v1/packages/my-package")
 	suspend fun getMyPackage(
 		@Query("type") type: String,
+		@Header("accept") accept: String = "application/json"
 	): BaseResponse<ResponsePackage?>
 
 	@GET("v1/profile")

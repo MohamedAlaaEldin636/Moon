@@ -183,7 +183,10 @@ open class BaseRemoteDataSource @Inject constructor(
 	    val causedBy1 = throwable.toStringOrEmpty().substringAfter("Caused by", "")
 	    val causedBy2 = throwable.cause.toStringOrEmpty().substringAfter("Caused by", "")
 	    //val msg = if ()
-      return Resource.Failure(FailureStatus.API_FAIL, 404, "${throwable.message}\n\n$causedBy1\n\n$causedBy2\n\n${throwable.message}"/*"API Failure ${throwable.message} $throwable"*//*context.getString(R.string.please_try_again_32332)*/)
+      return Resource.Failure(FailureStatus.API_FAIL, 404, "${throwable.message}\n\n$causedBy1\n\n$causedBy2\n\n" +
+	      "${(throwable as? HttpException)?.code().toStringOrEmpty().let { 
+					if (it.isEmpty()) it else "$it -> "
+	      }}${throwable.message}"/*"API Failure ${throwable.message} $throwable"*//*context.getString(R.string.please_try_again_32332)*/)
 //      when (throwable) {
 //        is HttpException -> {
 //          when {
