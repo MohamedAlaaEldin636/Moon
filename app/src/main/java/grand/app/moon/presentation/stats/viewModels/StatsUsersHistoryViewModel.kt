@@ -3,6 +3,7 @@ package grand.app.moon.presentation.stats.viewModels
 import android.app.Application
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
@@ -18,6 +19,8 @@ class StatsUsersHistoryViewModel @Inject constructor(
 	val repoShop: RepoShop,
 	val args: StatsUsersHistoryFragmentArgs,
 ) : AndroidViewModel(application) {
+
+	val showWholePageLoader = MutableLiveData(true)
 
 	val users = repoShop.getStatusUsersHistory(
 		args.type,
