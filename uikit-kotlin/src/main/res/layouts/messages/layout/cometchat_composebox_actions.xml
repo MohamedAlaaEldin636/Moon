@@ -35,8 +35,7 @@
     android:padding="16dp"
     android:text="@string/take_a_photo"
     android:textColor="@color/optionsColor"
-    android:textStyle="bold"
-    android:visibility="gone" />
+    android:textStyle="bold" />
 
   <TextView
     android:id="@+id/gallery_message"
