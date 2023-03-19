@@ -10,7 +10,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentSearchResultsBinding
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
-import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
 import grand.app.moon.helpers.paging.withDefaultHeaderOnlyAdapter
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.models.TypeSearchResult
@@ -33,7 +32,7 @@ class SearchResultsFragment : BaseFragment<FragmentSearchResultsBinding>() {
 		super.onViewCreated(view, savedInstanceState)
 
 		binding.recyclerView.setupWithRVItemCommonListUsage(
-			viewModel.adapterAdvertisements.withDefaultHeaderOnlyAdapter(),
+			viewModel.adapterAdvertisements,
 			false,
 			1
 		)
@@ -81,6 +80,27 @@ class SearchResultsFragment : BaseFragment<FragmentSearchResultsBinding>() {
 						viewModel.showEmptyForCategories.value = it
 					}
 				}
+
+				launch {
+					viewModel.adapterAdvertisements.showLoadingFlow.collectLatest {
+						viewModel.showLoadingForAds.value = it
+					}
+				}
+				launch {
+					viewModel.adapterStories.showLoadingFlow.collectLatest {
+						viewModel.showLoadingForStores.value = it
+					}
+				}
+				launch {
+					viewModel.adapterNicknames.showLoadingFlow.collectLatest {
+						viewModel.showLoadingForNicknames.value = it
+					}
+				}
+				launch {
+					viewModel.adapterCategories.showLoadingFlow.collectLatest {
+						viewModel.showLoadingForCategories.value = it
+					}
+				}
 			}
 		}
 
@@ -88,28 +108,28 @@ class SearchResultsFragment : BaseFragment<FragmentSearchResultsBinding>() {
 			when (it) {
 				null, TypeSearchResult.ADVERTISEMENT -> {
 					binding.recyclerView.setupWithRVItemCommonListUsage(
-						viewModel.adapterAdvertisements.withDefaultHeaderAndFooterAdapters(),
+						viewModel.adapterAdvertisements,
 						false,
 						1
 					)
 				}
 				TypeSearchResult.STORE -> {
 					binding.recyclerView.setupWithRVItemCommonListUsage(
-						viewModel.adapterStories.withDefaultHeaderAndFooterAdapters(),
+						viewModel.adapterStories,
 						false,
 						2
 					)
 				}
 				TypeSearchResult.NICKNAME -> {
 					binding.recyclerView.setupWithRVItemCommonListUsage(
-						viewModel.adapterNicknames.withDefaultHeaderAndFooterAdapters(),
+						viewModel.adapterNicknames,
 						false,
 						2
 					)
 				}
 				TypeSearchResult.CATEGORY -> {
 					binding.recyclerView.setupWithRVItemCommonListUsage(
-						viewModel.adapterCategories.withDefaultHeaderAndFooterAdapters(),
+						viewModel.adapterCategories,
 						false,
 						3
 					)

@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.FragmentFilterResults2Binding
 import grand.app.moon.extensions.setupWithRVItemCommonListUsage
-import grand.app.moon.helpers.paging.withDefaultHeaderAndFooterAdapters
+import grand.app.moon.helpers.paging.withDefaultFooterOnlyAdapter
 import grand.app.moon.presentation.base.BaseFragment
 import grand.app.moon.presentation.home.viewModels.FilterNavHomeGraphViewModel
 import grand.app.moon.presentation.home.viewModels.FilterResults2ViewModel
@@ -35,10 +35,18 @@ class FilterResults2Fragment : BaseFragment<FragmentFilterResults2Binding>() {
 		super.onViewCreated(view, savedInstanceState)
 
 		binding.recyclerView.setupWithRVItemCommonListUsage(
-			viewModel.adapter.withDefaultHeaderAndFooterAdapters(),
+			viewModel.adapter.withDefaultFooterOnlyAdapter(),
 			false,
 			2
 		)
+
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.adapter.showLoadingFlow.collectLatest {
+					viewModel.showWholePageLoader.value = it
+				}
+			}
+		}
 
 		viewLifecycleOwner.lifecycleScope.launch {
 			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

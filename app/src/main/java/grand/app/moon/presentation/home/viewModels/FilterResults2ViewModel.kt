@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
@@ -26,6 +27,8 @@ class FilterResults2ViewModel @Inject constructor(
 	val repoShop: RepoShop,
 	val userLocalUseCase: UserLocalUseCase,
 ) : AndroidViewModel(application) {
+
+	val showWholePageLoader = MutableLiveData(true)
 
 	val adapter = RVPagingItemCommonListUsage<ItemHomeRvAdvBinding, ItemAdvertisementInResponseHome>(
 		R.layout.item_home_rv_adv,
