@@ -10,6 +10,22 @@
   <!--
   /storage/emulated/0/Android/data/grand.app.moon/files/TrimmedVideo/trimmed_video_2023_1_2_15_51_21.mp4
   -->
+  <external-path
+    name="/storage/emulated/0"
+    path="." />
+  <external-files-path
+    name="external_files"
+    path="." />
+  <cache-path
+    name="cache"
+    path="." />
+  <external-cache-path
+    name="external_cache"
+    path="." />
+  <files-path
+    name="files"
+    path="." />
+
   <files-path
     name="/camera_photos"
     path="." />

@@ -310,5 +310,6 @@ dependencies {
   // Project Modules
   implementation(project(Config.Modules.prettyPopUp))
   implementation(project(":uikit-kotlin"))
+  //implementation(project(":uikit_kotlin_2"))
 
 }

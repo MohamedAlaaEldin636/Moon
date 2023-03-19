@@ -25,7 +25,7 @@ fun Context.startChatPage(v: View, user: User) {
   intent.putExtra(UIKitConstants.IntentStrings.NAME, user.name)
   intent.putExtra(UIKitConstants.IntentStrings.TYPE, CometChatConstants.RECEIVER_TYPE_USER)
   intent.putExtra(UIKitConstants.IntentStrings.LINK, user.link)
-  intent.putExtra(UIKitSettings.LANGUAGE_DATA, LanguagesHelper.getCurrentLanguage())
+  //intent.putExtra(UIKitSettings.LANGUAGE_DATA, LanguagesHelper.getCurrentLanguage())
 
   v.context.startActivity(intent)
 }
@@ -37,7 +37,7 @@ fun Context.startChatPage2(user: User) {
   intent.putExtra(UIKitConstants.IntentStrings.NAME, user.name)
   intent.putExtra(UIKitConstants.IntentStrings.TYPE, CometChatConstants.RECEIVER_TYPE_USER)
   intent.putExtra(UIKitConstants.IntentStrings.LINK, user.link)
-  intent.putExtra(UIKitSettings.LANGUAGE_DATA, LanguagesHelper.getCurrentLanguage())
+	//intent.putExtra(UIKitSettings.LANGUAGE_DATA, LanguagesHelper.getCurrentLanguage())
 
 	this.startActivity(intent)
 }
