@@ -45,7 +45,7 @@ class PickImagesOrVideoHandler(
 					SupportedMediaType.IMAGE -> add(Manifest.permission.READ_MEDIA_IMAGES)
 					SupportedMediaType.VIDEO -> add(Manifest.permission.READ_MEDIA_VIDEO)
 					SupportedMediaType.BOTH -> {
-						add(Manifest.permission.READ_MEDIA_VIDEO)
+						add(Manifest.permission.READ_MEDIA_IMAGES)
 						add(Manifest.permission.READ_MEDIA_VIDEO)
 					}
 				}
@@ -266,7 +266,7 @@ class PickImagesOrVideoHandler(
 
 	private fun pickGallery() {
 		when (supportedMediaType) {
-			SupportedMediaType.VIDEO -> pickVideoFromCamera()
+			SupportedMediaType.VIDEO -> pickVideoFromGallery()
 			SupportedMediaType.IMAGE -> pickImageFromGallery()
 			SupportedMediaType.BOTH -> {
 				val fragment = handler.weakRefHost.get() as? Fragment ?: return

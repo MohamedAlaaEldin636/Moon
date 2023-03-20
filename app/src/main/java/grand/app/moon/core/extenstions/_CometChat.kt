@@ -111,6 +111,11 @@ fun Context.loginCometChat(externalUserId: Int) {
         Log.d(TAG, "failed: ${p0?.message}")
       }
     })
+
+	UIKitSettings.sendVoiceNotes = true
+	UIKitSettings.sendFiles = true
+	UIKitSettings.sendPhotoVideos = true
+	//UIKitSettings.sendTypingIndicator
 }
 
 fun Context.logoutCometChat() {

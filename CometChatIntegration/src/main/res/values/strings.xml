@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="you_didn_t_accept_permission">You didn\'t Accept Permission</string>
+  <string name="ok">OK</string>
+  <string name="this_app_need_allow_location">To use this feature you must accept the Permission</string>
+  <string name="change_permission_in_settings_of_device">Change the Permission in the device Settings</string>
+  <string name="allow_location_permission">Allow Permission</string>
+  <string name="no_app_can_handle_this_action">No App can handle this Action</string>
+  <string name="max_video_hint_3_min">Video max limit is 3 minutes</string>
+  <string name="image">Image</string>
+  <string name="camera">Camera</string>
+  <string name="gallery">Gallery</string>
+  <string name="pick_image">Pick Image</string>
+  <string name="video">Video</string>
+</resources>

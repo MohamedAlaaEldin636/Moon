@@ -33,6 +33,7 @@
     android:foreground="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:padding="16dp"
+    android:visibility="gone"
     android:text="@string/take_a_photo"
     android:textColor="@color/optionsColor"
     android:textStyle="bold" />

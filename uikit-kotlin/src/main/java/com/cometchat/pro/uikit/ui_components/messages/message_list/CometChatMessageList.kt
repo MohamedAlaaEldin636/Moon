@@ -95,6 +95,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
+import ma.ya.cometchatintegration.helperClasses.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -233,10 +234,25 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
 
   private var ivBackArrow: ImageView? = null
 
-	/*var gettingImagesOrVideoHandler: PickImagesOrVideoHandler? = null
-		private set*/
+	private var handlerGetImageFromCamera: PickImagesOrVideoHandler? = null
+	private var handlerGetImageFromGallery: PickImagesOrVideoHandler? = null
+	private var handlerGetVideoFromCamera: PickImagesOrVideoHandler? = null
+	private var handlerGetVideoFromGallery: PickImagesOrVideoHandler? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
+	  handlerGetImageFromCamera = createPickImagesOrVideoHandlerForSingleImageFromCamera { uri ->
+			// todo
+	  }
+	  handlerGetImageFromGallery = createPickImagesOrVideoHandlerForSingleImageFromGallery { uri ->
+			// todo
+	  }
+	  handlerGetVideoFromCamera = createPickImagesOrVideoHandlerForVideoFromCamera { uri ->
+			// todo
+	  }
+	  handlerGetVideoFromGallery = createPickImagesOrVideoHandlerForVideoFromGallery { uri ->
+			// todo
+	  }
+
     super.onCreate(savedInstanceState)
     handleArguments()
     if (activity != null) fontUtils = FontUtils.getInstance(activity)
