@@ -110,6 +110,7 @@ object RetrofitModule {
       request.addHeader("language", appPreferences.context.getCurrentLangFromSharedPrefs())
       request.addHeader("platform", "1")
       request.addHeader("accept", "application/json")
+      //request.addHeader("database", "test")
       request.addHeader("device", appPreferences.context.getDeviceIdWithoutPermission())
       //request.addHeader("Accept", "application/json")
 	    MyLogger.e("HttpLoggingInterceptor -> device -> ${appPreferences.context.getDeviceIdWithoutPermission()}")

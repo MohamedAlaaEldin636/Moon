@@ -264,6 +264,95 @@
 
           android:text="@={viewModel.websiteLink}"/>
 
+        <!--
+        <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/flBox"
+        android:layout_width="match_parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/compose_box"
+        android:layout_toEndOf="@id/ivArrow"
+        android:layout_toStartOf="@+id/boxEndLayout"
+        android:layout_height="wrap_content">
+
+      <com.cometchat.pro.uikit.ui_components.shared.cometchatComposeBox.CometChatEditText
+        android:id="@+id/etComposeBox"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:background="@android:color/transparent"
+        android:gravity="center|start"
+        android:hint="@string/message"
+        android:imeOptions="actionSend"
+        android:inputType="textMultiLine"
+        android:maxLines="3"
+        android:padding="12dp"
+        android:paddingStart="16dp"
+        android:singleLine="false"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/recordImageView"/>
+
+      <ImageView
+        android:id="@+id/recordImageView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/ic_baseline_keyboard_voice_24"
+
+        android:layout_marginEnd="6dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+        -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+
+          android:visibility="gone"
+
+          android:layout_marginTop="16dp">
+
+          <com.hbb20.CountryCodePicker
+            android:id="@+id/countryCodePickerForAdsPhone"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center"
+            android:gravity="center"
+
+            android:layoutDirection="ltr"
+
+            app:ccpDialog_backgroundColor="@color/colorWhite"
+            app:ccpDialog_fastScroller_bubbleColor="@color/colorPrimary"
+            app:ccpDialog_searchEditTextTint="@color/colorWhite"
+            app:ccpDialog_textColor="@color/colorPrimary"
+            app:ccpDialog_showTitle="false"
+            app:ccpDialog_rippleEnable="true"
+
+            app:ccp_textSize="@dimen/text_size14"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_areaCodeDetectedCountry="true"
+            app:ccp_autoDetectLanguage="true"
+            app:ccp_countryAutoDetectionPref="SIM_NETWORK_LOCALE"
+            app:ccp_arrowColor="@color/colorPrimary"
+            app:ccp_contentColor="@color/colorPrimary"
+            app:ccp_useDummyEmojiForPreview="true"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <EditText
           style="@style/EditTextForCreateShop"
 

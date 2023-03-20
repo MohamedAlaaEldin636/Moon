@@ -59,51 +59,31 @@
     android:padding="8dp"
     android:src="@drawable/ic_add_circle_filled" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/flBox"
-        android:layout_width="match_parent"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/compose_box"
-        android:layout_toEndOf="@id/ivArrow"
-        android:layout_toStartOf="@+id/boxEndLayout"
-        android:layout_height="wrap_content">
+  <RelativeLayout
+    android:id="@+id/flBox"
+    android:layout_width="match_parent"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/compose_box"
+    android:layout_toEndOf="@id/ivArrow"
+    android:layout_toStartOf="@+id/boxEndLayout"
+    android:layout_height="wrap_content">
 
-      <com.cometchat.pro.uikit.ui_components.shared.cometchatComposeBox.CometChatEditText
-        android:id="@+id/etComposeBox"
+    <com.cometchat.pro.uikit.ui_components.shared.cometchatComposeBox.CometChatEditText
+      android:id="@+id/etComposeBox"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
 
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-
-        android:background="@android:color/transparent"
-        android:gravity="center|start"
-        android:hint="@string/message"
-        android:imeOptions="actionSend"
-        android:inputType="textMultiLine"
-        android:maxLines="3"
-        android:padding="12dp"
-        android:paddingStart="16dp"
-        android:singleLine="false"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/recordImageView"/>
-
-      <ImageView
-        android:id="@+id/recordImageView"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:src="@drawable/ic_baseline_keyboard_voice_24"
-
-        android:layout_marginEnd="6dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+      android:background="@android:color/transparent"
+      android:gravity="center|start"
+      android:hint="@string/message"
+      android:imeOptions="actionSend"
+      android:inputType="textMultiLine"
+      android:maxLines="3"
+      android:padding="12dp"
+      android:paddingStart="16dp"
+      android:singleLine="false" />
+  </RelativeLayout>
     <RelativeLayout
         android:visibility="gone"
         android:layout_alignBottom="@+id/boxEndLayout"

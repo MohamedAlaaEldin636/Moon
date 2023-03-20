@@ -137,6 +137,9 @@ open class BaseRemoteDataSource @Inject constructor(
           return Resource.Success(apiResponse)
         }
         401 -> {
+	        MyApplication.instance.logout()
+	        MyApplication.instance.loginPage()
+
           return Resource.Failure(
             FailureStatus.EMPTY,
             (apiResponse as BaseResponse<*>).code,
@@ -183,10 +186,13 @@ open class BaseRemoteDataSource @Inject constructor(
 	    val causedBy1 = throwable.toStringOrEmpty().substringAfter("Caused by", "")
 	    val causedBy2 = throwable.cause.toStringOrEmpty().substringAfter("Caused by", "")
 	    //val msg = if ()
-      return Resource.Failure(FailureStatus.API_FAIL, 404, "${throwable.message}\n\n$causedBy1\n\n$causedBy2\n\n" +
-	      "${(throwable as? HttpException)?.code().toStringOrEmpty().let { 
-					if (it.isEmpty()) it else "$it -> "
-	      }}${throwable.message}"/*"API Failure ${throwable.message} $throwable"*//*context.getString(R.string.please_try_again_32332)*/)
+	    // val msgggg -> /*"API Failure ${throwable.message} $throwable"*//*context.getString(R.string.please_try_again_32332)*/
+	    val msg = throwable.message
+	    val msgDetailed = "${throwable.message}\n\n$causedBy1\n\n$causedBy2\n\n" +
+		    "${(throwable as? HttpException)?.code().toStringOrEmpty().let {
+			    if (it.isEmpty()) it else "$it -> "
+		    }}${throwable.message}"
+      return Resource.Failure(FailureStatus.API_FAIL, 404, msg)
 //      when (throwable) {
 //        is HttpException -> {
 //          when {
@@ -299,6 +305,9 @@ open class BaseRemoteDataSource @Inject constructor(
             MAResult.Failure.Status.ACTIVATION_NOT_VERIFIED
         }*/
         401 -> {
+	        MyApplication.instance.logout()
+	        MyApplication.instance.loginPage()
+
           MAResult.Failure.Status.ERROR
         }
         in 500 until 600 -> {
@@ -315,6 +324,10 @@ open class BaseRemoteDataSource @Inject constructor(
 
       when (throwable) {
         is HttpException -> {
+	        if (throwable.code() == 401) {
+		        MyApplication.instance.logout()
+		        MyApplication.instance.loginPage()
+	        }
 
           val errorStatus = when (throwable.code()) {
             in 400 until 500 -> MAResult.Failure.Status.ERROR
