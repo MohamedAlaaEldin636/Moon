@@ -50,6 +50,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.provider.Settings
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
@@ -83,7 +84,7 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
   private var recordTime: Chronometer? = null
   var etComposeBox: CometChatEditText? = null
   private var composeBox: RelativeLayout? = null
-  private var flBox: RelativeLayout? = null
+  private var flBox: ConstraintLayout? = null
   private var voiceMessageLayout: RelativeLayout? = null
   private var rlActionContainer: RelativeLayout? = null
   private val hasFocus = false
