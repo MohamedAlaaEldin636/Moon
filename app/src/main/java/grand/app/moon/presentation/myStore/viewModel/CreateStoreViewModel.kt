@@ -257,10 +257,10 @@ class CreateStoreViewModel @Inject constructor(
 		}
 
 		val adsPhone = if (showNotActivatedAdsPhone.value == true) null else {
-			fragment.binding.countryCodePickerForAdsPhone.fullNumber.trimAllWhitespaces().orNullIfNullOrEmpty()
+			fragment.binding.countryCodePickerForAdsPhone.fullNumberWithPlus.trimAllWhitespaces().orNullIfNullOrEmpty()
 		}
 		val whatsAppPhone = if (showNotActivatedWhatsAppPhone.value == true) null else {
-			fragment.binding.countryCodePickerForWhatsAppPhone.fullNumber.trimAllWhitespaces().orNullIfNullOrEmpty()
+			fragment.binding.countryCodePickerForWhatsAppPhone.fullNumberWithPlus.trimAllWhitespaces().orNullIfNullOrEmpty()
 		}
 
 		fragment.handleRetryAbleActionCancellableNullable(
