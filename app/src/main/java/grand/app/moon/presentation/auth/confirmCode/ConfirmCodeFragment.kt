@@ -32,6 +32,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
 
+	companion object {
+		const val KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED = "KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED"
+		const val STRANGE_TYPE = "verifyverify"
+		const val ACTUAL_TYPE = "verify"
+	}
+
   private val viewModel: ConfirmViewModel by viewModels()
 
   lateinit var smsBroadcastReceiver: SMSBroadcastReceiver
@@ -91,11 +97,6 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
   override
   fun getLayoutId() = R.layout.fragment_confirm_code
 
-	companion object {
-		const val STRANGE_TYPE = "verifyverify"
-		const val ACTUAL_TYPE = "verify"
-	}
-
   override
   fun setBindingVariables() {
     binding.viewmodel = viewModel
@@ -131,7 +132,7 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           is Resource.Success -> {
             hideLoading()
 	          if (viewModel.usedStrangeType) {
-							setFragmentResultUsingJson(CreateStoreFragment.KEY_FRAGMENT_RESULT_ADS_PHONE_ACTIVATION, true)
+							setFragmentResultUsingJson(KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED, true)
 		          findNavController().navigateUp()
 	          }else {
 		          if(viewModel.profileRequest.country_code.isEmpty()) {//usual login

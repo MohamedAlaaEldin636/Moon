@@ -29,11 +29,6 @@ import grand.app.moon.presentation.myStore.viewModel.CreateStoreViewModel
 @AndroidEntryPoint
 class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), PermissionsHandler.Listener {
 
-	companion object {
-		const val KEY_FRAGMENT_RESULT_ADS_PHONE_ACTIVATION = "KEY_FRAGMENT_RESULT_ADS_PHONE_ACTIVATION"
-		const val KEY_FRAGMENT_RESULT_WHATSAPP_PHONE_ACTIVATION = "KEY_FRAGMENT_RESULT_WHATSAPP_PHONE_ACTIVATION"
-	}
-
 	private val viewModel by viewModels<CreateStoreViewModel>()
 
 	var permissionsHandlerForProfileImage: PermissionsHandler? = null

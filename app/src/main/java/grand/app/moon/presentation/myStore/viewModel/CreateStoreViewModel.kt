@@ -176,7 +176,7 @@ class CreateStoreViewModel @Inject constructor(
 				repoShop.sendCode(adsCountryCode, adsPhone)
 			}
 		) {
-			fragment.setFragmentResultListenerUsingJson<Boolean>(CreateStoreFragment.KEY_FRAGMENT_RESULT_ADS_PHONE_ACTIVATION) {
+			fragment.setFragmentResultListenerUsingJson<Boolean>(ConfirmCodeFragment.KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED) {
 				if (it) {
 					activatedAdvertisingPhone.value = advertisingPhone.value
 				}
@@ -190,9 +190,35 @@ class CreateStoreViewModel @Inject constructor(
 		}
 	}
 	fun activateWhatsAppPhone(view: View) {
+		val fragment = view.findFragmentOrNull<CreateStoreFragment>() ?: return
 
+		if (showNotActivatedWhatsAppPhone.value != true) {
+			return
+		}else if (showValidPhoneNumForWhatsAppPhone.value != true) {
+			return fragment.showError(fragment.getString(R.string.whatsapp_phone_num_is_invalid))
+		}
 
-		// todo ...
+		val whatsAppCountryCode = fragment.binding.countryCodePickerForWhatsAppPhone.selectedCountryCodeWithPlus.orEmpty()
+		val whatsAppPhone = fragment.binding.countryCodePickerForWhatsAppPhone.fullNumberWithPlus.orEmpty()
+			.removePrefix(whatsAppCountryCode)
+
+		fragment.handleRetryAbleActionCancellableNullable(
+			action = {
+				repoShop.sendCode(whatsAppCountryCode, whatsAppPhone)
+			}
+		) {
+			fragment.setFragmentResultListenerUsingJson<Boolean>(ConfirmCodeFragment.KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED) {
+				if (it) {
+					activatedWhatsAppPhone.value = this.whatsAppPhone.value
+				}
+			}
+
+			view.findNavController().navigateDeepLinkWithOptions(
+				"confirmCode",
+				"grand.app.moon.confirm.code",
+				paths = arrayOf(whatsAppCountryCode, whatsAppPhone, ConfirmCodeFragment.STRANGE_TYPE)
+			)
+		}
 	}
 
 	fun createOrUpdateStore(view: View) {
