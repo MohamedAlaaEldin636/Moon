@@ -69,6 +69,18 @@ class AdvClientsReviewsFragment : BaseFragment<FragmentAdvClientsReviewsBinding>
 			}
 		}
 
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.adapter.loadStateFlow.collectLatest {
+					viewModel.adapter.snapshot().firstOrNull()?.also {
+						if (viewModel.response.value != it.parentResponse) {
+							viewModel.response.value = it.parentResponse
+						}
+					}
+				}
+			}
+		}
+
 		observeBackStackEntrySavedStateHandleLiveDataViaGsonNotNull<Boolean> {
 			viewModel.adapter.refresh()
 

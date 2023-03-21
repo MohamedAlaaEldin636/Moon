@@ -30,7 +30,7 @@ class RateInAdvViewModel @Inject constructor(
 
 		val binding = fragment._binding ?: return
 
-		val rate = if (args.useRating) binding.ratingBar.progress / 20 else null
+		val rate = if (args.useRating) binding.ratingBar.progress/* / 20*/ else null
 
 		MyLogger.e("dasdasdasd ${binding.ratingBar.progress} $rate ${args.useRating}")
 

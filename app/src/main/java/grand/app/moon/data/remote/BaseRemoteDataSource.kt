@@ -127,7 +127,6 @@ open class BaseRemoteDataSource @Inject constructor(
 	    MyLogger.e("safeApiCall safeApiCall -> ch 4 -> $json")
       Log.d(TAG, "safeApiCall: $json")
 
-//      println(json)
 	    MyLogger.e("safeApiCall safeApiCall -> ch 5 -> ${(apiResponse as? BaseResponse<*>)?.code}")
       when ((apiResponse as BaseResponse<*>).code) {
         403 -> {
@@ -185,13 +184,13 @@ open class BaseRemoteDataSource @Inject constructor(
 	    MyLogger.e("dioasjdoasijd API Failure ${throwable.message} $throwable")
 	    val causedBy1 = throwable.toStringOrEmpty().substringAfter("Caused by", "")
 	    val causedBy2 = throwable.cause.toStringOrEmpty().substringAfter("Caused by", "")
-	    //val msg = if ()
-	    // val msgggg -> /*"API Failure ${throwable.message} $throwable"*//*context.getString(R.string.please_try_again_32332)*/
-	    val msg = throwable.message
+	    val msg = throwable.localizedMessage ?: throwable.message
 	    val msgDetailed = "${throwable.message}\n\n$causedBy1\n\n$causedBy2\n\n" +
 		    "${(throwable as? HttpException)?.code().toStringOrEmpty().let {
 			    if (it.isEmpty()) it else "$it -> "
-		    }}${throwable.message}"
+		    }}${throwable.message}\n\n${throwable.localizedMessage}"
+	    MyLogger.e("safeApiCall safeApiCall -> ch 8 $msgDetailed")
+
       return Resource.Failure(FailureStatus.API_FAIL, 404, msg)
 //      when (throwable) {
 //        is HttpException -> {
@@ -335,13 +334,13 @@ open class BaseRemoteDataSource @Inject constructor(
             else -> MAResult.Failure.Status.OTHER
           }
 
-          MAResult.Failure(errorStatus, throwable.code(), throwable.message())
+          MAResult.Failure(errorStatus, throwable.code(), throwable.localizedMessage ?: throwable.message())
         }
         is UnknownHostException, is SocketException, is ConnectException -> {
-        MAResult.Failure(MAResult.Failure.Status.NO_INTERNET, message = throwable.message)
+        MAResult.Failure(MAResult.Failure.Status.NO_INTERNET, message = throwable.localizedMessage ?: throwable.message)
       }
         else -> {
-          MAResult.Failure(MAResult.Failure.Status.OTHER, message = throwable.message)
+          MAResult.Failure(MAResult.Failure.Status.OTHER, message = throwable.localizedMessage ?: throwable.message)
         }
       }
     }

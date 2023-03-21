@@ -11,7 +11,7 @@ data class ResponseReviewsWithStats(
 	@SerializedName("1_star_count") var countStar1: Int?,
 	@SerializedName("average_rate") var averageRate: Float?,
 	@SerializedName("rate_count") var rateCount: Int?,
-	var reviews: MABasePaging<ResponseClientReviews>
+	var reviews: MABasePaging<ResponseClientReviews>?
 )
 
 /**
@@ -22,6 +22,7 @@ data class ResponseClientReviews(
 	var review: String?,
 	var date: String?,
 	var user: ItemUserInClientReviews?,
+	var parentResponse: ResponseReviewsWithStats?,
 )
 
 data class ItemUserInClientReviews(

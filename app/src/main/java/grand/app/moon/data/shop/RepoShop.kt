@@ -216,7 +216,15 @@ class RepoShop @Inject constructor(
 	) = BasePaging.createFlowViaPager {
 		remoteDataSource.getShopClientsReviews(query, from, to, it).mapImmediate { maBaseResponse ->
 			maBaseResponse.map { response ->
-				response?.reviews
+				response?.reviews?.copy(
+					data = response.reviews?.data?.map { clientReview ->
+						clientReview.copy(
+							parentResponse = response.copy(
+								reviews = null
+							)
+						)
+					}
+				)
 			}
 		}
 	}
@@ -301,7 +309,15 @@ class RepoShop @Inject constructor(
 	fun getReviewsForAdvPaging(advertisementId: Int) = BasePaging.createFlowViaPager {
 		remoteDataSource.getReviewsForAdv(advertisementId, it).mapImmediate { maBaseResponse ->
 			maBaseResponse.map { response ->
-				response?.reviews
+				response?.reviews?.copy(
+					data = response.reviews?.data?.map { clientReview ->
+						clientReview.copy(
+							parentResponse = response.copy(
+								reviews = null
+							)
+						)
+					}
+				)
 			}
 		}
 	}
@@ -309,7 +325,15 @@ class RepoShop @Inject constructor(
 	fun getReviewsForStorePaging(storeId: Int) = BasePaging.createFlowViaPager {
 		remoteDataSource.getReviewsForStore(storeId, it).mapImmediate { maBaseResponse ->
 			maBaseResponse.map { response ->
-				response?.reviews
+				response?.reviews?.copy(
+					data = response.reviews?.data?.map { clientReview ->
+						clientReview.copy(
+							parentResponse = response.copy(
+								reviews = null
+							)
+						)
+					}
+				)
 			}
 		}
 	}
