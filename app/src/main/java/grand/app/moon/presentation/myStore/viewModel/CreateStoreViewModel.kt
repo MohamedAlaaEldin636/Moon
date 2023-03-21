@@ -168,7 +168,8 @@ class CreateStoreViewModel @Inject constructor(
 		}
 
 		val adsCountryCode = fragment.binding.countryCodePickerForAdsPhone.selectedCountryCodeWithPlus.orEmpty()
-		val adsPhone = advertisingPhone.value.orEmpty()
+		val adsPhone = fragment.binding.countryCodePickerForAdsPhone.fullNumberWithPlus.orEmpty()
+			.removePrefix(adsCountryCode)
 
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
