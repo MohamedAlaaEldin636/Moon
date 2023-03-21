@@ -23,11 +23,9 @@ import kotlinx.coroutines.flow.collect
 import com.onesignal.OneSignal
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.explore.entity.Explore
-import grand.app.moon.extensions.MyLogger
-import grand.app.moon.extensions.navigateSafely
-import grand.app.moon.extensions.orZero
-import grand.app.moon.extensions.toJsonInlinedOrNull
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.*
+import grand.app.moon.presentation.myStore.CreateStoreFragment
 import kotlinx.coroutines.launch
 
 
@@ -93,15 +91,24 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
   override
   fun getLayoutId() = R.layout.fragment_confirm_code
 
+	companion object {
+		const val STRANGE_TYPE = "verifyverify"
+		const val ACTUAL_TYPE = "verify"
+	}
+
   override
   fun setBindingVariables() {
     binding.viewmodel = viewModel
     if(arguments != null) {
+			if (arguments?.getString("type") == STRANGE_TYPE) {
+				viewModel.usedStrangeType = true
+				arguments?.putString("type", ACTUAL_TYPE)
+			}
       if(requireArguments().containsKey("country_code")) {
         val args: ConfirmCodeFragmentArgs by navArgs()
         viewModel.request.country_code = args.countryCode
         viewModel.request.phone = args.phone
-        viewModel.request.type = args.type
+        viewModel.request.type = if (args.type == STRANGE_TYPE) ACTUAL_TYPE else args.type
       }else if(requireArguments().containsKey("profile")){
         val gson = GsonBuilder().create()
         viewModel.profileRequest = gson.fromJson<UpdateProfileRequest>(requireArguments().getString("profile"), object :
@@ -123,23 +130,28 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-            if(viewModel.profileRequest.country_code.isEmpty()) {//usual login
-	            if (it.value?.data?.name.isNullOrEmpty()) {
-								findNavController().navigateSafely(
-									ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToDestCompleteLogin(
-										it.value.data.toJsonInlinedOrNull().orEmpty(),
-										arguments?.getInt("flagResId", 0).orZero()
-									)
-								)
-							}else viewModel.viewModelScope.launch {
-		            viewModel.userLocalUseCase(it.value.data)
+	          if (viewModel.usedStrangeType) {
+							setFragmentResultUsingJson(CreateStoreFragment.KEY_FRAGMENT_RESULT_ADS_PHONE_ACTIVATION, true)
+		          findNavController().navigateUp()
+	          }else {
+		          if(viewModel.profileRequest.country_code.isEmpty()) {//usual login
+			          if (it.value?.data?.name.isNullOrEmpty()) {
+				          findNavController().navigateSafely(
+					          ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToDestCompleteLogin(
+						          it.value.data.toJsonInlinedOrNull().orEmpty(),
+						          arguments?.getInt("flagResId", 0).orZero()
+					          )
+				          )
+			          }else viewModel.viewModelScope.launch {
+				          viewModel.userLocalUseCase(it.value.data)
 
-								makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
-							}
-            } else{
-              //update profile
-              viewModel.updateProfile()
-            }
+				          makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
+			          }
+		          } else{
+			          //update profile
+			          viewModel.updateProfile()
+		          }
+	          }
           }
           is Resource.Failure -> {
             hideLoading()

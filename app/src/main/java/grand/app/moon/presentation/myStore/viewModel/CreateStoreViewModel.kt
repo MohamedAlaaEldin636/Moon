@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
@@ -17,6 +18,8 @@ import grand.app.moon.extensions.compose.GlideImageViaXmlModel
 import grand.app.moon.presentation.base.extensions.showError
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.core.extenstions.showPopup
+import grand.app.moon.data.shop.RepoShop
+import grand.app.moon.presentation.auth.confirmCode.ConfirmCodeFragment
 import grand.app.moon.presentation.myAds.addAdvFinalPage.CameraUtils
 import grand.app.moon.presentation.myAds.model.LocationData
 import grand.app.moon.presentation.myStore.CreateStoreFragment
@@ -29,7 +32,11 @@ class CreateStoreViewModel @Inject constructor(
 	application: Application,
 	val userLocalUseCase: UserLocalUseCase,
 	val useCaseShop: RepositoryPackages,
+	val repoShop: RepoShop,
 ) : AndroidViewModel(application) {
+
+	val showValidPhoneNumForAdsPhone = MutableLiveData(false)
+	val showValidPhoneNumForWhatsAppPhone = MutableLiveData(false)
 
 	val response = MutableLiveData<ResponseMyStoreDetails>()
 
@@ -86,11 +93,19 @@ class CreateStoreViewModel @Inject constructor(
 	val advertisingPhone = response.mapNullableToMutableLiveData {
 		it?.adsPhone.orEmpty()
 	}
+	val activatedAdvertisingPhone = MutableLiveData("")
 	val whatsAppPhone = response.mapNullableToMutableLiveData {
 		it?.whatsappPhone.orEmpty()
 	}
+	val activatedWhatsAppPhone = MutableLiveData("")
 	val taxNumber = response.mapNullableToMutableLiveData {
 		it?.taxNumber.orEmpty()
+	}
+	val showNotActivatedAdsPhone = switchMapMultiple2(advertisingPhone, activatedAdvertisingPhone) {
+		(advertisingPhone.value.isNullOrEmpty() || advertisingPhone.value != activatedAdvertisingPhone.value)
+	}
+	val showNotActivatedWhatsAppPhone = switchMapMultiple2(whatsAppPhone, activatedWhatsAppPhone) {
+		(whatsAppPhone.value.isNullOrEmpty() || whatsAppPhone.value != activatedWhatsAppPhone.value)
 	}
 
 	fun changeLogoImage(view: View) {
@@ -143,6 +158,42 @@ class CreateStoreViewModel @Inject constructor(
 		)
 	}
 
+	fun activateAdsPhone(view: View) {
+		val fragment = view.findFragmentOrNull<CreateStoreFragment>() ?: return
+
+		if (showNotActivatedAdsPhone.value != true) {
+			return
+		}else if (showValidPhoneNumForAdsPhone.value != true) {
+			return fragment.showError(fragment.getString(R.string.contact_phone_num_is_invalid))
+		}
+
+		val adsCountryCode = fragment.binding.countryCodePickerForAdsPhone.selectedCountryCodeWithPlus.orEmpty()
+		val adsPhone = advertisingPhone.value.orEmpty()
+
+		fragment.handleRetryAbleActionCancellableNullable(
+			action = {
+				repoShop.sendCode(adsCountryCode, adsPhone)
+			}
+		) {
+			fragment.setFragmentResultListenerUsingJson<Boolean>(CreateStoreFragment.KEY_FRAGMENT_RESULT_ADS_PHONE_ACTIVATION) {
+				if (it) {
+					activatedAdvertisingPhone.value = advertisingPhone.value
+				}
+			}
+
+			view.findNavController().navigateDeepLinkWithOptions(
+				"confirmCode",
+				"grand.app.moon.confirm.code",
+				paths = arrayOf(adsCountryCode, adsPhone, ConfirmCodeFragment.STRANGE_TYPE)
+			)
+		}
+	}
+	fun activateWhatsAppPhone(view: View) {
+
+
+		// todo ...
+	}
+
 	fun createOrUpdateStore(view: View) {
 		val fragment = view.findFragmentOrNull<CreateStoreFragment>() ?: return
 		val context = fragment.context ?: return
@@ -158,6 +209,31 @@ class CreateStoreViewModel @Inject constructor(
 		val regex = Regex("[a-zA-Z\\s0-9&._-]+")
 		if (regex.matches(userName.value.orEmpty()).not()) {
 			return fragment.showError(fragment.getString(R.string.nickname_must_be_in_english_characters))
+		}
+
+		if (showValidPhoneNumForAdsPhone.value.orFalse().not()
+			&& advertisingPhone.value.isNullOrEmpty().not()) {
+			return fragment.showError(fragment.getString(R.string.contact_phone_num_is_invalid))
+		}
+		if (showValidPhoneNumForWhatsAppPhone.value.orFalse().not()
+			&& whatsAppPhone.value.isNullOrEmpty().not()) {
+			return fragment.showError(fragment.getString(R.string.whatsapp_phone_num_is_invalid))
+		}
+
+		if (advertisingPhone.value.isNullOrEmpty().not()
+			&& activatedAdvertisingPhone.value != advertisingPhone.value) {
+			return fragment.showError(fragment.getString(R.string.contact_phone_num_is_not_activated))
+		}
+		if (whatsAppPhone.value.isNullOrEmpty().not()
+			&& activatedWhatsAppPhone.value != whatsAppPhone.value) {
+			return fragment.showError(fragment.getString(R.string.whatsapp_phone_num_is_not_activated))
+		}
+
+		val adsPhone = if (showNotActivatedAdsPhone.value == true) null else {
+			fragment.binding.countryCodePickerForAdsPhone.fullNumber.trimAllWhitespaces().orNullIfNullOrEmpty()
+		}
+		val whatsAppPhone = if (showNotActivatedWhatsAppPhone.value == true) null else {
+			fragment.binding.countryCodePickerForWhatsAppPhone.fullNumber.trimAllWhitespaces().orNullIfNullOrEmpty()
 		}
 
 		fragment.handleRetryAbleActionCancellableNullable(
@@ -178,8 +254,8 @@ class CreateStoreViewModel @Inject constructor(
 					advertisingLink.value.orEmpty(),
 					email.value.orEmpty(),
 					websiteLink.value.orEmpty(),
-					advertisingPhone.value.orEmpty(),
-					whatsAppPhone.value.orEmpty(),
+					adsPhone,
+					whatsAppPhone,
 					taxNumber.value.orEmpty(),
 				)
 			}

@@ -6,7 +6,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +28,11 @@ import grand.app.moon.presentation.myStore.viewModel.CreateStoreViewModel
 
 @AndroidEntryPoint
 class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), PermissionsHandler.Listener {
+
+	companion object {
+		const val KEY_FRAGMENT_RESULT_ADS_PHONE_ACTIVATION = "KEY_FRAGMENT_RESULT_ADS_PHONE_ACTIVATION"
+		const val KEY_FRAGMENT_RESULT_WHATSAPP_PHONE_ACTIVATION = "KEY_FRAGMENT_RESULT_WHATSAPP_PHONE_ACTIVATION"
+	}
 
 	private val viewModel by viewModels<CreateStoreViewModel>()
 
@@ -105,6 +112,17 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 		}
 	}
 
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		return super.onCreateView(inflater, container, savedInstanceState)?.also {
+			binding.countryCodePickerForAdsPhone.registerCarrierNumberEditText(binding.adsPhoneEditText)
+			binding.countryCodePickerForWhatsAppPhone.registerCarrierNumberEditText(binding.whatsAppPhoneEditText)
+		}
+	}
+
 	override fun getLayoutId(): Int = R.layout.fragment_create_store
 
 	override fun setBindingVariables() {
@@ -114,6 +132,13 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
+		viewModel.advertisingPhone.observe(viewLifecycleOwner) {
+			viewModel.showValidPhoneNumForAdsPhone.value = binding.countryCodePickerForAdsPhone.isValidFullNumber
+		}
+		viewModel.whatsAppPhone.observe(viewLifecycleOwner) {
+			viewModel.showValidPhoneNumForWhatsAppPhone.value = binding.countryCodePickerForWhatsAppPhone.isValidFullNumber
+		}
+
 		findNavController().currentBackStackEntry?.savedStateHandle?.actOnGetIfNotInitialValueOrGetLiveData(
 			LocationSelectionFragment.KEY_FRAGMENT_RESULT_LOCATION_DATA_AS_JSON,
 			"",
@@ -122,7 +147,6 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 		) {
 			viewModel.locationData.value = it.fromJsonInlinedOrNull<LocationData>()
 		}
-
 	}
 
 	override fun onAllPermissionsAccepted() {

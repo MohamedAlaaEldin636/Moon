@@ -65,7 +65,10 @@
 
       <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_confirm_header"
+        android:lineSpacingExtra="4dp"
         style="@style/mediumFont"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="16sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen36"
@@ -73,7 +76,6 @@
         android:layout_marginEnd="@dimen/dimen36"
         android:text="@string/enter_the_code_sent_to_your_phone"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

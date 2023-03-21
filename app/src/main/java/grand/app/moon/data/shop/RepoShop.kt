@@ -806,6 +806,8 @@ class RepoShop @Inject constructor(
 
 	suspend fun getExploreDetails(id: Int) = remoteDataSource.getExploreDetails(id)
 
+	suspend fun sendCode(countryCode: String, phone: String) = remoteDataSource.sendCode(countryCode, phone)
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

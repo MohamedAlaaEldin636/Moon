@@ -34,9 +34,13 @@ import javax.inject.Inject
 class ConfirmViewModel @Inject constructor(
   private val useCase: LogInUseCase,
   val userLocalUseCase: UserLocalUseCase,
-  private val verifyAccountUseCase: VerifyAccountUseCase) :
+  private val verifyAccountUseCase: VerifyAccountUseCase,
+) :
   BaseViewModel() {
-  val request = VerifyAccountRequest()
+
+	var usedStrangeType = false
+
+	val request = VerifyAccountRequest()
   private val _verifyResponse = MutableStateFlow<Resource<BaseResponse<User>>>(Resource.Default)
   val verifyResponse = _verifyResponse
 

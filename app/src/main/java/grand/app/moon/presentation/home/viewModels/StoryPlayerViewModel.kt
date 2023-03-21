@@ -130,7 +130,7 @@ class StoryPlayerViewModel @Inject constructor(
 		it?.name.orEmpty()
 	}
 
-	val storeDate = currentStoreWithStories.map {
+	val storeDate = currentStory.map {
 		it?.createdAt.orEmpty()
 	}
 

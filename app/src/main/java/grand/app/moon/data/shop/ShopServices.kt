@@ -495,4 +495,12 @@ interface ShopServices {
 		@Path("id") id: Int,
 	): BaseResponse<ItemHomeExplore?>
 
+	@FormUrlEncoded
+	@POST("v1/auth/send_code")
+	suspend fun sendCode(
+		@Field("country_code") countryCode: String,
+		@Field("phone") phone: String,
+		@Field("type") type: String = "verify",
+	): BaseResponse<Any?>
+
 }

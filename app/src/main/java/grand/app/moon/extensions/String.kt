@@ -18,6 +18,14 @@ fun String?.orStringNullIfNullOrEmpty(): String {
 	}
 }
 
+fun String?.orNullIfNullOrEmpty(): String? {
+	return if (isNullOrEmpty()) {
+		null
+	}else {
+		this
+	}
+}
+
 fun String?.ifNotNullNorEmpty(action: (String) -> Unit) {
 	if (!isNullOrEmpty()) {
 		action(this)

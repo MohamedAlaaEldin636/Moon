@@ -19,6 +19,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Field
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -830,6 +831,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 	}
 
 	suspend fun getExploreDetails(id: Int) = safeApiCall { apiService.getExploreDetails(id) }
+
+	suspend fun sendCode(countryCode: String, phone: String) = safeApiCall { apiService.sendCode(countryCode, phone) }
 
 	enum class TypeAdOrStoreInteraction(val apiValue: Int) {
 		CALL(6), WHATSAPP(7), CHAT(8)

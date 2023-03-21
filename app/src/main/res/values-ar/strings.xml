@@ -4,8 +4,8 @@
   <string name="app_name">SouqMoon | سوق مون</string>
   <string name="discover">إكتشف</string>
   <string name="confirm_resend">أعد إرسال الرمز</string>
-  <string name="confirm_header_text">رقم رمز التفعيل</string>
-  <string name="enter_the_code_sent_to_your_phone">أدخل الرمز المرسل إليك على رقم هاتفك لتفعيل حسابك</string>
+  <string name="confirm_header_text">رمز التفعيل</string>
+  <string name="enter_the_code_sent_to_your_phone">أدخل الرمز المرسل إليك على رقم الواتساب الخاص بك لتفعيل حسابك</string>
   <string name="email">بريد الالكتروني</string>
   <string name="reason_for_contact">السبب للاتصال</string>
   <string name="my_account">حسابي</string>
@@ -533,4 +533,11 @@
   <string name="am">صباحاً</string>
   <string name="pm">مساءً</string>
   <string name="please_try_again_32332">من فضلك حاول مرة اخرى</string>
+    <string name="activate">تفعيل</string>
+  <string name="activated">مفعل</string>
+  <string name="contact_phone_num_is_invalid">رقم هاتف الإتصال غير صحيح</string>
+  <string name="whatsapp_phone_num_is_invalid">رقم هاتف الواتساب غير صحيح</string>
+  <string name="contact_phone_num_is_not_activated">رقم هاتف الإتصال غير مفعل</string>
+  <string name="whatsapp_phone_num_is_not_activated">رقم هاتف الواتساب غير مفعل</string>
+  <string name="desc_of_log_in">يرجي التسجيل برقم جوال لديه واتساب حيث سيصل عليه كود التفعيل الخاص بك</string>
 </resources>
