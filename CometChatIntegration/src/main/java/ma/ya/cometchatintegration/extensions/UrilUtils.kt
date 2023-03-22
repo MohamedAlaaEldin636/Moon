@@ -5,6 +5,23 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import ma.ya.cometchatintegration.helperClasses.MyLogger
 
+/*
+Uri uri = Uri.parse(pathStr);
+MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+mmr.setDataSource(AppContext.getAppContext(),uri);
+String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+int millSecond = Integer.parseInt(durationStr);
+ */
+
+fun Uri.getLengthOfAudioInMs(context: Context): Long? {
+	return kotlin.runCatching {
+		val retriever = MediaMetadataRetriever()
+		retriever.setDataSource(context, this)
+		val time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+		time?.toLongOrNull()
+	}.getOrNull()
+}
+
 fun Uri.checkSizeAndLengthOfVideo(context: Context, maxDurationInSeconds: Int): Boolean {
 	MyLogger.e("deiwu -> pre")
 

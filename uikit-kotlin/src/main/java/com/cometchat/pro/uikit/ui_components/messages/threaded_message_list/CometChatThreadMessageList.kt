@@ -449,7 +449,7 @@ class CometChatThreadMessageList : Fragment(), View.OnClickListener, OnMessageLo
         composeBox?.hideWriteBoardOption(true)
         composeBox?.hideWhiteBoardOption(true)
 //        composeBox?.hideGroupCallOption(true)
-        composeBox?.hideRecordOption(true)
+        composeBox?.hideRecordOption(false/*true*/)
         composeBox?.hideSendButton(false)
 //        composeBox?.ivMic?.visibility = View.GONE
         FeatureRestriction.isOneOnOneChatEnabled(object : FeatureRestriction.OnSuccessListener{

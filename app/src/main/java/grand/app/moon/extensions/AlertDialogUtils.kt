@@ -133,6 +133,7 @@ fun <VDB : ViewDataBinding> showCustomDialog(
 	val dialog = Dialog(activity)
 	if (dialog.window != null) {
 		dialog.window?.setBackgroundDrawable(background)
+		//dialog.window?.setGravity()
 	}
 	val binding = DataBindingUtil.inflate<VDB>(
 		activity.layoutInflater, layoutRes, null, false

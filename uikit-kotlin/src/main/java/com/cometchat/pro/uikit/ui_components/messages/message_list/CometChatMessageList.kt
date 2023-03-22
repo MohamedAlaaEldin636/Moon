@@ -56,6 +56,8 @@ import com.cometchat.pro.exceptions.CometChatException
 import com.cometchat.pro.helpers.CometChatHelper
 import com.cometchat.pro.models.*
 import com.cometchat.pro.uikit.R
+import com.cometchat.pro.uikit.myOwnChanges.extensions.sendAudioMsg
+import com.cometchat.pro.uikit.myOwnChanges.helperClasses.GrantingRecordPermission
 import com.cometchat.pro.uikit.ui_components.groups.group_detail.CometChatGroupDetailActivity
 import com.cometchat.pro.uikit.ui_components.messages.extensions.ExtensionResponseListener
 import com.cometchat.pro.uikit.ui_components.messages.extensions.Extensions
@@ -95,7 +97,10 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
+import ma.ya.cometchatintegration.extensions.setFragmentResultListenerUsingJson
+import ma.ya.cometchatintegration.extensions.showDialogFragment
 import ma.ya.cometchatintegration.helperClasses.*
+import ma.ya.cometchatintegration.screens.RecordingDialogFragment
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -238,6 +243,24 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
 	private var handlerGetImageFromGallery: PickImagesOrVideoHandler? = null
 	private var handlerGetVideoFromCamera: PickImagesOrVideoHandler? = null
 	private var handlerGetVideoFromGallery: PickImagesOrVideoHandler? = null
+	private var handlerPermissionOfRecording: PermissionsHandler? = null
+
+	private val lll by lazy {
+		ListenerOfPermissionsHandlerWhichActOnlyIfAllGranted(
+			context
+		) {
+			MyLogger.e("sadhiasudh launching it 0")
+
+			setFragmentResultListenerUsingJson<String>(RecordingDialogFragment.KEY_FRAGMENT_RESULT_FILE_PATH) {
+				if (it.isNotEmpty()) {
+					composeBox?.sendAudioMsg(it)
+				}
+			}
+
+			MyLogger.e("sadhiasudh launching it 1")
+			showDialogFragment<RecordingDialogFragment>()
+		}
+	}
 
   override fun onCreate(savedInstanceState: Bundle?) {
 	  handlerGetImageFromCamera = createPickImagesOrVideoHandlerForSingleImageFromCamera { uri ->
@@ -252,8 +275,25 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
 	  handlerGetVideoFromGallery = createPickImagesOrVideoHandlerForVideoFromGallery { uri ->
 			// todo
 	  }
+	  @Suppress("RemoveRedundantQualifierName")
+	  handlerPermissionOfRecording = createPermissionHandlerAndActOnlyIfAllGranted(
+		  Manifest.permission.RECORD_AUDIO,
+		  Manifest.permission.WRITE_EXTERNAL_STORAGE,
+		  listener = lll
+		)/* {
+		  MyLogger.e("sadhiasudh launching it 0")
 
-    super.onCreate(savedInstanceState)
+		  setFragmentResultListenerUsingJson<String>(RecordingDialogFragment.KEY_FRAGMENT_RESULT_FILE_PATH) {
+				if (it.isNotEmpty()) {
+					composeBox?.sendAudioMsg(it)
+				}
+		  }
+
+		  MyLogger.e("sadhiasudh launching it 1")
+		  showDialogFragment<RecordingDialogFragment>()
+	  }*/
+
+	  super.onCreate(savedInstanceState)
     handleArguments()
     if (activity != null) fontUtils = FontUtils.getInstance(activity)
     FeatureRestriction.isThreadedMessagesEnabled(object : FeatureRestriction.OnSuccessListener {
@@ -339,6 +379,12 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
     if (cometChatMessageActions != null) cometChatMessageActions?.dismiss()
 
     composeBox = requireView().findViewById(R.id.message_box)
+	  composeBox?.grantingRecordPermission = object : GrantingRecordPermission {
+		  override fun requestGrantingPermission() {
+			  MyLogger.e("sadhiasudh request permission fragment")
+			  handlerPermissionOfRecording?.requestPermissions()
+		  }
+	  }
 //        if (type == CometChatConstants.RECEIVER_TYPE_USER)
 //            composeBox?.isStartVideoCall = false
     liveReactionLayout = view?.findViewById(R.id.live_reactions_layout)
@@ -547,11 +593,11 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
           } else {
             composeBox?.ivSend?.visibility = View.GONE
             composeBox?.btnLiveReaction?.visibility = View.VISIBLE
-//            composeBox?.ivMic?.visibility = View.VISIBLE //osama
+						composeBox?.ivMic?.visibility = View.VISIBLE //osama
             FeatureRestriction.isVoiceNotesEnabled(object : FeatureRestriction.OnSuccessListener {
               override fun onSuccess(p0: Boolean) {
                 if (p0) {
-//                  composeBox!!.ivMic!!.visibility = View.VISIBLE //osama
+									composeBox!!.ivMic!!.visibility = View.VISIBLE //osama
                 } else {
                   composeBox!!.ivMic!!.visibility = View.GONE
                   composeBox!!.ivSend!!.visibility = View.VISIBLE

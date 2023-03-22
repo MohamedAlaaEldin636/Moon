@@ -54,7 +54,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import com.cometchat.pro.uikit.myOwnChanges.helperClasses.GrantingRecordPermission
 import com.cometchat.pro.uikit.ui_components.messages.message_list.CometChatMessageListActivity
+import ma.ya.cometchatintegration.helperClasses.MyLogger
 import org.webrtc.ContextUtils.getApplicationContext
 
 
@@ -67,11 +69,11 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
   private var timerRunnable: Runnable? = null
   private val seekHandler = Handler(Looper.getMainLooper())
   private var timer: Timer? = Timer()
-  private var audioFileNameWithPath: String? = null
+  var audioFileNameWithPath: String? = null
   private var isOpen = false
-  private var isRecording = false
-  private var isPlaying = false
-  private var voiceMessage = false
+  var isRecording = false
+  var isPlaying = false
+  var voiceMessage = false
   var ivAudio: ImageView? = null
   var ivCamera: ImageView? = null
   var ivGallery: ImageView? = null
@@ -85,10 +87,10 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
   var etComposeBox: CometChatEditText? = null
   private var composeBox: RelativeLayout? = null
   private var flBox: ConstraintLayout? = null
-  private var voiceMessageLayout: RelativeLayout? = null
+  var voiceMessageLayout: RelativeLayout? = null
   private var rlActionContainer: RelativeLayout? = null
   private val hasFocus = false
-  private lateinit var composeActionListener: ComposeActionListener
+  lateinit var composeActionListener: ComposeActionListener
   private var c: Context? = null
   private var color = 0
   private var cometChatComposeBoxActions: CometChatComposeBoxActions? = null
@@ -105,6 +107,8 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
 
   //    var isStartVideoCall = true
   var isPollVisible = true
+
+	var grantingRecordPermission: GrantingRecordPermission? = null
 
   constructor(context: Context) : super(context) {
     initViewComponent(context, null, -1, -1)
@@ -386,6 +390,39 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
 
   private val TAG = "CometChatComposeBox"
 
+	/*fun onRecordPermissionGranted() {
+		if (isOpen) {
+			ivArrow!!.rotation = 0f
+			isOpen = false
+			val leftAnim = AnimationUtils.loadAnimation(getContext(), R.anim.animate_left_slide)
+			rlActionContainer!!.startAnimation(leftAnim)
+			rlActionContainer!!.visibility = View.GONE
+		}
+		if (!isRecording) {
+			startRecord()
+			ivMic!!.setImageDrawable(resources.getDrawable(R.drawable.ic_stop_24dp))
+			isRecording = true
+			isPlaying = false
+		} else {
+			if (isRecording && !isPlaying) {
+				isPlaying = true
+				stopRecording(false)
+				recordTime!!.stop()
+			}
+			voiceSeekbar!!.visibility = View.VISIBLE
+			voiceMessage = true
+			ivMic!!.setImageDrawable(resources.getDrawable(R.drawable.ic_pause_24dp))
+			audioRecordView!!.visibility = View.GONE
+			ivSend!!.visibility = View.VISIBLE
+			ivDelete!!.visibility = View.VISIBLE
+			if (audioFileNameWithPath != null) startPlayingAudio(audioFileNameWithPath!!) else Toast.makeText(
+				context,
+				"No File Found. Please",
+				Toast.LENGTH_LONG
+			).show()
+		}
+	}*/
+
   //    @RequiresApi(Build.VERSION_CODES.M)
   override fun onClick(view: View) {
     if (view.id == R.id.ivDelete) {
@@ -456,8 +493,14 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
     }
     if (view.id == R.id.ivMic) {
 
-      if (SDK_INT >= Build.VERSION_CODES.R) {
+	    MyLogger.e("sadhiasudh request permission from box")
+
+	    grantingRecordPermission?.requestGrantingPermission()
+
+      /*if (SDK_INT >= Build.VERSION_CODES.R) {
         Log.d(TAG, "onClick: ")
+	      // to-do 3ayez permission isa....
+	      dsahdisaud;
         if (checkRecordAudioPermissionAPI30(UIKitConstants.RequestCode.RECORD)) {
           Log.d(TAG, "onClick: asdsa")
           if (!isRecording) {
@@ -533,15 +576,15 @@ class CometChatComposeBox : RelativeLayout, View.OnClickListener {
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 //          checkRecordAudioPermissionAPI30(UIKitConstants.RequestCode.RECORD)
 //        }
-      }
+      }*/
     }
 
   }
 
   @TargetApi(30)
   private fun checkRecordAudioPermissionAPI30(recordAudioRequestCode: Int): Boolean {
-    if (checkSinglePermission(Manifest.permission.RECORD_AUDIO) &&
-      checkSinglePermission(MANAGE_EXTERNAL_STORAGE)
+    if (checkSinglePermission(Manifest.permission.RECORD_AUDIO)/* &&
+      checkSinglePermission(MANAGE_EXTERNAL_STORAGE)*/
     ) return true
     else {
       AlertDialog.Builder(context)

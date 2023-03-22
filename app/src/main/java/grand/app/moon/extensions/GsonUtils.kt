@@ -32,7 +32,7 @@ internal val gson by lazy {
 
 fun getMAGson() = gson
 
-private object TypeAdapterLocalYearMonth : JsonSerializer<YearMonth>, JsonDeserializer<YearMonth> {
+/*private object TypeAdapterLocalYearMonth : JsonSerializer<YearMonth>, JsonDeserializer<YearMonth> {
     override fun serialize(
         src: YearMonth?,
         typeOfSrc: Type?,
@@ -150,7 +150,7 @@ private object TypeAdapterLocalTime : JsonSerializer<LocalTime>, JsonDeserialize
             null
         }
     }
-}
+}*/
 
 fun Any?.toJsonOrNull(type: Type): String? = kotlin.runCatching {
     gson.toJson(this, type)

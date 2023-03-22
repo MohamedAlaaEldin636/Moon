@@ -1,4 +1,4 @@
-package grand.app.moon.presentation.base
+package ma.ya.cometchatintegration.helperClasses
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -9,8 +9,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import grand.app.moon.presentation.base.utils.hideLoadingDialog
-import grand.app.moon.presentation.base.utils.showLoadingDialog
 
 abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 
@@ -19,9 +17,7 @@ abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 	open val windowGravity: Int = Gravity.CENTER
 	open val canceledOnTouchOutside: Boolean = true
 
-	private var progressDialog: Dialog? = null
-
-	var _binding: VDB? = null
+	private var _binding: VDB? = null
 	
 	protected val binding get() = _binding!!
 
@@ -64,20 +60,6 @@ abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 			}
 		}
 	}
-
-	@CallSuper
-	override fun onCancel(dialog: DialogInterface) {
-		onEitherCancelOrDismiss()
-	}
-
-	@CallSuper
-	override fun onDismiss(dialog: DialogInterface) {
-		onEitherCancelOrDismiss()
-
-		super.onDismiss(dialog)
-	}
-
-	open fun onEitherCancelOrDismiss() {}
 	
 	override fun onResume() {
 		super.onResume()
@@ -95,7 +77,21 @@ abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 	protected open fun customOnCreateDialog(savedInstanceState: Bundle?): Dialog {
 		return super.onCreateDialog(savedInstanceState)
 	}
-	
+
+	@CallSuper
+	override fun onCancel(dialog: DialogInterface) {
+		onEitherCancelOrDismiss()
+	}
+
+	@CallSuper
+	override fun onDismiss(dialog: DialogInterface) {
+		onEitherCancelOrDismiss()
+
+		super.onDismiss(dialog)
+	}
+
+	open fun onEitherCancelOrDismiss() {}
+
 	/** calls [dismiss] if [canceledOnTouchOutside] is `true` otherwise does nothing isa. */
 	open fun onBackPressed() {
 		if (canceledOnTouchOutside) {
@@ -105,14 +101,6 @@ abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 
 	open fun onCreateDialogWindowChanges(window: Window) {}
 
-	fun showLoading() {
-		progressDialog = showLoadingDialog(activity, null)
-	}
-	fun hideLoading() {
-		hideLoadingDialog(progressDialog, activity)
-		progressDialog = null
-	}
-	
 }
 
 /*

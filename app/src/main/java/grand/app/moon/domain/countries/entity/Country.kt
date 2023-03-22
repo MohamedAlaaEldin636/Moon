@@ -12,7 +12,7 @@ data class Country(
   val currency: String = "",
   @SerializedName("image")
   @Expose
-  val image: String = "",
+  val image: String? = "",
   @SerializedName("name")
   @Expose
   val name: String = "",

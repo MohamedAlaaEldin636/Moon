@@ -17,9 +17,77 @@ import ma.ya.cometchatintegration.R
 import ma.ya.cometchatintegration.extensions.*
 import java.lang.ref.WeakReference
 
+fun Fragment.createPermissionHandlerForSinglePermission(
+	permission: String,
+	onPermissionGranted: () -> Unit
+) = PermissionsHandler(
+	this,
+	lifecycle,
+	requireContext(),
+	listOf(permission),
+	object : PermissionsHandler.Listener {
+		override fun onAllPermissionsAccepted() {
+			onPermissionGranted()
+		}
+	}
+)
+
+class ListenerOfPermissionsHandlerWhichActOnlyIfAllGranted(
+	context: Context?,
+	private val onPermissionGranted: () -> Unit
+) : PermissionsHandler.Listener {
+
+	private val weakRefContext = WeakReference(context)
+
+	override fun onAllPermissionsAccepted() {
+		MyLogger.e("sadhiasudh on allll+ ${weakRefContext.get()}")
+		onPermissionGranted()
+	}
+
+	override fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {
+		MyLogger.e("sadhiasudh on subbbbbbbbb")
+		weakRefContext.get()?.apply {
+			showError(getString(R.string.not_all_permissions_are_accepted))
+		}
+	}
+}
+
+fun Fragment.createPermissionHandlerAndActOnlyIfAllGranted(
+	vararg permissions: String,
+	listener: ListenerOfPermissionsHandlerWhichActOnlyIfAllGranted
+) = PermissionsHandler(
+	this,
+	lifecycle,
+	requireContext(),
+	permissions.toList(),
+	listener
+)
+
+fun Fragment.createPermissionHandlerAndActOnlyIfAllGranted(
+	vararg permissions: String,
+	onPermissionGranted: () -> Unit
+) = PermissionsHandler(
+	this,
+	lifecycle,
+	requireContext(),
+	permissions.toList(),
+	ListenerOfPermissionsHandlerWhichActOnlyIfAllGranted(context, onPermissionGranted)
+	/*object : PermissionsHandler.Listener {
+		override fun onAllPermissionsAccepted() {
+			MyLogger.e("sadhiasudh on allll+")
+			onPermissionGranted()
+		}
+
+		override fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {
+			MyLogger.e("sadhiasudh on subbbbbbbbb")
+			context?.showError(getString(R.string.not_all_permissions_are_accepted))
+		}
+	}*/
+)
+
 abstract class ListenerOfPermissionsHandler : PermissionsHandler.Listener
 
-open class PermissionsHandler private constructor(
+class PermissionsHandler private constructor(
 	lifecycle: Lifecycle,
 	context: Context,
 	host: Any,
@@ -38,7 +106,7 @@ open class PermissionsHandler private constructor(
 	private val weakRefLifecycle = WeakReference(lifecycle)
 	private val weakRefContext = WeakReference(context)
 	val weakRefHost = WeakReference(host)
-	private var weakRefListener = WeakReference(listener)
+	private val weakRefListener = WeakReference(listener)
 
 	init {
 		lifecycle.addObserver(this)
@@ -57,16 +125,21 @@ open class PermissionsHandler private constructor(
 	}
 
 	private fun onActivityPermissionsLauncherResult(permissions: Map<String, Boolean>) {
+		MyLogger.e("sadhiasudh onActivityPermissionsLauncherResult ${weakRefHost.get().getActivityOrNull() != null}")
+
 		val activity = weakRefHost.get().getActivityOrNull()
 
 		when {
 			this.permissions.all { permissions[it] == true } -> {
+				MyLogger.e("sadhiasudh onActivityPermissionsLauncherResult 1 ${weakRefListener.get()}")
 				weakRefListener.get()?.onAllPermissionsAccepted()
 			}
 			this.permissions.any { permissions[it] == true } -> {
+				MyLogger.e("sadhiasudh onActivityPermissionsLauncherResult 2")
 				weakRefListener.get()?.onSubsetPermissionsAccepted(permissions)
 			}
 			activity != null -> {
+				MyLogger.e("sadhiasudh onActivityPermissionsLauncherResult 3")
 				val rationaleList = this.permissions.filter {
 					weakRefHost.get().shouldShowRequestPermissionRationale(it)
 				}
@@ -81,6 +154,7 @@ open class PermissionsHandler private constructor(
 	}
 
 	fun requestPermissions() {
+		MyLogger.e("sadhiasudh request permission in permissions handler with ${this.permissions}")
 		activityResultLauncherPermissions.launchSafely(
 			weakRefContext.get(),
 			this.permissions.toTypedArray()
@@ -116,7 +190,9 @@ open class PermissionsHandler private constructor(
 
 		fun onAllPermissionsAccepted()
 
-		fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {}
+		fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {
+			MyLogger.e("sadhiasudh on subset accepted")
+		}
 
 		/** @param list contains list of permissions which returns `true` to [shouldShowRequestPermissionRationale] fun */
 		fun onShouldShowRationale(permissionsHandler: PermissionsHandler, @Size(min = 1) list: List<String>) {

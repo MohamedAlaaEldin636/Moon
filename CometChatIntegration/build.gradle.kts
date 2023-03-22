@@ -31,12 +31,23 @@ android {
 	kotlinOptions {
 		jvmTarget = "11"
 	}
+	buildFeatures {
+		viewBinding = true
+		dataBinding = true
+		//compose = true
+	}
 }
 
 dependencies {
 	implementation("com.cometchat:pro-android-chat-sdk:3.0.13")
-	implementation("androidx.appcompat:appcompat:1.6.1")
+
 	implementation("com.google.android.material:material:1.8.0")
+
+	implementation("androidx.fragment:fragment-ktx:1.5.5")
+	implementation("androidx.appcompat:appcompat:1.6.1")
+
+	implementation("com.google.code.gson:gson:2.10.1")
+
 	testImplementation("junit:junit:4.13.2")
 	androidTestImplementation("androidx.test.ext:junit:1.1.5")
 	androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

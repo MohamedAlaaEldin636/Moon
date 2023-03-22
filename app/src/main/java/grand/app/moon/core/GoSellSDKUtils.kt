@@ -15,6 +15,7 @@ import company.tap.gosellapi.open.models.TapCurrency
 import grand.app.moon.BuildConfig
 import grand.app.moon.core.extenstions.toast
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
+import java.lang.ref.WeakReference
 import java.math.BigDecimal
 
 /**
@@ -25,7 +26,7 @@ import java.math.BigDecimal
 @Suppress("UsePropertyAccessSyntax")
 object GoSellSDKUtils {
 
-	private var sdkSession: SDKSession? = null
+	private var weakRefSdkSession: WeakReference<SDKSession>? = null
 
 	private fun useDebugForPayment() = true || BuildConfig.DEBUG
 
@@ -180,22 +181,22 @@ object GoSellSDKUtils {
 		userLocalUseCase: UserLocalUseCase,
 	) {
 		// Instantiate SDK Session
-		if (sdkSession == null) {
-			sdkSession = SDKSession() //** Required **
+		if (weakRefSdkSession == null || weakRefSdkSession?.get() == null) {
+			weakRefSdkSession = WeakReference(SDKSession()) //** Required **
 		}
 
 		// pass your activity as a session delegate to listen to SDK internal payment process follow
-		sdkSession?.addSessionDelegate(sessionDelegate) //** Required **
+		weakRefSdkSession?.get()?.addSessionDelegate(sessionDelegate) //** Required **
 
 		// initiate PaymentDataSource
-		sdkSession?.instantiatePaymentDataSource() //** Required **
+		weakRefSdkSession?.get()?.instantiatePaymentDataSource() //** Required **
 
 		// set transaction currency associated to your account
-		sdkSession?.setTransactionCurrency(TapCurrency(currencyIsoCode)) //** Required **
+		weakRefSdkSession?.get()?.setTransactionCurrency(TapCurrency(currencyIsoCode)) //** Required **
 
 		// Using static CustomerBuilder method available inside TAP Customer Class you can populate TAP Customer object and pass it to SDK
 		val user = userLocalUseCase()
-		sdkSession?.setCustomer(
+		weakRefSdkSession?.get()?.setCustomer(
 			CustomerBuilder(null)
 				.firstName(user.name)
 				.phone(PhoneNumber(user.country_code, user.phone))
@@ -203,69 +204,69 @@ object GoSellSDKUtils {
 		) //** Required **
 
 		// Set Total Amount. The Total amount will be recalculated according to provided Taxes and Shipping
-		sdkSession?.setAmount(amount) //** Required **
+		weakRefSdkSession?.get()?.setAmount(amount) //** Required **
 
 		// Set Payment Items array list
-		sdkSession?.setPaymentItems(ArrayList()) // ** Optional ** you can pass empty array list
+		weakRefSdkSession?.get()?.setPaymentItems(ArrayList()) // ** Optional ** you can pass empty array list
 
-		sdkSession?.setPaymentType(PaymentType.CARD.name/*"CARD"*/)   //** Merchant can pass paymentType
+		weakRefSdkSession?.get()?.setPaymentType(PaymentType.CARD.name/*"CARD"*/)   //** Merchant can pass paymentType
 
 		// Set Taxes array list
-		sdkSession?.setTaxes(ArrayList()) // ** Optional ** you can pass empty array list
+		weakRefSdkSession?.get()?.setTaxes(ArrayList()) // ** Optional ** you can pass empty array list
 
 		// Set Shipping array list
-		sdkSession?.setShipping(ArrayList()) // ** Optional ** you can pass empty array list
+		weakRefSdkSession?.get()?.setShipping(ArrayList()) // ** Optional ** you can pass empty array list
 
 		// Post URL
-		//sdkSession?.setPostURL("") // ** Optional **
+		//weakRefSdkSession?.get()?.setPostURL("") // ** Optional **
 
 		// Payment Description
-		//sdkSession?.setPaymentDescription("") //** Optional **
+		//weakRefSdkSession?.get()?.setPaymentDescription("") //** Optional **
 
 		// Payment Extra Info
-		sdkSession?.setPaymentMetadata(metaData) // ** Optional ** you can pass empty array hash map
+		weakRefSdkSession?.get()?.setPaymentMetadata(metaData) // ** Optional ** you can pass empty array hash map
 
 		// Payment Reference
 		//Reference()
-		sdkSession?.setPaymentReference(null) // ** Optional ** you can pass null
+		weakRefSdkSession?.get()?.setPaymentReference(null) // ** Optional ** you can pass null
 
 		// Payment Statement Descriptor
-		//sdkSession?.setPaymentStatementDescriptor("") // ** Optional **
+		//weakRefSdkSession?.get()?.setPaymentStatementDescriptor("") // ** Optional **
 
 		// Enable or Disable Saving Card
-		sdkSession?.isUserAllowedToSaveCard(false) //  ** Required ** you can pass boolean
+		weakRefSdkSession?.get()?.isUserAllowedToSaveCard(false) //  ** Required ** you can pass boolean
 
 		// Enable or Disable 3DSecure
-		sdkSession?.isRequires3DSecure(true)
+		weakRefSdkSession?.get()?.isRequires3DSecure(true)
 
 		//Set Receipt Settings [SMS - Email ]
-		sdkSession?.setReceiptSettings(null/*Receipt(false, false)*/) // ** Optional ** you can pass Receipt object or null
+		weakRefSdkSession?.get()?.setReceiptSettings(null/*Receipt(false, false)*/) // ** Optional ** you can pass Receipt object or null
 
 		// Set Authorize Action
-		sdkSession?.setAuthorizeAction(null) // ** Optional ** you can pass AuthorizeAction object or null
-		sdkSession?.setDestination(null) // ** Optional ** you can pass Destinations object or null
-		sdkSession?.setMerchantID(null) // ** Optional ** you can pass merchant id or null
-		sdkSession?.setCardType(cardType) // ** Optional ** you can pass which cardType[CREDIT/DEBIT] you want.By default it loads all available cards for Merchant.
+		weakRefSdkSession?.get()?.setAuthorizeAction(null) // ** Optional ** you can pass AuthorizeAction object or null
+		weakRefSdkSession?.get()?.setDestination(null) // ** Optional ** you can pass Destinations object or null
+		weakRefSdkSession?.get()?.setMerchantID(null) // ** Optional ** you can pass merchant id or null
+		weakRefSdkSession?.get()?.setCardType(cardType) // ** Optional ** you can pass which cardType[CREDIT/DEBIT] you want.By default it loads all available cards for Merchant.
 
 		if (useDebugForPayment()) {
-			sdkSession?.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
-			sdkSession?.isUserAllowedToEnableCardHolderName(false) // ** Optional ** you can enable/ disable  default CardHolderName .
+			weakRefSdkSession?.get()?.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
+			weakRefSdkSession?.get()?.isUserAllowedToEnableCardHolderName(false) // ** Optional ** you can enable/ disable  default CardHolderName .
 		}else {
-			//sdkSession?.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
-			sdkSession?.isUserAllowedToEnableCardHolderName(true) // ** Optional ** you can enable/ disable  default CardHolderName .
+			//weakRefSdkSession?.get()?.setDefaultCardHolderName("TEST TAP") // ** Optional ** you can pass default CardHolderName of the user .So you don't need to type it.
+			weakRefSdkSession?.get()?.isUserAllowedToEnableCardHolderName(true) // ** Optional ** you can enable/ disable  default CardHolderName .
 		}
 
 		//company.tap.sample.managers.SettingsManager
-		sdkSession?.transactionMode = TransactionMode.PURCHASE
+		weakRefSdkSession?.get()?.transactionMode = TransactionMode.PURCHASE
 
 		/**
 		 * Use this method where ever you want to show TAP SDK Main Screen.
 		 * This method must be called after you configured SDK as above
 		 * This method will be used in case of you are not using TAP PayButton in your activity.
 		 */
-		sdkSession?.start(activity)
+		weakRefSdkSession?.get()?.start(activity)
 
-		//sdkSession?.startPayment()
+		//weakRefSdkSession?.get()?.startPayment()
 	}
 
 	/**
