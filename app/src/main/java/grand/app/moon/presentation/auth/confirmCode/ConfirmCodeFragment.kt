@@ -36,6 +36,11 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
 		const val KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED = "KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED"
 		const val STRANGE_TYPE = "verifyverify"
 		const val ACTUAL_TYPE = "verify"
+
+		const val TYPE_VERIFY = "1"
+		const val TYPE_RESET = "2"
+		const val TYPE_WHATSAPP_PHONE = "3"
+		const val TYPE_ADS_PHONE = "4"
 	}
 
   private val viewModel: ConfirmViewModel by viewModels()
@@ -101,19 +106,20 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
   fun setBindingVariables() {
     binding.viewmodel = viewModel
     if(arguments != null) {
-			if (arguments?.getString("type") == STRANGE_TYPE) {
-				viewModel.usedStrangeType = true
-				arguments?.putString("type", ACTUAL_TYPE)
+			if (arguments?.getString("type") == ACTUAL_TYPE) {
+				//viewModel.usedStrangeType = true
+				arguments?.putString("type", TYPE_VERIFY)
 			}
       if(requireArguments().containsKey("country_code")) {
         val args: ConfirmCodeFragmentArgs by navArgs()
         viewModel.request.country_code = args.countryCode
         viewModel.request.phone = args.phone
-        viewModel.request.type = if (args.type == STRANGE_TYPE) ACTUAL_TYPE else args.type
+        viewModel.request.type = if (args.type == ACTUAL_TYPE) TYPE_VERIFY else args.type
       }else if(requireArguments().containsKey("profile")){
         val gson = GsonBuilder().create()
         viewModel.profileRequest = gson.fromJson<UpdateProfileRequest>(requireArguments().getString("profile"), object :
           TypeToken<UpdateProfileRequest>() {}.type)
+	      //viewModel.profileRequest.typ
         viewModel.request.country_code = viewModel.profileRequest.country_code
         viewModel.request.phone = viewModel.profileRequest.phone
       }
@@ -131,7 +137,8 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
           }
           is Resource.Success -> {
             hideLoading()
-	          if (viewModel.usedStrangeType) {
+	          if (arguments?.getString("type") == TYPE_WHATSAPP_PHONE
+		          || arguments?.getString("type") == TYPE_ADS_PHONE) {
 							setFragmentResultUsingJson(KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED, true)
 		          findNavController().navigateUp()
 	          }else {

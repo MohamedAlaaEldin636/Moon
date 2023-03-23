@@ -185,7 +185,7 @@ class CreateStoreViewModel @Inject constructor(
 			view.findNavController().navigateDeepLinkWithOptions(
 				"confirmCode",
 				"grand.app.moon.confirm.code",
-				paths = arrayOf(adsCountryCode, adsPhone, ConfirmCodeFragment.STRANGE_TYPE)
+				paths = arrayOf(adsCountryCode, adsPhone, ConfirmCodeFragment.TYPE_ADS_PHONE)
 			)
 		}
 	}
@@ -216,7 +216,7 @@ class CreateStoreViewModel @Inject constructor(
 			view.findNavController().navigateDeepLinkWithOptions(
 				"confirmCode",
 				"grand.app.moon.confirm.code",
-				paths = arrayOf(whatsAppCountryCode, whatsAppPhone, ConfirmCodeFragment.STRANGE_TYPE)
+				paths = arrayOf(whatsAppCountryCode, whatsAppPhone, ConfirmCodeFragment.TYPE_WHATSAPP_PHONE)
 			)
 		}
 	}
