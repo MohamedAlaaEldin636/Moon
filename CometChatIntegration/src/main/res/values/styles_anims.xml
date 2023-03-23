@@ -3,7 +3,7 @@
 
   <style name="DialogBottomSheetAnim">
     <item name="android:windowEnterAnimation">@anim/anim_slide_in_top</item>
-    <item name="android:windowExitAnimation">@anim/anim_slide_out_bottom</item>
+    <item name="android:windowExitAnimation">@anim/anim_scale_1_to_0</item>
   </style>
 
 </resources>

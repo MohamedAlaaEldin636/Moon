@@ -9,41 +9,53 @@ class MATimer(
 	private val onRun: (currentTimeInMs: Long) -> Unit
 ) {
 
-	private val timer = Timer()
+	private var timer: Timer? = null
 
 	private var isPaused = false
 
 	private var startingTimeInMs = 0L
 
+	private var isStarted = false
 	private var isStopped = false
 
-	private val task = object : TimerTask() {
-		override fun run() {
-			if (!isPaused) {
-				startingTimeInMs += periodInMs
+	private var task: TimerTask? = null
 
-				onRun(startingTimeInMs)
+	private fun setupTask() {
+		task = object : TimerTask() {
+			override fun run() {
+				if (!isPaused) {
+					startingTimeInMs += periodInMs
+
+					onRun(startingTimeInMs)
+				}
+
+				MyLogger.e("CometChatIntegration paused $isPaused startingTimeInMs $startingTimeInMs")
 			}
-
-			MyLogger.e("CometChatIntegration paused $isPaused startingTimeInMs $startingTimeInMs")
 		}
 	}
 
-	fun start() {
-		timer.scheduleAtFixedRate(task, delayInMs, periodInMs)
-	}
-
-	fun stop() {
-		timer.cancel()
+	fun stopOrReset() {
+		timer?.cancel()
+		timer = null
+		task = null
 		isStopped = true
+		isStarted = false
+		startingTimeInMs = 0L
 	}
 
 	fun pause() {
 		isPaused = true
 	}
 
-	fun resume() {
+	fun startOrResume() {
 		isPaused = false
+		if (isStarted.not()) {
+			isStarted = true
+			isStopped = false
+			timer = Timer()
+			setupTask()
+			timer?.scheduleAtFixedRate(task, delayInMs, periodInMs)
+		}
 	}
 
 }

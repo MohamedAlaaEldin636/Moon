@@ -80,17 +80,31 @@ class RecordingDialogFragment : MADialogFragment<DialogFragmentRecordingBinding>
 			val value = it ?: 0f
 
 			if (sliderIsBeingTouchedByUser.not()) {
-				binding.slider.value = value
+				binding.slider.value = value.coerceAtLeast(0f).coerceAtMost(100f)
 			}
 		}
 
 		binding.root.post {
-			viewModel.start()
+			viewModel.startRecording()
 		}
 	}
 
 	override fun onEitherCancelOrDismiss() {
 		viewModel.releaseAllResources()
+	}
+
+	override fun onResume() {
+		super.onResume()
+
+		viewModel.resumeRecordingOrSoundAccToCurrentState()
+	}
+
+	override fun onPause() {
+		MyLogger.e("aaaaaaaaaaa fragment on pause()")
+
+		viewModel.pauseRecordingOrSoundAccToCurrentState()
+
+		super.onPause()
 	}
 
 }

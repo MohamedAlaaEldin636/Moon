@@ -1,29 +1,86 @@
 package ma.ya.cometchatintegration.screens.viewModels
 
 import android.app.Application
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.view.View
+import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.upstream.DefaultDataSource
 import ma.ya.cometchatintegration.extensions.*
 import ma.ya.cometchatintegration.helperClasses.MATimer
 import ma.ya.cometchatintegration.helperClasses.MyLogger
 import ma.ya.cometchatintegration.screens.RecordingDialogFragment
 import java.io.File
-import java.io.IOException
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 
 class RecordingViewModel(application: Application) : AndroidViewModel(application) {
 
+	//externalCacheDir
 	private val filePath = "${app.externalCacheDir?.absolutePath.orEmpty()}/" +
-		"audio_record_moon_${System.currentTimeMillis()}.3gp"
+		"audio_record_moon_${System.currentTimeMillis()}.3gp" // 3gp
 
 	val recorder = app.createMediaRecorderOrNull(filePath)
+	// todo if all are released in onCreate view then create it isa.
 
-	private var player: MediaPlayer? = null
+	private var player: ExoPlayer? = null
+
+	private fun createExoPlayer(
+		onReady: () -> Unit
+	) {
+		player = ExoPlayer.Builder(app).build().also { exoPlayer ->
+			val filePath = "/storage/emulated/0/APKs/M/VID20230322154946.mp4"
+			kotlin.runCatching {
+				MyLogger.e("CometChatIntegration RRRRR $filePath")
+				MyLogger.e("CometChatIntegration RRRRR ${File(filePath).exists()}")
+				MyLogger.e("CometChatIntegration RRRRR ${File(filePath).canRead()}")
+				MyLogger.e("CometChatIntegration RRRRR ${File(filePath).canWrite()}")
+				MyLogger.e("CometChatIntegration RRRRR ${File(filePath).toUri()}")
+				MyLogger.e("CometChatIntegration RRRRR $filePath")
+				MyLogger.e("CometChatIntegration RRRRR ${Uri.parse(filePath)}")
+				MyLogger.e("CometChatIntegration RRRRR ${Uri.fromFile(File(filePath))}")
+			}
+			val uri = Uri.parse(filePath)
+			exoPlayer.setMediaItem(MediaItem.fromUri(uri))
+			DefaultDataSource.Factory(app)
+
+			exoPlayer.addListener(object : Player.Listener {
+				override fun onPlaybackStateChanged(playbackState: Int) {
+					MyLogger.e("CometChatIntegration state $playbackState, while ExoPlayer.STATE_READY -> ${ExoPlayer.STATE_READY}")
+					when (playbackState) {
+						ExoPlayer.STATE_READY -> {
+							if (isLoadingSound.value == true) {
+								onReady()
+								isLoadingSound.value = false
+							}
+						}
+						ExoPlayer.STATE_ENDED -> {
+							isPlayingSound.value = false
+							player?.pause()
+							player?.seekTo(0L)
+							sliderPercentage.value = 0f
+							textOfTimeInPauseState.value = "0:00"
+							timerSound.stopOrReset()
+						}
+					}
+				}
+
+				override fun onPlayerError(error: PlaybackException) {
+					MyLogger.e("CometChatIntegration onPlayerError $error")
+				}
+			})
+
+			isLoadingSound.value = true
+			exoPlayer.playWhenReady = false
+			exoPlayer.prepare()
+		}
+	}
 
 	val isInPlayState = MutableLiveData(false)
 
@@ -36,6 +93,9 @@ class RecordingViewModel(application: Application) : AndroidViewModel(applicatio
 	val isLoadingSound = MutableLiveData(false)
 
 	private var allAreReleased = false
+
+	private var pausedRecording = false
+	private var pausedPlaying = false
 
 	private val timerRecording = MATimer(1_000, 1_000) { currentTimeInMs ->
 		// Update text of recording sound
@@ -68,18 +128,21 @@ class RecordingViewModel(application: Application) : AndroidViewModel(applicatio
 
 		player?.duration
 		 */
-		val lengthInMs = (Uri.fromFile(File(filePath)).getLengthOfAudioInMs(app) ?: player?.duration?.toLong()).let {
+		val filePath = "/storage/emulated/0/APKs/M/VID20230322154946.mp4"
+		val lengthInMs = (Uri.parse(filePath).getLengthOfAudioInMs(app)/* ?: player?.duration*/).let {
 			if (it == null || it == -1L) null else it
 		}
+		MyLogger.e("CometChatIntegration lengthInMs $lengthInMs")
 		if (lengthInMs == null) sliderPercentage.postValue(50f) else {
 			sliderPercentage.postValue(
 				(currentTimeInMs.toDouble() / lengthInMs.toDouble() * 100.0).toFloat()
+					.coerceAtMost(100f)
 			)
 		}
 	}
 
 	fun seekToInSound(percentage: Float) {
-		val lengthInMs = (Uri.fromFile(File(filePath)).getLengthOfAudioInMs(app) ?: player?.duration?.toLong()).let {
+		val lengthInMs = (Uri.fromFile(File(filePath)).getLengthOfAudioInMs(app) ?: player?.duration).let {
 			if (it == null || it == -1L) null else it
 		}
 		if (lengthInMs == null) sliderPercentage.value = 50f else {
@@ -94,23 +157,12 @@ class RecordingViewModel(application: Application) : AndroidViewModel(applicatio
 			textOfTimeInPauseState.value = "$minutes:${seconds.toStringOrEmpty().minLengthZerosPrefix(2)}"
 
 			if (player != null) {
-				player?.seekTo(currentTimeInMs.toInt())
+				player?.seekTo(currentTimeInMs)
 			}else {
-				player = MediaPlayer().apply {
-					setOnPreparedListener {
-						isLoadingSound.value = false
-						it.seekTo(currentTimeInMs.toInt())
-						timerSound.start()
-						timerSound.pause()
-					}
-
-					try {
-						isLoadingSound.value = true
-						setDataSource(filePath)
-						prepare()
-					} catch (e: IOException) {
-						MyLogger.e("CometChatIntegration error in preparring 0 -> $e")
-					}
+				createExoPlayer {
+					player?.seekTo(currentTimeInMs)
+					timerSound.startOrResume()
+					timerSound.pause()
 				}
 			}
 		}
@@ -120,27 +172,15 @@ class RecordingViewModel(application: Application) : AndroidViewModel(applicatio
 		isPlayingSound.value = isPlayingSound.value?.not()
 
 		if (player == null) {
-			player = MediaPlayer().apply {
-				setOnPreparedListener {
-					MyLogger.e("CometChatIntegration error on prepare listener 0")
-					isLoadingSound.value = false
-					it.start()
-					timerSound.start()
-					MyLogger.e("CometChatIntegration error on prepare listener 1")
-				}
-
-				try {
-					isLoadingSound.value = true
-					setDataSource(filePath)
-					prepare()
-					MyLogger.e("CometChatIntegration error in prepared successfully")
-				} catch (e: IOException) {
-					MyLogger.e("CometChatIntegration error in preparring 1 -> $e")
-				}
+			createExoPlayer {
+				MyLogger.e("CometChatIntegration error on prepare listener 0")
+				player?.play()
+				timerSound.startOrResume()
+				MyLogger.e("CometChatIntegration error on prepare listener 1")
 			}
 		}else if (isPlayingSound.value == true) {
-			timerSound.resume()
-			player?.start()
+			timerSound.startOrResume()
+			player?.play()
 		}else {
 			timerSound.pause()
 			player?.pause()
@@ -148,10 +188,13 @@ class RecordingViewModel(application: Application) : AndroidViewModel(applicatio
 	}
 
 	fun toggleState() {
-		if (isInPlayState.value == true) {
-			pause()
+		MyLogger.e("aaaaaaaaaaa in toggle state")
+		val performPause = isInPlayState.value == true
+		isInPlayState.value = performPause.not()
+		if (performPause) {
+			pauseRecording()
 		}else {
-			resume()
+			resumeRecording()
 		}
 	}
 
@@ -187,37 +230,54 @@ class RecordingViewModel(application: Application) : AndroidViewModel(applicatio
 			kotlin.runCatching {
 				recorder?.stop()
 				recorder?.release()
-				timerRecording.stop()
-				timerSound.stop()
+				timerRecording.stopOrReset()
+				timerSound.stopOrReset()
 				player?.stop()
 				player?.release()
 			}
 		}
 	}
 
-	fun pause() {
+	fun pauseRecording() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			recorder?.pause()
+			recorder?.pause() // todo called before start or after stop
 		}
 		timerRecording.pause()
-
-		isInPlayState.value = false
 	}
 
-	fun resume() {
+	fun resumeRecording() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			recorder?.resume()
 		}
-		timerRecording.resume()
+		timerRecording.startOrResume()
+	}
 
+	fun startRecording() {
+		recorder?.start()
+
+		timerRecording.startOrResume()
 		isInPlayState.value = true
 	}
 
-	fun start() {
-		recorder?.start()
-
-		timerRecording.start()
-		isInPlayState.value = true
+	fun resumeRecordingOrSoundAccToCurrentState() {
+		if (pausedRecording) {
+			pausedRecording = false
+			pauseRecording()
+		}else if (pausedPlaying) {
+			pausedPlaying = false
+			timerSound.startOrResume()
+			player?.play()
+		}
+	}
+	fun pauseRecordingOrSoundAccToCurrentState() {
+		if (isInPlayState.value == true) {
+			pausedRecording = true
+			pauseRecording()
+		}else if (isPlayingSound.value == true) {
+			pausedPlaying = true
+			timerSound.pause()
+			player?.pause()
+		}
 	}
 
 }

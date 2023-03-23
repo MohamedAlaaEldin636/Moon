@@ -13,7 +13,7 @@ enum class FailureStatus {
 
 fun MAResult.Failure<*>.toFailureStatus(): FailureStatus {
 	return when (failureStatus) {
-		MAResult.Failure.Status.ERROR -> FailureStatus.OTHER
+		MAResult.Failure.Status.ERROR -> FailureStatus.EMPTY
 		MAResult.Failure.Status.TOKEN_EXPIRED -> FailureStatus.TOKEN_EXPIRED
 		MAResult.Failure.Status.ACTIVATION_NOT_VERIFIED -> FailureStatus.NOT_ACTIVE
 		MAResult.Failure.Status.SERVER_ERROR -> FailureStatus.API_FAIL

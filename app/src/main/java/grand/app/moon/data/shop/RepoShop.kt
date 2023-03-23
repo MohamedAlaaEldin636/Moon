@@ -480,8 +480,8 @@ class RepoShop @Inject constructor(
 				maBasePaging?.map {
 					SimpleUserListOfInteractionsFragment.Item(
 						it.id.orZero(),
-						it.name.orEmpty(),
-						it.image.orEmpty(),
+						it.user?.name.orEmpty(),
+						it.user?.image.orEmpty(),
 					)
 				}
 			}

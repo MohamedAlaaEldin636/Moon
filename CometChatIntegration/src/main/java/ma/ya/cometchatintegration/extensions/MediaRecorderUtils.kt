@@ -14,14 +14,16 @@ fun Context.createMediaRecorderOrNull(outputFilePath: String): MediaRecorder? {
 	}
 	return recorder.apply {
 		setAudioSource(MediaRecorder.AudioSource.MIC)
-		setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+		setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP) // THREE_GPP // right .3gp
 		setOutputFile(outputFilePath)
 		/*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 			setOutputFile(outputFile)
 		}else {
 			setOutputFile(outputFile.absolutePath)
 		}*/
-		setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+		setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB) // left
+		// AAC_ELD // MPEG_4 // .m4a
+		// AMR_NB // THREE_GPP // .3gp
 
 		try {
 			prepare()

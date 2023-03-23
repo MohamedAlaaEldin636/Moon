@@ -65,7 +65,7 @@ class AdvClientsReviewsViewModel @Inject constructor(
 		binding.dateTextView.text = item.date.orEmpty()
 
 		binding.ratingBar.isVisible = item.user?.id != args.storeId
-		binding.ratingBar.setProgressBAFloat(item.rate.orZero() * 20f)
+		binding.ratingBar.setProgressBAFloat(item.rate.orZero())
 
 		binding.imageView.setupWithGlideOrElseResNameBA(item.user?.image, "ic_default_user")
 	}

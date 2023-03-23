@@ -32,7 +32,7 @@
       tools:src="@drawable/ic_baseline_pause_24"
       android:src="@{viewModel.isPlayingSound() ? @drawable/ic_baseline_pause_24 : @drawable/ic_baseline_play_arrow_24}"
 
-      android:visibility="@{viewModel.isInPlayState() ? View.INVISIBLE : View.VISIBLE}"
+      android:visibility="@{viewModel.isInPlayState() || viewModel.isLoadingSound() ? View.INVISIBLE : View.VISIBLE}"
 
       android:onClick="@{() -> viewModel.playOrResumeOrPauseSound()}"
 

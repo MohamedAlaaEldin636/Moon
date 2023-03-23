@@ -101,8 +101,8 @@ object RetrofitModule {
 				chain.request().newBuilder()
 	    }
 
-      if (appPreferences.getIsLoggedIn()) {
-					val token = appPreferences.getLocal(Constants.TOKEN)
+	    if (appPreferences.getIsLoggedIn()) {
+				val token = appPreferences.getLocal(Constants.TOKEN)
 	      MyLogger.e("HttpLoggingInterceptor -> Authorization Bearer -> $token")
 	      request.addHeader("Authorization", "Bearer $token")
       }

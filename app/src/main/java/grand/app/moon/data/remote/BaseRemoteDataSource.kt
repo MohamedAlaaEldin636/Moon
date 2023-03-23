@@ -136,9 +136,6 @@ open class BaseRemoteDataSource @Inject constructor(
 	        return Resource.Success(apiResponse)
         }
         401 -> {
-	        MyApplication.instance.logout()
-	        MyApplication.instance.loginPage()
-
           return Resource.Failure(
             FailureStatus.EMPTY,
             (apiResponse as BaseResponse<*>).code,
@@ -165,10 +162,10 @@ open class BaseRemoteDataSource @Inject constructor(
 	        MyLogger.e("safeApiCall safeApiCall -> ch 7 -> throwable CODE ${throwable.code()}")
           when(throwable.code()){
             401 -> {
-              val errorResponse = Gson().fromJson(
+              /*val errorResponse = Gson().fromJson(
                 throwable.response()?.errorBody()!!.charStream().readText(),
                 ErrorResponse::class.java
-              )
+              )*/
 
               MyApplication.instance.logout()
               MyApplication.instance.loginPage()
@@ -279,10 +276,10 @@ open class BaseRemoteDataSource @Inject constructor(
 
       val response = kotlin.runCatching {
 	      apiCall()
-      }.getOrElse {
+      }.getOrElse { it ->
 	      MyLogger.e("jsadkjash ch 1.5 -> $it")
 	      it.stackTrace.forEach {
-		      MyLogger.e("jsadkjash ch 1.7 -> ${it}")
+		      MyLogger.e("jsadkjash ch 1.7 -> $it")
 	      }
 
 				throw it
@@ -304,8 +301,8 @@ open class BaseRemoteDataSource @Inject constructor(
             MAResult.Failure.Status.ACTIVATION_NOT_VERIFIED
         }*/
         401 -> {
-	        MyApplication.instance.logout()
-	        MyApplication.instance.loginPage()
+	        /*MyApplication.instance.logout()
+	        MyApplication.instance.loginPage()*/
 
           MAResult.Failure.Status.ERROR
         }
@@ -336,7 +333,7 @@ open class BaseRemoteDataSource @Inject constructor(
 
           MAResult.Failure(errorStatus, throwable.code(), throwable.localizedMessage ?: throwable.message())
         }
-        is UnknownHostException, is SocketException, is ConnectException -> {
+        is UnknownHostException, is SocketException/*, is ConnectException*/ -> {
         MAResult.Failure(MAResult.Failure.Status.NO_INTERNET, message = throwable.localizedMessage ?: throwable.message)
       }
         else -> {
