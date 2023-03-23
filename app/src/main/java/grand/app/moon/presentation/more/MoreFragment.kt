@@ -50,10 +50,10 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>() {
 		if (requireContext().isLogin() && viewModel.user.value?.isStore.orFalse()) {
 			handleRetryAbleActionOrGoBack(
 				action = {
-					viewModel.repoPackages.getMyPackageOfBeingShop()
+					viewModel.repoShop.getRestOfDaysInMyPackageIfHaveOneOrZeroInstead()
 				}
-			) {
-				viewModel.restDaysInPackage.value = it.restDays.orZero()
+			) { restDays ->
+				viewModel.restDaysInPackage.value = restDays.orZero()
 			}
 		}else {
 			viewModel.restDaysInPackage.value = 0

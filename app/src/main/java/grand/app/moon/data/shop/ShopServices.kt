@@ -500,7 +500,10 @@ interface ShopServices {
 	suspend fun sendCode(
 		@Field("country_code") countryCode: String,
 		@Field("phone") phone: String,
-		@Field("type") type: String = "verify",
+		@Field("type") type: String = "3",
 	): BaseResponse<Any?>
+
+	@GET("v1/check?type=4")
+	suspend fun getRestOfDaysInMyPackageIfHaveOneOrZeroInstead(): BaseResponse<Int?>
 
 }

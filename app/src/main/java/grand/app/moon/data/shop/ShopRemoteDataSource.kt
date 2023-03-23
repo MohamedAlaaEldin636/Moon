@@ -834,6 +834,10 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun sendCode(countryCode: String, phone: String) = safeApiCall { apiService.sendCode(countryCode, phone) }
 
+	suspend fun getRestOfDaysInMyPackageIfHaveOneOrZeroInstead() = safeApiCall {
+		apiService.getRestOfDaysInMyPackageIfHaveOneOrZeroInstead()
+	}
+
 	enum class TypeAdOrStoreInteraction(val apiValue: Int) {
 		CALL(6), WHATSAPP(7), CHAT(8)
 	}

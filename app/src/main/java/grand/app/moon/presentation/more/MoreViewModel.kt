@@ -47,7 +47,7 @@ class MoreViewModel @Inject constructor(
 			else -> if (it.orZero() > 0) {
 				R.string.check_ad_premium
 			}else {
-				R.string.renew_and_subscribe_in_another_package
+				R.string.subscribe_now
 			}
 		}
 

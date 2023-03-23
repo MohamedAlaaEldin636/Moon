@@ -13,6 +13,7 @@ import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.countries.entity.Country
 import grand.app.moon.domain.countries.use_case.CountriesUseCase
 import grand.app.moon.domain.home.repository.HomeRepository
+import grand.app.moon.domain.packages.PackageType
 import grand.app.moon.domain.shop.*
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
@@ -831,6 +832,9 @@ class RepoShop @Inject constructor(
 	suspend fun getExploreDetails(id: Int) = remoteDataSource.getExploreDetails(id)
 
 	suspend fun sendCode(countryCode: String, phone: String) = remoteDataSource.sendCode(countryCode, phone)
+
+	suspend fun getRestOfDaysInMyPackageIfHaveOneOrZeroInstead() =
+		remoteDataSource.getRestOfDaysInMyPackageIfHaveOneOrZeroInstead()
 
 }
 
