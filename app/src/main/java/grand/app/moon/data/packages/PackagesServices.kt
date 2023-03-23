@@ -62,6 +62,7 @@ interface PackagesServices {
 	@GET("v1/countries")
 	suspend fun getCountries(): BaseResponse<List<ResponseCountry>?>
 
+	// should ad country codes as well isa.
 	@Multipart
 	@POST("v1/stores")
 	suspend fun addOrUpdateStore(
