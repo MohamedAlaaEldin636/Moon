@@ -95,19 +95,16 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 			val adsPhone = responseShopDetails.adsPhone.orEmpty()
 			if (adsPhone.isNotEmpty()) {
 				viewModel.activatedAdvertisingPhone.value = adsPhone
-				val countryCode = responseShopDetails.adsCountryCode?.let {
-					if (it[0] == '+') it.substring(1) else it
-				}?.toIntOrNull()
+				val countryCode = responseShopDetails.adsCountryCode?.trimFirstPlusIfExistsOrEmpty()?.toIntOrNull()
 				if (countryCode != null) {
+					MyLogger.e("dhiuashdia 1 -> $adsPhone")
 					viewModel.initialAdsPhoneCountryCode.value = countryCode
 				}
 			}
 			val whatsappPhone = responseShopDetails.whatsappPhone.orEmpty()
 			if (whatsappPhone.isNotEmpty()) {
 				viewModel.activatedWhatsAppPhone.value = whatsappPhone
-				val countryCode = responseShopDetails.whatsappCountryCode?.let {
-					if (it[0] == '+') it.substring(1) else it
-				}?.toIntOrNull()
+				val countryCode = responseShopDetails.whatsappCountryCode?.trimFirstPlusIfExistsOrEmpty()?.toIntOrNull()
 				if (countryCode != null) {
 					viewModel.initialWhatsAppPhoneCountryCode.value = countryCode
 				}
@@ -160,6 +157,8 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 			override fun onChanged(code: Int?) {
 				if (code != null) {
 					binding.countryCodePickerForAdsPhone.setCountryForPhoneCode(code)
+					MyLogger.e("dhiuashdia 2 -> ${viewModel.response.value?.adsPhone} ==== ${viewModel.activatedAdvertisingPhone.value}")
+					viewModel.advertisingPhone.value = viewModel.response.value?.adsPhone
 					viewModel.initialAdsPhoneCountryCode.removeObserver(this)
 				}
 			}
@@ -168,6 +167,7 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 			override fun onChanged(code: Int?) {
 				if (code != null) {
 					binding.countryCodePickerForWhatsAppPhone.setCountryForPhoneCode(code)
+					viewModel.whatsAppPhone.value = viewModel.response.value?.whatsappPhone
 					viewModel.initialWhatsAppPhoneCountryCode.removeObserver(this)
 				}
 			}

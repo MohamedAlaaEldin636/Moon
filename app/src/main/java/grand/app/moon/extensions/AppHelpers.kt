@@ -23,7 +23,9 @@ fun ResponseMapData.toResponseStory(): ResponseStory {
 		id = id,
 		countryCode = country?.countryCode,
 		adsPhone = adsPhone,
-		whatsappPhone = whatsappPhone
+		whatsappPhone = whatsappPhone,
+		adsCountryCode = adsCountryCode,
+		whatsappCountryCode = whatsappCountryCode
 	)
 }
 fun ItemAdvertisementInResponseHome.toResponseStory(): ResponseStory {
@@ -37,7 +39,9 @@ fun ItemAdvertisementInResponseHome.toResponseStory(): ResponseStory {
 		id = store?.id,
 		countryCode = store?.country?.countryCode,
 		adsPhone = store?.adsPhone,
-		whatsappPhone = store?.whatsappPhone
+		whatsappPhone = store?.whatsappPhone,
+		adsCountryCode = store?.adsCountryCode,
+		whatsappCountryCode = store?.whatsappCountryCode
 	)
 }
 fun ItemAdvertisementInResponseHome.Store?.toResponseStory(): ResponseStory {
@@ -51,7 +55,9 @@ fun ItemAdvertisementInResponseHome.Store?.toResponseStory(): ResponseStory {
 		id = this?.id,
 		countryCode = this?.country?.countryCode,
 		adsPhone = this?.adsPhone,
-		whatsappPhone = this?.whatsappPhone
+		whatsappPhone = this?.whatsappPhone,
+		adsCountryCode = this?.adsCountryCode,
+		whatsappCountryCode = this?.whatsappCountryCode
 	)
 }
 fun ItemStoreInResponseHome?.toResponseStory(): ResponseStory {
@@ -65,7 +71,9 @@ fun ItemStoreInResponseHome?.toResponseStory(): ResponseStory {
 		id = this?.id,
 		countryCode = this?.country?.countryCode,
 		adsPhone = this?.adsPhone,
-		whatsappPhone = this?.whatsappPhone
+		whatsappPhone = this?.whatsappPhone,
+		adsCountryCode = this?.adsCountryCode,
+		whatsappCountryCode = this?.whatsappCountryCode
 	)
 }
 fun ResponseSearchResult?.toResponseStory(): ResponseStory {
@@ -79,7 +87,9 @@ fun ResponseSearchResult?.toResponseStory(): ResponseStory {
 		id = this?.id,
 		countryCode = this?.country?.countryCode,
 		adsPhone = if (this?.adsPhone.isNullOrEmpty().not()) this?.adsPhone else this?.store?.adsPhone,
-		whatsappPhone = if (this?.whatsappPhone.isNullOrEmpty().not()) this?.whatsappPhone else this?.store?.whatsappPhone
+		whatsappPhone = if (this?.whatsappPhone.isNullOrEmpty().not()) this?.whatsappPhone else this?.store?.whatsappPhone,
+		adsCountryCode = this?.adsCountryCode,
+		whatsappCountryCode = this?.whatsappCountryCode
 	)
 }
 fun ItemStoreInHomeExplore?.toResponseStory(): ResponseStory {
@@ -93,7 +103,9 @@ fun ItemStoreInHomeExplore?.toResponseStory(): ResponseStory {
 		id = this?.id,
 		countryCode = this?.country?.countryCode,
 		adsPhone = this?.adsPhone,
-		whatsappPhone = this?.whatsappPhone
+		whatsappPhone = this?.whatsappPhone,
+		adsCountryCode = this?.adsCountryCode,
+		whatsappCountryCode = this?.whatsappCountryCode
 	)
 }
 fun ResponseStoreDetails?.toResponseStory(): ResponseStory {
@@ -107,7 +119,9 @@ fun ResponseStoreDetails?.toResponseStory(): ResponseStory {
 		id = this?.id,
 		countryCode = this?.country?.countryCode,
 		adsPhone = this?.adsPhone,
-		whatsappPhone = this?.whatsappPhone
+		whatsappPhone = this?.whatsappPhone,
+		adsCountryCode = this?.adsCountryCode,
+		whatsappCountryCode = this?.whatsappCountryCode
 	)
 }
 

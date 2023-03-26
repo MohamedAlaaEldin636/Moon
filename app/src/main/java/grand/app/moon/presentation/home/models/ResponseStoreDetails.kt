@@ -5,6 +5,7 @@ import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.domain.shop.ResponseWorkingHour
 import grand.app.moon.extensions.orFalse
+import grand.app.moon.extensions.trimFirstPlusIfExistsOrEmpty
 
 fun ResponseStoreDetails?.toItemHomeExplore(): ItemStoreInHomeExplore {
 	return ItemStoreInHomeExplore(
@@ -25,7 +26,9 @@ fun ResponseStoreDetails?.toItemHomeExplore(): ItemStoreInHomeExplore {
 		this?.backgroundImage,
 		this?.averageRate,
 		this?.advertisementsCount,
-		this?.viewsCount
+		this?.viewsCount,
+		this?.adsCountryCode,
+		this?.whatsappCountryCode,
 	)
 }
 
@@ -66,14 +69,18 @@ data class ResponseStoreDetails(
 	@SerializedName("is_store") var isStore: Boolean?,
 	@SerializedName("ads_phone") var adsPhone: String?,
 	@SerializedName("whatsapp_phone") var whatsappPhone: String?,
+	@SerializedName("ads_country_code") var adsCountryCode: String?,
+	@SerializedName("whatsapp_country_code") var whatsappCountryCode: String?,
 ) {
 	val isPremium get() = premium == 1
 
 	val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
-		"${country?.countryCode.orEmpty()}${whatsappPhone.orEmpty()}"
+		val countryCode = whatsappCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+		"$countryCode${whatsappPhone.orEmpty()}"
 	}
 	val fullAdsPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
-		"${country?.countryCode.orEmpty()}${adsPhone.orEmpty()}"
+		val countryCode = adsCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+		"$countryCode${adsPhone.orEmpty()}"
 	}
 	val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
 

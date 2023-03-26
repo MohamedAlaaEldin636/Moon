@@ -1120,6 +1120,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 			repoShop.interactionForStoreWhatsApp(response.value?.id.orZero())
 		}
 
+		MyLogger.e("phoneeeeeeeeeee -> ${response.value?.fullAdsPhone.orEmpty()}")
+
 		context.launchWhatsApp(response.value?.fullWhatsAppPhone.orEmpty())
 	}
 
@@ -1131,6 +1133,8 @@ class OtherStoreDetailsViewModel @Inject constructor(
 		context.applicationScope?.launch {
 			repoShop.interactionForStoreCall(response.value?.id.orZero())
 		}
+
+		MyLogger.e("phoneeeeeeeeeee -> ${response.value?.fullAdsPhone.orEmpty()}")
 
 		context.launchDialNumber(response.value?.fullAdsPhone.orEmpty())
 	}

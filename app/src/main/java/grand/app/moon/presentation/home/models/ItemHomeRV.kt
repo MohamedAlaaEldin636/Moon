@@ -2,32 +2,37 @@ package grand.app.moon.presentation.home.models
 
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.domain.categories.entity.ItemCategory
+import grand.app.moon.extensions.trimFirstPlusIfExistsOrEmpty
 
 fun  ItemAdvertisementInResponseHome.Store.toItemStoreInResponseHome(): ItemStoreInResponseHome {
 	return ItemStoreInResponseHome(
 		id, image, name, nickname, averageRate, viewsCount, advertisementsCount,
-		isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage, adsPhone, whatsappPhone
+		isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage, adsPhone, whatsappPhone,
+		adsCountryCode, whatsappCountryCode
 	)
 }
 
 fun ResponseSearchResult.toItemStoreInResponseHome(): ItemStoreInResponseHome {
 	return ItemStoreInResponseHome(
 		id, image, name, nickname, averageRate, viewsCount, advertisementsCount,
-		isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage, adsPhone, whatsappPhone
+		isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage, adsPhone, whatsappPhone,
+		adsCountryCode, whatsappCountryCode
 	)
 }
 
 fun ItemStoreInHomeExplore.toItemStoreInResponseHome(): ItemStoreInResponseHome {
 	return ItemStoreInResponseHome(
 		id, logo, name, nickname, averageRate, viewsCount, advertisementsCount,
-		isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage, adsPhone, whatsappPhone
+		isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage, adsPhone, whatsappPhone,
+		adsCountryCode, whatsappCountryCode
 	)
 }
 
 fun ResponseStoreDetails.toItemStoreInResponseHome(): ItemStoreInResponseHome {
 	return ItemStoreInResponseHome(
 		id, image, name, nickname, averageRate, viewsCount, advertisementsCount, isFollowing, premium, hasOffer, stories, phone, createdAt, country, backgroundImage,
-		adsPhone, whatsappPhone
+		adsPhone, whatsappPhone,
+		adsCountryCode, whatsappCountryCode
 	)
 }
 
@@ -68,6 +73,8 @@ data class ItemStoreInResponseHome(
 	@SerializedName("background_image") var backgroundImage: String?,
 	@SerializedName("ads_phone") var adsPhone: String?,
 	@SerializedName("whatsapp_phone") var whatsappPhone: String?,
+	@SerializedName("ads_country_code") var adsCountryCode: String?,
+	@SerializedName("whatsapp_country_code") var whatsappCountryCode: String?,
 ) : ItemInResponseHome {
 	val isPremium get() = premium == 1
 }
@@ -281,13 +288,17 @@ data class ItemAdvertisementInResponseHome(
 		@SerializedName("advertisements_count") var advertisementsCount: Int?,
 		@SerializedName("views_count") var viewsCount: Int?,
 		@SerializedName("has_offer") var hasOffer: Boolean?,
-		var premium: Int,
+		var premium: Int?,
+		@SerializedName("ads_country_code") var adsCountryCode: String?,
+		@SerializedName("whatsapp_country_code") var whatsappCountryCode: String?,
 ) {
 		val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
-			"${country?.countryCode.orEmpty()}${whatsappPhone.orEmpty()}"
+			val countryCode = whatsappCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+			"$countryCode${whatsappPhone.orEmpty()}"
 		}
 		val fullAdsPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
-			"${country?.countryCode.orEmpty()}${adsPhone.orEmpty()}"
+			val countryCode = adsCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+			"$countryCode${adsPhone.orEmpty()}"
 		}
 		val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
  	}

@@ -1,20 +1,23 @@
 package grand.app.moon.presentation.map.model
 
 import com.google.gson.annotations.SerializedName
+import grand.app.moon.extensions.trimFirstPlusIfExistsOrEmpty
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.myStore.model.ResponseCity
 
 fun ResponseMapDataForStore.toResponseMapData(): ResponseMapData {
 	return ResponseMapData(
-		id, name, image, stories, category, latitude, longitude, phone = phone, nickname = nickname, country = country
+		id, name, image, stories, category, latitude, longitude, phone = phone, nickname = nickname, country = country,
+		adsPhone = adsPhone, adsCountryCode = adsCountryCode, whatsappPhone = whatsappPhone, whatsappCountryCode = whatsappCountryCode
 	)
 }
 fun ResponseMapDataForAdv.toResponseMapData(): ResponseMapData {
 	return ResponseMapData(
 		id, null, image, null, category?.let { listOf(it) }, latitude, longitude, title, isFavorite,
 		premium, favoriteCount, viewsCount, averageRate, createdAt, country, city, store, price, negotiable,
-		priceBefore = priceBefore, phone = phone
+		priceBefore = priceBefore, phone = phone,
+		adsPhone = adsPhone, adsCountryCode = adsCountryCode, whatsappPhone = whatsappPhone, whatsappCountryCode = whatsappCountryCode
 	)
 }
 
@@ -30,6 +33,11 @@ data class ResponseMapDataForStore(
 	var phone: String? = null,
 	var nickname: String? = null,
 	var country: ItemAdvertisementInResponseHome.Country? = null,
+
+	@SerializedName("ads_phone") var adsPhone: String? = null,
+	@SerializedName("whatsapp_phone") var whatsappPhone: String? = null,
+	@SerializedName("ads_country_code") var adsCountryCode: String? = null,
+	@SerializedName("whatsapp_country_code") var whatsappCountryCode: String? = null,
 )
 
 data class ResponseMapDataForAdv(
@@ -52,6 +60,11 @@ data class ResponseMapDataForAdv(
 	var phone: String?,
 	var id: Int?,
 	var image: String?,
+
+	@SerializedName("ads_phone") var adsPhone: String? = null,
+	@SerializedName("whatsapp_phone") var whatsappPhone: String? = null,
+	@SerializedName("ads_country_code") var adsCountryCode: String? = null,
+	@SerializedName("whatsapp_country_code") var whatsappCountryCode: String? = null,
 )
 
 /**
@@ -89,29 +102,33 @@ data class ResponseMapData(
 
 	@SerializedName("ads_phone") var adsPhone: String? = null,
 	@SerializedName("whatsapp_phone") var whatsappPhone: String? = null,
-	//var store: Store? = null,
+	//var store: Store? = null,,
+	@SerializedName("ads_country_code") var adsCountryCode: String? = null,
+	@SerializedName("whatsapp_country_code") var whatsappCountryCode: String? = null,
 ) {
 	val isNegotiable get() = negotiable == 1
 
 	fun getFullWhatsAppPhone(isStoreNotAdv: Boolean) = if (isStoreNotAdv) {
-		if (whatsappPhone.isNullOrEmpty()) getFullPhone(isStoreNotAdv) else {
-			"${country?.countryCode.orEmpty()}${store?.whatsappPhone.orEmpty()}"
+		if (store?.whatsappPhone.isNullOrEmpty()) getFullPhone(true) else {
+			store?.fullWhatsAppPhone
 		}
 	}else {
-		if (whatsappPhone.isNullOrEmpty()) getFullPhone(isStoreNotAdv) else {
-			"${country?.countryCode.orEmpty()}${whatsappPhone.orEmpty()}"
+		if (whatsappPhone.isNullOrEmpty()) getFullPhone(false) else {
+			val countryCode = whatsappCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+			"$countryCode${whatsappPhone.orEmpty()}"
 		}
 	}
 	fun getFullAdsPhone(isStoreNotAdv: Boolean) = if (isStoreNotAdv) {
-		if (whatsappPhone.isNullOrEmpty()) getFullPhone(isStoreNotAdv) else {
-			"${country?.countryCode.orEmpty()}${store?.adsPhone.orEmpty()}"
+		if (store?.adsPhone.isNullOrEmpty()) getFullPhone(true) else {
+			store?.fullAdsPhone
 		}
 	}else {
-		if (whatsappPhone.isNullOrEmpty()) getFullPhone(isStoreNotAdv) else {
-			"${country?.countryCode.orEmpty()}${adsPhone.orEmpty()}"
+		if (adsPhone.isNullOrEmpty()) getFullPhone(false) else {
+			val countryCode = adsCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+			"$countryCode${adsPhone.orEmpty()}"
 		}
 	}
-	fun getFullPhone(isStoreNotAdv: Boolean) = if (isStoreNotAdv) {
+	private fun getFullPhone(isStoreNotAdv: Boolean) = if (isStoreNotAdv) {
 		if (store?.phone.isNullOrEmpty()) "" else "${store?.country?.countryCode.orEmpty()}${store?.phone.orEmpty()}"
 	}else {
 		if (phone.isNullOrEmpty()) "" else "${country?.countryCode.orEmpty()}${phone.orEmpty()}"

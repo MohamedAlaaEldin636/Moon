@@ -66,6 +66,12 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 		) { response ->
 			viewModel.response.value = response.copy(viewsCount = response.viewsCount?.inc())
 
+			MyLogger.e("phoneeeeeeeeeee -> ${response.adsCountryCode.orEmpty()}")
+			MyLogger.e("phoneeeeeeeeeee -> ${response.adsPhone.orEmpty()}")
+			MyLogger.e("phoneeeeeeeeeee -> ${response.whatsappCountryCode.orEmpty()}")
+			MyLogger.e("phoneeeeeeeeeee -> ${response.whatsappPhone.orEmpty()}")
+			MyLogger.e("phoneeeeeeeeeee -> ${response.fullAdsPhone.orEmpty()}")
+
 			viewModel.adapterHighlights.submitList(
 				response.highlights.orEmpty()
 			)

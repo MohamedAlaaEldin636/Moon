@@ -105,10 +105,14 @@ class CreateStoreViewModel @Inject constructor(
 		it?.taxNumber.orEmpty()
 	}
 	val showNotActivatedAdsPhone = switchMapMultiple2(advertisingPhone, activatedAdvertisingPhone) {
-		(advertisingPhone.value.isNullOrEmpty() || advertisingPhone.value != activatedAdvertisingPhone.value)
+		val adsPhone = advertisingPhone.value.trimAllWhitespaces()
+		val activatedAdsPhone = activatedAdvertisingPhone.value.trimAllWhitespaces()
+		(adsPhone.isEmpty() || adsPhone != activatedAdsPhone)
 	}
 	val showNotActivatedWhatsAppPhone = switchMapMultiple2(whatsAppPhone, activatedWhatsAppPhone) {
-		(whatsAppPhone.value.isNullOrEmpty() || whatsAppPhone.value != activatedWhatsAppPhone.value)
+		val whatsAppPhone = whatsAppPhone.value.trimAllWhitespaces()
+		val activatedWhatsAppPhone = activatedWhatsAppPhone.value.trimAllWhitespaces()
+		(whatsAppPhone.isEmpty() || whatsAppPhone != activatedWhatsAppPhone)
 	}
 
 	fun changeLogoImage(view: View) {

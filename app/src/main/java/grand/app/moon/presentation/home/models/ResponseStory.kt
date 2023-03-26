@@ -7,6 +7,7 @@ import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.extensions.orFalse
 import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.toArrayList
+import grand.app.moon.extensions.trimFirstPlusIfExistsOrEmpty
 import grand.app.moon.presentation.base.utils.Constants
 
 /**
@@ -46,13 +47,17 @@ data class ResponseStory(
 	@SerializedName("chat_agent") var chatAgent: ResponseChatAgent? = null,
 	@SerializedName("ads_phone") var adsPhone: String? = null,
 	@SerializedName("whatsapp_phone") var whatsappPhone: String? = null,
+	@SerializedName("ads_country_code") var adsCountryCode: String? = null,
+	@SerializedName("whatsapp_country_code") var whatsappCountryCode: String? = null,
 ) {
 
 	val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
-		"${countryCode.orEmpty()}${whatsappPhone.orEmpty()}"
+		val countryCode = whatsappCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+		"$countryCode${whatsappPhone.orEmpty()}"
 	}
 	val fullAdsPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
-		"${countryCode.orEmpty()}${adsPhone.orEmpty()}"
+		val countryCode = adsCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+		"$countryCode${adsPhone.orEmpty()}"
 	}
 	val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${countryCode.orEmpty()}${phone.orEmpty()}"
 
