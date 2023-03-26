@@ -38,6 +38,9 @@ class CreateStoreViewModel @Inject constructor(
 	val showValidPhoneNumForAdsPhone = MutableLiveData(false)
 	val showValidPhoneNumForWhatsAppPhone = MutableLiveData(false)
 
+	val initialAdsPhoneCountryCode = MutableLiveData<Int?>(null)
+	val initialWhatsAppPhoneCountryCode = MutableLiveData<Int?>(null)
+
 	val response = MutableLiveData<ResponseMyStoreDetails>()
 
 	val backgroundImage = response.mapNullableToMutableLiveData<ResponseMyStoreDetails, GlideImageViaXmlModel> {
@@ -173,7 +176,7 @@ class CreateStoreViewModel @Inject constructor(
 
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
-				repoShop.sendCode(adsCountryCode, adsPhone)
+				repoShop.sendCode(adsCountryCode, adsPhone, true)
 			}
 		) {
 			fragment.setFragmentResultListenerUsingJson<Boolean>(ConfirmCodeFragment.KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED) {
@@ -204,7 +207,7 @@ class CreateStoreViewModel @Inject constructor(
 
 		fragment.handleRetryAbleActionCancellableNullable(
 			action = {
-				repoShop.sendCode(whatsAppCountryCode, whatsAppPhone)
+				repoShop.sendCode(whatsAppCountryCode, whatsAppPhone, false)
 			}
 		) {
 			fragment.setFragmentResultListenerUsingJson<Boolean>(ConfirmCodeFragment.KEY_FRAGMENT_RESULT_VERIFICATION_SUCCEEDED) {
@@ -256,11 +259,16 @@ class CreateStoreViewModel @Inject constructor(
 			return fragment.showError(fragment.getString(R.string.whatsapp_phone_num_is_not_activated))
 		}
 
+		// Both will be ignored and not sent since on verify will be auto-updated cuz backend can't do it.
+		val adsPhoneCountryCode = fragment.binding.countryCodePickerForAdsPhone.selectedCountryCodeWithPlus
 		val adsPhone = if (showNotActivatedAdsPhone.value == true) null else {
-			fragment.binding.countryCodePickerForAdsPhone.fullNumberWithPlus.trimAllWhitespaces().orNullIfNullOrEmpty()
+			fragment.binding.countryCodePickerForAdsPhone.fullNumberWithPlus.trimAllWhitespaces()
+				.orNullIfNullOrEmpty()?.substringAfter(adsPhoneCountryCode).orNullIfNullOrEmpty()
 		}
+		val whatsAppPhoneCountryCode = fragment.binding.countryCodePickerForAdsPhone.selectedCountryCodeWithPlus
 		val whatsAppPhone = if (showNotActivatedWhatsAppPhone.value == true) null else {
-			fragment.binding.countryCodePickerForWhatsAppPhone.fullNumberWithPlus.trimAllWhitespaces().orNullIfNullOrEmpty()
+			fragment.binding.countryCodePickerForWhatsAppPhone.fullNumberWithPlus.trimAllWhitespaces()
+				.orNullIfNullOrEmpty()?.substringAfter(whatsAppPhoneCountryCode).orNullIfNullOrEmpty()
 		}
 
 		fragment.handleRetryAbleActionCancellableNullable(
@@ -281,8 +289,11 @@ class CreateStoreViewModel @Inject constructor(
 					advertisingLink.value.orEmpty(),
 					email.value.orEmpty(),
 					websiteLink.value.orEmpty(),
-					adsPhone,
-					whatsAppPhone,
+					// Both will be ignored and not sent since on verify will be auto-updated cuz backend can't do it.
+					null/*if (adsPhone.isNullOrEmpty()) null else adsPhoneCountryCode*/,
+					null/*adsPhone*/,
+					null/*if (whatsAppPhone.isNullOrEmpty()) null else whatsAppPhoneCountryCode*/,
+					null/*whatsAppPhone*/,
 					taxNumber.value.orEmpty(),
 				)
 			}

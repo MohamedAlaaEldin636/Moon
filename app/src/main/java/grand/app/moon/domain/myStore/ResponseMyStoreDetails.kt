@@ -36,6 +36,9 @@ data class ResponseMyStoreDetails(
 	@SerializedName("sub_categories_status") var subCategories: Boolean?,
 	@SerializedName("working_hours_status") var workingHours: Boolean?,
 	@SerializedName("social_media_links_status") var socialMediaLinks: Boolean?,
+
+	@SerializedName("ads_country_code") var adsCountryCode: String?,
+	@SerializedName("whatsapp_country_code") var whatsappCountryCode: String?,
 )
 /*
 "store_info_status":false,

@@ -831,7 +831,7 @@ class RepoShop @Inject constructor(
 
 	suspend fun getExploreDetails(id: Int) = remoteDataSource.getExploreDetails(id)
 
-	suspend fun sendCode(countryCode: String, phone: String) = remoteDataSource.sendCode(countryCode, phone)
+	suspend fun sendCode(countryCode: String, phone: String, isForAdsNotWhatsApp: Boolean) = remoteDataSource.sendCode(countryCode, phone, isForAdsNotWhatsApp)
 
 	suspend fun getRestOfDaysInMyPackageIfHaveOneOrZeroInstead() =
 		remoteDataSource.getRestOfDaysInMyPackageIfHaveOneOrZeroInstead()

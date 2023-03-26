@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import grand.app.moon.core.extenstions.actOnGetIfNotInitialValueOrGetLiveData
 import dagger.hilt.android.AndroidEntryPoint
@@ -91,6 +92,27 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 		) { responseShopDetails ->
 			viewModel.response.value = responseShopDetails
 
+			val adsPhone = responseShopDetails.adsPhone.orEmpty()
+			if (adsPhone.isNotEmpty()) {
+				viewModel.activatedAdvertisingPhone.value = adsPhone
+				val countryCode = responseShopDetails.adsCountryCode?.let {
+					if (it[0] == '+') it.substring(1) else it
+				}?.toIntOrNull()
+				if (countryCode != null) {
+					viewModel.initialAdsPhoneCountryCode.value = countryCode
+				}
+			}
+			val whatsappPhone = responseShopDetails.whatsappPhone.orEmpty()
+			if (whatsappPhone.isNotEmpty()) {
+				viewModel.activatedWhatsAppPhone.value = whatsappPhone
+				val countryCode = responseShopDetails.whatsappCountryCode?.let {
+					if (it[0] == '+') it.substring(1) else it
+				}?.toIntOrNull()
+				if (countryCode != null) {
+					viewModel.initialWhatsAppPhoneCountryCode.value = countryCode
+				}
+			}
+
 			handleRetryAbleActionOrGoBack(
 				action = {
 					viewModel.useCaseShop.getCitiesWithAreas()
@@ -133,6 +155,23 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 		viewModel.whatsAppPhone.observe(viewLifecycleOwner) {
 			viewModel.showValidPhoneNumForWhatsAppPhone.value = binding.countryCodePickerForWhatsAppPhone.isValidFullNumber
 		}
+
+		viewModel.initialAdsPhoneCountryCode.observe(viewLifecycleOwner, object : Observer<Int?> {
+			override fun onChanged(code: Int?) {
+				if (code != null) {
+					binding.countryCodePickerForAdsPhone.setCountryForPhoneCode(code)
+					viewModel.initialAdsPhoneCountryCode.removeObserver(this)
+				}
+			}
+		})
+		viewModel.initialWhatsAppPhoneCountryCode.observe(viewLifecycleOwner, object : Observer<Int?> {
+			override fun onChanged(code: Int?) {
+				if (code != null) {
+					binding.countryCodePickerForWhatsAppPhone.setCountryForPhoneCode(code)
+					viewModel.initialWhatsAppPhoneCountryCode.removeObserver(this)
+				}
+			}
+		})
 
 		findNavController().currentBackStackEntry?.savedStateHandle?.actOnGetIfNotInitialValueOrGetLiveData(
 			LocationSelectionFragment.KEY_FRAGMENT_RESULT_LOCATION_DATA_AS_JSON,

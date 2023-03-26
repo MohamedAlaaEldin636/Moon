@@ -832,7 +832,13 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun getExploreDetails(id: Int) = safeApiCall { apiService.getExploreDetails(id) }
 
-	suspend fun sendCode(countryCode: String, phone: String) = safeApiCall { apiService.sendCode(countryCode, phone) }
+	suspend fun sendCode(countryCode: String, phone: String, isForAdsNotWhatsApp: Boolean) = safeApiCall {
+		apiService.sendCode(
+			countryCode,
+			phone,
+			if (isForAdsNotWhatsApp) "4" else "3"
+		)
+	}
 
 	suspend fun getRestOfDaysInMyPackageIfHaveOneOrZeroInstead() = safeApiCall {
 		apiService.getRestOfDaysInMyPackageIfHaveOneOrZeroInstead()

@@ -58,7 +58,9 @@ class PackagesRemoteDataSource @Inject constructor(private val apiService: Packa
 		advertisingWebsite: String?,
 		email: String?,
 		websiteLink: String?,
+		adsPhoneCountryCode: String?,
 		adsPhone: String?,
+		whatsappPhoneCountryCode: String?,
 		whatsappPhone: String?,
 		taxNumber: String?,
 	) = safeApiCall {
@@ -74,10 +76,12 @@ class PackagesRemoteDataSource @Inject constructor(private val apiService: Packa
 		if (websiteLink.isNullOrEmpty().not()) {
 			map["website"] = websiteLink.orEmpty().toRequestBody()
 		}
-		if (adsPhone.isNullOrEmpty().not()) {
+		if (adsPhone.isNullOrEmpty().not() && adsPhoneCountryCode.isNullOrEmpty().not()) {
+			map["ads_country_code"] = adsPhoneCountryCode.orEmpty().toRequestBody()
 			map["ads_phone"] = adsPhone.orEmpty().toRequestBody()
 		}
-		if (whatsappPhone.isNullOrEmpty().not()) {
+		if (whatsappPhone.isNullOrEmpty().not() && whatsappPhoneCountryCode.isNullOrEmpty().not()) {
+			map["whatsapp_country_code"] = whatsappPhoneCountryCode.orEmpty().toRequestBody()
 			map["whatsapp_phone"] = whatsappPhone.orEmpty().toRequestBody()
 		}
 		if (taxNumber.isNullOrEmpty().not()) {

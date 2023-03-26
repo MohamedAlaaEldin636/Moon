@@ -71,12 +71,15 @@ class RepositoryPackages @Inject constructor(
 		advertisingWebsite: String?,
 		email: String?,
 		websiteLink: String?,
+		adsPhoneCountryCode: String?,
 		adsPhone: String?,
+		whatsappPhoneCountryCode: String?,
 		whatsappPhone: String?,
 		taxNumber: String?,
 	) = packagesRemoteDataSource.addOrUpdateStore(
 		coverImage, logoImage, storeName, userName, cityId, areaId, latitude, longitude, address,
-		description, advertisingWebsite, email, websiteLink, adsPhone, whatsappPhone, taxNumber
+		description, advertisingWebsite, email, websiteLink, adsPhoneCountryCode, adsPhone,
+		whatsappPhoneCountryCode, whatsappPhone, taxNumber
 	)
 
 }
