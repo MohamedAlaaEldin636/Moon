@@ -5,7 +5,6 @@ import grand.app.moon.domain.categories.entity.ItemCategory
 import grand.app.moon.domain.shop.ResponseStoreSocialMedia
 import grand.app.moon.domain.shop.ResponseWorkingHour
 import grand.app.moon.extensions.orFalse
-import grand.app.moon.extensions.trimFirstPlusIfExistsOrEmpty
 
 fun ResponseStoreDetails?.toItemHomeExplore(): ItemStoreInHomeExplore {
 	return ItemStoreInHomeExplore(
@@ -75,11 +74,11 @@ data class ResponseStoreDetails(
 	val isPremium get() = premium == 1
 
 	val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
-		val countryCode = whatsappCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+		val countryCode = whatsappCountryCode.orEmpty()
 		"$countryCode${whatsappPhone.orEmpty()}"
 	}
 	val fullAdsPhone get() = if (adsPhone.isNullOrEmpty()) fullPhone else {
-		val countryCode = adsCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+		val countryCode = adsCountryCode.orEmpty()
 		"$countryCode${adsPhone.orEmpty()}"
 	}
 	val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${country?.countryCode.orEmpty()}${phone.orEmpty()}"

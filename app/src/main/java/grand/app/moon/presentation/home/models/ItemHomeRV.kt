@@ -2,7 +2,6 @@ package grand.app.moon.presentation.home.models
 
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.domain.categories.entity.ItemCategory
-import grand.app.moon.extensions.trimFirstPlusIfExistsOrEmpty
 
 fun  ItemAdvertisementInResponseHome.Store.toItemStoreInResponseHome(): ItemStoreInResponseHome {
 	return ItemStoreInResponseHome(
@@ -293,11 +292,11 @@ data class ItemAdvertisementInResponseHome(
 		@SerializedName("whatsapp_country_code") var whatsappCountryCode: String?,
 ) {
 		val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
-			val countryCode = whatsappCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+			val countryCode = whatsappCountryCode.orEmpty()
 			"$countryCode${whatsappPhone.orEmpty()}"
 		}
 		val fullAdsPhone get() = if (adsPhone.isNullOrEmpty()) fullPhone else {
-			val countryCode = adsCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+			val countryCode = adsCountryCode.orEmpty()
 			"$countryCode${adsPhone.orEmpty()}"
 		}
 		val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${country?.countryCode.orEmpty()}${phone.orEmpty()}"

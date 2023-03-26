@@ -7,7 +7,6 @@ import grand.app.moon.domain.story.entity.StoryItem
 import grand.app.moon.extensions.orFalse
 import grand.app.moon.extensions.orZero
 import grand.app.moon.extensions.toArrayList
-import grand.app.moon.extensions.trimFirstPlusIfExistsOrEmpty
 import grand.app.moon.presentation.base.utils.Constants
 
 /**
@@ -52,11 +51,11 @@ data class ResponseStory(
 ) {
 
 	val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
-		val countryCode = whatsappCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+		val countryCode = whatsappCountryCode.orEmpty()
 		"$countryCode${whatsappPhone.orEmpty()}"
 	}
 	val fullAdsPhone get() = if (adsPhone.isNullOrEmpty()) fullPhone else {
-		val countryCode = adsCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+		val countryCode = adsCountryCode.orEmpty()
 		"$countryCode${adsPhone.orEmpty()}"
 	}
 	val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${countryCode.orEmpty()}${phone.orEmpty()}"

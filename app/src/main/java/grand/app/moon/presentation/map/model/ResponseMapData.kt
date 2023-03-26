@@ -1,10 +1,8 @@
 package grand.app.moon.presentation.map.model
 
 import com.google.gson.annotations.SerializedName
-import grand.app.moon.extensions.trimFirstPlusIfExistsOrEmpty
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ResponseStory
-import grand.app.moon.presentation.myStore.model.ResponseCity
 
 fun ResponseMapDataForStore.toResponseMapData(): ResponseMapData {
 	return ResponseMapData(
@@ -114,7 +112,7 @@ data class ResponseMapData(
 		}
 	}else {
 		if (whatsappPhone.isNullOrEmpty()) getFullPhone(false) else {
-			val countryCode = whatsappCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+			val countryCode = whatsappCountryCode.orEmpty()
 			"$countryCode${whatsappPhone.orEmpty()}"
 		}
 	}
@@ -124,7 +122,7 @@ data class ResponseMapData(
 		}
 	}else {
 		if (adsPhone.isNullOrEmpty()) getFullPhone(false) else {
-			val countryCode = adsCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
+			val countryCode = adsCountryCode.orEmpty()
 			"$countryCode${adsPhone.orEmpty()}"
 		}
 	}
