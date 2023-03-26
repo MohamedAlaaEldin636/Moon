@@ -6,6 +6,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import grand.app.moon.core.extenstions.*
 import grand.app.moon.data.home.repository.HomeRepositoryImpl
 import grand.app.moon.data.local.preferences.AppPreferences
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.ads.DynamicFilterProperty
 import grand.app.moon.domain.ads.ResponseFilterProperties
 import grand.app.moon.domain.ads.toResponseFilterProperties
@@ -819,12 +820,24 @@ class RepoShop @Inject constructor(
 	suspend fun interactionForAdChat(advId: Int) = remoteDataSource.interactionForAdv(
 		advId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CHAT
 	)
-	suspend fun interactionForStoreWhatsApp(storeId: Int) = remoteDataSource.interactionForStore(
-		storeId, ShopRemoteDataSource.TypeAdOrStoreInteraction.WHATSAPP
-	)
-	suspend fun interactionForStoreCall(storeId: Int) = remoteDataSource.interactionForStore(
-		storeId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CALL
-	)
+	suspend fun interactionForStoreWhatsApp(storeId: Int): Resource<BaseResponse<Any?>> {
+		return if (appContext.isLogin()) {
+			remoteDataSource.interactionForStore(
+				storeId, ShopRemoteDataSource.TypeAdOrStoreInteraction.WHATSAPP
+			)
+		}else {
+			Resource.Success(BaseResponse(null, "", 200))
+		}
+	}
+	suspend fun interactionForStoreCall(storeId: Int): Resource<BaseResponse<Any?>> {
+		return if (appContext.isLogin()) {
+			remoteDataSource.interactionForStore(
+				storeId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CALL
+			)
+		}else {
+			Resource.Success(BaseResponse(null, "", 200))
+		}
+	}
 	suspend fun interactionForStoreChat(storeId: Int) = remoteDataSource.interactionForStore(
 		storeId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CHAT
 	)
