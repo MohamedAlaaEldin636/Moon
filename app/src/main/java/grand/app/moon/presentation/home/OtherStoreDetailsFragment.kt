@@ -28,6 +28,7 @@ import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.utils.MACometChatUtils
 import grand.app.moon.presentation.home.viewModels.OtherStoreDetailsViewModel
 import grand.app.moon.presentation.myAds.MyAdsFragment
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -68,6 +69,7 @@ class OtherStoreDetailsFragment : BaseFragment<FragmentOtherStoreDetailsBinding>
 
 			MyLogger.e("phoneeeeeeeeeee -> ${response.adsCountryCode.orEmpty()}")
 			MyLogger.e("phoneeeeeeeeeee -> ${response.adsPhone.orEmpty()}")
+			MyLogger.e("phoneeeeeeeeeee full -> ${response.fullAdsPhone.orEmpty()}")
 			MyLogger.e("phoneeeeeeeeeee -> ${response.whatsappCountryCode.orEmpty()}")
 			MyLogger.e("phoneeeeeeeeeee -> ${response.whatsappPhone.orEmpty()}")
 			MyLogger.e("phoneeeeeeeeeee -> ${response.fullAdsPhone.orEmpty()}")

@@ -296,7 +296,7 @@ data class ItemAdvertisementInResponseHome(
 			val countryCode = whatsappCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
 			"$countryCode${whatsappPhone.orEmpty()}"
 		}
-		val fullAdsPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
+		val fullAdsPhone get() = if (adsPhone.isNullOrEmpty()) fullPhone else {
 			val countryCode = adsCountryCode.orEmpty().trimFirstPlusIfExistsOrEmpty()
 			"$countryCode${adsPhone.orEmpty()}"
 		}
