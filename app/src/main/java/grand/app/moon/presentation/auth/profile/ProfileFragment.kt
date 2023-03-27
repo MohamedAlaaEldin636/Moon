@@ -28,7 +28,9 @@ import grand.app.moon.R
 import grand.app.moon.core.extenstions.showPopup
 import grand.app.moon.databinding.FragmentProfileBinding
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
+import grand.app.moon.domain.shop.MAImagesOrVideo
 import grand.app.moon.domain.utils.Resource
+import grand.app.moon.extensions.PickImagesOrVideoHandler
 import grand.app.moon.extensions.toStringOrEmpty
 import grand.app.moon.helpers.utils.getUriFromBitmapRetrievedByCamera
 import grand.app.moon.helpers.utils.handleCaptureImageRotation
@@ -43,6 +45,26 @@ import java.util.*
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
   private val viewModel: ProfileViewModel by viewModels()
+
+	var gettingImagesOrVideoHandler: PickImagesOrVideoHandler? = null
+		private set
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		gettingImagesOrVideoHandler = PickImagesOrVideoHandler(
+			this,
+			PickImagesOrVideoHandler.SupportedMediaType.IMAGE,
+			requestMultipleImages = false,
+			getAnchor = { _binding?.imgProfile }
+		) { uris, _, _ ->
+			val uri = uris.firstOrNull() ?: return@PickImagesOrVideoHandler
+
+			viewModel.request.uri = uri
+			loadImageProfile()
+			navigateSafe(ProfileFragmentDirections.actionProfileFragmentToCropFragment(viewModel.request))
+		}
+
+		super.onCreate(savedInstanceState)
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -97,11 +119,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     viewModel.submitEvent.observe(this) {
       when (it) {
         Constants.PICKER_IMAGE -> {
-	        permissionLocationRequest.launch(arrayOf(
+					gettingImagesOrVideoHandler?.requestImageOrVideo()
+	        /*permissionLocationRequest.launch(arrayOf(
 		        Manifest.permission.READ_EXTERNAL_STORAGE,
 		        Manifest.permission.WRITE_EXTERNAL_STORAGE,
 		        Manifest.permission.CAMERA,
-	        ))
+	        ))*/
 //          singleTedBottomPicker(requireActivity())
         }
       }
