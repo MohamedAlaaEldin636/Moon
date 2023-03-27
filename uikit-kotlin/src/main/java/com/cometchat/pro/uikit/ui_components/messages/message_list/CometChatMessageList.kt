@@ -1634,6 +1634,7 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
+	  MyLogger.e("dhaisudhasiuda ${item.itemId == android.R.id.home} ${item.itemId} == ${android.R.id.home}")
     if (item.itemId == android.R.id.home) {
       if (activity != null) {
         activity?.onBackPressed()
