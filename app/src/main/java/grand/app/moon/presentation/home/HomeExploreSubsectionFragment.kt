@@ -65,7 +65,12 @@ class HomeExploreSubsectionFragment : BaseFragment<FragmentHomeExploreSubsection
 		binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 			override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
 				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+					MyLogger.e("Checking RV IDLE")
 					loadVideo()
+				}else {
+					MyLogger.e("Checking RV Dragging ${newState == RecyclerView.SCROLL_STATE_DRAGGING} === Settling ${newState == RecyclerView.SCROLL_STATE_SETTLING}")
+
+					hideVideoIfCompletelyInvisible()
 				}
 			}
 		})
@@ -89,6 +94,33 @@ class HomeExploreSubsectionFragment : BaseFragment<FragmentHomeExploreSubsection
 		}
 
 		super.onDestroyView()
+	}
+
+	private fun hideVideoIfCompletelyInvisible() {
+		val currentLink = viewModel.player?.currentMediaItem?.localConfiguration?.uri?.toString().orEmpty()
+		MyLogger.e("Checking RV currentLink $currentLink")
+		if (currentLink.isEmpty()) return
+
+		// All partially visible items
+		val start = binding.recyclerView.layoutManager.findFirstVisibleItemPosition() ?: return
+		val end = binding.recyclerView.layoutManager.findLastVisibleItemPosition() ?: return
+
+		MyLogger.e("Checking RV start $start end $end")
+
+		for (index in start..end) {
+			if (viewModel.adapter.snapshot().items.getOrNull(index)?.isVideo.orFalse()) {
+				val item = viewModel.adapter.snapshot().items.getOrNull(index) ?: continue
+				val link = item.files?.firstOrNull().orEmpty()
+
+				MyLogger.e("Checking RV link == currentLink ${link == currentLink} ---- link $link")
+
+				if (link == currentLink) return
+			}
+		}
+
+		MyLogger.e("Checking RV pre release player")
+
+		viewModel.releasePlayer()
 	}
 
 	private fun loadVideo() {

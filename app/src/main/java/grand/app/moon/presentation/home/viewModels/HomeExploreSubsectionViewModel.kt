@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.home.viewModels
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.view.View
@@ -65,6 +66,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 	var player: ExoPlayer? = null
 		private set
 
+	@SuppressLint("SetTextI18n")
 	val adapter = RVPagingItemCommonListUsage<ItemHomeExploreSubsectionBinding, ItemHomeExplore>(
 		R.layout.item_home_explore_subsection,
 		additionalListenersSetups = { adapter, binding ->
@@ -267,7 +269,7 @@ class HomeExploreSubsectionViewModel @Inject constructor(
 		binding.likesCountTextView.text = "${item.likesCount.orZero()} ${context.getString(R.string.like)}"
 		binding.sharesCountTextView.text = "${item.sharesCount.orZero()} ${context.getString(R.string.share)}"
 
-		binding.commentsCountTextView.text = context.getString(R.string.show_all_var_comments, item.commentsCount.orZero())
+		binding.commentsCountTextView.text = context.getString(R.string.show_all_var_comments, item.commentsCount.orZero().toString())
 	}
 
 	fun playVideo(context: Context, videoLink: String): Player? {
