@@ -55,9 +55,9 @@ class AddAdvFinalPageViewModel @Inject constructor(
 
 	val addressLabel: CharSequence = app.getAsRequiredText(getString(R.string.address_advertisement))
 
-	val price = MutableLiveData(response?.price?.toString().orEmpty())
+	val price = MutableLiveData(response?.price?.toIntIfNoFractionsOrThisFloat()?.toString().orEmpty())
 
-	val priceBeforeDiscount = MutableLiveData(response?.priceBeforeDiscount?.toString().orEmpty())
+	val priceBeforeDiscount = MutableLiveData(response?.priceBeforeDiscount?.toIntIfNoFractionsOrThisFloat()?.toString().orEmpty())
 
 	val title = MutableLiveData(response?.title.orEmpty())
 

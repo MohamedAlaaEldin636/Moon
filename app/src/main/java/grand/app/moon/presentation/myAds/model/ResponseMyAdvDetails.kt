@@ -47,7 +47,7 @@ data class ResponseMyAdvDetails(
 	var city: ItemCityInAdvDetails?,
 	var brand: ItemBrandInAdvDetails?,
 
-	@SerializedName("price_before") var priceBeforeDiscount: Int?,
+	@SerializedName("price_before") var priceBeforeDiscount: Float?,
 	@SerializedName("store_category_id") var storeCategoryId: Int?,
 	@SerializedName("store_sub_category_id") var storeSubCategoryId: Int?,
 
