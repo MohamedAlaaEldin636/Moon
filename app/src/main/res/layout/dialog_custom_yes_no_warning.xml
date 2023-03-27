@@ -52,7 +52,7 @@
       android:textDirection="locale"
       style="@style/TextTajawalBold14"
       android:textSize="17sp"
-      tools:text="تأكيدالحذف"
+      tools:text="تأكيد الحذف"
 
       app:layout_constraintTop_toBottomOf="@id/lottieAnimationView"
       app:layout_constraintStart_toStartOf="parent"

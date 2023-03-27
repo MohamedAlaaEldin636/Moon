@@ -72,7 +72,7 @@
       tools:text="@string/back"
 
       android:background="@drawable/dr_rounded_5_text_field_with_bg"
-      app:backgroundTint="@color/errorIndication"
+      app:backgroundTint="#E89028"
 
       app:layout_constraintTop_toTopOf="@id/positiveButton"
       app:layout_constraintStart_toEndOf="@id/positiveButton"

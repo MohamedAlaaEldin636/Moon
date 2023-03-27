@@ -249,7 +249,7 @@
   <string name="no_link_exists">لا يوجد لينك</string>
     <string name="yes_confirm">نعم تأكيد</string>
   <string name="no_thanks">لا شكرا</string>
-  <string name="confirm_deletion">تأكيدالحذف</string>
+  <string name="confirm_deletion">تأكيد الحذف</string>
   <string name="are_you_sure_del_ad">هل تريد تأكيد حذف الإعلان من حسابك ؟</string>
   <string name="done_successfully">تم بنجاح</string>
   <string name="at_least_1_image_898">على الأقل صورة واحدة يجب ان تبقى</string>
