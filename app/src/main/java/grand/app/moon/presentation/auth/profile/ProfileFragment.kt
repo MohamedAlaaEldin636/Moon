@@ -97,7 +97,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     viewModel.submitEvent.observe(this) {
       when (it) {
         Constants.PICKER_IMAGE -> {
-          pickImageOrRequestPermissions()
+	        permissionLocationRequest.launch(arrayOf(
+		        Manifest.permission.READ_EXTERNAL_STORAGE,
+		        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+		        Manifest.permission.CAMERA,
+	        ))
 //          singleTedBottomPicker(requireActivity())
         }
       }

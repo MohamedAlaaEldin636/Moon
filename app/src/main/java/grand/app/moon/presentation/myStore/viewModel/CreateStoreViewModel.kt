@@ -255,11 +255,11 @@ class CreateStoreViewModel @Inject constructor(
 		}
 
 		if (advertisingPhone.value.isNullOrEmpty().not()
-			&& activatedAdvertisingPhone.value != advertisingPhone.value) {
+			&& activatedAdvertisingPhone.value.trimAllWhitespaces() != advertisingPhone.value.trimAllWhitespaces()) {
 			return fragment.showError(fragment.getString(R.string.contact_phone_num_is_not_activated))
 		}
 		if (whatsAppPhone.value.isNullOrEmpty().not()
-			&& activatedWhatsAppPhone.value != whatsAppPhone.value) {
+			&& activatedWhatsAppPhone.value.trimAllWhitespaces() != whatsAppPhone.value.trimAllWhitespaces()) {
 			return fragment.showError(fragment.getString(R.string.whatsapp_phone_num_is_not_activated))
 		}
 

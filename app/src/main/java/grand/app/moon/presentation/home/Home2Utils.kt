@@ -298,6 +298,8 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 				repoShop.interactionForAdCall(item.id.orZero())
 			}
 
+			MyLogger.e("")
+
 			context.launchDialNumber(item.store?.fullAdsPhone.orEmpty())
 		}
 		binding.chatImageView.setOnClickListener {

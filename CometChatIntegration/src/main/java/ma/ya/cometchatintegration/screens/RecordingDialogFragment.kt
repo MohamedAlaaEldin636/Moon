@@ -2,9 +2,7 @@ package ma.ya.cometchatintegration.screens
 
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
-import android.view.View
-import android.view.Window
+import android.view.*
 import androidx.annotation.CallSuper
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -45,6 +43,16 @@ class RecordingDialogFragment : MADialogFragment<DialogFragmentRecordingBinding>
 
 	override fun initializeBindingVariables() {
 		binding.viewModel = viewModel
+	}
+
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		return super.onCreateView(inflater, container, savedInstanceState).apply {
+			viewModel.createRecorderIfNeedsTo()
+		}
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

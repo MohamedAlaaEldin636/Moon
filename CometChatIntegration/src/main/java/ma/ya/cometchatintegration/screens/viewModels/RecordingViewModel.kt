@@ -1,6 +1,7 @@
 package ma.ya.cometchatintegration.screens.viewModels
 
 import android.app.Application
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.view.View
@@ -26,8 +27,16 @@ class RecordingViewModel(application: Application) : AndroidViewModel(applicatio
 	private val filePath = "${app.externalCacheDir?.absolutePath.orEmpty()}/" +
 		"audio_record_moon_${System.currentTimeMillis()}.3gp" // 3gp
 
-	val recorder = app.createMediaRecorderOrNull(filePath)
-	// todo if all are released in onCreate view then create it isa.
+	private var allAreReleased = true
+
+	var recorder: MediaRecorder? = null
+
+	fun createRecorderIfNeedsTo() {
+		if (allAreReleased) {
+			allAreReleased = false
+			recorder = app.createMediaRecorderOrNull(filePath)
+		}
+	}
 
 	private var player: ExoPlayer? = null
 
@@ -91,8 +100,6 @@ class RecordingViewModel(application: Application) : AndroidViewModel(applicatio
 
 	val isPlayingSound = MutableLiveData(false)
 	val isLoadingSound = MutableLiveData(false)
-
-	private var allAreReleased = false
 
 	private var pausedRecording = false
 	private var pausedPlaying = false

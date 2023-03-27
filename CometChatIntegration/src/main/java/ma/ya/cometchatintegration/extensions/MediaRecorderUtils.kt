@@ -27,6 +27,8 @@ fun Context.createMediaRecorderOrNull(outputFilePath: String): MediaRecorder? {
 
 		try {
 			prepare()
+
+			MyLogger.e("prepare() of recorder succeeded")
 		} catch (throwable: Throwable) {
 			MyLogger.e("prepare() of recorder failed $throwable")
 

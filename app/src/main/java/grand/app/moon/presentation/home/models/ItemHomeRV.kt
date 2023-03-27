@@ -290,6 +290,7 @@ data class ItemAdvertisementInResponseHome(
 		var premium: Int?,
 		@SerializedName("ads_country_code") var adsCountryCode: String?,
 		@SerializedName("whatsapp_country_code") var whatsappCountryCode: String?,
+		@SerializedName("country_code") var countryCode: String?,
 ) {
 		val fullWhatsAppPhone get() = if (whatsappPhone.isNullOrEmpty()) fullPhone else {
 			val countryCode = whatsappCountryCode.orEmpty()
@@ -299,7 +300,7 @@ data class ItemAdvertisementInResponseHome(
 			val countryCode = adsCountryCode.orEmpty()
 			"$countryCode${adsPhone.orEmpty()}"
 		}
-		val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${country?.countryCode.orEmpty()}${phone.orEmpty()}"
+		val fullPhone get() = if (phone.isNullOrEmpty()) "" else "${countryCode.orEmpty()}${phone.orEmpty()}"
  	}
 }
 
