@@ -86,7 +86,7 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 			}
 		}
 
-		apiService.saveSocialMedia(map)
+		if (map.isNotEmpty()) apiService.saveSocialMedia(map) else apiService.saveSocialMediaEmpty()
 	}
 
 	suspend fun getClientsReviews(

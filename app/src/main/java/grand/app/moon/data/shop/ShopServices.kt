@@ -97,6 +97,8 @@ interface ShopServices {
 	suspend fun saveSocialMedia(
 		@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>
 	): BaseResponse<Any?>
+	@POST("v1/profile/social-media")
+	suspend fun saveSocialMediaEmpty(): BaseResponse<Any?>
 
 	@GET("v1/profile/reviews")
 	suspend fun getClientsReviews(
