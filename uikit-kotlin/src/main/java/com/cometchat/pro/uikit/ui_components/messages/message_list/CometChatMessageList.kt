@@ -97,6 +97,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
+import ma.ya.cometchatintegration.extensions.hideKeyboard
 import ma.ya.cometchatintegration.extensions.setFragmentResultListenerUsingJson
 import ma.ya.cometchatintegration.extensions.showDialogFragment
 import ma.ya.cometchatintegration.helperClasses.*
@@ -2812,6 +2813,8 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
         startActivity(intent)
       }
     } else if (id == R.id.iv_back_arrow) {
+			hideKeyboard()
+
       activity?.onBackPressed()
     }
   }
