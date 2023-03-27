@@ -811,12 +811,24 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getFollowedStores(categoryId, it)
 	}
 	
-	suspend fun interactionForAdWhatsApp(advId: Int) = remoteDataSource.interactionForAdv(
-		advId, ShopRemoteDataSource.TypeAdOrStoreInteraction.WHATSAPP
-	)
-	suspend fun interactionForAdCall(advId: Int) = remoteDataSource.interactionForAdv(
-		advId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CALL
-	)
+	suspend fun interactionForAdWhatsApp(advId: Int): Resource<BaseResponse<Any?>> {
+		return if (appContext.isLogin()) {
+			remoteDataSource.interactionForAdv(
+				advId, ShopRemoteDataSource.TypeAdOrStoreInteraction.WHATSAPP
+			)
+		}else {
+			Resource.Success(BaseResponse(null, "", 200))
+		}
+	}
+	suspend fun interactionForAdCall(advId: Int): Resource<BaseResponse<Any?>> {
+		return if (appContext.isLogin()) {
+			remoteDataSource.interactionForAdv(
+				advId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CALL
+			)
+		}else {
+			Resource.Success(BaseResponse(null, "", 200))
+		}
+	}
 	suspend fun interactionForAdChat(advId: Int) = remoteDataSource.interactionForAdv(
 		advId, ShopRemoteDataSource.TypeAdOrStoreInteraction.CHAT
 	)
