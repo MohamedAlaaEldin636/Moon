@@ -1,6 +1,8 @@
 package grand.app.moon.extensions
 
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.getSystemService
 import androidx.core.os.bundleOf
 import androidx.core.view.postDelayed
 import androidx.fragment.app.*
@@ -13,6 +15,21 @@ import androidx.paging.PagingDataAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
+fun Fragment.hideKeyboardNew() {
+	// Get the InputMethodManager
+	val inputMethodManager = activity?.getSystemService<InputMethodManager>() ?: return
+
+	// Hide the keyboard
+	inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+
+	/*
+	var view = activity.currentFocus
+  if (view == null) view = View(activity)
+  val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+  imm.hideSoftInputFromWindow(view.windowToken, 0)
+	 */
+}
 
 inline fun <reified T> Fragment.setFragmentResultListenerUsingJson(
 	key: String,

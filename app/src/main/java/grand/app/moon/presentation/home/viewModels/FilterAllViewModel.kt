@@ -25,6 +25,7 @@ import grand.app.moon.domain.categories.entity.ItemSubCategory
 import grand.app.moon.domain.shop.IdAndName
 import grand.app.moon.extensions.*
 import grand.app.moon.extensions.bindingAdapter.setCompoundDrawablesRelativeWithIntrinsicBoundsEnd
+import grand.app.moon.presentation.base.extensions.hideKeyboard
 import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.*
 import grand.app.moon.presentation.myStore.model.ResponseArea
@@ -440,6 +441,8 @@ class FilterAllViewModel @Inject constructor(
 		if (minPrice != null && maxPrice != null) {
 			if (minPrice > maxPrice) return fragment.showMessage(fragment.getString(R.string.warning_of_price_range))
 		}
+
+		fragment.hideKeyboardNew()
 
 		if (showDataOfAds.value == true) {
 			fragment.navGraphViewModel.filter = FilterAllFragment.Filter(
