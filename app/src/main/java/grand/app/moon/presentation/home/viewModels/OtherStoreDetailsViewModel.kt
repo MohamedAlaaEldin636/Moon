@@ -453,7 +453,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 							?: return@setOnClickListener
 
 						context.applicationScope?.launch {
-							repoShop.interactionForAdWhatsApp(item.id.orZero())
+							repoShop.interactionForAdWhatsApp(item.store?.id.orZero())
 						}
 
 						context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
@@ -465,7 +465,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 							?: return@setOnClickListener
 
 						context.applicationScope?.launch {
-							repoShop.interactionForAdCall(item.id.orZero())
+							repoShop.interactionForAdCall(item.store?.id.orZero())
 						}
 
 						context.launchDialNumber(item.store?.fullAdsPhone.orEmpty())

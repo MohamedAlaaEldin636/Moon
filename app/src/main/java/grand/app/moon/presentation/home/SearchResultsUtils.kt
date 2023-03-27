@@ -82,7 +82,7 @@ fun SearchResultsViewModel.getAdsAdapter() = RVPagingItemCommonListUsage<ItemSea
 				?: return@setOnClickListener
 
 			context.applicationScope?.launch {
-				repoShop.interactionForAdWhatsApp(item.id.orZero())
+				repoShop.interactionForAdWhatsApp(item.store?.id.orZero())
 			}
 
 			context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
@@ -94,10 +94,10 @@ fun SearchResultsViewModel.getAdsAdapter() = RVPagingItemCommonListUsage<ItemSea
 				?: return@setOnClickListener
 
 			context.applicationScope?.launch {
-				repoShop.interactionForAdCall(item.id.orZero())
+				repoShop.interactionForAdCall(item.store?.id.orZero())
 			}
 
-			context.launchDialNumber("${item.country?.countryCode.orEmpty()} ${item.phone.orEmpty()}")
+			context.launchDialNumber(item.store?.fullAdsPhone.orEmpty())
 		}
 		binding.chatConstraintLayout.setOnClickListener {
 			val context = binding.root.context ?: return@setOnClickListener

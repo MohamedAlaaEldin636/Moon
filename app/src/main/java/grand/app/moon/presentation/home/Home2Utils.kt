@@ -283,7 +283,7 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 				?: return@setOnClickListener
 
 			context.applicationScope?.launch {
-				repoShop.interactionForAdWhatsApp(item.id.orZero())
+				repoShop.interactionForAdWhatsApp(item.store?.id.orZero())
 			}
 
 			context.launchWhatsApp(item.store?.fullWhatsAppPhone.orEmpty())
@@ -295,10 +295,8 @@ fun Home2ViewModel.getAdapterForAds() = RVItemCommonListUsage<ItemHomeRvAdvBindi
 				?: return@setOnClickListener
 
 			context.applicationScope?.launch {
-				repoShop.interactionForAdCall(item.id.orZero())
+				repoShop.interactionForAdCall(item.store?.id.orZero())
 			}
-
-			MyLogger.e("")
 
 			context.launchDialNumber(item.store?.fullAdsPhone.orEmpty())
 		}

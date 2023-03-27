@@ -358,7 +358,7 @@ class OtherAdvDetailsViewModel @Inject constructor(
 		val context = fragment.context ?: return
 
 		context.applicationScope?.launch {
-			repoShop.interactionForAdWhatsApp(response.value?.id.orZero())
+			repoShop.interactionForAdWhatsApp(response.value?.store?.id.orZero())
 		}
 
 		context.launchWhatsApp(response.value?.store?.fullWhatsAppPhone.orEmpty())
@@ -370,7 +370,7 @@ class OtherAdvDetailsViewModel @Inject constructor(
 		val context = fragment.context ?: return
 
 		context.applicationScope?.launch {
-			repoShop.interactionForAdCall(response.value?.id.orZero())
+			repoShop.interactionForAdCall(response.value?.store?.id.orZero())
 		}
 
 		context.launchDialNumber(response.value?.store?.fullAdsPhone.orEmpty())
