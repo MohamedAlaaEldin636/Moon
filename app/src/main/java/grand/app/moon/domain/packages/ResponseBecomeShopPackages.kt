@@ -1,5 +1,6 @@
 package grand.app.moon.domain.packages
 
+import android.content.Context
 import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import grand.app.moon.R
@@ -64,7 +65,16 @@ data class ResponsePackage(
 		DAYS(0, R.string.days),
 		MONTHS(1, R.string.months),
 		YEARS(2, R.string.years),
-		FREE(3, R.string.free),
+		FREE(3, R.string.free);
+
+		fun getStringWithQuantity(context: Context, quantity: Int): String {
+			return when (this) {
+				DAYS -> context.resources.getQuantityString(R.plurals.days, quantity)
+				MONTHS -> context.resources.getQuantityString(R.plurals.months, quantity)
+				YEARS -> context.resources.getQuantityString(R.plurals.years, quantity)
+				FREE -> context.getString(R.string.free)
+			}
+		}
 	}
 
 	fun getPeriodInDays(): Int {

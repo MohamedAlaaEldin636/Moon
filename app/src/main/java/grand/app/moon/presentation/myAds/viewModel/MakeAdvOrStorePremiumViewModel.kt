@@ -219,7 +219,7 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 					6f
 				)
 
-				val typeOfPeriod = item.typePeriod?.stringRes?.let { app.getString(it) }.orEmpty()
+				val typeOfPeriod = item.typePeriod?.getStringWithQuantity(app, item.period.orZero()).orEmpty()
 				val period = "${item.period.orZero()} $typeOfPeriod"
 				binding.durationTextView.adjustInsideRV(
 					app.getString(R.string.for_var, period),
@@ -229,7 +229,8 @@ class MakeAdvOrStorePremiumViewModel @Inject constructor(
 
 				binding.numberTextView.adjustInsideRV(
 					if (isForAdsNotShops) {
-						app.getString(R.string.var_ads, item.advertisementsCount.orZero().toString())
+						val count = item.advertisementsCount.orZero()
+						app.resources.getQuantityString(R.plurals.var_ads, count, count)
 					}else {
 						app.getString(R.string.shop_promotion_8)
 					},

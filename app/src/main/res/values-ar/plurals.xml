@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+  tools:ignore="MissingQuantity">
+  <plurals name="var_ads">
+    <item quantity="zero">%1$d إعلان</item>
+    <item quantity="one">%1$d إعلان</item>
+    <item quantity="other">%1$d إعلانات</item>
+  </plurals>
+  <plurals name="days">
+    <item quantity="zero">يوم</item>
+    <item quantity="one">يوم</item>
+    <item quantity="other">أيام</item>
+  </plurals>
+  <plurals name="months">
+    <item quantity="zero">شهر</item>
+    <item quantity="one">شهر</item>
+    <item quantity="other">شهور</item>
+  </plurals>
+  <plurals name="years">
+    <item quantity="zero">سنة</item>
+    <item quantity="one">سنة</item>
+    <item quantity="other">سنين</item>
+  </plurals>
+</resources>
