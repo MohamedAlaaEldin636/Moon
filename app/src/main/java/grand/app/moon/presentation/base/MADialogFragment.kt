@@ -25,6 +25,8 @@ abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 	
 	protected val binding get() = _binding!!
 
+	private var usedEitherCancelOrDismissOnce = false
+
 	@LayoutRes
 	abstract fun getLayoutId(): Int
 	
@@ -77,8 +79,16 @@ abstract class MADialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 		super.onDismiss(dialog)
 	}
 
-	open fun onEitherCancelOrDismiss() {}
-	
+	@CallSuper
+	open fun onEitherCancelOrDismiss() {
+		if (usedEitherCancelOrDismissOnce.not()) {
+			usedEitherCancelOrDismissOnce = true
+			onEitherCancelOrDismissOnce()
+		}
+	}
+
+	open fun onEitherCancelOrDismissOnce() {}
+
 	override fun onResume() {
 		super.onResume()
 		

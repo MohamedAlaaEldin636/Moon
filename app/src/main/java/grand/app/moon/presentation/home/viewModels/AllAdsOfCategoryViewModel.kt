@@ -1,13 +1,18 @@
 package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
+import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.core.view.postDelayed
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
@@ -123,9 +128,39 @@ class AllAdsOfCategoryViewModel @Inject constructor(
 			)
 		}
 
+		val listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
+			val toolbarName = allCategories.firstOrNull {
+				it.id == filter.value?.categoryId
+			}?.name.letIfNullOrEmpty { args.title }
+			(fragment.activity as? HomeActivity)?.binding?.toolbar?.title = toolbarName
+		}
+
+		view.findNavController().addOnDestinationChangedListener(listener)
+
+		fragment.setFragmentResultListenerUsingJson<Boolean>(
+			AdsSortDialogFragment.FRAGMENT_RESULT_ON_EITHER_CANCEL_OR_DISMISS
+		) { bool ->
+			if (bool) {
+				MyLogger.e("diuihsidauhsuis")
+
+				view.findNavController().removeOnDestinationChangedListener(listener)
+
+				val toolbarName = allCategories.firstOrNull {
+					it.id == filter.value?.categoryId
+				}?.name.letIfNullOrEmpty { args.title }
+				(fragment.activity as? HomeActivity)?.binding?.toolbar?.title = toolbarName
+				(fragment.activity as? HomeActivity)?.binding?.toolbar?.postDelayed(50) {
+					(fragment.activity as? HomeActivity)?.binding?.toolbar?.title = toolbarName
+				}
+			}
+		}
+
+		val toolbarName = allCategories.firstOrNull {
+			it.id == filter.value?.categoryId
+		}?.name.letIfNullOrEmpty { args.title }
 		AdsSortDialogFragment.launch(
 			view.findNavController(),
-			args.title,
+			toolbarName,
 			filter.value?.sortBy
 		)
 	}

@@ -1,13 +1,17 @@
 package grand.app.moon.presentation.home
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
@@ -104,6 +108,11 @@ class AllAdsOfCategoryFragment : BaseFragment<FragmentAllAdsOfCategoryBinding>()
 
 		viewModel.filter.observe(viewLifecycleOwner) {
 			retryAbleFlow.retry()
+
+			val toolbarName = viewModel.allCategories.firstOrNull {
+				it.id == viewModel.filter.value?.categoryId
+			}?.name.letIfNullOrEmpty { viewModel.args.title }
+			(activity as? HomeActivity)?.binding?.toolbar?.title = toolbarName
 		}
 
 		binding.rootConstraintLayout.post {

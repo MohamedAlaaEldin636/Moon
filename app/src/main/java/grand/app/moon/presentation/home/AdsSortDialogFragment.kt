@@ -1,15 +1,14 @@
 package grand.app.moon.presentation.home
 
-import android.view.Gravity
-import android.view.Window
+import android.os.Bundle
+import android.view.*
 import androidx.annotation.CallSuper
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.databinding.DialogFragmentAdsSortBinding
-import grand.app.moon.extensions.navigateDeepLinkWithOptions
-import grand.app.moon.extensions.orStringNullIfNullOrEmpty
+import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.MADialogFragment
 import grand.app.moon.presentation.base.extensions.getMyDrawable
 import grand.app.moon.presentation.home.viewModels.AdsSortViewModel
@@ -18,6 +17,8 @@ import grand.app.moon.presentation.home.viewModels.AdsSortViewModel
 class AdsSortDialogFragment : MADialogFragment<DialogFragmentAdsSortBinding>() {
 
 	companion object {
+		const val FRAGMENT_RESULT_ON_EITHER_CANCEL_OR_DISMISS = "FRAGMENT_RESULT_ON_EITHER_CANCEL_OR_DISMISS"
+
 		fun launch(navController: NavController, title: String, sortBy: FilterAllFragment.SortBy?) {
 			navController.navigateDeepLinkWithOptions(
 				"fragment-dest",
@@ -40,6 +41,14 @@ class AdsSortDialogFragment : MADialogFragment<DialogFragmentAdsSortBinding>() {
 
 	override fun initializeBindingVariables() {
 		binding.viewModel = viewModel
+	}
+
+	override fun onEitherCancelOrDismissOnce() {
+		MyLogger.e("djoaisjdoasjdao 1")
+
+		setFragmentResultUsingJson(
+			FRAGMENT_RESULT_ON_EITHER_CANCEL_OR_DISMISS, true
+		)
 	}
 
 }

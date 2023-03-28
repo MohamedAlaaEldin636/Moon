@@ -283,7 +283,7 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>(), PermissionsHandler.L
         else -> {
           Log.d(TAG, "setUpBottomNavigationWithGraphs: ${destination.label}")
           binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite))
-          binding.toolbar.title = if (destination.id == R.id.dest_add_adv_final_page) {
+          if (destination.id == R.id.dest_add_adv_final_page) {
 	          val res = if (arguments?.getString("jsonResponseMyAdvDetails").isNullOrEmpty()) {
 							R.string.advertisement_addition
 	          }else {
@@ -292,15 +292,13 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>(), PermissionsHandler.L
 
 	          MyLogger.e("ad details cycle -> args -> ${getString(res)}")
 
-	          /*binding.toolbar.post {
-							binding.toolbar.title = getString(res)
-	          }*/
-
-	          getString(res)
-          }else if (arguments != null && arguments.containsKey(Constants.TabBarText)) {
-						arguments.getString(Constants.TabBarText)
+	          binding.toolbar.title = getString(res)
+          }else if (destination.id == R.id.dest_all_ads_of_category || destination.id == R.id.dest_ads_sort_dialog) {
+						// Do nothing.
+					}else if (arguments != null && arguments.containsKey(Constants.TabBarText)) {
+	          binding.toolbar.title = arguments.getString(Constants.TabBarText)
 					}else {
-						destination.label
+	          binding.toolbar.title = destination.label
 					}
           hideTopBarControls()
           showText()
