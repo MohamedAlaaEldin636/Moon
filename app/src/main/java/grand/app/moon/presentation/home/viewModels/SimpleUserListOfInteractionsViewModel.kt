@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
 import grand.app.moon.data.shop.RepoShop
@@ -12,6 +13,7 @@ import grand.app.moon.databinding.ItemUserInShopInfoStoriesOrExploresBinding
 import grand.app.moon.extensions.*
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragmentArgs
+import grand.app.moon.presentation.stats.models.ItemStoreStats
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,6 +51,18 @@ class SimpleUserListOfInteractionsViewModel @Inject constructor(
 				SimpleUserListOfInteractionsFragment.Type.STORE_VIEWS,
 				SimpleUserListOfInteractionsFragment.Type.STORE_FOLLOWERS -> R.layout.item_simple_user
 				else -> R.layout.item_user_in_shop_info_stories_or_explores
+			}
+		},
+		onItemClick = { adapter, binding ->
+			val item = binding.root.getTagJson<SimpleUserListOfInteractionsFragment.Item>()
+				?: return@RVPagingItemCommonListUsageWithDifferentItems
+
+			if (item.count != null && args.type == SimpleUserListOfInteractionsFragment.Type.STORE_VIEWS) {
+				binding.root.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.stats.users.history",
+					paths = arrayOf(item.name, ItemStoreStats.Type.VIEWS.apiValue, item.id.orZero().toString(), (-1).toString())
+				)
 			}
 		},
 		additionalListenersSetups = { _, binding ->
