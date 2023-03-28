@@ -70,6 +70,22 @@ class AdsInteractedWithByOtherUsersFragment : BaseFragment<FragmentAdsInteracted
 				}
 			}
 		}
+
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.ads.collectLatest {
+					viewModel.adapter.submitData(it)
+				}
+			}
+		}
+
+		viewLifecycleOwner.lifecycleScope.launch {
+			viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+				viewModel.adapter.showEmptyViewFlow.collectLatest {
+					viewModel.showEmptyView.value = it
+				}
+			}
+		}
 	}
 
 	enum class Type {

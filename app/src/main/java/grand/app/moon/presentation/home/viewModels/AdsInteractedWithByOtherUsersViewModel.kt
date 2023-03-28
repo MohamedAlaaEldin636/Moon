@@ -32,6 +32,8 @@ class AdsInteractedWithByOtherUsersViewModel @Inject constructor(
 
 	val showWholePageLoader = MutableLiveData(true)
 
+	val showEmptyView = MutableLiveData(false)
+
 	val showLabelText = when (args.type) {
 		AdsInteractedWithByOtherUsersFragment.Type.LAST_VIEWED -> true
 		AdsInteractedWithByOtherUsersFragment.Type.LAST_SEARCHED,
