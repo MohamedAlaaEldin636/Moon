@@ -1429,5 +1429,15 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.followed.stores" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_whatsapp_history"
+    android:name="grand.app.moon.presentation.home.WhatsappHistoryFragment"
+    android:label="@string/whatsapp"
+    tools:layout="@layout/fragment_whatsapp_history">
+    <deepLink
+      android:id="@+id/deep_link_dest_whatsapp_history"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.whatsapp.history" />
+  </fragment>
 
 </navigation>

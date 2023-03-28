@@ -107,7 +107,7 @@ class FollowedStoresViewModel @Inject constructor(
 
 		binding.nameTextView.text = item.name.orEmpty()
 
-		binding.ratingBar.setProgressBAFloat(item.averageRate.orZero() * 20f)
+		binding.ratingBar.setProgressBAFloat(item.averageRate.orZero()/* * 20f*/)
 		binding.ratingTextView.text = "( ${item.averageRate?.round(1).orZero()
 			.toIntIfNoFractionsOrThisFloat().toStringOrEmpty()} )"
 

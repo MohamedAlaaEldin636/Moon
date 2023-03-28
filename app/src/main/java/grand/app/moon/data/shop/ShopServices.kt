@@ -508,4 +508,9 @@ interface ShopServices {
 	@GET("v1/check?type=4")
 	suspend fun getRestOfDaysInMyPackageIfHaveOneOrZeroInstead(): BaseResponse<Int?>
 
+	@GET("v1/profile/whatsapp")
+	suspend fun getWhatsappHistory(
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ResponseWhatsappHistoryItem>>
+
 }

@@ -113,7 +113,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	}
 	//appCompatRatingBar_setProgressFloat
 	val averageRateProgress = response.map {
-		it?.averageRate.orZero() * 20f
+		it?.averageRate.orZero()/* * 20f*/
 	}
 	val generalAddress = response.map {
 		"${it?.country?.name.orEmpty()} ${app.getString(R.string.slash)} ${it?.city?.name.orEmpty()}"

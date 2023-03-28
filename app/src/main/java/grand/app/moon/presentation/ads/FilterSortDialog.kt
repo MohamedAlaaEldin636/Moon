@@ -19,6 +19,7 @@ import grand.app.moon.presentation.ads.viewModels.FilterDialogViewModel
 import grand.app.moon.presentation.base.extensions.backToPreviousScreen
 import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.home.HomeFragmentDirections
+import grand.app.moon.presentation.home.WhatsappHistoryFragment
 
 @AndroidEntryPoint
 class FilterSortDialog : BottomSheetDialogFragment() {
@@ -37,7 +38,11 @@ class FilterSortDialog : BottomSheetDialogFragment() {
         FilterDialog.CHAT ->
           when(viewModel.adapter.lastSelected){
             1 -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCommetChatFragment())
-            else -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToWhatsappChatFragment())
+            else -> {
+							WhatsappHistoryFragment.launch(findNavController())
+
+	            //findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToWhatsappChatFragment())
+						}
           }
         else -> {
           val bundle = Bundle()

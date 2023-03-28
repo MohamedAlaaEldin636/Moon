@@ -862,6 +862,10 @@ class RepoShop @Inject constructor(
 	suspend fun getRestOfDaysInMyPackageIfHaveOneOrZeroInstead() =
 		remoteDataSource.getRestOfDaysInMyPackageIfHaveOneOrZeroInstead()
 
+	fun getWhatsappHistory() = BasePaging.createFlowViaPager {
+		remoteDataSource.getWhatsappHistory(it)
+	}
+
 }
 
 enum class ExploreInteractions(val apiValue: Int) {

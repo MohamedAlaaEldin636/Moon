@@ -848,6 +848,8 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		apiService.getRestOfDaysInMyPackageIfHaveOneOrZeroInstead()
 	}
 
+	suspend fun getWhatsappHistory(page: Int) = safeApiCall2 { apiService.getWhatsappHistory(page) }
+
 	enum class TypeAdOrStoreInteraction(val apiValue: Int) {
 		CALL(6), WHATSAPP(7), CHAT(8)
 	}
