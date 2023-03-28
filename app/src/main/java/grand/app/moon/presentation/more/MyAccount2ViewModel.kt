@@ -4,10 +4,8 @@ import android.app.Application
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.R
-import grand.app.moon.core.extenstions.isLoginWithOpenAuth
 import grand.app.moon.data.packages.RepositoryPackages
 import grand.app.moon.data.shop.RepoShop
 import grand.app.moon.databinding.ItemStoreFullDataBinding
@@ -19,9 +17,9 @@ import grand.app.moon.extensions.*
 import grand.app.moon.presentation.base.extensions.logout
 import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.extensions.showMessage
+import grand.app.moon.presentation.home.AdsInteractedWithByOtherUsersFragment
 import grand.app.moon.presentation.home.FollowedStoresFragment
 import grand.app.moon.presentation.home.HomeActivity
-import grand.app.moon.presentation.myAds.MyAdsFragment
 import grand.app.moon.presentation.myStore.model.ItemStoreInfo
 import javax.inject.Inject
 
@@ -63,28 +61,43 @@ class MyAccount2ViewModel @Inject constructor(
 					)
 				}
 				R.drawable.ic_view -> {
-					navController.navigateDeepLinkWithOptions(
+					AdsInteractedWithByOtherUsersFragment.launch(
+						navController,
+						app.getString(R.string.last_ads_seen),
+						AdsInteractedWithByOtherUsersFragment.Type.LAST_VIEWED
+					)
+					/*navController.navigateDeepLinkWithOptions(
 						"fragment-dest",
 						"grand.app.moon.dest.adsListFragment",
 						paths = arrayOf(2.toString(), app.getString(R.string.last_ads_seen), true.toString())
-					)
+					)*/
 				}
 				R.drawable.stores_followed -> {
 					FollowedStoresFragment.launch(navController)
 				}
 				R.drawable.ic_last_search -> {
-					navController.navigateDeepLinkWithOptions(
+					AdsInteractedWithByOtherUsersFragment.launch(
+						navController,
+						app.getString(R.string.last_search),
+						AdsInteractedWithByOtherUsersFragment.Type.LAST_SEARCHED
+					)
+					/*navController.navigateDeepLinkWithOptions(
 						"fragment-dest",
 						"grand.app.moon.dest.adsListFragment",
 						paths = arrayOf(5.toString(), app.getString(R.string.last_search), true.toString())
-					)
+					)*/
 				}
 				R.drawable.ic_favourite_user -> {
-					navController.navigateDeepLinkWithOptions(
+					AdsInteractedWithByOtherUsersFragment.launch(
+						navController,
+						app.getString(R.string.favourite),
+						AdsInteractedWithByOtherUsersFragment.Type.FAV
+					)
+					/*navController.navigateDeepLinkWithOptions(
 						"fragment-dest",
 						"grand.app.moon.dest.adsListFragment",
 						paths = arrayOf(1.toString(), app.getString(R.string.favourite), true.toString())
-					)
+					)*/
 				}
 				R.drawable.ic_stores_block -> {
 					navController.navigateDeepLinkWithOptions(

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+
+  tools:context="grand.app.moon.presentation.home.AdsInteractedWithByOtherUsersFragment">
+
+  <data>
+    <variable
+      name="viewModel"
+      type="grand.app.moon.presentation.home.viewModels.AdsInteractedWithByOtherUsersViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+      android:id="@+id/toolbarCurve"
+
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      layout="@layout/item_toolbar_curve"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+      android:id="@+id/labelTextView"
+
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+
+      style="@style/TextTajawalMedium14"
+      android:textColor="@color/colorPrimary"
+      tools:text="23541 اعلان قمت بمشاهدتهم"
+      android:gravity="center_vertical"
+      android:textDirection="locale"
+
+      android:background="@drawable/dr_rect_5"
+      android:backgroundTint="#33E89028"
+
+      android:layout_margin="16dp"
+
+      android:visibility="@{viewModel.showLabelText}"
+      tools:visibility="visible"
+
+      android:text="@{viewModel.textOfLabel}"
+
+      android:paddingStart="20.3dp"
+      android:paddingEnd="20.3dp"
+      android:paddingTop="12.2dp"
+      android:paddingBottom="12.2dp"
+
+      android:drawablePadding="6dp"
+      app:drawableStartCompat="@drawable/views_interacted_ads_list"
+
+      app:layout_constraintTop_toBottomOf="@id/toolbarCurve"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+    <ProgressBar
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+
+      android:layout_gravity="center"
+
+      android:visibility="@{viewModel.showWholePageLoader}"
+
+      app:layout_constraintTop_toBottomOf="@id/labelTextView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView"
+
+      android:visibility="@{!viewModel.showWholePageLoader}"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:paddingTop="8dp"
+      android:paddingBottom="8dp"
+      android:paddingStart="12dp"
+      android:paddingEnd="12dp"
+      android:clipToPadding="false"
+
+      android:scrollbars="none"
+      tools:orientation="vertical"
+      tools:spanCount="1"
+      tools:itemCount="6"
+      tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+      tools:listitem="@layout/item_search_result"
+
+      app:layout_constraintTop_toBottomOf="@id/labelTextView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

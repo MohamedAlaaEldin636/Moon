@@ -28,6 +28,7 @@ import grand.app.moon.presentation.home.AllStoresFragment
 import grand.app.moon.presentation.home.FilterAllFragment
 import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.models.Interaction
+import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ResponseStory
 import grand.app.moon.presentation.home.models.TypeSearchResult
 import grand.app.moon.presentation.map.MapOfDataFragment
@@ -864,6 +865,53 @@ class RepoShop @Inject constructor(
 
 	fun getWhatsappHistory() = BasePaging.createFlowViaPager {
 		remoteDataSource.getWhatsappHistory(it)
+	}
+
+	// todo ...
+	/*
+	remoteDataSource.getExploreShares(id, page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map {
+					SimpleUserListOfInteractionsFragment.Item(
+						it.id.orZero(),
+						it.name.orEmpty(),
+						it.image.orEmpty(),
+						it.count,
+						it.createdAt,
+						it.email,
+						it.phone,
+						it.countryCode
+					)
+				}
+			}
+		}
+	 */
+	fun getLastViewedAds() = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getLastViewedAds(page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map { item ->
+					item.copy(totalCountInPagination = maBasePaging.meta?.total)
+				}
+			}
+		}
+	}
+	fun getLastSearchedAds() = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getLastSearchedAds(page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map { item ->
+					item.copy(totalCountInPagination = maBasePaging.meta?.total)
+				}
+			}
+		}
+	}
+	fun getFavByOtherUsersAds() = BasePaging.createFlowViaPager { page ->
+		remoteDataSource.getFavByOtherUsersAds(page).mapImmediate { maBaseResponse ->
+			maBaseResponse.map { maBasePaging ->
+				maBasePaging?.map { item ->
+					item.copy(totalCountInPagination = maBasePaging.meta?.total)
+				}
+			}
+		}
 	}
 
 }

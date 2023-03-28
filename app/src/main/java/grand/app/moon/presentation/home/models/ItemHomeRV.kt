@@ -240,6 +240,8 @@ data class ItemAdvertisementInResponseHome(
 	@SerializedName("date") var dateInMs: Long?,
 	//@SerializedName("sub_category_id") var subCategoryId: Int?,
 	var area: Area?, // name
+
+	var totalCountInPagination: Int?,
 ) : ItemInResponseHome {
 
 	val fullPhone get() = "${country?.countryCode.orEmpty()}${phone.orEmpty()}"

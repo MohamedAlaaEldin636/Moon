@@ -1439,5 +1439,21 @@
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.whatsapp.history" />
   </fragment>
+  <fragment
+    android:id="@+id/dest_ads_interacted_with_by_other_users"
+    android:name="grand.app.moon.presentation.home.AdsInteractedWithByOtherUsersFragment"
+    android:label="{title}"
+    tools:layout="@layout/fragment_ads_interacted_with_by_other_users">
+    <argument
+      android:name="title"
+      app:argType="string"/>
+    <argument
+      android:name="type"
+      app:argType="grand.app.moon.presentation.home.AdsInteractedWithByOtherUsersFragment$Type"/>
+    <deepLink
+      android:id="@+id/deep_link_dest_ads_interacted_with_by_other_users"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.ads.interacted.with.by.other.users/{title}/{type}" />
+  </fragment>
 
 </navigation>

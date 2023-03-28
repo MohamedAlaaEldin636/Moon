@@ -5,14 +5,16 @@ import com.google.gson.annotations.SerializedName
 fun <T, R> MABasePaging<T>.map(transformation: (T) -> R): MABasePaging<R> {
 	return MABasePaging(
 		data?.map { transformation(it) },
-		links, currentPage, nextPageUrl, firstPageUrl, lastPage, fromInPage, toInPage, totalNumberOfItems, numOfItemsPerPage
+		links, MAPagingMeta(totalNumberOfItems), currentPage, nextPageUrl, firstPageUrl, lastPage, fromInPage, toInPage, totalNumberOfItems, numOfItemsPerPage
 	)
 }
 
 data class MABasePaging<T>(
-    val data: List<T>?,
+		val data: List<T>?,
 
     val links: MAPagingLinks?,
+
+    val meta: MAPagingMeta?,
 
     @SerializedName("current_page") val currentPage: Int?,
 
@@ -34,6 +36,10 @@ data class MABasePaging<T>(
 
 data class MAPagingLinks(
 	var next: String?,
+)
+
+data class MAPagingMeta(
+	var total: Int?,
 )
 
 /*

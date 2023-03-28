@@ -513,4 +513,17 @@ interface ShopServices {
 		@Query("page") page: Int,
 	): MABaseResponse<MABasePaging<ResponseWhatsappHistoryItem>>
 
+	@GET("v1/profile/advertisements?type=2")
+	suspend fun getLastViewedAds(
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ItemAdvertisementInResponseHome>>
+	@GET("v1/profile/advertisements?type=5")
+	suspend fun getLastSearchedAds(
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ItemAdvertisementInResponseHome>>
+	@GET("v1/profile/advertisements?type=1")
+	suspend fun getFavByOtherUsersAds(
+		@Query("page") page: Int,
+	): MABaseResponse<MABasePaging<ItemAdvertisementInResponseHome>>
+
 }

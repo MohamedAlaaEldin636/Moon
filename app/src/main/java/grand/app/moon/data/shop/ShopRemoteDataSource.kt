@@ -850,6 +850,10 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun getWhatsappHistory(page: Int) = safeApiCall2 { apiService.getWhatsappHistory(page) }
 
+	suspend fun getLastViewedAds(page: Int) = safeApiCall2 { apiService.getLastViewedAds(page) }
+	suspend fun getLastSearchedAds(page: Int) = safeApiCall2 { apiService.getLastSearchedAds(page) }
+	suspend fun getFavByOtherUsersAds(page: Int) = safeApiCall2 { apiService.getFavByOtherUsersAds(page) }
+
 	enum class TypeAdOrStoreInteraction(val apiValue: Int) {
 		CALL(6), WHATSAPP(7), CHAT(8)
 	}

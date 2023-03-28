@@ -545,9 +545,10 @@
   <string name="please_try_again_32332">please try again</string>
     <string name="activate">Activate</string>
   <string name="activated">Activated</string>
-  <string name="contact_phone_num_is_invalid">رقم هاتف الإتصال غير صحيح</string>
-  <string name="whatsapp_phone_num_is_invalid">رقم هاتف الواتساب غير صحيح</string>
-    <string name="contact_phone_num_is_not_activated">رقم هاتف الإتصال غير مفعل</string>
-  <string name="whatsapp_phone_num_is_not_activated">رقم هاتف الواتساب غير مفعل</string>
-  <string name="desc_of_log_in">يرجي التسجيل برقم جوال لديه واتساب حيث سيصل عليه كود التفعيل الخاص بك</string>
+  <string name="contact_phone_num_is_invalid">ads phone is incorrect</string>
+  <string name="whatsapp_phone_num_is_invalid">whatsapp phone is incorrect</string>
+    <string name="contact_phone_num_is_not_activated">ads phone is not activated</string>
+  <string name="whatsapp_phone_num_is_not_activated">whatsapp phone is not activated</string>
+  <string name="desc_of_log_in">Please log in with a phone number which is using whatsapp, Because the verification code will be sent to it</string>
+  <string name="num_ads_watched">%1$d Ads Watched</string>
 </resources>
