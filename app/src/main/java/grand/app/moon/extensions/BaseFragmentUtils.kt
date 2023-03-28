@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -195,6 +196,9 @@ fun <T> BaseActivity<*>.handleRetryAbleActionCancellable(
 		onSuccess
 	)
 }
+
+/** If called before returning non-null in onCreate view a crash wil happen isa. */
+private fun Fragment.getGeneralScopeForRetrying() = viewLifecycleOwner.lifecycleScope
 
 fun <T> BaseFragment<*>.handleRetryAbleActionCancellable(
 	action: suspend () -> Resource<BaseResponse<T?>>,
