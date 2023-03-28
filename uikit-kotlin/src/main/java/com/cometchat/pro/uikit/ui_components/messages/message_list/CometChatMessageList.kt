@@ -39,6 +39,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -594,11 +595,11 @@ class CometChatMessageList : Fragment(), View.OnClickListener, OnMessageLongClic
           } else {
             composeBox?.ivSend?.visibility = View.GONE
             composeBox?.btnLiveReaction?.visibility = View.VISIBLE
-						composeBox?.ivMic?.visibility = View.VISIBLE //osama
+						composeBox?.ivMic?.isVisible = MACometChatChattingScreenUtils.SHOW_MIC_FOR_RECORDING //osama
             FeatureRestriction.isVoiceNotesEnabled(object : FeatureRestriction.OnSuccessListener {
               override fun onSuccess(p0: Boolean) {
                 if (p0) {
-									composeBox!!.ivMic!!.visibility = View.VISIBLE //osama
+									composeBox!!.ivMic!!.isVisible = MACometChatChattingScreenUtils.SHOW_MIC_FOR_RECORDING //osama
                 } else {
                   composeBox!!.ivMic!!.visibility = View.GONE
                   composeBox!!.ivSend!!.visibility = View.VISIBLE
