@@ -70,7 +70,7 @@ class HomeExploreSubsectionFragment : BaseFragment<FragmentHomeExploreSubsection
 				}else {
 					MyLogger.e("Checking RV Dragging ${newState == RecyclerView.SCROLL_STATE_DRAGGING} === Settling ${newState == RecyclerView.SCROLL_STATE_SETTLING}")
 
-					hideVideoIfCompletelyInvisible()
+					//hideVideoIfCompletelyInvisible()
 				}
 			}
 		})

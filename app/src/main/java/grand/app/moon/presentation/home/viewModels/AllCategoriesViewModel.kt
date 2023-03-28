@@ -1,6 +1,8 @@
 package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
+import android.os.Build
+import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
@@ -55,6 +57,14 @@ class AllCategoriesViewModel @Inject constructor(
 		binding.imageImageView.setupWithGlide {
 			load(item.image).saveDiskCacheStrategyAll()
 		}
+
+		/*binding.textTextView.isSingleLine = true
+		binding.textTextView.ellipsize = TextUtils.TruncateAt.MARQUEE
+		binding.textTextView.marqueeRepeatLimit = -1
+		binding.textTextView.isFocusable = true
+		binding.textTextView.isFocusableInTouchMode = true
+		binding.textTextView.setHorizontallyScrolling(true)
+		binding.textTextView.isSelected = true*/
 	}
 
 
