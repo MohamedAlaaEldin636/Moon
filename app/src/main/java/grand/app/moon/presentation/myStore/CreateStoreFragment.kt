@@ -155,7 +155,7 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 
 		viewModel.initialAdsPhoneCountryCode.observe(viewLifecycleOwner, object : Observer<Int?> {
 			override fun onChanged(code: Int?) {
-				if (code != null) {
+				if (code != null && viewModel.advertisingPhone.value.isNullOrEmpty()) {
 					binding.countryCodePickerForAdsPhone.setCountryForPhoneCode(code)
 					MyLogger.e("dhiuashdia 2 -> ${viewModel.response.value?.adsPhone} ==== ${viewModel.activatedAdvertisingPhone.value}")
 					viewModel.advertisingPhone.value = viewModel.response.value?.adsPhone
@@ -165,7 +165,7 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Permissi
 		})
 		viewModel.initialWhatsAppPhoneCountryCode.observe(viewLifecycleOwner, object : Observer<Int?> {
 			override fun onChanged(code: Int?) {
-				if (code != null) {
+				if (code != null && viewModel.whatsAppPhone.value.isNullOrEmpty()) {
 					binding.countryCodePickerForWhatsAppPhone.setCountryForPhoneCode(code)
 					viewModel.whatsAppPhone.value = viewModel.response.value?.whatsappPhone
 					viewModel.initialWhatsAppPhoneCountryCode.removeObserver(this)
