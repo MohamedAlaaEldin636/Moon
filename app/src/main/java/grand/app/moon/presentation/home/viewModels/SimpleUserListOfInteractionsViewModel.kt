@@ -60,8 +60,8 @@ class SimpleUserListOfInteractionsViewModel @Inject constructor(
 			if (item.count != null && args.type == SimpleUserListOfInteractionsFragment.Type.STORE_VIEWS) {
 				binding.root.findNavController().navigateDeepLinkWithOptions(
 					"fragment-dest",
-					"grand.app.moon.dest.stats.users.history",
-					paths = arrayOf(item.name, ItemStoreStats.Type.VIEWS.apiValue, item.id.orZero().toString(), (-1).toString())
+					"grand.app.moon.dest.stats.users.history.for.other.store",
+					paths = arrayOf(item.name, ItemStoreStats.Type.VIEWS.apiValue, item.id.orZero().toString(), (-1).toString(), args.storeId.toString())
 				)
 			}
 		},

@@ -1104,10 +1104,18 @@
     <argument
       android:name="advId"
       app:argType="integer" />
+    <argument
+      android:name="storeId"
+      app:argType="integer"
+      android:defaultValue="-1"/>
     <deepLink
       android:id="@+id/deep_link_dest_stats_users_history"
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.stats.users.history/{title}/{type}/{userId}/{advId}" />
+    <deepLink
+      android:id="@+id/deep_link_dest_stats_users_history_for_other_store"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.stats.users.history.for.other.store/{title}/{type}/{userId}/{advId}/{storeId}" />
   </fragment>
   <fragment
     android:id="@+id/dest_home_explore_subsection"
@@ -1135,6 +1143,10 @@
       android:id="@+id/deep_link_dest_simple_user_list_of_interactions"
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.simple.user.list.of.interactions/{pageTitle}/{dataTitle}/{type}/{exploreId}" />
+    <deepLink
+      android:id="@+id/deep_link_dest_simple_user_list_of_interactions_for_other_store"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.simple.user.list.of.interactions.for.other.store/{pageTitle}/{dataTitle}/{type}/{exploreId}/{storeId}" />
     <argument
       android:name="type"
       app:argType="grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment$Type" />
@@ -1147,6 +1159,10 @@
     <argument
       android:name="exploreId"
       app:argType="integer" />
+    <argument
+      android:name="storeId"
+      app:argType="integer"
+      android:defaultValue="-1"/>
   </fragment>
   <fragment
     android:id="@+id/dest_story_player"

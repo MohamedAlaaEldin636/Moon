@@ -24,17 +24,31 @@ import kotlinx.coroutines.launch
 class SimpleUserListOfInteractionsFragment : BaseFragment<FragmentSimpleUserListOfInteractionsBinding>() {
 
 	companion object {
-		fun launch(navController: NavController, screenTitle: String, dataTitle: String, type: Type, id: Int) {
-			navController.navigateDeepLinkWithOptions(
-				"fragment-dest",
-				"grand.app.moon.dest.simple.user.list.of.interactions",
-				paths = arrayOf(
-					screenTitle.orStringNullIfNullOrEmpty(),
-					dataTitle.orStringNullIfNullOrEmpty(),
-					type.toString(),
-					id.toStringOrEmpty().orStringNullIfNullOrEmpty()
+		fun launch(navController: NavController, screenTitle: String, dataTitle: String, type: Type, id: Int, storeId: Int = -1) {
+			if (storeId != -1) {
+				navController.navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.simple.user.list.of.interactions.for.other.store",
+					paths = arrayOf(
+						screenTitle.orStringNullIfNullOrEmpty(),
+						dataTitle.orStringNullIfNullOrEmpty(),
+						type.toString(),
+						id.toStringOrEmpty().orStringNullIfNullOrEmpty(),
+						storeId.toString()
+					)
 				)
-			)
+			}else {
+				navController.navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.simple.user.list.of.interactions",
+					paths = arrayOf(
+						screenTitle.orStringNullIfNullOrEmpty(),
+						dataTitle.orStringNullIfNullOrEmpty(),
+						type.toString(),
+						id.toStringOrEmpty().orStringNullIfNullOrEmpty()
+					)
+				)
+			}
 		}
 	}
 

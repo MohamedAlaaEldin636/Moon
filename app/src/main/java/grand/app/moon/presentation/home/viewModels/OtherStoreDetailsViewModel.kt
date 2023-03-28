@@ -1016,6 +1016,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 			app.getString(R.string.views),
 			"${app.getString(R.string.views_count)} ${viewsCount.value.orEmpty()}",
 			SimpleUserListOfInteractionsFragment.Type.STORE_VIEWS,
+			response.value?.id.orZero(),
 			response.value?.id.orZero()
 		)
 	}

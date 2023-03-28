@@ -386,11 +386,15 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 		type: String,
 		userId: Int,
 		advId: Int?,
+		storeId: Int?,
 		page: Int
 	) = safeApiCall2 {
 		val map = mutableMapOf<String, String>()
 		if (advId != null) {
 			map["advertisement_id"] = advId.toString()
+		}
+		if (storeId != null) {
+			map["store_id"] = storeId.toString()
 		}
 
 		apiService.getStatusUsersHistory(

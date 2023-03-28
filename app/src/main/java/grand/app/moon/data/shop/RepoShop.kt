@@ -460,8 +460,9 @@ class RepoShop @Inject constructor(
 		type: String,
 		userId: Int,
 		advId: Int?,
+		storeId: Int?,
 	) = BasePaging.createFlowViaPager {
-		remoteDataSource.getStatusUsersHistory(type, userId, advId, it)
+		remoteDataSource.getStatusUsersHistory(type, userId, advId, storeId, it)
 	}
 
 	suspend fun followStore(storeId: Int) = remoteDataSource.followStore(storeId)

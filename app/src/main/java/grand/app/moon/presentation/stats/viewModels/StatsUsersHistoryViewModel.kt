@@ -25,7 +25,8 @@ class StatsUsersHistoryViewModel @Inject constructor(
 	val users = repoShop.getStatusUsersHistory(
 		args.type,
 		args.userId,
-		if (args.advId >= 0) args.advId else null
+		if (args.advId >= 0) args.advId else null,
+		if (args.storeId == -1) null else args.storeId
 	)
 
 	val adapter = RVPagingItemCommonListUsage<ItemUserInStatsBinding, ResponseUserInGeneralStats>(
