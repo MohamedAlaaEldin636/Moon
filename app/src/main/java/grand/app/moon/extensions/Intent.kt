@@ -58,8 +58,14 @@ fun Context.launchWhatsApp(phoneNumber: String) {
     i.setPackage("com.whatsapp");
     startActivity(Intent.createChooser(i, ""));
 }
+
+https://wa.me/15551234567
+https://faq.whatsapp.com/511210730860677/?locale=en_US&cms_platform=android
+https://faq.whatsapp.com/5913398998672934/?locale=en_US&category=5245251
+https://stackoverflow.com/questions/15462874/sending-message-through-whatsapp
 	 */
-	val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:${phoneNumber.trim()}"))
+	//val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:${phoneNumber.trim()}"))
+	val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/$phoneNumber"))//Intent(Intent.ACTION_SENDTO)
 	intent.`package` = "com.whatsapp"
 
 	launchActivitySafely {
