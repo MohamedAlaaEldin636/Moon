@@ -541,4 +541,6 @@
   <string name="whatsapp_phone_num_is_not_activated">رقم هاتف الواتساب غير مفعل</string>
   <string name="desc_of_log_in">يرجي التسجيل برقم جوال لديه واتساب حيث سيصل عليه كود التفعيل الخاص بك</string>
     <string name="num_ads_watched">%1$d اعلان قمت بمشاهدتهم</string>
+  <string name="notif_channel_store_added_adv">إضافات الإعلانات من المتاجر التى تتابعها</string>
+  <string name="notif_channel_comet_chat">الدردشة</string>
 </resources>

@@ -16,8 +16,12 @@ import com.google.android.gms.common.util.Strings
 import com.google.firebase.messaging.Constants
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.onesignal.OSNotification
+import com.onesignal.OneSignal
 import grand.app.moon.R
 import com.readystatesoftware.chuck.internal.ui.MainActivity
+import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.NotificationsUtils
 import grand.app.moon.presentation.base.utils.Constants.TabBarText
 import grand.app.moon.presentation.home.HomeActivity
 import java.io.IOException
@@ -27,7 +31,14 @@ import java.net.URL
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
   override fun onMessageReceived(remoteMessage: RemoteMessage) {
-    sendNotification(remoteMessage.data)
+	  MyLogger.e("Notification ch START")
+
+	  //remoteMessage.messageId
+	  //NotificationsUtils.showNotificationAndSendBroadcast(applicationContext, remoteMessage.data)
+
+	  MyLogger.e("Notification ch END")
+
+    //sendNotification(remoteMessage.data)
   }
 
   override fun onNewToken(token: String) {

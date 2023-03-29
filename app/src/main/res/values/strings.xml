@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-  <string name="app_name_debug">SouqMoon | SouqMoon</string>
-  <string name="app_name">SouqMoon | SouqMoon</string>
+  <string name="app_name_debug">SouqMoon | سوق مون</string>
+  <string name="app_name">SouqMoon | سوق مون</string>
   <string name="fb_login_protocol_scheme" translatable="false">Fb802733460697057</string>
   <string name="facebook_app_id" translatable="false">802733460697057</string>
   <string name="facebook_client_token">80b99f338097c575f40acb5b3a0be4a9</string>
@@ -551,4 +551,6 @@
   <string name="whatsapp_phone_num_is_not_activated">whatsapp phone is not activated</string>
   <string name="desc_of_log_in">Please log in with a phone number which is using whatsapp, Because the verification code will be sent to it</string>
   <string name="num_ads_watched">%1$d Ads Watched</string>
+  <string name="notif_channel_store_added_adv">Advertisements Additions By Followed Stores</string>
+  <string name="notif_channel_comet_chat">Chatting</string>
 </resources>

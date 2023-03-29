@@ -303,7 +303,7 @@ dependencies {
   //eventBus
   implementation("org.greenrobot:eventbus:3.3.1")
 
-  //oneSignal
+  //oneSignal 4.8.5 api 33
   implementation ("com.onesignal:OneSignal:[4.0.0, 4.99.99]")
 
 

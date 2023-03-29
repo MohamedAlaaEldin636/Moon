@@ -158,6 +158,7 @@ class MyApplication : Application() {
 			// OneSignal Initialization
 			OneSignal.initWithContext(this@MyApplication)
 			OneSignal.setAppId(Constants.ONESIGNAL_APP_ID)
+			//OneSignal.promptForPushNotifications()
 
 			// Below is secret key of IOS I guess wait to get from Alaa for android
 			MyLogger.e("app id $packageName which should be grand.app.moon")

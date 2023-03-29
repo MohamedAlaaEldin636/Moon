@@ -17,6 +17,10 @@ fun Context.getExploreLayoutManager(): LayoutManager {
 		3,
 		VERTICAL,
 	) {
+		override fun supportsPredictiveItemAnimations(): Boolean {
+			return false//super.supportsPredictiveItemAnimations()
+		}
+
 		override fun checkLayoutParams(layoutParams: RecyclerView.LayoutParams?): Boolean {
 			val position = kotlin.runCatching { layoutParams?.bindingAdapterPosition }.getOrNull()
 

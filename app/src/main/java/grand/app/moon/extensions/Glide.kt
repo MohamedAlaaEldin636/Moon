@@ -2,6 +2,7 @@ package grand.app.moon.extensions
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.core.graphics.drawable.toBitmap
@@ -24,9 +25,41 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import grand.app.moon.R
+import kotlinx.coroutines.runBlocking
+import java.io.IOException
+import java.io.InputStream
 import java.lang.ref.WeakReference
+import java.net.HttpURLConnection
+import java.net.URL
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+fun getBitmapFromURL(src: String?): Bitmap? {
+	return try {
+		val url = URL(src)
+		val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+		connection.setDoInput(true)
+		connection.connect()
+		val input: InputStream = connection.getInputStream()
+		BitmapFactory.decodeStream(input)
+	} catch (e: IOException) {
+		e.printStackTrace()
+		null
+	}
+}
+
+suspend fun Context.getBitmapFromURLUsingGlide(src: String?, sizeInPx: Int? = null): Bitmap? {
+	return Glide.with(this@getBitmapFromURLUsingGlide)
+		.asBitmap()
+		.load(src)
+		.let {
+			if (sizeInPx.orZero() <= 0) it else {
+				it.apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL)
+					.override(sizeInPx.orZero(), sizeInPx.orZero()))
+			}
+		}
+		.intoBitmap()
+}
 
 suspend fun RequestBuilder<Bitmap>.intoBitmap(): Bitmap? {
 	return suspendCoroutine { continuation ->

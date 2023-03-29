@@ -34,6 +34,10 @@ package="grand.app.moon">
   tools:replace="android:allowBackup,android:supportsRtl">
   <!--android:resource-->
 
+  <!-- name doesn't change, value = your class fully name spaced-->
+  <meta-data android:name="com.onesignal.NotificationServiceExtension"
+    android:value="grand.app.moon.core.NotificationServiceExtension" />
+
   <service
     android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
     android:enabled="false"
