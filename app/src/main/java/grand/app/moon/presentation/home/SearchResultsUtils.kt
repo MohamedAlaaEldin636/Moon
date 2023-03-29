@@ -236,12 +236,10 @@ fun SearchResultsViewModel.getCategoriesAdapter() = RVPagingItemCommonListUsage<
 		val item = (binding.root.tag as? String).fromJsonInlinedOrNull<ItemCategory>()
 			?: return@RVPagingItemCommonListUsage
 
-		binding.root.findNavController().navigate(
-			R.id.categoryDetailsFragment,
-			bundleOf(
-				"category_id" to item.id.orZero(),
-				"tabBarText" to item.name.orEmpty()
-			), Constants.NAVIGATION_OPTIONS
+		CategoryDetails2Fragment.launch(
+			binding.root.findNavController(),
+			item.id.orZero(),
+			item.name.orEmpty()
 		)
 	}
 ) { binding, _, item ->
