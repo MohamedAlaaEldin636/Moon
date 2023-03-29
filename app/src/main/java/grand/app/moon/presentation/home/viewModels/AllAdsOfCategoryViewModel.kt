@@ -62,7 +62,7 @@ class AllAdsOfCategoryViewModel @Inject constructor(
 	val showSlider = MutableLiveData(true)
 
 	fun getOnEditorListener(): TextView.OnEditorActionListener = TextView.OnEditorActionListener { view, actionId, _ ->
-		view.findFragmentOrNull<AllAdsFragment>()?.apply {
+		view.findFragmentOrNull<AllAdsOfCategoryFragment>()?.apply {
 			context?.apply {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 					filter.value = filter.value?.copy(
