@@ -1023,7 +1023,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 	fun goToReviews(view: View) {
 		val context = view.context ?: return
-		if (context.isLogin().not() || (userLocalUseCase().isStore.orFalse().not() && userLocalUseCase().id != response.value?.id)) return
+		if (context.isLogin().not()/* || (userLocalUseCase().isStore.orFalse().not() && userLocalUseCase().id != response.value?.id)*/) return
 
 		val fragment = view.findFragmentOrNull<OtherStoreDetailsFragment>() ?: return
 
