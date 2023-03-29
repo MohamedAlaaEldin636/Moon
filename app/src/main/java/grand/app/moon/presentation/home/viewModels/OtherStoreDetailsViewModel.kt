@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.home.viewModels
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.res.ColorStateList
 import android.view.View
@@ -386,6 +387,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 
 		gher on clicks
 	 */
+	@SuppressLint("SetTextI18n")
 	@Suppress("RemoveExplicitTypeArguments")
 	val adapterAds = RVItemCommonListUsageWithDifferentItems<ItemAdvertisementInResponseHome>(
 		getLayoutRes = {
@@ -823,6 +825,7 @@ class OtherStoreDetailsViewModel @Inject constructor(
 		}
 	}
 
+	@SuppressLint("NotifyDataSetChanged")
 	val adapterCategories = RVItemCommonListUsage<ItemStoreCategoryInMyAdsBinding, ItemCategory>(
 		R.layout.item_store_category_in_my_ads,
 		onItemClick = { adapter, binding ->
