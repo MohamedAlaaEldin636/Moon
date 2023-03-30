@@ -11,8 +11,6 @@ public class NotificationServiceExtension implements OSRemoteNotificationReceive
 
   @Override
   public void remoteNotificationReceived(Context context, OSNotificationReceivedEvent notificationReceivedEvent) {
-    NotificationsUtils.abc(notificationReceivedEvent.getNotification());
-
     NotificationsUtils.showNotificationAndSendBroadcast(
       context.getApplicationContext(),
       notificationReceivedEvent.getNotification()

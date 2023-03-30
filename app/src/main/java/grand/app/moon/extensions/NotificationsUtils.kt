@@ -11,7 +11,6 @@ import android.media.AudioManager
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.webkit.URLUtil
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.IconCompat
@@ -36,27 +35,6 @@ object NotificationsUtils {
 	private const val NOTIFICATION_ID_COMET_CHAT = 43
 
 	@JvmStatic
-	fun abc(osNotification: OSNotification) {
-		//notificationReceivedEvent.getNotification()
-
-		/*
-		notificationReceivedEvent.getNotification().getAdditionalData();
-    notificationReceivedEvent.getNotification().getTitle();
-    notificationReceivedEvent.getNotification().getBody();
-    notificationReceivedEvent.getNotification().getSmallIcon();
-    notificationReceivedEvent.getNotification().getLargeIcon();
-    notificationReceivedEvent.getNotification().getBigPicture();
-		 */
-
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.additionalData}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.title}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.body}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.smallIcon}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.largeIcon}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.bigPicture}")
-	}
-
-	@JvmStatic
 	fun showNotificationAndSendBroadcast(
 		applicationContext: Context,
 		data: OSNotification
@@ -67,7 +45,7 @@ object NotificationsUtils {
 
 		val pendingIntent = getNotificationPendingIntent(applicationContext, model)
 
-		val (channelId, channelName, notificationId) = when (model.type) {
+		val (channelId, channelName, generalNotificationId) = when (model.type) {
 			Type.ADMIN -> Triple(
 				CHANNEL_ID_ADMIN,
 				applicationContext.getString(R.string.app_name),
@@ -112,7 +90,7 @@ object NotificationsUtils {
 			model,
 			channelId,
 			channelName,
-			notificationId,
+			model.notificationId/*if (model.notificationId <= 0) generalNotificationId else model.notificationId*/,
 			soundUri
 		)
 
@@ -128,7 +106,7 @@ object NotificationsUtils {
 		notificationId: Int,
 		soundUri: Uri?,
 	) {
-		// todo 3 ideas 1 run foreground service like whatsapp checkking new notifications untill laoading
+		// 3 ideas 1 run foreground service like whatsapp checkking new notifications untill laoading
 		/*
 		image as bitmap
 		2. OR herre run in bg thread and update notifiaction although not guranteed to be killed
@@ -163,7 +141,6 @@ object NotificationsUtils {
 				val bitmap = if (model.image.isNullOrEmpty()) null else runBlocking {
 					applicationContext.getBitmapFromURLUsingGlide(
 						model.image,
-						//applicationContext.dpToPx(24f).roundToInt()
 					)
 				}
 				if (bitmap != null) {
@@ -249,62 +226,37 @@ object NotificationsUtils {
 		val advId: Int?,
 		val storeImgOfAddedAdv: String?,
 		val userChatId: Int?,
+		val notificationId: Int,
 	) {
 		companion object {
-			//OSNotification
 
 			fun fromNotificationMappedData(data: OSNotification): Model {
-				/*
-				MyLogger.e("Pre Showing Notification oneSignal ${osNotification.additionalData}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.title}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.body}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.smallIcon}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.largeIcon}")
-		MyLogger.e("Pre Showing Notification oneSignal ${osNotification.bigPicture}")
-				 */
-				//store_image_of_added_advertisement
-				return TODO()
-				/*val advId = data.additionalData?.optInt("advertisement_id").let {
+				val advId = data.additionalData?.optInt("advertisement_id").let {
+					if (it == 0) null else it
+				}
+				val storeImageOfAddedAdvertisement = data.additionalData?.optString("store_image_of_added_advertisement").let {
+					if (it.isNullOrEmpty()) null else it
+				}
+				val type = when {
+					advId != null -> Type.STORE_ADDED_ADVERTISEMENT
+					//advId != null -> Type.COMET_CHAT // todo
+					else -> Type.ADMIN
+				}
 
-				}
-				when {
-					data.additionalData?.optInt("advertisement_id")
-				}
+				MyLogger.e("data.androidNotificationId ${data.androidNotificationId}")
 
 				return Model(
 					data.title,
 					data.body,
-					data.bigPicture,
+					if (type == Type.STORE_ADDED_ADVERTISEMENT) null else data.bigPicture,
 					type,
 					advId,
-					storeImgOfAddedAdv,
-					null // userChatId = todo
-				)*/
+					storeImageOfAddedAdvertisement,
+					null, // userChatId = todo,
+					data.androidNotificationId
+				)
 			}
 
-			fun fromNotificationMappedData(data: Map<String, String>): Model {
-				val title = data["title"]
-				val msg = data["alert"]
-				val image = data["bicon"]?.let {
-					if (URLUtil.isHttpUrl(it) || URLUtil.isHttpsUrl(it)) it else null
-				}
-				// Store added advertisement
-				val advId = data["advertisement_id"]?.toIntOrNull()
-				var storeImgOfAddedAdv = data["store_image_of_added_advertisement"]?.let {
-					if (URLUtil.isHttpUrl(it) || URLUtil.isHttpsUrl(it)) it else null
-				}
-				// Comet chat id todo from comet chat themselves fa check it out isa.
-				val userChatId = data["user_chat_id"]?.toIntOrNull()
-
-				val type = when {
-					advId != null -> Type.STORE_ADDED_ADVERTISEMENT
-					userChatId != null -> Type.COMET_CHAT
-					else -> Type.ADMIN
-				}
-				// todo ....
-
-				return Model(title, msg, image, type, advId, storeImgOfAddedAdv, userChatId)
-			}
 		}
 	}
 
