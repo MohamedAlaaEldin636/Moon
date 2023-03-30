@@ -237,9 +237,9 @@ object NotificationsUtils {
 				val advId = data.additionalData?.optInt("advertisement_id").let {
 					if (it == 0) null else it
 				}
-				val storeImageOfAddedAdvertisement = data.additionalData?.optString("store_image_of_added_advertisement").let {
+				/*val storeImageOfAddedAdvertisement = data.additionalData?.optString("store_image_of_added_advertisement").let {
 					if (it.isNullOrEmpty()) null else it
-				}
+				}*/
 				val type = when {
 					advId != null -> Type.STORE_ADDED_ADVERTISEMENT
 					//advId != null -> Type.COMET_CHAT // todo
@@ -254,7 +254,7 @@ object NotificationsUtils {
 					if (type == Type.STORE_ADDED_ADVERTISEMENT) null else data.bigPicture,
 					type,
 					advId,
-					storeImageOfAddedAdvertisement,
+					if (type == Type.STORE_ADDED_ADVERTISEMENT) data.bigPicture else null,
 					null, // userChatId = todo,
 					data.androidNotificationId
 				)

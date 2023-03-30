@@ -1063,6 +1063,14 @@
           android:drawablePadding="20dp"
           app:drawableStartCompat="@drawable/adv_details_reportsvg"
 
+          android:singleLine="true"
+          android:ellipsize="marquee"
+          android:marqueeRepeatLimit ="marquee_forever"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:scrollHorizontally="true"
+          textView_setSelectedBA="@{true}"
+
           android:onClick="@{v -> viewModel.reportStore(v)}"
 
           app:layout_constraintTop_toBottomOf="@id/mapFragmentContainerView"
@@ -1080,6 +1088,14 @@
           android:textDirection="locale"
           android:gravity="center"
           android:text="@string/block_store"
+
+          android:singleLine="true"
+          android:ellipsize="marquee"
+          android:marqueeRepeatLimit ="marquee_forever"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:scrollHorizontally="true"
+          textView_setSelectedBA="@{true}"
 
           android:padding="9dp"
 
@@ -1219,7 +1235,7 @@
         <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/recyclerViewStoreSubCategories"
 
-          android:visibility="@{viewModel.showAdsNotExplore &amp;&amp; viewModel.isStoreAccount()}"
+          android:visibility="@{viewModel.showAdsNotExplore &amp;&amp; viewModel.isStoreAccount() &amp;&amp; viewModel.showSubCategories}"
 
           android:layout_width="0dp"
           android:layout_height="wrap_content"

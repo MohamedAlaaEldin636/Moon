@@ -354,7 +354,7 @@
         android:paddingEnd="4dp"
         android:clipToPadding="false"
 
-        android:visibility="@{viewModel.showStoreData}"
+        android:visibility="@{viewModel.showStoreData &amp;&amp; viewModel.showSubCategories}"
 
         android:scrollbars="horizontal"
         tools:itemCount="6"

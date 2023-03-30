@@ -90,6 +90,10 @@ class MyAdsViewModel @Inject constructor(
 
 	val showStoreData = MutableLiveData(false)
 
+	val showSubCategories = selectedCategory.map {
+		it != null
+	}
+
 	private var currentMyAdsNonCategoriesFilter = emptyList<ResponseMyAdvDetails>()
 
 	val adapterCategories = RVItemCommonListUsage<ItemStoreCategoryInMyAdsBinding, IdAndName>(

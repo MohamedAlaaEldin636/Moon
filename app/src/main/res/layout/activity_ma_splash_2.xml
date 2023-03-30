@@ -27,6 +27,57 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"/>
 
+    <com.google.android.exoplayer2.ui.PlayerView
+      android:id="@+id/playerView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      app:use_controller="false"
+
+      app:resize_mode="fill"
+
+      android:visibility="gone"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/lottieAnimationView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:visibility="gone"
+
+      android:background="@color/white"
+
+      app:lottie_autoPlay="true"
+      app:lottie_fileName="splasshshshshs.json"
+      app:lottie_loop="true"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+      android:id="@+id/gifImageView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:background="@color/white"
+
+      android:visibility="gone"
+
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
+
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

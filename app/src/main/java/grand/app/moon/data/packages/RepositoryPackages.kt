@@ -6,6 +6,7 @@ import grand.app.moon.domain.packages.PackageType
 import grand.app.moon.domain.utils.BaseResponse
 import grand.app.moon.domain.utils.Resource
 import grand.app.moon.helpers.paging.BasePaging
+import grand.app.moon.presentation.base.utils.Constants
 import grand.app.moon.presentation.myStore.model.ResponseArea
 import grand.app.moon.presentation.myStore.model.ResponseCity
 import kotlinx.coroutines.flow.firstOrNull
@@ -46,7 +47,11 @@ class RepositoryPackages @Inject constructor(
 	suspend fun getCountriesAndCitiesAndAreas() = packagesRemoteDataSource.getCountries()
 
 	suspend fun getCitiesWithAreas() = packagesRemoteDataSource.getCountries().mapSuccess { response ->
-		val countryId = accountRepository.getCountryId().firstOrNull()
+		val countryId = kotlin.runCatching {
+			accountRepository.getKeyFromLocal(Constants.COUNTRY_ID)
+		}.getOrElse {
+			accountRepository.getCountryId().firstOrNull()
+		}
 
 		BaseResponse(
 			response.data?.firstOrNull { it.id?.toString() == countryId }?.let {

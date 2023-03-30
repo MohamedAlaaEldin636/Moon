@@ -284,6 +284,9 @@ class OtherStoreDetailsViewModel @Inject constructor(
 	val allCategories = MutableLiveData<List<ItemCategory>?>(null)
 	val allSubCategories = MutableLiveData<List<ItemSubCategory>?>(null)
 	private val selectedCategory = MutableLiveData<ItemCategory?>()
+	val showSubCategories = selectedCategory.map {
+		it != null
+	}
 	val toBeShownSubCategories = switchMapMultiple2(allCategories, allSubCategories, selectedCategory) {
 		val allSubCategories = allSubCategories.value.orEmpty()
 		listOf(ItemSubCategory(null, getString(R.string.all))).plus(
