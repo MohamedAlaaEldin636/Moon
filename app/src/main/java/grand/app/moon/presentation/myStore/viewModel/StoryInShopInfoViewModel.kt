@@ -103,7 +103,7 @@ class StoryInShopInfoViewModel @Inject constructor(
 
 				SimpleUserListOfInteractionsFragment.launch(
 					view.findNavController(),
-					"الإعجابات",
+					app.getString(R.string.likes_99),
 					"",
 					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_LIKES,
 					item.id.orZero()
@@ -116,7 +116,7 @@ class StoryInShopInfoViewModel @Inject constructor(
 
 				SimpleUserListOfInteractionsFragment.launch(
 					view.findNavController(),
-					"المشاهدات",
+					app.getString(R.string.views),
 					"",
 					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_VIEWS,
 					item.id.orZero()
@@ -129,7 +129,7 @@ class StoryInShopInfoViewModel @Inject constructor(
 
 				SimpleUserListOfInteractionsFragment.launch(
 					view.findNavController(),
-					"المشاركات",
+					app.getString(R.string.shares),
 					"",
 					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_SHARES,
 					item.id.orZero()

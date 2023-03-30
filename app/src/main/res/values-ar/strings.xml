@@ -543,4 +543,5 @@
     <string name="num_ads_watched">%1$d اعلان قمت بمشاهدتهم</string>
   <string name="notif_channel_store_added_adv">إضافات الإعلانات من المتاجر التى تتابعها</string>
   <string name="notif_channel_comet_chat">الدردشة</string>
+    <string name="likes_99">الإعجابات</string>
 </resources>

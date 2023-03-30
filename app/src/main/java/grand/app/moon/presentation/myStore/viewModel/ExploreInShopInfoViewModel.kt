@@ -103,7 +103,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 
 				SimpleUserListOfInteractionsFragment.launch(
 					view.findNavController(),
-					"الإعجابات",
+					app.getString(R.string.likes_99),
 					"",
 					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_LIKES,
 					item.id.orZero()
@@ -116,7 +116,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 
 				SimpleUserListOfInteractionsFragment.launch(
 					view.findNavController(),
-					"التعليقات",
+					app.getString(R.string.comments),
 					"",
 					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_COMMENTS,
 					item.id.orZero()
@@ -129,7 +129,7 @@ class ExploreInShopInfoViewModel @Inject constructor(
 
 				SimpleUserListOfInteractionsFragment.launch(
 					view.findNavController(),
-					"المشاركات",
+					app.getString(R.string.shares),
 					"",
 					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_SHARES,
 					item.id.orZero()

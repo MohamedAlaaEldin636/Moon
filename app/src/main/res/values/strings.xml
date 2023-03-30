@@ -553,4 +553,5 @@
   <string name="num_ads_watched">%1$d Ads Watched</string>
   <string name="notif_channel_store_added_adv">Advertisements Additions By Followed Stores</string>
   <string name="notif_channel_comet_chat">Chatting</string>
+    <string name="likes_99">Likes</string>
 </resources>
