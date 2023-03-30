@@ -80,9 +80,11 @@ class MASplash2Activity : AppCompatActivity() {
 			val file1 = File(url1.toString())
 			MyLogger.e("sssssssssss ${file1.exists()} ${file1.canRead()}")
 			val filePath =  getFileFromAssets(this@MASplash2Activity, "abc.mp4")
+			MyLogger.e("sssssssssss chhhhhhhhhhhhhhh 0")
 			val url2 = Uri.fromFile(filePath)
+			MyLogger.e("sssssssssss chhhhhhhhhhhhhhh 1")
 			val file2 = File(url2.toString())
-			MyLogger.e("sssssssssssAAAAAAAAAA ${file2.exists()} ${file2.canRead()}")
+			MyLogger.e("sssssssssssAAAAAAAAAA ${file2.exists()} ${file2.canRead()} ${filePath.exists()} ${filePath.canRead()}")
 		}.getOrElse {
 			MyLogger.e("sssssssssss error ${it.message} $it")
 		}
