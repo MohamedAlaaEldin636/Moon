@@ -1,8 +1,7 @@
 package grand.app.moon.presentation.home
 
 import android.Manifest
-import android.content.Intent
-import android.content.IntentSender
+import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -50,8 +49,13 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>(), PermissionsHandler.L
 
 	lateinit var handler: PermissionsHandler
 
-	// todo Ignore it for now
-	//private val broadcastReceiverIncrementNotificationsCount = ;
+	private val broadcastReceiverIncrementNotificationsCount = object : BroadcastReceiver() {
+		override fun onReceive(context: Context?, intent: Intent?) {
+			kotlin.runCatching {
+				viewModel.notificationsCount.postValue(viewModel.notificationsCount.value.orZero())
+			}
+		}
+	}
 
   override fun getLayoutId() = R.layout.activity_home
 
@@ -527,7 +531,18 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>(), PermissionsHandler.L
       super.onResume()
 
       updateAuto(immediateUpdateActivity!!)
+
+	    registerReceiver(
+		    broadcastReceiverIncrementNotificationsCount,
+		    IntentFilter(NotificationsUtils.BROADCAST_INTENT_KEY_INCREMENT_NOTIFICATIONS_COUNT)
+			)
     }
+
+	override fun onPause() {
+		unregisterReceiver(broadcastReceiverIncrementNotificationsCount)
+
+		super.onPause()
+	}
 
 	fun updateAuto(immediateUpdateActivity: ImmediateUpdateActivity){
 		immediateUpdateActivity.getAppUpdateManager()!!.appUpdateInfo.addOnSuccessListener { it ->
