@@ -132,7 +132,13 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 
 		MyLogger.e("Home2Fragment -> onViewCreated ${viewModel.callApi}")
 		if (MyApplication.usedDeepLink.not() && MyApplication.deepLinkUri != null) {
-			MyLogger.e("hsadasdasdaiiii ${MyApplication.deepLinkUri} ${MyApplication.deepLinkUri?.toString().fromJsonInlinedOrNull<NotificationsUtils.Model>()}")
+			//			Uri.parse("a://b?c=$it")
+			kotlin.runCatching {
+				MyLogger.e("hsadasdasdaiiii ${MyApplication.deepLinkUri} ${MyApplication.deepLinkUri?.toString().fromJsonInlinedOrNull<NotificationsUtils.Model>()}")
+				MyLogger.e("hsadasdasdaiiii qqq ${MyApplication.deepLinkUri?.getQueryParameter("c")} ${MyApplication.deepLinkUri?.getQueryParameter("c").fromJsonInlinedOrNull<NotificationsUtils.Model>()}")
+			}.getOrElse {
+				MyLogger.e("hsadasdasdaiiii error ${it.message} $it")
+			}
 
 			val path = MyApplication.deepLinkUri?.path.toStringOrEmpty()
 			MyLogger.e("dijasodjasoidjas $path")
