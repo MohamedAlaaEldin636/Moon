@@ -1108,6 +1108,14 @@
       android:name="storeId"
       app:argType="integer"
       android:defaultValue="-1"/>
+    <argument
+      android:name="exploreOrStoryId"
+      app:argType="integer"
+      android:defaultValue="-1"/>
+    <argument
+      android:name="simpleUserListOfInteractionsFragmentTypeAPiValue"
+      app:argType="grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment$Type"
+      android:defaultValue="EXPLORE_LIKES" />
     <deepLink
       android:id="@+id/deep_link_dest_stats_users_history"
       android:autoVerify="true"
@@ -1116,6 +1124,10 @@
       android:id="@+id/deep_link_dest_stats_users_history_for_other_store"
       android:autoVerify="true"
       app:uri="fragment-dest://grand.app.moon.dest.stats.users.history.for.other.store/{title}/{type}/{userId}/{advId}/{storeId}" />
+    <deepLink
+      android:id="@+id/deep_link_dest_stats_users_history_for_explore_or_story_views_comments_likes_shares"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.stats.users.history.for.explore.or.story.views.comments.likes.shares/{title}/{type}/{userId}/{advId}/{exploreOrStoryId}/{simpleUserListOfInteractionsFragmentTypeAPiValue}" />
   </fragment>
   <fragment
     android:id="@+id/dest_home_explore_subsection"

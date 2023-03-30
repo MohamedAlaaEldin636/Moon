@@ -462,8 +462,18 @@ class RepoShop @Inject constructor(
 		userId: Int,
 		advId: Int?,
 		storeId: Int?,
+		exploreOrStoryId: Int?,
+		simpleUserListOfInteractionsFragmentType: SimpleUserListOfInteractionsFragment.Type
 	) = BasePaging.createFlowViaPager {
-		remoteDataSource.getStatusUsersHistory(type, userId, advId, storeId, it)
+		if (exploreOrStoryId != null) {
+			remoteDataSource.getStatusUserHistoryOfExploreOrStoryInShopInfo(
+				simpleUserListOfInteractionsFragmentType,
+				exploreOrStoryId,
+				userId
+			)
+		}else {
+			remoteDataSource.getStatusUsersHistory(type, userId, advId, storeId, it)
+		}
 	}
 
 	suspend fun followStore(storeId: Int) = remoteDataSource.followStore(storeId)
@@ -867,7 +877,6 @@ class RepoShop @Inject constructor(
 		remoteDataSource.getWhatsappHistory(it)
 	}
 
-	// todo ...
 	/*
 	remoteDataSource.getExploreShares(id, page).mapImmediate { maBaseResponse ->
 			maBaseResponse.map { maBasePaging ->

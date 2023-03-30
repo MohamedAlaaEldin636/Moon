@@ -26,7 +26,9 @@ class StatsUsersHistoryViewModel @Inject constructor(
 		args.type,
 		args.userId,
 		if (args.advId >= 0) args.advId else null,
-		if (args.storeId == -1) null else args.storeId
+		if (args.storeId == -1) null else args.storeId,
+		if (args.exploreOrStoryId == -1) null else args.exploreOrStoryId,
+		args.simpleUserListOfInteractionsFragmentTypeAPiValue,
 	)
 
 	val adapter = RVPagingItemCommonListUsage<ItemUserInStatsBinding, ResponseUserInGeneralStats>(

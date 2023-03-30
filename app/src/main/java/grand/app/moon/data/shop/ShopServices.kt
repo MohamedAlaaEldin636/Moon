@@ -281,6 +281,15 @@ interface ShopServices {
 		@QueryMap map: Map<String, String>
 	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
 
+	/** Ex. v1/profile/stories/shares/90?user_id=8523 */
+	@GET("v1/profile/{storyOrExplore}/{type}/{storyOrExploreId}")
+	suspend fun getStatusUserHistoryOfExploreOrStoryInShopInfo(
+		@Path("storyOrExplore") storyOrExplore: String,
+		@Path("type") type: String,
+		@Path("storyOrExploreId") storyOrExploreId: Int,
+		@Query("user_id") userId: Int,
+	): MABaseResponse<MABasePaging<ResponseUserInGeneralStats>>
+
 	@FormUrlEncoded
 	@POST("v1/follow")
 	suspend fun followStore(

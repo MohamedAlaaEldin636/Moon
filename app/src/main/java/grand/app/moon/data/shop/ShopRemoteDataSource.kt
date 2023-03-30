@@ -9,6 +9,7 @@ import grand.app.moon.extensions.*
 import grand.app.moon.helpers.paging.*
 import grand.app.moon.presentation.home.AllStoresFragment
 import grand.app.moon.presentation.home.FilterAllFragment
+import grand.app.moon.presentation.home.SimpleUserListOfInteractionsFragment
 import grand.app.moon.presentation.home.models.*
 import grand.app.moon.presentation.map.MapOfDataFragment
 import grand.app.moon.presentation.myAds.model.ItemStatsInAdvDetails
@@ -19,7 +20,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Field
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -380,6 +380,28 @@ class ShopRemoteDataSource @Inject constructor(private val apiService: ShopServi
 
 	suspend fun getAllStories(page: Int) = safeApiCall2 {
 		apiService.getAllStories(page)
+	}
+
+	suspend fun getStatusUserHistoryOfExploreOrStoryInShopInfo(
+		type: SimpleUserListOfInteractionsFragment.Type,
+		storyOrExploreId: Int,
+		userId: Int,
+	) = safeApiCall2 {
+		val isStoryNotExplore = type == SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_LIKES
+			|| type == SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_VIEWS
+			|| type == SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_SHARES
+
+		apiService.getStatusUserHistoryOfExploreOrStoryInShopInfo(
+			if (isStoryNotExplore) "stories" else "explores",
+			when (type) {
+				SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_VIEWS -> "views"
+				SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_SHARES,
+				SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_SHARES -> "shares"
+				else -> "NONE"
+			},
+			storyOrExploreId,
+			userId
+		)
 	}
 
 	suspend fun getStatusUsersHistory(

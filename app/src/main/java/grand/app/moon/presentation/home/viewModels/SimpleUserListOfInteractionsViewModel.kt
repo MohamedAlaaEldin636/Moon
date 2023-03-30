@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.home.viewModels
 
+import android.annotation.SuppressLint
 import android.app.Application
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
@@ -44,6 +45,7 @@ class SimpleUserListOfInteractionsViewModel @Inject constructor(
 		else -> false
 	}
 
+	@SuppressLint("SetTextI18n")
 	val adapter = RVPagingItemCommonListUsageWithDifferentItems<SimpleUserListOfInteractionsFragment.Item>(
 		getLayoutRes = {
 			when (args.type) {
@@ -53,19 +55,54 @@ class SimpleUserListOfInteractionsViewModel @Inject constructor(
 				else -> R.layout.item_user_in_shop_info_stories_or_explores
 			}
 		},
-		onItemClick = { adapter, binding ->
+		onItemClick = { _, binding ->
 			val item = binding.root.getTagJson<SimpleUserListOfInteractionsFragment.Item>()
 				?: return@RVPagingItemCommonListUsageWithDifferentItems
 
-			if (item.count != null && args.type == SimpleUserListOfInteractionsFragment.Type.STORE_VIEWS) {
-				binding.root.findNavController().navigateDeepLinkWithOptions(
-					"fragment-dest",
-					"grand.app.moon.dest.stats.users.history.for.other.store",
-					paths = arrayOf(item.name, ItemStoreStats.Type.VIEWS.apiValue, item.id.orZero().toString(), (-1).toString(), args.storeId.toString())
-				)
+			if (item.count != null) {
+				when (args.type) {
+					SimpleUserListOfInteractionsFragment.Type.STORE_VIEWS -> {
+						binding.root.findNavController().navigateDeepLinkWithOptions(
+							"fragment-dest",
+							"grand.app.moon.dest.stats.users.history.for.other.store",
+							paths = arrayOf(item.name, ItemStoreStats.Type.VIEWS.apiValue, item.id.orZero().toString(), (-1).toString(), args.storeId.toString())
+						)
+					}
+					//SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_LIKES,
+					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_VIEWS,
+					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_STORY_SHARES -> {
+						binding.root.findNavController().navigateDeepLinkWithOptions(
+							"fragment-dest",
+							"grand.app.moon.dest.stats.users.history.for.explore.or.story.views.comments.likes.shares",
+							paths = arrayOf(
+								item.name,
+								ItemStoreStats.Type.STORIES.apiValue,
+								item.id.orZero().toString(),
+								(-1).toString(),
+								args.exploreId.toString(),
+								args.type.toString()
+							)
+						)
+					}
+					//SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_LIKES,
+					//SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_COMMENTS,
+					SimpleUserListOfInteractionsFragment.Type.SHOP_INFO_EXPLORE_SHARES -> {
+						binding.root.findNavController().navigateDeepLinkWithOptions(
+							"fragment-dest",
+							"grand.app.moon.dest.stats.users.history.for.explore.or.story.views.comments.likes.shares",
+							paths = arrayOf(
+								item.name,
+								ItemStoreStats.Type.EXPLORES.apiValue,
+								item.id.orZero().toString(),
+								(-1).toString(),
+								args.exploreId.toString(),
+								args.type.toString()
+							)
+						)
+					}
+					else -> { /* Do nothing */ }
+				}
 			}
-			//ItemStoreStats.Type.EXPLORES
-			//ItemStoreStats.Type.STORIES
 		},
 		additionalListenersSetups = { _, binding ->
 			if (binding is ItemUserInShopInfoStoriesOrExploresBinding) {
