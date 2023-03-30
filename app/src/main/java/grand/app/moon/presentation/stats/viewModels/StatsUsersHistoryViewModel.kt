@@ -48,9 +48,15 @@ class StatsUsersHistoryViewModel @Inject constructor(
 		binding.countTextView.isVisible = false
 		//binding.countTextView.text = count.orZero().toString()
 
-		binding.imageImageView.setupWithGlide {
-			load(item.image)
-				.placeholder(R.drawable.ic_default_user)
+		if (item.image.isNullOrEmpty()) {
+			binding.imageImageView.setImageResource(R.drawable.ic_default_user)
+		}else {
+			binding.imageImageView.setupWithGlide {
+				load(item.image)
+					.placeholder(R.drawable.ic_default_user)
+					.error(R.drawable.ic_default_user)
+					.saveDiskCacheStrategyAll()
+			}
 		}
 
 		binding.nameTextView.text = item.name
