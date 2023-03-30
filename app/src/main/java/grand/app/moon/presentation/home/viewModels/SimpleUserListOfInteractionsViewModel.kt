@@ -64,6 +64,8 @@ class SimpleUserListOfInteractionsViewModel @Inject constructor(
 					paths = arrayOf(item.name, ItemStoreStats.Type.VIEWS.apiValue, item.id.orZero().toString(), (-1).toString(), args.storeId.toString())
 				)
 			}
+			//ItemStoreStats.Type.EXPLORES
+			//ItemStoreStats.Type.STORIES
 		},
 		additionalListenersSetups = { _, binding ->
 			if (binding is ItemUserInShopInfoStoriesOrExploresBinding) {

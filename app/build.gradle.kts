@@ -108,6 +108,7 @@ android {
   }
 
   compileOptions {
+	  isCoreLibraryDesugaringEnabled = true
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -133,6 +134,8 @@ android {
 
 dependencies {
 	implementation(project(":trim_video_lib"))
+
+	coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
 
 	implementation("com.github.Tap-Payments:goSellSDK-AndroidX:3.16.1")
 
