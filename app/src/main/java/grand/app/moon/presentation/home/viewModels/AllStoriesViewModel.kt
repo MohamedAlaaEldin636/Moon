@@ -1,6 +1,7 @@
 package grand.app.moon.presentation.home.viewModels
 
 import android.app.Application
+import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
@@ -61,6 +62,8 @@ class AllStoriesViewModel @Inject constructor(
 	) { binding, position, item ->
 		MyLogger.e("aaaaaaaa $position")
 		binding.root.tag = position
+
+		binding.premiumImageView.isVisible = item.isPremium
 
 		binding.seenCircleView.visibleOrInvisible(
 			item.isSeen.not()

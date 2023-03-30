@@ -229,6 +229,8 @@ fun CategoryDetails2ViewModel.getAdapterStories() = RVItemCommonListUsageWithDif
 
 	when (binding) {
 		is ItemHomeRvStoryActualBinding -> {
+			binding.premiumImageView.isVisible = item.isPremium
+
 			binding.storeNameTextView.text = item.name
 
 			binding.seenCircleView.visibleOrInvisible(

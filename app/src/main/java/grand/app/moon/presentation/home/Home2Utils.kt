@@ -100,6 +100,8 @@ fun Home2ViewModel.getAdapterStories(): RVItemCommonListUsageWithDifferentItems<
 
 	when (binding) {
 		is ItemHomeRvStoryActualBinding -> {
+			binding.premiumImageView.isVisible = item.isPremium
+
 			binding.storeNameTextView.text = item.name
 
 			binding.seenCircleView.visibleOrInvisible(

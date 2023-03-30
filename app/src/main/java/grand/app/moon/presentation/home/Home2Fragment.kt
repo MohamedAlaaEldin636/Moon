@@ -37,7 +37,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 	private var permissionsHandler: PermissionsHandler? = null
 
 	override fun onAllPermissionsAccepted() {
-		// Do nothing used just for comet chat
+		// Do nothing used just for API 33 to be able to post notifications isa.
 	}
 
 	override fun onSubsetPermissionsAccepted(permissions: Map<String, Boolean>) {

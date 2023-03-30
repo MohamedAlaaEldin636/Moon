@@ -38,6 +38,21 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"/>
 
+    <ImageView
+      android:id="@+id/premiumImageView"
+
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      app:layout_constraintWidth_percent="0.5"
+
+      app:layout_constraintDimensionRatio="1:1"
+
+      android:src="@drawable/premium_32"
+
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
       android:id="@+id/storeNameTextView"
 
