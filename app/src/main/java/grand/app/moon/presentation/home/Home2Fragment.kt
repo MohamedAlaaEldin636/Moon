@@ -132,6 +132,8 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 
 		MyLogger.e("Home2Fragment -> onViewCreated ${viewModel.callApi}")
 		if (MyApplication.usedDeepLink.not() && MyApplication.deepLinkUri != null) {
+			MyLogger.e("hsadasdasdaiiii ${MyApplication.deepLinkUri} ${MyApplication.deepLinkUri?.toString().fromJsonInlinedOrNull<NotificationsUtils.Model>()}")
+
 			val path = MyApplication.deepLinkUri?.path.toStringOrEmpty()
 			MyLogger.e("dijasodjasoidjas $path")
 			if (path.isNotEmpty()) {

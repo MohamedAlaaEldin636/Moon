@@ -28,7 +28,6 @@ import grand.app.moon.presentation.base.extensions.showMessage
 import grand.app.moon.presentation.home.utils.MACometChatUtils
 import grand.app.moon.presentation.home.viewModels.OtherStoreDetailsViewModel
 import grand.app.moon.presentation.myAds.MyAdsFragment
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
