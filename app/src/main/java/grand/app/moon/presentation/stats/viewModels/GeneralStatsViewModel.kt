@@ -52,11 +52,13 @@ class GeneralStatsViewModel @Inject constructor(
 				args.storeType.apiValue to -1
 			}
 
-			binding.root.findNavController().navigateDeepLinkWithOptions(
-				"fragment-dest",
-				"grand.app.moon.dest.stats.users.history",
-				paths = arrayOf(item.name.orEmpty(), type, item.id.orZero().toString(), advId.toString())
-			)
+			if (item.count != null) {
+				binding.root.findNavController().navigateDeepLinkWithOptions(
+					"fragment-dest",
+					"grand.app.moon.dest.stats.users.history",
+					paths = arrayOf(item.name.orEmpty(), type, item.id.orZero().toString(), advId.toString())
+				)
+			}
 		},
 		additionalListenersSetups = { _, binding ->
 			binding.whatsappImageView.setOnClickListener { view ->
