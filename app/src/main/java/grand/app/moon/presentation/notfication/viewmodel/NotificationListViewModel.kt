@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import grand.app.moon.presentation.notfication.adapter.NotificationAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import grand.app.moon.BR
+import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.explore.entity.ExploreAction
 import grand.app.moon.domain.settings.entity.NotificationPaginateData
 import grand.app.moon.domain.settings.models.NotificationData
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NotificationListViewModel @Inject constructor(
   private val useCase: SettingsUseCase,
+  val userLocalUseCase: UserLocalUseCase,
 ) : BaseViewModel() {
   @Bindable
   var page: Int = 0

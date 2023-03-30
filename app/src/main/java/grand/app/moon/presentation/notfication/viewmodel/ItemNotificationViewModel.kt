@@ -9,6 +9,8 @@ import grand.app.moon.core.extenstions.isLogin
 import grand.app.moon.domain.account.use_case.UserLocalUseCase
 import grand.app.moon.domain.settings.models.NotificationData
 import grand.app.moon.extensions.MyLogger
+import grand.app.moon.extensions.findFragmentOrNull
+import grand.app.moon.extensions.goToAdvDetailsCheckIfMyAdv
 import grand.app.moon.extensions.navToMyAdvDetails
 import grand.app.moon.presentation.base.BaseViewModel
 import grand.app.moon.presentation.base.utils.Constants
@@ -38,13 +40,20 @@ class ItemNotificationViewModel constructor(val model: NotificationData) : BaseV
 
 	  MyLogger.e("aa -> ch 6")
     if(model.notify_type == 2) {
-			// todo recheck it later isa.
-	    v.findNavController().navigate(
+			v.findFragmentOrNull<NotificationFragment>()?.viewModel?.apply {
+				userLocalUseCase.goToAdvDetailsCheckIfMyAdv(
+					context,
+					v.findNavController(),
+					model.action_by_id,
+					false
+				)
+			}
+	    /*v.findNavController().navigate(
 		    R.id.nav_ads, bundleOf(
 			    "id" to model.action_by_id,
 			    "type" to 2
 		    )
-	    )
+	    )*/
 	    /*if (context.isLogin() && data.user?.id == data.storeId) {
 		    v.findNavController().navToMyAdvDetails(model.action_by_id)
 	    }else {

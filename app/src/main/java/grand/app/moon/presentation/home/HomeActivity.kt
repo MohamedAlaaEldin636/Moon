@@ -50,6 +50,9 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>(), PermissionsHandler.L
 
 	lateinit var handler: PermissionsHandler
 
+	// todo Ignore it for now
+	//private val broadcastReceiverIncrementNotificationsCount = ;
+
   override fun getLayoutId() = R.layout.activity_home
 
 	override fun onAllPermissionsAccepted() {

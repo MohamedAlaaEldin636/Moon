@@ -34,6 +34,8 @@ object NotificationsUtils {
 	private const val CHANNEL_ID_COMET_CHAT = "CHANNEL_ID_COMET_CHAT"
 	private const val NOTIFICATION_ID_COMET_CHAT = 43
 
+	const val BROADCAST_INTENT_KEY_INCREMENT_NOTIFICATIONS_COUNT = "BROADCAST_INTENT_KEY_INCREMENT_NOTIFICATIONS_COUNT"
+
 	@JvmStatic
 	fun showNotificationAndSendBroadcast(
 		applicationContext: Context,
@@ -94,7 +96,8 @@ object NotificationsUtils {
 			soundUri
 		)
 
-		// todo send broadcastf
+		// Send broadcast
+		applicationContext.sendBroadcast(Intent(BROADCAST_INTENT_KEY_INCREMENT_NOTIFICATIONS_COUNT))
 	}
 
 	private fun showNotificationToLaunchPendingIntent(

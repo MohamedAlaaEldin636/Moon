@@ -28,7 +28,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
 
   private val activityViewModel: HomeViewModel by activityViewModels()
 
-  private val viewModel: NotificationListViewModel by viewModels()
+  val viewModel: NotificationListViewModel by viewModels()
 
   override
   fun getLayoutId() = R.layout.fragment_notification
