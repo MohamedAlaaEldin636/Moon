@@ -11,11 +11,6 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.AssetDataSource
-import com.google.android.exoplayer2.upstream.DataSource
 import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
@@ -60,7 +55,7 @@ class MASplash2Activity : AppCompatActivity() {
 
 	//Uri url = Uri.parse("file:///android_asset/folder1/video.mp4");
 	fun ExoPlayer.prepareExoPlayerFromAssetResource(uri: String = "file:///android_asset/splash_video.mp4") {
-		val dataSourceFactory = DataSource.Factory {
+		/*val dataSourceFactory = DataSource.Factory {
 			AssetDataSource(this@MASplash2Activity)
 		}
 		val newUri = "android.resource://" + packageName + "/" + R.raw.splash_video_2
@@ -92,6 +87,13 @@ class MASplash2Activity : AppCompatActivity() {
 		setMediaSource(ms)
 		playWhenReady = true
 		prepare()
+		play()*/
+
+		val uris = "android.resource://" + packageName + "/" + R.raw.splash_video_2
+		val uri = Uri.parse(uris)
+		val mediaItem = MediaItem.fromUri(uri)
+		setMediaItem(mediaItem)
+		prepare()
 		play()
 	}
 
@@ -115,10 +117,10 @@ class MASplash2Activity : AppCompatActivity() {
 		}
 
 		// splash_giiif.gif todo
-		Glide.with(this).asGif().load(R.raw.splash_giiif).into(binding.gifImageView)
-		/*binding.gifImageView.setupWithGlide {
+		/*Glide.with(this).asGif().load(R.raw.splash_giiif).into(binding.gifImageView)
+		*//*binding.gifImageView.setupWithGlide {
 			load(R.raw.splash_giiif)
-		}*/
+		}*//*
 
 		// Create a new SimpleExoPlayer instance
 		val player = ExoPlayer.Builder(this).build()
@@ -130,9 +132,9 @@ class MASplash2Activity : AppCompatActivity() {
 			override fun onPlayerError(error: PlaybackException) {
 				MyLogger.e("errrrr ${error.message} $error")
 			}
-		})
+		})*/
 
-		player.prepareExoPlayerFromAssetResource()
+		//player.prepareExoPlayerFromAssetResource()
 
 		// Prepare the player with the video source
 		/*player.playWhenReady = true
