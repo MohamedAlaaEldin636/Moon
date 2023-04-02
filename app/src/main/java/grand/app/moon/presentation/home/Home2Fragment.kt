@@ -120,6 +120,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 		if (MyApplication.usedDeepLink.not()) {
 			mRootView = null
 			MyApplication.usedDeepLink = true
+			MyLogger.e("Home2Fragment -> onDestroyView ${MyApplication.usedDeepLink}")
 		}
 
 		super.onDestroyView()
@@ -130,9 +131,14 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 
 		val context = context ?: return
 
-		MyLogger.e("Home2Fragment -> onViewCreated ${viewModel.callApi}")
+		MyLogger.e("Home2Fragment -> onViewCreated ${viewModel.callApi} ${MyApplication.deepLinkUri} ${MyApplication.usedDeepLink}")
+		val model = NotificationsUtils.getModelFromUriWhereModelIsAsJson(MyApplication.deepLinkUri)
+		if (model != null) {
+			MyApplication.usedDeepLink = false
+		}
+
 		if (MyApplication.usedDeepLink.not() && MyApplication.deepLinkUri != null) {
-			val model = NotificationsUtils.getModelFromUriWhereModelIsAsJson(MyApplication.deepLinkUri)
+			MyLogger.e("Home2Fragment -> onViewCreated model?.type ${model?.type} ==== model $model")
 
 			if (model != null) {
 				MyApplication.deepLinkUri = null

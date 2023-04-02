@@ -102,11 +102,10 @@ class MASplash2Activity : AppCompatActivity() {
 
 		val binding = DataBindingUtil.setContentView<ActivityMaSplash2Binding>(this, R.layout.activity_ma_splash_2)
 
-		MyLogger.e("heeeeeeeeeeeey ${intent.getStringExtra(NotificationsUtils.INTENT_EXTRA_KEY_MODEL_AS_JSON)}")
-
 		val appLinkData = intent?.data ?: NotificationsUtils.getModelAsJsonAsUriFromIntent(intent)
 		MyApplication.deepLinkUri = appLinkData
 		MyApplication.usedDeepLink = appLinkData == null
+		MyLogger.e("heeeeeeeeeeeey ${MyApplication.usedDeepLink} ${intent.getStringExtra(NotificationsUtils.INTENT_EXTRA_KEY_MODEL_AS_JSON)} $appLinkData")
 
 		binding.splashImageView.setupWithGlide {
 			load(R.drawable.aaaa).saveDiskCacheStrategyAll()

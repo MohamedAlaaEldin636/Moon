@@ -223,7 +223,7 @@ object NotificationsUtils {
 		adjustments: Intent.() -> Unit = {}
 	): PendingIntent {
 		val intent = Intent(applicationContext, jClass)
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK/* or Intent.FLAG_ACTIVITY_CLEAR_TOP*/)
 		intent.adjustments()
 
 		return PendingIntent.getActivity(
