@@ -159,9 +159,9 @@
       <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgMoonLogo"
         style="@style/mediumFont"
-        android:layout_width="@dimen/dimen100"
-        android:layout_height="@dimen/dimen70"
-        android:src="@drawable/ic_home_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_homeeeeeeeeeee"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
