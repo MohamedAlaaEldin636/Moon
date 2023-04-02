@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import grand.app.moon.presentation.home.HomeActivity
 import kotlinx.coroutines.flow.collect
 import com.onesignal.OneSignal
+import grand.app.moon.core.extenstions.showError
 import grand.app.moon.domain.auth.entity.request.UpdateProfileRequest
 import grand.app.moon.domain.explore.entity.Explore
 import grand.app.moon.extensions.*
@@ -143,18 +144,24 @@ class ConfirmCodeFragment : BaseFragment<FragmentConfirmCodeBinding>() {
 		          findNavController().navigateUp()
 	          }else {
 		          if(viewModel.profileRequest.country_code.isEmpty()) {//usual login
-			          if (it.value?.data?.name.isNullOrEmpty()) {
-				          findNavController().navigateSafely(
-					          ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToDestCompleteLogin(
-						          it.value.data.toJsonInlinedOrNull().orEmpty(),
-						          arguments?.getInt("flagResId", 0).orZero()
-					          )
-				          )
-			          }else viewModel.viewModelScope.launch {
-				          viewModel.userLocalUseCase(it.value.data)
+								if (it.value.data.isVerified) {
+									if (it.value?.data?.name.isNullOrEmpty()) {
+										findNavController().navigateSafely(
+											ConfirmCodeFragmentDirections.actionFragmentConfirmCodeToDestCompleteLogin(
+												it.value.data.toJsonInlinedOrNull().orEmpty(),
+												arguments?.getInt("flagResId", 0).orZero()
+											)
+										)
+									}else viewModel.viewModelScope.launch {
+										viewModel.userLocalUseCase(it.value.data)
 
-				          makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
-			          }
+										makeIntegrationWithRedirectHome(viewModel.userLocalUseCase.invoke().id)
+									}
+								}else {
+									context?.showError(getString(R.string.your_account_has_been_suspended))
+
+									findNavController().navigateUp()
+								}
 		          } else{
 			          //update profile
 			          viewModel.updateProfile()

@@ -2,6 +2,8 @@
 <resources>
   <color name="button_disabled_4">#A5A5A5</color>
 
+  <color name="no_button_color_in_dialogs">#E89028</color>
+
   <color name="star_enabled">#e89028</color>
   <color name="star_disabled">#69414141</color>
 

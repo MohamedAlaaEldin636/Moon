@@ -14,4 +14,9 @@ data class User(
   val token: String = "",
   val country_code: String = "",
   @SerializedName("is_shop") val isStore: Boolean? = null,
-) : Serializable
+  val verified: Int? = 1,
+) : Serializable {
+
+	val isVerified get() = verified == 1
+
+}

@@ -545,4 +545,5 @@
   <string name="notif_channel_comet_chat">الدردشة</string>
     <string name="likes_99">الإعجابات</string>
   <string name="notif_channel_become_shop_or_renewed_or_subscribed_to_new_package">أصبحت متجراً او إشتركت فى باقة</string>
+  <string name="your_account_has_been_suspended">تم إيقاف حسابك من إدارة التطبيق</string>
 </resources>

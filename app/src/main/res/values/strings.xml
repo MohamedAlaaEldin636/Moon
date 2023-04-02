@@ -555,4 +555,5 @@
   <string name="notif_channel_comet_chat">Chatting</string>
     <string name="likes_99">Likes</string>
     <string name="notif_channel_become_shop_or_renewed_or_subscribed_to_new_package">Became Shop or Subscribed to a Package</string>
+  <string name="your_account_has_been_suspended">Your account has been suspended by the administration</string>
 </resources>
