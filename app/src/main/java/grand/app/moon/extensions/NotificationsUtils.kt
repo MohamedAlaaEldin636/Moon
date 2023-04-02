@@ -18,11 +18,14 @@ import com.onesignal.OSNotification
 import grand.app.moon.R
 import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.dpToPx
+import grand.app.moon.data.local.preferences.AppPreferences
 import grand.app.moon.presentation.splash.MASplash2Activity
 import kotlinx.coroutines.runBlocking
 import kotlin.math.roundToInt
 
 object NotificationsUtils {
+
+	// todo zawed type bevome shop or
 
 	const val INTENT_EXTRA_KEY_MODEL_AS_JSON = "NotificationsUtils.INTENT_EXTRA_KEY_MODEL_AS_JSON"
 
@@ -34,6 +37,9 @@ object NotificationsUtils {
 
 	private const val CHANNEL_ID_COMET_CHAT = "CHANNEL_ID_COMET_CHAT"
 	private const val NOTIFICATION_ID_COMET_CHAT = 43
+
+	private const val CHANNEL_ID_BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE = "CHANNEL_ID_BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE"
+	private const val NOTIFICATION_ID_BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE = 44
 
 	const val BROADCAST_INTENT_KEY_INCREMENT_NOTIFICATIONS_COUNT = "BROADCAST_INTENT_KEY_INCREMENT_NOTIFICATIONS_COUNT"
 
@@ -58,6 +64,11 @@ object NotificationsUtils {
 				CHANNEL_ID_STORE_ADDED_ADVERTISEMENT,
 				applicationContext.getString(R.string.notif_channel_store_added_adv),
 				NOTIFICATION_ID_STORE_ADDED_ADVERTISEMENT
+			)
+			Type.BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE -> Triple(
+				CHANNEL_ID_BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE,
+				applicationContext.getString(R.string.notif_channel_become_shop_or_renewed_or_subscribed_to_new_package),
+				NOTIFICATION_ID_BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE
 			)
 			Type.COMET_CHAT -> Triple(
 				CHANNEL_ID_COMET_CHAT,
@@ -98,7 +109,9 @@ object NotificationsUtils {
 		)
 
 		// Send broadcast
-		applicationContext.sendBroadcast(Intent(BROADCAST_INTENT_KEY_INCREMENT_NOTIFICATIONS_COUNT))
+		if (model.type != Type.BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE) {
+			applicationContext.sendBroadcast(Intent(BROADCAST_INTENT_KEY_INCREMENT_NOTIFICATIONS_COUNT))
+		}
 	}
 
 	private fun showNotificationToLaunchPendingIntent(
@@ -116,6 +129,10 @@ object NotificationsUtils {
 		2. OR herre run in bg thread and update notifiaction although not guranteed to be killed
 		3. OR whenever u follow a store save it's image but this is not a good approach cuz in case changed image isa.
 		 */
+
+		if (model.type == Type.BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE) {
+			makeUserShop(applicationContext)
+		}
 
 		MyLogger.e("Pre Showing Notification $model")
 
@@ -234,6 +251,9 @@ object NotificationsUtils {
 		)
 	}
 
+	/**
+	 * @param shopId used to know specific new type instead of actually using type ?!!? (backend idea)
+	 */
 	data class Model(
 		val title: String?,
 		val msg: String?,
@@ -243,6 +263,7 @@ object NotificationsUtils {
 		val storeImgOfAddedAdv: String?,
 		val userChatId: Int?,
 		val notificationId: Int,
+		val shopId: Int?,
 	) {
 		companion object {
 
@@ -250,26 +271,37 @@ object NotificationsUtils {
 				val advId = data.additionalData?.optInt("advertisement_id").let {
 					if (it == 0) null else it
 				}
+				val shopId = data.additionalData?.optInt("shop_id").let {
+					if (it == 0) null else it
+				}
 				/*val storeImageOfAddedAdvertisement = data.additionalData?.optString("store_image_of_added_advertisement").let {
 					if (it.isNullOrEmpty()) null else it
 				}*/
 				val type = when {
 					advId != null -> Type.STORE_ADDED_ADVERTISEMENT
+					shopId != null -> Type.BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE
 					//advId != null -> Type.COMET_CHAT // todo
 					else -> Type.ADMIN
 				}
 
 				MyLogger.e("data.androidNotificationId ${data.androidNotificationId}")
 
+				val (image, storeImgOfAddedAdv) = if (type == Type.STORE_ADDED_ADVERTISEMENT) {
+					null to data.bigPicture
+				}else {
+					data.bigPicture to null
+				}
+
 				return Model(
 					data.title,
 					data.body,
-					if (type == Type.STORE_ADDED_ADVERTISEMENT) null else data.bigPicture,
+					image,
 					type,
 					advId,
-					if (type == Type.STORE_ADDED_ADVERTISEMENT) data.bigPicture else null,
+					storeImgOfAddedAdv,
 					null, // userChatId = todo,
-					data.androidNotificationId
+					data.androidNotificationId,
+					shopId
 				)
 			}
 
@@ -279,7 +311,15 @@ object NotificationsUtils {
 	enum class Type {
 		ADMIN,
 		STORE_ADDED_ADVERTISEMENT,
-		COMET_CHAT
+		BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE,
+		COMET_CHAT,
+	}
+
+	//, shopId: Int
+	private fun makeUserShop(appContext: Context) {
+		val appPreferences = AppPreferences(appContext)
+		val user = appPreferences.getUser()
+		appPreferences.saveUser(user.copy(isStore = true))
 	}
 
 }

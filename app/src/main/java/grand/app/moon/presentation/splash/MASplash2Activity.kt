@@ -102,7 +102,11 @@ class MASplash2Activity : AppCompatActivity() {
 
 		val binding = DataBindingUtil.setContentView<ActivityMaSplash2Binding>(this, R.layout.activity_ma_splash_2)
 
-		val appLinkData = intent?.data ?: NotificationsUtils.getModelAsJsonAsUriFromIntent(intent)
+		var appLinkData = intent?.data ?: NotificationsUtils.getModelAsJsonAsUriFromIntent(intent)
+		val model = NotificationsUtils.getModelFromUriWhereModelIsAsJson(appLinkData)
+		if (model?.type == NotificationsUtils.Type.BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE) {
+			appLinkData = null
+		}
 		MyApplication.deepLinkUri = appLinkData
 		MyApplication.usedDeepLink = appLinkData == null
 		MyLogger.e("heeeeeeeeeeeey ${MyApplication.usedDeepLink} ${intent.getStringExtra(NotificationsUtils.INTENT_EXTRA_KEY_MODEL_AS_JSON)} $appLinkData")
