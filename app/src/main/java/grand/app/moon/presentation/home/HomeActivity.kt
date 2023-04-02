@@ -52,7 +52,7 @@ class HomeActivity : MABaseActivity<ActivityHomeBinding>(), PermissionsHandler.L
 	private val broadcastReceiverIncrementNotificationsCount = object : BroadcastReceiver() {
 		override fun onReceive(context: Context?, intent: Intent?) {
 			kotlin.runCatching {
-				viewModel.notificationsCount.postValue(viewModel.notificationsCount.value.orZero())
+				viewModel.notificationsCount.postValue(viewModel.notificationsCount.value.orZero().inc())
 			}
 		}
 	}

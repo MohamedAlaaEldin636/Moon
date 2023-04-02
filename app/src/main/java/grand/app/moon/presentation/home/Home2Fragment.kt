@@ -132,65 +132,83 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 
 		MyLogger.e("Home2Fragment -> onViewCreated ${viewModel.callApi}")
 		if (MyApplication.usedDeepLink.not() && MyApplication.deepLinkUri != null) {
-			//			Uri.parse("a://b?c=$it")
-			kotlin.runCatching {
-				MyLogger.e("hsadasdasdaiiii ${MyApplication.deepLinkUri} ${MyApplication.deepLinkUri?.toString().fromJsonInlinedOrNull<NotificationsUtils.Model>()}")
-				MyLogger.e("hsadasdasdaiiii qqq ${MyApplication.deepLinkUri?.getQueryParameter("c")} ${MyApplication.deepLinkUri?.getQueryParameter("c").fromJsonInlinedOrNull<NotificationsUtils.Model>()}")
-			}.getOrElse {
-				MyLogger.e("hsadasdasdaiiii error ${it.message} $it")
-			}
+			val model = NotificationsUtils.getModelFromUriWhereModelIsAsJson(MyApplication.deepLinkUri)
 
-			val path = MyApplication.deepLinkUri?.path.toStringOrEmpty()
-			MyLogger.e("dijasodjasoidjas $path")
-			if (path.isNotEmpty()) {
-				when {
-					"shop" in path || "stores" in path -> {
-						//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store?story=view
-						//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store
-						val id = MyApplication.deepLinkUri?.pathSegments?.dropLast(1)?.lastOrNull()?.toIntOrNull()
+			if (model != null) {
+				MyApplication.deepLinkUri = null
 
-						if (id != null) {
-							viewModel.userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
-								requireContext(),
-								findNavController(),
-								id
-							)
-						}
+				when (model.type) {
+					NotificationsUtils.Type.ADMIN -> {
+						findNavController().navigateDeepLinkWithOptions(
+							"fragment-dest",
+							"grand.app.moon.dest.notifications.two"
+						)
 					}
-					"explore" in path -> {
-						//https://EG.sooqmoon.net/website/ar/explore/133
-						val id = MyApplication.deepLinkUri?.pathSegments?.lastOrNull()?.toIntOrNull()
+					NotificationsUtils.Type.STORE_ADDED_ADVERTISEMENT -> {
+						viewModel.userLocalUseCase.goToAdvDetailsCheckIfMyAdv(
+							context,
+							findNavController(),
+							model.advId.orZero(),
+							false
+						)
+					}
+					NotificationsUtils.Type.COMET_CHAT -> {
+						// TODO() not programmed yet isa.
+					}
+				}
+			}else {
+				val path = MyApplication.deepLinkUri?.path.toStringOrEmpty()
+				MyLogger.e("dijasodjasoidjas $path")
+				if (path.isNotEmpty()) {
+					when {
+						"shop" in path || "stores" in path -> {
+							//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store?story=view
+							//https://om.sooqmoon.net/website/ar/shop/7779/mariz-store
+							val id = MyApplication.deepLinkUri?.pathSegments?.dropLast(1)?.lastOrNull()?.toIntOrNull()
 
-						if (id != null) {
-							handleRetryAbleActionOrGoBack(
-								action = {
-									viewModel.repoShop.getExploreDetails(id)
-								}
-							) { item ->
-								findNavController().navigateDeepLinkWithOptions(
-									"fragment-dest",
-									"grand.app.moon.dest.home.explore.subsection",
-									paths = arrayOf(listOf(item).toJsonInlinedOrNull(), (-1).toString())
+							if (id != null) {
+								viewModel.userLocalUseCase.goToStoreDetailsIgnoringStoriesCheckIfMyStore(
+									requireContext(),
+									findNavController(),
+									id
 								)
 							}
 						}
+						"explore" in path -> {
+							//https://EG.sooqmoon.net/website/ar/explore/133
+							val id = MyApplication.deepLinkUri?.pathSegments?.lastOrNull()?.toIntOrNull()
 
-						MyApplication.deepLinkUri = null
-					}
-					else -> {
-						// https://OM.sooqmoon.net/website/ar/37880/ggg?store_id=983
-						val id = MyApplication.deepLinkUri?.pathSegments?.dropLast(1)?.lastOrNull()?.toIntOrNull()
-
-						if (id != null) {
-							viewModel.userLocalUseCase.goToAdvDetailsCheckIfMyAdv(
-								requireContext(),
-								findNavController(),
-								id,
-								context.isLogin() && MyApplication.deepLinkUri
-									?.getQueryParameter("store_id") == viewModel.userLocalUseCase().id.toString()
-							)
+							if (id != null) {
+								handleRetryAbleActionOrGoBack(
+									action = {
+										viewModel.repoShop.getExploreDetails(id)
+									}
+								) { item ->
+									findNavController().navigateDeepLinkWithOptions(
+										"fragment-dest",
+										"grand.app.moon.dest.home.explore.subsection",
+										paths = arrayOf(listOf(item).toJsonInlinedOrNull(), (-1).toString())
+									)
+								}
+							}
 
 							MyApplication.deepLinkUri = null
+						}
+						else -> {
+							// https://OM.sooqmoon.net/website/ar/37880/ggg?store_id=983
+							val id = MyApplication.deepLinkUri?.pathSegments?.dropLast(1)?.lastOrNull()?.toIntOrNull()
+
+							if (id != null) {
+								viewModel.userLocalUseCase.goToAdvDetailsCheckIfMyAdv(
+									requireContext(),
+									findNavController(),
+									id,
+									context.isLogin() && MyApplication.deepLinkUri
+										?.getQueryParameter("store_id") == viewModel.userLocalUseCase().id.toString()
+								)
+
+								MyApplication.deepLinkUri = null
+							}
 						}
 					}
 				}

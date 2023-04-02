@@ -104,11 +104,7 @@ class MASplash2Activity : AppCompatActivity() {
 
 		MyLogger.e("heeeeeeeeeeeey ${intent.getStringExtra(NotificationsUtils.INTENT_EXTRA_KEY_MODEL_AS_JSON)}")
 
-		val notificationExtras = intent.getStringExtra(NotificationsUtils.INTENT_EXTRA_KEY_MODEL_AS_JSON)
-			.orNullIfNullOrEmpty()
-		val appLinkData = intent?.data ?: notificationExtras?.let {
-			Uri.parse("a://b?c=$it")
-		}
+		val appLinkData = intent?.data ?: NotificationsUtils.getModelAsJsonAsUriFromIntent(intent)
 		MyApplication.deepLinkUri = appLinkData
 		MyApplication.usedDeepLink = appLinkData == null
 

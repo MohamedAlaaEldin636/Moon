@@ -16,6 +16,7 @@ import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.IconCompat
 import com.onesignal.OSNotification
 import grand.app.moon.R
+import grand.app.moon.core.MyApplication
 import grand.app.moon.core.extenstions.dpToPx
 import grand.app.moon.presentation.splash.MASplash2Activity
 import kotlinx.coroutines.runBlocking
@@ -202,6 +203,18 @@ object NotificationsUtils {
 		) {
 			putExtra(INTENT_EXTRA_KEY_MODEL_AS_JSON, model.toJsonInlinedOrNull())
 		}
+	}
+
+	fun getModelAsJsonAsUriFromIntent(intent: Intent?): Uri? {
+		val notificationExtras = intent?.getStringExtra(INTENT_EXTRA_KEY_MODEL_AS_JSON)
+			.orNullIfNullOrEmpty()
+		return notificationExtras?.let {
+			Uri.parse("a://b?c=$it")
+		}
+	}
+
+	fun getModelFromUriWhereModelIsAsJson(uri: Uri?): Model? {
+		return uri?.getQueryParameter("c").fromJsonInlinedOrNull()
 	}
 
 	private fun getActivityPendingIntent(

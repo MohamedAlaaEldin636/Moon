@@ -300,6 +300,11 @@
       app:destination="@id/filterSortDialog" />
 
 
+    <deepLink
+      android:id="@+id/deep_link_dest_notifications_two"
+      android:autoVerify="true"
+      app:uri="fragment-dest://grand.app.moon.dest.notifications.two" />
+
   </fragment>
 
 

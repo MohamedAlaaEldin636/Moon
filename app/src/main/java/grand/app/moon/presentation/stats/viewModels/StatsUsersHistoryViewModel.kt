@@ -1,5 +1,6 @@
 package grand.app.moon.presentation.stats.viewModels
 
+import android.annotation.SuppressLint
 import android.app.Application
 import androidx.core.view.isVisible
 import androidx.lifecycle.AndroidViewModel
@@ -31,6 +32,7 @@ class StatsUsersHistoryViewModel @Inject constructor(
 		args.simpleUserListOfInteractionsFragmentTypeAPiValue,
 	)
 
+	@SuppressLint("SetTextI18n")
 	val adapter = RVPagingItemCommonListUsage<ItemUserInStatsBinding, ResponseUserInGeneralStats>(
 		R.layout.item_user_in_stats,
 		additionalListenersSetups = { _, binding ->
