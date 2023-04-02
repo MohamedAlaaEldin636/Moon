@@ -162,6 +162,7 @@ class Home2Fragment : BaseFragment<FragmentHome2Binding>(), PermissionsHandler.L
 						// TODO() not programmed yet isa.
 					}
 					NotificationsUtils.Type.BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE -> {}
+					NotificationsUtils.Type.SUSPEND_ACCOUNT -> {}
 				}
 			}else {
 				val path = MyApplication.deepLinkUri?.path.toStringOrEmpty()

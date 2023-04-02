@@ -104,8 +104,13 @@ class MASplash2Activity : AppCompatActivity() {
 
 		var appLinkData = intent?.data ?: NotificationsUtils.getModelAsJsonAsUriFromIntent(intent)
 		val model = NotificationsUtils.getModelFromUriWhereModelIsAsJson(appLinkData)
-		if (model?.type == NotificationsUtils.Type.BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE) {
+		if (model?.type == NotificationsUtils.Type.BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE
+			|| model?.type == NotificationsUtils.Type.SUSPEND_ACCOUNT) {
 			appLinkData = null
+
+			if (model.type == NotificationsUtils.Type.SUSPEND_ACCOUNT) {
+				myApplication?.logoutWithoutRedirection()
+			}
 		}
 		MyApplication.deepLinkUri = appLinkData
 		MyApplication.usedDeepLink = appLinkData == null

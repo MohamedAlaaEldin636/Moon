@@ -1,11 +1,17 @@
 package grand.app.moon.core
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.multidex.MultiDex
 import com.cometchat.pro.core.AppSettings
 import com.cometchat.pro.core.CometChat
@@ -17,10 +23,14 @@ import com.onesignal.OneSignal
 import dagger.hilt.android.HiltAndroidApp
 import grand.app.moon.core.extenstions.InitialAppLaunch
 import grand.app.moon.core.extenstions.getInitialAppLaunch
+import grand.app.moon.core.extenstions.logout
+import grand.app.moon.domain.account.use_case.LogOutUseCase
 import grand.app.moon.domain.auth.use_case.LogInUseCase
 import grand.app.moon.extensions.MyLogger
 import grand.app.moon.extensions.indexOfFirstOrNull
+import grand.app.moon.presentation.base.extensions.openActivityAndClearStack
 import grand.app.moon.presentation.base.utils.Constants
+import grand.app.moon.presentation.home.HomeActivity
 import grand.app.moon.presentation.home.models.ItemAdvertisementInResponseHome
 import grand.app.moon.presentation.home.models.ItemStoreInResponseHome
 import grand.app.moon.presentation.splash.*
@@ -28,6 +38,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import java.lang.ref.WeakReference
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import javax.inject.Inject
@@ -53,6 +64,8 @@ class MyApplication : Application() {
 
 	@Inject
 	lateinit var loginUseCase: LogInUseCase
+	@Inject
+	lateinit var logOutUseCase: LogOutUseCase
 
 	fun logOutAsync() {
 		applicationScope.launch {
@@ -131,6 +144,47 @@ class MyApplication : Application() {
 		MultiDex.install(this)
 	}
 
+	private val appLifecycleObserver = object : DefaultLifecycleObserver {
+		override fun onResume(owner: LifecycleOwner) {
+			// todo reg
+			//registerReceiver()
+			MyLogger.e("MyApplicationLifecycle -> resumeee")
+			// todo register receiver below unregister it and on show notification add key value tru false 34an on resume hna te3mel logout with redirection
+		}
+
+		override fun onPause(owner: LifecycleOwner) {
+			//unregisterReceiver()
+			MyLogger.e("MyApplicationLifecycle -> pauseeee")
+		}
+	}
+
+	fun logoutWithoutRedirection() {
+		logout()
+		logOutUseCase()
+	}
+
+	private var weakRefCurrentActivity: WeakReference<Activity?>? = null
+
+	fun logoutWithRedirection() {
+		logout()
+		logOutUseCase()
+		val activity = weakRefCurrentActivity?.get()
+		if (activity != null) {
+			Intent(this, HomeActivity::class.java).apply {
+				flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK// or PendingIntent.FLAG_IMMUTABLE
+				this.action = activity.intent.action
+				this.data = activity.intent.data
+				startActivity(this)
+				activity.finishAffinity()
+			}
+		}else {
+			Intent(this, HomeActivity::class.java).apply {
+				flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK// or PendingIntent.FLAG_IMMUTABLE
+				startActivity(this)
+			}
+		}
+	}
+
   override
   fun onCreate() {
     super.onCreate()
@@ -138,6 +192,24 @@ class MyApplication : Application() {
     //updateAndroidSecurityProvider()
 	  //initStoryViewer()
     instance = this
+
+	  ProcessLifecycleOwner.get().lifecycle.addObserver(appLifecycleObserver)
+
+	  registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+		  override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+		  override fun onActivityStarted(activity: Activity) {}
+		  override fun onActivityResumed(activity: Activity) {
+				weakRefCurrentActivity?.clear()
+			  weakRefCurrentActivity = WeakReference(activity)
+			}
+		  override fun onActivityPaused(activity: Activity) {
+				weakRefCurrentActivity?.clear()
+			  weakRefCurrentActivity = null
+			}
+		  override fun onActivityStopped(activity: Activity) {}
+		  override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+		  override fun onActivityDestroyed(activity: Activity) {}
+	  })
 
     // Logging set to help debug issues, remove before releasing your app.
 	  //OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
@@ -200,4 +272,5 @@ class MyApplication : Application() {
       e.printStackTrace()
     }
   }
+
 }

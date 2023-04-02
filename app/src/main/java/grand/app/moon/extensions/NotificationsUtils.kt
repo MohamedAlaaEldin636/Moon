@@ -264,6 +264,7 @@ object NotificationsUtils {
 		val userChatId: Int?,
 		val notificationId: Int,
 		val shopId: Int?,
+		val userId: Int?,
 	) {
 		companion object {
 
@@ -274,12 +275,16 @@ object NotificationsUtils {
 				val shopId = data.additionalData?.optInt("shop_id").let {
 					if (it == 0) null else it
 				}
+				val userId = data.additionalData?.optInt("user_id").let {
+					if (it == 0) null else it
+				}
 				/*val storeImageOfAddedAdvertisement = data.additionalData?.optString("store_image_of_added_advertisement").let {
 					if (it.isNullOrEmpty()) null else it
 				}*/
 				val type = when {
 					advId != null -> Type.STORE_ADDED_ADVERTISEMENT
 					shopId != null -> Type.BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE
+					userId != null -> Type.SUSPEND_ACCOUNT
 					//advId != null -> Type.COMET_CHAT // todo
 					else -> Type.ADMIN
 				}
@@ -301,7 +306,8 @@ object NotificationsUtils {
 					storeImgOfAddedAdv,
 					null, // userChatId = todo,
 					data.androidNotificationId,
-					shopId
+					shopId,
+					userId
 				)
 			}
 
@@ -312,6 +318,8 @@ object NotificationsUtils {
 		ADMIN,
 		STORE_ADDED_ADVERTISEMENT,
 		BECOME_SHOP_OR_RENEWED_OR_SUBSCRIBED_TO_NEW_PACKAGE,
+		/** So force logout isa. */
+		SUSPEND_ACCOUNT,
 		COMET_CHAT,
 	}
 
